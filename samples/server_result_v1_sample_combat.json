@@ -1,0 +1,131 @@
+{
+    "version": "server_result_v1",
+    "turnNo": 24,
+    "node": {
+        "id": "node_4",
+        "type": "COMBAT",
+        "index": 4,
+        "state": "NODE_ACTIVE"
+    },
+    "summary": {
+        "short": "오른쪽으로 굴러 회피한 뒤, 화살이 적중했다."
+    },
+    "events": [
+        {
+            "id": "e1",
+            "kind": "MOVE",
+            "text": "오른쪽으로 굴러 공격을 피했다.",
+            "tags": [
+                "EVADE",
+                "RIGHT"
+            ],
+            "data": {
+                "direction": "RIGHT",
+                "distanceBefore": "CLOSE",
+                "distanceAfter": "MID",
+                "angleAfter": "SIDE"
+            }
+        },
+        {
+            "id": "e2",
+            "kind": "DAMAGE",
+            "text": "화살이 적의 어깨를 꿰뚫었다.",
+            "tags": [
+                "HIT",
+                "RANGED"
+            ],
+            "data": {
+                "source": "PLAYER",
+                "targetId": "enemy_01",
+                "damage": 18,
+                "isCrit": false
+            }
+        },
+        {
+            "id": "e3",
+            "kind": "UI",
+            "text": "적이 잠시 빈틈을 드러냈다.",
+            "tags": [
+                "BONUS_SLOT"
+            ],
+            "data": {
+                "bonusSlot": true
+            }
+        }
+    ],
+    "diff": {
+        "player": {
+            "hp": {
+                "from": 82,
+                "to": 82,
+                "delta": 0
+            },
+            "stamina": {
+                "from": 3,
+                "to": 1,
+                "delta": -2
+            },
+            "status": []
+        },
+        "enemies": [
+            {
+                "enemyId": "enemy_01",
+                "hp": {
+                    "from": 55,
+                    "to": 37,
+                    "delta": -18
+                },
+                "status": [],
+                "distance": "MID",
+                "angle": "SIDE"
+            }
+        ],
+        "inventory": {
+            "itemsAdded": [],
+            "itemsRemoved": [],
+            "goldDelta": 0
+        },
+        "meta": {
+            "battle": {
+                "phase": "TURN",
+                "rngConsumed": 6
+            },
+            "position": {
+                "distance": "MID",
+                "angle": "SIDE",
+                "env": [
+                    "OPEN"
+                ]
+            }
+        }
+    },
+    "ui": {
+        "availableActions": [
+            "ATTACK",
+            "DEFEND",
+            "MOVE",
+            "USE_ITEM",
+            "FLEE"
+        ],
+        "targetLabels": [
+            {
+                "id": "enemy_01",
+                "name": "병사",
+                "hint": "정면에서 비틀거림"
+            }
+        ],
+        "actionSlots": {
+            "base": 2,
+            "bonusAvailable": true,
+            "max": 3
+        },
+        "toneHint": "tense"
+    },
+    "choices": [],
+    "flags": {
+        "bonusSlot": true,
+        "downed": false,
+        "battleEnded": false,
+        "nodeTransition": false
+    }
+}

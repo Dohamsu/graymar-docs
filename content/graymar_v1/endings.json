@@ -1,0 +1,60 @@
+{
+  "version": "endings_v1",
+  "softDeadlineDay": 14,
+  "closingLines": {
+    "STABLE": "도시는 여전히 숨 쉬고 있었다.",
+    "UNSTABLE": "도시는 상처를 안고 다음 날을 맞았다.",
+    "COLLAPSED": "도시는 무너졌지만, 누군가는 잿더미 위에 다시 서 있었다."
+  },
+  "cityStatusRules": {
+    "STABLE": "containedCount >= escalatedCount + expiredCount",
+    "COLLAPSED": "escalatedCount >= 3",
+    "UNSTABLE": "default"
+  },
+  "npcEpilogueTemplates": {
+    "NPC_YOON_HAMIN": {
+      "high_trust": "하를런 보스는 부두에서 당신의 이름을 기억했다. 노동자들 사이에서 당신은 전설이 되었다.",
+      "neutral": "하를런 보스는 부두에서 여전히 일하고 있다. 당신에 대한 기억은 흐릿하다.",
+      "hostile": "하를런 보스는 당신의 이름을 저주했다. 노동자들이 당신을 보면 돌을 던질 것이다."
+    },
+    "NPC_SEO_DOYUN": {
+      "high_trust": "에드릭 베일은 당신과의 거래를 기억했다. 그의 서재에 당신의 이름이 적힌 장부가 남았다.",
+      "neutral": "에드릭 베일은 새로운 사업 파트너를 찾아 나섰다. 당신은 그저 스쳐간 얼굴이었다.",
+      "hostile": "에드릭 베일은 당신을 블랙리스트에 올렸다. 그레이마르에서 거래할 곳이 없을 것이다."
+    },
+    "NPC_KANG_CHAERIN": {
+      "high_trust": "마이렐 단 경은 당신에게 경례했다. 경비대의 명예를 지킨 것은 외부인이었다.",
+      "neutral": "마이렐 단 경은 서류 더미에 파묻혀 있었다. 당신은 수많은 보고서 중 한 줄이었다.",
+      "hostile": "마이렐 단 경은 당신에 대한 체포 영장을 발부했다. 돌아온다면 감옥이 기다릴 것이다."
+    },
+    "NPC_BAEK_SEUNGHO": {
+      "high_trust": "토브렌은 약초를 말리며 당신의 안부를 물었다. 그의 눈에 진심 어린 걱정이 담겨 있었다.",
+      "neutral": "토브렌은 여전히 빈민가에서 약을 나누고 있었다. 당신은 많은 환자 중 하나였다.",
+      "hostile": "토브렌은 고개를 저었다. '그 사람은 치료할 수 없었어'라고 중얼거렸다."
+    },
+    "NPC_INFO_BROKER": {
+      "high_trust": "쉐도우는 당신에 대한 모든 정보를 삭제했다. 가장 큰 호의였다.",
+      "neutral": "쉐도우는 당신의 정보를 파일에 넣었다. 언젠가 쓸 일이 있을지도 모른다.",
+      "hostile": "쉐도우는 당신의 정보를 최고 입찰자에게 팔았다."
+    },
+    "NPC_GUARD_CAPTAIN": {
+      "high_trust": "벨론 대위는 당신에게 맥주 한 잔을 건넸다. '다음에 또 오게.'",
+      "neutral": "벨론 대위는 별 관심 없다는 듯 서류를 넘겼다.",
+      "hostile": "벨론 대위는 당신의 사진을 경비초소에 붙였다."
+    },
+    "NPC_MOON_SEA": {
+      "high_trust": "라이라 케스텔은 당신에게 선물 하나를 남겼다. 작은 감사의 표시였다.",
+      "neutral": "라이라 케스텔은 새로운 투자처를 찾아 바쁘게 움직이고 있었다.",
+      "hostile": "라이라 케스텔은 당신 때문에 큰 손해를 봤다며 이를 갈았다."
+    }
+  },
+  "statistics": {
+    "trackItems": [
+      "daysSpent",
+      "incidentsContained",
+      "incidentsEscalated",
+      "incidentsExpired",
+      "totalTurns"
+    ]
+  }
+}

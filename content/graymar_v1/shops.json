@@ -1,0 +1,68 @@
+[
+  {
+    "shopId": "SHOP_MARKET_GENERAL",
+    "locationId": "LOC_MARKET",
+    "name": "시장 잡화점",
+    "description": "시장 중앙의 큰 잡화점. 기본적인 물자를 취급한다.",
+    "refreshInterval": 10,
+    "stockPool": [
+      "ITEM_MINOR_HEALING",
+      "ITEM_STAMINA_TONIC",
+      "ITEM_SMOKE_BOMB",
+      "EQ_RUSTY_BLADE",
+      "EQ_SCOUTS_GOGGLES"
+    ],
+    "stockSize": 4,
+    "uniqueChance": 0.1
+  },
+  {
+    "shopId": "SHOP_HARBOR_ARMORY",
+    "locationId": "LOC_HARBOR",
+    "name": "항만 무기고",
+    "description": "부두 노동자들이 자주 찾는 무기 가게. 튼튼한 장비가 많다.",
+    "refreshInterval": 12,
+    "stockPool": [
+      "EQ_DOCK_CUTLASS",
+      "EQ_DOCK_VEST",
+      "EQ_DOCK_BOOTS",
+      "EQ_PATROL_ARMOR",
+      "EQ_SILENT_BOOTS",
+      "ITEM_MINOR_HEALING"
+    ],
+    "stockSize": 4,
+    "uniqueChance": 0.15
+  },
+  {
+    "shopId": "SHOP_GUILD_TRADER",
+    "locationId": "LOC_MARKET",
+    "name": "길드 상단",
+    "description": "상인 길드가 운영하는 고급 거래소. 정치적 영향력이 있는 물건을 취급한다.",
+    "refreshInterval": 15,
+    "stockPool": [
+      "EQ_MERCHANT_LEDGER",
+      "EQ_MERCHANT_RING",
+      "EQ_HARBOR_SEAL",
+      "ITEM_SUPERIOR_HEALING",
+      "ITEM_POISON_NEEDLE"
+    ],
+    "stockSize": 3,
+    "uniqueChance": 0.2
+  },
+  {
+    "shopId": "SHOP_SLUMS_BLACK_MARKET",
+    "locationId": "LOC_SLUMS",
+    "name": "빈민가 암시장",
+    "description": "뒷골목의 은밀한 거래소. 위험하지만 희귀한 물건이 나올 수 있다.",
+    "refreshInterval": 8,
+    "stockPool": [
+      "ITEM_POISON_NEEDLE",
+      "ITEM_SMOKE_BOMB",
+      "ITEM_SUPERIOR_HEALING",
+      "EQ_RUSTY_BLADE",
+      "EQ_SHADOW_DAGGER",
+      "EQ_SMUGGLER_DAGGER"
+    ],
+    "stockSize": 4,
+    "uniqueChance": 0.25
+  }
+]

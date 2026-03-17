@@ -1,0 +1,107 @@
+{
+  "version": "narrative_marks_v1",
+  "marks": [
+    {
+      "markType": "BETRAYER",
+      "description": "동맹을 배신한 자",
+      "conditions": {
+        "npcEmotional": { "npcId": "*", "axis": "trust", "op": "lt", "value": -50 }
+      },
+      "contextTemplate": "{{npcName}}의 신뢰를 저버렸다"
+    },
+    {
+      "markType": "SAVIOR",
+      "description": "도시를 구한 영웅",
+      "conditions": {
+        "incidentOutcome": { "incidentId": "*critical*", "outcome": "CONTAINED" },
+        "minMarks": 0
+      },
+      "contextTemplate": "{{incidentTitle}} 사태를 해결했다"
+    },
+    {
+      "markType": "KINGMAKER",
+      "description": "권력의 판을 뒤집은 자",
+      "conditions": {
+        "flag": "CORRUPTION_EXPOSED"
+      },
+      "contextTemplate": "부패를 폭로하여 권력 구조를 바꾸었다"
+    },
+    {
+      "markType": "SHADOW_HAND",
+      "description": "그림자 속에서 일한 자",
+      "conditions": {
+        "resolveOutcome": { "outcome": "SUCCESS", "minCount": 5 },
+        "npcEmotional": { "npcId": "NPC_INFO_BROKER", "axis": "trust", "op": "gt", "value": 40 }
+      },
+      "contextTemplate": "쉐도우와 함께 어둠 속에서 도시를 움직였다"
+    },
+    {
+      "markType": "MARTYR",
+      "description": "자신을 희생한 자",
+      "conditions": {
+        "npcEmotional": { "npcId": "*", "axis": "attachment", "op": "gt", "value": 70 }
+      },
+      "contextTemplate": "{{npcName}}을(를) 위해 자신을 희생했다"
+    },
+    {
+      "markType": "PROFITEER",
+      "description": "혼란에서 이익을 취한 자",
+      "conditions": {
+        "resolveOutcome": { "outcome": "SUCCESS", "minCount": 3 },
+        "flag": "BRIBE_HEAVY_USER"
+      },
+      "contextTemplate": "도시의 혼란 속에서 이익을 챙겼다"
+    },
+    {
+      "markType": "PEACEMAKER",
+      "description": "평화를 이끈 중재자",
+      "conditions": {
+        "incidentOutcome": { "incidentId": "INC_LABOR_STRIKE", "outcome": "CONTAINED" },
+        "npcEmotional": { "npcId": "NPC_YOON_HAMIN", "axis": "respect", "op": "gt", "value": 30 }
+      },
+      "contextTemplate": "갈등을 중재하여 평화를 이끌어냈다"
+    },
+    {
+      "markType": "WITNESS",
+      "description": "진실을 목격한 자",
+      "conditions": {
+        "flag": "ASSASSINATION_PREVENTED"
+      },
+      "contextTemplate": "암살 음모의 진실을 목격했다"
+    },
+    {
+      "markType": "ACCOMPLICE",
+      "description": "범죄에 가담한 자",
+      "conditions": {
+        "flag": "SMUGGLING_ESCALATED"
+      },
+      "contextTemplate": "밀수 조직의 확장에 가담했다"
+    },
+    {
+      "markType": "AVENGER",
+      "description": "복수를 행한 자",
+      "conditions": {
+        "npcEmotional": { "npcId": "*", "axis": "fear", "op": "gt", "value": 60 },
+        "resolveOutcome": { "outcome": "SUCCESS", "minCount": 2 }
+      },
+      "contextTemplate": "{{npcName}}에게 복수의 칼날을 들이밀었다"
+    },
+    {
+      "markType": "COWARD",
+      "description": "위기에서 도망친 자",
+      "conditions": {
+        "incidentOutcome": { "incidentId": "*critical*", "outcome": "EXPIRED" }
+      },
+      "contextTemplate": "{{incidentTitle}} 사태를 외면했다"
+    },
+    {
+      "markType": "MERCIFUL",
+      "description": "자비를 베푼 자",
+      "conditions": {
+        "npcEmotional": { "npcId": "*", "axis": "trust", "op": "gt", "value": 50 },
+        "npcEmotional2": { "npcId": "*", "axis": "attachment", "op": "gt", "value": 40 }
+      },
+      "contextTemplate": "적이었던 {{npcName}}에게 자비를 베풀었다"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+    "input": {
+        "type": "CHOICE",
+        "choiceId": "PRESS_MORE"
+    },
+    "idempotencyKey": "f0b2a2e3-7f6d-4b7a-8df1-1c2d3e4f5a6b",
+    "expectedNextTurnNo": 57,
+    "client": {
+        "uiMode": "NOVEL",
+        "locale": "ko-KR",
+        "timezone": "Asia/Seoul"
+    },
+    "options": {
+        "wantNarrative": true
+    }
+}

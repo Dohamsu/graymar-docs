@@ -1,0 +1,65 @@
+[
+  {
+    "affixId": "AFFIX_HARBOR_PREFIX_SALT",
+    "kind": "PREFIX",
+    "locationId": "LOC_HARBOR",
+    "name": "소금기 밴",
+    "weight": 20,
+    "modifiers": [{ "stat": "atk", "value": 3 }],
+    "allowedProfiles": ["PROFILE_LIGHT_WEAPON"]
+  },
+  {
+    "affixId": "AFFIX_HARBOR_PREFIX_RUST",
+    "kind": "PREFIX",
+    "locationId": "LOC_HARBOR",
+    "name": "녹슨",
+    "weight": 15,
+    "modifiers": [{ "stat": "def", "value": 2 }],
+    "allowedProfiles": ["PROFILE_HEAVY_ARMOR", "PROFILE_LIGHT_ARMOR"]
+  },
+  {
+    "affixId": "AFFIX_GUARD_PREFIX_HONED",
+    "kind": "PREFIX",
+    "locationId": "LOC_GUARD",
+    "name": "벼린",
+    "weight": 15,
+    "modifiers": [{ "stat": "acc", "value": 3 }],
+    "allowedProfiles": ["PROFILE_LIGHT_WEAPON", "PROFILE_HEAVY_WEAPON"]
+  },
+  {
+    "affixId": "AFFIX_HARBOR_SUFFIX_TIDE",
+    "kind": "SUFFIX",
+    "locationId": "LOC_HARBOR",
+    "name": "조류의",
+    "weight": 10,
+    "modifiers": [{ "stat": "speed", "value": 2 }],
+    "allowedProfiles": ["PROFILE_LIGHT_WEAPON", "PROFILE_LIGHT_ARMOR"]
+  },
+  {
+    "affixId": "AFFIX_GUARD_SUFFIX_DISCIPLINE",
+    "kind": "SUFFIX",
+    "locationId": "LOC_GUARD",
+    "name": "규율의",
+    "weight": 15,
+    "modifiers": [{ "stat": "def", "value": 4 }],
+    "allowedProfiles": ["PROFILE_HEAVY_ARMOR"]
+  },
+  {
+    "affixId": "AFFIX_MARKET_PREFIX_GILDED",
+    "kind": "PREFIX",
+    "locationId": "LOC_MARKET",
+    "name": "금장식",
+    "weight": 12,
+    "modifiers": [{ "stat": "acc", "value": 2 }, { "stat": "resist", "value": 1 }],
+    "allowedProfiles": ["PROFILE_POLITICAL"]
+  },
+  {
+    "affixId": "AFFIX_SLUMS_SUFFIX_GUTTER",
+    "kind": "SUFFIX",
+    "locationId": "LOC_SLUMS",
+    "name": "뒷골목의",
+    "weight": 18,
+    "modifiers": [{ "stat": "eva", "value": 3 }],
+    "allowedProfiles": ["PROFILE_LIGHT_WEAPON", "PROFILE_LIGHT_ARMOR"]
+  }
+]

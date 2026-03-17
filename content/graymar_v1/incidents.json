@@ -1,0 +1,460 @@
+{
+  "version": "incidents_v1",
+  "incidents": [
+    {
+      "incidentId": "INC_SMUGGLING_RING",
+      "kind": "CRIMINAL",
+      "title": "항만 밀수 조직",
+      "description": "항만 부두에서 대규모 밀수 조직이 활동 중이다. 경비대는 이를 눈치채지 못하고 있다.",
+      "locationId": "LOC_HARBOR",
+      "priority": 3,
+      "weight": 10,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 10
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "수상한 화물이 부두에 쌓이고 있다",
+          "affordances": ["INVESTIGATE", "OBSERVE", "SNEAK"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "부두 한켠에 표식 없는 화물 상자들이 쌓여 있다. 인부들이 서둘러 옮기고 있다.",
+          "choices": [
+            { "id": "inc_smug_observe", "label": "화물을 관찰한다", "hint": "무엇을 옮기는지 확인", "affordance": "OBSERVE" },
+            { "id": "inc_smug_sneak", "label": "몰래 상자를 열어본다", "hint": "위험하지만 직접 확인", "affordance": "SNEAK" },
+            { "id": "inc_smug_ask", "label": "인부에게 물어본다", "hint": "정보를 얻을 수 있다", "affordance": "INVESTIGATE" }
+          ]
+        },
+        {
+          "stage": 1,
+          "description": "밀수품이 시장으로 유통되기 시작했다",
+          "affordances": ["INVESTIGATE", "PERSUADE", "THREATEN", "FIGHT"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 5,
+          "controlReward": 20,
+          "controlPenalty": 8,
+          "sceneFrame": "시장에서 출처 불명의 물건들이 거래되고 있다. 상인들이 수군거린다.",
+          "choices": [
+            { "id": "inc_smug_trace", "label": "유통 경로를 추적한다", "hint": "시간이 걸리지만 확실", "affordance": "INVESTIGATE" },
+            { "id": "inc_smug_confront", "label": "상인을 추궁한다", "hint": "직접적이지만 적을 만들 수 있다", "affordance": "THREATEN" }
+          ]
+        },
+        {
+          "stage": 2,
+          "description": "밀수 조직의 수장이 드러났다",
+          "affordances": ["FIGHT", "PERSUADE", "BRIBE", "THREATEN"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 7,
+          "controlReward": 25,
+          "controlPenalty": 10,
+          "sceneFrame": "밀수 조직의 거점을 찾아냈다. 무장한 인부들이 경계하고 있다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "SECURITY", "severity": 2, "textTemplate": "부두에서 수상한 화물 이동이 목격되었다", "triggerStage": 0 },
+        { "channel": "RUMOR", "severity": 3, "textTemplate": "시장에 출처 불명의 물건들이 돌고 있다는 소문", "triggerStage": 1 },
+        { "channel": "SECURITY", "severity": 4, "textTemplate": "경비대가 항만 밀수 조직을 수사 중이다", "triggerStage": 2, "triggerPressure": 70 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -10, "tensionDelta": -2, "reputationChanges": { "CITY_GUARD": 5, "MERCHANT_CONSORTIUM": 3 }, "flagsSet": ["SMUGGLING_STOPPED"] },
+        "ESCALATED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "CITY_GUARD": -5 }, "flagsSet": ["SMUGGLING_ESCALATED"] },
+        "EXPIRED": { "heatDelta": 5, "tensionDelta": 1, "reputationChanges": {}, "flagsSet": ["SMUGGLING_IGNORED"] }
+      },
+      "relatedNpcIds": ["NPC_SEO_DOYUN", "NPC_YOON_HAMIN"],
+      "tags": ["HARBOR", "CRIMINAL", "TRADE"],
+      "isCritical": true
+    },
+    {
+      "incidentId": "INC_GUARD_CORRUPTION",
+      "kind": "POLITICAL",
+      "title": "경비대 부패 스캔들",
+      "description": "경비대 내부에서 뇌물을 받고 범죄를 묵인하는 장교들이 있다는 소문이 퍼지고 있다.",
+      "locationId": "LOC_GUARD",
+      "priority": 4,
+      "weight": 8,
+      "spawnConditions": {
+        "minDay": 2,
+        "minHeat": 20
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "경비대원들 사이에서 불만이 커지고 있다",
+          "affordances": ["INVESTIGATE", "PERSUADE", "OBSERVE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 2,
+          "controlReward": 12,
+          "controlPenalty": 4,
+          "sceneFrame": "경비대 지구에서 병사들이 낮은 목소리로 속삭이고 있다. 불만이 가득한 표정이다.",
+          "choices": [
+            { "id": "inc_corr_listen", "label": "대화를 엿듣는다", "hint": "정보 수집", "affordance": "OBSERVE" },
+            { "id": "inc_corr_talk", "label": "불만있는 병사에게 말을 건다", "hint": "동맹을 얻을 수 있다", "affordance": "PERSUADE" }
+          ]
+        },
+        {
+          "stage": 1,
+          "description": "부패의 증거가 수면 위로 올라오고 있다",
+          "affordances": ["INVESTIGATE", "STEAL", "PERSUADE", "BRIBE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 4,
+          "controlReward": 18,
+          "controlPenalty": 7,
+          "sceneFrame": "경비대 사무실에서 수상한 장부가 발견되었다는 소문이 돌고 있다."
+        },
+        {
+          "stage": 2,
+          "description": "부패 장교가 증거 인멸을 시도하고 있다",
+          "affordances": ["FIGHT", "THREATEN", "STEAL", "INVESTIGATE"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 6,
+          "controlReward": 22,
+          "controlPenalty": 10,
+          "sceneFrame": "부패한 장교가 기록을 불태우려 하고 있다. 시간이 얼마 남지 않았다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "RUMOR", "severity": 2, "textTemplate": "경비대 내부에 뇌물 수수 소문이 돌고 있다", "triggerStage": 0 },
+        { "channel": "SECURITY", "severity": 3, "textTemplate": "경비대 장교가 비밀리에 면담을 하고 있다", "triggerStage": 1 },
+        { "channel": "NPC_BEHAVIOR", "severity": 4, "textTemplate": "벨론 대위가 긴급 소집을 명령했다", "triggerStage": 2, "triggerPressure": 60 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 60
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -8, "tensionDelta": -3, "reputationChanges": { "CITY_GUARD": 8 }, "flagsSet": ["CORRUPTION_EXPOSED"] },
+        "ESCALATED": { "heatDelta": 20, "tensionDelta": 4, "reputationChanges": { "CITY_GUARD": -10 }, "flagsSet": ["CORRUPTION_COVERUP"] },
+        "EXPIRED": { "heatDelta": 8, "tensionDelta": 2, "reputationChanges": { "CITY_GUARD": -3 }, "flagsSet": ["CORRUPTION_FESTERED"] }
+      },
+      "relatedNpcIds": ["NPC_KANG_CHAERIN", "NPC_GUARD_CAPTAIN"],
+      "tags": ["GUARD", "POLITICAL", "CORRUPTION"],
+      "isCritical": true
+    },
+    {
+      "incidentId": "INC_LABOR_STRIKE",
+      "kind": "SOCIAL",
+      "title": "항만 노동자 파업",
+      "description": "임금 체불과 열악한 노동 조건에 분노한 항만 노동자들이 파업을 준비하고 있다.",
+      "locationId": "LOC_HARBOR",
+      "priority": 3,
+      "weight": 9,
+      "spawnConditions": {
+        "minDay": 3,
+        "minHeat": 15
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "노동자들 사이에서 불만이 퍼지고 있다",
+          "affordances": ["OBSERVE", "TALK", "PERSUADE", "HELP"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 12,
+          "controlPenalty": 5,
+          "sceneFrame": "부두 노동자들이 삼삼오오 모여 낮은 목소리로 이야기하고 있다."
+        },
+        {
+          "stage": 1,
+          "description": "파업 지도부가 조직되었다",
+          "affordances": ["PERSUADE", "HELP", "BRIBE", "THREATEN"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 5,
+          "controlReward": 16,
+          "controlPenalty": 7,
+          "sceneFrame": "노동자들이 공개적으로 모이기 시작했다. 경비대가 주시하고 있다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "RUMOR", "severity": 2, "textTemplate": "항만 노동자들이 불만을 토로하고 있다", "triggerStage": 0 },
+        { "channel": "ECONOMY", "severity": 3, "textTemplate": "부두 화물 처리가 지연되고 있다", "triggerStage": 1 },
+        { "channel": "VISUAL", "severity": 4, "textTemplate": "노동자들이 부두 입구에서 구호를 외치고 있다", "triggerStage": 1, "triggerPressure": 60 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 36
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -5, "tensionDelta": -2, "reputationChanges": { "LABOR_GUILD": 8 }, "flagsSet": ["STRIKE_RESOLVED"] },
+        "ESCALATED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "LABOR_GUILD": -5, "MERCHANT_CONSORTIUM": -3 }, "flagsSet": ["STRIKE_RIOT"] },
+        "EXPIRED": { "heatDelta": 10, "tensionDelta": 1, "reputationChanges": { "LABOR_GUILD": -2 }, "flagsSet": ["STRIKE_FIZZLED"] }
+      },
+      "relatedNpcIds": ["NPC_YOON_HAMIN"],
+      "tags": ["HARBOR", "SOCIAL", "LABOR"],
+      "isCritical": false
+    },
+    {
+      "incidentId": "INC_MERCHANT_WAR",
+      "kind": "ECONOMIC",
+      "title": "상인 길드 내전",
+      "description": "상인 길드 내부에서 무역 독점권을 두고 파벌 싸움이 벌어지고 있다.",
+      "locationId": "LOC_MARKET",
+      "priority": 2,
+      "weight": 8,
+      "spawnConditions": {
+        "minDay": 2,
+        "minHeat": 5
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "상인들 사이에서 가격 전쟁이 시작되었다",
+          "affordances": ["OBSERVE", "TRADE", "INVESTIGATE", "PERSUADE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 2,
+          "controlReward": 10,
+          "controlPenalty": 4,
+          "sceneFrame": "시장에서 같은 물건의 가격이 가게마다 크게 다르다. 상인들이 서로를 경계하고 있다."
+        },
+        {
+          "stage": 1,
+          "description": "파벌 간 물리적 충돌이 일어나고 있다",
+          "affordances": ["FIGHT", "PERSUADE", "BRIBE", "HELP"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 4,
+          "controlReward": 15,
+          "controlPenalty": 6,
+          "sceneFrame": "시장 한편에서 고함 소리가 들린다. 상인들의 하인들이 주먹을 쥐고 있다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "ECONOMY", "severity": 2, "textTemplate": "시장 물가가 불안정하다", "triggerStage": 0 },
+        { "channel": "RUMOR", "severity": 3, "textTemplate": "상인 길드가 둘로 쪼개질 수 있다는 소문", "triggerStage": 1 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -5, "tensionDelta": -1, "reputationChanges": { "MERCHANT_CONSORTIUM": 5 }, "flagsSet": ["MERCHANT_PEACE"] },
+        "ESCALATED": { "heatDelta": 12, "tensionDelta": 2, "reputationChanges": { "MERCHANT_CONSORTIUM": -8 }, "flagsSet": ["MERCHANT_SPLIT"] },
+        "EXPIRED": { "heatDelta": 5, "tensionDelta": 1, "reputationChanges": { "MERCHANT_CONSORTIUM": -2 }, "flagsSet": ["MERCHANT_STALEMATE"] }
+      },
+      "relatedNpcIds": ["NPC_SEO_DOYUN", "NPC_MOON_SEA"],
+      "tags": ["MARKET", "ECONOMIC", "FACTION"],
+      "isCritical": false
+    },
+    {
+      "incidentId": "INC_SLUM_PLAGUE",
+      "kind": "SOCIAL",
+      "title": "빈민가 역병",
+      "description": "빈민가에서 원인 불명의 전염병이 퍼지고 있다. 약초상들이 분주하다.",
+      "locationId": "LOC_SLUMS",
+      "priority": 3,
+      "weight": 7,
+      "spawnConditions": {
+        "minDay": 4,
+        "minHeat": 25
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "빈민가에서 아픈 사람들이 늘어나고 있다",
+          "affordances": ["INVESTIGATE", "HELP", "OBSERVE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 4,
+          "controlReward": 14,
+          "controlPenalty": 5,
+          "sceneFrame": "빈민가 골목에서 기침 소리가 끊이지 않는다. 약냄새가 진동한다."
+        },
+        {
+          "stage": 1,
+          "description": "전염병의 원인이 의심되는 우물이 발견되었다",
+          "affordances": ["INVESTIGATE", "HELP", "PERSUADE", "TRADE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 6,
+          "controlReward": 20,
+          "controlPenalty": 8,
+          "sceneFrame": "오염된 우물 주변에 병자들이 누워 있다. 누군가 약을 가져와야 한다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "VISUAL", "severity": 2, "textTemplate": "빈민가에서 기침하는 사람들이 늘었다", "triggerStage": 0 },
+        { "channel": "RUMOR", "severity": 3, "textTemplate": "빈민가 우물이 오염되었다는 소문", "triggerStage": 1 },
+        { "channel": "SECURITY", "severity": 5, "textTemplate": "경비대가 빈민가 출입을 통제하려 한다", "triggerStage": 1, "triggerPressure": 80 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 36
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -8, "tensionDelta": -2, "reputationChanges": { "LABOR_GUILD": 5 }, "flagsSet": ["PLAGUE_CURED"] },
+        "ESCALATED": { "heatDelta": 20, "tensionDelta": 5, "reputationChanges": { "CITY_GUARD": -3 }, "flagsSet": ["PLAGUE_SPREAD"] },
+        "EXPIRED": { "heatDelta": 10, "tensionDelta": 2, "reputationChanges": {}, "flagsSet": ["PLAGUE_SUBSIDED"] }
+      },
+      "relatedNpcIds": ["NPC_BAEK_SEUNGHO"],
+      "tags": ["SLUMS", "SOCIAL", "HEALTH"],
+      "isCritical": true
+    },
+    {
+      "incidentId": "INC_ASSASSINATION_PLOT",
+      "kind": "POLITICAL",
+      "title": "암살 음모",
+      "description": "누군가가 도시의 핵심 인물을 암살하려는 음모를 꾸미고 있다.",
+      "locationId": "LOC_SLUMS",
+      "priority": 5,
+      "weight": 6,
+      "spawnConditions": {
+        "minDay": 5,
+        "minHeat": 40,
+        "requiredFlags": ["SMUGGLING_STOPPED"]
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "빈민가에서 수상한 인물들이 모임을 가지고 있다",
+          "affordances": ["SNEAK", "INVESTIGATE", "OBSERVE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 5,
+          "controlReward": 18,
+          "controlPenalty": 6,
+          "sceneFrame": "빈민가 뒷골목에서 복면을 쓴 인물들이 밀담을 나누고 있다."
+        },
+        {
+          "stage": 1,
+          "description": "암살 대상과 시기가 특정되었다",
+          "affordances": ["FIGHT", "THREATEN", "PERSUADE", "HELP"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 8,
+          "controlReward": 25,
+          "controlPenalty": 12,
+          "sceneFrame": "암살이 임박했다. 대상을 보호하든 방관하든, 결정해야 한다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "NPC_BEHAVIOR", "severity": 3, "textTemplate": "쉐도우가 긴급 정보를 갖고 있다고 한다", "triggerStage": 0 },
+        { "channel": "SECURITY", "severity": 5, "textTemplate": "도시 핵심 인물에 대한 암살 위협이 감지되었다", "triggerStage": 1 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 24
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -15, "tensionDelta": -4, "reputationChanges": { "CITY_GUARD": 10, "MERCHANT_CONSORTIUM": 5 }, "flagsSet": ["ASSASSINATION_PREVENTED"], "npcEmotionalChanges": { "NPC_KANG_CHAERIN": { "trust": 20, "respect": 15 } } },
+        "ESCALATED": { "heatDelta": 25, "tensionDelta": 6, "reputationChanges": { "CITY_GUARD": -15 }, "flagsSet": ["ASSASSINATION_SUCCESS"] },
+        "EXPIRED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "CITY_GUARD": -5 }, "flagsSet": ["ASSASSINATION_UNKNOWN"] }
+      },
+      "relatedNpcIds": ["NPC_INFO_BROKER", "NPC_KANG_CHAERIN"],
+      "tags": ["SLUMS", "POLITICAL", "VIOLENCE"],
+      "isCritical": true
+    },
+    {
+      "incidentId": "INC_MARKET_THEFT",
+      "kind": "CRIMINAL",
+      "title": "시장 연쇄 절도",
+      "description": "시장에서 연이어 절도 사건이 발생하고 있다. 상인들이 불안해하고 있다.",
+      "locationId": "LOC_MARKET",
+      "priority": 1,
+      "weight": 12,
+      "spawnConditions": {
+        "minDay": 1
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "시장에서 소매치기가 기승을 부리고 있다",
+          "affordances": ["OBSERVE", "INVESTIGATE", "SNEAK", "FIGHT"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 2,
+          "controlReward": 10,
+          "controlPenalty": 3,
+          "sceneFrame": "상인이 도둑을 쫓으며 소리를 지르고 있다. 시장 통이 어수선하다."
+        },
+        {
+          "stage": 1,
+          "description": "절도단의 아지트가 특정되었다",
+          "affordances": ["FIGHT", "SNEAK", "THREATEN"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "좁은 골목 끝에 절도단의 은신처가 있다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "RUMOR", "severity": 1, "textTemplate": "시장에서 소매치기가 늘었다", "triggerStage": 0 },
+        { "channel": "SECURITY", "severity": 2, "textTemplate": "경비대가 시장 순찰을 강화했다", "triggerStage": 1 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 36
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -3, "tensionDelta": -1, "reputationChanges": { "MERCHANT_CONSORTIUM": 3 }, "flagsSet": ["THEFT_STOPPED"] },
+        "ESCALATED": { "heatDelta": 8, "tensionDelta": 1, "reputationChanges": { "MERCHANT_CONSORTIUM": -3 }, "flagsSet": ["THEFT_RAMPANT"] },
+        "EXPIRED": { "heatDelta": 3, "tensionDelta": 0, "reputationChanges": {}, "flagsSet": ["THEFT_ONGOING"] }
+      },
+      "relatedNpcIds": [],
+      "tags": ["MARKET", "CRIMINAL", "MINOR"],
+      "isCritical": false
+    },
+    {
+      "incidentId": "INC_GUARD_SLUM_RAID",
+      "kind": "MILITARY",
+      "title": "빈민가 강제 진압",
+      "description": "경비대가 빈민가에 대한 강제 진압 작전을 계획하고 있다.",
+      "locationId": "LOC_GUARD",
+      "priority": 4,
+      "weight": 7,
+      "spawnConditions": {
+        "minDay": 4,
+        "minHeat": 35,
+        "requiredReputation": { "CITY_GUARD": { "op": "lt", "value": -5 } }
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "경비대가 빈민가 진압 작전을 준비하고 있다",
+          "affordances": ["INVESTIGATE", "PERSUADE", "SNEAK", "OBSERVE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 4,
+          "controlReward": 15,
+          "controlPenalty": 6,
+          "sceneFrame": "경비대 지구에서 무장한 병사들이 집결하고 있다. 빈민가를 향한 지도가 펼쳐져 있다."
+        },
+        {
+          "stage": 1,
+          "description": "진압 작전이 임박했다",
+          "affordances": ["PERSUADE", "HELP", "FIGHT", "THREATEN"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 7,
+          "controlReward": 22,
+          "controlPenalty": 10,
+          "sceneFrame": "내일이면 진압이 시작된다. 빈민가 주민들은 아직 모르고 있다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "SECURITY", "severity": 3, "textTemplate": "경비대가 대규모 작전을 준비하고 있다", "triggerStage": 0 },
+        { "channel": "NPC_BEHAVIOR", "severity": 4, "textTemplate": "하를런 보스가 긴급히 노동자들을 소집했다", "triggerStage": 1 },
+        { "channel": "VISUAL", "severity": 5, "textTemplate": "무장 병사들이 빈민가로 향하고 있다", "triggerStage": 1, "triggerPressure": 85 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 30
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -10, "tensionDelta": -3, "reputationChanges": { "LABOR_GUILD": 10, "CITY_GUARD": -3 }, "flagsSet": ["RAID_AVERTED"], "npcEmotionalChanges": { "NPC_YOON_HAMIN": { "trust": 15, "attachment": 10 } } },
+        "ESCALATED": { "heatDelta": 25, "tensionDelta": 5, "reputationChanges": { "LABOR_GUILD": -15, "CITY_GUARD": 3 }, "flagsSet": ["RAID_EXECUTED"] },
+        "EXPIRED": { "heatDelta": 12, "tensionDelta": 2, "reputationChanges": { "LABOR_GUILD": -5 }, "flagsSet": ["RAID_DELAYED"] }
+      },
+      "relatedNpcIds": ["NPC_GUARD_CAPTAIN", "NPC_YOON_HAMIN"],
+      "tags": ["GUARD", "MILITARY", "SLUMS"],
+      "isCritical": true
+    }
+  ]
+}

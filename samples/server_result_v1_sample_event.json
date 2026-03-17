@@ -1,0 +1,124 @@
+{
+    "version": "server_result_v1",
+    "turnNo": 57,
+    "node": {
+        "id": "node_2",
+        "type": "EVENT",
+        "index": 2,
+        "state": "NODE_ACTIVE"
+    },
+    "summary": {
+        "short": "상단 직원이 비밀 거래의 단서를 흘렸다."
+    },
+    "events": [
+        {
+            "id": "e1",
+            "kind": "NPC",
+            "text": "상단 직원이 당신을 경계하면서도 짧게 정보를 흘렸다.",
+            "tags": [
+                "NPC",
+                "INFO"
+            ],
+            "data": {
+                "npcId": "npc_merchant_clerk",
+                "relationDelta": 1
+            }
+        },
+        {
+            "id": "e2",
+            "kind": "QUEST",
+            "text": "비밀 거래 장소에 대한 단서가 갱신되었다.",
+            "tags": [
+                "CLUE",
+                "QUEST"
+            ],
+            "data": {
+                "questId": "quest_black_market",
+                "op": "UPDATED"
+            }
+        }
+    ],
+    "diff": {
+        "player": {
+            "hp": {
+                "from": 120,
+                "to": 120,
+                "delta": 0
+            },
+            "stamina": {
+                "from": 4,
+                "to": 4,
+                "delta": 0
+            },
+            "status": []
+        },
+        "enemies": [],
+        "inventory": {
+            "itemsAdded": [],
+            "itemsRemoved": [],
+            "goldDelta": 0
+        },
+        "meta": {
+            "battle": {
+                "phase": "NONE",
+                "rngConsumed": 1
+            },
+            "position": {
+                "distance": "OUT",
+                "angle": "FRONT",
+                "env": []
+            }
+        }
+    },
+    "ui": {
+        "availableActions": [
+            "TALK",
+            "OBSERVE",
+            "MOVE",
+            "NOTE"
+        ],
+        "targetLabels": [
+            {
+                "id": "npc_merchant_clerk",
+                "name": "상단 직원",
+                "hint": "말을 아끼는 눈치"
+            }
+        ],
+        "actionSlots": {
+            "base": 2,
+            "bonusAvailable": false,
+            "max": 3
+        },
+        "toneHint": "mysterious"
+    },
+    "choices": [
+        {
+            "id": "c1",
+            "label": "더 캐묻는다",
+            "hint": "위험하지만 정보를 더 얻을 수 있음",
+            "action": {
+                "type": "CHOICE",
+                "payload": {
+                    "choiceId": "PRESS_MORE"
+                }
+            }
+        },
+        {
+            "id": "c2",
+            "label": "조용히 넘긴다",
+            "hint": "관계를 유지한다",
+            "action": {
+                "type": "CHOICE",
+                "payload": {
+                    "choiceId": "LET_GO"
+                }
+            }
+        }
+    ],
+    "flags": {
+        "bonusSlot": false,
+        "downed": false,
+        "battleEnded": false,
+        "nodeTransition": false
+    }
+}

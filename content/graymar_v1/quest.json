@@ -1,0 +1,26 @@
+{
+  "questId": "MAIN_Q1_LEDGER",
+  "title": "사라진 공물 장부",
+  "scale": "왕국 정치 연계",
+  "states": [
+    "S0_ARRIVE",
+    "S1_GET_ANGLE",
+    "S2_PROVE_TAMPER",
+    "S3_TRACE_ROUTE",
+    "S4_CONFRONT",
+    "S5_RESOLVE"
+  ],
+  "facts": [
+    "FACT_LEDGER_EXISTS",
+    "FACT_WAGE_FRAUD_PATTERN",
+    "FACT_TAMPERED_LOGS",
+    "FACT_ROUTE_TO_EAST_DOCK",
+    "FACT_INSIDE_JOB",
+    "FACT_SMUGGLE_ROUTE_GUILD",
+    "FACT_MAIREL_GUILD_EVIDENCE",
+    "FACT_OFFICIAL_INQUIRY",
+    "FACT_MAIREL_GUARD_EVIDENCE",
+    "FACT_SHADOW_INTEL",
+    "FACT_BOTH_SIDES_EVIDENCE"
+  ]
+}

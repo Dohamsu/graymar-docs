@@ -1,0 +1,127 @@
+{
+    "run": {
+        "id": "run_123",
+        "status": "RUN_ACTIVE",
+        "runType": "BORDER",
+        "actLevel": 3,
+        "chapterIndex": 1,
+        "currentNodeIndex": 4,
+        "currentTurnNo": 24,
+        "startedAt": "2026-02-12T06:05:00Z",
+        "updatedAt": "2026-02-12T06:20:11Z"
+    },
+    "currentNode": {
+        "id": "node_4",
+        "index": 4,
+        "type": "COMBAT",
+        "state": "NODE_ACTIVE",
+        "environmentTags": [
+            "OPEN"
+        ],
+        "nodeMeta": {
+            "isBoss": false
+        }
+    },
+    "lastResult": {
+        "version": "server_result_v1",
+        "turnNo": 24,
+        "node": {
+            "id": "node_4",
+            "type": "COMBAT",
+            "index": 4,
+            "state": "NODE_ACTIVE"
+        },
+        "summary": {
+            "short": "오른쪽으로 굴러 회피한 뒤, 화살이 적중했다."
+        },
+        "events": [],
+        "diff": {},
+        "ui": {
+            "availableActions": [
+                "ATTACK",
+                "DEFEND"
+            ],
+            "targetLabels": [],
+            "actionSlots": {
+                "base": 2,
+                "bonusAvailable": true,
+                "max": 3
+            },
+            "toneHint": "tense"
+        },
+        "choices": [],
+        "flags": {
+            "bonusSlot": true,
+            "downed": false,
+            "battleEnded": false,
+            "nodeTransition": false
+        }
+    },
+    "memory": {
+        "theme": [
+            {
+                "id": "main_arc_red_door",
+                "text": "폐광의 붉은 문을 열 열쇠를 찾아야 한다.",
+                "priority": 100,
+                "tags": [
+                    "MAIN_ARC",
+                    "QUEST"
+                ],
+                "expiresAt": null
+            }
+        ],
+        "storySummary": "촌장은 붉은 문에 대한 경고와 단서를 남겼다.",
+        "nodeFacts": [
+            {
+                "key": "clue.red_door",
+                "value": "열쇠는 늑대 두목과 연관",
+                "importance": 0.9,
+                "tags": [
+                    "CLUE",
+                    "QUEST"
+                ]
+            }
+        ],
+        "recent": {
+            "shortSummaries": [
+                "촌장에게서 붉은 문 이야기를 들었다.",
+                "사냥터로 이동했다."
+            ]
+        }
+    },
+    "battleState": {
+        "phase": "TURN",
+        "playerState": {
+            "hp": 82,
+            "stamina": 1,
+            "status": []
+        },
+        "enemiesState": [
+            {
+                "id": "enemy_01",
+                "hp": 37,
+                "status": [],
+                "personality": "TACTICAL",
+                "distance": "MID",
+                "angle": "SIDE"
+            }
+        ],
+        "lastResolvedTurnNo": 24
+    },
+    "turns": [
+        {
+            "turnNo": 24,
+            "inputType": "ACTION",
+            "rawInput": "오른쪽으로 굴러서 피하고 화살을 쏜다",
+            "parsedBy": "RULE",
+            "policyResult": "ALLOW",
+            "llmStatus": "PENDING",
+            "shortSummary": "회피 후 화살이 적중했다.",
+            "createdAt": "2026-02-12T06:20:11Z"
+        }
+    ],
+    "page": {
+        "hasMore": true,
+        "nextBefore": 24
+    }
+}

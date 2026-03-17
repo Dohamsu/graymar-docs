@@ -1,0 +1,106 @@
+[
+  {
+    "presetId": "DOCKWORKER",
+    "name": "부두 노동자",
+    "subtitle": "항만의 주먹",
+    "description": "그레이마르 항만에서 10년간 화물을 나른 노동자. 길드 간부의 횡령을 목격한 뒤 '사고'로 위장된 습격을 당해 쫓겨났다.",
+    "playstyleHint": "높은 체력과 방어력. 맞으면서 싸우는 근접 탱커.",
+    "protagonistTheme": "전직 항만 노동자 — 그레이마르 항만 노동 길드에서 10년간 일했다. 간부의 횡령을 목격한 뒤 '사고'로 위장된 습격을 당해 길드에서 쫓겨났다. 거친 부두에서 단련된 육체와 주먹만이 남은 재산이다.",
+    "prologueHook": "부두에서 당신이 일하는 것을 봤소. 길드 안 사람은 아무도 믿을 수가 없어서… 외부 사람이 필요했소.",
+    "stats": {
+      "MaxHP": 120,
+      "MaxStamina": 5,
+      "ATK": 16,
+      "DEF": 14,
+      "ACC": 3,
+      "EVA": 2,
+      "CRIT": 4,
+      "CRIT_DMG": 1.4,
+      "RESIST": 7,
+      "SPEED": 4
+    },
+    "startingGold": 30,
+    "startingItems": [
+      { "itemId": "ITEM_MINOR_HEALING", "qty": 2 }
+    ]
+  },
+  {
+    "presetId": "DESERTER",
+    "name": "탈영병",
+    "subtitle": "추적받는 검",
+    "description": "왕국 남부 수비대 출신. 상관의 민간인 약탈 명령에 항명하여 탈영했다. 현재 수배 중.",
+    "playstyleHint": "균형 잡힌 공격과 방어. 정석적인 근접 전투.",
+    "protagonistTheme": "전직 왕국 수비대 병사 — 남부 수비대에서 복무했으나 상관의 민간인 약탈 명령에 항명하여 탈영했다. 군에서 익힌 검술과 전투 경험이 있으나 수배 중이라 신분을 숨기고 있다.",
+    "prologueHook": "당신이 군적에서 이름을 지웠다는 소문을 들었소. 신분을 숨기고 있는 자라면… 오히려 입단속이 될 것이오.",
+    "stats": {
+      "MaxHP": 100,
+      "MaxStamina": 5,
+      "ATK": 17,
+      "DEF": 11,
+      "ACC": 7,
+      "EVA": 3,
+      "CRIT": 5,
+      "CRIT_DMG": 1.5,
+      "RESIST": 5,
+      "SPEED": 5
+    },
+    "startingGold": 45,
+    "startingItems": [
+      { "itemId": "ITEM_MINOR_HEALING", "qty": 1 },
+      { "itemId": "ITEM_STAMINA_TONIC", "qty": 1 }
+    ]
+  },
+  {
+    "presetId": "SMUGGLER",
+    "name": "밀수업자",
+    "subtitle": "어둠의 운반책",
+    "description": "밀수 조직 '검은 조류'의 하급 운반책이었다. 조직 와해 후 증거 인멸을 위해 제거 대상이 되었다.",
+    "playstyleHint": "높은 회피와 치명타. 빠르게 움직이며 급소를 노린다.",
+    "protagonistTheme": "전직 밀수 운반책 — 밀수 조직 '검은 조류'에서 하급 운반책으로 일했다. 조직이 와해된 후 증거 인멸을 위해 제거 대상이 되어 도주 중이다. 어둠 속에서 움직이는 데 익숙하고 급소를 노리는 싸움에 능하다.",
+    "prologueHook": "당신이 세관을 교묘히 빠져나간다는 걸 알고 있소. 사람을 찾아야 하는데… 그런 재주가 필요하오.",
+    "stats": {
+      "MaxHP": 80,
+      "MaxStamina": 6,
+      "ATK": 14,
+      "DEF": 7,
+      "ACC": 5,
+      "EVA": 7,
+      "CRIT": 8,
+      "CRIT_DMG": 1.7,
+      "RESIST": 3,
+      "SPEED": 7
+    },
+    "startingGold": 60,
+    "startingItems": [
+      { "itemId": "ITEM_SMOKE_BOMB", "qty": 1 },
+      { "itemId": "ITEM_POISON_NEEDLE", "qty": 1 }
+    ]
+  },
+  {
+    "presetId": "HERBALIST",
+    "name": "약초상",
+    "subtitle": "뒷골목 약사",
+    "description": "항만 뒷골목에서 합법 약재와 밀수 독초를 함께 취급하는 약사. 세 세력 모두와 거래해왔다.",
+    "playstyleHint": "낮은 공격력이지만 높은 저항과 기력. 아이템 활용 전투.",
+    "protagonistTheme": "항만 뒷골목 약사 — 합법 약재와 밀수 독초를 함께 취급하며 세 세력 모두와 거래해왔다. 직접 싸우는 것보다 약물과 도구를 활용하는 데 능하며, 독과 해독에 관한 깊은 지식을 가지고 있다.",
+    "prologueHook": "당신의 약초 솜씨가 이 도시에서 꽤 알려졌다더군요. 세 세력 모두와 거래하는 사람이라면… 어디든 자연스럽게 드나들 수 있을 것이오.",
+    "stats": {
+      "MaxHP": 90,
+      "MaxStamina": 7,
+      "ATK": 11,
+      "DEF": 9,
+      "ACC": 6,
+      "EVA": 4,
+      "CRIT": 4,
+      "CRIT_DMG": 1.4,
+      "RESIST": 9,
+      "SPEED": 4
+    },
+    "startingGold": 40,
+    "startingItems": [
+      { "itemId": "ITEM_MINOR_HEALING", "qty": 2 },
+      { "itemId": "ITEM_POISON_NEEDLE", "qty": 2 },
+      { "itemId": "ITEM_STAMINA_TONIC", "qty": 1 }
+    ]
+  }
+]

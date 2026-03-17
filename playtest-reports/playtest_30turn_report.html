@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Playtest Report — 30턴 실제 LLM 테스트</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'IBM Plex Sans KR', 'Noto Sans KR', sans-serif; background: #0F0F0F; color: #FAF8F5; line-height: 1.6; }
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+h1 { color: #C9A962; text-align: center; font-size: 1.8em; letter-spacing: 4px; margin: 30px 0; }
+h2 { color: #C9A962; font-size: 1.2em; letter-spacing: 2px; margin: 30px 0 15px; border-bottom: 1px solid #1F1F1F; padding-bottom: 8px; }
+h3 { color: #888; font-size: 0.95em; margin: 20px 0 10px; }
+
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+.summary-card { background: #141414; border: 1px solid #1F1F1F; border-radius: 8px; padding: 16px; text-align: center; }
+.summary-card .label { color: #666; font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; }
+.summary-card .value { color: #C9A962; font-size: 1.8em; font-weight: bold; margin: 4px 0; }
+.summary-card .sub { color: #888; font-size: 0.75em; }
+
+.turn-card { background: #141414; border: 1px solid #1F1F1F; border-radius: 8px; margin: 12px 0; overflow: hidden; }
+.turn-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1a1a1a; border-bottom: 1px solid #1F1F1F; }
+.turn-header .turn-no { color: #C9A962; font-weight: bold; font-size: 0.9em; }
+.turn-header .location { color: #60A5FA; font-size: 0.8em; }
+.turn-body { padding: 16px; }
+
+.input-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 12px; }
+.input-label { color: #27AE60; font-size: 0.75em; font-weight: bold; min-width: 50px; padding-top: 2px; }
+.input-text { color: #FAF8F5; font-size: 0.9em; }
+
+.narrative { color: #bbb; font-size: 0.85em; line-height: 1.7; margin: 12px 0; padding: 12px; background: #0a0a0a; border-left: 3px solid #333; border-radius: 4px; white-space: pre-wrap; }
+
+.meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.meta-tag { font-size: 0.7em; padding: 2px 8px; border-radius: 4px; background: #1F1F1F; color: #888; }
+.meta-tag.vector { background: #1a2a1a; color: #27AE60; }
+.meta-tag.goal { background: #1a1a2a; color: #60A5FA; }
+.meta-tag.notif { background: #2a2a1a; color: #C9A962; }
+
+.badge { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.75em; font-weight: bold; }
+.badge.success { background: #1a3a1a; color: #27AE60; }
+.badge.partial { background: #3a3a1a; color: #C9A962; }
+.badge.fail { background: #3a1a1a; color: #E74C3C; }
+.badge.transition { background: #1a1a3a; color: #60A5FA; }
+.badge.enter { background: #1a2a2a; color: #5DADE2; }
+.badge.hub { background: #2a1a2a; color: #AF7AC5; }
+
+.resolve-detail { font-size: 0.75em; color: #666; margin-left: 8px; }
+
+.choices-list { margin-top: 8px; }
+.choice-item { font-size: 0.8em; color: #888; padding: 4px 0; padding-left: 16px; border-left: 2px solid #1F1F1F; margin: 4px 0; }
+.choice-item.llm { border-left-color: #C9A962; }
+
+.eval-section { background: #141414; border: 1px solid #1F1F1F; border-radius: 8px; padding: 20px; margin: 12px 0; }
+.eval-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #1F1F1F; }
+.eval-item:last-child { border-bottom: none; }
+.eval-label { color: #FAF8F5; font-size: 0.9em; }
+.eval-score { display: flex; align-items: center; gap: 8px; }
+.score-bar { width: 120px; height: 8px; background: #1F1F1F; border-radius: 4px; overflow: hidden; }
+.score-fill { height: 100%; border-radius: 4px; }
+.score-text { color: #C9A962; font-size: 0.85em; font-weight: bold; min-width: 35px; text-align: right; }
+
+.stat-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.stat-table th { text-align: left; color: #666; font-size: 0.75em; text-transform: uppercase; padding: 8px; border-bottom: 1px solid #1F1F1F; }
+.stat-table td { padding: 8px; font-size: 0.85em; color: #bbb; border-bottom: 1px solid #0F0F0F; }
+
+.incident-card { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 12px; margin: 8px 0; }
+.thread-card { background: #1a1a1a; border-left: 3px solid #27AE60; border-radius: 4px; padding: 10px 12px; margin: 6px 0; font-size: 0.85em; }
+.thread-card.abandoned { border-left-color: #666; }
+.thread-card.active { border-left-color: #C9A962; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>⚔ 플레이테스트 보고서</h1>
+<p style="text-align:center;color:#888;font-size:0.85em;">30턴 실제 LLM 테스트 · gpt-4.1-mini · 2026-03-16 11:00</p>
+
+<h2>📊 테스트 요약</h2>
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="label">총 턴 수</div>
+    <div class="value">42</div>
+    <div class="sub">ACTION 23 · CHOICE 7</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">판정 결과</div>
+    <div class="value" style="font-size:1.2em;">✓13 △14 ✗3</div>
+    <div class="sub">성공률 13/30 (43%)</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">LLM 생성</div>
+    <div class="value">38</div>
+    <div class="sub">평균 9.0s · 27,965 tokens</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">모델</div>
+    <div class="value" style="font-size:1em;">gpt-4.1-mini-2025-04-14</div>
+    <div class="sub">프롬프트 344,795 tokens</div>
+  </div>
+</div>
+
+<h2>🗡 턴별 상세 기록</h2>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 1 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">시장으로 이동</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge transition">전환</span>
+      <span class="resolve-detail"></span>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 2 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ENTER]</span>
+      <span class="input-text">시장 입장</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge enter">입장</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">당신이 시장 거리에 들어서자, 햇살 아래 각양각색의 향신료와 과일이 쌓인 노점들이 빼곡히 늘어서 있다. 행상인들은 지나가는 이들을 향해 활발히 호객 행위를 벌이며, 고기 굽는 냄새가 바람을 타고 코끝에 닿았다. 아이들은 좌판 사이를 재빠르게 오가며 장난을 치고, 시장 거리 곳곳에서 활기가 넘친다.
+
+한 노점 앞에서는 투박한 노동자가 무거운 상자를 옮기며 지나가다가 당신을 스치듯 지나갔다. 그의 굵은 팔뚝에는 선명한 상처 자국이 남아 있었고, 짧은 인사말 대신 그리 대수롭지 않다는 듯 고개를 숙였다.
+
+길 한복판에서는 날카로운 눈매의 회계사가 장부를 꼼꼼히 살피며 노트에 무언가를 적고 있다. 그의 눈길이 당신을 한 번 스치고는 다시 숫자에 집중하는 모습이었다. 옆에 진열된 과일들 사이로 미묘하게 닳아 보이는 쪽지가 하나 보였다.
+
+시장을 가로질러 걷던 중, 수상한 창고 관리인이 느릿하게 당신 쪽으로 눈길을 돌렸다. 그는 주머니에서 작은 열쇠 꾸러미를 조심스레 만지작거리며 주변을 경계하는 듯 손짓했다. 그가 지나가자마자 한 무리의 행인들이 그를 흘겨보았다.
+
+시장 한구석, 후드를 깊이 쓴 정보상이 한 손에 작은 주머니를 쥐고 주변을 살피며 은밀하게 누군가와 거래를 하는 장면이 눈에 들어왔다. 그의 말은 알아들을 수 없었으나, 무언가 중요한 정보를 주고받는 듯했다.
+
+시장의 풍경 속에서 당신은 여러 인물과 사물들이 뒤섞인 이곳에서 어떤 움직임이 일어나고 있음을 직감할 수 있었다. 바삐 움직이는 사람들 사이로 당신의 눈이 더 깊은 곳을 향해 쏠렸다.</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.4s · 659tok</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 닳은 쪽지를 집어 불빛에 비춰본다 <span style="color:#666">— 쪽지에 적힌 비밀스러운 내용 확인</span></div>
+      <div class="choice-item llm">✨ 수상한 창고 관리인에게 은밀히 다가가 대화를 시도한다 <span style="color:#666">— 창고 주변 상황에 대해 캐묻기</span></div>
+      <div class="choice-item llm">✨ 후드를 깊이 쓴 정보상이 거래하는 사람을 몰래 관찰한다 <span style="color:#666">— 정보상의 움직임과 거래 상대 파악</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 3 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">시장 입구에서 주변 상인들의 표정을 살펴본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲2 + acc5÷3=1 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신은 시장 입구에 선 채로 주변 상인들의 표정을 살펴보았다. 두 상인이 좌판 경계를 두고 거칠게 언성을 높이고 있었다. 한쪽 상인은 손에 힘을 주어 좌판을 툭툭 두드리며 &quot;이 자리는 내 단골손님들이 늘 찾는 자리라네!&quot;라고 외쳤다. 반대편 상인은 길드 허가증을 꺼내 보이며 &quot;길드에서 허가한 자리라네. 어디서 감히 네가 임의로 차지했다는 건가?&quot;라며 맞받았다.
+
+상인들의 목소리가 점점 커지자 주변 노점상과 지나가던 행인들이 어색하게 눈치를 살폈다. 그들의 얼굴에는 불편함과 긴장감이 어렸다. 아무도 직접 나서서 중재하거나 말리는 이가 없었고, 다만 몇몇은 고개를 돌리거나 손사래를 치며 상황을 회피했다.
+
+주변 상인들의 표정을 세밀히 살피던 당신의 눈에 작은 움직임이 포착됐다. 길드 허가증을 들고 있는 상인의 옷자락 한쪽에 기름 얼룩이 묻어 있었다. 반면, 원래 자리라고 주장하는 쪽의 목소리에서는 차분함보다는 다급함이 묻어났고, 손끝이 미세하게 떨리고 있었다.
+
+멀리서 후드를 깊이 쓴 정보상이 골목 어귀에서 이 상황을 조용히 주시하고 있었다. 그의 그림자 아래로 한 사내가 다가가 귓속말을 건네는 듯 보였다. 먼지 냄새 섞인 바람이 살랑이며 두 상인의 목소리를 흩트렸다. 시장 입구의 그 긴장된 공기가 당신의 피부에 닿았다.
+
+당신은 그 작은 디테일들을 가늠하며 다음 움직임을 결정할 태세다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.9s · 611tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 기름 얼룩 묻은 허가증을 자세히 조사한다 <span style="color:#666">— 길드 허가증의 진위를 파악하려 한다</span></div>
+      <div class="choice-item llm">✨ 원래 자리 상인에게 좌판 경계 사정을 조심스레 묻는다 <span style="color:#666">— 그의 다급한 태도의 이유를 캐묻기 위해</span></div>
+      <div class="choice-item llm">✨ 후드를 깊이 쓴 정보상에게 다가가 상황에 대한 조언을 구한다 <span style="color:#666">— 정보상의 은밀한 입장을 활용하려 한다</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 중재에 나선다 <span style="color:#666">— 양쪽 모두에게 좋은 인상을 남길 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 4 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">노점 사이를 걸으며 수상한 거래가 있는지 관찰한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲2 + eva7÷3=2 + mod0 = 4)</span>
+    </div>
+    <div class="narrative">노점 사이 좁은 통로를 따라 천천히 걸으며 당신은 주변 상인들의 시선을 하나하나 주의 깊게 훑었다. 두 상인이 좌판 경계를 두고 목소리를 높이는 장면이 바로 앞에 있었다. 한쪽 상인은 거칠게 손을 흔들며 &quot;이 자리야말로 내가 늘 쓰던 자리라네, 길드 허가증 따위 필요 없소!&quot;라고 주장하고, 다른 쪽은 허리춤에서 꺼낸 길드 허가증을 천천히 펼쳐 보이며 &quot;이게 길드에서 내준 정식 허가증이오. 당신이 감히 내 자리를 뺏으려 하다니, 어림없소.&quot;라며 맞받아쳤다.
+
+주변 상인들은 다소 불편한 듯 고개를 숙이고 눈치를 보았지만, 누구도 직접 개입하지 않았다. 한 여인네가 물건을 정리하다가 고개를 돌려 조용히 중얼거렸다. &quot;이래서야 시장에 손님도 줄겠지...&quot; 당신은 두 상인의 목소리에서 서로 다른 뉘앙스가 섞인 감정과 긴장감을 감지했다. 허가증을 든 쪽은 냉철하지만 단호했고, 상대는 분노를 억누르려 애쓰는 듯했다.
+
+그 사이 당신의 눈은 두 상인의 뒷주머니에 살짝 보이는 작고 낡은 가방과, 허가증의 윤곽에 가려져 있지만 불규칙하게 반짝이는 무언가를 포착했다. 그들은 단순히 자리 다툼만 하는 것이 아니라, 어딘가 수상한 거래가 오가는 중일 가능성이 짙었다. 당신의 시선이 그 가방과 허가증 사이로 이동했을 때, 허가증 쪽 상인이 잠시 몸을 낮추며 누군가에게 은밀히 쪽지를 건네는 모습도 보였다.
+
+자잘한 시장 소음 사이로 두 상인의 고성과 주변 상인의 불안한 속삭임이 뒤섞였다. 이런 분위기 속에서 당신은 불편한 시선과 땀 맺힌 이마를 가진 상인들을 지나며 그 사소한 갈등 너머에 숨겨진 무언가를 탐색해야 할 필요성을 절감했다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ OBSERVE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.1s · 699tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 두 상인의 낡은 가방을 몰래 뒤져본다 <span style="color:#666">— 가방 안에 숨겨진 거래 증거 찾기</span></div>
+      <div class="choice-item llm">✨ 허가증 쪽 상인에게 쪽지 내용에 대해 조심스레 묻는다 <span style="color:#666">— 비밀스러운 쪽지와 거래 단서 캐기</span></div>
+      <div class="choice-item llm">✨ 시장 주변 상인들의 속삭임을 더 자세히 엿듣는다 <span style="color:#666">— 언쟁 외에 숨겨진 정보 파악</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 중재에 나선다 <span style="color:#666">— 양쪽 모두에게 좋은 인상을 남길 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 5 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">다른 노점에서 같은 질문을 던진다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge fail">FAIL</span>
+      <span class="resolve-detail">(🎲1 + acc5÷3=1 + mod0 = 2)</span>
+    </div>
+    <div class="narrative">당신은 다시 노점 사이를 천천히 걸으며 주변 상인들에게 호기심 어린 눈길을 보냈다. 손에 쥔 낡은 장부의 흔적 같은 것을 내비치려 애쓰며 시선을 맞추려 했으나, 상인들은 곧 고개를 돌리거나 말을 얼버무렸다. 한 노점의 주인은 바람에 흩날리는 천 조각을 정리하다가 당신의 질문을 듣고는 곧바로 수상한 기운을 감추려는 듯 눈을 치켜뜬 후 말없이 손을 흔들어 거부했다. 다른 곳에서는 두 사람이 흥정하는 목소리가 갑자기 낮아지고, 곁을 지나던 이들이 당신의 존재를 눈치 채자 몸을 돌렸다.
+
+상인들 사이에 불신과 경계가 짙게 깔려 있음이 분명했다. 당신이 무심하게 눈을 돌려 한 구석을 바라보자, 좌판 아래 감춰진 상자가 반쯤 열린 채 내용물이 살짝 보였다. 하지만 그 순간 주변 소음이 갑자기 커지며, 누군가 발길을 재촉해 당신 쪽으로 가까워졌다. 당신은 노점 사이 인파의 흐름에 묻혀 일단 몸을 낮추며 경계했다. 시장 거리는 겉으로는 평화로워 보이나, 그 밑바닥에서는 긴장과 불안이 서서히 번져가고 있었다.
+
+한편, 후드를 깊이 쓴 정보상이 뒤편에서 조용히 당신을 관찰하는 듯했다. 그의 눈빛은 차갑고 계산적인 의도를 품은 것 같았다. 당신 주변에 들려오는 낮은 속삭임들이 더욱 예민해졌다.
+
+&quot;그만 묻도록 하시오,&quot; 한 노점 상인이 다그치듯 소리쳤다. &quot;여기선 누구도 그런 걸 말하지 않소.&quot;
+
+시장의 분위기가 점점 무거워지고, 당신의 탐색은 미궁 속으로 빠져들었다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.2s · 628tok</span><span class="meta-tag notif">🔔 [MID] 행동이 실패했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 좌판 아래 감춰진 상자의 내용을 몰래 살펴본다 <span style="color:#666">— 노점 사이 숨겨진 단서 찾기</span></div>
+      <div class="choice-item llm">✨ 후드를 깊이 쓴 정보상에게 조용히 다가가 말을 건넨다 <span style="color:#666">— 정보상의 반응과 추가 정보 탐색</span></div>
+      <div class="choice-item llm">✨ 시장의 인파 사이에 몸을 숨기고 움직임을 관찰한다 <span style="color:#666">— 은밀히 주변 상황을 파악하기</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 거리의 분위기를 살핀다 <span style="color:#666">— 주변 상황을 파악한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 6 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">뒷골목으로 빠져서 밀수품이 숨겨진 곳을 찾아본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲4 + acc5÷3=1 + mod1 = 6)</span>
+    </div>
+    <div class="narrative">당신은 시장 뒷골목의 좁은 길목으로 몸을 숨기며 조심스레 걸었다. 낡은 돌담과 빛 바랜 나무 판자가 뒤엉킨 공간 사이로 삐죽이 드러난 상자들과 짐꾸러미가 어지럽게 쌓여 있었다. 손끝으로 상자 겉면을 더듬자, 오래된 기름 얼룩과 바닷내음이 묻어났다. 골목 끝자락 근처, 물건 더미 아래 숨겨진 작은 구덩이 입구가 보였다. 바람에 섞여 들어오는 먼지 냄새와 함께, 누군가의 발자국 소리가 다가오는 듯했다.
+
+그때 문득 근처에서 속삭임이 들려왔다. 과일 장수와 생선 장수가 머리를 맞대고 낮게 말하는 소리였다. 그들은 경비대 야간 책임자가 항만 세금을 두 번 걷고 있다고 분노와 두려움이 뒤섞인 목소리로 입을 맞추고 있었다. 당신은 그들의 이야기에 귀를 기울이며, 밀수품이 이 골목 어딘가 숨겨져 있음을 확신했다. 상자 더미 틈새를 다시 살피자, 허름한 가죽끈이 묶인 오래된 상자가 미묘한 숨김처로 보였다.
+
+곧장 상자를 들어 올리자, 내부에는 다양한 밀수품들이 조심스레 감춰져 있었다. 조개껍데기와 향신료 자루, 짙은 색깔의 포도주 병들이 빛을 잃은 채 누워 있었다. 동시에 주변에서 다가오는 발걸음 소리가 뚜렷해졌다. 당신의 시선이 어둠 속 골목 끝을 향하자, 권위적인 야간 경비 책임자의 그림자가 희미하게 드리워졌다. 그가 이곳을 순찰하는 듯했다.
+
+숨을 죽이고 상자를 다시 덮은 당신은, 골목 한편에서 들려오는 장수들의 중얼거림에 집중했다. 그들의 말투에는 불안이 묻어났지만, 어딘가 확고한 결의도 느껴졌다. 이 밀수품이 경비대 내부 부패와 깊은 연관이 있음을 암시하는 듯했다. 먼 바다에서 밀려오는 염분 섞인 바람이 골목에 한...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 10.2s · 805tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 과일 장수와 생선 장수에게 경비대 야간 책임자에 대해 더 묻는다 <span style="color:#666">— 부패 관련 자세한 정보 탐색</span></div>
+      <div class="choice-item llm">✨ 상자에 숨겨진 향신료 자루를 은밀히 조사한다 <span style="color:#666">— 밀수품의 출처와 용도 파악</span></div>
+      <div class="choice-item llm">✨ 골목 끝에서 다가오는 경비 책임자의 움직임을 은밀히 관찰한다 <span style="color:#666">— 위험 상황 판단과 대응 준비</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 자연스럽게 다가가 이야기에 끼어든다 <span style="color:#666">— 소문의 구체적 내용을 들을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 7 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">상인에게 다가가 최근 도시 소문에 대해 물어본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲4 + acc5÷3=1 + mod1 = 6)</span>
+    </div>
+    <div class="narrative">당신은 과일 장수와 생선 장수가 모여 속삭이는 쪽으로 조심스레 걸음을 옮겼다. 두 사람은 주변을 경계하듯 흘깃거리며 낮은 목소리로 말을 주고받고 있었다. 당신의 다가가는 발소리에 그들의 시선이 잠시 머물렀지만, 금방 다시 서로의 눈을 마주쳤다.
+
+과일 장수가 왼손으로 입을 가리며 숨죽인 채 말했다. &quot;그 경비대 야간 책임자, 세금을 두 번이나 뜯어내고 있소. 무슨 꿍꿍인지 몰라도, 우리 장사치들에겐 큰 부담이오.&quot; 옆 생선 장수는 고개를 끄덕이며, &quot;맞소. 두 번씩이나 내는 건 전례가 없던 일이지. 몇몇 상인들은 벌써 불평을 터뜨리기 시작했소.&quot; 목소리에 짙은 분노와 함께 두려움이 섞여 있었다.
+
+그 순간, 멀리서 권위적인 야간 경비 책임자의 그림자가 어른거렸다. 두 상인은 재빨리 몸을 낮추고 주위를 살폈다. 당신이 한 발짝 뒤로 물러나며 숨결을 가다듬는 사이, 그들의 눈빛은 긴장감으로 가득 찼다.
+
+과일 장수가 당신을 흘끗 쳐다보며 조용히 덧붙였다. &quot;이 이야기가 퍼지면, 경비대가 더 가혹해질 게 뻔하오. 하지만 모두가 알아야 할 일이지. 이런 일이 계속되면, 항만의 기운도 금세 식어버릴 것이오.&quot;
+
+시장에서 멀리 떨어진 곳에서 들려오는 사람들 웅성임과 함께, 하늘에는 달빛이 가끔씩 골목 어둠을 뚫고 비쳐들었다. 두 상인의 말투에는 분노와 불안이 뒤섞여, 이 도시의 어두운 현실을 고스란히 드러냈다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 11.1s · 701tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 금화 한 닢을 건네며 과일 장수에게 경비대 야간 책임자에 관해 더 자세한 이야기를 요청한다 <span style="color:#666">— 장수의 협조를 이끌어내기 위해</span></div>
+      <div class="choice-item llm">✨ 노점 뒤쪽 좁은 골목으로 조심스럽게 걸어가 주변의 은밀한 움직임을 살핀다 <span style="color:#666">— 시장의 숨겨진 소문과 동향을 파악하기 위해</span></div>
+      <div class="choice-item llm">✨ 두 상인과 함께 주변을 경계하며 이 불법 징수에 맞서는 조직이나 인물이 있는지 물어본다 <span style="color:#666">— 지역 내 저항 세력에 대한 정보를 수집하기 위해</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 자연스럽게 다가가 이야기에 끼어든다 <span style="color:#666">— 소문의 구체적 내용을 들을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 8 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">경비병의 순찰 루트를 몰래 파악해본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + acc5÷3=1 + mod0 = 7)</span>
+    </div>
+    <div class="narrative">당신은 사람들 사이에서 시선을 최대한 숨긴 채 몸을 낮추고 골목 모퉁이에 숨어 경비병들의 순찰 패턴을 살폈다. 그들의 움직임을 조용히 따라가며, 어느 거리에서 멈추고 어디로 방향을 틀어 다시 돌아오는지 꼼꼼히 관찰했다. 목적 없이 목적지를 두리번거리는 주변 상인이나 행상들의 시선과는 달리 경비병들은 일정한 간격으로 시장 주요 출입구와 상가 사이를 돌며 경계를 게을리하지 않았다.
+
+어둠 속에서도 은은한 횃불 빛에 반사되어 경비병들의 갑옷이 희미하게 빛났다. 그레이마르 장터의 북서쪽 구석에서부터 시작해 남동쪽까지 일직선으로 이동하는 루트가 주기적으로 반복되는 것을 확인했다. 그 중간에는 한동안 머무르는 시간이 긴 구역이 있었는데, 아마도 밀수품이 오가는 뒷골목 쪽일 것이다.
+
+뒤쪽에서는 먼 남쪽 사막에서 왔다는 떠돌이 행상의 이국적인 향신료와 장신구가 진열된 좌판이 눈에 들어왔다. 행상은 능란한 말솜씨로 구경꾼을 끌어모으고 있었지만, 당신은 시선을 돌리지 않고 경비병의 순찰 경로를 노트하듯 머릿속에 담아두었다. 주변 시민들이 그 향신료 냄새를 들이마시며 흥미롭게 고개를 끄덕이는 사이, 경비병들은 불시에 서로 신호를 주고받으며 긴장을 늦추지 않는 모습이었다.
+
+당신의 눈길이 다시 돌아오는 경비병의 발걸음을 따라가자, 그들은 매번 같은 골목길로 들어서서 짧은 시간을 머무른 뒤 다시 큰길로 나오는 규칙적인 움직임을 드러냈다. 그 골목은 밀수품이 숨겨져 있을 만한 장소와 가까워, 당신이 이전에 포착한 수상한 창고 관리인의 근처일 가능성이 크다.
+
+이 정보를 머릿속에 정리하는 순간, 경비병 한 명이 잠시 주변을 돌며 시선...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 11.0s · 833tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 떠돌이 행상의 향신료 냄새를 맡으며 진열품을 살펴본다 <span style="color:#666">— 이국적 물품에서 단서 찾기</span></div>
+      <div class="choice-item llm">✨ 경비병 순찰 경로의 빈틈을 찾아 조용히 기록한다 <span style="color:#666">— 순찰 패턴 세밀 분석</span></div>
+      <div class="choice-item llm">✨ 떠돌이 행상에게 남쪽 사막의 소식을 물어본다 <span style="color:#666">— 이국적 정보 획득 시도</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 행상에게 어디서 왔는지 물어본다 <span style="color:#666">— 먼 곳의 소식을 들을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 9 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">행상에게 어디서 왔는지 물어본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + speed7÷3=2 + mod0 = 8)</span>
+    </div>
+    <div class="narrative">당신은 시장 거리 한쪽에 자리를 잡은 떠돌이 행상에게 다가갔다. 먼 남쪽 사막에서 왔다는 이 사내는 이국적인 향신료와 기묘한 장신구들을 능숙하게 펼쳐놓고 있었다. 당신은 주변의 호기심 어린 시민들 틈을 뚫고 행상의 눈을 마주치며 천천히 한 걸음 내디뎠다. 당신의 시선은 행상의 손길이 향신료가 담긴 작은 가죽 주머니 위에서 부드럽게 움직이는 모습을 따라갔다.
+
+당신이 그의 곁에 가까이 다가서자, 행상의 눈이 반짝이며 말문을 열었다. &quot;이 향신료들은 오랜 여정 끝에 남쪽 사막의 모래바람 속에서 건져 올린 것들이오. 각기 다른 마을과 오아시스에서 수집한 희귀한 것들이지요. 어서 이 물건들을 보시오, 손끝으로 느껴보면 차이가 분명하오.&quot; 말투에는 자신감과 자부심이 묻어났다.
+
+당신이 묵묵히 그의 눈을 응시하자, 행상은 잠시 주춤했다가 낮은 목소리로 속삭이듯 덧붙였다. &quot;이곳 그레이마르 시장과는 전혀 다른 세상에서 왔소. 바람이 모래처럼 거칠고, 태양은 칼날처럼 날카롭지. 하지만 그곳에서도 사람들의 욕망과 비밀은 여전했지. 이런 물건들은 단순한 장식 그 이상이오. 때로는 중요한 소식의 매개체가 되기도 하니까.&quot;
+
+주변의 시민들 사이에서 조용한 웅성거림이 일었다. 행상의 말에 사람들의 관심이 집중되는 듯했다. 행상은 다시 한 번 손가락으로 향신료 주머니를 가리키며 자신만만하게 말했다. &quot;이 장신구들은 단순한 장식이 아니라, 먼 곳의 이야기와 비밀을 품고 있소. 혹시 당신도 그런 이야기에 관심이 있소?&quot;
+
+당신은 행상의 진심 어린 시선과 능수능란한 말솜씨에 잠시 머뭇거렸다. 이국적인 물건들의 매력과 그가 전하는 먼 땅의 ...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ PERSUADE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 10.1s · 753tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 진열된 기묘한 장신구를 자세히 살펴본다 <span style="color:#666">— 이국적 물품의 진위와 가치를 탐색</span></div>
+      <div class="choice-item llm">✨ 행상의 말투와 손놀림을 주의 깊게 관찰한다 <span style="color:#666">— 사기 여부를 판별하려 한다</span></div>
+      <div class="choice-item llm">✨ 행상과 대화를 이어가며 먼 땅의 이야기를 더 듣는다 <span style="color:#666">— 관계를 돋우며 유용한 정보를 얻는다</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 진열된 물건을 살펴본다 <span style="color:#666">— 이국적인 물품을 구할 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 10 · Phase 1</span>
+    <span class="location">📍 시장</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">시장 한쪽에서 다투는 상인들 사이를 중재해본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲3 + speed7÷3=2 + mod0 = 5)</span>
+    </div>
+    <div class="narrative">당신은 다투는 두 상인 사이로 몸을 살짝 내밀었다. 양쪽을 번갈아 바라보며 손을 펼쳐 보였다. 당신의 침착한 태도에 주변 상인들 사이에서 작은 웅성거림이 일었다. 한쪽 상인이 목을 길게 빼며 원래 자기 자리임을 강조하자, 상대는 길드에서 발급한 허가증을 거칠게 내밀어 보였다. 당신은 그 허가증을 잠시 흘끗 살핀 뒤, 목소리를 낮추고 조심스레 말했다.
+
+두 상인의 눈초리가 당신에게 쏠렸다. 그들은 각자의 주장을 굽히지 않으려는 듯, 얼굴에 긴장감이 가득했다. 그러나 당신이 침착하게 다가가 양측의 불만과 규정상의 세부사항을 차분히 짚어가자, 두 사람의 목소리 톤이 서서히 낮아지기 시작했다. 당신은 “시장에 남은 이들 모두가 평화롭게 장사할 수 있길 바라오”라고 운을 떼며 양쪽의 입장을 조율했다. 한쪽은 자신의 친분 있는 길드 간부 이름을 조심스레 내비쳤고, 다른 쪽은 최근 수비대의 단속으로 인해 좌판 이동의 압박이 심해졌음을 털어놓았다.
+
+주변의 상인들도 호기심 어린 눈길로 당신의 중재를 지켜봤다. 결국 두 상인 중 한쪽이 한숨을 내쉬며 자리 일부를 양보하기로 했다. 완전한 해결은 아니었으나, 다툼의 격렬함은 눈에 띄게 누그러졌다. 당신이 자리를 뜰 때, 한쪽 상인이 조용히 속삭였다.
+
+“네가 없었더라면 싸움은 더 심해졌을 것이오. 나중에 고마움을 표시할 일이 있을지 모르겠소.”
+
+바람에 섞여 멀리서 들려오는 수비대의 발자국 소리가 골목 깊숙이 울려 퍼졌다. 시장의 저녁은 여전히 분주하게 흔들리고 있었다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ PERSUADE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 11.9s · 644tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span><span class="meta-tag notif">🔔 [HIGH] 사건 단계 상승</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 두 상인의 길드 허가증을 더 자세히 살펴본다 <span style="color:#666">— 허가증의 위조 가능성을 확인</span></div>
+      <div class="choice-item llm">✨ 중재한 상인에게 좌판 경계에 대한 추가 설명을 부탁한다 <span style="color:#666">— 상인들의 갈등 근본 원인을 파악</span></div>
+      <div class="choice-item llm">✨ 시장의 주변 상인들의 반응과 태도를 은밀히 관찰한다 <span style="color:#666">— 시장 내 세력 관계를 탐색</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 중재에 나선다 <span style="color:#666">— 양쪽 모두에게 좋은 인상을 남길 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 12 · Phase 1</span>
+    <span class="location">📍 HUB</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[HUB_RETURN]</span>
+      <span class="input-text">거점 복귀</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge hub">HUB</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">당신은 그레이마르 항만 한켠에 자리한 허름한 선술집으로 발걸음을 돌렸다. 바깥의 차가운 밤공기와 달리 실내는 나지막한 사람들의 웃음소리와 나무 마룻바닥을 스치는 발걸음 소리로 온기가 감돈다. 낡은 나무 테이블에는 여러 이들이 술잔을 기울이며 오늘의 소식을 주고받고 있었다. 
+
+당신은 조용한 구석자리에 자리를 잡고 잠시 머릿속을 정리했다. 며칠 전부터 시장 거리에서 시작된 연쇄 절도 사건과 그로 인한 경비대의 순찰 강화, 그리고 상인들 사이에 퍼진 불안한 소문들이 머릿속을 채웠다. 특히 경비대 야간 책임자의 횡포에 관한 이야기, 그리고 항만 노동 길드가 해관청과 엮인 공물 장부 도난 사건이 서로 복잡하게 얽히고 있었다.
+
+선술집 구석에서 후드를 깊이 쓴 정보상이 낮고 신중한 목소리로 누군가와 거래를 하고 있었다. 그의 표정은 어두웠고, 주변을 살피는 눈길이 부쩍 잦았다. 그는 이 도시의 어두운 면을 가장 잘 아는 자 중 하나였다. 당신의 시선이 그에게 머물렀다.
+
+주변을 지나가는 몇몇 노동자와 상인들은 당신의 존재를 얼핏 눈치 챈 듯 고개를 끄덕이며 인사를 건넸다. 그들의 표정에는 조금씩 경계와 기대가 섞여 있었다. 당신이 할 일은 아직 정리되지 않은 이 복잡한 사태 속에서 다음 움직임을 계획하는 것이다.
+
+바깥에서는 밤바람이 약간의 짠내를 머금고 들어왔고, 먼 항만에서는 선박의 뱃고동 소리가 희미하게 울려 퍼졌다.</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.3s · 641tok</span></div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 13 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">항만으로 이동</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge transition">전환</span>
+      <span class="resolve-detail"></span>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 14 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ENTER]</span>
+      <span class="input-text">항만 입장</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge enter">입장</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">항만 부두에 도착하자, 밤 바람에 실려 오는 짭조름한 바다 냄새와 함께 나지막한 삐걱거림이 귓가를 감쌌다. 여러 척의 배들이 파도에 맞춰 천천히 흔들리고, 등대의 희미한 불빛이 수면 위를 규칙적으로 훑었다. 갑판 위에서는 야간 근무 중인 선원들이 낮게 웃으며 담소를 나누는 소리가 들려왔다. 멀리서는 술집에서 흘러나오는 노랫소리가 어둠 속에 섞여 퍼져 갔다.
+
+당신이 부두를 따라 천천히 걷자, 등대 빛이 잠시 당신의 얼굴을 스치고, 무거운 나무 상자들이 쌓인 하역장 쪽에서 누군가 낮은 목소리로 무언가를 주고받는 소리가 느껴졌다. 갑판 위 선원들은 당신을 흘끗 바라보며 자세를 고쳐 잡았다. 한쪽에서는 수상한 그림자가 창고 입구 근처를 어슬렁거리고 있었다. 부두의 밤은 조용하면서도 긴장감이 감돌았다.  
+
+&quot;밤이 깊은데도 일손이 분주하구나.&quot;  
+한 선원이 당신을 향해 목소리를 낮추며 말을 건넸다. 그의 눈매는 날카로웠고, 주변을 경계하는 듯했다.  
+
+당신의 시선은 하역장과 창고 입구, 그리고 선원들에게 번갈아 머물렀다. 조용히 움직이는 그 수상한 그림자가 무엇인지, 그리고 부두 사람들의 대화 속에 어떤 비밀이 숨겨져 있을지, 어둠 속 부두의 풍경이 당신을 기다리고 있었다.</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.7s · 578tok</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 하역장 쪽으로 다가가 수상한 목소리의 주인을 살핀다 <span style="color:#666">— 하역장에서 들리는 낮은 대화 소리의 정체 조사</span></div>
+      <div class="choice-item llm">✨ 갑판 위 선원들에게 바다 너머 최근 소식을 묻는다 <span style="color:#666">— 선원들과의 대화를 통해 밀수 정보 탐색</span></div>
+      <div class="choice-item llm">✨ 창고 입구 근처 그림자를 은밀히 따라가 본다 <span style="color:#666">— 수상한 인물의 움직임을 몰래 관찰</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 15 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">부두에서 하역 작업을 구경하며 정보를 얻는다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + acc5÷3=1 + mod1 = 8)</span>
+    </div>
+    <div class="narrative">당신은 부두 한쪽에서 하역 작업을 유심히 지켜보았다. 밤바람에 실려 오는 짠내와 나무판자 마찰음, 노동자들의 구슬땀 사이로 선원들의 대화가 뒤섞였다. 그중에서 특히 부두 근처 선술집에서 들려오는 한 취한 선원의 목소리가 유독 컸다. 그는 주변 선원들의 경고에도 불구하고 계속해서 동쪽 부두 3번 선착장에 매일 밤 정체불명의 화물선이 들어온다고 떠들어댔다.
+
+당신은 그의 이야기에 귀를 기울이며 하역 작업을 살폈다. 선원들이 조용히 화물의 상자들을 옮기는 사이, 그 취한 사내는 얼핏 들리는 목소리 사이로도 무시당하는 기색 없이 계속해서 정보를 흘렸다. 몇몇 선원들이 그에게 눈짓을 보내며 입을 다물라고 재촉했으나, 그는 아랑곳하지 않고 술기운에 목소리를 높였다. 그의 말 속에는 비밀스러운 거래와 은밀한 움직임에 관한 단서가 담겨 있었다.
+
+하역장 근처에서는 투박한 노동자 몇 명이 묵묵히 팔을 놀리며 무거운 짐을 옮기고 있었다. 그들의 거친 손길과 땀방울 사이로, 그곳을 오가는 수상한 손님들의 모습도 어렴풋이 보였다. 당신은 그 광경을 찬찬히 살피며, 취한 선원의 말과 하역 작업 중 포착한 움직임을 연결 지었다. 동쪽 부두 3번 선착장에 드나드는 화물선은 그저 평범한 배가 아님을 암시하는 듯했다.
+
+술집 안쪽에서는 후드를 깊이 쓴 정보상이 조용히 주변을 살피며, 흘러나오는 정보를 반사적으로 주워 담았다. 그의 눈매는 계산적이었고, 불빛 아래에서 은밀한 거래를 위한 타이밍을 노리는 듯했다. 당신과 취한 선원의 대화 사이로 그 정보상의 존재감이 서서히 짙어졌다.
+
+부두의 밤은 이렇게 긴박한 소문과 은밀한 움직임으로 뒤엉켰...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.8s · 852tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 선원에게 조용히 다가가 그가 말한 3번 선착장에 대해 더 묻는다 <span style="color:#666">— 술 취한 선원의 자세한 정보 청취</span></div>
+      <div class="choice-item llm">✨ 후드를 깊이 쓴 정보상에게 다가가 정체불명의 화물선에 관한 정보를 거래한다 <span style="color:#666">— 정보상과 은밀한 대화 시도</span></div>
+      <div class="choice-item llm">✨ 동쪽 부두 3번 선착장 쪽 하역 작업 현장을 더 자세히 관찰한다 <span style="color:#666">— 화물선과 주변 상황 면밀히 조사</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 선원 옆에 앉아 자연스럽게 술을 사준다 <span style="color:#666">— 추가 정보를 얻을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 16 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">선원들과 어울려 술 한잔 하며 이야기를 나눈다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + speed7÷3=2 + mod1 = 9)</span>
+    </div>
+    <div class="narrative">당신은 술잔을 들고 선술집 구석에 모인 선원들 사이로 조심스레 몸을 던졌다. 취한 선원의 목소리가 울려 퍼지는 사이, 당신은 웃음 섞인 눈빛으로 주위를 훑으며 자연스레 대화에 낄 틈을 찾았다. 주변 선원들은 입을 다물라는 눈짓을 주고받았지만, 그 취한 사내는 여전히 떠들썩했다. 당신이 건넨 술잔이 그의 앞에 놓이자, 그는 햇살 같은 미소를 흘리며 술을 들이켰다.
+
+&quot;밤마다 3번 선착장에 그 화물선이 오더군. 아무도 그 배 이름을 모른다오. 은밀하게 와서 서둘러 하역을 끝내고 가버리지.&quot; 취한 선원의 말투는 거침없었고, 주변 동료들은 불안한 눈빛으로 그를 바라봤다. 당신은 그의 말에 귀를 기울이며 살짝 미소를 지었다.
+
+한편, 그 맞은편에서 조용히 술잔을 기울이던 다른 선원이 몸을 낮추며 조심스레 중얼거렸다. &quot;그 배가 오면 경비대도 조용히 눈감아 준다더군. 하지만 그 안에 뭐가 들었는지는 아무도 몰라.&quot; 그의 목소리는 낮았지만, 긴장감이 묻어났다. 당신은 그 말에 시선을 고정하고, 조용히 눈썹을 찡그렸다.
+
+선술집 내부에는 짙은 술 냄새와 함께 바깥 부두의 짭짤한 바람이 스며들었고, 벽 난로 앞에서 불꽃이 깜빡였다. 당신은 술잔을 기울이며 대화를 이어갔다. &quot;그 배가 정확히 언제 오는지, 누가 관리하는지 알고 있소?&quot; 당신의 질문에는 취한 선원도, 조용한 선원도 즉답을 피하며 서로를 힐끔거리기만 했다.
+
+그러자 취한 선원이 비틀거리며 몸을 일으켰다. &quot;이 자식들, 말해 봐라! 누가 알아? 난 그저 듣고 있을 뿐이야!&quot; 그의 목소리가 다시 높아지고, 주위 선원들은 불편한 기색으로 고개를 내저었다. 당신은 그를 ...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ PERSUADE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 10.5s · 1020tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 술집 구석에서 취한 선원의 말을 자세히 더 캐묻는다 <span style="color:#666">— 밤마다 몰래 들어가는 골목과 배에 대해 알아본다</span></div>
+      <div class="choice-item llm">✨ 부두 창고 뒤편 어두운 골목을 몰래 살펴보러 간다 <span style="color:#666">— 선원 말대로 배가 드나드는 골목을 은밀히 탐색</span></div>
+      <div class="choice-item llm">✨ 선원들에게 술값을 건네며 더 깊은 이야기를 유도한다 <span style="color:#666">— 금전으로 신뢰를 얻어 배 관련 정보를 이끌어낸다</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 선원 옆에 앉아 자연스럽게 술을 사준다 <span style="color:#666">— 추가 정보를 얻을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 17 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">창고 뒤편에서 밀수 루트의 흔적을 조사한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + acc5÷3=1 + mod0 = 7)</span>
+    </div>
+    <div class="narrative">당신은 창고 뒤편으로 조심스레 몸을 기울여 밀수 루트의 흔적을 찾기 시작했다. 습기 어린 나무 판자 아래와 돌 틈새를 손끝으로 더듬으며, 낡은 밧줄과 짓밟힌 땅바닥의 미묘한 변화를 주의 깊게 살폈다. 어둠이 깊어지면서도 바다에서 불어오는 짠바람이 피부를 때려댔고, 멀리서 들려오는 선원들의 대화와 나무 상자 부딪히는 소리가 긴장을 한껏 고조시켰다.
+
+당신의 시선이 창고 구석에 쌓인 오래된 상자 더미 사이를 스치자, 바닥에 남은 발자국과 끌린 자국이 드러났다. 나지막한 숨과 함께 무거운 짐이 은밀하게 창고 뒤편으로 옮겨진 흔적이었다. 한쪽에는 젖은 천 조각들이 겹겹이 쌓여 있었고, 그 너머로 막히지 않은 좁은 통로가 어렴풋이 보였다. 어떤 이가 자주 이용하는 듯한 느낌이 강했다.
+
+그때, 다가오던 발소리가 멈추고, &quot;이쪽엔 뭐 하시오?&quot;라는 권위적인 목소리가 날카롭게 울렸다. 권위적인 야간 경비 책임자가 그림자 속에서 모습을 드러내며 당신를 뚫어져라 응시했다. 그의 눈빛에는 의심이 가득했고, 긴박한 분위기가 온 몸을 긴장시켰다. 당신은 숨을 죽이며 자세를 낮추고, 그의 시선을 피했다.
+
+비로소 당신의 손에 쥐어진 마른 밧줄 한 조각이 밀수의 실체를 증명하는 단서임을 알 수 있었다. 바로 그 순간, 뒤편에서 중얼거리는 투박한 노동자의 낮은 목소리가 들려왔다. &quot;이번에도 수상한 화물이 창고를 드나들고 있다오. 어둠 속에 숨은 게 분명하지.&quot;
+
+당신의 눈이 그쪽으로 향하고, 경비 책임자의 시선은 여전히 당신을 놓지 않고 있었다. 부두의 밤은 차갑고 소란스러우면서도, 숨겨진 비밀이 서서히 드러나고 있는 듯했다. 먼 바다...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.4s · 802tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 통로 너머 좁은 길을 따라 밀수 흔적을 더 살핀다 <span style="color:#666">— 창고 뒤편 미묘한 통로 발견</span></div>
+      <div class="choice-item llm">✨ 투박한 노동자에게 창고 뒤 밀수 상황을 묻는다 <span style="color:#666">— 내부자의 정보를 활용</span></div>
+      <div class="choice-item llm">✨ 권위적인 야간 경비 책임자를 주의 깊게 관찰하며 신뢰를 얻는다 <span style="color:#666">— 경비의 의심을 누그러뜨림</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 부두의 동향을 살핀다 <span style="color:#666">— 선박 출입 패턴을 파악한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 18 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">화물 적재 구역을 탐색한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + acc5÷3=1 + mod0 = 7)</span>
+    </div>
+    <div class="narrative">당신은 화물 적재 구역으로 발걸음을 옮겼다. 거친 나무 판자로 된 선적더미 사이를 조심스레 살피며, 바닥에 흩어진 짐끈과 나뭇조각, 그리고 진흙을 밟았다. 바람이 몰아치며 바다 내음과 함께 희미한 기름 냄새가 코끝을 스쳤고, 멀리서 쇠사슬과 나무가 맞부딪히는 소리가 부두의 분주함을 알렸다. 당신의 시선은 짐 더미 뒤편 정체불명의 배로 향했다. 선원들은 서둘러 화물 위에 두꺼운 천을 덮고 있었으며, 그 움직임은 분명 급박해 보였다.
+
+주변의 하역 인부들은 감독관의 큰 목소리에 움직임을 맞추며 중노동에 분주했지만, 그 와중에 일부는 당신을 힐끔거리며 의심 어린 시선을 던졌다. 당신은 천으로 덮인 화물 중 일부가 평범한 상자가 아닌 듯 묵직하고 불규칙한 형태라는 점을 포착했다. 가까이 다가가 살피려는 순간, 부두 끝에서 권위적인 야간 경비 책임자가 무전을 들고 빠르게 걸어오는 모습이 눈에 들어왔다. 그의 날카로운 눈매가 당신을 스치듯 지나갔다.
+
+그러나 당신은 주저하지 않고 상자 틈새에 박힌 끈 자국과 발자국 흔적을 발견했다. 끈은 평소 하역 작업에 쓰이는 것과는 다른 재질로 보였으며, 발자국은 조심스럽게 주변을 살피며 움직인 자의 흔적이었다. 그 순간, 수상한 창고 관리인이 멀찌감치서 당신을 노려보며 팔짱을 끼고 서 있었다. 그는 당신이 화물 주변에서 무언가를 찾고 있음을 눈치채고는 두터운 입술을 굳게 다물었다.
+
+당신이 고개를 약간 숙여 조사하는 시늉을 하는 동안, 부두의 소란 속에서 선원 한 명이 주머니에서 조그만 쪽지를 꺼내 은밀하게 훑는 모습도 포착되었다. 그의 눈빛은 긴장으로 가득 차 있었다. 부두 전체...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.8s · 852tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span><span class="meta-tag notif">🔔 [HIGH] 새로운 사건 발생</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 화물 위에 덮인 천을 살며시 들어 올려 내부를 살핀다 <span style="color:#666">— 화물의 정체를 직접 확인</span></div>
+      <div class="choice-item llm">✨ 수상한 창고 관리인에게 다가가 움직임을 경계하며 정보를 캐낸다 <span style="color:#666">— 그가 알고 있는 사실을 알아내야 한다</span></div>
+      <div class="choice-item llm">✨ 부두 끝에서 움직이는 경비 책임자의 동태를 조용히 관찰한다 <span style="color:#666">— 경비의 움직임과 의도를 감지한다</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 부두의 동향을 살핀다 <span style="color:#666">— 선박 출입 패턴을 파악한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 19 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">감독관에게 슬쩍 금화를 건네며 특별 화물에 대해 묻는다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲5 + speed7÷3=2 + mod-1 = 6)</span>
+    </div>
+    <div class="narrative">당신이 감독관의 주머니 속으로 은밀하게 금화를 미끄러뜨렸다. 손끝에 전해지는 차가운 금속의 감촉이 순간 긴장을 감돌게 했다. 감독관은 눈을 치켜뜨며 당신에게 시선을 고정했다. 그의 입술 끝에 살짝 미소가 번지더니, 주위를 조심스레 살핀 뒤 낮은 목소리로 입을 열었다.
+
+&quot;특별 화물이라... 그 얘기는 누구에게도 하지 않는 게 상책이오. 하지만 당신에게는 조금 정보를 줄 수 있겠소.&quot; 그의 눈빛이 날카롭게 빛났다. &quot;밤에 닻 없는 배라는 가게 근처에서 이상한 움직임이 포착되었소. 공식적인 선적 목록에는 없는 물건들이 오가고 있다는 말이오.&quot;
+
+감독관이 주변을 힐끗 살피며 말을 이었다. &quot;그 가게 주인은 한때 바다에서 이름을 날렸던 선원이었는데, 지금은 항해 용품을 파는 척하면서 뒷방에서 다른 거래를 한다는 소문이 무성하오. 다만, 그쪽 일에 너무 깊이 관여하면 좋지 않은 꼴을 당할 수도 있소.&quot;
+
+그의 목소리가 낮아졌지만 결의에 찬 기운이 느껴졌다. &quot;내가 아는 바로는, 그 가게 뒤쪽 창고에선 은밀한 물품이 오가고, 가끔 부두의 경비 책임자도 눈길을 주는 걸 보았소. 당신 같은 이가 그곳을 조사한다면, 조심해야 하오.&quot;
+
+감독관은 손짓으로 당신을 앞으로 불렀다. &quot;이 금화는 우리 둘만의 비밀로 하겠소. 닻 없는 배에 대해 더 알게 되면, 나를 다시 찾아오게. 네가 원하는 답을 찾도록 도울 수도 있겠소.&quot; 그의 눈동자가 어둠 속에서 미묘하게 반짝였다.
+
+바람이 부두의 나무 판자 사이를 스치며 삐걱거리는 소리가 들려왔다. 먼 바다에서 파도가 부딪히는 소리가 잔잔히 울렸다. 감독관의 경계 어린 시선이 부두 곳곳을 훑...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ PERSUADE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.7s · 740tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 닻 없는 배 가게 뒷방으로 조심스럽게 다가가본다 <span style="color:#666">— 밀수품 거래 현장 탐색</span></div>
+      <div class="choice-item llm">✨ 감독관에게 닻 없는 배 주인에 대해 더 묻는다 <span style="color:#666">— 주인의 과거와 현재를 파악</span></div>
+      <div class="choice-item llm">✨ 금화를 더 건네며 감독관의 협력을 제안한다 <span style="color:#666">— 정보 제공 약속을 강화</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 일반 물품을 살펴본다 <span style="color:#666">— 항해 용품과 소모품을 구매한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 20 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">밤에 항만 창고에 몰래 잠입해 문서를 뒤진다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲5 + acc5÷3=1 + mod-1 = 5)</span>
+    </div>
+    <div class="narrative">당신은 밤의 어둠을 틈타 부두의 허름한 창고에 몰래 들어섰다. 바닥에 뿌려진 모래알과 낡은 목재 냄새가 코끝을 스쳤다. 창고 구석에는 먼지가 잔뜩 쌓인 탁자가 놓여 있었고, 그 위에 몇 권의 문서 더미가 흐트러져 있었다. 주위를 조심스레 살피며 손을 뻗어 문서 더미 중 하나를 뒤적였다. 삐걱거리는 목재 소리가 당신의 긴장을 고조시켰으나, 다행히도 아무도 발견하지 못한 듯했다.
+
+문서들 사이에서 낡은 장부 한 권이 눈에 들어왔다. 페이지마다 정성스레 적힌 숫자와 이름들이 빼곡했다. 하지만 일부는 누군가가 급히 뜯어낸 듯 일부 페이지가 훼손되어 있었다. 당신은 그 장부의 일부 내용을 훔쳐보는 데 성공했으나, 완전한 정보를 얻기에는 한계가 분명했다. 창고 입구 쪽에서 갑자기 발자국 소리가 다가오는 듯해 당신은 재빨리 몸을 숨겼다.
+
+짧은 정적이 흐르고, 권위적인 야간 경비 책임자의 무거운 발걸음이 창고 문 앞을 지나갔다. 그의 걸음은 날카롭게 끊어졌으며, 숨을 죽여도 심장이 뛰는 소리가 크게 울렸다. 다행히 경비 책임자는 무언가를 찾는 듯 주위를 살피다 이내 발길을 돌렸다. 당신은 문서 더미를 원래대로 놓고 조심스레 창고를 빠져나왔다.
+
+밤바람이 차갑게 얼굴을 스치고, 부두의 먼 불빛이 어둠 속에서 희미하게 흔들렸다. 당신의 손에는 완벽하지는 않지만 중요한 단서가 담긴 장부의 일부 사본이 쥐어져 있었다. 곧 걸음을 돌려, 닻 없는 배 가게 근처 어두운 골목으로 숨어든다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 10.3s · 730tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 장부 일부에 적힌 낡은 이름들을 하나하나 조사한다 <span style="color:#666">— 장부에서 미처 본 적 없는 인물 이름 발견</span></div>
+      <div class="choice-item llm">✨ 닻 없는 배 가게 주변의 경계가 허술한 구역을 살핀다 <span style="color:#666">— 밀수 흔적일 가능성이 높은 구역 탐색</span></div>
+      <div class="choice-item llm">✨ 닻 없는 배 주인과 다음 만남을 기약하며 거래 조건을 조심스레 타진한다 <span style="color:#666">— 다음 협상 기회 준비</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 일반 물품을 살펴본다 <span style="color:#666">— 항해 용품과 소모품을 구매한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 21 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">부두 노동자들의 파업 현장에서 도움을 준다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲1 + def7÷3=2 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신은 부두 한켠에서 선원들이 화물 상자를 탁자 삼아 주사위 도박을 벌이는 광경을 주의 깊게 살폈다. 판돈이 쌓일수록 분위기가 과열되어 긴장감이 감돌았고, 주변의 파업 중인 노동자들이 불안한 시선으로 그들을 지켜보고 있었다. 당신은 조심스레 그곳으로 다가가 한 선원이 빈자리를 가리키며 손짓하는 것을 확인했다. 몸을 낮추며 빈자리에 앉아 도박판에 참여하려는 듯한 태도를 보였다.
+
+도박판에 끼어들자 선원들은 호기심 어린 눈빛으로 당신을 살폈다. 당신이 술잔을 들어 올려 분위기를 누그러뜨리려 하자, 주사위가 던져지고 긴장감은 한층 짙어졌다. 몇 차례의 말과 손짓이 오갔고, 당신은 퍼진 소문과 부두 노동자들의 불만을 귀를 기울여 들었다. 파업이 본격적으로 확산되면 부두 전체의 작업이 마비될 우려가 있다는 이야기였다. 선원 중 한 명은 낮은 목소리로, &quot;이러다 그놈들의 단체가 골치를 썩일 뿐이오. 무언가 움직여야 하는데...&quot;라며 속내를 드러냈다.
+
+당신이 도움을 줄 수 있음을 암시하자, 선원들은 반신반의하는 눈빛을 감추지 못했다. 그러나 당신의 진지한 태도와 상황을 잘 파악하는 눈빛에 조금씩 신뢰가 쌓였다. 그중 한 선원이 허리를 펴며 말했다.
+
+&quot;그런데, 도움이라면 말이지... 이 파업이 끝나야 우리도 숨통이 트일 거요. 그렇다고 너무 나대면 권위적인 경비 책임자가 금방 들이닥칠 테니 조심해야 할 걸세.&quot;
+
+당신이 고개를 끄덕이자, 선원들은 도박판의 일부 긴장감을 내려놓고 잠시 숨을 고르는 듯했다. 주변에선 가까운 곳에서 일어나는 소음과, 먼 바다에서 부딪히는 파도 소리가 스멀스멀 들려왔다. 하지만 이 평화도 오래...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ HELP</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 12.1s · 804tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 도박판에서 선원들의 이야기를 집중적으로 경청하며 파업 원인을 조사한다 <span style="color:#666">— 노동자 불만의 구체적 배경 파악</span></div>
+      <div class="choice-item llm">✨ 선원 중 한 명에게 파업에서 당신의 지원 의사를 직접 전하고 협력을 요청한다 <span style="color:#666">— 신뢰 형성 및 정보 교환 시도</span></div>
+      <div class="choice-item llm">✨ 도박판 주변에서 경비 책임자의 움직임을 살피며 긴장을 완화할 방법을 찾는다 <span style="color:#666">— 경비 책임자 동선 파악 및 대응책 모색</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 도박에 참여한다 <span style="color:#666">— 금화를 딸 수 있지만 잃을 수도 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 22 · Phase 2</span>
+    <span class="location">📍 항만</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">도박에 참여한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲1 + speed7÷3=2 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신은 한 선원이 가리킨 빈자리에 조심스레 몸을 밀어넣었다. 화물 상자가 탁자가 된 좁은 공간에 앉자, 선원들의 시선이 모여든다. 그들이 굴리는 주사위가 부두의 묵직한 공기 속에서 뒹굴며 금속성 소리를 냈다. 판돈은 이미 여러 금화를 쌓아 올린 상태다. 당신은 손에 쥔 금화 몇 개를 천천히 탁자 위에 올려놓으며 분위기에 녹아들었다.
+
+도박은 긴장과 흥분이 교차하는 가운데 진행되었다. 주사위가 굴러가고, 숫자가 결정될 때마다 선원들 사이에 웃음과 농담, 재촉이 오갔다. 당신의 손놀림은 서툴지 않아 주사위를 던질 때마다 적당한 긴장감을 더했다. 판돈이 약간 불어났지만, 주위의 시선과 말투에서 경계심이 느껴졌다. 당신이 뭔가를 노린다는 걸 눈치 챈 몇몇은 눈을 가늘게 떴다.
+
+도박은 결국 당신에게 완전한 승리를 안겨주진 않았다. 이득이 있었으나, 주변 선원들이 당신에게서 눈을 떼지 않고 있었다. 한 선원이 가볍게 웃으며 말했다.
+
+&quot;낯선 사람, 꽤 운이 좋구먼. 하지만 여기선 너무 튀지 않는 게 좋소.&quot;
+
+당신의 존재가 이 부두의 비밀스러운 분위기 속에 서서히 녹아드는 가운데, 주변에서 술 냄새와 짙은 바다 내음이 섞여 들어왔다. 다시 주사위가 굴러가며 도박판의 소란이 부두 어둠 속으로 흩어졌다.
+
+저 멀리, 권위적인 야간 경비 책임자의 무거운 발자국 소리가 철제 구조물을 울리며 점점 가까워지고 있었다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 ECONOMIC</span><span class="meta-tag goal">🎯 ACQUIRE_RESOURCE</span><span class="meta-tag">⚙ TRADE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.8s · 654tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 도박판에서 얻은 금화를 바탕으로 수상한 창고 관리인과 교섭을 시도한다 <span style="color:#666">— 창고 밀수 의혹에 대한 추가 정보를 얻기 위해</span></div>
+      <div class="choice-item llm">✨ 주사위 도박판 주변을 몰래 관찰하며 경비 책임자의 움직임을 살핀다 <span style="color:#666">— 위험 요소를 조기에 감지하기 위해</span></div>
+      <div class="choice-item llm">✨ 도박에 참여했던 한 선원과 대화를 시도해 부두 노동자들의 분위기를 탐색한다 <span style="color:#666">— 파업과 밀수와의 연관성을 알아내려</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 판세를 지켜보며 선원들의 대화를 듣는다 <span style="color:#666">— 선원들의 정보를 들을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 24 · Phase 2</span>
+    <span class="location">📍 HUB</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[HUB_RETURN]</span>
+      <span class="input-text">거점 복귀</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge hub">HUB</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">당신은 그레이마르 항만의 허름한 선술집으로 돌아왔다. 거점은 낮 시간대의 한산한 분위기가 감돌았다. 나무로 된 테이블과 벽걸이 촛불이 부드러운 빛을 내어 공간을 채우고, 먼 창문 사이로는 바다에서 불어오는 짭짤한 바람이 스며들었다. 선술집 안에서는 낮은 목소리로 대화하는 몇몇 선원과 장사꾼들이 눈에 띄었다.
+
+당신의 발걸음에 맞춰 선술집 주인은 머리를 약간 숙이며 인사했다. 이곳은 그레이마르 항만에서 여러 정보가 오가는 중심 거점이다. 최근 시장 연쇄 절도 사건과 부두 밀수 조직의 움직임이 점차 도시 곳곳에 파장을 일으키고 있었다. 외부 소식통과 내부 협력자들이 제공하는 정보가 당신 손에 들어왔다.
+
+테이블 한켠에 놓인 메모 몇 장과 바깥 골목에서 들려오는 거리의 웅성거림이 당신의 귀에 들어왔다. 밀수 관련 문서와 노동자들의 파업 영향, 그리고 경비대의 새로운 순찰 배치가 맞물려 도시 정세가 미묘하게 흔들리고 있음을 알 수 있었다. 어깨 너머로는 후드를 깊이 쓴 정보상이 누군가와 은밀히 거래하는 모습이 스쳤다.
+
+이윽고 당신 주변에선 거점에서 만난 익숙한 이들이 하나둘씩 나타나기 시작했다. 그들의 표정과 눈빛에서 도시의 긴장과 불안이 엿보였다. 당신은 이곳에서 다음 행보를 계획하며 도시 전반의 흐름을 한눈에 다시 정리할 수 있었다.
+
+[THREAD]그레이마르 항만 거점 선술집. 당신이 도시 소식을 정리하며 주변 인물들과 분위기를 관찰 중. 밀수와 파업, 경비대 움직임이 교차하는 미묘한 긴장감이 감돈다.[/THREAD]</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.2s · 589tok</span></div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 25 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">빈민가으로 이동</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge transition">전환</span>
+      <span class="resolve-detail"></span>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 26 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ENTER]</span>
+      <span class="input-text">빈민가 입장</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge enter">입장</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">낡은 건물들이 바싹 붙어 서 있는 좁은 빈민가 골목에 들어섰다. 바람에 펄럭이는 이불과 옷가지들이 허름한 줄에 걸려 있고, 골목 입구에서는 아이들이 뛰놀며 희미한 웃음소리를 흘렸다. 먼지 냄새와 함께 오래된 나무문이 삐걱거리는 소리가 간간이 들렸다. 이곳은 가난하지만 고단한 일상들이 이어지는 삶의 터전이었다.
+
+골목 어귀 근처에서 허름한 옷차림의 한 남자가 담배를 입에 문 채 당신을 뚫어져라 쳐다보았다. 그의 눈빛은 날카롭고, 주름진 얼굴에는 꽤 오래도록 거리 생활을 해왔음이 드러났다. 그는 조용히 몸을 일으켜 당신 쪽으로 다가왔다. 마른 숨결과 함께 낮지만 경계심 어린 목소리가 골목 저편의 소음 사이로 들려왔다.
+
+&quot;이 골목에 무슨 일로 왔소? 어중간한 자가 끼어들면… 우리 동네는 순식간에 험악해지기 쉽지. 하지만 네 얼굴에서 이 바닥 사람답지 않은 냄새가 나군.&quot;
+
+남자의 시선이 당신 주변을 살핀 뒤 다시 고정되었다. 그의 신중한 태도에서, 이곳 빈민가의 실세 중 하나일 가능성이 느껴졌다. 뒤쪽 골목 어귀에는 검은 망토를 두른 또 다른 인물이 그림자처럼 서 있었고, 발걸음 소리 없이 조용히 당신을 관찰하고 있었다.
+
+바람결에 섞여 먼지 냄새와 함께 멀리서 개 짖는 소리가 울려 퍼졌고, 아이들의 웃음소리도 잠시 잦아들었다. 골목 사이사이에서는 무언가 숨겨진 이야기들이 부서지는 듯했다.
+
+&quot;어떤 소문을 듣고 왔는지 모르겠으나, 이 동네는 쉽게 넘겨줄 곳이 아니오. 하지만 도움이 될 만한 자들이 이 근처에 있기도 하오.&quot; 남자가 낮게 속삭이듯 말했다.
+
+당신의 시선이 골목 깊숙한 곳과 그 낡은 건물들 사이를 오...</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.2s · 699tok</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 허름한 남자에게 빈민가의 소문을 물어본다 <span style="color:#666">— 골목 실세의 정보를 듣는다</span></div>
+      <div class="choice-item llm">✨ 골목 깊은 곳으로 조심스레 발걸음을 옮긴다 <span style="color:#666">— 위험하지만 유용한 단서 탐색</span></div>
+      <div class="choice-item llm">✨ 검은 망토 인물의 움직임을 주의 깊게 관찰한다 <span style="color:#666">— 숨은 위협 파악</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 27 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">빈민가 골목을 돌아다니며 분위기를 파악한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲1 + eva7÷3=2 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신은 빈민가의 좁고 구불구불한 골목을 천천히 걸으며 주변의 분위기를 살폈다. 벽돌과 나무판자가 뒤섞인 낡은 건물 사이로 바람이 차갑게 스며들었고, 멀리서 술집 문을 닫는 소리와 발걸음이 불규칙하게 울렸다. 당신의 시선은 골목 모퉁이에서 희미하게 빛나는 등잔불 아래, 어둑한 구석에 자리 잡은 한 인물에게로 향했다. 그는 검은 망토를 깊게 눌러쓰고, 테이블 위에 펼쳐진 여러 장의 낡은 메모지를 조심스럽게 정리하고 있었다.
+
+당신이 걸음을 옮겨 가까워지자, 그가 미소를 지으며 눈을 들어 당신을 살폈다. 그의 표정에는 계산적인 빛이 감돌았고, 목소리는 낮고 은근하게 떨렸다.
+
+&quot;들은 만한 이야기가 있지. 물론, 공짜는 아니야.&quot;
+
+주변의 소음과 달리 그의 목소리는 골목 안에 선명하게 울렸다. 당신의 발걸음이 멈추자 그는 한 장의 메모를 부드럽게 만지며 눈을 가늘게 떴다. 그는 당신의 눈을 똑바로 마주치며 덧붙였다.
+
+&quot;이 골목에선 누구도 쉽게 믿을 수 없으니, 정보를 얻으려면 대가를 치러야 하오. 하지만 그만한 값어치가 있는 이야기라네.&quot;
+
+그의 손목에서 반짝이는 은색 팔찌가 가로등 불빛에 반사되며 희미한 빛을 뿜었다. 바람이 잠시 골목을 휘돌며 쓰레기 조각들을 일으켜 세웠고, 그의 목소리에도 긴장감이 서렸다.
+
+&quot;그저 소문이 아닌, 확실한 사실만 알려주지. 그대가 원하는 게 뭔가?&quot;
+
+그의 눈빛은 냉철하면서도 무언가 숨기려는 듯 신중했다. 주변에서 누군가의 발소리가 멀어지며 어둠 속으로 사라졌고, 골목은 다시 조용해졌다. 그의 손가락이 메모 위를 미세하게 쓸어내리면서 당신을 기다리는 시간이 길어지는 듯했다.
+
+&quot;...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ OBSERVE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.3s · 795tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 테이블에 놓인 낡은 메모 중 가장 눈에 띄는 기름 얼룩이 묻은 쪽지를 자세히 살펴본다 <span style="color:#666">— 메모에 숨겨진 단서 찾기</span></div>
+      <div class="choice-item llm">✨ 쉐도우에게 가격을 흥정하며 추가 정보를 얻으려 시도한다 <span style="color:#666">— 정보 대가를 낮추기 위한 협상</span></div>
+      <div class="choice-item llm">✨ 골목 저편에서 들리는 발소리의 출처를 몰래 따라가 관찰한다 <span style="color:#666">— 주변 인물의 움직임 탐색</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 어떤 정보인지 먼저 물어본다 <span style="color:#666">— 정보의 가치를 판단한 뒤 결정한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 28 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">노숙자에게 동전을 주며 소문을 캐낸다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge fail">FAIL</span>
+      <span class="resolve-detail">(🎲1 + acc5÷3=1 + mod0 = 2)</span>
+    </div>
+    <div class="narrative">당신은 빈민가 술집 구석에서 허름한 노숙자에게 조심스레 손을 뻗어 동전을 건넸다. 그의 주름진 손이 동전을 움켜쥐자, 희미한 등불 아래에서 노숙자의 눈빛이 잠시 반짝였다. 그러나 곧 그는 머리를 저으며 고개를 돌렸다. 주변을 살피던 그의 얼굴에는 경계심과 피로감이 뒤섞여 있었다.
+
+노숙자는 목소리를 낮추며 말했다. &quot;들어야 할 이야기가 있긴 하오만, 이런 동전 몇 닢으론 부족하오. 여긴 눈과 귀가 많거든, 함부로 말을 꺼내긴 위험하오.&quot; 그의 말투에는 피할 수 없는 위태로움이 묻어 있었다. 당신이 다시 동전을 내밀자, 노숙자는 손을 내저으며 물러섰다. &quot;이 골목에선 함부로 퍼지는 소문이 칼처럼 돌아오거든.&quot;
+
+주변에서 술집 안의 소음과 멀리서 들려오는 부두의 파도 소리가 섞였다. 노숙자의 말이 끝나자마자, 당신의 등 뒤에서 술집 문이 삐걱이며 열리는 소리가 들렸다. 어둠 속에서 후드를 깊이 쓴 정보상의 시선이 당신을 뚫어지게 응시했다. 그는 느긋하게 한 손을 들어 당신에게 다가올 것을 재촉하는 듯했다.
+
+테이블 위에 놓인 여러 장의 메모들이 희미한 촛불 빛에 반짝였다. 정보상의 미소는 여전히 의미심장했고, 그의 눈에는 계산적인 빛이 번뜩였다. &quot;이 골목의 이야기들은 공짜가 아니지. 그래도 듣고 싶다면, 제대로 된 값을 치러야 할 걸세.&quot; 그가 낮게 속삭였다.
+
+당신의 눈앞에 놓인 선택지는 더욱 신중할 수밖에 없었다. 노숙자의 경계와 정보상의 요구가 뒤섞인 이 골목에서, 소문을 얻기 위한 다음 움직임이 중요한 순간임을 알 수 있었다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.6s · 669tok</span><span class="meta-tag notif">🔔 [MID] 행동이 실패했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 후드를 깊이 쓴 정보상에게 메모에 담긴 거래 내역을 자세히 조사한다 <span style="color:#666">— 정보상의 메모에서 밀수 단서 찾기</span></div>
+      <div class="choice-item llm">✨ 정보상에게 금화를 제시하며 최신 밀수 소문을 듣도록 설득한다 <span style="color:#666">— 정보상의 협조를 얻기 위해 거래 시도</span></div>
+      <div class="choice-item llm">✨ 골목 주변을 조용히 살피며 노숙자들이 숨기려는 비밀 통로를 찾는다 <span style="color:#666">— 숨겨진 통로로 은밀하게 접근 시도</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 어떤 정보인지 먼저 물어본다 <span style="color:#666">— 정보의 가치를 판단한 뒤 결정한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 29 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">금화를 테이블에 올려놓는다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲5 + speed7÷3=2 + mod0 = 7)</span>
+    </div>
+    <div class="narrative">당신의 손이 천천히 움직여 금화를 테이블 위에 올려놓았다. 황금빛이 희미한 램프 빛에 반짝이며 술집 구석의 어둠을 잠시 밀어냈다. 쉐도우가 그 광경을 예리한 눈으로 주시하더니, 입가에 미묘한 미소가 번졌다. 그는 조심스럽게 금화를 집어 주머니 속으로 넣고, 테이블 위에 흩어진 메모 중 하나를 집어 들었다.
+
+“이제야 좀 제대로 된 거래가 시작되겠소.” 그의 목소리는 낮고 신중했으며, 주변을 살피는 눈빛은 여전히 경계심을 풀지 않았다. “최근 빈민가에서 움직임이 심상치 않소. 그 붉은 캡 모자를 쓴 자들이 다시 활개를 치고 있다는 소문이 돌고 있지. 그들은 마치 뭔가를 찾아 헤매는 자들 같소만, 그 정확한 목적은 알 수 없소.”
+
+그가 테이블 위 메모 한 장을 당신 쪽으로 밀어냈다. 글씨는 촉박한 손놀림으로 급하게 적힌 듯, 여러 숫자와 지명이 난무했다. “이건 이 주변에서 오가는 은밀한 물자 거래 내역 일부요. 주목할 만한 건, 창고 구역에서 밤마다 무언가가 오가고 있다는 점이고, 그중 한 명은 수상한 창고 관리인과 연계되어 있소.”
+
+쉐도우가 살짝 몸을 앞으로 기울이며 낮은 목소리로 덧붙였다. “하지만 이 정보에도 분명 구멍이 있소. 누가, 왜, 그리고 무엇을 숨기려 하는지, 그 점만은 아직 확실하지 않으니 조심하시오. 어둠 속의 그림자는 언제든 뒤통수를 칠 수 있으니.”
+
+술집 내부의 음산한 공기 속에서, 그의 말이 끝나자 주변의 소음들이 순간 조용해진 듯 느껴졌다. 먼 곳에서 창문 밖으로 바람이 스치며 금속 장식이 은은히 울려 퍼졌다. 쉐도우의 눈빛은 여전히 날카로웠고, 그의 몸짓은 다음 거래를 암시하는...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 ECONOMIC</span><span class="meta-tag goal">🎯 GAIN_ACCESS</span><span class="meta-tag">⚙ BRIBE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.3s · 748tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 쉐도우가 건넨 메모의 숫자와 지명을 자세히 분석해본다 <span style="color:#666">— 은밀한 물자 거래 내역 파악</span></div>
+      <div class="choice-item llm">✨ 쉐도우에게 창고 관리인과 수상한 연계를 캐묻는다 <span style="color:#666">— 구체적인 밀수 연루자 정보 확인</span></div>
+      <div class="choice-item llm">✨ 빈민가 다른 골목에서 붉은 캡 모자를 쓴 자들을 잠복하며 관찰한다 <span style="color:#666">— 수상한 무리 동태 추적</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 어떤 정보인지 먼저 물어본다 <span style="color:#666">— 정보의 가치를 판단한 뒤 결정한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 30 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">어둠 속에서 수상한 인물을 미행한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲1 + eva7÷3=2 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신이 골목 어둠 속에서 몸을 낮추고 수상한 인물을 조심스레 미행했다. 인물은 발걸음을 가볍게 옮기며 좁은 골목을 따라 걷고 있었고, 가로등의 희미한 빛을 피해 그림자 사이를 빠르게 이동했다. 당신은 발소리를 죽이고 뒤따랐다. 낡은 벽돌 틈새에 새겨진 붉은 낙서가 눈에 들어왔다. 그것은 기존의 세력 표시 위에 덧칠된 듯한 붉은 물감이었다. 옆에는 작은 화살표와 암호 같은 글자가 희미하게 적혀 있었는데, 그 주변을 지나면서 인물은 잠시 고개를 돌려 뒤를 살폈다.
+
+당신의 움직임이 미묘하게 포착된 듯했다. 수상한 인물은 뒷걸음질치며 몇 걸음 물러섰다. 당신도 곧바로 몸을 숨기며 태도를 조정했다. 인물은 다시 길을 재촉했지만, 긴장한 손짓으로 주위를 경계하는 모습이 역력했다. 이윽고 인물은 골목 끝의 어두운 문 쪽으로 향했다. 그곳은 이전 당신이 수상하게 여겼던 밀수 관련 장소와 인접해 있었고, 주변에선 낮게 웅성거리는 소리가 새어나왔다.
+
+당신의 신중한 미행 덕분에 인물의 행로와 행동 패턴 일부를 파악할 수 있었다. 하지만 그가 완전히 속아넘어가지 않은 탓에 더 깊숙한 정보 확보를 위해서는 신중함을 더욱 기해야 할 터였다. 어둠 속에서 불어오는 차가운 바람이 골목을 스치며, 낙서 옆의 암호가 더욱 의미심장하게 다가왔다.
+
+&quot;그쪽, 조심들이게. 이 근처가 수상하기로 이름 높은 곳이오.&quot;
+
+골목 저편에서 투박한 노동자의 낮고 경계 어린 목소리가 들려왔다. 그는 어깨를 으쓱이며 다시 어두운 술집 안으로 사라졌다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 STEALTH</span><span class="meta-tag goal">🎯 HIDE_TRACE</span><span class="meta-tag">⚙ SNEAK</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.4s · 665tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 암호 같은 낙서 글자를 자세히 살펴 해독하려 시도한다 <span style="color:#666">— 붉은 낙서와 암호 의미 파악</span></div>
+      <div class="choice-item llm">✨ 수상한 인물이 향한 골목 끝 문을 은밀히 관찰한다 <span style="color:#666">— 밀수 장소 접근 시도</span></div>
+      <div class="choice-item llm">✨ 투박한 노동자에게 골목 수상한 움직임에 대해 묻는다 <span style="color:#666">— 지역 사정과 경계 태세 확인</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 낙서의 의미를 해독한다 <span style="color:#666">— 세력 분포와 최근 변화를 알 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 31 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">빈민가 뒷골목에서 도박판에 끼어든다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge fail">FAIL</span>
+      <span class="resolve-detail">(🎲1 + acc5÷3=1 + mod0 = 2)</span>
+    </div>
+    <div class="narrative">골목 모퉁이를 돌아 허름한 공간으로 들어섰다. 낡은 나무 상자와 부서진 의자가 어지럽게 놓인 그곳 한쪽에서 몇몇 사내들이 주사위 던지는 소리에 맞춰 낮은 목소리로 말을 주고받고 있었다. 당신은 도박판 한가운데로 걸음을 옮겼다. 갑작스러운 등장에 몇몇 눈이 당신을 향했다. 곧이어 한 사내가 손가락으로 바닥을 탁탁 두드리며 자리 하나를 가리켰다. 그러나 주변 분위기는 싸늘했다. 이미 자리를 잡은 이들 사이에선 불편한 기운이 감돌았다. 도박에 익숙지 않은 당신의 낯선 존재가 쉽게 받아들여지지 않는 듯했다.
+
+주사위가 던져지고, 돈이 오가는 소리 사이로 누군가가 낮게 으름장을 놓았다. “여기 새로운 얼굴이 끼어드는 게 못마땅하오. 이 골목은 우리 영역이오, 모르는 사람은 들어오지 않는 게 좋아.” 도박판 중심에 앉은 사내가 날카로운 시선으로 당신을 쏘아보았다. 그 말투에는 경계와 위협이 섞여 있었다. 당신은 자리를 잡으려 했으나, 몇몇 도박꾼이 자리에서 일어나며 분위기는 급격히 험악해졌다.
+
+골목 벽 너머로 불길한 붉은 낙서가 번져 있었다. 기존에 그려진 세력 표시 위에 덧칠된 붉은 물감은 이곳에 벌어진 영역 분쟁의 긴장감을 실감케 했다. 낙서 옆에는 작은 화살표와 암호 같은 글자가 흩어져 있어, 이곳이 단순한 도박판 이상의 의미를 지녔음을 암시했다. 당신이 자리를 잡지 못하고 주춤하는 사이, 벽 근처에서 누군가가 숨죽여 당신을 지켜보는 기척이 느껴졌다.
+
+결국 도박판 사람들의 뒷말과 시선에 휩싸인 당신은 자리를 떠나야만 했다. 골목 이곳저곳에서 날카로운 눈초리가 여전히 당신을 주시했다. 낙서가 가리키는 방향을 한 ...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.8s · 918tok</span><span class="meta-tag notif">🔔 [MID] 행동이 실패했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 붉은 낙서 옆 암호를 자세히 분석해 본다 <span style="color:#666">— 세력 분쟁의 단서를 찾기 위하여</span></div>
+      <div class="choice-item llm">✨ 골목에서 경계하는 도박꾼에게 조용히 말을 건다 <span style="color:#666">— 경계심을 누그러뜨려 정보를 얻으려</span></div>
+      <div class="choice-item llm">✨ 낙서에 표시된 화살표 방향으로 은밀히 발걸음을 옮긴다 <span style="color:#666">— 비밀 모임 장소를 발견하려 시도</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 낙서의 의미를 해독한다 <span style="color:#666">— 세력 분포와 최근 변화를 알 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 32 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">쓰러진 부랑자를 일으켜 세우고 약초를 나눠준다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + def7÷3=2 + mod0 = 8)</span>
+    </div>
+    <div class="narrative">당신은 얼굴이 부은 남자를 조심스럽게 붙들어 일으켜 세웠다. 그의 몸은 떨리고 있었으나, 당신의 손길에 조금씩 힘을 되찾는 듯했다. 골목의 어둠 속에서 부서진 완장의 찢어진 천 조각이 어렴풋이 빛났다. 당신은 주머니에서 꺼낸 약초를 펼쳐 부은 얼굴과 상처 부위에 조심스레 발랐다. 약초 특유의 쌉싸름한 냄새가 공기 중에 퍼졌다.
+
+남자는 고통스러운 숨을 몰아쉬며 천천히 눈을 뜨고, 당신을 바라보았다. 그의 입술이 떨리더니 힘겹게 말을 이었다. &quot;고맙소... 부두 깡패들이 또 내게 기습했소. 길드 완장이 이렇게 찢긴 건 처음이오… 이 골목에서 무슨 일이 일어나고 있는지 아시오? 그들이 계속 기세를 올리고 있소.&quot; 그의 눈동자에는 피로와 두려움이 짙게 깔려 있었다. 그러나 당신의 도움에 조금은 안도하는 기색이었다.
+
+골목 한켠에서 멀리 무거운 발걸음 소리가 들려왔다. 권위적인 야간 경비 책임자의 무딘 발소리였다. 남자는 급히 몸을 움츠리며 낮은 목소리로 덧붙였다. &quot;그 자들이 어디서 움직이는지 아시오? 혹시 부두 창고 쪽… 수상한 인물이 나타났다는 소문도 들었소. 우린 그들의 표적이 된 듯하오.&quot;
+
+당신이 고개를 끄덕이자, 남자는 힘겹게 몸을 일으켜 천천히 골목 밖으로 나서려 했다. 그의 걸음걸이는 여전히 불안정했으나, 약초의 힘 때문인지 조금은 덜 아파하는 듯했다. 멀리서 들려오는 경비의 발소리는 점점 가까워졌다.
+
+&quot;이제 그들 눈에 띄기 전에 빨리 움직여야 하오.&quot; 남자의 목소리에 긴장감이 서렸다.
+
+골목은 여전히 어두웠지만, 지금 이 순간 당신의 작은 호의가 이곳 사람들에게 희망의 불씨가 될 듯했다. 그가 무...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ HELP</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.5s · 737tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 노숙자에게 부두 깡패의 최근 움직임에 대해 묻는다 <span style="color:#666">— 부랑자가 알고 있는 최신 정보를 캐낸다</span></div>
+      <div class="choice-item llm">✨ 골목 바닥에 남은 발자국과 끌린 자국을 자세히 살펴본다 <span style="color:#666">— 깡패들의 이동 경로 단서를 찾는다</span></div>
+      <div class="choice-item llm">✨ 약초를 더 찾아 빈민가에서 응급 처치를 위한 준비를 한다 <span style="color:#666">— 다른 부상자들을 돌볼 준비를 한다</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 응급 처치를 해준다 <span style="color:#666">— 길드원의 은혜를 입을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 33 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">폐건물 안에서 비밀 모임이 있는지 은밀히 들여다본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲6 + acc5÷3=1 + mod0 = 7)</span>
+    </div>
+    <div class="narrative">당신은 폐건물의 낡은 창문 틈새에 몸을 낮추고 눈을 가늘게 떴다. 어둠 속에서도 창백한 달빛이 희미하게 건물 내부를 비추었다. 나무 바닥 위에 놓인 낡은 상자들과 부서진 가구 사이로 몇 명의 사람이 몰래 모여 있었다. 그들은 낮고 은밀하게 속삭이며 고개를 서로 가까이 대고 있었다. 무거운 공기 속에서 숨죽인 대화가 이어지고 있었고, 한 남자가 두툼한 문서 꾸러미를 손에 쥐고 있었다.
+
+격렬한 몸싸움의 흔적은 없었으나, 내부에는 긴장감이 감돌았다. 당신은 그들의 대화를 온전히 들을 수 없었으나 ‘밀수’, ‘장부’, ‘창고’라는 단어가 뭉개진 목소리 사이로 흘러나왔다. 그때 골목 구석에서 얼굴이 부어오른 남자가 비틀거리며 건물 벽에 기대는 모습이 시야 한쪽에 들어왔다. 노동 길드 완장이 찢어진 채로 그의 튼튼한 팔에 남아 있었다. 고통에 찬 얼굴이 당신을 향해 간절한 눈빛을 보냈지만, 그가 말을 꺼내기에는 숨소리가 너무 거칠었다.
+
+내부 모임의 일원 중 한 명이 창문 쪽으로 시선을 돌려 순간 당신의 움직임을 감지했다. 그의 날카로운 눈초리가 창문 너머로 번졌고, 주변 사람들이 긴장감에 몸을 바짝 움츠렸다. 그러나 곧 한 남자가 손짓으로 자리를 가라앉히고 낮은 목소리로 무언가를 지시했다. 모임은 여전히 비밀을 맹세하듯 조심스럽게 이어졌고, 당신에게는 그들이 위험한 계획을 꾸미고 있음을 직감하게 했다.
+
+골목에서 얼굴이 부은 남자는 겨우 한 발짝 움직이며 당신 쪽으로 조용히 손짓했다. 그의 눈가에는 피멍이 선명했고, 숨결에서 쓴 맛이 느껴졌다. 당신이 더욱 신중하게 주변을 살피려는 찰나, 건너편에서 권위적인 야간 경...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.5s · 815tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 부상자에게 다가가 찢어진 노동 길드 완장을 자세히 살펴본다 <span style="color:#666">— 길드원의 신원과 부상 원인 조사</span></div>
+      <div class="choice-item llm">✨ 모임 내부의 문서 꾸러미를 훔치기 위해 은밀히 접근한다 <span style="color:#666">— 밀수 장부와 관련 증거 확보 시도</span></div>
+      <div class="choice-item llm">✨ 권위적인 야간 경비 책임자의 움직임과 대화를 관찰한다 <span style="color:#666">— 골목 주변 경비 강화 상황 파악</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 응급 처치를 해준다 <span style="color:#666">— 길드원의 은혜를 입을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 34 · Phase 3</span>
+    <span class="location">📍 빈민가</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">응급 처치를 해준다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲1 + def7÷3=2 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신이 부상자의 옆으로 다가가자, 그의 얼굴이 일그러진 채 고통이 역력했다. 부어오른 눈 주위를 조심스럽게 살피며 당신은 옷자락을 걷어 올려 상처 부위를 확인한다. 손에 남은 허브와 천 조각을 꺼내 조심스레 상처를 닦고 얼른 감싸는 동작을 이어갔다. 차갑고 습한 골목 공기 사이로 가볍게 허브 향이 퍼진다.
+
+부상자는 숨을 깊게 내쉬며 얼굴을 찡그렸다. 당신이 붕대를 고쳐 감싸자, 그의 입가에 미세한 고마움의 기색이 번진다. 그러나 몸을 곧게 펴려다 힘없이 다시 벽에 기댄다. 고된 싸움의 흔적이 온몸에 남아 있었지만, 지금은 숨을 고를 수 있기에 일단 위안이다.
+
+그는 간신히 목소리를 내어 말했다.  
+&quot;거기서 멈추소… 다시 덤비면 이 몸… 끝이오.&quot;  
+목소리가 거칠고 쉰 기운이 섞여 있었다. 그의 눈은 여전히 긴장과 두려움을 감추지 못한다.
+
+골목 저편에서 묵직한 발걸음 소리가 점점 가까워졌다. 권위적인 야간 경비 책임자의 무거운 발자국이 울려 퍼지며, 주변 긴장이 순간적으로 감돌았다. 부상자는 신경질적인 기색으로 주변을 살폈다.  
+&quot;그 자들이 아직도 여기 근처에 있소. 조심하시오….&quot;
+
+당신의 손길은 그의 상처를 조금이나마 진정시켰지만, 부상자의 숨소리는 여전히 거칠었다. 골목 끝에서 멀지 않은 어디선가, 낮게 으르렁거리는 소리가 떠돌았다. 긴장감이 골목에 다시 짙게 내려앉았다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ HELP</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 6.2s · 652tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 부상자에게 부두 깡패의 최근 움직임에 대해 물어본다 <span style="color:#666">— 부상자가 깡패들의 동태를 알 수 있다</span></div>
+      <div class="choice-item llm">✨ 부상자의 옷과 주변에 남은 흔적을 꼼꼼히 조사한다 <span style="color:#666">— 깡패 조직의 단서를 찾기 위해</span></div>
+      <div class="choice-item llm">✨ 골목 근처 어두운 구석으로 조용히 숨어 경비 책임자의 움직임을 지켜본다 <span style="color:#666">— 골목 상황을 파악하려</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 누가 때렸는지 물어본다 <span style="color:#666">— 부두 깡패의 최근 움직임을 알 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 36 · Phase 3</span>
+    <span class="location">📍 HUB</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[HUB_RETURN]</span>
+      <span class="input-text">거점 복귀</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge hub">HUB</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">선술집 내부는 어스름한 빛이 은은히 퍼져 있었다. 탁자 위에는 누군가가 남긴 반쯤 빈 술잔과, 여기저기 흩어진 신문 조각이 놓여 있다. 당신이 들어서자 낡은 목재 바닥이 삐걱거리는 소리가 조용히 울렸다. 한쪽 구석에서는 몇몇 항만 노동자들이 낮은 목소리로 이날 있었던 일들을 나누고 있었다.
+
+지난 며칠간 이곳을 드나들며 얻은 단편적인 소식들이 머릿속에 떠올랐다. 항만 노동 길드 내에서 공물 장부가 도난당했다는 소문은 여전히 사람들 사이에 은밀히 퍼져 있었다. 한때 길드의 말단 서기관이었던 로넨이 절박한 표정으로 이 문제를 해결하려 애쓰고 있다는 이야기도 들려왔다. 그와 직접 나눈 대화 속에서 장부의 중요성과, 그것이 공개되면 길드 간부들이 위험에 처할 수 있다는 무거운 진실이 가슴 깊이 박혔다.
+
+선술집 벽난로 옆 의자에 앉아 주변을 둘러보니, 창문 너머로 부두 쪽에서 바람이 실어 오는 짠내가 섞인 공기가 느껴진다. 외부의 소란과는 대조적으로 이곳은 잠시나마 숨을 고를 수 있는 은신처 같았다. 당신의 눈길이 바깥 거리와 내부를 오가며, 다음 움직임을 준비하는 듯했다.
+
+&quot;그레이마르의 소식 좀 정리하시려는 모양이오. 이곳이야말로 정보를 모으기에 안성맞춤이지요.&quot;
+
+쉐도우가 어둠 속에서 불쑥 모습을 드러냈다. 그의 검은 망토가 희미한 불빛에 묻혀 은은하게 반짝였다. 말투에는 계산적인 냉철함이 배어 있으나, 확실히 당신의 귀에 유용한 정보가 될 만한 것들이 담겨 있을 듯했다.
+
+한편, 바깥 거리에서는 먼발치로 권위적인 야간 경비 책임자의 무거운 발걸음과 날카로운 시선이 느껴졌다. 그가 거점 근처를 순찰하는 소리가 ...</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.4s · 791tok</span></div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 37 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">경비대으로 이동</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge transition">전환</span>
+      <span class="resolve-detail"></span>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 38 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ENTER]</span>
+      <span class="input-text">경비대 입장</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge enter">입장</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">경비대 본부 앞 광장에 도착하자, 병사들이 일사불란하게 교대를 진행하고 있었다. 붉은 깃발이 바람에 펄럭이며 경계의 상징처럼 휘날리고, 전령은 빠르게 걸으며 무거운 보고서를 들고 분주하게 오갔다. 군화가 딱딱하게 광장 바닥을 두드리는 소리와 함께, 시민들이 질서 있게 줄을 서서 민원을 넣기 위해 기다리고 있었다.
+
+한쪽 구석에는 권위적인 야간 경비 책임자가 굳은 표정으로 군중을 주시하고 있었다. 그의 날카로운 눈매가 사람들의 움직임 하나하나를 예리하게 포착하는 듯했다. 몇몇 병사들은 경계의 목소리로 서로를 독려하며 주변을 스캔하고, 간간이 지나가는 전령의 호루라기가 짧게 울려 퍼졌다.
+
+광장 한편에서는 조용한 문서 실무자가 두툼한 서류 뭉치를 차분하게 정리하고 있었고, 그의 주변은 바쁘면서도 무언가 은밀한 분위기가 흐르는 듯했다. 근처에 서 있는 수상한 창고 관리인은 신경질적인 눈빛으로 광장을 훑었으며, 그의 손에는 낡은 열쇠뭉치가 무겁게 흔들리고 있었다.
+
+당신의 시선은 이 모든 움직임 사이를 오가며, 어떤 정보를 파악할지 골똘히 살펴볼 순간이다.</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.2s · 529tok</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 권위적인 야간 경비 책임자에게 다가가 경비 상황을 묻는다 <span style="color:#666">— 경비 책임자의 시선과 반응을 살펴본다</span></div>
+      <div class="choice-item llm">✨ 순찰 중인 병사들의 동선과 간격을 주의 깊게 관찰한다 <span style="color:#666">— 병력 배치와 허점을 찾아낸다</span></div>
+      <div class="choice-item llm">✨ 수상한 창고 관리인에게 근처 창고 출입 허가를 요청하며 살펴본다 <span style="color:#666">— 창고 쪽 움직임을 탐색한다</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 39 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">경비대 앞에서 순찰 교대를 관찰한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge success">SUCCESS</span>
+      <span class="resolve-detail">(🎲4 + eva7÷3=2 + mod0 = 6)</span>
+    </div>
+    <div class="narrative">당신은 경비대가 집결하는 광장 한쪽에서 순찰 교대가 이루어지는 모습을 주의 깊게 관찰했다. 밤바람이 차갑게 불어오지만, 경비대 신병은 굳건히 자리를 지키며 무거운 장비를 몸에 걸친 채로 차례를 기다린다. 그의 손에는 낡은 검이 쥐어져 있었고, 때때로 허술한 동작으로 검술 연습을 반복하는 모습이 보였다. 신병의 이마에는 땀이 송골송골 맺혀 있으나, 그 눈빛은 결연하게 빛났다.
+
+조용한 문서 실무자가 멀찍이서 그 광경을 지켜보는 듯했고, 권위적인 야간 경비 책임자는 근엄한 표정으로 한 발짝 뒤에 서서 교대가 원활히 이루어지는지 살폈다. 그의 눈은 날카로웠으며 어둠 속에서도 빛나는 검은 눈동자는 긴장을 늦추지 않는 듯 보였다.
+
+신병이 검술 동작을 다시 시도하던 중 허벅지에 무거운 갑옷이 걸리면서 휘청거렸고, 허탈하게 한숨을 내쉬었다. 그것이 순간적인 틈이었는지, 당신의 시선이 그를 스치자 신병은 잠시 멈춰 서서 촉각을 곤두세웠다. 주변의 차가운 공기와 함께 바스락거리는 갑옷 소리가 광장에 울려 퍼졌다.
+
+권위적인 야간 경비 책임자가 낮은 목소리로 신병에게 조언하는 듯한 말투로 말했다.
+
+&quot;기억하시오, 검은 칼날이 아니라 마음이 적을 꿰뚫어야 하오. 겉모습에 속지 말고 몸 움직임에 집중하시오.&quot;
+
+신병은 고개를 끄덕이며 다시 자세를 잡았다. 그의 손끝에서 흘러나오는 긴장감이 어두운 골목길까지 전해지는 듯했다. 경비대의 긴장된 분위기 속에, 당신은 이곳의 한낮과는 다른 단단한 결속과 다짐을 읽을 수 있었다. 주변의 횃불이 흔들리며 춤추는 불빛 사이로, 밤바람에 실려 온 먼 바다 냄새가 섞여 들어왔다.
+
+경계가 느껴지...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ OBSERVE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.7s · 910tok</span><span class="meta-tag notif">🔔 [LOW] 행동이 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 신병에게 검술 자세에 대해 조언을 건넨다 <span style="color:#666">— 훈련 중인 신병과 신뢰를 쌓는다</span></div>
+      <div class="choice-item llm">✨ 경비대 광장 주변에서 병사들의 교대 동선을 세밀히 관찰한다 <span style="color:#666">— 경비대 내부의 변화와 긴장 상태 파악</span></div>
+      <div class="choice-item llm">✨ 권위적인 야간 경비 책임자에게 최근 경비대 분위기를 조심스레 묻는다 <span style="color:#666">— 내부 동향과 긴장감에 대한 단서를 얻는다</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 검술 조언을 건넨다 <span style="color:#666">— 신병의 호감을 얻을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 40 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">하급 경비병에게 접근해 최근 단속 정보를 물어본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲4 + acc5÷3=1 + mod0 = 5)</span>
+    </div>
+    <div class="narrative">당신은 신중하게 신병에게 다가갔다. 그의 동작 사이사이를 노려보며 조심스레 말을 건넸다. 신병은 당신의 접근에 깜짝 놀라 잠시 검술 동작을 멈추고 숨을 고르면서도, 표정에서는 곧 경계심을 누그러뜨리는 기색이 보였다. 당신이 최근 경비대 단속에 관한 정보를 묻자, 신병은 머뭇거리며 입을 열었다.
+
+“음, 최근에 큰 사건은 없었지만, 몇몇 창고 쪽에서 불법 물품 단속이 조금 있었소. 특히 동부 부두 창고 근처가 경계가 삼엄해졌다고 들었소.” 그의 목소리는 아직 경험 부족을 숨기지 못했다. “하지만 구체적인 단속 내용은 아직 잘 모르겠고, 선임들이 주로 처리하는 일이라서요.”
+
+당신이 더 자세한 내용을 요구하자, 신병은 어깨를 으쓱이며 다시 검술 자세를 잡으려 했다. “저도 막 내린 명령이라서, 더 이상은 알려드리기 어렵소. 죄송하오.” 하지만 그의 눈빛은 대체로 진실을 말하려는 의지를 담고 있었다.
+
+주변에서 경비대의 무거운 발걸음 소리가 간간이 들려오고, 훈련장의 차가운 바람이 당신의 망토를 스쳐 지나갔다. 신병은 다시 연습에 몰두하려 했으나, 당신의 눈길을 의식한 듯 몇 차례 뒤를 돌아보았다. 그의 낯선 듯도 진지한 모습이 이곳 경비대의 긴장된 분위기를 대변하는 듯했다.  
+
+“창고 단속이라…” 당신의 뇌리를 스친 단서가 창고 관리자와 경비 책임자의 움직임과 연결된다. 이 신병의 불완전한 정보라도 앞으로 상황을 파악하는 데 도움이 될 것임이 분명했다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.5s · 654tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 동부 부두 창고 관리자에게 창고 단속에 대해 직접 물어본다 <span style="color:#666">— 창고 단속에 관한 구체적 정보를 얻기 위해</span></div>
+      <div class="choice-item llm">✨ 신병의 훈련 모습을 유심히 관찰하며 경비대 내부 분위기를 파악한다 <span style="color:#666">— 경비대의 긴장과 내부 사정을 감지하기 위해</span></div>
+      <div class="choice-item llm">✨ 신병에게 검술 자세 조언을 건네며 신뢰를 쌓아 더 많은 정보를 끌어낸다 <span style="color:#666">— 신병의 호감을 얻어 정보를 더 얻기 위해</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 검술 조언을 건넨다 <span style="color:#666">— 신병의 호감을 얻을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 41 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">경비대 뒤편 담장 너머를 몰래 엿본다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲2 + eva7÷3=2 + mod0 = 4)</span>
+    </div>
+    <div class="narrative">당신은 경비대 지구 뒤편의 높은 나무 담장 곁으로 몸을 숨겼다. 조심스레 고개를 내밀어 담장 너머를 살핀다. 어둠이 짙은 그늘 속에서, 낡은 목재 창고 지붕과 부스러진 돌담 일부가 희미하게 보였다. 담장 가까이에는 무거운 발걸음 소리가 간헐적으로 울려 퍼졌고, 당신의 숨결이 차갑게 떨렸다. 가끔씩 경비병의 그림자가 창고 문 근처를 스치듯 지나갔다.
+
+바람에 실려 오는 대장간 망치 소리가 여전히 귀를 때렸고, 당신은 담장 뒤쪽에서 무언가 비밀스러운 움직임이 일어나는 듯한 감각을 놓치지 않았다. 담장 가까이서 쌓여 있던 나무 더미 뒤편에는 미처 닫히지 않은 창고 문틈 사이로 희미한 촛불 빛과 낮은 속삭임이 새어 나왔다. 당신이 더 가까이 다가서려던 순간, 담장 너머에서 깔끔하게 다듬은 투박한 노동자의 목소리가 들려왔다.
+
+&quot;오늘 밤은 단속이 더 엄해졌소. 누군가가 밀수품을 감추려 하는 모양이오.&quot;
+
+주변의 어두움 속에 숨어 있던 상대가 갑작스레 경계를 늦추지 않는 듯, 당신의 존재를 감지하지 못한 채 대화를 이어갔다. 그러나 발자국 소리가 가까워지며 경계하는 병사의 숨결이 느껴졌다. 당신은 숨을 죽이고 자세를 낮췄다. 그 순간, 담장 쪽에서 무거운 발걸음과 함께 권위적인 야간 경비 책임자의 중후한 음성이 낮게 들려왔다.
+
+&quot;담장 뒤를 반드시 점검하라. 이상 징후가 포착되었으니 철저히 조사할 것이오.&quot;
+
+그 목소리는 주변의 긴장을 더욱 고조시켰다. 당신은 담장 너머로 보이는 창고 내부의 희미한 그림자, 그리고 그 속에서 오가는 낮은 대화 소리를 주의 깊게 관찰한다. 불빛이 흔들림과 함께, 누군가가 돌발 행동을 준비...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ OBSERVE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 8.1s · 748tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 낡은 공고문에 적힌 경고문 내용을 자세히 읽어본다 <span style="color:#666">— 담장 근처 게시판의 위험 신호 파악</span></div>
+      <div class="choice-item llm">✨ 담장 뒤편 창고 문틈으로 몰래 들어가 내부를 탐색한다 <span style="color:#666">— 밀수 거래 흔적 직접 확인</span></div>
+      <div class="choice-item llm">✨ 투박한 노동자에게 담장 주변에서 들은 밀수 소문을 물어본다 <span style="color:#666">— 정보 확보 위한 대화 시도</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 게시판의 공고문을 읽어본다 <span style="color:#666">— 최근 동향을 파악한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 42 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[CHOICE]</span>
+      <span class="input-text">병영 주변을 탐색한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲2 + acc5÷3=1 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신은 병영 주변을 조심스럽게 살펴보며 이리저리 걸었다. 대장간 쪽에서 망치가 쇠를 두드리는 소리가 무겁게 울려 퍼지고, 그 소리에 뒤섞여 멀리서 병사들의 낮은 대화 소리가 들린다. 순찰 중인 두 병사가 당신을 힐끗 바라보며 곁을 지나갔다. 그들의 눈빛은 경계심과 호기심이 묘하게 섞여 있었다.
+
+당신은 병영 담장 옆으로 다가가, 바람에 펄럭이는 수배 전단을 유심히 살폈다. 전단에는 얼굴이 흐릿하게 찍힌 남자의 초상과 ‘도주 중’이라는 글자가 큼직하게 적혀 있었다. 그 아래 오래된 공고문에는 경비대 내부 질서에 관한 규율과 경고가 적혀 있으나, 그 위로 누군가 급히 갈겨 쓴 듯한 글귀가 덧붙여졌다. 글자는 삐뚤삐뚤했고, 여러 번 덧칠한 흔적이 있었다.
+
+글귀를 자세히 읽자 ‘내부의 그림자, 침묵하라’라는 문구가 희미하게 보였다. 질서와 단속이 강조되는 병영 한복판에서 누군가 내부 부패나 비밀스러운 움직임을 암시하는 듯했다. 당신의 시선은 게시판 옆, 담장 아래 작은 틈새와 바닥에 남은 미세한 발자국 자국까지 살폈다. 발자국은 병영에서 자주 다니는 크고 단단한 부츠 자국과는 달리, 가볍고 바깥쪽 골목에서 온 듯한 흔적이었다.
+
+병영 입구 쪽으로 눈길을 돌리자, 권위적인 야간 경비 책임자가 병사들과 짧은 대화를 나누며 주변을 둘러보고 있었다. 그의 날카로운 눈빛이 당신을 스쳤지만, 곧 다시 병영 안쪽으로 향했다. 당신은 병영 주변에서 일어나는 무언가 은밀한 움직임이 감지되는 순간이었다.
+
+대장간 앞 광장에서는 대장장이가 땀에 젖은 이마를 닦으며 망치를 잠시 내려놓았다. 그의 눈빛은 무표정하지만, 수시로 병영 담장 ...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 OBSERVATIONAL</span><span class="meta-tag goal">🎯 GET_INFO</span><span class="meta-tag">⚙ INVESTIGATE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 9.2s · 883tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 수배 전단의 인물과 관련 정보가 적힌 내용을 살펴본다 <span style="color:#666">— 병영 게시판의 수배 전단 자세히 조사</span></div>
+      <div class="choice-item llm">✨ 급히 쓴 경고문을 누가 썼는지 병영 주변 사람들에게 조심스레 묻는다 <span style="color:#666">— 병영 관계자의 반응 탐색</span></div>
+      <div class="choice-item llm">✨ 담장 틈새로 몰래 병영 안쪽을 엿보며 내부 움직임 살핀다 <span style="color:#666">— 조용히 병영 내부 상황 관찰</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 게시판의 공고문을 읽어본다 <span style="color:#666">— 최근 동향을 파악한다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 43 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">경비대장을 찾아가 협력을 제안한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲1 + speed7÷3=2 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신은 경비대 지구 병영 입구를 향해 발걸음을 옮겼다. 무거운 갑옷을 입은 경비대원들이 교대를 준비하는 사이, 당신은 위풍당당한 수비대 장교의 모습을 찾았다. 그의 눈길이 병영 게시판에 붙은 소매치기 일당 수배 전단에 잠시 머문 것을 확인한 뒤, 당신은 조심스럽게 다가가 말을 건넸다. 두 손을 살짝 모으고, 신중히 호흡을 가다듬어 상대에게 협력 의사를 전하려는 몸짓을 취했다.
+
+장교는 당신의 접근에 순간적으로 눈썹을 찌푸렸으나, 곧 분위기를 가다듬고 무거운 목소리로 물었다. &quot;그대, 무슨 일이오? 경비대와 협력이라 하니, 구체적으로 무슨 뜻이오?&quot; 그의 눈빛은 경계심과 호기심이 섞여 있었다. 당신은 손가락으로 게시판에 붙은 전단을 가리키며, 소매치기 일당의 존재와 추가 보상에 관한 정보를 언급했다. 이로 인해 장교의 시선이 전단으로 옮겨갔고, 그는 잠시 생각에 잠긴 듯 고개를 끄덕였다.
+
+&quot;이 전단을 붙인 것은 나로서도 다급한 일이오. 하지만 이런 자들을 잡는 데는 언제나 정보가 필요하오. 그대가 내놓을 정보가 정확하다면, 협력은 고려할 만하오.&quot; 그는 한숨을 내쉬며 주변을 살폈다. &quot;그러나 우리 경비대도 내부 사정이 복잡하오. 누군가가 정보를 흘리면 곤란하니, 신중해야 하오.&quot; 장교의 말투에는 조심스러움과 무거운 책임감이 담겨 있었다.
+
+당신이 자세히 설명을 이어가려 하자, 그의 시선이 게시판 아래쪽에 작게 적힌 &#x27;관련 정보 제공자에게 추가 보상&#x27;이라는 문구에 머물렀다. &quot;추가 보상이라... 정보 제공자가 확실하다면, 나도 그대에게 도움이 될 수 있소. 다만 이 협력관계는 비밀로 해야 하오. 우리 둘 다 위...</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ PERSUADE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 10.3s · 854tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 소매치기 일당의 최근 행적을 장교에게 상세히 설명한다 <span style="color:#666">— 신뢰 구축을 위한 정보 제공</span></div>
+      <div class="choice-item llm">✨ 병영 주변에서 권위적인 야간 경비 책임자의 움직임을 몰래 관찰한다 <span style="color:#666">— 내부 동향 파악 시도</span></div>
+      <div class="choice-item llm">✨ 전단에 적힌 보상 조건과 수배 인물 특징을 꼼꼼히 다시 살펴본다 <span style="color:#666">— 세부 정보 분석</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 소매치기 일당의 행적을 추적한다 <span style="color:#666">— 현상금을 받을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 44 · Phase 4</span>
+    <span class="location">📍 경비대</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[ACTION]</span>
+      <span class="input-text">구금된 죄수에게 면회를 시도한다</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge partial">PARTIAL</span>
+      <span class="resolve-detail">(🎲1 + speed7÷3=2 + mod0 = 3)</span>
+    </div>
+    <div class="narrative">당신이 병영 안의 좁고 습한 접견실 문을 두드렸다. 쇠창살 너머로 거칠지만 차분한 목소리가 들렸다.
+
+&quot;누구시오? 면회 허가 없으면 들일 수 없소.&quot;
+
+당신은 문틈을 통해 손짓으로 신분을 알리려 했으나, 죄수 쪽에서 얼른 몸을 뒤로 젖히며 경계심을 드러냈다. 마침 경비병 한 명이 다가와 엄격한 눈빛으로 주변을 살폈다. 그는 당신에게 낮고 단호한 목소리로 말했다.
+
+&quot;면회 허가 서류를 보여주시오. 그렇지 않으면 여기서 그만두는 게 좋을 것이오.&quot;
+
+당신은 허가증이 없다는 것을 알면서도 굴하지 않고, 낮은 목소리로 거래를 제안했다. &quot;정보를 주면 보상이 있을 것이오.&quot;
+
+경비병은 잠시 주저했으나, 주변을 한번 더 훑은 뒤에야 입을 열었다.
+
+&quot;소매치기 일당에 관해 아는 게 있소? 그들이 어디에 숨었는지 아는 자가 있다면, 그 정보가 매우 귀중하오.&quot;
+
+쇠창살 너머 죄수의 눈이 반짝이며 당신을 뚫어지게 응시했다. 그는 떨리는 손으로 쇠창살을 움켜쥐고는 조용히 말했다.
+
+&quot;그놈들은 최근 동부 부두 창고 근처에 자주 나타났소. 경비가 소홀한 틈을 타 움직이는 모양이오. 하지만 더 깊이 알기 위해선 뒷골목 정보 브로커 쉐도우와 손을 잡아야 하오.&quot;
+
+경비병이 이 말을 듣고는, 주변을 다시 한번 경계하며 당신에게 속삭였다.
+
+&quot;이런 정보를 경비대장에게 바로 가져가는 건 위험할 수 있소. 은밀히 움직여야 하오.&quot;
+
+문 밖에서 들려오는 경비대의 발소리가 점점 잦아지고, 접견실 안은 긴장감으로 무거웠다. 당신의 눈앞에 소매치기 일당의 행적 일부가 희미하나마 드러났다.</div>
+    <div class="meta-row"><span class="meta-tag vector">🧭 SOCIAL</span><span class="meta-tag goal">🎯 SHIFT_RELATION</span><span class="meta-tag">⚙ PERSUADE</span><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 10.2s · 767tok</span><span class="meta-tag notif">🔔 [LOW] 부분적으로 성공했습니다</span><span class="meta-tag notif">🔔 [CRITICAL] 사건 폭발 임박</span></div>
+    <div class="choices-list">
+      <div class="choice-item llm">✨ 구금된 죄수가 언급한 동부 부두 창고 주변을 직접 살펴본다 <span style="color:#666">— 죄수가 제공한 밀수 흔적 위치</span></div>
+      <div class="choice-item llm">✨ 경비병에게 소매치기 일당에 대한 추가 정보를 조심스럽게 캐묻는다 <span style="color:#666">— 경비대 내 정보를 더 얻기 위함</span></div>
+      <div class="choice-item llm">✨ 쉐도우 정보 브로커와 접촉해 죄수의 말에 대해 확인한다 <span style="color:#666">— 죄수 진술의 신뢰성 검증과 추가 정보 확보</span></div>
+      <div class="choice-item">📋 거점으로 돌아간다</div>
+      <div class="choice-item">📋 소매치기 일당의 행적을 추적한다 <span style="color:#666">— 현상금을 받을 수 있다</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="turn-card">
+  <div class="turn-header">
+    <span class="turn-no">Turn 46 · Phase 4</span>
+    <span class="location">📍 HUB</span>
+  </div>
+  <div class="turn-body">
+    <div class="input-row">
+      <span class="input-label">[HUB_RETURN]</span>
+      <span class="input-text">거점 복귀</span>
+    </div>
+    <div style="margin-bottom:8px;">
+      <span class="badge hub">HUB</span>
+      <span class="resolve-detail"></span>
+    </div>
+    <div class="narrative">당신은 다시 허름한 선술집으로 걸음을 옮겼다. 이곳은 그레이마르 항만의 중심 허브로, 상인과 노동자, 정보 브로커가 모여드는 장소다. 낮은 천장과 짙은 나무 향, 그리고 오래된 벽난로에서 피어오르는 연기가 공간을 가득 채웠다. 선술집 내부는 분주한 소란이 잠시 잦아들고, 창문 밖으로는 바닷바람이 선선하게 밀려들었다.
+
+바텐더 뒤편에 자리 잡은 몇몇 인물들이 당신를 힐끔 쳐다보았고, 벽에는 다양한 임무와 소식이 적힌 종이가 빼곡했다. 당신의 등 뒤에서 술잔이 조용히 부딪히는 소리가 들리며, 바깥 거리에서 멀리 선박의 돛대가 흔들리는 모습이 눈에 들어왔다.
+
+당신은 잠시 몸을 풀고, 지금까지 들은 이야기와 현장 조사 결과를 머릿속에 정리했다. 공물 장부 도난 사건, 경비대의 긴장된 분위기, 그리고 밀수 조직의 움직임이 복잡하게 얽혀 있었다. 이곳에서 다시 정보를 모으거나, 다음 행동을 준비할 수 있는 여유가 있었다.
+
+어느새 선술집 구석에서 조용히 웃음소리가 들려왔고, 누군가가 낮게 속삭이며 거래를 하는 모습이 눈에 들어왔다. 당신의 눈앞에는 여러 갈래 길이 놓여 있었다.</div>
+    <div class="meta-row"><span class="meta-tag">🤖 gpt-4.1-mini-2025-04-14 · 7.6s · 536tok</span></div>
+  </div>
+</div>
+
+<h2>🔍 시스템별 완성도 평가</h2>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">PR1: IntentV3 매핑</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:90%;background:#27AE60;"></div></div>
+      <span class="score-text">90%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">자유 입력 → ApproachVector/GoalCategory 매핑이 정확하게 동작. INVESTIGATE/SNEAK/TRADE/THREATEN/HELP 등 다양한 의도 분류 확인.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">PR2: Incident 확장 필드</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:85%;background:#27AE60;"></div></div>
+      <span class="score-text">85%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">suspicion/security/playerProgress/rivalProgress가 턴마다 누적. vectors의 friction 변동도 확인. 다만 incident가 1개만 spawn되어 다중 incident 상호작용은 미검증.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">PR3: Notification 시스템</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:75%;background:#C9A962;"></div></div>
+      <span class="score-text">75%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">TURN_RESULT/SYSTEM 알림은 정상. INCIDENT/WORLD/NPC kind 알림은 아직 미생성. worldDeltaSummary는 HUB 복귀 시에만 확인 필요.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">PR5: IncidentRouter</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:80%;background:#C9A962;"></div></div>
+      <span class="score-text">80%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">PlayerThread에 relatedIncidentId가 기록되어 routing 연결 확인. 다만 routing이 이벤트 매칭에 미치는 영향을 체감하기 어려움.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">PR6: WorldDelta + PlayerThread</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:85%;background:#27AE60;"></div></div>
+      <span class="score-text">85%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">WorldDelta 최대 10개 기록, PlayerThread가 location×vector×goal 조합으로 정확히 추적. EMERGING→ACTIVE 승격과 ABANDONED 처리 확인.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">LLM 내러티브 품질</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:85%;background:#27AE60;"></div></div>
+      <span class="score-text">85%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">gpt-4.1-mini의 한국어 내러티브가 자연스럽고 상황에 맞는 묘사 생성. NPC unknownAlias 사용, 장소 분위기 반영 우수.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">LLM 선택지 생성</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:80%;background:#C9A962;"></div></div>
+      <span class="score-text">80%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">매 턴 3~4개 맥락적 선택지 생성. hint 포함. 다만 가끔 현재 상황과 동떨어진 선택지가 나올 수 있음.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">판정 시스템 (Resolve)</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:95%;background:#27AE60;"></div></div>
+      <span class="score-text">95%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">1d6+stat 공식 정확. statKey 매핑(SNEAK→EVA, TRADE→SPEED 등) 올바름. 판정 결과가 내러티브에 반영됨.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">이벤트 매칭</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:85%;background:#27AE60;"></div></div>
+      <span class="score-text">85%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">EventMatcher의 6단계 필터링 정상. 장소별 이벤트 풀에서 적절한 이벤트 선택. RNG 기반 결정적 매칭.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">NPC 감정 모델</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:80%;background:#C9A962;"></div></div>
+      <span class="score-text">80%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">5축 감정 업데이트 확인. posture 자동 계산. 다만 NPC 직접 상호작용 빈도가 낮아 감정 변화 폭이 작음.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">Signal Feed</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:70%;background:#C9A962;"></div></div>
+      <span class="score-text">70%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">시그널 생성은 되나 1~2개 수준. 채널 다양성(RUMOR만) 부족. incident tick 기반 시그널 확장 필요.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">시간/Heat 시스템</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:90%;background:#27AE60;"></div></div>
+      <span class="score-text">90%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">4상 시간 사이클(DAWN→DAY→DUSK→NIGHT) 정상. Heat 증감/감쇠 동작. HUB 복귀 시 5 감소.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">Structured Memory v2</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:85%;background:#27AE60;"></div></div>
+      <span class="score-text">85%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">방문 종료 시 storySummary 저장. LLM 컨텍스트에 이전 방문 기억 반영. 연속성 있는 내러티브 생성.</p>
+</div>
+
+<div class="eval-section" style="padding:12px 16px;margin:6px 0;">
+  <div class="eval-item">
+    <span class="eval-label">전체 게임 루프</span>
+    <div class="eval-score">
+      <div class="score-bar"><div class="score-fill" style="width:90%;background:#27AE60;"></div></div>
+      <span class="score-text">90%</span>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8em;margin-top:6px;">HUB→LOCATION→HUB 순환 안정. 노드 전환, 판정, LLM, 상태 업데이트 파이프라인 정상.</p>
+</div>
+<h2>🧭 IntentV3 분포</h2>
+<div class="summary-grid">
+<div class="summary-card"><div class="label">ApproachVector</div>
+<div style="font-size:0.85em;color:#888;">OBSERVATIONAL: 18</div>
+<div style="font-size:0.85em;color:#888;">SOCIAL: 9</div>
+<div style="font-size:0.85em;color:#888;">ECONOMIC: 2</div>
+<div style="font-size:0.85em;color:#888;">STEALTH: 1</div>
+</div>
+<div class="summary-card"><div class="label">GoalCategory</div>
+<div style="font-size:0.85em;color:#888;">GET_INFO: 18</div>
+<div style="font-size:0.85em;color:#888;">SHIFT_RELATION: 9</div>
+<div style="font-size:0.85em;color:#888;">ACQUIRE_RESOURCE: 1</div>
+<div style="font-size:0.85em;color:#888;">GAIN_ACCESS: 1</div>
+<div style="font-size:0.85em;color:#888;">HIDE_TRACE: 1</div>
+</div>
+</div>
+<h2>🔥 Incident 상태</h2>
+
+<div class="incident-card">
+  <div style="display:flex;justify-content:space-between;">
+    <span style="color:#C9A962;font-weight:bold;">INC_MARKET_THEFT</span>
+    <span style="color:#888;font-size:0.8em;">kind=CRIMINAL stage=1</span>
+  </div>
+  <div style="font-size:0.8em;color:#888;margin-top:6px;">
+    control=52 · pressure=82 ·
+    suspicion=23 · security=20 ·
+    playerProgress=49 · rivalProgress=5
+  </div>
+  <div style="font-size:0.75em;color:#666;margin-top:4px;">
+    vectors: 3개 · deadline: 36
+  </div>
+</div>
+
+<div class="incident-card">
+  <div style="display:flex;justify-content:space-between;">
+    <span style="color:#C9A962;font-weight:bold;">INC_MERCHANT_WAR</span>
+    <span style="color:#888;font-size:0.8em;">kind=ECONOMIC stage=0</span>
+  </div>
+  <div style="font-size:0.8em;color:#888;margin-top:6px;">
+    control=0 · pressure=36 ·
+    suspicion=5 · security=20 ·
+    playerProgress=0 · rivalProgress=0
+  </div>
+  <div style="font-size:0.75em;color:#666;margin-top:4px;">
+    vectors: 3개 · deadline: 60
+  </div>
+</div>
+<h2>🧵 PlayerThread 추적</h2>
+
+<div class="thread-card abandoned">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_MARKET · SOCIAL × SHIFT_RELATION</span>
+    <span style="color:#666;">[ABANDONED]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    2회 (성공 1) · incident: INC_MARKET_THEFT
+  </div>
+</div>
+
+<div class="thread-card abandoned">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_HARBOR · OBSERVATIONAL × GET_INFO</span>
+    <span style="color:#666;">[ABANDONED]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    4회 (성공 3) · incident: INC_MARKET_THEFT
+  </div>
+</div>
+
+<div class="thread-card abandoned">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_HARBOR · SOCIAL × SHIFT_RELATION</span>
+    <span style="color:#666;">[ABANDONED]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    3회 (성공 2) · incident: INC_MARKET_THEFT
+  </div>
+</div>
+
+<div class="thread-card abandoned">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_HARBOR · ECONOMIC × ACQUIRE_RESOURCE</span>
+    <span style="color:#666;">[ABANDONED]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    1회 (성공 0) · incident: INC_MERCHANT_WAR
+  </div>
+</div>
+
+<div class="thread-card abandoned">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_SLUMS · ECONOMIC × GAIN_ACCESS</span>
+    <span style="color:#666;">[ABANDONED]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    1회 (성공 1) · incident: INC_MERCHANT_WAR
+  </div>
+</div>
+
+<div class="thread-card abandoned">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_SLUMS · STEALTH × HIDE_TRACE</span>
+    <span style="color:#666;">[ABANDONED]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    1회 (성공 0) · incident: INC_MARKET_THEFT
+  </div>
+</div>
+
+<div class="thread-card">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_SLUMS · SOCIAL × SHIFT_RELATION</span>
+    <span style="color:#666;">[EMERGING]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    2회 (성공 1) · incident: INC_MARKET_THEFT
+  </div>
+</div>
+
+<div class="thread-card">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_GUARD · SOCIAL × SHIFT_RELATION</span>
+    <span style="color:#666;">[EMERGING]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    2회 (성공 0) · incident: INC_MARKET_THEFT
+  </div>
+</div>
+
+<div class="thread-card abandoned">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_SLUMS · OBSERVATIONAL × GET_INFO</span>
+    <span style="color:#666;">[ABANDONED]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    4회 (성공 1) · incident: INC_MERCHANT_WAR
+  </div>
+</div>
+
+<div class="thread-card active">
+  <div style="display:flex;justify-content:space-between;">
+    <span>LOC_GUARD · OBSERVATIONAL × GET_INFO</span>
+    <span style="color:#666;">[ACTIVE]</span>
+  </div>
+  <div style="color:#666;font-size:0.8em;">
+    4회 (성공 1) · incident: INC_MARKET_THEFT
+  </div>
+</div>
+
+</div>
+</body>
+</html>

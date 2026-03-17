@@ -1,0 +1,40 @@
+[
+  {
+    "itemId": "DAGGER_SMUGGLER",
+    "name": "Smuggler Dagger",
+    "type": "EQUIPMENT",
+    "equipSlot": "weapon",
+    "rarity": "RARE",
+    "baseTags": [
+      "DAGGER",
+      "STEALTH"
+    ],
+    "baseModifiers": [
+      {
+        "stat": "attack",
+        "value": 12
+      }
+    ],
+    "setId": "SET_HARBOR_SHADOW",
+    "allowRegionAffix": true,
+    "regionAffixProfileId": "PROFILE_LIGHT_WEAPON"
+  },
+  {
+    "itemId": "CLOAK_SHADOW",
+    "name": "Shadow Cloak",
+    "type": "EQUIPMENT",
+    "equipSlot": "armor",
+    "rarity": "UNIQUE",
+    "baseTags": [
+      "STEALTH"
+    ],
+    "baseModifiers": [
+      {
+        "stat": "eva",
+        "value": 8
+      }
+    ],
+    "setId": "SET_HARBOR_SHADOW",
+    "allowRegionAffix": false
+  }
+]

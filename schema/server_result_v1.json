@@ -1,0 +1,582 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/schemas/server_result_v1.schema.json",
+    "title": "Server Result v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "version",
+        "turnNo",
+        "node",
+        "summary",
+        "events",
+        "diff",
+        "ui",
+        "choices",
+        "flags"
+    ],
+    "properties": {
+        "version": {
+            "type": "string",
+            "const": "server_result_v1"
+        },
+        "turnNo": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "node": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "type",
+                "index",
+                "state"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "COMBAT",
+                        "EVENT",
+                        "REST",
+                        "SHOP",
+                        "EXIT"
+                    ]
+                },
+                "index": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "state": {
+                    "type": "string",
+                    "enum": [
+                        "NODE_ACTIVE",
+                        "NODE_ENDED"
+                    ]
+                }
+            }
+        },
+        "summary": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "short"
+            ],
+            "properties": {
+                "short": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 180
+                }
+            }
+        },
+        "events": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+                "$ref": "#/$defs/Event"
+            }
+        },
+        "diff": {
+            "$ref": "#/$defs/DiffBundle"
+        },
+        "ui": {
+            "$ref": "#/$defs/UIBundle"
+        },
+        "choices": {
+            "type": "array",
+            "maxItems": 6,
+            "items": {
+                "$ref": "#/$defs/ChoiceItem"
+            }
+        },
+        "flags": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "bonusSlot",
+                "downed",
+                "battleEnded"
+            ],
+            "properties": {
+                "bonusSlot": {
+                    "type": "boolean"
+                },
+                "downed": {
+                    "type": "boolean"
+                },
+                "battleEnded": {
+                    "type": "boolean"
+                },
+                "nodeTransition": {
+                    "type": "boolean"
+                }
+            }
+        }
+    },
+    "$defs": {
+        "Event": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "kind",
+                "text",
+                "tags"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                },
+                "kind": {
+                    "type": "string",
+                    "enum": [
+                        "BATTLE",
+                        "DAMAGE",
+                        "STATUS",
+                        "LOOT",
+                        "GOLD",
+                        "QUEST",
+                        "NPC",
+                        "MOVE",
+                        "SYSTEM",
+                        "UI"
+                    ]
+                },
+                "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 220
+                },
+                "tags": {
+                    "type": "array",
+                    "maxItems": 8,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 24
+                    }
+                },
+                "data": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "UI/리플레이/Fact 추출을 위한 구조화 데이터(선택)."
+                }
+            }
+        },
+        "DiffBundle": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "player",
+                "enemies",
+                "inventory",
+                "meta"
+            ],
+            "properties": {
+                "player": {
+                    "$ref": "#/$defs/PlayerDiff"
+                },
+                "enemies": {
+                    "type": "array",
+                    "maxItems": 6,
+                    "items": {
+                        "$ref": "#/$defs/EnemyDiff"
+                    }
+                },
+                "inventory": {
+                    "$ref": "#/$defs/InventoryDiff"
+                },
+                "meta": {
+                    "$ref": "#/$defs/MetaDiff"
+                }
+            }
+        },
+        "PlayerDiff": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "hp",
+                "stamina",
+                "status"
+            ],
+            "properties": {
+                "hp": {
+                    "$ref": "#/$defs/ValueDelta"
+                },
+                "stamina": {
+                    "$ref": "#/$defs/ValueDelta"
+                },
+                "status": {
+                    "type": "array",
+                    "maxItems": 12,
+                    "items": {
+                        "$ref": "#/$defs/StatusDelta"
+                    }
+                }
+            }
+        },
+        "EnemyDiff": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "enemyId",
+                "hp",
+                "status"
+            ],
+            "properties": {
+                "enemyId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                },
+                "hp": {
+                    "$ref": "#/$defs/ValueDelta"
+                },
+                "status": {
+                    "type": "array",
+                    "maxItems": 12,
+                    "items": {
+                        "$ref": "#/$defs/StatusDelta"
+                    }
+                },
+                "distance": {
+                    "type": "string",
+                    "enum": [
+                        "ENGAGED",
+                        "CLOSE",
+                        "MID",
+                        "FAR",
+                        "OUT"
+                    ],
+                    "description": "이 적과 플레이어 간 현재 거리 상태 (다수 적 전투 시 per-enemy 정본)"
+                },
+                "angle": {
+                    "type": "string",
+                    "enum": [
+                        "FRONT",
+                        "SIDE",
+                        "BACK"
+                    ],
+                    "description": "이 적 기준 플레이어 방향 상태 (다수 적 전투 시 per-enemy 정본)"
+                }
+            }
+        },
+        "InventoryDiff": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "itemsAdded",
+                "itemsRemoved",
+                "goldDelta"
+            ],
+            "properties": {
+                "itemsAdded": {
+                    "type": "array",
+                    "maxItems": 20,
+                    "items": {
+                        "$ref": "#/$defs/ItemStack"
+                    }
+                },
+                "itemsRemoved": {
+                    "type": "array",
+                    "maxItems": 20,
+                    "items": {
+                        "$ref": "#/$defs/ItemStack"
+                    }
+                },
+                "goldDelta": {
+                    "type": "integer"
+                }
+            }
+        },
+        "MetaDiff": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "battle",
+                "position"
+            ],
+            "properties": {
+                "battle": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "phase"
+                    ],
+                    "properties": {
+                        "phase": {
+                            "type": "string",
+                            "enum": [
+                                "NONE",
+                                "START",
+                                "TURN",
+                                "END"
+                            ]
+                        },
+                        "rngConsumed": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                },
+                "position": {
+                    "type": "object",
+                    "description": "env는 노드 수준 전역. distance/angle는 단일 적 편의용(다수 적 시 enemies[].distance/angle이 정본).",
+                    "additionalProperties": false,
+                    "required": [
+                        "env"
+                    ],
+                    "properties": {
+                        "distance": {
+                            "type": "string",
+                            "enum": [
+                                "ENGAGED",
+                                "CLOSE",
+                                "MID",
+                                "FAR",
+                                "OUT"
+                            ]
+                        },
+                        "angle": {
+                            "type": "string",
+                            "enum": [
+                                "FRONT",
+                                "SIDE",
+                                "BACK"
+                            ]
+                        },
+                        "env": {
+                            "type": "array",
+                            "maxItems": 6,
+                            "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 24
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "UIBundle": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "availableActions",
+                "targetLabels",
+                "actionSlots",
+                "toneHint"
+            ],
+            "properties": {
+                "availableActions": {
+                    "type": "array",
+                    "maxItems": 10,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 30
+                    }
+                },
+                "targetLabels": {
+                    "type": "array",
+                    "maxItems": 6,
+                    "items": {
+                        "$ref": "#/$defs/TargetLabel"
+                    }
+                },
+                "actionSlots": {
+                    "$ref": "#/$defs/ActionSlots"
+                },
+                "toneHint": {
+                    "type": "string",
+                    "enum": [
+                        "neutral",
+                        "tense",
+                        "calm",
+                        "mysterious",
+                        "triumph",
+                        "danger"
+                    ]
+                }
+            }
+        },
+        "TargetLabel": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "hint"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 30
+                },
+                "hint": {
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 60
+                }
+            }
+        },
+        "ActionSlots": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "base",
+                "bonusAvailable",
+                "max"
+            ],
+            "properties": {
+                "base": {
+                    "type": "integer",
+                    "enum": [
+                        2
+                    ]
+                },
+                "bonusAvailable": {
+                    "type": "boolean"
+                },
+                "max": {
+                    "type": "integer",
+                    "enum": [
+                        3
+                    ]
+                }
+            }
+        },
+        "ChoiceItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "label",
+                "action"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                },
+                "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                },
+                "hint": {
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 80
+                },
+                "action": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "type",
+                        "payload"
+                    ],
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "ACTION",
+                                "CHOICE",
+                                "SYSTEM"
+                            ]
+                        },
+                        "payload": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "ValueDelta": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "from",
+                "to",
+                "delta"
+            ],
+            "properties": {
+                "from": {
+                    "type": "integer"
+                },
+                "to": {
+                    "type": "integer"
+                },
+                "delta": {
+                    "type": "integer"
+                }
+            }
+        },
+        "StatusDelta": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "statusId",
+                "op"
+            ],
+            "properties": {
+                "statusId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                },
+                "op": {
+                    "type": "string",
+                    "enum": [
+                        "APPLIED",
+                        "REMOVED",
+                        "TICKED"
+                    ]
+                },
+                "stacks": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "duration": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "ItemStack": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "itemId",
+                "qty"
+            ],
+            "properties": {
+                "itemId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                },
+                "qty": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "factionId": "LABOR_GUILD",
+    "name": "항만 노동 길드",
+    "initialReputation": 5
+  },
+  {
+    "factionId": "MERCHANT_CONSORTIUM",
+    "name": "상인 길드 연합",
+    "initialReputation": -10
+  },
+  {
+    "factionId": "CITY_GUARD",
+    "name": "도시 수비대",
+    "initialReputation": 0
+  },
+  {
+    "factionId": "ARCANE_SOCIETY",
+    "name": "비전 학회",
+    "initialReputation": 0
+  }
+]
