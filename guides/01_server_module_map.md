@@ -90,8 +90,8 @@ main.ts → AppModule
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
-| MemoryCollectorService | memory-collector.service.ts | 매 LOCATION 턴 visitContext 실시간 수집 |
-| MemoryIntegrationService | memory-integration.service.ts | 방문 종료 시 StructuredMemory 통합+압축 |
+| MemoryCollectorService | memory-collector.service.ts | 매 LOCATION 턴 visitContext 실시간 수집 + NPC Knowledge 자동 수집 (Fixplanv2 PR-E: AUTO_COLLECT) |
+| MemoryIntegrationService | memory-integration.service.ts | 방문 종료 시 StructuredMemory 통합+압축 (Fixplanv2 PR-B: NPC별 행동 필터, snippet summaryShort 기반) |
 
 ### 4. User-Driven Bridge (6 services) — 설계문서 14~17
 
