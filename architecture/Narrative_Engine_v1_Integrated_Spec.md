@@ -196,6 +196,11 @@ Server remains Source of Truth.
 - `milestones`: 서사 이정표 (NarrativeMark 연동)
 - `llmExtracted`: LLM [MEMORY] 태그 누적 (max 15개)
 
+**호출 시점** (3곳):
+1. `go_hub` CHOICE 선택 시 (HUB 복귀)
+2. `performLocationTransition()` (LOCATION→LOCATION 직접 이동)
+3. **RUN_ENDED 경로** (Fixplan3 P1) — go_hub/MOVE_LOCATION 없이 런이 끝나는 경우에도 structuredMemory 보존
+
 ## LLM Context Integration
 
 `MemoryRendererService` → 프롬프트 블록 렌더링:
@@ -212,11 +217,12 @@ Server remains Source of Truth.
 
 EventMatcher가 매 턴 다른 이벤트를 선택 → sceneFrame 변경 → LLM 장면 점프
 
-## Solution (3 메커니즘)
+## Solution (4 메커니즘)
 
 1. **`[현재 장면 상태]` 블록**: 대화 상대/세부 위치/직전 행동을 명시적 전달
 2. **sceneFrame 3단계 억제**: 첫턴=전달, 1턴=참고, 2턴+=완전억제
-3. **`[이번 방문 대화]` 규칙 강화**: 7개 연속성 규칙 (정보 기억, NPC 대화 맥락 유지)
+3. **씬 이벤트 유지 제한** (Fixplan3 P5): ACTION 입력 시 직전 이벤트를 **1턴만** 자동 유지 (기존 2턴 → 1턴 축소). `consecutiveCount < 1` 조건으로 2턴째부터 새 이벤트 매칭.
+4. **`[이번 방문 대화]` 규칙 강화**: 7개 연속성 규칙 (정보 기억, NPC 대화 맥락 유지)
 
 ## Narrative Thread
 
