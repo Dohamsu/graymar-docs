@@ -1,0 +1,34 @@
+[
+  {
+    "affixId": "AFFIX_HARBOR_PREFIX_SALT",
+    "kind": "PREFIX",
+    "locationId": "LOC_HARBOR",
+    "name": "Salt-Stained",
+    "weight": 20,
+    "modifiers": [
+      {
+        "stat": "attack",
+        "value": 3
+      }
+    ],
+    "allowedProfiles": [
+      "PROFILE_LIGHT_WEAPON"
+    ]
+  },
+  {
+    "affixId": "AFFIX_GUARD_SUFFIX_DISCIPLINE",
+    "kind": "SUFFIX",
+    "locationId": "LOC_GUARD",
+    "name": "of Discipline",
+    "weight": 15,
+    "modifiers": [
+      {
+        "stat": "defense",
+        "value": 4
+      }
+    ],
+    "allowedProfiles": [
+      "PROFILE_HEAVY_ARMOR"
+    ]
+  }
+]

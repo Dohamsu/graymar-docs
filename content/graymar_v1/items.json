@@ -1,0 +1,331 @@
+[
+  {
+    "itemId": "CLUE_TORN_SHIFT_SHEET",
+    "type": "CLUE",
+    "name": "찢긴 징발 교대표",
+    "factKey": "FACT_WAGE_FRAUD_PATTERN",
+    "presentable": true
+  },
+  {
+    "itemId": "CLUE_SMEARED_INK_LOG",
+    "type": "CLUE",
+    "name": "잉크 번진 출입 기록",
+    "factKey": "FACT_TAMPERED_LOGS",
+    "presentable": true
+  },
+  {
+    "itemId": "CLUE_LOCK_TAG_EAST_DOCK",
+    "type": "CLUE",
+    "name": "동쪽 부두 자물쇠 인장",
+    "factKey": "FACT_ROUTE_TO_EAST_DOCK",
+    "presentable": true
+  },
+
+  {
+    "itemId": "ITEM_MINOR_HEALING",
+    "type": "CONSUMABLE",
+    "name": "하급 치료제",
+    "description": "항구 약초상에서 구할 수 있는 기본 치료약.",
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "HEAL_HP",
+      "value": 25,
+      "targetSelf": true
+    },
+    "buyPrice": 15,
+    "maxStack": 3
+  },
+  {
+    "itemId": "ITEM_STAMINA_TONIC",
+    "type": "CONSUMABLE",
+    "name": "체력 강장제",
+    "description": "쓴맛이 강한 허브 음료. 기력을 일시적으로 회복한다.",
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "RESTORE_STAMINA",
+      "value": 2,
+      "targetSelf": true
+    },
+    "buyPrice": 20,
+    "maxStack": 2
+  },
+  {
+    "itemId": "ITEM_SMOKE_BOMB",
+    "type": "CONSUMABLE",
+    "name": "연막탄",
+    "description": "밀수업자들이 사용하는 조잡한 연막. 도주에 유리하다.",
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "FLEE_BONUS",
+      "value": 5,
+      "targetSelf": true
+    },
+    "buyPrice": 25,
+    "maxStack": 1
+  },
+  {
+    "itemId": "ITEM_POISON_NEEDLE",
+    "type": "CONSUMABLE",
+    "name": "독침",
+    "description": "암시장에서 거래되는 소형 독침. 다음 공격에 출혈을 부여한다.",
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "APPLY_STATUS",
+      "status": "BLEED",
+      "duration": 3,
+      "targetSelf": false
+    },
+    "buyPrice": 30,
+    "maxStack": 2
+  },
+
+  {
+    "itemId": "ITEM_GUILD_BADGE",
+    "type": "KEY_ITEM",
+    "name": "노동 길드 인장",
+    "description": "하를런이 신뢰의 증표로 건넨 인장. 길드원들이 경계를 풀어준다.",
+    "buyPrice": 0,
+    "maxStack": 1
+  },
+  {
+    "itemId": "ITEM_GUARD_PERMIT",
+    "type": "KEY_ITEM",
+    "name": "경비대 임시 허가증",
+    "description": "벨론 대위가 발급한 임시 수사 허가증. 관할 시설 출입 가능.",
+    "buyPrice": 0,
+    "maxStack": 1
+  },
+  {
+    "itemId": "ITEM_SMUGGLE_MAP",
+    "type": "KEY_ITEM",
+    "name": "밀수 경로 지도",
+    "description": "쉐도우에게서 구입한 비밀 항로 지도. 밀수 네트워크의 전체 윤곽이 담겨있다.",
+    "buyPrice": 35,
+    "maxStack": 1
+  },
+  {
+    "itemId": "ITEM_SUPERIOR_HEALING",
+    "type": "CONSUMABLE",
+    "name": "상급 치료제",
+    "description": "암시장에서 거래되는 고급 약재. 회복량이 크지만 비싸다.",
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "HEAL_HP",
+      "value": 50,
+      "targetSelf": true
+    },
+    "buyPrice": 45,
+    "maxStack": 2
+  },
+
+  {
+    "itemId": "EQ_DOCK_CUTLASS",
+    "type": "EQUIPMENT",
+    "name": "부두 만도",
+    "description": "항만 전사들이 사용하는 짧은 곡검. 빠른 근접전에 적합하다.",
+    "rarity": "RARE",
+    "slot": "WEAPON",
+    "statBonus": { "atk": 3, "speed": 1 },
+    "setId": "SET_HARBOR_WARRIOR",
+    "narrativeTags": ["heavy_weapon", "dock_fighter"],
+    "buyPrice": 40,
+    "sellPrice": 20,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_DOCK_VEST",
+    "type": "EQUIPMENT",
+    "name": "두꺼운 방수 조끼",
+    "description": "부두 노동자들의 작업복. 칼날을 약간 막아준다.",
+    "rarity": "RARE",
+    "slot": "ARMOR",
+    "statBonus": { "def": 3, "maxHP": 10 },
+    "setId": "SET_HARBOR_WARRIOR",
+    "narrativeTags": ["rugged_armor", "dock_worker"],
+    "buyPrice": 35,
+    "sellPrice": 18,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_DOCK_BOOTS",
+    "type": "EQUIPMENT",
+    "name": "항만 전투화",
+    "description": "미끄러운 갑판에서도 안정적인 발놀림을 보장하는 가죽 장화.",
+    "rarity": "RARE",
+    "slot": "TACTICAL",
+    "statBonus": { "eva": 2, "speed": 2 },
+    "setId": "SET_HARBOR_WARRIOR",
+    "narrativeTags": ["agile_footwork", "dock_fighter"],
+    "buyPrice": 30,
+    "sellPrice": 15,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_MERCHANT_LEDGER",
+    "type": "EQUIPMENT",
+    "name": "상인 길드 원장",
+    "description": "길드 공인 거래 장부. 상인들의 신뢰를 얻는 데 유용하다.",
+    "rarity": "RARE",
+    "slot": "POLITICAL",
+    "statBonus": { "acc": 2 },
+    "setId": "SET_GUILD_DIPLOMAT",
+    "narrativeTags": ["guild_badge", "merchant_trust"],
+    "buyPrice": 50,
+    "sellPrice": 25,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_MERCHANT_RING",
+    "type": "EQUIPMENT",
+    "name": "상단 인장 반지",
+    "description": "상인 조합의 인장이 새겨진 반지. 교섭 시 설득력이 높아진다.",
+    "rarity": "RARE",
+    "slot": "POLITICAL",
+    "statBonus": { "acc": 1, "speed": 1 },
+    "setId": "SET_GUILD_DIPLOMAT",
+    "narrativeTags": ["noble_signet", "merchant_trust"],
+    "buyPrice": 45,
+    "sellPrice": 22,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_MERCHANT_CLOAK",
+    "type": "EQUIPMENT",
+    "name": "길드 외교관 망토",
+    "description": "상인 길드 외교관이 입는 품격 있는 망토. 위엄을 더해준다.",
+    "rarity": "UNIQUE",
+    "slot": "ARMOR",
+    "statBonus": { "def": 2, "resist": 3 },
+    "setId": "SET_GUILD_DIPLOMAT",
+    "narrativeTags": ["scholarly", "political_influence"],
+    "buyPrice": 80,
+    "sellPrice": 40,
+    "maxStack": 1
+  },
+
+  {
+    "itemId": "EQ_RUSTY_BLADE",
+    "type": "EQUIPMENT",
+    "name": "녹슨 단검",
+    "description": "빈민가에서 흔히 볼 수 있는 허름한 단검. 그래도 없는 것보단 낫다.",
+    "rarity": "RARE",
+    "slot": "WEAPON",
+    "statBonus": { "atk": 2 },
+    "narrativeTags": ["light_weapon", "street_fighter"],
+    "buyPrice": 15,
+    "sellPrice": 7,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_SHADOW_DAGGER",
+    "type": "EQUIPMENT",
+    "name": "암살자의 단도",
+    "description": "어둠 속에서 빛나는 예리한 칼날. 치명적 일격에 특화되어 있다.",
+    "rarity": "UNIQUE",
+    "slot": "WEAPON",
+    "statBonus": { "atk": 4, "crit": 5, "critDmg": 20 },
+    "narrativeTags": ["assassin_blade", "intimidating", "shadow_weapon"],
+    "buyPrice": 120,
+    "sellPrice": 60,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_PATROL_ARMOR",
+    "type": "EQUIPMENT",
+    "name": "순찰대 경갑",
+    "description": "경비대 순찰병에게 지급되는 표준 경갑. 안정적인 방어력을 제공한다.",
+    "rarity": "RARE",
+    "slot": "ARMOR",
+    "statBonus": { "def": 4, "maxHP": 15 },
+    "narrativeTags": ["guard_armor", "disciplined"],
+    "buyPrice": 55,
+    "sellPrice": 28,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_SCOUTS_GOGGLES",
+    "type": "EQUIPMENT",
+    "name": "정찰병 고글",
+    "description": "원거리 관측과 어두운 환경에서의 시야 확보에 유리한 특수 렌즈.",
+    "rarity": "RARE",
+    "slot": "TACTICAL",
+    "statBonus": { "acc": 3, "eva": 1 },
+    "narrativeTags": ["observer", "tactical_gear"],
+    "buyPrice": 40,
+    "sellPrice": 20,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_HARBOR_SEAL",
+    "type": "EQUIPMENT",
+    "name": "항만 관리관의 봉인",
+    "description": "그레이마르 항만 관리국의 공식 봉인. 소지자에게 일정한 권위를 부여한다.",
+    "rarity": "UNIQUE",
+    "slot": "POLITICAL",
+    "statBonus": { "acc": 3, "resist": 2 },
+    "narrativeTags": ["official_seal", "political_influence", "harbor_authority"],
+    "buyPrice": 100,
+    "sellPrice": 50,
+    "maxStack": 1
+  },
+
+  {
+    "itemId": "EQ_RELIC_TIDE_COMPASS",
+    "type": "EQUIPMENT",
+    "name": "조류의 나침반",
+    "description": "그레이마르 항구의 전설적 유물. 조류를 읽는 자에게 운명의 흐름이 보인다고 전해진다.",
+    "rarity": "LEGENDARY",
+    "slot": "RELIC",
+    "statBonus": { "acc": 5, "speed": 3, "resist": 3 },
+    "narrativeTags": ["ancient_relic", "tide_reader", "world_impact"],
+    "maxStack": 1
+  },
+
+  {
+    "itemId": "EQ_SMUGGLER_DAGGER",
+    "type": "EQUIPMENT",
+    "name": "밀수업자의 단검",
+    "description": "항만 밀수업자들이 사용하는 날렵한 단검. 은밀한 작전에 최적화되어 있다.",
+    "rarity": "RARE",
+    "slot": "WEAPON",
+    "statBonus": { "atk": 4, "eva": 1 },
+    "setId": "SET_HARBOR_SHADOW",
+    "narrativeTags": ["stealth_weapon", "harbor_shadow"],
+    "allowRegionAffix": true,
+    "regionAffixProfileId": "PROFILE_LIGHT_WEAPON",
+    "buyPrice": 55,
+    "sellPrice": 28,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_SHADOW_CLOAK",
+    "type": "EQUIPMENT",
+    "name": "그림자 망토",
+    "description": "밤의 항구에서 그림자처럼 움직일 수 있게 해주는 검은 망토.",
+    "rarity": "UNIQUE",
+    "slot": "ARMOR",
+    "statBonus": { "eva": 3, "speed": 2 },
+    "setId": "SET_HARBOR_SHADOW",
+    "narrativeTags": ["stealth", "shadow_cloak"],
+    "allowRegionAffix": false,
+    "buyPrice": 90,
+    "sellPrice": 45,
+    "maxStack": 1
+  },
+  {
+    "itemId": "EQ_SILENT_BOOTS",
+    "type": "EQUIPMENT",
+    "name": "무음 장화",
+    "description": "빈민가 도둑들이 즐겨 신는 가죽 장화. 발소리를 완전히 죽여준다.",
+    "rarity": "RARE",
+    "slot": "TACTICAL",
+    "statBonus": { "eva": 2, "speed": 1 },
+    "setId": "SET_HARBOR_SHADOW",
+    "narrativeTags": ["silent_movement", "harbor_shadow"],
+    "allowRegionAffix": true,
+    "regionAffixProfileId": "PROFILE_LIGHT_ARMOR",
+    "buyPrice": 35,
+    "sellPrice": 18,
+    "maxStack": 1
+  }
+]

@@ -1,0 +1,306 @@
+[
+  {
+    "encounterId": "ENC_DOCK_AMBUSH",
+    "name": "부두 습격",
+    "description": "밤중 부두에서 증거를 조사하던 중, 노동 길드 깡패들에게 발각된다.",
+    "questState": "S1_GET_ANGLE",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+
+    "enemies": [
+      { "ref": "ENEMY_DOCK_THUG", "count": 2 }
+    ],
+
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_DOCK_THUG", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_DOCK_THUG", "instance": 1, "distance": "MID", "angle": "SIDE" }
+    ],
+
+    "envTags": ["OPEN", "COVER_CRATE"],
+    "toneHint": "tense",
+    "timePhase": "NIGHT",
+
+    "rewards": {
+      "gold": "10-30",
+      "xp": 0,
+      "clueChance": {
+        "itemId": "CLUE_TORN_SHIFT_SHEET",
+        "probability": 0.6
+      }
+    }
+  },
+  {
+    "encounterId": "ENC_WAREHOUSE_INFILTRATION",
+    "name": "창고 잠입 전투",
+    "description": "동쪽 부두 창고에 잠입하다 야경꾼과 밀수업자를 만난다.",
+    "questState": "S3_TRACE_ROUTE",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+
+    "enemies": [
+      { "ref": "ENEMY_WAREHOUSE_GUARD", "count": 1 },
+      { "ref": "ENEMY_SMUGGLER", "count": 1 }
+    ],
+
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_WAREHOUSE_GUARD", "instance": 0, "distance": "MID", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_SMUGGLER", "instance": 0, "distance": "FAR", "angle": "SIDE" }
+    ],
+
+    "envTags": ["COVER_CRATE", "NARROW"],
+    "toneHint": "tense",
+    "timePhase": "NIGHT",
+
+    "rewards": {
+      "gold": "18-45",
+      "xp": 0,
+      "clueChance": {
+        "itemId": "CLUE_LOCK_TAG_EAST_DOCK",
+        "probability": 0.8
+      }
+    }
+  },
+  {
+    "encounterId": "ENC_GUARD_CONFRONTATION",
+    "name": "수비대 대치",
+    "description": "장부 은폐의 진상에 다가서자, 매수된 수비대원들이 길을 막는다.",
+    "questState": "S4_CONFRONT",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": true },
+
+    "enemies": [
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1 },
+      { "ref": "ENEMY_HARBOR_WATCHMAN", "count": 1 }
+    ],
+
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_HARBOR_WATCHMAN", "instance": 0, "distance": "MID", "angle": "SIDE" }
+    ],
+
+    "envTags": ["OPEN", "COVER_WALL"],
+    "toneHint": "tense",
+    "timePhase": "AFTERNOON",
+
+    "rewards": {
+      "gold": "30-60",
+      "xp": 0,
+      "clueChance": {
+        "itemId": "CLUE_SMEARED_INK_LOG",
+        "probability": 1.0
+      }
+    }
+  },
+  {
+    "encounterId": "ENC_WHARF_RAID",
+    "name": "부두 창고 급습",
+    "description": "하를런과 함께 밀수 경로를 급습한다. 밀수업자와 고용 무력배가 대기 중.",
+    "questState": "S3_GUILD",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+    "enemies": [
+      { "ref": "ENEMY_SMUGGLER", "count": 2 },
+      { "ref": "ENEMY_HIRED_MUSCLE", "count": 1 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_SMUGGLER", "instance": 0, "distance": "FAR", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_SMUGGLER", "instance": 1, "distance": "MID", "angle": "SIDE" },
+      { "enemyRef": "ENEMY_HIRED_MUSCLE", "instance": 0, "distance": "CLOSE", "angle": "FRONT" }
+    ],
+    "envTags": ["OPEN", "COVER_CRATE"],
+    "toneHint": "tense",
+    "timePhase": "NIGHT",
+    "rewards": { "gold": "20-45", "xp": 0 }
+  },
+  {
+    "encounterId": "ENC_GUILD_BOSS",
+    "name": "마이렐 경 대치 (길드)",
+    "description": "증거를 들이밀자 마이렐 경이 무력으로 저항한다.",
+    "questState": "S4_GUILD",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": true },
+    "enemies": [
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1, "overrides": {
+        "name": "마이렐 단 경 (야간 책임자)", "hp": 65,
+        "stats": { "ATK": 18, "DEF": 16, "ACC": 7, "EVA": 4, "CRIT": 6, "CRIT_DMG": 1.6, "RESIST": 10, "SPEED": 5 },
+        "personality": "TACTICAL"
+      }},
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 1, "distance": "MID", "angle": "SIDE" }
+    ],
+    "envTags": ["OPEN", "COVER_WALL"],
+    "toneHint": "climax",
+    "timePhase": "NIGHT",
+    "rewards": { "gold": "30-60", "xp": 0, "clueChance": { "itemId": "CLUE_SMEARED_INK_LOG", "probability": 1.0 } }
+  },
+  {
+    "encounterId": "ENC_BARRACKS",
+    "name": "병영 내부 전투",
+    "description": "마이렐의 매수된 수비대원들이 증거 인멸을 위해 공격한다.",
+    "questState": "S3_GUARD",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+    "enemies": [
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1 },
+      { "ref": "ENEMY_HARBOR_WATCHMAN", "count": 1 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_HARBOR_WATCHMAN", "instance": 0, "distance": "MID", "angle": "SIDE" }
+    ],
+    "envTags": ["INDOOR", "NARROW"],
+    "toneHint": "tense",
+    "timePhase": "AFTERNOON",
+    "rewards": { "gold": "15-35", "xp": 0 }
+  },
+  {
+    "encounterId": "ENC_GUARD_BOSS",
+    "name": "마이렐 경 체포 저항",
+    "description": "체포 영장을 집행하자 마이렐 경이 충성 부하와 함께 저항한다.",
+    "questState": "S4_GUARD",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": true },
+    "enemies": [
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1, "overrides": {
+        "name": "마이렐 단 경 (야간 책임자)", "hp": 65,
+        "stats": { "ATK": 18, "DEF": 16, "ACC": 7, "EVA": 4, "CRIT": 6, "CRIT_DMG": 1.6, "RESIST": 10, "SPEED": 5 },
+        "personality": "TACTICAL"
+      }},
+      { "ref": "ENEMY_CORRUPT_GUARD_LOYAL", "count": 1 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_CORRUPT_GUARD_LOYAL", "instance": 0, "distance": "MID", "angle": "SIDE" }
+    ],
+    "envTags": ["OPEN", "COVER_WALL"],
+    "toneHint": "climax",
+    "timePhase": "AFTERNOON",
+    "rewards": { "gold": "30-60", "xp": 0, "clueChance": { "itemId": "CLUE_SMEARED_INK_LOG", "probability": 1.0 } }
+  },
+  {
+    "encounterId": "ENC_ALLEY",
+    "name": "뒷골목 기습",
+    "description": "양쪽 세력 모두에게 추적당한다. 길드 정예와 매수된 수비대원이 협공.",
+    "questState": "S3_SOLO",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+    "enemies": [
+      { "ref": "ENEMY_GUILD_THUG_ELITE", "count": 1 },
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_GUILD_THUG_ELITE", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 0, "distance": "MID", "angle": "SIDE" }
+    ],
+    "envTags": ["NARROW", "COVER_WALL"],
+    "toneHint": "tense",
+    "timePhase": "NIGHT",
+    "rewards": { "gold": "25-50", "xp": 0 }
+  },
+  {
+    "encounterId": "ENC_SOLO_BOSS",
+    "name": "토브렌-마이렐 연합 대치",
+    "description": "증거를 양쪽에 모두 쥐고 있으므로, 양쪽 모두 적이 된다. 최고 난이도.",
+    "questState": "S4_SOLO",
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": true },
+    "enemies": [
+      { "ref": "ENEMY_TOBREN_COMBAT", "count": 1 },
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1, "overrides": {
+        "name": "마이렐 단 경 (야간 책임자)", "hp": 65,
+        "stats": { "ATK": 18, "DEF": 16, "ACC": 7, "EVA": 4, "CRIT": 6, "CRIT_DMG": 1.6, "RESIST": 10, "SPEED": 5 },
+        "personality": "TACTICAL"
+      }}
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_TOBREN_COMBAT", "instance": 0, "distance": "MID", "angle": "SIDE" },
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 0, "distance": "CLOSE", "angle": "FRONT" }
+    ],
+    "envTags": ["INDOOR", "NARROW"],
+    "toneHint": "climax",
+    "timePhase": "NIGHT",
+    "rewards": { "gold": "40-80", "xp": 0, "clueChance": { "itemId": "CLUE_SMEARED_INK_LOG", "probability": 1.0 } }
+  },
+  {
+    "encounterId": "enc_slum_gang",
+    "name": "빈민가 건달 패거리",
+    "description": "빈민가 뒷골목에서 건달 패거리에게 둘러싸인다.",
+    "questState": null,
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+    "enemies": [
+      { "ref": "ENEMY_SLUM_THUG", "count": 2 },
+      { "ref": "ENEMY_SLUM_KNIFE", "count": 1 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_SLUM_THUG", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_SLUM_THUG", "instance": 1, "distance": "CLOSE", "angle": "SIDE" },
+      { "enemyRef": "ENEMY_SLUM_KNIFE", "instance": 0, "distance": "MID", "angle": "BACK" }
+    ],
+    "envTags": ["NARROW", "COVER_WALL"],
+    "toneHint": "tense",
+    "timePhase": "NIGHT",
+    "rewards": { "gold": "8-20", "xp": 0 }
+  },
+  {
+    "encounterId": "enc_market_thugs",
+    "name": "시장 불량배 습격",
+    "description": "시장 골목에서 보호비를 뜯는 불량배들과 충돌한다.",
+    "questState": null,
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+    "enemies": [
+      { "ref": "ENEMY_MARKET_ENFORCER", "count": 2 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_MARKET_ENFORCER", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_MARKET_ENFORCER", "instance": 1, "distance": "MID", "angle": "SIDE" }
+    ],
+    "envTags": ["OPEN", "COVER_CRATE"],
+    "toneHint": "tense",
+    "timePhase": "DAY",
+    "rewards": { "gold": "10-25", "xp": 0 }
+  },
+  {
+    "encounterId": "enc_guard_ambush",
+    "name": "경비대 지구 매복",
+    "description": "경비대 구역에서 의심을 받아 매수된 수비대원에게 붙잡힌다.",
+    "questState": null,
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+    "enemies": [
+      { "ref": "ENEMY_CORRUPT_GUARD", "count": 1 },
+      { "ref": "ENEMY_HARBOR_WATCHMAN", "count": 1 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_CORRUPT_GUARD", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_HARBOR_WATCHMAN", "instance": 0, "distance": "MID", "angle": "SIDE" }
+    ],
+    "envTags": ["OPEN", "COVER_WALL"],
+    "toneHint": "tense",
+    "timePhase": "AFTERNOON",
+    "rewards": { "gold": "15-35", "xp": 0 }
+  },
+  {
+    "encounterId": "enc_harbor_pirates",
+    "name": "항만 해적 조우",
+    "description": "밤중 부두에서 밀수품을 하역하던 해적과 마주친다.",
+    "questState": null,
+    "nodeType": "COMBAT",
+    "nodeMeta": { "isBoss": false },
+    "enemies": [
+      { "ref": "ENEMY_HARBOR_PIRATE", "count": 2 }
+    ],
+    "initialPositioning": [
+      { "enemyRef": "ENEMY_HARBOR_PIRATE", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
+      { "enemyRef": "ENEMY_HARBOR_PIRATE", "instance": 1, "distance": "MID", "angle": "SIDE" }
+    ],
+    "envTags": ["OPEN", "COVER_CRATE"],
+    "toneHint": "tense",
+    "timePhase": "NIGHT",
+    "rewards": { "gold": "15-35", "xp": 0 }
+  }
+]

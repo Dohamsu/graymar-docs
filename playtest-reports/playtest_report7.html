@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playtest Report #7 — 20턴 종합 테스트</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0F0F0F; color: #FAF8F5; font-family: 'IBM Plex Sans KR', 'Noto Sans KR', sans-serif; padding: 24px; line-height: 1.6; }
+h1 { color: #C9A962; font-size: 24px; margin-bottom: 8px; }
+h2 { color: #C9A962; font-size: 18px; margin: 32px 0 12px; border-bottom: 1px solid #1F1F1F; padding-bottom: 8px; }
+h3 { color: #FAF8F5; font-size: 15px; margin: 20px 0 8px; }
+.subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.card { background: #141414; border: 1px solid #1F1F1F; border-radius: 8px; padding: 16px; }
+.card-title { color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 8px; }
+.card-value { font-size: 28px; font-weight: 700; }
+.card-value.green { color: #27AE60; }
+.card-value.gold { color: #C9A962; }
+.card-value.red { color: #E74C3C; }
+.card-value.blue { color: #60A5FA; }
+.card-detail { color: #888; font-size: 12px; margin-top: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #1A1A1A; color: #C9A962; text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid #1F1F1F; }
+td { padding: 8px 12px; border-bottom: 1px solid #1F1F1F; vertical-align: top; }
+tr:hover { background: #1A1A1A; }
+tr.choice-row { background: #0A0A0A; color: #666; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; color: #FFF; white-space: nowrap; }
+.tag { display: inline-block; padding: 2px 6px; border: 1px solid; border-radius: 3px; font-size: 11px; margin: 2px; color: #FAF8F5; }
+.input-text { max-width: 280px; word-break: break-all; }
+.bar-row { display: flex; align-items: center; margin: 4px 0; }
+.bar-label { width: 130px; font-size: 12px; color: #888; flex-shrink: 0; }
+.bar { height: 22px; border-radius: 3px; color: #FFF; font-size: 11px; display: flex; align-items: center; padding: 0 8px; min-width: 30px; }
+.npc-change { font-size: 11px; margin: 2px 0; }
+.change-cell { max-width: 300px; }
+.summary-box { background: #1A1A1A; border-left: 4px solid #C9A962; padding: 12px 16px; margin: 12px 0; border-radius: 0 4px 4px 0; }
+.summary-box.critical { border-color: #E74C3C; }
+.summary-box.success { border-color: #27AE60; }
+.heat-chart { display: flex; align-items: flex-end; gap: 2px; height: 60px; margin: 12px 0; }
+.heat-bar { background: #C9A962; min-width: 16px; border-radius: 2px 2px 0 0; position: relative; }
+.heat-bar:hover::after { content: attr(data-tip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: #333; padding: 2px 6px; border-radius: 3px; font-size: 10px; white-space: nowrap; }
+.section-divider { border: none; border-top: 2px solid #1F1F1F; margin: 32px 0; }
+.findings { list-style: none; }
+.findings li { padding: 6px 0; border-bottom: 1px solid #1F1F1F; }
+.findings li::before { content: '•'; color: #C9A962; margin-right: 8px; }
+.findings li.issue::before { content: '⚠'; color: #E74C3C; }
+.findings li.good::before { content: '✓'; color: #27AE60; }
+</style>
+</head>
+<body>
+
+<h1>Playtest Report #7</h1>
+<p class="subtitle">20턴 종합 테스트 | SMUGGLER 프리셋 | 4 LOCATION 순환 | 20 서버 턴 | 2026-03-16</p>
+
+<div class="grid">
+    <div class="card">
+        <div class="card-title">의도 파싱 정확도</div>
+        <div class="card-value gold">9/11 (81%)</div>
+        <div class="card-detail">11개 ACTION 중 2건 불일치</div>
+    </div>
+    <div class="card">
+        <div class="card-title">판정 성공률</div>
+        <div class="card-value green">8/11 (72%)</div>
+        <div class="card-detail">SUCCESS 8 / PARTIAL 1 / FAIL 2</div>
+    </div>
+    <div class="card">
+        <div class="card-title">Notification 생성</div>
+        <div class="card-value blue">11</div>
+        <div class="card-detail">RELATION:9, INCIDENT:1, SYSTEM:1</div>
+    </div>
+    <div class="card">
+        <div class="card-title">Signal Feed</div>
+        <div class="card-value gold">12</div>
+        <div class="card-detail">RUMOR:1, VISUAL:5, ECONOMY:2, NPC_BEHAVIOR:2, SECURITY:2</div>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <div class="card-title">ActionType 다양성</div>
+        <div class="card-value green">9종</div>
+        <div class="card-detail">11개 ACTION에서 9개 고유 타입</div>
+    </div>
+    <div class="card">
+        <div class="card-title">ApproachVector 다양성</div>
+        <div class="card-value green">6종</div>
+        <div class="card-detail">OBSERVATIONAL, STEALTH, ECONOMIC, SOCIAL, PRESSURE, VIOLENT</div>
+    </div>
+    <div class="card">
+        <div class="card-title">NPC 감정 변화</div>
+        <div class="card-value green">11회</div>
+        <div class="card-detail">1명 NPC 변화</div>
+    </div>
+    <div class="card">
+        <div class="card-title">최종 Heat</div>
+        <div class="card-value gold">0</div>
+        <div class="card-detail">Max: 6, Safety: SAFE</div>
+    </div>
+</div>
+
+<hr class="section-divider">
+
+<h2>핵심 발견사항</h2>
+<ul class="findings">
+    <li class="issue">의도 파싱 정확도 81% — 개선 필요 (2건 불일치)</li>
+    <li class="issue">불일치: "주변 상인에게 장부에 대해 물어본다" → 기대 TALK, 실제 INVESTIGATE</li><li class="issue">불일치: "방심한 틈을 타 주머니를 뒤진다" → 기대 STEAL, 실제 SNEAK</li>
+    <li class="good">Notification Kind 다양화: RELATION:9, INCIDENT:1, SYSTEM:1 — 3종 분류 작동</li>
+    <li class="good">Signal Feed 채널 다양화: 5개 채널 사용 (RUMOR, VISUAL, ECONOMY, NPC_BEHAVIOR, SECURITY)</li>
+    <li class="good">NPC 감정 변화: THREATEN/STEAL 연속 시 dramatic한 변화 확인 (trust -24, fear 30, suspicion 32)</li>
+    <li class="good">ApproachVector 6종 분포: 편중 없이 다양한 벡터 사용</li>
+    <li class="good">판정 성공률 72% — SMUGGLER EVA/SPEED 보너스 반영</li>
+    <li class="good">Notification body 템플릿: 행동별 고유 메시지 정상 생성</li>
+</ul>
+
+<hr class="section-divider">
+
+<h2>턴별 상세</h2>
+<div style="overflow-x: auto;">
+<table>
+<thead>
+<tr><th>Turn</th><th>Type</th><th>Input</th><th>ActionType</th><th>Vector</th><th>Goal</th><th>GoalText</th><th>Outcome</th><th>Roll</th><th>Heat</th><th>Notification</th></tr>
+</thead>
+<tbody>
+<tr class="choice-row"><td>1</td><td>CHOICE</td><td class="input-text">accept_quest</td><td colspan="5">—</td><td>0</td><td></td></tr>
+<tr class="choice-row"><td>3</td><td>CHOICE</td><td class="input-text">go_market</td><td colspan="5">—</td><td>0</td><td></td></tr>
+<tr><td>4</td><td>ACTION</td><td class="input-text">주변 상인에게 장부에 대해 물어본다</td><td><span class="badge" style="background:#E74C3C">INVESTIGATE ✗ (exp TALK)</span></td><td>OBSERVATIONAL</td><td>GET_INFO</td><td>상인 관련 정보 확보</td><td>🎲<span class="badge" style="background:#E74C3C">FAIL</span>+1acc+mod1=0</td><td>2</td><td>2</td></tr>
+<tr><td>5</td><td>ACTION</td><td class="input-text">수상한 흔적을 찾아 시장 뒷골목을 조사한다</td><td><span class="badge" style="background:#27AE60">INVESTIGATE ✓</span></td><td>OBSERVATIONAL</td><td>GET_INFO</td><td>시장에서 정보 수집</td><td>🎲<span class="badge" style="background:#E74C3C">FAIL</span>+1acc+mod1=0</td><td>2</td><td>4</td></tr>
+<tr><td>6</td><td>ACTION</td><td class="input-text">몰래 창고 뒤편으로 숨어서 살펴본다</td><td><span class="badge" style="background:#27AE60">SNEAK ✓</span></td><td>STEALTH</td><td>HIDE_TRACE</td><td>창고 뒤편 관련 흔적 은폐</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+6eva+mod2=-1</td><td>7</td><td>5</td></tr>
+<tr><td>7</td><td>ACTION</td><td class="input-text">상인에게 물건값을 물어보며 흥정한다</td><td><span class="badge" style="background:#27AE60">TRADE ✓</span></td><td>ECONOMIC</td><td>ACQUIRE_RESOURCE</td><td>상인 획득</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+6speed+mod2=-1</td><td>7</td><td>6</td></tr>
+<tr class="choice-row"><td>9</td><td>CHOICE</td><td class="input-text">go_hub</td><td colspan="5">—</td><td>1</td><td></td></tr>
+<tr class="choice-row"><td>11</td><td>CHOICE</td><td class="input-text">go_harbor</td><td colspan="5">—</td><td>1</td><td></td></tr>
+<tr><td>12</td><td>ACTION</td><td class="input-text">부두 주변을 주의 깊게 관찰한다</td><td><span class="badge" style="background:#27AE60">OBSERVE ✓</span></td><td>OBSERVATIONAL</td><td>GET_INFO</td><td>항만에서 정보 수집</td><td>🎲<span class="badge" style="background:#C9A962">PARTIAL</span>+1eva+mod2=0</td><td>3</td><td>1</td></tr>
+<tr><td>13</td><td>ACTION</td><td class="input-text">부두 노동자에게 돈을 건네며 정보를 얻으려 한다</td><td><span class="badge" style="background:#27AE60">BRIBE ✓</span></td><td>ECONOMIC</td><td>GET_INFO</td><td>부두 노동자 관련 정보 확보</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+5speed+mod2=1</td><td>8</td><td>2</td></tr>
+<tr><td>14</td><td>ACTION</td><td class="input-text">짐을 나르는 노동자를 도와준다</td><td><span class="badge" style="background:#27AE60">HELP ✓</span></td><td>SOCIAL</td><td>SHIFT_RELATION</td><td>노동자과(와)의 관계 변화</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+5def+mod2=1</td><td>8</td><td>3</td></tr>
+<tr class="choice-row"><td>16</td><td>CHOICE</td><td class="input-text">go_hub</td><td colspan="5">—</td><td>0</td><td></td></tr>
+<tr class="choice-row"><td>18</td><td>CHOICE</td><td class="input-text">go_slums</td><td colspan="5">—</td><td>0</td><td></td></tr>
+<tr><td>19</td><td>ACTION</td><td class="input-text">수상한 자를 붙잡아 위협하며 정보를 캐낸다</td><td><span class="badge" style="background:#27AE60">THREATEN ✓</span></td><td>PRESSURE</td><td>ESCALATE_CONFLICT</td><td>수상한 자과(와)의 대립 격화</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+6atk+mod4=0</td><td>10</td><td>3</td></tr>
+<tr><td>20</td><td>ACTION</td><td class="input-text">방심한 틈을 타 주머니를 뒤진다</td><td><span class="badge" style="background:#E74C3C">SNEAK ✗ (exp STEAL)</span></td><td>STEALTH</td><td>GAIN_ACCESS</td><td>빈민가에서 접근 경로 확보</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+6eva+mod2=0</td><td>8</td><td>4</td></tr>
+<tr><td>21</td><td>ACTION</td><td class="input-text">거리의 거지에게 다가가 설득하여 소문을 듣는다</td><td><span class="badge" style="background:#27AE60">PERSUADE ✓</span></td><td>SOCIAL</td><td>SHIFT_RELATION</td><td>거리의 거지과(와)의 관계 변화</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+4speed+mod2=0</td><td>6</td><td>5</td></tr>
+<tr class="choice-row"><td>23</td><td>CHOICE</td><td class="input-text">go_hub</td><td colspan="5">—</td><td>0</td><td></td></tr>
+<tr class="choice-row"><td>25</td><td>CHOICE</td><td class="input-text">go_guard</td><td colspan="5">—</td><td>0</td><td></td></tr>
+<tr><td>26</td><td>ACTION</td><td class="input-text">경비병과 싸운다</td><td><span class="badge" style="background:#27AE60">FIGHT ✓</span></td><td>VIOLENT</td><td>ESCALATE_CONFLICT</td><td>경비병과(와)의 대립 격화</td><td>🎲<span class="badge" style="background:#27AE60">SUCCESS</span>+3atk+mod4=0</td><td>7</td><td>3</td></tr>
+<tr class="choice-row"><td>28</td><td>CHOICE</td><td class="input-text">go_hub</td><td colspan="5">—</td><td>0</td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<hr class="section-divider">
+
+<h2>분포 분석</h2>
+<div class="grid">
+    <div class="card">
+        <div class="card-title">ActionType 분포</div>
+        <div class="bar-row"><span class="bar-label">INVESTIGATE</span><div class="bar" style="width:100.0%;background:#BB86FC">2</div></div>
+<div class="bar-row"><span class="bar-label">SNEAK</span><div class="bar" style="width:100.0%;background:#888">2</div></div>
+<div class="bar-row"><span class="bar-label">TRADE</span><div class="bar" style="width:50.0%;background:#27AE60">1</div></div>
+<div class="bar-row"><span class="bar-label">OBSERVE</span><div class="bar" style="width:50.0%;background:#C9A962">1</div></div>
+<div class="bar-row"><span class="bar-label">BRIBE</span><div class="bar" style="width:50.0%;background:#FF6B6B">1</div></div>
+<div class="bar-row"><span class="bar-label">HELP</span><div class="bar" style="width:50.0%;background:#4ECDC4">1</div></div>
+<div class="bar-row"><span class="bar-label">THREATEN</span><div class="bar" style="width:50.0%;background:#E74C3C">1</div></div>
+<div class="bar-row"><span class="bar-label">PERSUADE</span><div class="bar" style="width:50.0%;background:#A29BFE">1</div></div>
+<div class="bar-row"><span class="bar-label">FIGHT</span><div class="bar" style="width:50.0%;background:#E74C3C">1</div></div>
+    </div>
+    <div class="card">
+        <div class="card-title">ApproachVector 분포</div>
+        <div class="bar-row"><span class="bar-label">OBSERVATIONAL</span><div class="bar" style="width:100.0%;background:#BB86FC">3</div></div>
+<div class="bar-row"><span class="bar-label">STEALTH</span><div class="bar" style="width:66.66666666666666%;background:#888">2</div></div>
+<div class="bar-row"><span class="bar-label">ECONOMIC</span><div class="bar" style="width:66.66666666666666%;background:#27AE60">2</div></div>
+<div class="bar-row"><span class="bar-label">SOCIAL</span><div class="bar" style="width:66.66666666666666%;background:#60A5FA">2</div></div>
+<div class="bar-row"><span class="bar-label">PRESSURE</span><div class="bar" style="width:33.33333333333333%;background:#FF6B6B">1</div></div>
+<div class="bar-row"><span class="bar-label">VIOLENT</span><div class="bar" style="width:33.33333333333333%;background:#E74C3C">1</div></div>
+    </div>
+</div>
+<div class="grid">
+    <div class="card">
+        <div class="card-title">판정 결과 분포</div>
+        <div class="bar-row"><span class="bar-label">SUCCESS</span><div class="bar" style="width:72.72727272727273%;background:#27AE60">8</div></div>
+<div class="bar-row"><span class="bar-label">PARTIAL</span><div class="bar" style="width:9.090909090909092%;background:#C9A962">1</div></div>
+<div class="bar-row"><span class="bar-label">FAIL</span><div class="bar" style="width:18.181818181818183%;background:#E74C3C">2</div></div>
+    </div>
+    <div class="card">
+        <div class="card-title">GoalCategory 분포</div>
+        <div class="bar-row"><span class="bar-label">GET_INFO</span><div class="bar" style="width:100.0%;background:#60A5FA">4</div></div>
+<div class="bar-row"><span class="bar-label">SHIFT_RELATION</span><div class="bar" style="width:50.0%;background:#60A5FA">2</div></div>
+<div class="bar-row"><span class="bar-label">ESCALATE_CONFLICT</span><div class="bar" style="width:50.0%;background:#60A5FA">2</div></div>
+<div class="bar-row"><span class="bar-label">HIDE_TRACE</span><div class="bar" style="width:25.0%;background:#60A5FA">1</div></div>
+<div class="bar-row"><span class="bar-label">ACQUIRE_RESOURCE</span><div class="bar" style="width:25.0%;background:#60A5FA">1</div></div>
+<div class="bar-row"><span class="bar-label">GAIN_ACCESS</span><div class="bar" style="width:25.0%;background:#60A5FA">1</div></div>
+    </div>
+</div>
+
+<hr class="section-divider">
+
+<h2>Notification 시스템</h2>
+<div class="grid">
+    <div class="card">
+        <div class="card-title">Kind 분포</div>
+        <div class="bar-row"><span class="bar-label">RELATION</span><div class="bar" style="width:100.0%;background:#60A5FA">9</div></div>
+<div class="bar-row"><span class="bar-label">INCIDENT</span><div class="bar" style="width:11.11111111111111%;background:#E74C3C">1</div></div>
+<div class="bar-row"><span class="bar-label">SYSTEM</span><div class="bar" style="width:11.11111111111111%;background:#C9A962">1</div></div>
+    </div>
+    <div class="card">
+        <div class="card-title">전체 알림 목록</div>
+        <table>
+        <thead><tr><th>Turn</th><th>Kind</th><th>Title</th><th>Body</th></tr></thead>
+        <tbody><tr><td>4</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 실패했습니다</td><td>아무런 단서도 찾지 못했습니다.</td></tr><tr><td>5</td><td><span class="badge" style="background:#E74C3C">INCIDENT</span></td><td>행동이 실패했습니다</td><td>아무런 단서도 찾지 못했습니다.</td></tr><tr><td>6</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>들키지 않고 목표를 달성했습니다.</td></tr><tr><td>7</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>좋은 거래였습니다.</td></tr><tr><td>12</td><td><span class="badge" style="background:#C9A962">SYSTEM</span></td><td>부분적으로 성공했습니다</td><td>일부만 관찰할 수 있었습니다.</td></tr><tr><td>13</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>거래가 성사되었습니다.</td></tr><tr><td>14</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>도움이 큰 효과를 거뒀습니다.</td></tr><tr><td>19</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>위협이 먹혔습니다.</td></tr><tr><td>20</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>들키지 않고 목표를 달성했습니다.</td></tr><tr><td>21</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>상대를 설득하는 데 성공했습니다.</td></tr><tr><td>26</td><td><span class="badge" style="background:#60A5FA">RELATION</span></td><td>행동이 성공했습니다</td><td>전투에서 우위를 점했습니다.</td></tr></tbody>
+        </table>
+    </div>
+</div>
+
+<hr class="section-divider">
+
+<h2>Signal Feed (최종 상태)</h2>
+<div class="grid">
+    <div class="card">
+        <div class="card-title">채널 분포</div>
+        <div class="bar-row"><span class="bar-label">VISUAL</span><div class="bar" style="width:100.0%;background:#BB86FC">5</div></div>
+<div class="bar-row"><span class="bar-label">ECONOMY</span><div class="bar" style="width:40.0%;background:#27AE60">2</div></div>
+<div class="bar-row"><span class="bar-label">NPC_BEHAVIOR</span><div class="bar" style="width:40.0%;background:#60A5FA">2</div></div>
+<div class="bar-row"><span class="bar-label">SECURITY</span><div class="bar" style="width:40.0%;background:#E74C3C">2</div></div>
+<div class="bar-row"><span class="bar-label">RUMOR</span><div class="bar" style="width:20.0%;background:#C9A962">1</div></div>
+    </div>
+    <div class="card">
+        <div class="card-title">전체 시그널 목록 (12개)</div>
+        <table>
+        <thead><tr><th>Channel</th><th>Severity</th><th>Text</th></tr></thead>
+        <tbody><tr><td><span class="badge" style="background:#C9A962">RUMOR</span></td><td>█░░░░ (1)</td><td>시장에서 소매치기가 늘었다</td></tr><tr><td><span class="badge" style="background:#BB86FC">VISUAL</span></td><td>███░░ (3)</td><td>조사가 차단되었다.</td></tr><tr><td><span class="badge" style="background:#BB86FC">VISUAL</span></td><td>███░░ (3)</td><td>조사가 차단되었다.</td></tr><tr><td><span class="badge" style="background:#BB86FC">VISUAL</span></td><td>█░░░░ (1)</td><td>수상한 그림자가 스쳐 지나갔다.</td></tr><tr><td><span class="badge" style="background:#27AE60">ECONOMY</span></td><td>█░░░░ (1)</td><td>거래가 성사된 소식이 들린다.</td></tr><tr><td><span class="badge" style="background:#BB86FC">VISUAL</span></td><td>██░░░ (2)</td><td>누군가 주변을 살피고 있었다.</td></tr><tr><td><span class="badge" style="background:#27AE60">ECONOMY</span></td><td>█░░░░ (1)</td><td>뒷거래 소문이 돈다.</td></tr><tr><td><span class="badge" style="background:#60A5FA">NPC_BEHAVIOR</span></td><td>█░░░░ (1)</td><td>누군가 도움을 받았다.</td></tr><tr><td><span class="badge" style="background:#E74C3C">SECURITY</span></td><td>██░░░ (2)</td><td>누군가 위협을 받았다는 소문이 돈다.</td></tr><tr><td><span class="badge" style="background:#BB86FC">VISUAL</span></td><td>█░░░░ (1)</td><td>수상한 그림자가 스쳐 지나갔다.</td></tr><tr><td><span class="badge" style="background:#60A5FA">NPC_BEHAVIOR</span></td><td>█░░░░ (1)</td><td>누군가 설득당한 듯하다.</td></tr><tr><td><span class="badge" style="background:#E74C3C">SECURITY</span></td><td>██░░░ (2)</td><td>근처에서 격투 소리가 들렸다.</td></tr></tbody>
+        </table>
+    </div>
+</div>
+
+<hr class="section-divider">
+
+<h2>NPC 감정 변화</h2>
+<table>
+<thead><tr><th>NPC</th><th>Trust</th><th>Fear</th><th>Respect</th><th>Suspicion</th><th>Attachment</th><th>변화 이력</th></tr></thead>
+<tbody><tr><td>조용한 문서 실무자<br><small style="color:#666">NPC_MOON_SEA</small></td><td>5</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="change-cell"><span style="color:#666">변화 없음</span></td></tr><tr><td>날카로운 눈매의 회계사<br><small style="color:#666">NPC_SEO_DOYUN</small></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="change-cell"><span style="color:#666">변화 없음</span></td></tr><tr><td>투박한 노동자<br><small style="color:#666">NPC_YOON_HAMIN</small></td><td>10</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="change-cell"><span style="color:#666">변화 없음</span></td></tr><tr><td>후드를 깊이 쓴 정보상<br><small style="color:#666">NPC_INFO_BROKER</small></td><td>-24</td><td>28.5</td><td>-7</td><td>31.5</td><td>0</td><td class="change-cell"><div class="npc-change"><span style="color:#E74C3C">T19 trust: -18.0</span> (위협 행동)</div><div class="npc-change"><span style="color:#27AE60">T19 fear: +30.0</span> (위협 행동)</div><div class="npc-change"><span style="color:#E74C3C">T19 respect: -7.0</span> (위협 행동)</div><div class="npc-change"><span style="color:#27AE60">T19 suspicion: +18.0</span> (위협 행동)</div><div class="npc-change"><span style="color:#E74C3C">T20 trust: -6.0</span> (절도 시도)</div><div class="npc-change"><span style="color:#E74C3C">T20 fear: -0.5</span> (절도 시도)</div><div class="npc-change"><span style="color:#27AE60">T20 suspicion: +14.5</span> (절도 시도)</div><div class="npc-change"><span style="color:#E74C3C">T21 fear: -0.5</span> (설득 시도)</div><div class="npc-change"><span style="color:#E74C3C">T21 suspicion: -0.5</span> (설득 시도)</div><div class="npc-change"><span style="color:#E74C3C">T26 fear: -0.5</span> (전투 시도)</div><div class="npc-change"><span style="color:#E74C3C">T26 suspicion: -0.5</span> (전투 시도)</div></td></tr><tr><td>수상한 창고 관리인<br><small style="color:#666">NPC_BAEK_SEUNGHO</small></td><td>-5</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="change-cell"><span style="color:#666">변화 없음</span></td></tr><tr><td>권위적인 야간 경비 책임자<br><small style="color:#666">NPC_KANG_CHAERIN</small></td><td>-10</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="change-cell"><span style="color:#666">변화 없음</span></td></tr><tr><td>위풍당당한 수비대 장교<br><small style="color:#666">NPC_GUARD_CAPTAIN</small></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="change-cell"><span style="color:#666">변화 없음</span></td></tr></tbody>
+</table>
+
+<hr class="section-divider">
+
+<h2>Heat 추이</h2>
+<div class="heat-chart">
+<div class="heat-bar" style="height:4px" data-tip="T1: Heat 0"></div><div class="heat-bar" style="height:4px" data-tip="T3: Heat 0"></div><div class="heat-bar" style="height:12px" data-tip="T4: Heat 2"></div><div class="heat-bar" style="height:24px" data-tip="T5: Heat 4"></div><div class="heat-bar" style="height:30px" data-tip="T6: Heat 5"></div><div class="heat-bar" style="height:36px" data-tip="T7: Heat 6"></div><div class="heat-bar" style="height:6px" data-tip="T9: Heat 1"></div><div class="heat-bar" style="height:6px" data-tip="T11: Heat 1"></div><div class="heat-bar" style="height:6px" data-tip="T12: Heat 1"></div><div class="heat-bar" style="height:12px" data-tip="T13: Heat 2"></div><div class="heat-bar" style="height:18px" data-tip="T14: Heat 3"></div><div class="heat-bar" style="height:4px" data-tip="T16: Heat 0"></div><div class="heat-bar" style="height:4px" data-tip="T18: Heat 0"></div><div class="heat-bar" style="height:18px" data-tip="T19: Heat 3"></div><div class="heat-bar" style="height:24px" data-tip="T20: Heat 4"></div><div class="heat-bar" style="height:30px" data-tip="T21: Heat 5"></div><div class="heat-bar" style="height:4px" data-tip="T23: Heat 0"></div><div class="heat-bar" style="height:4px" data-tip="T25: Heat 0"></div><div class="heat-bar" style="height:18px" data-tip="T26: Heat 3"></div><div class="heat-bar" style="height:4px" data-tip="T28: Heat 0"></div>
+</div>
+<div style="font-size:11px;color:#666;display:flex;justify-content:space-between;">
+<span>T1</span>
+<span>T28</span>
+</div>
+
+<hr class="section-divider">
+
+<h2>Incident 상태 (최종)</h2>
+<table>
+<thead><tr><th>ID</th><th>Kind</th><th>Stage</th><th>Control</th><th>Pressure</th><th>PlayerProgress</th><th>RivalProgress</th><th>Status</th></tr></thead>
+<tbody><tr><td>INC_MARKET_THEFT</td><td>CRIMINAL</td><td>0</td><td>20</td><td>22</td><td>20</td><td>10</td><td>🔴 Active</td></tr></tbody>
+</table>
+
+<hr class="section-divider">
+
+<h2>의도 파싱 불일치 상세</h2>
+<table><thead><tr><th>Turn</th><th>Input</th><th>Expected</th><th>Got</th><th>Vector</th><th>GoalText</th></tr></thead><tbody><tr><td>4</td><td>주변 상인에게 장부에 대해 물어본다</td><td><span class="badge" style="background:#27AE60">TALK</span></td><td><span class="badge" style="background:#E74C3C">INVESTIGATE</span></td><td>OBSERVATIONAL</td><td>상인 관련 정보 확보</td></tr><tr><td>20</td><td>방심한 틈을 타 주머니를 뒤진다</td><td><span class="badge" style="background:#27AE60">STEAL</span></td><td><span class="badge" style="background:#E74C3C">SNEAK</span></td><td>STEALTH</td><td>빈민가에서 접근 경로 확보</td></tr></tbody></table>
+
+<hr class="section-divider">
+
+<h2>개선 제안</h2>
+
+<div class="summary-box">
+<h3>1. 의도 파싱 (81%)</h3>
+<ul class="findings">
+<li class="issue">"주변 상인에게 장부에 대해 물어본다" → 기대 TALK, 실제 INVESTIGATE</li><li class="issue">"방심한 틈을 타 주머니를 뒤진다" → 기대 STEAL, 실제 SNEAK</li>
+<li>• "물어본다" 패턴이 INVESTIGATE로 파싱 — "물어본다" 패턴은 TALK에 우선 배정 필요</li>
+<li>• "주머니를 뒤진다" 패턴이 SNEAK으로 파싱 — "뒤진다" 키워드를 STEAL에 추가 필요</li>
+</ul>
+</div>
+
+<div class="summary-box success">
+<h3>2. Notification 시스템 ✓</h3>
+<ul class="findings">
+<li class="good">3개 Kind 분류 정상: RELATION(9), INCIDENT(1), SYSTEM(1)</li>
+<li class="good">행동별 body 템플릿 정상 작동 (11건 모두 적절한 한국어 메시지)</li>
+</ul>
+</div>
+
+<div class="summary-box success">
+<h3>3. Signal Feed ✓</h3>
+<ul class="findings">
+<li class="good">5개 채널 중 5개 사용: RUMOR, VISUAL, ECONOMY, NPC_BEHAVIOR, SECURITY</li>
+<li class="good">행동별 고유 시그널 텍스트 생성 정상</li>
+</ul>
+</div>
+
+<div class="summary-box success">
+<h3>4. NPC 감정 시스템 ✓</h3>
+<ul class="findings">
+<li class="good">THREATEN+STEAL 연속 시 dramatic 변화: trust -24, fear 30, suspicion 32</li>
+<li class="good">passive drift 확인: fear 30→28.5 (0.5/턴 감소)</li>
+</ul>
+</div>
+
+<div class="summary-box">
+<h3>5. PlayerThread</h3>
+<ul class="findings">
+<li class="issue">UI 번들(serverResult.ui)에 playerThreads 미포함</li>
+<li>• turns.service.ts에서 ui.playerThreads 할당 확인 필요</li>
+</ul>
+</div>
+
+<p style="color:#666;margin-top:32px;font-size:12px;">Generated by Claude Code Playtest Tool | 20 server turns | Run ID: c669fbc4-375f-460c-8dd0-6cd433f2c605</p>
+</body>
+</html>

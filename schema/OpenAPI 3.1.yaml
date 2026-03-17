@@ -1,0 +1,425 @@
+openapi: 3.1.0
+info:
+  title: Text RPG API
+  version: 0.1.0
+
+servers:
+  - url: https://api.example.com
+
+paths:
+  /v1/runs/{runId}:
+    get:
+      summary: Get current run state (reconnect / recovery)
+      operationId: getRun
+      description: |
+        앱 재접속, 브라우저 새로고침, 복구 시 단일 호출로 현재 화면을 복원한다.
+        LLM 재호출 없이 server_result 기반으로 UI를 재구성한다.
+      parameters:
+        - name: runId
+          in: path
+          required: true
+          schema: { type: string, minLength: 1, maxLength: 80 }
+        - name: turnsLimit
+          in: query
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 50, default: 20 }
+          description: 최근 턴 요약 포함 개수
+        - name: turnsBefore
+          in: query
+          required: false
+          schema: { type: integer, minimum: 0 }
+          description: 커서 기반 페이징 (이 turnNo 이전)
+
+      responses:
+        "200":
+          description: Run state for recovery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetRunResponse"
+        "404":
+          description: Run not found or no access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /v1/runs/{runId}/turns:
+    post:
+      summary: Submit a turn input and resolve server result
+      operationId: postTurn
+      parameters:
+        - name: runId
+          in: path
+          required: true
+          schema: { type: string, minLength: 1, maxLength: 80 }
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostTurnRequest"
+
+      responses:
+        "200":
+          description: Turn resolved successfully (idempotent safe)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostTurnResponse"
+        "409":
+          description: Turn conflict (expectedNextTurnNo mismatch)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
+          description: Validation error (schema/constraints)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    # ──────────────── GET /runs/{runId} ────────────────
+
+    GetRunResponse:
+      type: object
+      additionalProperties: false
+      required: [run, currentNode, lastResult, memory, turns, page]
+      properties:
+        run:
+          $ref: "#/components/schemas/RunDetail"
+        currentNode:
+          $ref: "#/components/schemas/NodeDetail"
+        lastResult:
+          $ref: "#/components/schemas/ServerResultV1"
+        memory:
+          $ref: "#/components/schemas/MemorySnapshot"
+        battleState:
+          oneOf:
+            - { $ref: "#/components/schemas/BattleState" }
+            - { type: "null" }
+          description: 전투 중인 경우에만 존재
+        turns:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/TurnSummary"
+        page:
+          $ref: "#/components/schemas/PageInfo"
+
+    RunDetail:
+      type: object
+      additionalProperties: false
+      required: [id, status, runType, actLevel, chapterIndex, currentNodeIndex, currentTurnNo, startedAt, updatedAt]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 80 }
+        status: { type: string, enum: [RUN_ACTIVE, RUN_ENDED, RUN_ABORTED] }
+        runType: { type: string, enum: [CAPITAL, PROVINCE, BORDER], description: "수도/지방/국경 RUN 유형" }
+        actLevel: { type: integer, minimum: 1, maximum: 6 }
+        chapterIndex: { type: integer, minimum: 0 }
+        currentNodeIndex: { type: integer, minimum: 0 }
+        currentTurnNo: { type: integer, minimum: 0 }
+        startedAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    NodeDetail:
+      type: object
+      additionalProperties: false
+      required: [id, index, type, state, environmentTags]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 80 }
+        index: { type: integer, minimum: 0 }
+        type: { type: string, enum: [COMBAT, EVENT, REST, SHOP, EXIT] }
+        state: { type: string, enum: [NODE_ACTIVE, NODE_ENDED] }
+        environmentTags:
+          type: array
+          maxItems: 6
+          items: { type: string, minLength: 1, maxLength: 24 }
+        nodeMeta:
+          type: object
+          additionalProperties: false
+          properties:
+            isBoss: { type: boolean, default: false }
+            isIntro: { type: boolean, default: false }
+
+    BattleState:
+      type: object
+      additionalProperties: false
+      required: [phase, playerState, enemiesState, lastResolvedTurnNo]
+      description: |
+        전투 중 상태 스냅샷. 복구/재접속 시 전투를 이어가기 위해 사용.
+        distance/angle은 enemies에만 존재 (per-enemy 정본). playerState에는 포함하지 않는다.
+      properties:
+        phase: { type: string, enum: [START, TURN, END] }
+        playerState:
+          type: object
+          additionalProperties: false
+          required: [hp, stamina, status]
+          properties:
+            hp: { type: integer, minimum: 0 }
+            stamina: { type: integer, minimum: 0 }
+            status:
+              type: array
+              maxItems: 12
+              items: { type: string, minLength: 1, maxLength: 40 }
+        enemiesState:
+          type: array
+          maxItems: 6
+          items:
+            type: object
+            additionalProperties: false
+            required: [id, hp, status, personality, distance, angle]
+            properties:
+              id: { type: string, minLength: 1, maxLength: 80 }
+              hp: { type: integer, minimum: 0 }
+              status:
+                type: array
+                maxItems: 12
+                items: { type: string, minLength: 1, maxLength: 40 }
+              personality: { type: string, enum: [AGGRESSIVE, TACTICAL, COWARDLY, BERSERK, SNIPER] }
+              distance: { type: string, enum: [ENGAGED, CLOSE, MID, FAR, OUT], description: "이 적과 플레이어 간 거리 (per-enemy 정본)" }
+              angle: { type: string, enum: [FRONT, SIDE, BACK], description: "이 적 기준 플레이어 방향 (per-enemy 정본)" }
+        lastResolvedTurnNo: { type: integer, minimum: 0 }
+
+    MemorySnapshot:
+      type: object
+      additionalProperties: false
+      required: [theme, storySummary, nodeFacts, recent]
+      description: "llm_ctx_v1.memory와 동일 구조"
+      properties:
+        theme:
+          type: array
+          maxItems: 12
+          items:
+            type: object
+            additionalProperties: false
+            required: [id, text, priority, tags]
+            properties:
+              id: { type: string }
+              text: { type: string }
+              priority: { type: integer }
+              tags: { type: array, items: { type: string } }
+              expiresAt: { oneOf: [{ type: string, format: date-time }, { type: "null" }] }
+        storySummary: { type: string, maxLength: 2000 }
+        nodeFacts:
+          type: array
+          maxItems: 20
+          items:
+            type: object
+            additionalProperties: false
+            required: [key, value, importance, tags]
+            properties:
+              key: { type: string }
+              value: { type: string }
+              importance: { type: number, minimum: 0, maximum: 1 }
+              tags: { type: array, items: { type: string } }
+        recent:
+          type: object
+          additionalProperties: false
+          required: [shortSummaries]
+          properties:
+            shortSummaries:
+              type: array
+              maxItems: 8
+              items: { type: string, maxLength: 180 }
+
+    TurnSummary:
+      type: object
+      additionalProperties: false
+      required: [turnNo, inputType, rawInput, parsedBy, policyResult, llmStatus, shortSummary, createdAt]
+      properties:
+        turnNo: { type: integer, minimum: 0 }
+        inputType: { type: string, enum: [ACTION, CHOICE, SYSTEM] }
+        rawInput: { type: string, maxLength: 400 }
+        parsedBy: { type: string, enum: [RULE, LLM, MERGED] }
+        policyResult: { type: string, enum: [ALLOW, TRANSFORM, PARTIAL, DENY] }
+        llmStatus: { type: string, enum: [PENDING, RUNNING, DONE, FAILED, SKIPPED] }
+        shortSummary: { type: string, maxLength: 180 }
+        createdAt: { type: string, format: date-time }
+
+    PageInfo:
+      type: object
+      additionalProperties: false
+      required: [hasMore]
+      properties:
+        hasMore: { type: boolean }
+        nextBefore:
+          oneOf:
+            - { type: integer, minimum: 0 }
+            - { type: "null" }
+
+    # ──────────────── POST /runs/{runId}/turns ────────────────
+
+    PostTurnRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - input
+        - idempotencyKey
+        - expectedNextTurnNo
+        - client
+      properties:
+        input:
+          $ref: "#/components/schemas/TurnInput"
+        idempotencyKey:
+          type: string
+          minLength: 8
+          maxLength: 80
+          description: Unique key per user action (UUID recommended)
+        expectedNextTurnNo:
+          type: integer
+          minimum: 0
+          description: Concurrency guard. Must match run.current_turn_no
+        client:
+          type: object
+          additionalProperties: false
+          required: [uiMode]
+          properties:
+            uiMode:
+              type: string
+              enum: [CHAT, NOVEL]
+            locale:
+              type: string
+              minLength: 2
+              maxLength: 10
+              default: "ko-KR"
+            timezone:
+              type: string
+              minLength: 3
+              maxLength: 64
+              default: "Asia/Seoul"
+        options:
+          type: object
+          additionalProperties: false
+          properties:
+            wantNarrative:
+              type: boolean
+              default: true
+              description: If true, server may also return narrative text when available
+            narrativeMode:
+              type: string
+              enum: [AUTO, CHAT, NOVEL]
+              default: AUTO
+            allowLLMFallbackParse:
+              type: boolean
+              default: true
+
+    TurnInput:
+      type: object
+      additionalProperties: false
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [ACTION, CHOICE, SYSTEM]
+        text:
+          type: string
+          maxLength: 400
+          description: Free text input (for ACTION/SYSTEM; optional for CHOICE)
+        choiceId:
+          type: string
+          maxLength: 64
+          description: Required when type=CHOICE
+        systemCommand:
+          type: string
+          enum: [CHECK_STATUS, INVENTORY, NOTE, HELP]
+          description: Required when type=SYSTEM (if not using text)
+        payload:
+          type: object
+          additionalProperties: true
+          description: Optional structured hints (targetId, direction, itemId...)
+
+      allOf:
+        - if:
+            properties: { type: { const: CHOICE } }
+          then:
+            required: [choiceId]
+        - if:
+            properties: { type: { const: ACTION } }
+          then:
+            required: [text]
+        - if:
+            properties: { type: { const: SYSTEM } }
+          then:
+            anyOf:
+              - required: [systemCommand]
+              - required: [text]
+
+    PostTurnResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - turnNo
+        - accepted
+        - serverResult
+        - llm
+      properties:
+        accepted:
+          type: boolean
+          description: True when request is accepted (idempotent: same request returns same response)
+        turnNo:
+          type: integer
+          minimum: 0
+        serverResult:
+          $ref: "#/components/schemas/ServerResultV1"
+        llm:
+          $ref: "#/components/schemas/LLMStatusBundle"
+        meta:
+          type: object
+          additionalProperties: false
+          properties:
+            runStatus:
+              type: string
+              enum: [RUN_ACTIVE, RUN_ENDED, RUN_ABORTED]
+            nodeTransitioned:
+              type: boolean
+            nextExpectedTurnNo:
+              type: integer
+              minimum: 0
+
+    # ──────────────── Shared ────────────────
+
+    LLMStatusBundle:
+      type: object
+      additionalProperties: false
+      required: [status]
+      description: |
+        POST /turns 응답에서는 PENDING/DONE/FAILED/SKIPPED만 반환한다.
+        RUNNING은 POST 시점에는 불가능하므로 의도적으로 제외.
+        GET /turns/{turnNo} 응답에서는 RUNNING이 포함될 수 있다 (10_turn_detail_endpoint 참조).
+      properties:
+        status:
+          type: string
+          enum: [PENDING, DONE, FAILED, SKIPPED]
+        narrative:
+          type: string
+          maxLength: 4000
+          description: Present when status=DONE and wantNarrative=true
+        error:
+          type: object
+          additionalProperties: true
+          description: Present when status=FAILED
+
+    ServerResultV1:
+      type: object
+      description: See server_result_v1.schema.json (canonical)
+      additionalProperties: true
+
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          maxLength: 64
+        message:
+          type: string
+          maxLength: 300
+        details:
+          type: object
+          additionalProperties: true

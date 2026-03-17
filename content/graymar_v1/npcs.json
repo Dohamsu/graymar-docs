@@ -1,0 +1,134 @@
+[
+  {
+    "npcId": "NPC_YOON_HAMIN",
+    "name": "하를런 보스",
+    "unknownAlias": "투박한 노동자",
+    "role": "부두 노동 형제단 연락책",
+    "faction": "LABOR_GUILD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": ["하를런", "보스"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 10,
+    "agenda": "노동자 권리 보호, 부두 이권 사수"
+  },
+  {
+    "npcId": "NPC_SEO_DOYUN",
+    "name": "에드릭 베일",
+    "unknownAlias": "날카로운 눈매의 회계사",
+    "role": "은장부 상단 회계 담당",
+    "faction": "MERCHANT_CONSORTIUM",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": ["에드릭", "베일"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "agenda": "상단 장부 은폐, 개인 이익 추구"
+  },
+  {
+    "npcId": "NPC_KANG_CHAERIN",
+    "name": "마이렐 단 경",
+    "unknownAlias": "권위적인 야간 경비 책임자",
+    "role": "그레이마르 도시수비대 야간 책임자",
+    "faction": "CITY_GUARD",
+    "hostile": "conditional",
+    "combatProfile": {
+      "note": "S4_CONFRONT에서 적대 전환 가능 (평판 -30 이하)",
+      "enemyRef": "ENEMY_CORRUPT_GUARD",
+      "overrides": {
+        "name": "마이렐 단 경 (야간 책임자)",
+        "hp": 110,
+        "stats": {
+          "ATK": 18,
+          "DEF": 16,
+          "ACC": 7,
+          "EVA": 4,
+          "CRIT": 6,
+          "CRIT_DMG": 1.6,
+          "RESIST": 10,
+          "SPEED": 5
+        },
+        "personality": "TACTICAL"
+      }
+    },
+    "title": "경",
+    "house": "단",
+    "aliases": ["마이렐", "마이렐 경", "단가(家)의 마이렐"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CALCULATING",
+    "initialTrust": -10,
+    "agenda": "도시 치안 유지, 권력 기반 강화"
+  },
+  {
+    "npcId": "NPC_BAEK_SEUNGHO",
+    "name": "토브렌 하위크",
+    "unknownAlias": "수상한 창고 관리인",
+    "role": "동부 부두 창고 관리자",
+    "faction": null,
+    "hostile": "conditional",
+    "combatProfile": {
+      "note": "창고 잠입 시 적대 가능 (S3_TRACE_ROUTE, Insight 체크 실패 시)",
+      "enemyRef": "ENEMY_WAREHOUSE_GUARD",
+      "overrides": {
+        "name": "토브렌 하위크 (창고 관리자)",
+        "hp": 55,
+        "personality": "COWARDLY"
+      }
+    },
+    "title": null,
+    "aliases": ["토브렌", "하위크"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": -5,
+    "agenda": "밀수 루트 은폐, 생존"
+  },
+  {
+    "npcId": "NPC_MOON_SEA",
+    "name": "라이라 케스텔",
+    "unknownAlias": "조용한 문서 실무자",
+    "role": "상단 문서실 암호 메모 실무자",
+    "faction": "MERCHANT_CONSORTIUM",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": ["라이라", "케스텔"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 5,
+    "agenda": "상단 내부 정보 관리, 자기 안전 확보"
+  },
+  {
+    "npcId": "NPC_INFO_BROKER",
+    "name": "쉐도우",
+    "unknownAlias": "후드를 깊이 쓴 정보상",
+    "role": "뒷골목 정보 브로커. 양쪽 세력 모두에게 정보를 판다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": ["쉐도우", "정보상"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "agenda": "정보 거래로 이익 극대화"
+  },
+  {
+    "npcId": "NPC_GUARD_CAPTAIN",
+    "name": "벨론 대위",
+    "unknownAlias": "위풍당당한 수비대 장교",
+    "role": "그레이마르 수비대 대위. 마이렐의 상관으로 내부 부패 진압 의지가 있다.",
+    "faction": "CITY_GUARD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": "대위",
+    "aliases": ["벨론", "대위"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "agenda": "내부 부패 척결, 수비대 기강 확립"
+  }
+]

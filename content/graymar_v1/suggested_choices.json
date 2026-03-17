@@ -1,0 +1,213 @@
+{
+  "RUMOR": [
+    {
+      "id": "rumor_investigate",
+      "label": "소문의 출처를 추적한다",
+      "hint": "정보를 더 모을 수 있다",
+      "affordance": "INVESTIGATE"
+    },
+    {
+      "id": "rumor_bribe",
+      "label": "금화를 건네며 더 물어본다",
+      "hint": "확실한 정보를 얻을 수 있다",
+      "affordance": "BRIBE",
+      "riskLevel": 2
+    },
+    {
+      "id": "rumor_observe",
+      "label": "조용히 듣기만 한다",
+      "hint": "안전하지만 정보가 제한적",
+      "affordance": "OBSERVE"
+    }
+  ],
+  "FACTION": [
+    {
+      "id": "faction_persuade",
+      "label": "대의를 내세워 협력을 구한다",
+      "hint": "성공하면 세력 평판이 상승한다",
+      "affordance": "PERSUADE",
+      "riskLevel": 2
+    },
+    {
+      "id": "faction_trade",
+      "label": "실리적인 거래를 제안한다",
+      "hint": "자원을 대가로 관계를 구축한다",
+      "affordance": "TRADE"
+    },
+    {
+      "id": "faction_threaten",
+      "label": "증거를 내밀며 압박한다",
+      "hint": "빠르지만 적대 관계가 될 수 있다",
+      "affordance": "THREATEN",
+      "riskLevel": 3
+    },
+    {
+      "id": "faction_observe",
+      "label": "일단 관망하며 정보를 모은다",
+      "hint": "안전하게 세력 동향을 파악한다",
+      "affordance": "OBSERVE"
+    }
+  ],
+  "ARC_HINT": [
+    {
+      "id": "arc_investigate",
+      "label": "단서를 꼼꼼히 조사한다",
+      "hint": "핵심 증거를 발견할 수 있다",
+      "affordance": "INVESTIGATE"
+    },
+    {
+      "id": "arc_sneak",
+      "label": "몰래 접근하여 확인한다",
+      "hint": "발각 위험이 있지만 결정적 정보를 얻는다",
+      "affordance": "SNEAK",
+      "riskLevel": 2
+    },
+    {
+      "id": "arc_persuade",
+      "label": "관련자를 설득해 정보를 얻는다",
+      "hint": "대화로 풀 수 있다면 안전하다",
+      "affordance": "PERSUADE"
+    },
+    {
+      "id": "arc_steal",
+      "label": "문서를 훔쳐 확보한다",
+      "hint": "확실하지만 발각되면 큰 대가를 치른다",
+      "affordance": "STEAL",
+      "riskLevel": 3
+    }
+  ],
+  "SHOP": [
+    {
+      "id": "shop_trade",
+      "label": "물건을 살펴보고 구매한다",
+      "hint": "필요한 물품을 얻을 수 있다",
+      "affordance": "TRADE"
+    },
+    {
+      "id": "shop_bribe",
+      "label": "상인에게 특별 물건을 요청한다",
+      "hint": "금화를 더 내면 숨겨둔 물건을 보여준다",
+      "affordance": "BRIBE",
+      "riskLevel": 1
+    },
+    {
+      "id": "shop_investigate",
+      "label": "상점 뒤편을 슬쩍 살핀다",
+      "hint": "수상한 거래의 단서를 찾을 수 있다",
+      "affordance": "INVESTIGATE",
+      "riskLevel": 2
+    }
+  ],
+  "CHECKPOINT": [
+    {
+      "id": "checkpoint_persuade",
+      "label": "신분을 밝히고 통과를 요청한다",
+      "hint": "허가증이 있으면 순조롭다",
+      "affordance": "PERSUADE"
+    },
+    {
+      "id": "checkpoint_sneak",
+      "label": "경비 교대 틈을 노려 우회한다",
+      "hint": "발각되면 전투가 벌어진다",
+      "affordance": "SNEAK",
+      "riskLevel": 2
+    },
+    {
+      "id": "checkpoint_bribe",
+      "label": "경비병에게 뇌물을 건넨다",
+      "hint": "금화가 필요하지만 빠르게 통과할 수 있다",
+      "affordance": "BRIBE",
+      "riskLevel": 2
+    },
+    {
+      "id": "checkpoint_fight",
+      "label": "강행 돌파한다",
+      "hint": "확실하지만 경비대 평판이 크게 하락한다",
+      "affordance": "FIGHT",
+      "riskLevel": 3
+    }
+  ],
+  "AMBUSH": [
+    {
+      "id": "ambush_fight",
+      "label": "무기를 들고 맞서 싸운다",
+      "hint": "정면 전투. 승리하면 전리품을 얻는다",
+      "affordance": "FIGHT"
+    },
+    {
+      "id": "ambush_sneak",
+      "label": "은신하여 매복을 피한다",
+      "hint": "조용히 빠져나갈 수 있다",
+      "affordance": "SNEAK",
+      "riskLevel": 2
+    },
+    {
+      "id": "ambush_threaten",
+      "label": "위협하여 물러서게 한다",
+      "hint": "상대가 겁먹으면 전투 없이 해결된다",
+      "affordance": "THREATEN",
+      "riskLevel": 2
+    }
+  ],
+  "ENCOUNTER": [
+    {
+      "id": "encounter_talk",
+      "label": "말을 건네본다",
+      "hint": "자연스럽게 대화를 시도한다",
+      "affordance": "PERSUADE"
+    },
+    {
+      "id": "encounter_observe",
+      "label": "조용히 지켜본다",
+      "hint": "상황을 관찰하며 정보를 모은다",
+      "affordance": "OBSERVE"
+    },
+    {
+      "id": "encounter_help",
+      "label": "도움을 제안한다",
+      "hint": "호의를 베풀어 관계를 쌓는다",
+      "affordance": "HELP"
+    }
+  ],
+  "OPPORTUNITY": [
+    {
+      "id": "opp_investigate",
+      "label": "기회를 자세히 살핀다",
+      "hint": "무엇을 얻을 수 있는지 확인한다",
+      "affordance": "INVESTIGATE"
+    },
+    {
+      "id": "opp_trade",
+      "label": "거래를 시도한다",
+      "hint": "실리적 이득을 추구한다",
+      "affordance": "TRADE"
+    },
+    {
+      "id": "opp_sneak",
+      "label": "남들이 모르게 챙긴다",
+      "hint": "위험하지만 독점적 이득을 얻는다",
+      "affordance": "SNEAK",
+      "riskLevel": 2
+    }
+  ],
+  "FALLBACK": [
+    {
+      "id": "fallback_observe",
+      "label": "주변을 둘러보며 상황을 파악한다",
+      "hint": "새로운 단서나 이벤트를 발견할 수 있다",
+      "affordance": "OBSERVE"
+    },
+    {
+      "id": "fallback_investigate",
+      "label": "수상한 점이 없는지 조사한다",
+      "hint": "숨겨진 정보를 찾을 수 있다",
+      "affordance": "INVESTIGATE"
+    },
+    {
+      "id": "fallback_talk",
+      "label": "주변 인물에게 말을 건다",
+      "hint": "근처 사람들에게서 정보를 얻는다",
+      "affordance": "TALK"
+    }
+  ]
+}

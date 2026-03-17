@@ -1,0 +1,16 @@
+{
+    "accepted": true,
+    "turnNo": 24,
+    "serverResult": {
+        "version": "server_result_v1",
+        "...": "..."
+    },
+    "llm": {
+        "status": "PENDING"
+    },
+    "meta": {
+        "runStatus": "RUN_ACTIVE",
+        "nodeTransitioned": false,
+        "nextExpectedTurnNo": 25
+    }
+}

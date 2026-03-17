@@ -1,0 +1,30 @@
+{
+  "version": "engine_v1",
+  "note": "초기값 정본: CLAUDE.md Combat Stats, design/combat_system.md Part 0 §2",
+
+  "hp": 100,
+  "stamina": 5,
+
+  "stats": {
+    "MaxHP": 100,
+    "MaxStamina": 5,
+    "ATK": 15,
+    "DEF": 10,
+    "ACC": 5,
+    "EVA": 3,
+    "CRIT": 5,
+    "CRIT_DMG": 1.5,
+    "RESIST": 5,
+    "SPEED": 5
+  },
+
+  "status": [],
+
+  "scenario": {
+    "timeStart": "NIGHT",
+    "timePhases": ["MORNING", "AFTERNOON", "NIGHT"],
+    "combatFrequencyPerRun": "2-3",
+    "startingGold": 50,
+    "startingItems": []
+  }
+}

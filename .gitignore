@@ -1,0 +1,10 @@
+# Subprojects (separate repos)
+server/
+client/
+
+# System files
+.DS_Store
+.claude/
+
+# Content seed data is in server repo
+# content/ is symlinked or copied — keep here for reference

@@ -1,0 +1,2337 @@
+[
+  {
+    "eventId": "EVT_MARKET_RUMOR",
+    "locationId": "LOC_MARKET",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "BRIBE", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "시장 한구석에서 과일 장수와 생선 장수가 머리를 맞대고 속삭이고 있다. 경비대 야간 책임자가 항만 세금을 두 번 징수하고 있다는 이야기가 흘러나온다. 장수들의 목소리에는 분노와 두려움이 뒤섞여 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_rumor_investigate", "label": "자연스럽게 다가가 이야기에 끼어든다", "hint": "소문의 구체적 내용을 들을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "mkt_rumor_bribe", "label": "금화 한 닢을 건네며 상세한 이야기를 요청한다", "hint": "관련 인물의 이름을 알아낼 수 있다", "affordance": "BRIBE", "riskLevel": 2 },
+        { "id": "mkt_rumor_observe", "label": "멀찍이서 대화를 엿듣는다", "hint": "안전하지만 단편적 정보만 얻는다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["GOSSIP", "TAX", "GUARD_CORRUPTION"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_FACTION",
+    "locationId": "LOC_MARKET",
+    "eventType": "FACTION",
+    "priority": 6,
+    "weight": 45,
+    "conditions": { "field": "reputation.MERCHANT_CONSORTIUM", "op": ">=", "value": -5 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 5 },
+      { "type": "REQUIRE_FLAG", "flag": "FACT_LEDGER_EXISTS" }
+    ],
+    "affordances": ["PERSUADE", "TRADE", "THREATEN", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "SUPPORT",
+    "arcRouteTag": "EXPOSE_CORRUPTION",
+    "commitmentDeltaOnSuccess": 10,
+    "payload": {
+      "sceneFrame": "상인 길드 연합의 회계 담당 에드릭 베일이 좌판 뒤편 창고에서 장부를 검토하고 있다. 그는 긴장한 기색으로 주변을 살피다가 당신의 시선을 의식한다. 그의 탁자 위에는 두 종류의 장부가 나란히 놓여 있다.",
+      "primaryNpcId": "NPC_SEO_DOYUN",
+      "choices": [
+        { "id": "mkt_faction_persuade", "label": "정직한 장부 관리가 길드에도 이롭다고 설득한다", "hint": "에드릭의 신뢰를 얻을 수 있다", "affordance": "PERSUADE", "riskLevel": 2 },
+        { "id": "mkt_faction_trade", "label": "정보를 대가로 거래를 제안한다", "hint": "상인 길드와 실질적 관계를 맺는다", "affordance": "TRADE", "riskLevel": 1 },
+        { "id": "mkt_faction_threaten", "label": "이중 장부의 존재를 알고 있다고 압박한다", "hint": "즉시 정보를 얻지만 적대할 수 있다", "affordance": "THREATEN", "riskLevel": 3 },
+        { "id": "mkt_faction_observe", "label": "에드릭의 행동 패턴을 관찰한다", "hint": "장부 접근 시간대를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [
+        { "type": "REPUTATION_CHECK", "target": "MERCHANT_CONSORTIUM", "value": -5 }
+      ],
+      "tags": ["MERCHANT_GUILD", "LEDGER", "NPC_EDRIC"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_SHOP",
+    "locationId": "LOC_MARKET",
+    "eventType": "SHOP",
+    "priority": 3,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": ["TRADE", "BRIBE", "INVESTIGATE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 거리 중앙에 허름하지만 물건이 풍성한 잡화점이 있다. 주인장이 낡은 의자에 앉아 졸고 있다가 눈을 뜬다. 진열대에는 약초와 치료제, 그리고 출처가 불분명한 물건들이 뒤섞여 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_shop_trade", "label": "진열된 물건을 살펴본다", "hint": "소모품을 구매할 수 있다", "affordance": "TRADE", "riskLevel": 1 },
+        { "id": "mkt_shop_bribe", "label": "카운터 아래 특별한 물건이 있느냐고 귀띔한다", "hint": "추가 금화로 희귀 아이템을 볼 수 있다", "affordance": "BRIBE", "riskLevel": 1 },
+        { "id": "mkt_shop_investigate", "label": "물건의 출처를 넌지시 물어본다", "hint": "밀수품 유통 경로의 단서를 얻을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [
+        { "type": "OPEN_SHOP", "target": "MARKET_GENERAL", "value": ["ITEM_MINOR_HEALING", "ITEM_STAMINA_TONIC"] }
+      ],
+      "tags": ["SHOP", "CONSUMABLES", "GENERAL_STORE"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_CHECKPOINT",
+    "locationId": "LOC_MARKET",
+    "eventType": "CHECKPOINT",
+    "priority": 4,
+    "weight": 40,
+    "conditions": { "field": "reputation.CITY_GUARD", "op": "<", "value": 0 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["PERSUADE", "SNEAK", "BRIBE", "FIGHT"],
+    "friction": 1,
+    "matchPolicy": "BLOCK",
+    "payload": {
+      "sceneFrame": "시장 입구에 경비병 둘이 임시 검문소를 설치하고 지나가는 이들의 소지품을 검사하고 있다. 당신의 인상착의가 최근 수배 전단과 비슷한 모양이다. 경비병 하나가 당신을 가리키며 동료에게 무언가 속삭인다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_chk_persuade", "label": "당당하게 다가가 신원을 밝힌다", "hint": "허가증이 있으면 쉽게 통과한다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "mkt_chk_sneak", "label": "노점 사이로 슬쩍 빠져나간다", "hint": "발각되면 수상한 인물로 찍힌다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "mkt_chk_bribe", "label": "금화를 슬쩍 쥐어주며 지나간다", "hint": "비용이 들지만 확실하다", "affordance": "BRIBE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["GUARD_PATROL", "CHECKPOINT", "IDENTITY_CHECK"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_FALLBACK",
+    "locationId": "LOC_MARKET",
+    "eventType": "FALLBACK",
+    "priority": 1,
+    "weight": 100,
+    "conditions": null,
+    "gates": [],
+    "affordances": ["OBSERVE", "INVESTIGATE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 거리에 들어서자 상인들의 흥정 소리와 향신료 냄새가 뒤섞인다. 노점 사이를 오가는 인파 속에서 누군가 시선을 피하듯 고개를 돌린다. 좌판 아래 감춰진 상자, 골목 모퉁이에서 나누는 은밀한 속삭임 — 겉보기에 평온한 시장이지만, 주의를 기울이면 표면 아래의 긴장이 느껴진다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_fb_observe", "label": "거리의 분위기를 살핀다", "hint": "주변 상황을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_fb_investigate", "label": "수상한 점이 없는지 유심히 본다", "hint": "숨겨진 단서를 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "mkt_fb_talk", "label": "지나가는 행인에게 말을 건다", "hint": "시장 사람들에게서 소문을 듣는다", "affordance": "TALK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DAILY_LIFE", "EXPLORATION"]
+    }
+  },
+
+  {
+    "eventId": "EVT_GUARD_FACTION",
+    "locationId": "LOC_GUARD",
+    "eventType": "FACTION",
+    "priority": 7,
+    "weight": 50,
+    "conditions": { "field": "reputation.CITY_GUARD", "op": ">=", "value": 0 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 5 },
+      { "type": "REQUIRE_FLAG", "flag": "FACT_LEDGER_EXISTS" }
+    ],
+    "affordances": ["PERSUADE", "INVESTIGATE", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "SUPPORT",
+    "arcRouteTag": "ALLY_GUARD",
+    "commitmentDeltaOnSuccess": 15,
+    "payload": {
+      "sceneFrame": "경비대 본부 뒤편의 조용한 골목. 벨론 대위가 사복 차림으로 기다리고 있다. 그의 눈 밑에는 짙은 그림자가 드리워져 있고, 목소리를 낮춘 채 내부 부패에 대한 고민을 토로한다. 외부인의 도움이 필요하다는 것이다.",
+      "primaryNpcId": "NPC_GUARD_CAPTAIN",
+      "choices": [
+        { "id": "grd_fac_persuade", "label": "대위의 뜻에 동조하며 협력을 약속한다", "hint": "경비대 내부 정보에 접근할 수 있다", "affordance": "PERSUADE", "riskLevel": 2 },
+        { "id": "grd_fac_investigate", "label": "우선 부패의 규모를 파악하겠다고 한다", "hint": "신중한 접근으로 더 많은 정보를 모은다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "grd_fac_observe", "label": "대위의 진의를 먼저 살핀다", "hint": "함정일 가능성을 경계한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [
+        { "type": "REPUTATION_CHECK", "target": "CITY_GUARD", "value": 0 }
+      ],
+      "tags": ["GUARD_ALLIANCE", "CAPTAIN_BELLON", "INTERNAL_AFFAIRS"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_CHECKPOINT",
+    "locationId": "LOC_GUARD",
+    "eventType": "CHECKPOINT",
+    "priority": 5,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["PERSUADE", "SNEAK", "BRIBE", "FIGHT"],
+    "friction": 2,
+    "matchPolicy": "BLOCK",
+    "payload": {
+      "sceneFrame": "경비대 지구 진입로에 완전 무장한 검문조가 배치되어 있다. 갑옷을 입은 병사가 손을 들어 정지를 명하고, 뒤에 선 병사가 석궁을 반쯤 들어 올린다. 허가증 없이는 한 발짝도 더 나갈 수 없다는 분위기다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_chk_persuade", "label": "허가증을 제시하거나 벨론 대위의 이름을 댄다", "hint": "정당한 접근 수단이 있으면 통과", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "grd_chk_sneak", "label": "야간 교대 시간을 노려 담벼락을 넘는다", "hint": "위험하지만 흔적을 남기지 않는다", "affordance": "SNEAK", "riskLevel": 3 },
+        { "id": "grd_chk_bribe", "label": "검문 병사에게 은밀히 금화를 건넨다", "hint": "병사에 따라 통할 수도 있다", "affordance": "BRIBE", "riskLevel": 2 },
+        { "id": "grd_chk_fight", "label": "검문을 무시하고 강행 돌파한다", "hint": "전투가 벌어지고 경비대 평판이 급락한다", "affordance": "FIGHT", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["CHECKPOINT", "ARMED_GUARD", "RESTRICTED_AREA"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_ARC_HINT",
+    "locationId": "LOC_GUARD",
+    "eventType": "ARC_HINT",
+    "priority": 8,
+    "weight": 35,
+    "conditions": { "field": "questState", "op": ">=", "value": "S2_PROVE_TAMPER" },
+    "gates": [
+      { "type": "REQUIRE_FLAG", "flag": "FACT_TAMPERED_LOGS" },
+      { "type": "REQUIRE_ARC", "arcId": "EXPOSE_CORRUPTION" }
+    ],
+    "affordances": ["INVESTIGATE", "SNEAK", "PERSUADE", "STEAL"],
+    "friction": 2,
+    "matchPolicy": "SUPPORT",
+    "arcRouteTag": "EXPOSE_CORRUPTION",
+    "commitmentDeltaOnSuccess": 20,
+    "payload": {
+      "sceneFrame": "병영 문서고의 문이 열려 있다. 안에서 촛불이 흔들리고, 누군가 서둘러 서류를 정리하는 소리가 들린다. 잉크 냄새가 강하게 풍기는 것으로 보아, 문서가 급히 수정되고 있는 것 같다. 이 기회를 놓치면 증거가 영영 사라질 수 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_arc_investigate", "label": "문서고에 들어가 장부를 확인한다", "hint": "조작 전 원본을 확보할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "grd_arc_sneak", "label": "창문으로 몰래 들어가 문서를 가져온다", "hint": "발각 위험이 크지만 확실한 증거를 얻는다", "affordance": "SNEAK", "riskLevel": 3 },
+        { "id": "grd_arc_persuade", "label": "문서 정리 중인 서기를 설득한다", "hint": "내부 협력자를 만들 수 있다", "affordance": "PERSUADE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [
+        { "type": "FLAG_SET", "target": "EVIDENCE_WINDOW_OPEN", "value": true }
+      ],
+      "tags": ["LEDGER", "DOCUMENT_FORGERY", "TIME_SENSITIVE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_AMBUSH",
+    "locationId": "LOC_GUARD",
+    "eventType": "AMBUSH",
+    "priority": 6,
+    "weight": 30,
+    "conditions": { "field": "reputation.CITY_GUARD", "op": "<", "value": -10 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 6 },
+      { "type": "REQUIRE_FLAG", "flag": "FACT_TAMPERED_LOGS" }
+    ],
+    "affordances": ["FIGHT", "SNEAK", "THREATEN"],
+    "friction": 3,
+    "matchPolicy": "BLOCK",
+    "payload": {
+      "sceneFrame": "경비대 지구를 빠져나가려는 순간, 골목 양쪽에서 매수된 수비대원들이 길을 막는다. 마이렐 경의 명을 받은 자들이다. 선두의 병사가 검을 뽑으며 말한다. '여기서 조용히 끝내자. 대위에게 보고할 일은 없을 거다.'",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_amb_fight", "label": "무기를 뽑아 맞선다", "hint": "정면 전투. 매수된 수비대원 2명", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "grd_amb_sneak", "label": "연막탄을 터뜨리고 도주한다", "hint": "연막탄이 있어야 가능. 전투를 피할 수 있다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "grd_amb_threaten", "label": "벨론 대위가 이미 알고 있다고 허세를 부린다", "hint": "상대가 동요하면 전투를 피할 수 있다", "affordance": "THREATEN", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [
+        { "type": "COMBAT_READY", "target": "ENC_BARRACKS", "value": true }
+      ],
+      "tags": ["AMBUSH", "CORRUPT_GUARDS", "MAIREL_FACTION"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_FALLBACK",
+    "locationId": "LOC_GUARD",
+    "eventType": "FALLBACK",
+    "priority": 1,
+    "weight": 100,
+    "conditions": null,
+    "gates": [],
+    "affordances": ["OBSERVE", "INVESTIGATE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 지구에 발을 들이자 대장간 망치 소리가 귀를 울린다. 순찰 중인 병사 둘이 당신을 힐끗 보고 지나간다. 게시판에는 새로 붙은 수배 전단이 바람에 펄럭이고, 그 아래에는 낡은 공고문 위로 누군가 급히 갈겨 쓴 경고문이 겹쳐 있다. 질서 아래 어떤 균열이 숨어 있는 듯하다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_fb_observe", "label": "게시판의 공고문을 읽어본다", "hint": "최근 동향을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_fb_investigate", "label": "병영 주변을 탐색한다", "hint": "수상한 움직임을 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "grd_fb_sneak", "label": "감시를 피해 주변을 탐색한다", "hint": "경비대의 눈을 피해 움직인다", "affordance": "SNEAK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DAILY_LIFE", "MILITARY_ROUTINE"]
+    }
+  },
+
+  {
+    "eventId": "EVT_HARBOR_RUMOR",
+    "locationId": "LOC_HARBOR",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "BRIBE", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "부두의 선술집에서 취한 선원이 큰 소리로 떠들고 있다. 동쪽 부두 3번 선착장에 밤마다 정체불명의 화물선이 들어온다는 것이다. 주변 선원들이 입을 다물라고 눈짓하지만, 술에 취한 사내는 아랑곳하지 않는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_rumor_investigate", "label": "선원 옆에 앉아 자연스럽게 술을 사준다", "hint": "추가 정보를 얻을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "hbr_rumor_bribe", "label": "조용한 구석으로 데려가 금화를 건넨다", "hint": "화물선의 구체적 스케줄을 알아낸다", "affordance": "BRIBE", "riskLevel": 2 },
+        { "id": "hbr_rumor_observe", "label": "바 한쪽에서 조용히 대화를 엿듣는다", "hint": "안전하지만 단편적 정보만 얻는다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["SAILOR_GOSSIP", "SMUGGLING", "EAST_DOCK"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_AMBUSH",
+    "locationId": "LOC_HARBOR",
+    "eventType": "AMBUSH",
+    "priority": 6,
+    "weight": 40,
+    "conditions": { "field": "reputation.LABOR_GUILD", "op": "<", "value": 0 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 5 }
+    ],
+    "affordances": ["FIGHT", "SNEAK", "THREATEN"],
+    "friction": 3,
+    "matchPolicy": "BLOCK",
+    "payload": {
+      "sceneFrame": "부두의 좁은 골목을 지나는데, 화물 상자 뒤에서 그림자들이 움직인다. 부두 깡패 셋이 길을 막아선다. 선두의 사내가 곤봉을 손바닥에 탁탁 치며 말한다. '누가 우리 구역에서 코를 들이미는지 알아보라고 했거든.'",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_amb_fight", "label": "선제 공격으로 기선을 잡는다", "hint": "부두 깡패 2명과의 전투", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "hbr_amb_sneak", "label": "화물 상자 사이로 숨어 빠져나간다", "hint": "성공하면 전투 없이 탈출", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "hbr_amb_threaten", "label": "하를런 보스의 이름을 들먹인다", "hint": "노동 길드 평판이 충분하면 물러선다", "affordance": "THREATEN", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [
+        { "type": "COMBAT_READY", "target": "ENC_DOCK_AMBUSH", "value": true }
+      ],
+      "tags": ["DOCK_THUGS", "AMBUSH", "LABOR_GUILD"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_ARC_HINT",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ARC_HINT",
+    "priority": 8,
+    "weight": 30,
+    "conditions": { "field": "questState", "op": ">=", "value": "S2_PROVE_TAMPER" },
+    "gates": [
+      { "type": "REQUIRE_FLAG", "flag": "FACT_ROUTE_TO_EAST_DOCK" },
+      { "type": "REQUIRE_ARC", "arcId": "PROFIT_FROM_CHAOS" }
+    ],
+    "affordances": ["INVESTIGATE", "SNEAK", "STEAL"],
+    "friction": 2,
+    "matchPolicy": "SUPPORT",
+    "arcRouteTag": "PROFIT_FROM_CHAOS",
+    "commitmentDeltaOnSuccess": 20,
+    "payload": {
+      "sceneFrame": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이 지워진 상자를 서둘러 내리고, 토브렌 하위크가 직접 검수하고 있다. 그의 장부에 밀수품 목록이 적혀 있을 것이다.",
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "choices": [
+        { "id": "hbr_arc_investigate", "label": "하역 과정을 관찰하며 패턴을 기록한다", "hint": "밀수 경로의 전체 그림을 파악한다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "hbr_arc_sneak", "label": "어둠을 이용해 토브렌의 장부를 훔쳐본다", "hint": "밀수품 목록이라는 결정적 증거를 확보한다", "affordance": "SNEAK", "riskLevel": 3 },
+        { "id": "hbr_arc_steal", "label": "혼란을 일으키고 장부를 탈취한다", "hint": "확실하지만 전투가 벌어질 수 있다", "affordance": "STEAL", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [
+        { "type": "FLAG_SET", "target": "SMUGGLE_SHIP_SPOTTED", "value": true }
+      ],
+      "tags": ["SMUGGLING", "EAST_DOCK", "TOBREN", "EVIDENCE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_SHOP",
+    "locationId": "LOC_HARBOR",
+    "eventType": "SHOP",
+    "priority": 3,
+    "weight": 50,
+    "conditions": null,
+    "gates": [],
+    "affordances": ["TRADE", "BRIBE", "INVESTIGATE"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두 끝자락에 '닻 없는 배'라는 간판이 걸린 가게가 있다. 주인은 한쪽 눈에 안대를 한 전직 선원으로, 공식적으로는 항해 용품을 팔지만 뒷방에는 다른 종류의 물건이 있다는 소문이 파다하다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_shop_trade", "label": "일반 물품을 살펴본다", "hint": "항해 용품과 소모품을 구매한다", "affordance": "TRADE", "riskLevel": 1 },
+        { "id": "hbr_shop_bribe", "label": "뒷방 물건을 보고 싶다고 은근히 말한다", "hint": "밀수품급 희귀 아이템을 볼 수 있다", "affordance": "BRIBE", "riskLevel": 2 },
+        { "id": "hbr_shop_investigate", "label": "가게의 거래 장부를 슬쩍 살핀다", "hint": "밀수 네트워크의 단서를 찾을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [
+        { "type": "OPEN_SHOP", "target": "HARBOR_SMUGGLER_SHOP", "value": ["ITEM_SMOKE_BOMB", "ITEM_POISON_NEEDLE", "ITEM_MINOR_HEALING"] }
+      ],
+      "tags": ["BLACK_MARKET", "SMUGGLE_GOODS", "HARBOR_SHOP"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_FALLBACK",
+    "locationId": "LOC_HARBOR",
+    "eventType": "FALLBACK",
+    "priority": 1,
+    "weight": 100,
+    "conditions": null,
+    "gates": [],
+    "affordances": ["OBSERVE", "INVESTIGATE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "짠 바람이 부두를 훑고 지나간다. 정박한 선박 사이로 하역 인부들이 무거운 상자를 나르고, 감독관이 화물 목록을 소리 내어 읽는다. 부두 끝자락에 정체를 알 수 없는 배 한 척이 닻을 내리고 있고, 선원들이 서둘러 천으로 화물을 덮는 모습이 눈에 걸린다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_fb_observe", "label": "부두의 동향을 살핀다", "hint": "선박 출입 패턴을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_fb_investigate", "label": "화물 적재 구역을 탐색한다", "hint": "수상한 화물을 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "hbr_fb_talk", "label": "선원들에게 말을 건다", "hint": "부두 사람들에게 정보를 얻는다", "affordance": "TALK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["HARBOR_LIFE", "EXPLORATION"]
+    }
+  },
+
+  {
+    "eventId": "EVT_SLUMS_RUMOR",
+    "locationId": "LOC_SLUMS",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "BRIBE", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "빈민가 모퉁이의 허름한 술집. 어둑한 구석에서 쉐도우가 평소처럼 의뢰인을 기다리고 있다. 그의 테이블 위에는 여러 장의 메모가 놓여 있고, 당신이 다가오자 의미심장한 미소를 짓는다. '들을 만한 이야기가 있지. 물론, 공짜는 아니야.'",
+      "primaryNpcId": "NPC_INFO_BROKER",
+      "choices": [
+        { "id": "slm_rumor_investigate", "label": "어떤 정보인지 먼저 물어본다", "hint": "정보의 가치를 판단한 뒤 결정한다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "slm_rumor_bribe", "label": "금화를 테이블에 올려놓는다", "hint": "쉐도우의 최신 정보를 모두 듣는다", "affordance": "BRIBE", "riskLevel": 1 },
+        { "id": "slm_rumor_observe", "label": "쉐도우의 다른 손님들을 관찰한다", "hint": "누가 정보를 사고 있는지 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_rumor_threaten", "label": "공짜로 알려주지 않으면 곤란해질 거라고 한다", "hint": "위험하지만 비용을 아낄 수 있다", "affordance": "THREATEN", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["INFO_BROKER", "SHADOW", "INTEL_TRADE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_FACTION",
+    "locationId": "LOC_SLUMS",
+    "eventType": "FACTION",
+    "priority": 7,
+    "weight": 40,
+    "conditions": { "field": "reputation.LABOR_GUILD", "op": ">=", "value": 0 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 5 },
+      { "type": "REQUIRE_FLAG", "flag": "FACT_LEDGER_EXISTS" }
+    ],
+    "affordances": ["PERSUADE", "TRADE", "THREATEN", "HELP"],
+    "friction": 1,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "빈민가 안쪽의 폐건물. 하를런 보스가 노동 길드의 비공식 모임을 이끌고 있다. 억울하게 임금을 떼인 인부들이 분노에 찬 목소리로 상황을 토로한다. 하를런이 당신을 보더니 고개를 끄덕이며 자리를 권한다.",
+      "primaryNpcId": "NPC_YOON_HAMIN",
+      "choices": [
+        { "id": "slm_fac_persuade", "label": "노동자들의 대의에 힘을 보탠다", "hint": "노동 길드 평판이 크게 상승한다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "slm_fac_trade", "label": "정보를 교환하자고 제안한다", "hint": "밀수 경로에 대한 정보를 얻을 수 있다", "affordance": "TRADE", "riskLevel": 1 },
+        { "id": "slm_fac_help", "label": "인부들의 체불 임금 회수를 돕겠다고 한다", "hint": "직접적 도움으로 강한 신뢰를 얻는다", "affordance": "HELP", "riskLevel": 2 },
+        { "id": "slm_fac_threaten", "label": "길드의 뒷거래를 알고 있다고 압박한다", "hint": "빠르지만 적대 관계가 될 수 있다", "affordance": "THREATEN", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [
+        { "type": "REPUTATION_CHECK", "target": "LABOR_GUILD", "value": 0 }
+      ],
+      "tags": ["LABOR_GUILD", "HARLUN", "WORKER_RIGHTS"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_AMBUSH",
+    "locationId": "LOC_SLUMS",
+    "eventType": "AMBUSH",
+    "priority": 6,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "SNEAK", "THREATEN"],
+    "friction": 3,
+    "matchPolicy": "BLOCK",
+    "payload": {
+      "sceneFrame": "빈민가의 좁은 골목을 지나던 중, 앞뒤에서 그림자가 나타난다. 후드를 뒤집어쓴 자들이 칼을 들고 다가온다. 이들이 누구의 지시를 받는지는 모르겠지만, 당신이 여기저기 코를 들이밀었다는 사실을 아는 것은 확실하다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_amb_fight", "label": "좁은 골목을 이용해 맞서 싸운다", "hint": "지형을 활용한 전투. 깡패 2명", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "slm_amb_sneak", "label": "가까운 건물 안으로 뛰어들어 도주한다", "hint": "빈민가 지리를 알면 유리하다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "slm_amb_threaten", "label": "보복이 따를 것이라고 경고한다", "hint": "소속 세력 평판이 높으면 위협이 먹힌다", "affordance": "THREATEN", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [
+        { "type": "COMBAT_READY", "target": "ENC_ALLEY", "value": true }
+      ],
+      "tags": ["ALLEY_AMBUSH", "UNKNOWN_ASSAILANTS", "NARROW_TERRAIN"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_ARC_HINT",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ARC_HINT",
+    "priority": 8,
+    "weight": 30,
+    "conditions": { "field": "questState", "op": ">=", "value": "S3_TRACE_ROUTE" },
+    "gates": [
+      { "type": "REQUIRE_FLAG", "flag": "FACT_SMUGGLE_ROUTE_GUILD" }
+    ],
+    "affordances": ["INVESTIGATE", "PERSUADE", "SNEAK"],
+    "friction": 2,
+    "matchPolicy": "SUPPORT",
+    "arcRouteTag": "PROFIT_FROM_CHAOS",
+    "commitmentDeltaOnSuccess": 15,
+    "payload": {
+      "sceneFrame": "빈민가의 폐가 지하실. 라이라 케스텔이 떨리는 손으로 문서 묶음을 안고 숨어 있다. 상인 길드에서 도주한 그녀는 암호화된 장부 사본을 가지고 있다. 눈에 공포가 가득하지만, 누군가에게 진실을 알려야 한다는 의지도 엿보인다.",
+      "primaryNpcId": "NPC_MOON_SEA",
+      "choices": [
+        { "id": "slm_arc_investigate", "label": "라이라의 문서를 함께 분석한다", "hint": "암호를 풀면 결정적 증거가 된다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "slm_arc_persuade", "label": "안전한 곳으로 함께 가자고 설득한다", "hint": "증인을 확보하면 재판에서 유리하다", "affordance": "PERSUADE", "riskLevel": 2 },
+        { "id": "slm_arc_sneak", "label": "추적자가 오기 전에 문서만 가지고 빠진다", "hint": "빠르지만 라이라를 위험에 빠뜨린다", "affordance": "SNEAK", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [
+        { "type": "FLAG_SET", "target": "LYRA_FOUND", "value": true }
+      ],
+      "tags": ["DEFECTOR", "CODED_LEDGER", "LYRA", "SAFE_HOUSE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_FALLBACK",
+    "locationId": "LOC_SLUMS",
+    "eventType": "FALLBACK",
+    "priority": 1,
+    "weight": 100,
+    "conditions": null,
+    "gates": [],
+    "affordances": ["OBSERVE", "INVESTIGATE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "빈민가 골목에 들어서자 축축한 곰팡이 냄새가 코를 찌른다. 허물어진 벽 위에 세력 표시가 겹겹이 덧칠되어 있고, 어둠 속에서 고양이의 울음소리가 끊어졌다 이어진다. 좁은 길 끝에서 누군가 급히 모퉁이를 도는 기척이 느껴진다. 이 구역에서는 눈을 감고 있어도 위험이 느껴진다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_fb_observe", "label": "세력 표시와 낙서를 읽어본다", "hint": "빈민가의 세력 분포를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_fb_investigate", "label": "빈 건물을 탐색한다", "hint": "숨겨진 은닉처나 단서를 찾을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "slm_fb_sneak", "label": "뒷골목 깊숙이 잠입한다", "hint": "어둠을 이용해 더 깊이 들어간다", "affordance": "SNEAK", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["SLUM_LIFE", "EXPLORATION", "TERRITORY"]
+    }
+  },
+
+  {
+    "eventId": "EVT_MARKET_RUMOR_NIGHT",
+    "locationId": "LOC_MARKET",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 45,
+    "conditions": { "field": "timePhase", "op": "==", "value": "NIGHT" },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["INVESTIGATE", "BRIBE", "OBSERVE", "SNEAK"],
+    "friction": 1,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "야시장 한쪽의 비밀 경매장. 등불이 어둡게 켜진 천막 안에서 속삭이는 목소리가 들린다. 경비대 내부 문서의 사본이 경매에 올랐다는 소문이다. 이 문서가 있으면 마이렐 경의 비리를 입증할 수 있을지 모른다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_rumor_n_investigate", "label": "경매장에 들어가 문서의 진위를 확인한다", "hint": "위조품인지 판별할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "mkt_rumor_n_bribe", "label": "경매에 참여하여 문서를 낙찰받는다", "hint": "금화가 필요하지만 확실한 증거를 얻는다", "affordance": "BRIBE", "riskLevel": 2 },
+        { "id": "mkt_rumor_n_sneak", "label": "경매장 뒤편으로 돌아가 문서를 몰래 가져온다", "hint": "발각되면 큰 소동이 벌어진다", "affordance": "SNEAK", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NIGHT_MARKET", "SECRET_AUCTION", "GUARD_DOCUMENTS"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_RUMOR_GUILD",
+    "locationId": "LOC_HARBOR",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 40,
+    "conditions": { "field": "reputation.LABOR_GUILD", "op": ">=", "value": 5 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 },
+      { "type": "REQUIRE_FLAG", "flag": "FACT_LEDGER_EXISTS" }
+    ],
+    "affordances": ["INVESTIGATE", "PERSUADE", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "부두의 하역 현장. 노동 길드 인부들이 쉬는 시간에 모여 수군거린다. 최근 동쪽 부두의 하역량이 급증했는데, 공식 기록에는 반영되지 않았다는 것이다. 한 인부가 창고 관리자 토브렌을 언급하며 고개를 젓는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_rumor_g_investigate", "label": "공식 하역 기록과 실제 물량을 대조해본다", "hint": "밀수 규모를 가늠할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "hbr_rumor_g_persuade", "label": "인부들에게 구체적인 목격담을 요청한다", "hint": "길드 평판이 높으면 협조적이다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "hbr_rumor_g_observe", "label": "하역 현장을 직접 관찰한다", "hint": "토브렌의 행동 패턴을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["LABOR_GUILD", "CARGO_DISCREPANCY", "TOBREN"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_RUMOR_NIGHT",
+    "locationId": "LOC_SLUMS",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 35,
+    "conditions": { "field": "timePhase", "op": "==", "value": "NIGHT" },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["INVESTIGATE", "BRIBE", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "빈민가의 어둠 속에서 한 거지가 다가온다. 자세히 보니 전직 수비대원이다. 마이렐의 비리를 알고 쫓겨났다며, 빵 한 조각만 주면 아는 것을 말해주겠다고 한다. 그의 눈에는 복수심과 절박함이 교차한다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_rumor_n_investigate", "label": "빵과 물을 건네며 자세히 듣는다", "hint": "내부자 증언을 확보할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "slm_rumor_n_bribe", "label": "금화를 주며 기록할 수 있도록 천천히 말해달라고 한다", "hint": "정식 증거로 쓸 수 있는 진술을 받는다", "affordance": "BRIBE", "riskLevel": 1 },
+        { "id": "slm_rumor_n_observe", "label": "함정일 수 있으니 거리를 두고 듣는다", "hint": "안전하지만 정보가 제한적이다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["EXPELLED_GUARD", "TESTIMONY", "MAIREL_CORRUPTION"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_ARC_HINT_ALLY",
+    "locationId": "LOC_GUARD",
+    "eventType": "ARC_HINT",
+    "priority": 7,
+    "weight": 35,
+    "conditions": { "field": "reputation.CITY_GUARD", "op": ">=", "value": 10 },
+    "gates": [
+      { "type": "REQUIRE_FLAG", "flag": "FACT_OFFICIAL_INQUIRY" },
+      { "type": "REQUIRE_ARC", "arcId": "ALLY_GUARD" }
+    ],
+    "affordances": ["INVESTIGATE", "PERSUADE", "SNEAK"],
+    "friction": 2,
+    "matchPolicy": "SUPPORT",
+    "arcRouteTag": "ALLY_GUARD",
+    "commitmentDeltaOnSuccess": 25,
+    "payload": {
+      "sceneFrame": "벨론 대위가 비밀리에 확보한 마이렐의 개인 집무실 열쇠를 건넨다. 집무실 금고 안에 횡령의 결정적 증거인 원본 장부가 있을 것이다. 그러나 마이렐의 충성 부하가 야간에도 집무실을 순찰하고 있어 위험하다.",
+      "primaryNpcId": "NPC_GUARD_CAPTAIN",
+      "choices": [
+        { "id": "grd_arc2_investigate", "label": "순찰 시간표를 분석하여 빈틈을 찾는다", "hint": "안전한 진입 타이밍을 계산한다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "grd_arc2_persuade", "label": "대위에게 순찰 교체 명령을 요청한다", "hint": "공식 지원으로 안전하게 접근한다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "grd_arc2_sneak", "label": "야간 순찰을 피해 직접 침입한다", "hint": "위험하지만 비밀리에 증거를 확보한다", "affordance": "SNEAK", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [
+        { "type": "FLAG_SET", "target": "MAIREL_OFFICE_KEY", "value": true }
+      ],
+      "tags": ["GUARD_ALLIANCE", "MAIREL_OFFICE", "FINAL_EVIDENCE"]
+    }
+  },
+
+  {
+    "eventId": "EVT_MARKET_ENC_PEDDLER",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 3,
+    "weight": 65,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["PERSUADE", "TRADE", "OBSERVE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 거리 한쪽에 떠돌이 행상이 자리를 펼쳤다. 먼 남쪽 사막에서 왔다는 사내가 이국적인 향신료와 기묘한 장신구를 늘어놓고 있다. 호기심 어린 시민들이 하나둘 모여들고, 행상은 능숙한 말솜씨로 물건의 내력을 풀어놓는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_enc_ped_talk", "label": "행상에게 어디서 왔는지 물어본다", "hint": "먼 곳의 소식을 들을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "mkt_enc_ped_trade", "label": "진열된 물건을 살펴본다", "hint": "이국적인 물품을 구할 수 있다", "affordance": "TRADE", "riskLevel": 1 },
+        { "id": "mkt_enc_ped_observe", "label": "행상의 손놀림을 유심히 관찰한다", "hint": "사기꾼인지 진짜인지 판별한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["PEDDLER", "EXOTIC_GOODS", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_ENC_BUSKER",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 2,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["OBSERVE", "PERSUADE", "BRIBE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 광장 분수대 앞에서 거리 악사가 류트를 켜며 풍자 노래를 부르고 있다. 가사 속에 항만 세금과 경비대 부패가 은유적으로 담겨 있어 시민들이 낄낄 웃는다. 경비병이 올까 봐 불안해하면서도 아무도 자리를 뜨지 않는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_enc_bus_listen", "label": "노래에 담긴 의미를 곱씹는다", "hint": "풍자 속에 진실이 숨어 있을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_enc_bus_talk", "label": "노래가 끝난 후 악사에게 말을 건다", "hint": "정보통일 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "mkt_enc_bus_tip", "label": "동전을 던져주며 특별 곡을 요청한다", "hint": "더 은밀한 정보가 담긴 노래를 들을 수 있다", "affordance": "BRIBE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["BUSKER", "SATIRE", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_ENC_DISPUTE",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 3,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["PERSUADE", "OBSERVE", "HELP", "THREATEN", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리라 주장하고, 다른 쪽은 길드 허가증을 들이밀며 맞선다. 주변 상인들이 불편한 듯 눈치를 보고 있지만, 아무도 나서지 않는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_enc_dis_mediate", "label": "중재에 나선다", "hint": "양쪽 모두에게 좋은 인상을 남길 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "mkt_enc_dis_watch", "label": "결말을 지켜본다", "hint": "시장의 세력 관계를 파악할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_enc_dis_help", "label": "약한 쪽을 도와준다", "hint": "한쪽의 호의를 얻지만 다른 쪽의 원한을 살 수 있다", "affordance": "HELP", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["MERCHANT_DISPUTE", "DAILY_LIFE", "TERRITORY"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_OPP_LOST_CARGO",
+    "locationId": "LOC_MARKET",
+    "eventType": "OPPORTUNITY",
+    "priority": 3,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["INVESTIGATE", "SNEAK", "OBSERVE", "ANY"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 뒷골목에 표식 없는 나무 상자가 방치되어 있다. 상자 한쪽에 항만 하역 인부의 분필 번호가 적혀 있고, 잠금장치가 반쯤 풀려 있다. 누군가 급히 내려놓고 간 듯하다. 주변에 사람은 없다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_opp_cargo_check", "label": "상자의 내용물을 확인한다", "hint": "가치 있는 물건이 들어 있을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "mkt_opp_cargo_take", "label": "몰래 상자를 열어 챙긴다", "hint": "위험하지만 이득이 클 수 있다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "mkt_opp_cargo_watch", "label": "누가 가지러 오는지 지켜본다", "hint": "상자의 주인과 배경을 알 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["LOST_CARGO", "OPPORTUNITY", "HARBOR_CONNECTION"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_OPP_ERRAND",
+    "locationId": "LOC_MARKET",
+    "eventType": "OPPORTUNITY",
+    "priority": 2,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["HELP", "PERSUADE", "TRADE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "약초 보따리를 든 노파가 무거운 짐에 휘청거리며 골목을 오르고 있다. 허리가 굽은 노파는 빈민가 쪽으로 가려는 듯하지만, 혼자서는 길이 험한 모양이다. 누군가 도와주기를 바라는 눈치다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_opp_err_help", "label": "짐을 대신 들어준다", "hint": "노파의 감사를 받을 수 있다", "affordance": "HELP", "riskLevel": 1 },
+        { "id": "mkt_opp_err_talk", "label": "어디까지 가시느냐고 묻는다", "hint": "빈민가 사정을 들을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "mkt_opp_err_trade", "label": "약초를 구매하겠다고 제안한다", "hint": "유용한 약초를 저렴하게 얻을 수 있다", "affordance": "TRADE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["ELDERLY", "HERBS", "DAILY_LIFE", "KINDNESS"]
+    }
+  },
+
+  {
+    "eventId": "EVT_GUARD_ENC_RECRUIT",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "priority": 2,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["PERSUADE", "OBSERVE", "INVESTIGATE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 훈련장 한쪽에서 신병이 혼자 서투르게 검술 연습을 하고 있다. 자세가 엉망이지만 눈빛은 진지하다. 선임 병사는 보이지 않고, 신병은 이따금 한숨을 쉬며 같은 동작을 반복한다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_enc_rec_talk", "label": "검술 조언을 건넨다", "hint": "신병의 호감을 얻을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "grd_enc_rec_watch", "label": "신병의 훈련을 지켜본다", "hint": "경비대의 현 상황을 가늠할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_enc_rec_ask", "label": "요즘 경비대 분위기가 어떠냐고 묻는다", "hint": "내부 동향을 들을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["RECRUIT", "TRAINING", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_ENC_NOTICE",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "priority": 2,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["OBSERVE", "INVESTIGATE", "PERSUADE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 지구 입구 게시판에 새 공고문이 붙었다. 야간 통행 규제가 강화되었다는 내용이다. 공고문 옆에 누군가 '거짓말'이라고 작게 긁어놓았고, 그 위에 다시 경비대 도장이 찍혀 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_enc_not_read", "label": "공고문을 자세히 읽는다", "hint": "규제의 실체와 배경을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_enc_not_trace", "label": "낙서를 쓴 사람의 단서를 찾는다", "hint": "내부 불만 세력과 접점을 얻을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "grd_enc_not_ask", "label": "지나가는 시민에게 규제에 대해 묻는다", "hint": "주민들의 반응을 파악한다", "affordance": "PERSUADE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NOTICE", "CURFEW", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_ENC_PATROL",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "priority": 3,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["PERSUADE", "OBSERVE", "SNEAK", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "순찰 경비병 두 명이 건물 그늘에서 잠시 쉬고 있다. 한 명이 물통을 기울이며 투덜거린다. 상관의 이중 기준과 최근 늘어난 야간 근무에 대한 불평이 섞여 나온다. 다른 한 명은 조심스럽게 주변을 살핀다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_enc_pat_chat", "label": "자연스럽게 다가가 대화에 끼어든다", "hint": "경비병의 속사정을 들을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "grd_enc_pat_listen", "label": "들리는 곳에서 대화를 엿듣는다", "hint": "불평 속에 유용한 정보가 있을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_enc_pat_sneak", "label": "경비병이 쉬는 틈을 이용한다", "hint": "감시가 느슨한 구역을 탐색할 수 있다", "affordance": "SNEAK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["PATROL", "REST", "DAILY_LIFE", "GUARD_MORALE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_OPP_REWARD",
+    "locationId": "LOC_GUARD",
+    "eventType": "OPPORTUNITY",
+    "priority": 3,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["INVESTIGATE", "PERSUADE", "OBSERVE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 게시판에 현상금 전단이 붙어 있다. 시장에서 활동하는 소매치기 일당의 수배 안내다. 현상금은 소액이지만, 전단 아래에 '관련 정보 제공자에게 추가 보상'이라는 문구가 적혀 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_opp_rwd_investigate", "label": "소매치기 일당의 행적을 추적한다", "hint": "현상금을 받을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "grd_opp_rwd_talk", "label": "담당 경비에게 관련 정보를 물어본다", "hint": "경비대와 관계를 쌓을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "grd_opp_rwd_read", "label": "전단의 세부 사항을 꼼꼼히 읽는다", "hint": "일당의 활동 패턴을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["BOUNTY", "PICKPOCKET", "OPPORTUNITY"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_OPP_SUPPLY",
+    "locationId": "LOC_GUARD",
+    "eventType": "OPPORTUNITY",
+    "priority": 3,
+    "weight": 40,
+    "conditions": { "field": "reputation.CITY_GUARD", "op": ">=", "value": 0 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TRADE", "PERSUADE", "BRIBE", "ANY"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "병참 보급관이 창고 앞에서 잔여 물자를 정리하고 있다. 이번 보급에서 약간의 여분이 생겨 처리가 곤란한 모양이다. 규정상 반납해야 하지만, 보급관의 표정에서 다른 생각이 읽힌다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_opp_sup_trade", "label": "여분 물자를 적정 가격에 구매한다", "hint": "군용 소모품을 얻을 수 있다", "affordance": "TRADE", "riskLevel": 1 },
+        { "id": "grd_opp_sup_talk", "label": "보급 상황에 대해 이야기를 나눈다", "hint": "경비대 보급선에 대한 정보를 얻는다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "grd_opp_sup_bribe", "label": "웃돈을 주고 특별 물자를 요청한다", "hint": "더 좋은 물건을 얻을 수 있다", "affordance": "BRIBE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["SUPPLY", "MILITARY_GOODS", "OPPORTUNITY"]
+    }
+  },
+
+  {
+    "eventId": "EVT_HARBOR_ENC_SAILOR",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "priority": 2,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["PERSUADE", "OBSERVE", "TRADE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두 난간에 기대어 파이프를 물고 있는 이국 선원이 보인다. 남쪽 해안의 문양이 새겨진 외투를 입고 있고, 바다를 바라보며 무언가 생각에 잠겨 있다. 그의 발치에 커다란 가죽 가방이 놓여 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_enc_sal_talk", "label": "선원에게 어디서 왔는지 말을 건다", "hint": "먼 곳의 소식을 들을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "hbr_enc_sal_watch", "label": "선원의 외투 문양을 관찰한다", "hint": "출신지와 소속을 파악할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_enc_sal_trade", "label": "이국 물건에 관심을 보인다", "hint": "희귀한 물품을 거래할 수 있다", "affordance": "TRADE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["FOREIGN_SAILOR", "EXOTIC", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_ENC_FISHERMEN",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "priority": 2,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["OBSERVE", "HELP", "PERSUADE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "어부들이 그물을 손질하다 기묘한 물건을 발견했다. 그물에 걸려 올라온 것은 녹슨 금속 상자로, 바다 밑에 꽤 오래 있었던 것 같다. 어부들이 호기심과 두려움이 뒤섞인 표정으로 상자를 둘러보고 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_enc_fish_look", "label": "상자를 자세히 살펴본다", "hint": "무엇이 들어 있는지 확인한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_enc_fish_help", "label": "어부들을 도와 상자를 연다", "hint": "어부들의 호의를 얻을 수 있다", "affordance": "HELP", "riskLevel": 1 },
+        { "id": "hbr_enc_fish_talk", "label": "어부들에게 이 근처 바다 사정을 묻는다", "hint": "해역 정보를 얻을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["FISHERMEN", "MYSTERIOUS_FIND", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_ENC_LOADING",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "priority": 3,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["OBSERVE", "INVESTIGATE", "HELP", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "대형 화물선의 하역 작업이 한창이다. 인부들이 줄지어 상자를 나르는 가운데, 유독 조심스럽게 다루는 상자 하나가 눈에 띈다. 빨간 인장이 찍혀 있고, 감독관이 직접 지시하며 별도 구역으로 옮기게 한다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_enc_load_watch", "label": "특별 상자가 어디로 가는지 지켜본다", "hint": "화물의 행선지를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_enc_load_ask", "label": "인부에게 무슨 화물인지 슬쩍 묻는다", "hint": "화물의 내용을 알아낼 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "hbr_enc_load_help", "label": "하역을 거들어 자연스럽게 접근한다", "hint": "화물에 가까이 다가갈 수 있다", "affordance": "HELP", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["CARGO", "LOADING", "DAILY_LIFE", "SPECIAL_SHIPMENT"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_OPP_WRECK",
+    "locationId": "LOC_HARBOR",
+    "eventType": "OPPORTUNITY",
+    "priority": 3,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["INVESTIGATE", "SNEAK", "OBSERVE", "ANY"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두 끝에 반쯤 침수된 난파 보트가 걸려 있다. 배는 버려진 지 오래되었지만, 선실 안에 방수 가죽 주머니가 매달려 있는 것이 보인다. 밀물이 올라오기 전에 확인해야 할 것 같다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_opp_wrk_check", "label": "보트에 올라 주머니를 확인한다", "hint": "가치 있는 물건이 있을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "hbr_opp_wrk_sneak", "label": "아무도 모르게 주머니를 가져온다", "hint": "남의 눈에 띄지 않게 챙긴다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "hbr_opp_wrk_watch", "label": "보트의 상태와 표식을 관찰한다", "hint": "배의 출처를 알 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["WRECK", "SALVAGE", "OPPORTUNITY"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_OPP_GAMBLE",
+    "locationId": "LOC_HARBOR",
+    "eventType": "OPPORTUNITY",
+    "priority": 2,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["TRADE", "OBSERVE", "SNEAK", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "선원 서너 명이 화물 상자를 탁자 삼아 주사위 도박을 벌이고 있다. 판돈이 꽤 쌓여 있고, 분위기가 과열되고 있다. 한 선원이 빈자리를 가리키며 끼어들라고 손짓한다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_opp_gam_join", "label": "도박에 참여한다", "hint": "금화를 딸 수 있지만 잃을 수도 있다", "affordance": "TRADE", "riskLevel": 2 },
+        { "id": "hbr_opp_gam_watch", "label": "판세를 지켜보며 선원들의 대화를 듣는다", "hint": "선원들의 정보를 들을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_opp_gam_cheat", "label": "속임수를 써서 이긴다", "hint": "확실한 이득이지만 들키면 위험하다", "affordance": "SNEAK", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["GAMBLING", "SAILORS", "OPPORTUNITY"]
+    }
+  },
+
+  {
+    "eventId": "EVT_SLUMS_ENC_ORPHAN",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "priority": 2,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["HELP", "OBSERVE", "PERSUADE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "골목 한쪽에 아이들 서넛이 모닥불을 피워 놓고 웅기종기 모여 있다. 가장 큰 아이가 작은 아이들에게 남은 빵 조각을 나눠주고 있다. 아이들의 얼굴에는 때가 끼어 있지만, 모닥불 주변의 분위기는 의외로 따뜻하다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_enc_orp_help", "label": "먹을 것을 나눠준다", "hint": "아이들의 신뢰를 얻을 수 있다", "affordance": "HELP", "riskLevel": 1 },
+        { "id": "slm_enc_orp_watch", "label": "아이들을 지켜본다", "hint": "빈민가 상황을 체감할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_enc_orp_talk", "label": "아이들에게 이 근처 사정을 묻는다", "hint": "아이들은 어른이 모르는 것을 알고 있다", "affordance": "PERSUADE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["ORPHANS", "DAILY_LIFE", "KINDNESS"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_ENC_HEALER",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "priority": 3,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["HELP", "TRADE", "OBSERVE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "허름한 움막에서 약초 냄새가 풍긴다. 문 앞에 앉은 노인이 약초를 갈고 있다. 주변 주민들이 간간이 찾아와 작은 병을 받아 가고, 노인은 대가를 거의 받지 않는 듯하다. 빈민가의 유일한 치료자라는 소문이 도는 인물이다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_enc_heal_help", "label": "약초 손질을 거들어 준다", "hint": "치료자의 호의와 약초를 얻을 수 있다", "affordance": "HELP", "riskLevel": 1 },
+        { "id": "slm_enc_heal_trade", "label": "약초를 구매한다", "hint": "치료 약초를 저렴하게 얻는다", "affordance": "TRADE", "riskLevel": 1 },
+        { "id": "slm_enc_heal_watch", "label": "누가 찾아오는지 지켜본다", "hint": "빈민가 주민들의 동향을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["HEALER", "HERBS", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_ENC_GRAFFITI",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "priority": 2,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["OBSERVE", "INVESTIGATE", "SNEAK", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "골목 벽에 새로운 낙서가 그려져 있다. 붉은 물감으로 그린 세력 표시인데, 기존 표시 위에 덧그려져 있다. 영역 분쟁이 벌어지고 있다는 신호다. 낙서 옆에 작은 화살표와 암호 같은 글자가 적혀 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_enc_grf_read", "label": "낙서의 의미를 해독한다", "hint": "세력 분포와 최근 변화를 알 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_enc_grf_trace", "label": "암호를 해석하고 화살표를 따라간다", "hint": "은닉처나 모임 장소를 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "slm_enc_grf_sneak", "label": "낙서 주변을 은밀히 탐색한다", "hint": "감시자가 있는지 확인한다", "affordance": "SNEAK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["GRAFFITI", "TERRITORY", "DAILY_LIFE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_OPP_STASH",
+    "locationId": "LOC_SLUMS",
+    "eventType": "OPPORTUNITY",
+    "priority": 3,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["INVESTIGATE", "SNEAK", "OBSERVE", "ANY"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "무너진 건물의 잔해 사이로 벽돌이 의도적으로 배열된 곳이 보인다. 은닉처다. 누군가 물건을 숨겨놓은 것이 분명한데, 최근에도 사용된 흔적이 있다. 잔해 주변에 사람은 보이지 않는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_opp_stash_check", "label": "은닉처를 열어본다", "hint": "가치 있는 물건이 있을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "slm_opp_stash_take", "label": "흔적을 남기지 않고 내용물을 챙긴다", "hint": "주인에게 들키지 않는 것이 중요하다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "slm_opp_stash_watch", "label": "은닉처의 주인이 나타나기를 기다린다", "hint": "누구의 것인지 알 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["STASH", "HIDDEN_GOODS", "OPPORTUNITY"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_OPP_FAVOR",
+    "locationId": "LOC_SLUMS",
+    "eventType": "OPPORTUNITY",
+    "priority": 3,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["HELP", "PERSUADE", "INVESTIGATE", "ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "골목 구석에 얼굴이 부은 남자가 벽에 기대어 있다. 노동 길드 완장이 찢어져 있고, 부두 깡패에게 맞은 것이 분명하다. 그는 고통스러운 표정으로 도움을 요청하는 눈빛을 보낸다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_opp_fav_help", "label": "응급 처치를 해준다", "hint": "길드원의 은혜를 입을 수 있다", "affordance": "HELP", "riskLevel": 1 },
+        { "id": "slm_opp_fav_talk", "label": "누가 때렸는지 물어본다", "hint": "부두 깡패의 최근 움직임을 알 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "slm_opp_fav_trace", "label": "공격자의 흔적을 조사한다", "hint": "깡패 조직의 단서를 찾을 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["BEATEN_WORKER", "LABOR_GUILD", "OPPORTUNITY", "DOCK_THUGS"]
+    }
+  },
+
+  {
+    "eventId": "EVT_MARKET_ATM_1",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 입구에서 향신료 상인이 가루를 볶는 냄새가 거리 전체에 퍼진다. 열기와 함께 피어오르는 연기 사이로 행인들이 발걸음을 멈추고 깊이 숨을 들이쉰다. 평범한 아침이지만, 이 냄새만은 그레이마르 항구가 살아 있다는 증거다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_atm1_look", "label": "향신료 가게 앞을 서성인다", "hint": "시장의 일상을 느낀다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_atm1_talk", "label": "상인에게 오늘 장사가 어떤지 묻는다", "hint": "시장 분위기를 파악한다", "affordance": "TALK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DAILY_LIFE", "SPICE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_ATM_2",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "비가 내리기 시작하자 상인들이 부랴부랴 천막을 펼친다. 빗소리에 흥정 소리가 묻히고, 물웅덩이에 비친 등불이 흔들린다. 우산 없는 사람들이 처마 밑으로 모여들며 비가 그치기를 기다린다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_atm2_wait", "label": "처마 밑에서 비를 피하며 주변을 살핀다", "hint": "비 피하는 사람들의 대화를 엿들을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_atm2_walk", "label": "비를 맞으며 시장을 걷는다", "hint": "비 오는 시장의 분위기를 느낀다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["RAIN", "DAILY_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_ATM_3",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 3,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 한가운데서 수레가 뒤집어지며 사과가 바닥에 쏟아진다. 상인이 절규하며 과일을 주워 담으려 하지만, 지나가는 아이들이 재빨리 몇 개를 집어 간다. 주변 상인들이 혀를 차며 구경하고 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_atm3_help", "label": "사과를 줍는 것을 도와준다", "hint": "상인의 감사를 받을 수 있다", "affordance": "HELP", "riskLevel": 1 },
+        { "id": "mkt_atm3_watch", "label": "소동을 지켜본다", "hint": "시장 사람들의 반응을 관찰한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["ACCIDENT", "DAILY_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_DSC_1",
+    "locationId": "LOC_MARKET",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "SEARCH", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 뒷골목 배수구 근처에서 반쯤 젖은 양피지 조각이 발견된다. 잉크가 번져 읽기 어렵지만, 날짜와 금액이 적힌 표가 보인다. 상인 길드의 내부 문서처럼 보이는데, 누군가 급히 버린 것 같다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_dsc1_read", "label": "양피지를 조심스럽게 펼쳐 읽는다", "hint": "이중 장부의 단서를 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "mkt_dsc1_search", "label": "주변에 다른 문서가 더 있는지 찾아본다", "hint": "추가 증거를 확보할 수 있다", "affordance": "SEARCH", "riskLevel": 2 },
+        { "id": "mkt_dsc1_look", "label": "누가 버렸는지 주변을 살핀다", "hint": "문서 유출자의 정체를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "DOCUMENT", "MERCHANT_GUILD", "EVIDENCE"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_DSC_2",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 5,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "OBSERVE", "SEARCH"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 광장 분수대 아래 돌틈에서 이상한 표식이 새겨져 있다. 밀수조직이 사용하는 암호 같은 기호인데, 최근에 새긴 것이 분명하다. 표식 방향이 시장 뒤편 창고 쪽을 가리키고 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_dsc2_follow", "label": "표식이 가리키는 방향을 따라간다", "hint": "밀수 거점을 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "mkt_dsc2_study", "label": "표식의 패턴을 기억해둔다", "hint": "다른 장소에서도 같은 표식을 찾을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_dsc2_search", "label": "주변에 다른 표식이 있는지 찾아본다", "hint": "암호 체계를 파악할 수 있다", "affordance": "SEARCH", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "CIPHER", "SMUGGLING", "TRAIL"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_DSC_3",
+    "locationId": "LOC_MARKET",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "OBSERVE", "SEARCH"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 뒤편 골목에서 깨진 유리병 조각 사이에 작은 열쇠가 떨어져 있다. 열쇠에 상인 길드의 문양이 각인되어 있고, 최근에 떨어진 것인지 먼지가 거의 없다. 근처 건물의 쪽문이 눈에 들어온다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_dsc3_try", "label": "열쇠로 근처 문을 열어본다", "hint": "길드의 비밀 창고에 접근할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "mkt_dsc3_keep", "label": "열쇠를 주머니에 넣고 관찰한다", "hint": "나중에 사용할 기회가 올 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_dsc3_search", "label": "열쇠가 어디서 떨어졌는지 역추적한다", "hint": "열쇠 주인의 정체를 알 수 있다", "affordance": "SEARCH", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "KEY", "MERCHANT_GUILD", "SECRET"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_INT_1",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["PERSUADE", "TALK", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "서도윤이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 안색이 어둡고, 차를 마시는 손이 미세하게 떨린다. 그가 고개를 들어 당신을 발견하면 잠시 망설이다가 건너편 자리를 가리킨다.",
+      "primaryNpcId": "NPC_SEO_DOYUN",
+      "choices": [
+        { "id": "mkt_int1_talk", "label": "맞은편에 앉아 안부를 묻는다", "hint": "서도윤의 고민을 들을 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "mkt_int1_persuade", "label": "무슨 일인지 조심스럽게 캐묻는다", "hint": "길드 내부 사정을 알 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "mkt_int1_observe", "label": "장부의 내용을 슬쩍 엿본다", "hint": "수치상의 이상을 발견할 수 있다", "affordance": "OBSERVE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_SEO_DOYUN", "MERCHANT_GUILD", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_INT_2",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 5,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "OBSERVE", "PERSUADE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "레닉이 시장 골목 어둠 속에서 후드를 깊이 눌러쓴 채 기다리고 있다. 당신을 보자 손짓으로 조용히 부른다. '들을 만한 이야기가 있어. 이번에는 좀 큰 건이야.' 그의 눈이 평소보다 날카롭게 빛난다.",
+      "primaryNpcId": "NPC_RENNICK",
+      "choices": [
+        { "id": "mkt_int2_listen", "label": "레닉의 이야기를 듣는다", "hint": "중요한 정보를 얻을 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "mkt_int2_assess", "label": "레닉의 의도를 먼저 파악한다", "hint": "함정인지 확인한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "mkt_int2_negotiate", "label": "대가를 먼저 협상한다", "hint": "정보의 가치에 맞는 거래를 한다", "affordance": "PERSUADE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_RENNICK", "INTEL", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_INT_3",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "PERSUADE", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "미렐라가 시장의 약재상 앞에서 약초 묶음을 고르고 있다. 등에 진 바구니에는 이미 여러 종류의 풀이 담겨 있다. 그녀는 당신을 보자 미소를 짓지만, 어딘가 걱정스러운 기색이 섞여 있다.",
+      "primaryNpcId": "NPC_MIRELA",
+      "choices": [
+        { "id": "mkt_int3_talk", "label": "미렐라에게 무엇을 사는지 묻는다", "hint": "빈민가 상황을 들을 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "mkt_int3_help", "label": "약초 고르는 것을 도와준다", "hint": "미렐라의 호감을 얻을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "mkt_int3_watch", "label": "미렐라가 어떤 약초를 고르는지 관찰한다", "hint": "빈민가에서 유행하는 병을 짐작할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_MIRELA", "HERBS", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_CFT_1",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "conflict",
+    "cooldownTurns": 4,
+    "priority": 6,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "THREATEN", "SNEAK"],
+    "friction": 2,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 뒷골목에서 건달 둘이 노점상을 위협하고 있다. '보호비'를 내라는 거친 요구에 상인이 벌벌 떨고 있다. 건달 중 하나가 좌판의 물건을 바닥에 쓸어버리며 으름장을 놓는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_cft1_fight", "label": "건달들에게 맞선다", "hint": "전투가 벌어질 수 있다", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "mkt_cft1_threaten", "label": "경비대를 부르겠다고 위협한다", "hint": "건달들이 물러날 수 있다", "affordance": "THREATEN", "riskLevel": 2 },
+        { "id": "mkt_cft1_sneak", "label": "소동을 피해 몰래 빠져나간다", "hint": "관여하지 않는다", "affordance": "SNEAK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["EXTORTION", "THUGS", "CONFLICT"]
+    }
+  },
+  {
+    "eventId": "EVT_MARKET_CFT_2",
+    "locationId": "LOC_MARKET",
+    "eventType": "AMBUSH",
+    "eventCategory": "conflict",
+    "cooldownTurns": 4,
+    "priority": 7,
+    "weight": 35,
+    "conditions": { "field": "worldState.heat", "op": ">=", "value": 40 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "SNEAK", "THREATEN"],
+    "friction": 3,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 골목을 지나는데 갑자기 양쪽에서 사람들이 나타난다. 복면을 한 자들이 칼을 들고 다가오며 '금화를 내놓으면 살려두지'라고 말한다. 노련한 움직임으로 보아 흔한 소매치기가 아니다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "mkt_cft2_fight", "label": "무기를 뽑아 맞선다", "hint": "정면 전투. 노상강도 2명", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "mkt_cft2_flee", "label": "좌판 사이로 도주한다", "hint": "시장의 복잡한 구조를 이용한다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "mkt_cft2_bluff", "label": "허세를 부리며 겁을 준다", "hint": "상대가 동요하면 피할 수 있다", "affordance": "THREATEN", "riskLevel": 3 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["ROBBERY", "AMBUSH", "CONFLICT", "HIGH_HEAT"]
+    }
+  },
+
+  {
+    "eventId": "EVT_GUARD_ATM_1",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "대장간에서 망치 소리가 울려 퍼진다. 장인이 검날을 벼려 내며 불꽃을 튀기고, 견습생이 풀무질을 하느라 땀을 비 오듯 흘린다. 경비대 지구의 일상이 규칙적인 망치 소리와 함께 돌아간다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_atm1_watch", "label": "대장간 작업을 지켜본다", "hint": "경비대의 무장 수준을 가늠한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_atm1_walk", "label": "병영 주변을 천천히 걷는다", "hint": "경비대 지구의 분위기를 느낀다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["BLACKSMITH", "DAILY_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_ATM_2",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "교대 시간이 다가오자 경비병들이 삼삼오오 모여 담소를 나눈다. 야간 근무조의 피곤한 얼굴과 주간 근무조의 긴장된 표정이 대조를 이룬다. 누군가 '오늘 밤도 동쪽 구역이냐'며 한숨을 쉰다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_atm2_listen", "label": "교대하는 병사들의 대화를 듣는다", "hint": "순찰 구역 정보를 얻을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_atm2_pass", "label": "자연스럽게 지나간다", "hint": "경비대 지구를 탐색한다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["SHIFT_CHANGE", "DAILY_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_ATM_3",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 3,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 마당에서 훈련이 진행 중이다. 교관의 우렁찬 고함 소리에 신병들이 일사불란하게 검술 동작을 반복한다. 간혹 자세가 흐트러지는 신병에게 교관의 호통이 떨어진다. 힘과 질서가 지배하는 공간이다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_atm3_watch", "label": "훈련을 지켜본다", "hint": "경비대의 전투력을 가늠한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_atm3_walk", "label": "훈련장을 지나쳐 걷는다", "hint": "다른 구역을 살펴본다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["TRAINING", "DRILL", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_DSC_1",
+    "locationId": "LOC_GUARD",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 5,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "OBSERVE", "SEARCH"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 쓰레기 소각장 근처에서 불에 탄 문서 조각이 바람에 날린다. 완전히 타지 않은 모서리에 서명과 도장 일부가 남아 있다. 누군가 급히 문서를 처분하려 했지만 완전히 태우지 못한 것 같다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_dsc1_collect", "label": "탄 문서 조각을 모아 내용을 추측한다", "hint": "파기 대상 문서의 성격을 알 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "grd_dsc1_watch", "label": "소각장을 누가 사용했는지 살핀다", "hint": "문서 파기자의 정체를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "grd_dsc1_search", "label": "소각장 주변을 더 뒤진다", "hint": "추가 증거를 찾을 수 있다", "affordance": "SEARCH", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "BURNED_DOCUMENTS", "COVER_UP", "EVIDENCE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_DSC_2",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "OBSERVE", "SEARCH"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "병영 뒷벽에 작은 쪽지가 붙어 있다. '달이 차면 동쪽 문에서'라는 암호 같은 문구다. 쪽지는 최근에 붙인 것이고, 접착에 사용된 밀랍에서 특정 향이 난다. 경비대 내부의 비밀 연락망이 존재하는 것일까.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_dsc2_decode", "label": "암호의 의미를 해석해본다", "hint": "비밀 모임의 시간과 장소를 알 수 있다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "grd_dsc2_trace", "label": "밀랍의 출처를 추적한다", "hint": "쪽지를 남긴 사람을 특정할 수 있다", "affordance": "SEARCH", "riskLevel": 2 },
+        { "id": "grd_dsc2_wait", "label": "쪽지를 건드리지 않고 관찰한다", "hint": "누가 쪽지를 확인하러 오는지 본다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "SECRET_NOTE", "CONSPIRACY", "INTERNAL"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_DSC_3",
+    "locationId": "LOC_GUARD",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "SEARCH", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "무기고 담벼락 아래서 깨진 자물쇠가 발견된다. 자물쇠에는 최근 사용된 열쇠 자국이 선명하고, 무기고 문은 새 자물쇠로 교체되어 있다. 공식 교체 기록에는 이런 내용이 없다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_dsc3_examine", "label": "깨진 자물쇠를 자세히 조사한다", "hint": "무기고 침입의 흔적을 확인한다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "grd_dsc3_search", "label": "무기고 주변에 다른 흔적을 찾는다", "hint": "침입자의 경로를 추적할 수 있다", "affordance": "SEARCH", "riskLevel": 2 },
+        { "id": "grd_dsc3_note", "label": "자물쇠 교체 사실을 기억해둔다", "hint": "나중에 활용할 수 있는 정보다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "ARMORY", "BREAK_IN", "EVIDENCE"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_INT_1",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 5,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "PERSUADE", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "브렌 대위가 경비대 마당 한쪽 벤치에 앉아 지친 표정으로 보고서를 넘기고 있다. 부하들이 멀리서 눈치를 보며 다가가지 못한다. 대위의 옆자리가 비어 있다.",
+      "primaryNpcId": "NPC_CAPTAIN_BREN",
+      "choices": [
+        { "id": "grd_int1_sit", "label": "옆에 앉아 안부를 묻는다", "hint": "대위의 현재 고민을 들을 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "grd_int1_ask", "label": "최근 경비대 상황에 대해 물어본다", "hint": "내부 동향을 파악한다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "grd_int1_watch", "label": "대위가 보는 보고서를 슬쩍 엿본다", "hint": "중요 사안을 알 수 있다", "affordance": "OBSERVE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_CAPTAIN_BREN", "GUARD_ALLIANCE", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_INT_2",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "PERSUADE", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "에드릭이 경비대 지구 입구에서 상인 길드 물자 납품을 감독하고 있다. 장부를 확인하며 이따금 경비병과 짧은 대화를 나눈다. 길드와 경비대 사이의 미묘한 관계가 그의 표정에서 읽힌다.",
+      "primaryNpcId": "NPC_EDRIC",
+      "choices": [
+        { "id": "grd_int2_approach", "label": "에드릭에게 다가가 말을 건다", "hint": "길드의 경비대 납품 사정을 들을 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "grd_int2_probe", "label": "납품 물자의 내역을 넌지시 묻는다", "hint": "비공식 거래의 단서를 얻을 수 있다", "affordance": "PERSUADE", "riskLevel": 2 },
+        { "id": "grd_int2_watch", "label": "에드릭과 경비병의 대화를 관찰한다", "hint": "길드-경비대 관계의 실체를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_EDRIC", "MERCHANT_GUILD", "SUPPLY", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_INT_3",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["PERSUADE", "TALK", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "레닉이 경비대 지구 외곽의 술집에서 경비병 한 명과 은밀히 대화하고 있다. 두 사람은 서로를 경계하면서도 무언가를 교환하는 중이다. 레닉이 당신을 발견하면 찰나의 당혹감을 보이지만, 곧 여유로운 미소를 짓는다.",
+      "primaryNpcId": "NPC_RENNICK",
+      "choices": [
+        { "id": "grd_int3_confront", "label": "무슨 거래인지 묻는다", "hint": "레닉의 정보망을 엿볼 수 있다", "affordance": "PERSUADE", "riskLevel": 2 },
+        { "id": "grd_int3_join", "label": "자연스럽게 합석한다", "hint": "경비병의 정보를 함께 들을 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "grd_int3_observe", "label": "거리를 두고 관찰한다", "hint": "레닉의 정보원 네트워크를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_RENNICK", "INTEL", "GUARD_CONNECTION", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_CFT_1",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "conflict",
+    "cooldownTurns": 4,
+    "priority": 6,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "THREATEN", "SNEAK"],
+    "friction": 2,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 지구 외곽 골목에서 탈영병 둘이 민간인 차림으로 숨어 있다가 당신과 마주친다. 정체가 들킬까 봐 겁먹은 얼굴이지만, 한 손에 단검을 쥐고 있다. '아무것도 보지 못한 거다. 알겠지?'",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_cft1_fight", "label": "탈영병을 제압한다", "hint": "경비대에 인도하면 평판이 오른다", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "grd_cft1_threaten", "label": "경비대에 신고하겠다고 위협한다", "hint": "탈영병이 정보를 줄 수 있다", "affordance": "THREATEN", "riskLevel": 2 },
+        { "id": "grd_cft1_ignore", "label": "모른 척하고 지나간다", "hint": "분쟁을 피한다", "affordance": "SNEAK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DESERTERS", "CONFLICT", "GUARD_DISTRICT"]
+    }
+  },
+  {
+    "eventId": "EVT_GUARD_CFT_2",
+    "locationId": "LOC_GUARD",
+    "eventType": "AMBUSH",
+    "eventCategory": "conflict",
+    "cooldownTurns": 4,
+    "priority": 7,
+    "weight": 35,
+    "conditions": { "field": "worldState.heat", "op": ">=", "value": 50 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "SNEAK", "THREATEN"],
+    "friction": 3,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 지구를 빠져나가려는데 좁은 통로에서 매복이 기다리고 있다. 사복 차림의 경비병 셋이 길을 막는다. '너무 많은 걸 알게 됐어. 여기서 조용히 처리하지.' 이들의 움직임에서 정규 훈련의 흔적이 보인다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "grd_cft2_fight", "label": "전투 태세를 갖춘다", "hint": "훈련받은 경비병과의 전투", "affordance": "FIGHT", "riskLevel": 3 },
+        { "id": "grd_cft2_flee", "label": "건물 사이로 도주한다", "hint": "좁은 통로를 이용해 달아난다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "grd_cft2_bluff", "label": "브렌 대위에게 이미 보고했다고 말한다", "hint": "상대가 망설이면 기회가 생긴다", "affordance": "THREATEN", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["AMBUSH", "CORRUPT_GUARDS", "CONFLICT", "HIGH_HEAT"]
+    }
+  },
+
+  {
+    "eventId": "EVT_HARBOR_ATM_1",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "갈매기 떼가 날카롭게 울며 하늘을 맴돈다. 밀물이 부두 기둥을 때리는 소리와 밧줄이 삐걱거리는 소리가 섞인다. 선원들이 갑판 위에서 돛을 접으며 거친 노래를 부른다. 바다의 냄새와 소금기가 얼굴을 때린다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_atm1_breathe", "label": "부두를 걸으며 항구의 풍경을 본다", "hint": "항만의 일상을 느낀다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_atm1_listen", "label": "선원들의 노래에 귀를 기울인다", "hint": "노래 가사에 정보가 있을 수 있다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["SEA", "DAILY_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_ATM_2",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "안개가 부두를 덮어 10걸음 앞도 보이지 않는다. 화물 크레인의 윤곽만 희미하게 보이고, 안개 속에서 들려오는 발자국 소리가 거리감을 잃게 만든다. 어디선가 뱃고동 소리가 길게 울린다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_atm2_careful", "label": "조심스럽게 안개 속을 걷는다", "hint": "안개에 가려진 것을 발견할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_atm2_wait", "label": "안개가 걷히기를 기다린다", "hint": "안개 속에서 움직이는 자들을 볼 수 있다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["FOG", "HARBOR_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_ATM_3",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 3,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두에 새 화물선이 입항하자 하역 인부들이 분주하게 움직인다. 감독관이 고함을 지르며 작업 속도를 재촉하고, 크레인이 삐걱거리며 무거운 상자를 들어 올린다. 언제나처럼 바쁜 항만의 오후다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_atm3_watch", "label": "하역 작업을 지켜본다", "hint": "화물의 종류를 대략 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "hbr_atm3_pass", "label": "분주한 부두를 지나간다", "hint": "항만의 활기를 느낀다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["CARGO_SHIP", "LOADING", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_ATM_4",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "해질녘 부두에 주홍빛이 물든다. 정박한 배들의 실루엣이 석양에 검게 드리워지고, 퇴근하는 인부들이 삼삼오오 선술집으로 향한다. 누군가 하모니카를 불며 방파제에 앉아 바다를 바라본다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_atm4_sit", "label": "방파제에 앉아 석양을 본다", "hint": "잠시 쉬며 생각을 정리한다", "affordance": "ANY", "riskLevel": 1 },
+        { "id": "hbr_atm4_tavern", "label": "인부들을 따라 선술집으로 간다", "hint": "선원들의 이야기를 들을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["SUNSET", "HARBOR_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_DSC_1",
+    "locationId": "LOC_HARBOR",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 5,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "SEARCH", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "창고 구역 뒤편에서 이중 바닥이 있는 화물 상자가 발견된다. 윗칸에는 평범한 곡물이 담겨 있지만, 바닥판 아래 공간에 무언가 더 있었던 흔적이 뚜렷하다. 상자에 찍힌 밀랍 인장이 일부 긁혀 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_dsc1_examine", "label": "이중 바닥을 자세히 조사한다", "hint": "숨겨진 물품의 종류를 추정할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "hbr_dsc1_seal", "label": "긁힌 인장을 분석한다", "hint": "상자의 원래 출처를 알 수 있다", "affordance": "SEARCH", "riskLevel": 1 },
+        { "id": "hbr_dsc1_note", "label": "상자의 위치와 표식을 기억해둔다", "hint": "나중에 추적할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "DOUBLE_BOTTOM", "SMUGGLING", "EVIDENCE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_DSC_2",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "OBSERVE", "SEARCH"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두 근처 버려진 어선의 선실에서 희미한 등불이 새어 나온다. 밤에 누군가 이 배를 사용하고 있는 것이 분명하다. 갑판 위에 신선한 밧줄 자국이 나 있고, 배 주변에 최근 발자국이 찍혀 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_dsc2_board", "label": "어선에 올라 선실을 확인한다", "hint": "비밀 거래 현장을 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "hbr_dsc2_tracks", "label": "발자국의 방향을 추적한다", "hint": "사용자의 경로를 알 수 있다", "affordance": "SEARCH", "riskLevel": 1 },
+        { "id": "hbr_dsc2_stake", "label": "숨어서 누가 오는지 지켜본다", "hint": "배의 사용자를 확인한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "ABANDONED_SHIP", "SECRET_USE", "TRAIL"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_DSC_3",
+    "locationId": "LOC_HARBOR",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 5,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "SEARCH", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두 등대 아래 바위틈에 방수 가죽으로 감싼 꾸러미가 숨겨져 있다. 꾸러미 위에 분필로 표식이 그려져 있고, 밀물 때 잠기는 위치에 의도적으로 놓여 있다. 밀수 중간 거점으로 보인다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_dsc3_open", "label": "꾸러미를 열어 내용물을 확인한다", "hint": "밀수품의 종류를 알 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "hbr_dsc3_mark", "label": "표식을 기록하고 다른 곳에서도 찾아본다", "hint": "밀수 네트워크 전체를 파악한다", "affordance": "SEARCH", "riskLevel": 1 },
+        { "id": "hbr_dsc3_wait", "label": "꾸러미를 두고 수거자를 기다린다", "hint": "밀수조직 관계자를 확인한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "DEAD_DROP", "SMUGGLING", "LIGHTHOUSE"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_INT_1",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 5,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "PERSUADE", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "하를런이 하역 작업을 감독하며 인부들에게 지시를 내리고 있다. 커다란 체구에서 나오는 우렁찬 목소리가 부두에 울린다. 잠시 짬이 나자 물통을 집어 들고 땀을 닦는다. 그가 당신을 알아본다.",
+      "primaryNpcId": "NPC_HARLAN",
+      "choices": [
+        { "id": "hbr_int1_greet", "label": "하를런에게 다가가 인사한다", "hint": "노동 길드의 최근 상황을 들을 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "hbr_int1_ask", "label": "부두 사정이 어떤지 묻는다", "hint": "밀수와 관련된 단서를 얻을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "hbr_int1_watch", "label": "하를런의 작업 방식을 관찰한다", "hint": "그의 영향력을 가늠한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_HARLAN", "LABOR_GUILD", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_INT_2",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["PERSUADE", "TALK", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "에드릭이 부두 창고 앞에서 화물 목록을 대조하고 있다. 평소의 침착한 모습이지만, 특정 상자들을 확인할 때 미묘하게 긴장하는 것이 보인다. 그는 당신의 접근을 눈치채고 장부를 재빨리 덮는다.",
+      "primaryNpcId": "NPC_EDRIC",
+      "choices": [
+        { "id": "hbr_int2_ask", "label": "무슨 화물인지 물어본다", "hint": "에드릭의 반응에서 단서를 얻는다", "affordance": "PERSUADE", "riskLevel": 2 },
+        { "id": "hbr_int2_chat", "label": "가벼운 대화를 나눈다", "hint": "에드릭의 경계를 풀 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "hbr_int2_note", "label": "에드릭이 긴장한 상자를 기억해둔다", "hint": "나중에 추적할 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_EDRIC", "CARGO", "MERCHANT_GUILD", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_INT_3",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "OBSERVE", "PERSUADE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "미렐라가 부두 근처에서 해초와 조개류를 채집하고 있다. 약재로 쓸 것들이다. 파도가 발을 적시는 것도 아랑곳하지 않고 꼼꼼하게 재료를 골라 바구니에 담는다. 물가에 홀로 있는 그녀의 모습이 쓸쓸해 보인다.",
+      "primaryNpcId": "NPC_MIRELA",
+      "choices": [
+        { "id": "hbr_int3_help", "label": "채집을 도와준다", "hint": "미렐라와 친해질 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "hbr_int3_ask", "label": "이런 약재가 왜 필요한지 묻는다", "hint": "빈민가의 의료 상황을 알 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "hbr_int3_watch", "label": "미렐라의 약초 지식을 관찰한다", "hint": "유용한 약초 정보를 얻을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_MIRELA", "HERBS", "SEASIDE", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_HARBOR_CFT_1",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "conflict",
+    "cooldownTurns": 4,
+    "priority": 6,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "THREATEN", "SNEAK"],
+    "friction": 2,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두 구석에서 밀수꾼 둘이 인부 한 명을 벽에 몰아세우고 있다. '입 다물지 않으면 다음엔 바다에 빠지게 될 거야.' 인부의 얼굴이 공포로 하얗게 질려 있다. 밀수꾼 중 하나가 주먹을 쥐었다 폈다 한다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "hbr_cft1_intervene", "label": "인부를 도와 밀수꾼에게 맞선다", "hint": "전투가 벌어질 수 있다", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "hbr_cft1_warn", "label": "경비대를 부르겠다고 소리친다", "hint": "밀수꾼들이 도주할 수 있다", "affordance": "THREATEN", "riskLevel": 2 },
+        { "id": "hbr_cft1_hide", "label": "숨어서 상황을 지켜본다", "hint": "밀수꾼의 정체를 파악한다", "affordance": "SNEAK", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["SMUGGLERS", "INTIMIDATION", "CONFLICT"]
+    }
+  },
+
+  {
+    "eventId": "EVT_SLUMS_ATM_1",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "빈민가 골목에서 빨래가 건물 사이에 줄지어 널려 있다. 아이들이 그 아래에서 뛰어놀고, 늙은 여인이 창가에서 골목을 내려다보고 있다. 허름하지만 삶의 온기가 느껴지는 오후의 풍경이다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_atm1_walk", "label": "골목을 천천히 걷는다", "hint": "빈민가의 일상을 느낀다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_atm1_greet", "label": "창가의 여인에게 인사한다", "hint": "주민의 반응을 본다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DAILY_LIFE", "SLUM_LIFE", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_ATM_2",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 2,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "빈민가 어느 광장에서 모닥불이 타오르고 있다. 주변에 둘러앉은 사람들이 묽은 스프를 나눠 먹으며 낮은 목소리로 대화한다. 불빛에 비친 얼굴들에 피로와 체념이 역력하지만, 서로를 의지하는 따뜻함도 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_atm2_sit", "label": "모닥불 곁에 앉는다", "hint": "주민들의 이야기를 들을 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_atm2_pass", "label": "묵묵히 지나간다", "hint": "빈민가를 더 탐색한다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["CAMPFIRE", "COMMUNITY", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_ATM_3",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "atmosphere",
+    "cooldownTurns": 2,
+    "priority": 3,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 2 }
+    ],
+    "affordances": ["ANY"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "비가 새는 지붕 아래서 떠돌이 음유시인이 낡은 류트를 튕기며 옛 노래를 부르고 있다. 빈민가 주민 몇이 계단에 앉아 조용히 듣고 있다. 노래는 그레이마르 항구가 번영하던 시절을 그리워하는 내용이다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_atm3_listen", "label": "노래를 끝까지 듣는다", "hint": "그레이마르의 과거를 알 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_atm3_coin", "label": "동전을 던져준다", "hint": "음유시인의 감사를 받는다", "affordance": "ANY", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["BARD", "HISTORY", "ATMOSPHERE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_DSC_1",
+    "locationId": "LOC_SLUMS",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 5,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "SEARCH", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "폐건물 지하로 내려가는 계단이 발견된다. 계단 입구에 최근 발자국이 찍혀 있고, 벽에 밀수조직의 표식이 분필로 그려져 있다. 지하에서 희미한 불빛이 새어 나오지만, 소리는 들리지 않는다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_dsc1_descend", "label": "조심스럽게 지하로 내려간다", "hint": "밀수 은닉처를 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "slm_dsc1_search", "label": "입구 주변에 다른 단서를 찾는다", "hint": "지하의 용도를 미리 파악한다", "affordance": "SEARCH", "riskLevel": 1 },
+        { "id": "slm_dsc1_watch", "label": "숨어서 출입자를 관찰한다", "hint": "이곳을 사용하는 사람을 확인한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "UNDERGROUND", "SMUGGLING", "HIDEOUT"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_DSC_2",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "OBSERVE", "SEARCH"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "빈민가 뒷골목 하수구 격자 아래에서 이상한 소리가 난다. 귀를 기울이면 규칙적인 금속 소리와 물소리가 섞여 들린다. 격자 한쪽이 최근에 열린 흔적이 있고, 주변에 진흙 발자국이 남아 있다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_dsc2_open", "label": "격자를 열고 하수구를 조사한다", "hint": "비밀 통로를 발견할 수 있다", "affordance": "INVESTIGATE", "riskLevel": 2 },
+        { "id": "slm_dsc2_listen", "label": "소리의 패턴을 분석한다", "hint": "지하 활동의 성격을 파악한다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_dsc2_track", "label": "진흙 발자국을 따라간다", "hint": "하수구 사용자의 경로를 알 수 있다", "affordance": "SEARCH", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "SEWER", "SECRET_PASSAGE", "UNDERGROUND"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_DSC_3",
+    "locationId": "LOC_SLUMS",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 3,
+    "effects": { "progress": 0.05 },
+    "priority": 4,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 3 }
+    ],
+    "affordances": ["INVESTIGATE", "SEARCH", "OBSERVE"],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "빈민가 한쪽에 버려진 것처럼 보이는 수레 아래서 가죽 서류 가방이 발견된다. 가방 안에는 날짜와 금액이 적힌 쪽지 여러 장이 있다. 내용은 부두 하역비와 '특별 수수료'라고 적힌 항목이다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_dsc3_read", "label": "쪽지의 내용을 꼼꼼히 읽는다", "hint": "자금 흐름의 단서를 얻는다", "affordance": "INVESTIGATE", "riskLevel": 1 },
+        { "id": "slm_dsc3_search", "label": "수레 주변에 다른 단서를 찾아본다", "hint": "가방 주인의 정체를 알 수 있다", "affordance": "SEARCH", "riskLevel": 1 },
+        { "id": "slm_dsc3_trap", "label": "함정일 수 있으니 경계하며 관찰한다", "hint": "안전하게 정보를 수집한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["DISCOVERY", "LEDGER", "CORRUPTION", "EVIDENCE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_INT_1",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 5,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "PERSUADE", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "로자가 고아원 앞에서 아이들에게 빵을 나눠주고 있다. 빵이 부족한지 아이들에게 작게 잘라 주며 미안한 표정을 짓는다. 그녀의 앞치마에는 밀가루가 묻어 있고, 손에는 반죽 자국이 남아 있다.",
+      "primaryNpcId": "NPC_ROSA",
+      "choices": [
+        { "id": "slm_int1_talk", "label": "로자에게 고아원 사정을 묻는다", "hint": "빈민가 아이들의 상황을 알 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "slm_int1_help", "label": "빵을 나누는 것을 도와준다", "hint": "로자의 신뢰를 얻을 수 있다", "affordance": "PERSUADE", "riskLevel": 1 },
+        { "id": "slm_int1_watch", "label": "로자와 아이들을 지켜본다", "hint": "빈민가의 인적 네트워크를 파악한다", "affordance": "OBSERVE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_ROSA", "ORPHANAGE", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_INT_2",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["PERSUADE", "TALK", "OBSERVE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "레닉이 빈민가 외곽의 폐허에서 누군가와 만남을 끝내고 돌아오는 길이다. 평소의 여유로운 태도 대신 다소 급한 걸음으로 걷고 있다. 당신을 보자 발걸음을 늦추며 평소처럼 미소를 짓지만, 눈에는 경계가 남아 있다.",
+      "primaryNpcId": "NPC_RENNICK",
+      "choices": [
+        { "id": "slm_int2_ask", "label": "어디서 오는 길인지 물어본다", "hint": "레닉의 비밀 연락망을 알 수 있다", "affordance": "PERSUADE", "riskLevel": 2 },
+        { "id": "slm_int2_chat", "label": "가볍게 대화를 나눈다", "hint": "레닉이 자연스럽게 정보를 흘릴 수 있다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "slm_int2_tail", "label": "레닉이 어디로 가는지 뒤를 밟는다", "hint": "레닉의 활동 범위를 파악한다", "affordance": "OBSERVE", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_RENNICK", "INTEL", "SECRET_MEETING", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_INT_3",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "interaction",
+    "cooldownTurns": 4,
+    "priority": 5,
+    "weight": 45,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["TALK", "OBSERVE", "PERSUADE"],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "미렐라가 빈민가의 허름한 진료소에서 환자를 치료하고 있다. 약초를 달이는 냄새가 좁은 방 안에 가득하다. 기다리는 사람이 몇 명 있는데, 모두 피로하고 수척한 얼굴이다. 미렐라는 지칠 줄 모르고 일한다.",
+      "primaryNpcId": "NPC_MIRELA",
+      "choices": [
+        { "id": "slm_int3_assist", "label": "진료를 도와준다", "hint": "미렐라의 깊은 신뢰를 얻는다", "affordance": "TALK", "riskLevel": 1 },
+        { "id": "slm_int3_watch", "label": "미렐라의 치료법을 관찰한다", "hint": "약초 지식을 배울 수 있다", "affordance": "OBSERVE", "riskLevel": 1 },
+        { "id": "slm_int3_ask", "label": "환자들의 상태에 대해 묻는다", "hint": "빈민가에서 유행하는 질병을 알 수 있다", "affordance": "PERSUADE", "riskLevel": 1 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["NPC_MIRELA", "CLINIC", "HEALING", "CONVERSATION"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_CFT_1",
+    "locationId": "LOC_SLUMS",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "conflict",
+    "cooldownTurns": 4,
+    "priority": 6,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "THREATEN", "SNEAK"],
+    "friction": 2,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "빈민가 골목에서 깡패 셋이 고아원 아이를 붙잡고 있다. 아이가 훔친 빵 한 조각을 되찾으려 하는 것인데, 깡패들은 '누가 보냈느냐'며 아이를 겁주고 있다. 아이의 겁에 질린 울음소리가 골목에 울린다.",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_cft1_fight", "label": "깡패들에게 맞선다", "hint": "아이를 구하고 깡패와 전투", "affordance": "FIGHT", "riskLevel": 2 },
+        { "id": "slm_cft1_threaten", "label": "하를런의 이름을 대며 위협한다", "hint": "노동 길드의 영향력을 활용한다", "affordance": "THREATEN", "riskLevel": 2 },
+        { "id": "slm_cft1_sneak", "label": "뒤에서 몰래 접근해 아이를 빼낸다", "hint": "은밀하게 구출한다", "affordance": "SNEAK", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["THUGS", "ORPHAN", "CONFLICT", "RESCUE"]
+    }
+  },
+  {
+    "eventId": "EVT_SLUMS_CFT_2",
+    "locationId": "LOC_SLUMS",
+    "eventType": "AMBUSH",
+    "eventCategory": "conflict",
+    "cooldownTurns": 4,
+    "priority": 7,
+    "weight": 35,
+    "conditions": { "field": "worldState.heat", "op": ">=", "value": 45 },
+    "gates": [
+      { "type": "COOLDOWN_TURNS", "turns": 4 }
+    ],
+    "affordances": ["FIGHT", "SNEAK", "THREATEN"],
+    "friction": 3,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "빈민가 깊숙한 곳을 지나는데 양쪽 지붕에서 그림자가 움직인다. 위에서 돌멩이가 떨어지며 길이 막히고, 앞뒤에서 칼을 든 자들이 나타난다. '여기까지 들어오다니 배짱도 좋군. 가진 거 다 내놓아.'",
+      "primaryNpcId": null,
+      "choices": [
+        { "id": "slm_cft2_fight", "label": "좁은 골목을 등지고 싸운다", "hint": "빈민가 깡패 3명과의 전투", "affordance": "FIGHT", "riskLevel": 3 },
+        { "id": "slm_cft2_flee", "label": "무너진 벽을 넘어 도주한다", "hint": "빈민가 지리를 알면 유리하다", "affordance": "SNEAK", "riskLevel": 2 },
+        { "id": "slm_cft2_bluff", "label": "자신의 배후 세력을 과장하여 겁을 준다", "hint": "깡패들이 망설이면 도주 기회가 생긴다", "affordance": "THREATEN", "riskLevel": 2 }
+      ],
+      "effectsOnEnter": [],
+      "tags": ["AMBUSH", "GANG", "CONFLICT", "HIGH_HEAT"]
+    }
+  }
+]

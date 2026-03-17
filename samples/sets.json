@@ -1,0 +1,35 @@
+[
+  {
+    "setId": "SET_HARBOR_SHADOW",
+    "name": "Harbor Shadow Set",
+    "pieces": [
+      "DAGGER_SMUGGLER",
+      "CLOAK_SHADOW",
+      "BOOTS_SILENT"
+    ],
+    "bonuses": [
+      {
+        "requiredCount": 2,
+        "modifiers": [
+          {
+            "stat": "attack",
+            "value": 5
+          }
+        ]
+      },
+      {
+        "requiredCount": 3,
+        "modifiers": [
+          {
+            "stat": "attack",
+            "value": 10
+          },
+          {
+            "stat": "critPercent",
+            "value": 5
+          }
+        ]
+      }
+    ]
+  }
+]

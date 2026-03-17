@@ -1,0 +1,206 @@
+{
+  "EXPOSE_CORRUPTION": [
+    {
+      "stage": 1,
+      "eventId": "arc_expose_1",
+      "title": "수상한 장부",
+      "description": "시장 거리의 한 상인이 이중 장부의 존재를 귀띔한다. 경비대 야간 책임자 마이렐 단 경이 항만 세금 일부를 횡령하고 있다는 소문이다. 진실을 밝히려면 먼저 장부의 사본을 확보해야 한다.",
+      "locationId": "LOC_MARKET",
+      "requirements": {
+        "minQuestState": "S1_GET_ANGLE",
+        "requiredFacts": ["FACT_LEDGER_EXISTS"],
+        "minReputation": null
+      },
+      "rewards": {
+        "facts": ["FACT_WAGE_FRAUD_PATTERN"],
+        "items": ["CLUE_TORN_SHIFT_SHEET"],
+        "reputationChanges": [
+          { "factionId": "CITY_GUARD", "delta": -5 }
+        ],
+        "gold": 0
+      },
+      "nextStageCondition": "CLUE_TORN_SHIFT_SHEET를 확보하고 에드릭 베일 또는 쉐도우에게 제시"
+    },
+    {
+      "stage": 2,
+      "eventId": "arc_expose_2",
+      "title": "증거 추적",
+      "description": "찢긴 교대표의 필적이 경비대 본부의 공식 문서와 일치한다. 벨론 대위에게 이 증거를 가져가면 내부 조사를 시작할 수 있다. 하지만 마이렐의 부하들이 움직이고 있다는 첩보가 들어온다.",
+      "locationId": "LOC_GUARD",
+      "requirements": {
+        "minQuestState": "S2_PROVE_TAMPER",
+        "requiredFacts": ["FACT_WAGE_FRAUD_PATTERN", "FACT_TAMPERED_LOGS"],
+        "minReputation": { "factionId": "CITY_GUARD", "value": -10 }
+      },
+      "rewards": {
+        "facts": ["FACT_OFFICIAL_INQUIRY"],
+        "items": ["ITEM_GUARD_PERMIT"],
+        "reputationChanges": [
+          { "factionId": "CITY_GUARD", "delta": 10 },
+          { "factionId": "MERCHANT_CONSORTIUM", "delta": -5 }
+        ],
+        "gold": 30
+      },
+      "nextStageCondition": "벨론 대위의 조사 허가를 받고, 마이렐의 은신처 장부 원본을 확보"
+    },
+    {
+      "stage": 3,
+      "eventId": "arc_expose_3",
+      "title": "부패의 뿌리",
+      "description": "마이렐 단 경의 횡령은 빙산의 일각이었다. 장부 원본에는 상인 길드 연합과의 뒷거래 내역이 빼곡히 적혀 있다. 이 증거를 왕도에 보고하면 그레이마르의 권력 구조가 뒤흔들린다. 마이렐은 최후의 발악으로 무력 저항을 선택한다.",
+      "locationId": "LOC_GUARD",
+      "requirements": {
+        "minQuestState": "S4_CONFRONT",
+        "requiredFacts": ["FACT_OFFICIAL_INQUIRY", "FACT_MAIREL_GUARD_EVIDENCE"],
+        "minReputation": { "factionId": "CITY_GUARD", "value": 0 }
+      },
+      "rewards": {
+        "facts": ["FACT_INSIDE_JOB"],
+        "items": [],
+        "reputationChanges": [
+          { "factionId": "CITY_GUARD", "delta": 20 },
+          { "factionId": "MERCHANT_CONSORTIUM", "delta": -15 },
+          { "factionId": "LABOR_GUILD", "delta": 5 }
+        ],
+        "gold": 100
+      },
+      "nextStageCondition": null
+    }
+  ],
+  "PROFIT_FROM_CHAOS": [
+    {
+      "stage": 1,
+      "eventId": "arc_profit_1",
+      "title": "밀수의 냄새",
+      "description": "항만 부두의 한 선원이 동쪽 부두에서 벌어지는 비밀 하역 작업에 대해 흘린다. 밀수 경로에 편승하면 큰돈을 벌 수 있지만, 양쪽 세력 모두와 엮이게 된다. 쉐도우가 밀수 경로 지도를 팔겠다고 접근해 온다.",
+      "locationId": "LOC_HARBOR",
+      "requirements": {
+        "minQuestState": "S1_GET_ANGLE",
+        "requiredFacts": ["FACT_LEDGER_EXISTS"],
+        "minReputation": null
+      },
+      "rewards": {
+        "facts": ["FACT_ROUTE_TO_EAST_DOCK"],
+        "items": ["ITEM_SMUGGLE_MAP"],
+        "reputationChanges": [
+          { "factionId": "LABOR_GUILD", "delta": -5 }
+        ],
+        "gold": -35
+      },
+      "nextStageCondition": "밀수 경로 지도를 구입하고 동쪽 부두 창고에 잠입"
+    },
+    {
+      "stage": 2,
+      "eventId": "arc_profit_2",
+      "title": "양다리 줄타기",
+      "description": "밀수 경로의 전모가 밝혀진다. 노동 길드가 물건을 들이고, 상인 길드가 세탁하며, 매수된 경비대가 눈을 감아주는 삼각 구조다. 양쪽 모두에게 증거를 쥔 채 중개자 역할을 자처하면, 양쪽 모두에게서 이익을 뜯어낼 수 있다.",
+      "locationId": "LOC_SLUMS",
+      "requirements": {
+        "minQuestState": "S3_TRACE_ROUTE",
+        "requiredFacts": ["FACT_ROUTE_TO_EAST_DOCK", "FACT_SMUGGLE_ROUTE_GUILD"],
+        "minReputation": null
+      },
+      "rewards": {
+        "facts": ["FACT_BOTH_SIDES_EVIDENCE"],
+        "items": [],
+        "reputationChanges": [
+          { "factionId": "LABOR_GUILD", "delta": -10 },
+          { "factionId": "MERCHANT_CONSORTIUM", "delta": -10 }
+        ],
+        "gold": 80
+      },
+      "nextStageCondition": "양쪽 세력에 증거를 제시하고 협상 카드로 활용"
+    },
+    {
+      "stage": 3,
+      "eventId": "arc_profit_3",
+      "title": "독을 품은 황금",
+      "description": "양쪽 세력 모두를 쥐락펴락하며 이익을 취했지만, 결국 양쪽 모두가 배신자를 처리하기로 합의한다. 토브렌과 마이렐이 기이한 동맹을 맺고 당신을 제거하려 한다. 살아남으려면 마지막 카드를 써야 한다.",
+      "locationId": "LOC_SLUMS",
+      "requirements": {
+        "minQuestState": "S4_CONFRONT",
+        "requiredFacts": ["FACT_BOTH_SIDES_EVIDENCE"],
+        "minReputation": null
+      },
+      "rewards": {
+        "facts": ["FACT_INSIDE_JOB"],
+        "items": [],
+        "reputationChanges": [
+          { "factionId": "LABOR_GUILD", "delta": -15 },
+          { "factionId": "CITY_GUARD", "delta": -15 },
+          { "factionId": "MERCHANT_CONSORTIUM", "delta": -10 }
+        ],
+        "gold": 150
+      },
+      "nextStageCondition": null
+    }
+  ],
+  "ALLY_GUARD": [
+    {
+      "stage": 1,
+      "eventId": "arc_guard_1",
+      "title": "대위의 부탁",
+      "description": "벨론 대위가 은밀히 접촉해 온다. 경비대 내부에 부패가 만연하지만 증거가 부족하다며, 외부인인 당신에게 비공식 조사를 의뢰한다. 경비대의 신뢰를 얻으면 강력한 후원자를 확보하게 된다.",
+      "locationId": "LOC_GUARD",
+      "requirements": {
+        "minQuestState": "S1_GET_ANGLE",
+        "requiredFacts": ["FACT_LEDGER_EXISTS"],
+        "minReputation": { "factionId": "CITY_GUARD", "value": -5 }
+      },
+      "rewards": {
+        "facts": ["FACT_TAMPERED_LOGS"],
+        "items": ["ITEM_GUARD_PERMIT"],
+        "reputationChanges": [
+          { "factionId": "CITY_GUARD", "delta": 10 }
+        ],
+        "gold": 20
+      },
+      "nextStageCondition": "경비대 임시 허가증을 받고 야간 순찰 기록을 조사"
+    },
+    {
+      "stage": 2,
+      "eventId": "arc_guard_2",
+      "title": "내부의 적",
+      "description": "야간 순찰 기록을 조사한 결과, 마이렐의 부하들이 특정 시간대에 순찰을 빼먹고 밀수선 하역을 묵인하고 있었다. 증거가 충분히 모였지만, 마이렐의 세력은 경비대 내부에 깊이 뿌리박혀 있다. 벨론 대위와 함께 병영 내부를 수색해야 한다.",
+      "locationId": "LOC_GUARD",
+      "requirements": {
+        "minQuestState": "S3_TRACE_ROUTE",
+        "requiredFacts": ["FACT_TAMPERED_LOGS", "FACT_MAIREL_GUARD_EVIDENCE"],
+        "minReputation": { "factionId": "CITY_GUARD", "value": 5 }
+      },
+      "rewards": {
+        "facts": ["FACT_OFFICIAL_INQUIRY"],
+        "items": ["CLUE_SMEARED_INK_LOG"],
+        "reputationChanges": [
+          { "factionId": "CITY_GUARD", "delta": 15 },
+          { "factionId": "LABOR_GUILD", "delta": -5 }
+        ],
+        "gold": 40
+      },
+      "nextStageCondition": "병영 수색을 완료하고 마이렐의 은닉 장부를 확보"
+    },
+    {
+      "stage": 3,
+      "eventId": "arc_guard_3",
+      "title": "정의의 칼날",
+      "description": "벨론 대위가 체포 영장을 발부받았다. 그러나 마이렐은 순순히 체포될 인물이 아니다. 충성스러운 부하들을 동원해 저항하고, 경비대 지구가 한순간 전장으로 변한다. 대위 곁에서 마이렐을 제압하면, 그레이마르에 새로운 질서가 선다.",
+      "locationId": "LOC_GUARD",
+      "requirements": {
+        "minQuestState": "S4_CONFRONT",
+        "requiredFacts": ["FACT_OFFICIAL_INQUIRY", "FACT_MAIREL_GUARD_EVIDENCE"],
+        "minReputation": { "factionId": "CITY_GUARD", "value": 10 }
+      },
+      "rewards": {
+        "facts": ["FACT_INSIDE_JOB"],
+        "items": [],
+        "reputationChanges": [
+          { "factionId": "CITY_GUARD", "delta": 25 },
+          { "factionId": "LABOR_GUILD", "delta": 10 },
+          { "factionId": "MERCHANT_CONSORTIUM", "delta": -10 }
+        ],
+        "gold": 80
+      },
+      "nextStageCondition": null
+    }
+  ]
+}

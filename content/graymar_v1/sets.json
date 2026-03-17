@@ -1,0 +1,49 @@
+[
+  {
+    "setId": "SET_HARBOR_WARRIOR",
+    "name": "항만 전사의 장비",
+    "regionId": "REG_GRAYMAR_HARBOR",
+    "type": "COMBAT",
+    "pieces": ["EQ_DOCK_CUTLASS", "EQ_DOCK_VEST", "EQ_DOCK_BOOTS"],
+    "bonus2": {
+      "description": "ATK +2, DEF +2",
+      "statBonus": { "atk": 2, "def": 2 }
+    },
+    "bonus3": {
+      "description": "ENGAGED 상태 적에게 공격 시 추가 피해 15%",
+      "statBonus": { "atk": 1 },
+      "specialEffect": "ENGAGED_BONUS_DMG_15"
+    }
+  },
+  {
+    "setId": "SET_GUILD_DIPLOMAT",
+    "name": "상인 길드 외교관 세트",
+    "regionId": "REG_GRAYMAR_HARBOR",
+    "type": "POLITICAL",
+    "pieces": ["EQ_MERCHANT_LEDGER", "EQ_MERCHANT_RING", "EQ_MERCHANT_CLOAK"],
+    "bonus2": {
+      "description": "ACC +2, RESIST +2",
+      "statBonus": { "acc": 2, "resist": 2 }
+    },
+    "bonus3": {
+      "description": "PERSUADE/BRIBE 판정 시 statBonus +1 (Resolve 보너스)",
+      "statBonus": { "acc": 1, "resist": 1 },
+      "specialEffect": "PERSUADE_BRIBE_BONUS_1"
+    }
+  },
+  {
+    "setId": "SET_HARBOR_SHADOW",
+    "name": "항만의 그림자 세트",
+    "regionId": "REG_GRAYMAR_HARBOR",
+    "type": "COMBAT",
+    "pieces": ["EQ_SMUGGLER_DAGGER", "EQ_SHADOW_CLOAK", "EQ_SILENT_BOOTS"],
+    "bonus2": {
+      "description": "ATK +5",
+      "statBonus": { "atk": 5 }
+    },
+    "bonus3": {
+      "description": "ATK +10, CRIT +5%",
+      "statBonus": { "atk": 10, "crit": 5 }
+    }
+  }
+]
