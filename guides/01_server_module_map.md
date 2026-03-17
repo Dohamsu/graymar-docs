@@ -128,7 +128,7 @@ main.ts → AppModule
 | MemoryRendererService | memory-renderer.service.ts | StructuredMemory → 프롬프트 블록 |
 | AiTurnLogService | ai-turn-log.service.ts | LLM 호출 로그 기록 |
 | TokenBudgetService | token-budget.service.ts | 토큰 예산 관리 (2500 토큰) |
-| MidSummaryService | mid-summary.service.ts | 6턴 초과 시 중간 요약 생성 |
+| MidSummaryService | mid-summary.service.ts | 4턴 초과 시 중간 요약 생성 |
 
 **하위 모듈:**
 - `providers/` — OpenAI, Claude, Gemini, Mock (4 providers)

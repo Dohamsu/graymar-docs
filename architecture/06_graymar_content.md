@@ -55,7 +55,7 @@ HUB (4개 LOCATION 선택)
 | 3 | `enemies.json` | 적 9종 정의 | enemyId |
 | 4 | `encounters.json` | 전투 조합 9종 + 보상 | encounterId |
 | 5 | `items.json` | 아이템 카탈로그 (단서 3 + 소모품 + 키 아이템) | itemId |
-| 6 | `npcs.json` | NPC 7명 + unknownAlias (소개 전 별칭) | npcId |
+| 6 | `npcs.json` | NPC 11명 + unknownAlias (소개 전 별칭) | npcId |
 | 7 | `factions.json` | 세력 4개 + 초기 평판 | factionId |
 | 8 | `quest.json` | 메인 퀘스트 상태/Fact 정의 | questId |
 | 9 | `locations.json` | 4개 LOCATION 정의 | locationId |
@@ -233,7 +233,7 @@ EventMatcherService의 6단계 필터링:
 | CITY_GUARD | 도시 수비대 | 0 | 마이렐의 부패 vs 벨론의 정의 |
 | ARCANE_SOCIETY | 비전 학회 | 0 | (현재 시나리오에서 주요 역할 없음) |
 
-### 6.2 NPC (7명)
+### 6.2 NPC (11명)
 
 | npcId | 이름 | unknownAlias (소개 전) | 역할 | 세력 | basePosture |
 |-------|------|----------------------|------|------|------------|
@@ -244,6 +244,10 @@ EventMatcherService의 6단계 필터링:
 | NPC_MOON_SEA | 라이라 케스텔 | 조용한 문서 실무자 | 상단 문서실 암호 메모 실무자 | MERCHANT_CONSORTIUM | FEARFUL |
 | NPC_INFO_BROKER | 쉐도우 | 후드를 깊이 쓴 정보상 | 뒷골목 정보 브로커 | 무소속 | CALCULATING |
 | NPC_GUARD_CAPTAIN | 벨론 대위 | 위풍당당한 수비대 장교 | 수비대 대위, 내부 부패 진압 의지 | CITY_GUARD | CAUTIOUS |
+| NPC_MIRELA | 미렐라 | 약초 향이 나는 노점상 | 시장 약초 노점상 | MERCHANT_CONSORTIUM | FRIENDLY |
+| NPC_RENNICK | 레닉 | 그림자 속 얼굴 | 정보 브로커, 경비대 연줄 보유 | 무소속 | CAUTIOUS |
+| NPC_CAPTAIN_BREN | 브렌 대위 | 날카로운 눈의 장교 | 경비대 장교, 벨론 휘하 | CITY_GUARD | CAUTIOUS |
+| NPC_ROSA | 로사 | 따뜻한 눈빛의 여인 | 고아원 관련 인물 | 무소속 | FRIENDLY |
 
 > NPC 소개 시스템: 첫 만남에서 `unknownAlias`로 표시. posture에 따라 1~3회 만남 후 실명 공개. 상세: `09_npc_politics.md` §1.4
 
@@ -258,7 +262,11 @@ EventMatcherService의 6단계 필터링:
 하를런 보스 ─── 노동 길드 ─── [피해자] 부두 노동자
 에드릭 베일 ─── 상인 길드 ─── [기록] 이중 장부
 라이라 케스텔 ─── 상인 길드 ─── [문서] 암호 메모
+미렐라 ─── 상인 길드 ─── [시장] 약초 노점, 소문 경유지
 쉐도우 ─── [독립] 정보 중개 (양쪽에 정보 판매)
+레닉 ─── [독립] 정보 브로커, 경비대 연줄
+브렌 대위 ─── 경비대 ─── 벨론 휘하 장교
+로사 ─── [독립] 고아원 관련, 빈민가 연결
 ```
 
 ---

@@ -84,7 +84,10 @@ RunState {
 | 상수 | 값 | 위치 | 설명 |
 |------|-----|------|------|
 | TOKEN_BUDGET_TOTAL | 2500 | TokenBudgetService | 프롬프트 총 토큰 예산 |
-| LOCATION_SESSION_MAX | 6턴 | ContextBuilderService | MidSummary 적용 후 |
+| LOCATION_SESSION_MAX | 4턴 | ContextBuilderService | MidSummary 적용 후 (Fixplanv1 PR3: 6→4) |
+| PREVIOUS_VISIT_BUDGET | 150 | TokenBudgetService | [직전 장소 정보] 블록 (priority=57) |
+| STRUCTURED_MEMORY_BUDGET | 450 | TokenBudgetService | 구조화 메모리 블록 (PR3: 500→450) |
+| BUFFER_BUDGET | 250 | TokenBudgetService | 기타 블록 (PR3: 300→250) |
 | STORY_SUMMARY_LIMIT | 2000자 | ContextBuilderService | 이야기 요약 최대 |
 | THREAD_ENTRY_MAX | 200자 | LlmWorkerService | THREAD 엔트리당 |
 | THREAD_TOTAL_BUDGET | 1200자 | LlmWorkerService | THREAD 총 예산 |
@@ -108,7 +111,7 @@ RunState {
 | enemies.json | 적 정의 |
 | encounters.json | 전투 조합 + 보상 |
 | items.json | 아이템 카탈로그 |
-| npcs.json | 7 NPC (name, unknownAlias, role, faction, basePosture) |
+| npcs.json | 11 NPC (name, unknownAlias, role, faction, basePosture) — PR1에서 4명 추가 |
 | factions.json | 세력 정의 |
 | quest.json | 퀘스트 정의 |
 | locations.json | 4 LOCATION (시장/경비대/항만/빈민가) |

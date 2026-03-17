@@ -72,6 +72,15 @@ Priority → Weight 매핑:
 
 Fallback 체인: 고정 이벤트 → 절차적 이벤트 → atmosphere fallback
 
+### 이벤트 반복 방지 (Fixplanv1 PR2)
+
+EventMatcherService의 누진 반복 페널티:
+- 1회 반복: -40
+- 2연속 반복: -70
+- 3연속+ 반복: -100 (사실상 차단)
+- NPC 보너스 캡: repeatPenalty의 50% 초과 상쇄 불가
+- 방문 내 하드캡: 동일 이벤트 2회 이상 → 후보에서 제거
+
 ---
 
 ## Procedural Event (동적 이벤트 생성)
