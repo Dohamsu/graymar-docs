@@ -54,7 +54,7 @@ LLM 출력에서 3종 태그를 파싱 후 서술 본문에서 제거:
 
 | 태그 | 파싱 | 저장 위치 | 예산 |
 |------|------|----------|------|
-| `[MEMORY:카테고리]...[/MEMORY]` | 최대 2개, 50자 절삭 | `run_memories.structuredMemory.llmExtracted[]` (최대 15개) | 카테고리: NPC_DETAIL, PLACE_DETAIL, PLOT_HINT, ATMOSPHERE |
+| `[MEMORY:카테고리]...[/MEMORY]` | 최대 2개, 50자 절삭 | `run_memories.structuredMemory.llmExtracted[]` (최대 15개) | 카테고리: NPC_DETAIL, PLACE_DETAIL, PLOT_HINT, ATMOSPHERE, NPC_KNOWLEDGE |
 | `[THREAD]...[/THREAD]` | 최대 200자 절삭 | `node_memories.narrativeThread` (JSON, 누적) | 총 1200자 초과 시 오래된 엔트리 삭제 |
 | `[CHOICES]...[/CHOICES]` | LOCATION 턴만, 3개 선택지 파싱 | `turns.llmChoices[]` | go_hub 선택지 자동 추가 |
 
@@ -156,6 +156,9 @@ interface LlmContext {
 
   // 장면 연속성 (2026-03-16 추가)
   currentSceneContext: string | null;  // 대화 상대, 세부 위치, 진행 중인 상황
+
+  // 장소 전환 맥락 (Fixplanv1 PR3 추가)
+  previousVisitContext: string | null; // 직전 장소 VisitExitSummary 텍스트
 }
 ```
 
@@ -310,7 +313,7 @@ locationSession 없을 때 fallback. 동일 구조.
 ### 4.2 장기 기억 (Structured Memory v2)
 
 go_hub 선택 시 `MemoryIntegration.finalizeVisit()` 호출:
-- `run_memories.structuredMemory` (visitLog, npcJournal, incidentChronicle, milestones, llmExtracted) 통합 저장
+- `run_memories.structuredMemory` (visitLog, npcJournal, incidentChronicle, milestones, llmExtracted, npcKnowledge, lastExitSummary) 통합 저장
 - 호환용 `storySummary` 동시 저장
 
 ### 4.3 메모리 흐름 요약
@@ -354,6 +357,7 @@ LOCATION 진입
 | 1 | `[세계 상태]` | ctx.worldSnapshot | L0 확장 |
 | 2 | `[서사 이정표]` | ctx.milestonesText | Structured Memory v2 |
 | 3 | `[이야기 요약]` | ctx.structuredSummary (우선) / ctx.storySummary (fallback) | L1 |
+| 3.5 | `[직전 장소 정보]` | ctx.previousVisitContext | Fixplanv1 PR3: 장소 전환 맥락 (PREVIOUS_VISIT 150토큰) |
 | 4 | `[NPC 관계]` | ctx.npcJournalText | Structured Memory v2 |
 | 5 | `[사건 일지]` | ctx.incidentChronicleText | Structured Memory v2 |
 | 6 | `[기억된 사실]` | ctx.llmFactsText | Structured Memory v2 (LLM [MEMORY] 누적) |
@@ -464,10 +468,24 @@ LOCATION 진입
 | 블록 | 소스 | 용도 |
 |------|------|------|
 | `[이야기 요약]` | visitLog (방문 기록) | 재방문 시 이전 행동 결과 흔적 반영 |
-| `[NPC 관계]` | npcJournal | NPC 태도/과거 상호작용 → 대사 톤 반영 |
+| `[직전 장소 정보]` | lastExitSummary (PR3) | 장소 전환 시 직전 장소 맥락 보존 (keyActions, keyDialogues, unresolvedLeads) |
+| `[NPC 관계]` | npcJournal + npcKnowledge | NPC 태도/과거 상호작용 → 대사 톤 반영. NPC가 알고 있는 정보도 포함 (PR4) |
 | `[사건 일지]` | incidentChronicle | 진행 중 사건 여파 → 배경 묘사 반영 |
-| `[기억된 사실]` | llmExtracted | LLM [MEMORY] 태그 누적 → 감각적 디테일 재활용 |
+| `[기억된 사실]` | llmExtracted | LLM [MEMORY] 태그 누적 → 감각적 디테일 재활용 (타 장소 importance≥0.7도 포함, max 3) |
 | `[서사 이정표]` | milestones | 중요 사건 콜백 (NPC 대사/배경 간접 언급) |
+
+### NPC Knowledge 파이프라인 (Fixplanv1 PR4)
+
+NPC가 플레이어와의 대화에서 알게 된 정보를 기록하고 프롬프트에 반영:
+
+```
+트리거 조건: 7종 대화형 actionType (TALK, PERSUADE, BRIBE, INVESTIGATE, OBSERVE, HELP, THREATEN)
+  + SUCCESS/PARTIAL 판정
+  + targetNpcId 존재 (primaryNpcId 우선, 없으면 eventTags에서 TAG_TO_NPC 매핑)
+  → MemoryCollector.collectNpcKnowledge() 호출
+  → structuredMemory.npcKnowledge[npcId] 저장 (NPC당 max 5, importance 기반 정리)
+  → 다음 턴 [등장 가능 NPC 목록]에 "이 인물이 알고 있는 것" 렌더링
+```
 
 ---
 

@@ -229,12 +229,16 @@ score = 1d6 + floor(stat / 3) + baseMod
 | 5 | Heat 간섭 | ALERT → 40% / DANGER → 25% 확률로 BLOCK 이벤트만 남김 |
 | 6 | 가중치 선택 | `priority*10 + weight + agendaBoost - penalty` → RNG 가중치 선택 |
 
-### 5-3. 페널티
+### 5-3. 페널티 (Fixplanv1 PR2 누진 페널티 적용)
 
 | 페널티 | 값 | 조건 |
 |--------|-----|------|
 | FALLBACK 연속 | -30 * consecutiveCount | 최근 이벤트가 연속 FALLBACK |
-| 최근 사용 이벤트 | -40 | recentEventIds에 포함 |
+| 최근 사용 1회 | -40 | recentEventIds에 1회 포함 |
+| 최근 사용 2연속 | -70 | recentEventIds에서 직전 2회 연속 동일 |
+| 최근 사용 3연속+ | -100 | 사실상 차단 |
+| NPC 보너스 캡 | repeatPenalty * 0.5 | NPC 보너스가 반복 페널티의 50% 이상 상쇄 불가 |
+| 방문 내 하드캡 | 후보 제외 | 동일 이벤트 2회 이상 사용 → 후보에서 제거 (전체 제거 시 필터 스킵) |
 
 ### 5-4. Agenda 부스트
 
@@ -347,7 +351,7 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 | HeatService | `heat.service.ts` | ✅ delta clamp ±8, decay, CONTACT_ALLY, PAY_COST |
 | IntentParserV2Service | `intent-parser-v2.service.ts` | ✅ 키워드 파싱, 고집 에스컬레이션, CHOICE 매핑, 복귀 의도 |
 | LlmIntentParserService | `llm-intent-parser.service.ts` | ✅ LLM 기반 의도 파싱 (폴백) |
-| EventMatcherService | `event-matcher.service.ts` | ✅ 6단계 필터링, FALLBACK/-40 페널티, 가중치 선택 |
+| EventMatcherService | `event-matcher.service.ts` | ✅ 6단계 필터링, 누진 반복 페널티(-40/-70/-100), NPC보너스 캡, 방문 내 하드캡 |
 | ResolveService | `resolve.service.ts` | ✅ 1d6 + stat/3 + baseMod, reputation 변동 |
 | AgendaService | `agenda.service.ts` | ✅ implicit bucket 누적, dominant 계산 |
 | ArcService | `arc.service.ts` | ✅ route switch, commitment lock, unlock 조건 |
