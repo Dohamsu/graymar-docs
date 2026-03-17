@@ -53,6 +53,24 @@ HUB↔LOCATION 전환 시: 전환 화면 없이 즉시 전환, enter narrator만
 ### LOCATION 떠날 때 기억 저장
 go_hub/MOVE_LOCATION → `MemoryIntegration.finalizeVisit()` → `run_memories.structuredMemory` + 호환 `storySummary` 동시 저장
 - Fixplanv1 PR3: `lastExitSummary` (VisitExitSummary) 동시 생성 → 다음 장소에서 `[직전 장소 정보]` 블록으로 활용
+- Fixplanv2 PR-B: `updateNpcJournal()`에서 NPC별 관련 행동만 필터 (`relatedNpcId` 매칭). 관련 행동 없는 NPC는 interaction 미기록 → npcJournal 오염 방지
+
+### VisitAction 구조 (Fixplanv2 PR-B)
+`server/src/db/types/structured-memory.ts`
+```
+{ rawInput, actionType, outcome, eventId?, brief, summaryShort?, relatedNpcId? }
+```
+- `summaryShort`: 행동+결과 요약 (최대 60자). turns.service.ts에서 `summaryText` 전달. sceneFrame이 아닌 실제 행동 기반.
+- `relatedNpcId`: 이 행동에 관련된 NPC ID. updateNpcJournal에서 NPC별 필터링에 사용.
+- snippet 생성 우선순위: summaryShort > rawInput > brief (sceneFrame은 최후 fallback)
+
+### NPC Knowledge 자동 수집 (Fixplanv2 PR-E)
+`server/src/engine/hub/memory-collector.service.ts`
+- 기존: 대화형 actionType(TALK, PERSUADE 등) + SUCCESS/PARTIAL → source=`PLAYER_TOLD`
+- 추가: 이벤트 태그(EVIDENCE, SECRET, RUMOR 등) 감지 → source=`AUTO_COLLECT`
+- source 타입: `PLAYER_TOLD | WITNESSED | INFERRED | AUTO_COLLECT`
+- 중복 방지: 같은 턴+NPC+source 조합이면 스킵
+- 렌더링 시 중복 제거: `MemoryRendererService.deduplicateNpcKnowledge()` — AUTO_COLLECT와 nonAuto가 같은 턴이면 AUTO_COLLECT 제거
 
 ---
 
@@ -149,6 +167,7 @@ EventMatcher가 매 턴 다른 이벤트를 선택 → sceneFrame 변경 → LLM
 |------|----------|------|
 | `[THREAD]...[/THREAD]` | `node_memories.narrativeThread` | 장면 흐름 추적 (max 200자/항목, 총 1200자) |
 | `[MEMORY]...[/MEMORY]` | `run_memories.structuredMemory.llmExtracted` | LLM 추출 사실 (max 15개) |
+| `[MEMORY:NPC_KNOWLEDGE:NPC_ID]` | `run_memories.structuredMemory.npcKnowledge` | NPC가 알게 된 정보 (source=WITNESSED, NPC당 max 5개) |
 | `[CHOICES]...[/CHOICES]` | `turns.suggestedChoices` | LLM 제안 선택지 (JSON 파싱) |
 
 NPC 소개 5-way 분기 (`prompt-builder.service.ts`):

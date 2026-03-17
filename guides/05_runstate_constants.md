@@ -17,7 +17,7 @@ RunState {
   arcState: ArcState           // 아크 루트/커밋먼트
   npcRelations: Record<string, number>
   eventCooldowns: Record<string, number>
-  actionHistory: ActionHistoryEntry[]  // 고집 에스컬레이션용
+  actionHistory: ActionHistoryEntry[]  // 고집 에스컬레이션 + NPC 만남 추적 (Fixplanv2 PR-A: primaryNpcId 추가)
 
   // NPC 시스템
   npcStates: Record<string, NPCState>  // introduced, encounterCount, NpcEmotionalState 포함

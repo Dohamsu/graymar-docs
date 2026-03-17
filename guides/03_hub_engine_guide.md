@@ -72,14 +72,14 @@ Priority → Weight 매핑:
 
 Fallback 체인: 고정 이벤트 → 절차적 이벤트 → atmosphere fallback
 
-### 이벤트 반복 방지 (Fixplanv1 PR2)
+### 이벤트 반복 방지 (Fixplanv1 PR2 + Fixplanv2 PR-D)
 
-EventMatcherService의 누진 반복 페널티:
-- 1회 반복: -40
-- 2연속 반복: -70
-- 3연속+ 반복: -100 (사실상 차단)
+EventMatcherService의 3중 방지 체계:
+1. **직전 이벤트 hard block** (Fixplanv2 PR-D): 가중치 선택 이전에 `recentEventIds[last]`와 동일한 이벤트를 후보에서 제거 (안전장치: 전체 제거 시 원래 후보 유지). match() + matchWithIncidentContext() 양쪽 적용.
+2. **누진 반복 페널티**: 1회 반복 -60 (Fixplanv2: 40→60), 2연속 -70, 3연속+ -100 (사실상 차단)
+3. **방문 내 하드캡**: 동일 이벤트 2회 이상 → 후보에서 제거
+
 - NPC 보너스 캡: repeatPenalty의 50% 초과 상쇄 불가
-- 방문 내 하드캡: 동일 이벤트 2회 이상 → 후보에서 제거
 
 ---
 
@@ -178,6 +178,8 @@ NotificationAssembler → scope × presentation 기반 알림 조립
 
 - 소개 전: `unknownAlias`, 소개 후: `npcDef.name`
 - 핵심 함수: `getNpcDisplayName()`, `shouldIntroduce()` (`server/src/db/types/npc-state.ts`)
+- **encounterCount 방문 단위 제한** (Fixplanv2 PR-A): actionHistory에서 이미 만난 NPC면 스킵. 같은 방문 내 5턴 연속 만나도 encounterCount는 1만 증가.
+- **effectiveNpcId 통합** (Fixplanv2 PR-A): `matchedEvent.payload.primaryNpcId` 우선, 없으면 `orchestrationResult.npcInjection.npcId` fallback. 두 소스 모두 없으면 null.
 
 ---
 
