@@ -23,6 +23,31 @@ LOCATION: ACTION/CHOICE
 
 ---
 
+## MOVE_LOCATION 처리 (Fixplan3 P4)
+
+`server/src/turns/turns.service.ts`
+
+### 파싱
+- IntentParserV2 키워드: "이동", "향한다", "떠나", "다른 곳", "다른 장소" 등
+- LlmIntentParserService: KW가 MOVE_LOCATION 반환 시 LLM 결과보다 **무조건 우선** (KW_OVERRIDE)
+
+### 처리 흐름
+```
+MOVE_LOCATION 감지
+  → extractTargetLocation(rawInput, currentLocationId)
+  → 목표 장소 특정됨? → performLocationTransition() (LOCATION→LOCATION 직접 이동)
+  → 목표 불명확?     → HUB 복귀 fallback (finalizeVisit + transitionToHub)
+```
+
+### HUB 복귀 fallback
+목표 장소가 불명확한 이동 의도("다른 장소로 이동한다")는 go_hub CHOICE와 동일하게 처리:
+1. `finalizeVisit()` 호출 → storySummary 축적
+2. `worldStateService.returnToHub()` → worldState 초기화
+3. `NODE_ENDED` + `transitionToHub()` → HUB 노드 생성
+4. 플레이어가 HUB에서 새 장소 선택
+
+---
+
 ## LOCATION 판정 시스템
 
 `server/src/engine/hub/resolve.service.ts`
