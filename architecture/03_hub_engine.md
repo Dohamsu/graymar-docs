@@ -144,6 +144,13 @@ LOCATION 진입 → Scene Shell(분위기) → 플레이어 입력
 - LOCATION 이동 또는 HUB 복귀 시 actionHistory 초기화
 - LLM에 escalated 플래그 전달 → "행동 그대로 실행" 강한 서술 지시
 
+### 3-3. MOVE_LOCATION 처리 (Fixplan3 P4)
+
+ACTION 입력에서 MOVE_LOCATION 파싱 성공 시:
+1. `extractTargetLocation()`으로 목표 장소 특정 시도
+2. 목표 특정 성공 → `performLocationTransition()` (직접 장소 이동)
+3. **목표 불명확 → go_hub와 동일한 HUB 복귀 처리** (`finalizeVisit` + `returnToHub` + `transitionToHub`)
+
 ---
 
 ## 4. Resolve 판정 시스템

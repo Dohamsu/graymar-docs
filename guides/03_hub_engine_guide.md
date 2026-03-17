@@ -164,7 +164,8 @@ NotificationAssembler → scope × presentation 기반 알림 조립
 
 ### Ending System (엔딩 시스템)
 - **트리거**: ALL_RESOLVED / DEADLINE / PLAYER_CHOICE
-- **결과**: NPC epilogues (high_trust/neutral/hostile) + city status (STABLE/UNSTABLE/COLLAPSED) + 통계
+- **최소 턴 가드** (Fixplan3 P7): ALL_RESOLVED 엔딩은 `totalTurns ≥ 15` 이상이어야 발동. 미달 시 엔딩 지연 → 탐색 시간 확보.
+- **결과**: NPC epilogues (high_trust/neutral/hostile, `korParticle` 조사 적용) + city status (STABLE/UNSTABLE/COLLAPSED) + 통계
 
 ### 4-Phase Time Cycle
 - DAWN(2 tick) → DAY(4) → DUSK(2) → NIGHT(4) = 12 tick/day
@@ -179,7 +180,8 @@ NotificationAssembler → scope × presentation 기반 알림 조립
 - 소개 전: `unknownAlias`, 소개 후: `npcDef.name`
 - 핵심 함수: `getNpcDisplayName()`, `shouldIntroduce()` (`server/src/db/types/npc-state.ts`)
 - **encounterCount 방문 단위 제한** (Fixplanv2 PR-A): actionHistory에서 이미 만난 NPC면 스킵. 같은 방문 내 5턴 연속 만나도 encounterCount는 1만 증가.
-- **effectiveNpcId 통합** (Fixplanv2 PR-A): `matchedEvent.payload.primaryNpcId` 우선, 없으면 `orchestrationResult.npcInjection.npcId` fallback. 두 소스 모두 없으면 null.
+- **effectiveNpcId 통합** (Fixplanv2 PR-A): `matchedEvent.payload.primaryNpcId` 우선, 없으면 `orchestrationResult.npcInjection.npcId` fallback.
+- **TAG_TO_NPC 보충** (Fixplan3 P2): 위 두 소스 모두 null이면 이벤트 `tags`에서 `TAG_TO_NPC` 매핑으로 NPC를 추론 → encounterCount 증가 + shouldIntroduce 판정. `memory-collector.service.ts`의 `TAG_TO_NPC` 재활용.
 
 ---
 

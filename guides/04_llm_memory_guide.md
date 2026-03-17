@@ -51,9 +51,10 @@ HUB↔LOCATION 전환 시: 전환 화면 없이 즉시 전환, enter narrator만
 `[World State]` → `[Narrative Milestones]` → `[Story Summary]` → `[직전 장소 정보]` → `[NPC Relationships]` → `[Incident Chronicle]` → `[Extracted Facts]`
 
 ### LOCATION 떠날 때 기억 저장
-go_hub/MOVE_LOCATION → `MemoryIntegration.finalizeVisit()` → `run_memories.structuredMemory` + 호환 `storySummary` 동시 저장
+go_hub/MOVE_LOCATION/RUN_ENDED → `MemoryIntegration.finalizeVisit()` → `run_memories.structuredMemory` + 호환 `storySummary` 동시 저장
 - Fixplanv1 PR3: `lastExitSummary` (VisitExitSummary) 동시 생성 → 다음 장소에서 `[직전 장소 정보]` 블록으로 활용
 - Fixplanv2 PR-B: `updateNpcJournal()`에서 NPC별 관련 행동만 필터 (`relatedNpcId` 매칭). 관련 행동 없는 NPC는 interaction 미기록 → npcJournal 오염 방지
+- **Fixplan3 P1**: RUN_ENDED 경로에서도 `finalizeVisit()` 호출 추가 — go_hub/MOVE_LOCATION 없이 런이 끝나도 structuredMemory 보존
 
 ### VisitAction 구조 (Fixplanv2 PR-B)
 `server/src/db/types/structured-memory.ts`
@@ -140,7 +141,8 @@ EventMatcher가 매 턴 다른 이벤트를 선택 → sceneFrame 변경 → LLM
 
 1. **`[현재 장면 상태]` 블록**: 대화 상대/세부 위치/직전 행동을 명시적 전달
 2. **sceneFrame 3단계 억제**: 첫턴=전달, 1턴=참고, 2턴+=완전억제
-3. **`[이번 방문 대화]` 7개 연속성 규칙**:
+3. **씬 이벤트 유지**: ACTION 입력 시 직전 이벤트 1턴만 자동 유지 (Fixplan3 P5: 2턴→1턴 축소)
+4. **`[이번 방문 대화]` 7개 연속성 규칙**:
    - 규칙 1-5: 기본 연속성 (이전 대화 이어가기, 인물 유지 등)
    - 규칙 6: ⚠️ NPC가 알려준 정보/획득 물건/단서를 반드시 기억
    - 규칙 7: ⚠️ 이미 대화한 NPC 재등장 시 이전 대화 내용 인지

@@ -147,9 +147,12 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 13. **이벤트 고유 선택지 우선** — payload.choices > suggested_choices > LOCATION 기본.
 14. **LOCATION 단기기억** — locationSessionTurns(최대 6턴+MidSummary) LLM 전달. 떠날 때 요약 저장.
 15. **NPC 이름 비공개→공개** — FRIENDLY 1회 / CAUTIOUS 2회 / HOSTILE 3회 소개.
-16. **장면 연속성 보장** — sceneFrame 3단계 억제 + 7개 연속성 규칙.
+16. **장면 연속성 보장** — sceneFrame 3단계 억제 + 씬 이벤트 1턴 유지 + 7개 연속성 규칙.
 17. **Token Budget 2500** — 블록별 예산 배분, 저우선 블록 트리밍.
 18. **Procedural Plot Protection** — 동적 이벤트에서 arcRouteTag/commitmentDelta 절대 금지.
+19. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns ≥ 15 이상이어야 발동.
+20. **RUN_ENDED 시 메모리 통합** — go_hub/MOVE_LOCATION 없이 런 종료 시에도 finalizeVisit() 호출.
+21. **MOVE_LOCATION fallback** — 목표 장소 불명확 시 HUB 복귀 처리 (이동 의도 무시 방지).
 
 ## Canonical Enums (정본)
 
@@ -236,6 +239,7 @@ LLM_FALLBACK_PROVIDER=mock
 | **Event v2** | Event Director + Event Library(88개) + Procedural Event | ✅ 완료 |
 | **Bridge** | IntentV3 + IncidentRouter + WorldDelta + PlayerThread + Notification | ✅ 완료 |
 | **Client** | Notification UI + 엔딩 행동 성향 | ✅ 완료 |
+| **Fixplan3** | P1 메모리통합 + P2 NPC소개 + P4 이동 + P5 씬연속 + P7 엔딩가드 + P10 조사 | ✅ 완료 |
 | **Phase 4** | 장비 v2 (세트/리전) + 리전 경제 | ⚠️ 부분/미구현 |
 
 ## Document Status (설계 문서 현황)
@@ -290,6 +294,7 @@ LLM_FALLBACK_PROVIDER=mock
 | 20_procedural_event_extension.md | ✅ 구현됨 | 동적 이벤트 생성 |
 | Narrative_Engine_v1_Integrated_Spec.md | ✅ 정본 | Narrative Engine v1 통합 |
 | ai_implementation_guidelines.md | ✅ 적용됨 | 구현 원칙/금지사항 |
+| fixplan3.md | ✅ 구현됨 | 플레이테스트 15턴 이슈 수정 (P1~P10) |
 
 ### guides/ — 코드 구현 지침 (5 md)
 
