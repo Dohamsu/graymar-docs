@@ -2,6 +2,20 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Slack 작업 완료 알림 (필수)
+
+모든 유의미한 작업(코드 구현, 버그 수정, 분석, 플레이테스트 등) 완료 시 Slack 웹훅으로 알림을 보낸다.
+간단한 질문 응답이나 파일 읽기만 하는 경우는 제외.
+
+```bash
+curl -s -X POST -H 'Content-type: application/json' \
+  --data "{\"text\":\"✅ [작업 요약 메시지]\"}" \
+  "$(grep SLACK_WEBHOOK_URL /Users/dohamsu/Workspace/mdfile/.env | cut -d= -f2)"
+```
+
+- 웹훅 URL: 프로젝트 루트 `.env` 파일의 `SLACK_WEBHOOK_URL`
+- 작업 완료 시점에 위 curl 명령을 실행할 것
+
 ## Repository Overview
 
 LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 용병이 왕국의 권력 투쟁을 거쳐 성장한다. 서버가 모든 게임 로직을 결정론적으로 처리하고, LLM은 내러티브 텍스트만 생성한다.
