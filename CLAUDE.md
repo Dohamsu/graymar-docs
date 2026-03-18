@@ -2,19 +2,29 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Slack 작업 완료 알림 (필수)
+## Slack 작업 알림 (필수)
 
 모든 유의미한 작업(코드 구현, 버그 수정, 분석, 플레이테스트 등) 완료 시 Slack 웹훅으로 알림을 보낸다.
 간단한 질문 응답이나 파일 읽기만 하는 경우는 제외.
 
+### 완료 알림
 ```bash
 curl -s -X POST -H 'Content-type: application/json' \
   --data "{\"text\":\"✅ [작업 요약 메시지]\"}" \
   "$(grep SLACK_WEBHOOK_URL /Users/dohamsu/Workspace/mdfile/.env | cut -d= -f2)"
 ```
 
+### 중간 진행 알림 (10분 이상 소요 작업)
+10분 이상 소요가 예상되는 작업 시, 약 10분 간격으로 중간 보고를 보낸다.
+```bash
+curl -s -X POST -H 'Content-type: application/json' \
+  --data "{\"text\":\"🔄 [진행 상황 메시지]\"}" \
+  "$(grep SLACK_WEBHOOK_URL /Users/dohamsu/Workspace/mdfile/.env | cut -d= -f2)"
+```
+
 - 웹훅 URL: 프로젝트 루트 `.env` 파일의 `SLACK_WEBHOOK_URL`
-- 작업 완료 시점에 위 curl 명령을 실행할 것
+- 완료 시 `✅`, 중간 보고 시 `🔄` 이모지 사용
+- 중간 보고 예시: `🔄 플레이테스트 진행 중 — 3/10 런 완료, 현재 이슈 없음`
 
 ## Repository Overview
 
