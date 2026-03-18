@@ -390,7 +390,7 @@
     "matchPolicy": "BLOCK",
     "payload": {
       "sceneFrame": "경비대 지구 진입로에 완전 무장한 검문조가 배치되어 있다. 갑옷을 입은 병사가 손을 들어 정지를 명하고, 뒤에 선 병사가 석궁을 반쯤 들어 올린다. 허가증 없이는 한 발짝도 더 나갈 수 없다는 분위기다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_GUARD_CAPTAIN",
       "choices": [
         {
           "id": "grd_chk_persuade",
@@ -1663,7 +1663,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "시장 뒷골목에 표식 없는 나무 상자가 방치되어 있다. 상자 한쪽에 항만 하역 인부의 분필 번호가 적혀 있고, 잠금장치가 반쯤 풀려 있다. 누군가 급히 내려놓고 간 듯하다. 주변에 사람은 없다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
           "id": "mkt_opp_cargo_check",
@@ -1940,7 +1940,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "경비대 게시판에 현상금 전단이 붙어 있다. 시장에서 활동하는 소매치기 일당의 수배 안내다. 현상금은 소액이지만, 전단 아래에 '관련 정보 제공자에게 추가 보상'이라는 문구가 적혀 있다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_GUARD_CAPTAIN",
       "choices": [
         {
           "id": "grd_opp_rwd_investigate",
@@ -2164,7 +2164,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "대형 화물선의 하역 작업이 한창이다. 인부들이 줄지어 상자를 나르는 가운데, 유독 조심스럽게 다루는 상자 하나가 눈에 띈다. 빨간 인장이 찍혀 있고, 감독관이 직접 지시하며 별도 구역으로 옮기게 한다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
           "id": "hbr_enc_load_watch",
@@ -2811,7 +2811,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "시장 광장 분수대 아래 돌틈에서 이상한 표식이 새겨져 있다. 밀수조직이 사용하는 암호 같은 기호인데, 최근에 새긴 것이 분명하다. 표식 방향이 시장 뒤편 창고 쪽을 가리키고 있다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_INFO_BROKER",
       "choices": [
         {
           "id": "mkt_dsc2_follow",
@@ -3096,7 +3096,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "시장 뒷골목에서 건달 둘이 노점상을 위협하고 있다. '보호비'를 내라는 거친 요구에 상인이 벌벌 떨고 있다. 건달 중 하나가 좌판의 물건을 바닥에 쓸어버리며 으름장을 놓는다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_YOON_HAMIN",
       "choices": [
         {
           "id": "mkt_cft1_fight",
@@ -3357,7 +3357,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "경비대 쓰레기 소각장 근처에서 불에 탄 문서 조각이 바람에 날린다. 완전히 타지 않은 모서리에 서명과 도장 일부가 남아 있다. 누군가 급히 문서를 처분하려 했지만 완전히 태우지 못한 것 같다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_GUARD_CAPTAIN",
       "choices": [
         {
           "id": "grd_dsc1_collect",
@@ -3705,7 +3705,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "경비대 지구 외곽 골목에서 탈영병 둘이 민간인 차림으로 숨어 있다가 당신과 마주친다. 정체가 들킬까 봐 겁먹은 얼굴이지만, 한 손에 단검을 쥐고 있다. '아무것도 보지 못한 거다. 알겠지?'",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_CAPTAIN_BREN",
       "choices": [
         {
           "id": "grd_cft1_fight",
@@ -4013,7 +4013,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "창고 구역 뒤편에서 이중 바닥이 있는 화물 상자가 발견된다. 윗칸에는 평범한 곡물이 담겨 있지만, 바닥판 아래 공간에 무언가 더 있었던 흔적이 뚜렷하다. 상자에 찍힌 밀랍 인장이 일부 긁혀 있다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
           "id": "hbr_dsc1_examine",
@@ -4073,7 +4073,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "부두 근처 버려진 어선의 선실에서 희미한 등불이 새어 나온다. 밤에 누군가 이 배를 사용하고 있는 것이 분명하다. 갑판 위에 신선한 밧줄 자국이 나 있고, 배 주변에 최근 발자국이 찍혀 있다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
           "id": "hbr_dsc2_board",
@@ -4133,7 +4133,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "부두 등대 아래 바위틈에 방수 가죽으로 감싼 꾸러미가 숨겨져 있다. 꾸러미 위에 분필로 표식이 그려져 있고, 밀물 때 잠기는 위치에 의도적으로 놓여 있다. 밀수 중간 거점으로 보인다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
           "id": "hbr_dsc3_open",
@@ -4362,7 +4362,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "부두 구석에서 밀수꾼 둘이 인부 한 명을 벽에 몰아세우고 있다. '입 다물지 않으면 다음엔 바다에 빠지게 될 거야.' 인부의 얼굴이 공포로 하얗게 질려 있다. 밀수꾼 중 하나가 주먹을 쥐었다 폈다 한다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
           "id": "hbr_cft1_intervene",
@@ -4562,7 +4562,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "폐건물 지하로 내려가는 계단이 발견된다. 계단 입구에 최근 발자국이 찍혀 있고, 벽에 밀수조직의 표식이 분필로 그려져 있다. 지하에서 희미한 불빛이 새어 나오지만, 소리는 들리지 않는다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
           "id": "slm_dsc1_descend",
@@ -4622,7 +4622,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "빈민가 뒷골목 하수구 격자 아래에서 이상한 소리가 난다. 귀를 기울이면 규칙적인 금속 소리와 물소리가 섞여 들린다. 격자 한쪽이 최근에 열린 흔적이 있고, 주변에 진흙 발자국이 남아 있다.",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_YOON_HAMIN",
       "choices": [
         {
           "id": "slm_dsc2_open",
@@ -4970,7 +4970,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "빈민가 깊숙한 곳을 지나는데 양쪽 지붕에서 그림자가 움직인다. 위에서 돌멩이가 떨어지며 길이 막히고, 앞뒤에서 칼을 든 자들이 나타난다. '여기까지 들어오다니 배짱도 좋군. 가진 거 다 내놓아.'",
-      "primaryNpcId": null,
+      "primaryNpcId": "NPC_YOON_HAMIN",
       "choices": [
         {
           "id": "slm_cft2_fight",
