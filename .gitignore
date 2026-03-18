@@ -5,6 +5,8 @@ client/
 # System files
 .DS_Store
 .claude/
+!.claude/agents/
+!.claude/commands/
 
 # Content seed data is in server repo
 # content/ is symlinked or copied — keep here for reference
