@@ -174,3 +174,6 @@ EventMatcher가 매 턴 다른 이벤트를 선택 → sceneFrame 변경 → LLM
 
 NPC 소개 5-way 분기 (`prompt-builder.service.ts`):
 - 첫만남+소개 / 재만남+소개 / 첫만남+미소개 / 이미 소개 / 미등장
+- **NPC 별칭 대명사 허용** (Fixplan5): `[이름 미공개]` NPC는 첫 등장 시 별칭(unknownAlias) 사용 후, 같은 장면 내에서 "그", "그녀", "그 인물" 등 짧은 대명사로 대체 가능. 매 문장 전체 별칭 반복 방지.
+
+`[MEMORY:NPC_KNOWLEDGE:NPC_ID]` 태그 regex (Fixplan5): `[\w:]` → `[^\]]` 변경으로 한국어 NPC 이름 포함 매칭 지원. 기존 regex는 `\w`가 한국어를 포함하지 않아 태그가 서술에 노출되는 버그 존재.

@@ -207,6 +207,8 @@ NotificationAssembler → scope × presentation 기반 알림 조립
 - **encounterCount 방문 단위 제한** (Fixplanv2 PR-A): actionHistory에서 이미 만난 NPC면 스킵. 같은 방문 내 5턴 연속 만나도 encounterCount는 1만 증가.
 - **effectiveNpcId 통합** (Fixplanv2 PR-A): `matchedEvent.payload.primaryNpcId` 우선, 없으면 `orchestrationResult.npcInjection.npcId` fallback.
 - **TAG_TO_NPC 보충** (Fixplan3 P2): 위 두 소스 모두 null이면 이벤트 `tags`에서 `TAG_TO_NPC` 매핑으로 NPC를 추론 → encounterCount 증가 + shouldIntroduce 판정. `memory-collector.service.ts`의 `TAG_TO_NPC` 재활용.
+- **장소 대표 NPC encounterCount fallback** (Fixplan5): primaryNpcId, npcInjection, TAG_TO_NPC 모두 null일 때, `NPC_LOCATION_AFFINITY`에서 해당 장소 친화도가 있는 미만남 NPC의 encounterCount를 1 증가 (턴당 최대 1명). LLM이 NPC 목록에서 자발적으로 서술하는 NPC의 만남을 추적.
+- **NPC 주입 연속 등장 방지** (Fixplan5): `orchestrate()` 호출 시 `actionHistory` 직전 2턴의 `primaryNpcId`를 수집, `checkNpcInjection()` 후보에서 제외. 모든 후보가 제외되면 원래 후보 풀로 fallback.
 
 ---
 
