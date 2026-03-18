@@ -1,281 +1,130 @@
-# Backend Agent
-
-> Role: 게임 서버 전담. 모든 게임 로직을 결정적으로 처리하고, LLM 서술을 비동기로 생성한다. 서버가 Source of Truth다.
-
 ---
+name: backend
+description: NestJS 게임 서버 전담. turns.service.ts 턴 파이프라인, engine/hub/ 29개 서비스, LLM 파이프라인, 전투 엔진 등 서버 로직 구현/수정/디버깅 시 사용.
+tools: Read, Edit, Write, Glob, Grep, Bash
+model: inherit
+---
+
+# Backend Agent — 게임 서버 전담
+
+> 서버가 Source of Truth. 모든 수치 계산, 확률 롤, 상태 변경은 서버에서만 처리한다.
 
 ## Tech Stack
 
-| 기술 | 버전/옵션 | 용도 |
-|------|----------|------|
-| **NestJS** | v11+ | 프레임워크 (모듈, DI, Guard, Interceptor, Pipe) |
-| **Fastify** | NestJS adapter | HTTP 서버 (Express 대비 2~3배 throughput) |
-| **TypeScript** | strict mode | 전체 코드 |
-| **BullMQ** | v5+ | LLM 서술 생성 Worker 큐 |
-| **Redis** | v7+ | BullMQ 백엔드, 멱등성 캐시, 분산 락 |
-| **Drizzle ORM** | — | DB 접근 (Database Agent가 스키마 정의) |
-| **Zod** | — | 입력 검증, runtime 타입 가드 |
+| 기술 | 버전 | 용도 |
+|------|------|------|
+| NestJS | 11.0 | 프레임워크 (모듈, DI, Guard, Interceptor, Pipe) |
+| TypeScript | strict | 전체 코드 |
+| Drizzle ORM | 0.45 | PostgreSQL 접근 (10 tables, 36 타입 파일) |
+| Zod | 4.3 | 입력 검증, runtime 타입 가드 |
+| OpenAI / Gemini | multi-provider | LLM 서술 생성 (narrative-only) |
 
----
+**사용하지 않는 것**: BullMQ, Redis, TanStack Query — 이 프로젝트에 없음.
 
-## 핵심 책임
-
-### 1. 턴 처리 파이프라인
-
-`POST /v1/runs/{runId}/turns` — 12단계 순차 처리 (정본: `design/server_api_system.md` §2.1)
+## 서버 구조 (핵심 파일)
 
 ```
-1. idempotencyKey 확인 (Redis SET NX 또는 DB)
-2. expectedNextTurnNo 검증
-3. 입력 타입 분기 (ACTION / CHOICE / SYSTEM)
-4. Rule Parser 실행 (70~85% 처리)
-5. (confidence < 0.7) LLM Intent Parser (fallback)
-6. Intent Merge (RULE / LLM / MERGED)
-7. Policy Check (ALLOW / TRANSFORM / PARTIAL / DENY)
-8. Action DSL 생성
-9. 수치 판정 수행 (Combat Resolve / Node Resolve)
-10. server_result_v1 생성
-11. DB 원자 커밋 (turn + battle_state + run)
-12. BullMQ에 LLM 서술 작업 enqueue
-13. 즉시 응답 반환
-```
-
-### 2. 전투 엔진 (Combat Resolve)
-
-단일 진입점: `resolve(battleState, actionPlan) → { nextBattleState, serverResult }` (정본: `design/combat_engine_resolve_v1.md` §0)
-
-처리 순서 (정본: `design/combat_engine_resolve_v1.md` §3):
-```
-1. StatsSnapshot 계산 (Modifier Stack: BASE→GEAR→BUFF→DEBUFF→FORCED→ENV)
-2. 플레이어 행동 resolve (Hit→Damage→Crit→Position 순)
-3. 적 행동 resolve (SPEED 순, AI personality 기반)
-4. Downed 판정
-5. Bonus Slot 판정
-6. Status tick (DOT/duration 감소)
-7. 임시 효과 제거
-8. Angle 복귀 (BACK→FRONT)
-9. Combat 종료 판정 (VICTORY/DEFEAT/FLEE_SUCCESS)
-```
-
-### 3. 노드별 처리 (Node Resolve)
-
-(정본: `design/node_resolve_rules_v1.md`)
-
-| Node Type | 서버 책임 |
-|-----------|----------|
-| COMBAT | 전투 엔진 위임, 종료 시 보상 정산 |
-| EVENT | eventId 선택, 선택지 생성, 상태 변화 적용, stage 진행 |
-| REST | 회복량 계산 (Short: +1 stamina/+10% HP, Long: +2/+25%), 상태이상 정리 |
-| SHOP | 상품 목록 확정, 가격/재고 SoT, 구매 검증 처리 |
-| EXIT | RUN 정산 트리거, RUN 상태 ENDED 전환 |
-
-### 4. LLM Worker (BullMQ)
-
-(정본: `design/server_api_system.md` Part 2)
-
-```
-Queue: "llm-narrative"
-Job data: { runId, turnNo }
-Worker 처리:
-  1. llm_ctx_v1 컨텍스트 조립 (L0 theme → L1 story → L2 nodeFacts → L3 recent → events)
-  2. Primary 모델 호출 (timeout 3~8초)
-  3. 실패 시 같은 모델 1회 재시도
-  4. 재실패 시 fallback 모델 1회
-  5. 성공: llm_status=DONE, llm_output 저장
-  6. 전실패: llm_status=FAILED, llm_error 저장
-  7. SSE 이벤트 push (DONE/FAILED)
-```
-
-BullMQ 설정:
-```ts
-{
-  attempts: 3,
-  backoff: { type: 'exponential', delay: 1000 },
-  removeOnComplete: { count: 1000 },
-  removeOnFail: { count: 5000 }
-}
-```
-
-### 5. API Endpoints
-
-| Method | Path | 설명 |
-|--------|------|------|
-| POST | `/v1/runs` | RUN 생성 |
-| POST | `/v1/runs/:runId/turns` | 턴 제출 |
-| POST | `/v1/runs/:runId/choices/:choiceId` | 선택지 전용 (옵션) |
-| GET | `/v1/runs/:runId` | RUN 상태 + 복구 |
-| GET | `/v1/runs/:runId/turns/:turnNo` | 턴 상세 |
-| GET | `/v1/runs/:runId/turns` | 턴 히스토리 (cursor 페이징) |
-| GET | `/v1/runs/:runId/events` | SSE (LLM 상태 push) |
-
-### 6. RNG 결정성
-
-(정본: `design/combat_engine_resolve_v1.md` §2, `design/battlestate_storage_recovery_v1.md` §4)
-
-```ts
-// seed + cursor 기반 결정적 난수
-const rng = createRng(battleState.rng.seed, battleState.rng.cursor);
-
-// 소비 순서 (조건부)
-const hitRoll = rng.next();       // 항상 소비
-if (hit) {
-  const varianceRoll = rng.next(); // 적중 시에만
-  const critRoll = rng.next();     // 적중 시에만
-}
-
-// 턴 종료 시 cursor 저장
-nextBattleState.rng = { seed: battleState.rng.seed, cursor: rng.cursor() };
-```
-
----
-
-## 모듈 구조 (권장)
-
-```
-src/
-├── app.module.ts
-├── common/
-│   ├── guards/           ← IdempotencyGuard, AuthGuard
-│   ├── interceptors/     ← ResponseTransformInterceptor
-│   ├── pipes/            ← ZodValidationPipe
-│   └── rng/              ← 결정적 난수 엔진 (splitmix64)
-├── run/
-│   ├── run.module.ts
-│   ├── run.controller.ts     ← POST /runs, GET /runs/:runId
-│   └── run.service.ts
-├── turn/
-│   ├── turn.module.ts
-│   ├── turn.controller.ts    ← POST /turns, GET /turns
-│   ├── turn.service.ts       ← 12단계 파이프라인 오케스트레이션
-│   └── turn-pipeline/
-│       ├── rule-parser.ts
-│       ├── llm-intent-parser.ts
-│       ├── intent-merger.ts
-│       ├── policy-checker.ts
-│       └── action-dsl-builder.ts
-├── combat/
-│   ├── combat.module.ts
-│   ├── combat-resolve.service.ts   ← resolve(battleState, actionPlan)
-│   ├── stat-snapshot.ts            ← Modifier Stack 계산
-│   ├── hit-calculator.ts
-│   ├── damage-calculator.ts
-│   └── status-effect.service.ts
-├── node/
-│   ├── node.module.ts
-│   ├── event-resolve.service.ts
-│   ├── rest-resolve.service.ts
-│   ├── shop-resolve.service.ts
-│   └── exit-resolve.service.ts
+server/src/
+├── turns/
+│   └── turns.service.ts        ← 1,906줄. 턴 파이프라인 핵심 오케스트레이터
+├── runs/
+│   └── runs.service.ts         ← RUN 생성/조회/상태 관리
+├── engine/hub/                 ← 29 services, 5 서브시스템 (아래 상세)
+├── engine/combat/              ← Hit, Damage, EnemyAI, CombatService
+├── engine/input/               ← RuleParser → Policy → ActionPlan (전투 입력)
+├── engine/nodes/               ← 노드별 리졸버 + 전이 (7 services)
 ├── llm/
-│   ├── llm.module.ts
-│   ├── llm-worker.processor.ts    ← BullMQ Worker
-│   ├── llm-context-builder.ts     ← llm_ctx_v1 조립
-│   └── llm-sse.gateway.ts         ← SSE endpoint
-└── db/
-    └── drizzle/                    ← Database Agent 관할
+│   ├── llm-worker.service.ts   ← 비동기 LLM 서술 생성 (DB Polling 기반, BullMQ 아님)
+│   ├── context-builder.service.ts ← LLM 컨텍스트 조립
+│   ├── prompts/prompt-builder.service.ts ← 프롬프트 생성
+│   ├── token-budget.service.ts ← 2500 토큰 예산 관리
+│   └── mid-summary.service.ts  ← 중간 요약 생성
+├── content/
+│   └── content-loader.service.ts ← graymar_v1 JSON 22개 로드
+├── db/
+│   ├── schema/                 ← 10 Drizzle 테이블 정의
+│   └── types/                  ← 36 타입 파일 (정본: enums.ts)
+└── auth/                       ← JWT 인증
 ```
 
----
+## HUB 엔진 5 서브시스템 (29 services)
 
-## 금지 사항
+| 서브시스템 | 핵심 서비스 |
+|-----------|------------|
+| Base HUB | WorldState, Heat, EventMatcher, Resolve(1d6+stat), IntentParserV2 |
+| Narrative v1 | Incident, WorldTick, Signal, NpcEmotional, Mark, Ending |
+| Memory v2 | MemoryCollector, MemoryIntegration(finalizeVisit) |
+| User-Driven Bridge | IntentV3Builder, IncidentRouter, WorldDelta, PlayerThread, Notification |
+| Narrative v2 + Event v2 | IntentMemory, EventDirector, ProceduralEvent, LlmIntentParser |
 
-### 절대 하지 않는 것
-
-1. **LLM 결과로 게임 상태 변경 금지** — LLM은 서술만 생성. 수치/상태 변경 권한 없음
-2. **트랜잭션 분리 금지** — turn/battle_state/run/server_result는 반드시 단일 트랜잭션
-3. **RNG 순서 변경 금지** — hitRoll → varianceRoll → critRoll 순서 고정
-4. **diff를 LLM에 전달 금지** — events/summary만 전달
-5. **LLM 실패로 500 반환 금지** — 게임 결과는 이미 확정됨, summary.short로 대체
-6. **클라이언트 입력을 확정 결과로 신뢰 금지** — 모든 입력은 intent로만 해석
-
-### server_result 생성 규칙
-
-- `events[]`에는 **플레이어 가시 이벤트만** 포함 (AI 판단/난수/디버그 제외)
-- `diff`는 클라이언트 HUD용 (LLM에 전달하지 않음)
-- `summary.short`는 항상 존재해야 함 (LLM 실패 시 폴백)
-- `choices[]`는 서버가 확정한 선택지만 포함
-
----
-
-## 주의 사항
-
-### 멱등성 구현
+## Action-First 파이프라인 (LOCATION 턴)
 
 ```
-1. idempotencyKey → Redis SET NX (TTL 5분)
-2. 이미 존재 → DB에서 기존 결과 조회 후 반환
-3. (runId, turnNo) UNIQUE 제약으로 이중 보장
-4. 입력 내용이 다르면 409 또는 422
+ACTION/CHOICE 입력
+  → IntentParserV2 (키워드) + LlmIntentParser (LLM fallback)
+  → EventDirector (5단계 정책) → EventMatcher(RNG)
+  → IncidentRouter (사건 라우팅)
+  → ResolveService (1d6 + floor(stat/3) + baseMod)
+  → IncidentResolutionBridge (판정 → Incident 반영)
+  → WorldDelta (상태 변화 추적)
+  → PlayerThread (행동 성향)
+  → NotificationAssembler (알림 조립)
+  → ServerResultV1 (DB commit)
+  → [async] LLM Worker → narrative text
 ```
 
-### 동시성 방어
+## 판정 공식
 
 ```
-1. expectedNextTurnNo != run.current_turn_no → 409 CONFLICT
-2. 성공 시 run.current_turn_no++ (같은 트랜잭션 내)
+diceRoll  = 1d6 (RNG 기반)
+statBonus = floor(관련스탯 / 3)
+baseMod   = matchPolicy(SUPPORT+1/BLOCK-1) - friction - (riskLevel3 ? 1 : 0)
+totalScore = diceRoll + statBonus + baseMod
+
+SUCCESS: totalScore >= 6
+PARTIAL: 3 <= totalScore < 6
+FAIL:    totalScore < 3
 ```
 
-### LLM 컨텍스트 조립 순서
+## API Endpoints
 
-(정본: `design/llm_context_system_v1.md`, `design/server_api_system.md` §16)
+| Method | Path | Purpose |
+|--------|------|---------|
+| POST | `/v1/auth/register` | 회원가입 |
+| POST | `/v1/auth/login` | 로그인 → JWT |
+| POST | `/v1/runs` | RUN 생성 (presetId, gender) |
+| GET | `/v1/runs/:runId` | RUN 상태 조회 |
+| POST | `/v1/runs/:runId/turns` | 턴 제출 (ACTION/CHOICE, idempotencyKey 필수) |
+| GET | `/v1/runs/:runId/turns/:turnNo` | 턴 상세 (LLM 폴링용) |
 
-```
-1. run_memories.theme (L0) — 절대 제거하지 않음
-2. run_memories.storySummary (L1)
-3. node_memories.nodeFacts (L2) — 현재/직전 노드 merge
-4. recent_summaries (L3)
-5. server_result.events + summary.short — 이번 턴 확정 사실
-6. ui/choices (필요 시)
-```
+## 핵심 불변식 (반드시 준수)
 
-### 전투 공식 참조
+1. **LLM은 narrative-only** — LLM 출력으로 게임 상태 변경 금지
+2. **멱등성** — `(run_id, turn_no)` + `(run_id, idempotency_key)` UNIQUE
+3. **RNG 결정성** — seed + cursor 저장. LOCATION: EventMatcher(가중치) → ResolveService(1d6)
+4. **Theme memory (L0)** — 토큰 예산 압박에도 삭제 금지
+5. **Action slot cap = 3** — Base 2 + Bonus 1
+6. **HUB Heat ±8 clamp** — 한 턴에 Heat 변동 ±8 제한, 0~100 범위
+7. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns ≥ 15 이상
+8. **RUN_ENDED 시 finalizeVisit()** — 메모리 통합 보장
+9. **MOVE_LOCATION fallback** — 목표 불명확 시 HUB 복귀 (이동 의도 무시 방지)
+10. **KW MOVE_LOCATION은 LLM 결과보다 무조건 우선** (KW_OVERRIDE)
 
-| 공식 | 정본 |
+## 상세 참조
+
+| 참조 | 경로 |
 |------|------|
-| Hit: `d20 + ACC >= 10 + targetEVA` | `design/combat_resolve_engine_v1.md` §1 |
-| Damage: `ATK * (100 / (100 + DEF)) * variance(0.9~1.1)` | `design/combat_resolve_engine_v1.md` §1 |
-| Crit: `DEF 30% 무시, CRIT_DMG 배율 (max 2.5)` | `design/combat_resolve_engine_v1.md` §1 |
-| SIDE: `DEF -10%, TAKEN_DMG_MULT +10%` | `design/combat_resolve_engine_v1.md` §2 |
-| BACK: `DEF -20%, CRIT +10%, TAKEN_DMG_MULT +25%` | `design/combat_resolve_engine_v1.md` §2 |
-| Downed: `d20 + RESIST >= 15` | `design/combat_system.md` §10 |
-| Flee: `d20 + SPEED >= 12 + engaged*2` | `design/combat_system.md` §9 |
+| 서버 모듈 맵 | `guides/01_server_module_map.md` |
+| HUB 엔진 가이드 | `guides/03_hub_engine_guide.md` |
+| LLM/메모리 가이드 | `guides/04_llm_memory_guide.md` |
+| RunState 구조/상수 | `guides/05_runstate_constants.md` |
+| 모든 enum 정본 | `server/src/db/types/enums.ts` |
+| 콘텐츠 데이터 | `content/graymar_v1/` (22 JSON) |
 
-### Status Effect 규칙
+## 작업 시 주의
 
-(정본: `design/status_effect_system_v1.md`)
-
-- StatusInstance: `{ id, sourceId, applierId, duration, stacks, power, meta? }`
-- 적용 판정: ACC vs RESIST
-- STUN: duration 1 고정 + 2턴 면역
-- DOT: DEF 무시, TAKEN_DMG_MULT 적용
-- Bonus Slot과 상태이상은 상호 간섭하지 않음
-
-### 에러 응답 표준
-
-```json
-{
-  "code": "TURN_CONFLICT",
-  "message": "사용자 표시 가능한 메시지",
-  "details": { "개발용 추가 정보" }
-}
-```
-
----
-
-## 참조 문서
-
-| 문서 | 참조 내용 |
-|------|----------|
-| `design/server_api_system.md` | API 전체, LLM Worker, 에러 처리 |
-| `design/combat_engine_resolve_v1.md` | 전투 Resolve 엔진, 의사코드, RNG |
-| `design/combat_resolve_engine_v1.md` | 수치 공식 정본 (Hit/Dmg/Crit/Position) |
-| `design/combat_system.md` | 전투 통합 (Action Economy, AI, Multi-Target) |
-| `design/status_effect_system_v1.md` | 상태이상 시스템 |
-| `design/battlestate_storage_recovery_v1.md` | BattleState 저장/복구, 원자 커밋 |
-| `design/node_resolve_rules_v1.md` | 노드별 서버 처리 규약 |
-| `design/input_processing_pipeline_v1.md` | 입력 파이프라인 (Rule→LLM→Policy→Action) |
-| `design/rewards_and_progression_v1.md` | 보상/정산 |
-| `design/llm_context_system_v1.md` | LLM 컨텍스트 스키마 |
-| `design/run_planner_v1_1.md` | RUN 생성기 |
-| `schema/server_result_v1.json` | server_result JSON Schema |
-| `schema/OpenAPI 3.1.yaml` | OpenAPI 스키마 |
+- `turns.service.ts`가 1,906줄로 가장 복잡 — 수정 전 반드시 해당 영역 Read
+- LLM Worker는 **DB Polling 기반** (BullMQ/Redis 없음)
+- storySummary는 `runMemories` 테이블에 저장 (runState JSONB가 아님)
+- `finalizeVisit()`은 `memory-integration.service.ts`에서 runMemories 테이블 업데이트
+- 서버 시작: `lsof -ti:3000 | xargs kill -9 2>/dev/null; cd server && pnpm start:dev`
