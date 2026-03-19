@@ -1,0 +1,4155 @@
+{
+  "turns": [
+    {
+      "turn": 1,
+      "turnNo": 0,
+      "nodeType": "HUB",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "accept_quest"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 2,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "go_market"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 3,
+      "turnNo": 3,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "market_talk",
+        "label": "상인에게 소문을 묻는다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 4,
+      "turnNo": 4,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_atm1_look",
+        "label": "향신료 가게 앞을 서성인다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 5,
+      "turnNo": 5,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_atm1_talk",
+        "label": "상인에게 오늘 장사가 어떤지 묻는다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 6,
+      "turnNo": 6,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "fu_enc_s_wander",
+        "label": "인사를 건네고 다른 곳을 둘러본다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 7,
+      "turnNo": 7,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_int1_talk",
+        "label": "맞은편에 앉아 안부를 묻는다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 8,
+      "turnNo": 8,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_int1_persuade",
+        "label": "무슨 일인지 조심스럽게 캐묻는다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 9,
+      "turnNo": 9,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_int1_observe",
+        "label": "장부의 내용을 슬쩍 엿본다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 10,
+      "turnNo": 10,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_dsc1_read",
+        "label": "양피지를 조심스럽게 펼쳐 읽는다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 11,
+      "turnNo": 11,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_dsc1_search",
+        "label": "주변에 다른 문서가 더 있는지 찾아본다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 12,
+      "turnNo": 12,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_dsc1_look",
+        "label": "누가 버렸는지 주변을 살핀다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 13,
+      "turnNo": 13,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_int3_talk",
+        "label": "미렐라에게 무엇을 사는지 묻는다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 14,
+      "turnNo": 14,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_int3_help",
+        "label": "약초 고르는 것을 도와준다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 15,
+      "turnNo": 15,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_int3_watch",
+        "label": "미렐라가 어떤 약초를 고르는지 관찰한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 16,
+      "turnNo": 16,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_enc_dis_mediate",
+        "label": "중재에 나선다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 17,
+      "turnNo": 17,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_enc_dis_watch",
+        "label": "결말을 지켜본다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 18,
+      "turnNo": 18,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_enc_dis_help",
+        "label": "약한 쪽을 도와준다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 19,
+      "turnNo": 19,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "encounter_talk",
+        "label": "말을 건네본다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    },
+    {
+      "turn": 20,
+      "turnNo": 20,
+      "nodeType": "LOCATION",
+      "input": {
+        "type": "CHOICE",
+        "choiceId": "mkt_int1_talk",
+        "label": "맞은편에 앉아 안부를 묻는다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null
+    }
+  ],
+  "runId": "4e26c7a4-4ecd-4fdf-994c-1c0de37cf670",
+  "preset": "DESERTER",
+  "gender": "male",
+  "finalState": {
+    "run": {
+      "id": "4e26c7a4-4ecd-4fdf-994c-1c0de37cf670",
+      "status": "RUN_ACTIVE",
+      "runType": "CAPITAL",
+      "actLevel": 1,
+      "chapterIndex": 0,
+      "currentNodeIndex": 1,
+      "currentTurnNo": 21,
+      "seed": "0dd051b7-47e2-457c-8c2d-a3d0245be33a",
+      "startedAt": "2026-03-18T08:18:54.140Z",
+      "presetId": "DESERTER",
+      "gender": "male"
+    },
+    "currentNode": {
+      "id": "04f79ed4-6432-4146-af81-da086135985e",
+      "nodeType": "LOCATION",
+      "nodeIndex": 1,
+      "status": "NODE_ACTIVE",
+      "nodeMeta": {
+        "locationId": "LOC_MARKET",
+        "locationName": "시장 거리"
+      },
+      "environmentTags": [
+        "TRADE",
+        "SOCIAL",
+        "CROWDED"
+      ]
+    },
+    "lastResult": {
+      "ui": {
+        "peakMode": true,
+        "toneHint": "triumph",
+        "signalFeed": [
+          {
+            "id": "sig_INC_MARKET_THEFT_s0_RUMOR",
+            "text": "시장에서 소매치기가 늘었다",
+            "channel": "RUMOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_INC_SMUGGLING_RING_s0_SECURITY",
+            "text": "부두에서 수상한 화물 이동이 목격되었다",
+            "channel": "SECURITY",
+            "severity": 2,
+            "locationId": "LOC_HARBOR"
+          },
+          {
+            "id": "sig_INC_MARKET_THEFT_s1_SECURITY",
+            "text": "경비대가 시장 순찰을 강화했다",
+            "channel": "SECURITY",
+            "severity": 2,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_7_OBSERVE",
+            "text": "누군가 주변을 살피고 있었다.",
+            "channel": "VISUAL",
+            "severity": 2,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_8_INVESTIGATE",
+            "text": "수색 흔적이 남아있다.",
+            "channel": "VISUAL",
+            "severity": 2,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_9_TALK",
+            "text": "대화가 오갔다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_10_OBSERVE",
+            "text": "감시자가 들켰다.",
+            "channel": "VISUAL",
+            "severity": 3,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_11_TALK",
+            "text": "대화가 오갔다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_INC_MERCHANT_WAR_s0_ECONOMY",
+            "text": "시장 물가가 불안정하다",
+            "channel": "ECONOMY",
+            "severity": 2,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_12_PERSUADE",
+            "text": "논쟁이 벌어진 듯하다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 2,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_13_OBSERVE",
+            "text": "누군가 주변을 살피고 있었다.",
+            "channel": "VISUAL",
+            "severity": 2,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_14_PERSUADE",
+            "text": "논쟁이 벌어진 듯하다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 2,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_15_OBSERVE",
+            "text": "주의 깊은 관찰자가 목격되었다.",
+            "channel": "VISUAL",
+            "severity": 1,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_16_HELP",
+            "text": "누군가 도움을 받았다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_17_PERSUADE",
+            "text": "설득이 실패했다는 이야기가 들린다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 3,
+            "locationId": "LOC_MARKET"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_18_TALK",
+            "text": "대화가 오갔다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET"
+          }
+        ],
+        "worldState": {
+          "hubHeat": 20,
+          "hubSafety": "SAFE",
+          "timePhase": "NIGHT",
+          "currentLocationId": "LOC_MARKET"
+        },
+        "actionSlots": {
+          "max": 3,
+          "base": 2,
+          "bonusAvailable": false
+        },
+        "npcPostures": {
+          "NPC_ROSA": "FRIENDLY",
+          "NPC_MIRELA": "FRIENDLY",
+          "NPC_RENNICK": "CAUTIOUS",
+          "NPC_MOON_SEA": "CAUTIOUS",
+          "NPC_SEO_DOYUN": "FRIENDLY",
+          "NPC_KANG_CHAERIN": "CALCULATING"
+        },
+        "npcEmotional": [
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_ROSA",
+            "trust": 5,
+            "npcName": "다정한 보육원 여인",
+            "posture": "FRIENDLY",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_MIRELA",
+            "trust": 25,
+            "npcName": "미렐라",
+            "posture": "FRIENDLY",
+            "respect": 5,
+            "suspicion": 0,
+            "attachment": 2.9000000000000012
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_RENNICK",
+            "trust": 0,
+            "npcName": "입이 가벼운 술꾼",
+            "posture": "CAUTIOUS",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_MOON_SEA",
+            "trust": 5,
+            "npcName": "조용한 문서 실무자",
+            "posture": "CAUTIOUS",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_SEO_DOYUN",
+            "trust": 25,
+            "npcName": "에드릭 베일",
+            "posture": "FRIENDLY",
+            "respect": 4,
+            "suspicion": 5.5,
+            "attachment": 11.100000000000001
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_YOON_HAMIN",
+            "trust": 10,
+            "npcName": "투박한 노동자",
+            "posture": "FRIENDLY",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_INFO_BROKER",
+            "trust": 0,
+            "npcName": "후드를 깊이 쓴 정보상",
+            "posture": "CALCULATING",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_BAEK_SEUNGHO",
+            "trust": -5,
+            "npcName": "수상한 창고 관리인",
+            "posture": "CAUTIOUS",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_CAPTAIN_BREN",
+            "trust": 0,
+            "npcName": "단정한 제복의 장교",
+            "posture": "CAUTIOUS",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_KANG_CHAERIN",
+            "trust": -10,
+            "npcName": "마이렐 단 경",
+            "posture": "CALCULATING",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          {
+            "fear": 0,
+            "marks": [],
+            "npcId": "NPC_GUARD_CAPTAIN",
+            "trust": 0,
+            "npcName": "위풍당당한 수비대 장교",
+            "posture": "CAUTIOUS",
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          }
+        ],
+        "targetLabels": [],
+        "actionContext": {
+          "tone": "NEUTRAL",
+          "eventId": "EVT_MARKET_INT_1",
+          "goalText": "시장에서 정보 수집",
+          "parsedType": "TALK",
+          "goalCategory": "GET_INFO",
+          "primaryNpcId": "NPC_SEO_DOYUN",
+          "originalInput": "맞은편에 앉아 안부를 묻는다",
+          "approachVector": "SOCIAL",
+          "eventSceneFrame": "서도윤이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 안색이 어둡고, 차를 마시는 손이 미세하게 떨린다. 그가 고개를 들어 당신을 발견하면 잠시 망설이다가 건너편 자리를 가리킨다.",
+          "insistenceCount": 1,
+          "eventMatchPolicy": "NEUTRAL"
+        },
+        "notifications": [
+          {
+            "id": "notif_21_64",
+            "body": "유익한 대화를 나눴습니다.",
+            "kind": "RELATION",
+            "scope": "TURN_RESULT",
+            "title": "행동이 성공했습니다",
+            "turnNo": 21,
+            "priority": "LOW",
+            "dedupeKey": "resolve:21",
+            "incidentId": "INC_MERCHANT_WAR",
+            "locationId": "LOC_MARKET",
+            "presentation": "BANNER",
+            "expiresAtTurn": 23,
+            "visibleFromTurn": 21
+          }
+        ],
+        "playerThreads": [
+          {
+            "status": "ACTIVE",
+            "summary": "시장에서 SOCIAL 접근 6회 (성공률 33%)",
+            "threadId": "thread_LOC_MARKET:SOCIAL:SHIFT_RELATION_4",
+            "failCount": 1,
+            "lastTurnNo": 20,
+            "locationId": "LOC_MARKET",
+            "actionCount": 6,
+            "firstTurnNo": 4,
+            "goalCategory": "SHIFT_RELATION",
+            "successCount": 2,
+            "approachVector": "SOCIAL",
+            "relatedIncidentId": "INC_MARKET_THEFT"
+          },
+          {
+            "status": "ACTIVE",
+            "summary": "시장에서 OBSERVATIONAL 접근 7회 (성공률 29%)",
+            "threadId": "thread_LOC_MARKET:OBSERVATIONAL:GET_INFO_5",
+            "failCount": 1,
+            "lastTurnNo": 18,
+            "locationId": "LOC_MARKET",
+            "actionCount": 7,
+            "firstTurnNo": 5,
+            "goalCategory": "GET_INFO",
+            "successCount": 2,
+            "approachVector": "OBSERVATIONAL",
+            "relatedIncidentId": "INC_MARKET_THEFT"
+          },
+          {
+            "status": "ACTIVE",
+            "summary": "시장에서 SOCIAL 접근 5회 (성공률 100%)",
+            "threadId": "thread_LOC_MARKET:SOCIAL:GET_INFO_6",
+            "failCount": 0,
+            "lastTurnNo": 21,
+            "locationId": "LOC_MARKET",
+            "actionCount": 5,
+            "firstTurnNo": 6,
+            "goalCategory": "GET_INFO",
+            "successCount": 5,
+            "approachVector": "SOCIAL",
+            "relatedIncidentId": "INC_MARKET_THEFT"
+          }
+        ],
+        "activeIncidents": [
+          {
+            "kind": "CRIMINAL",
+            "stage": 1,
+            "title": "시장 연쇄 절도",
+            "control": 89,
+            "outcome": "CONTAINED",
+            "pressure": 30,
+            "resolved": true,
+            "incidentId": "INC_MARKET_THEFT",
+            "deadlineClock": 36
+          },
+          {
+            "kind": "CRIMINAL",
+            "stage": 0,
+            "title": "항만 밀수 조직",
+            "control": 0,
+            "pressure": 54,
+            "resolved": false,
+            "incidentId": "INC_SMUGGLING_RING",
+            "deadlineClock": 48
+          },
+          {
+            "kind": "ECONOMIC",
+            "stage": 0,
+            "title": "상인 길드 내전",
+            "control": 41,
+            "pressure": 12,
+            "resolved": false,
+            "incidentId": "INC_MERCHANT_WAR",
+            "deadlineClock": 60
+          }
+        ],
+        "availableActions": [
+          "ACTION",
+          "CHOICE"
+        ]
+      },
+      "diff": {
+        "meta": {
+          "battle": {
+            "phase": "NONE"
+          },
+          "position": {
+            "env": []
+          }
+        },
+        "player": {
+          "hp": {
+            "to": 0,
+            "from": 0,
+            "delta": 0
+          },
+          "status": [],
+          "stamina": {
+            "to": 0,
+            "from": 0,
+            "delta": 0
+          }
+        },
+        "enemies": [],
+        "inventory": {
+          "goldDelta": 2,
+          "itemsAdded": [],
+          "itemsRemoved": []
+        }
+      },
+      "node": {
+        "id": "04f79ed4-6432-4146-af81-da086135985e",
+        "type": "LOCATION",
+        "index": 1,
+        "state": "NODE_ACTIVE"
+      },
+      "flags": {
+        "downed": false,
+        "bonusSlot": false,
+        "battleEnded": false
+      },
+      "events": [
+        {
+          "id": "gold_21",
+          "kind": "GOLD",
+          "tags": [],
+          "text": "2골드를 획득했다."
+        },
+        {
+          "id": "event_EVT_MARKET_INT_1",
+          "kind": "NPC",
+          "tags": [
+            "NPC_SEO_DOYUN",
+            "MERCHANT_GUILD",
+            "CONVERSATION"
+          ],
+          "text": "대화 — ENCOUNTER"
+        }
+      ],
+      "turnNo": 21,
+      "choices": [
+        {
+          "id": "mkt_int1_persuade",
+          "hint": "길드 내부 사정을 알 수 있다",
+          "label": "무슨 일인지 조심스럽게 캐묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "PERSUADE",
+              "sourceEventId": "EVT_MARKET_INT_1"
+            }
+          }
+        },
+        {
+          "id": "mkt_int1_observe",
+          "hint": "수치상의 이상을 발견할 수 있다",
+          "label": "장부의 내용을 슬쩍 엿본다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "OBSERVE",
+              "sourceEventId": "EVT_MARKET_INT_1"
+            }
+          }
+        },
+        {
+          "id": "fu_mkt_s_dig",
+          "hint": "시장의 뒷거래 정보를 파고든다",
+          "label": "상인들 사이에서 더 깊은 소문을 캔다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "affordance": "INVESTIGATE"
+            }
+          }
+        },
+        {
+          "id": "go_hub",
+          "hint": "거점에서 다른 지역을 탐색한다",
+          "label": "거점으로 돌아간다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "returnToHub": true
+            }
+          }
+        }
+      ],
+      "summary": {
+        "short": "플레이어가 대화를 했다.",
+        "display": "플레이어가 대화를 했다."
+      },
+      "version": "server_result_v1"
+    },
+    "battleState": null,
+    "runState": {
+      "hp": 100,
+      "pbp": {
+        "scores": {
+          "greed": 0,
+          "stealth": 0,
+          "violence": 0,
+          "insistence": 0,
+          "lawfulness": 1,
+          "riskTaking": 0,
+          "negotiation": 3,
+          "investigation": 3
+        },
+        "dominant": "NEGOTIATION",
+        "secondary": "INVESTIGATION"
+      },
+      "gold": 50,
+      "maxHp": 100,
+      "agenda": {
+        "dominant": null,
+        "explicit": {
+          "type": null,
+          "intensity": 1
+        },
+        "implicit": {
+          "allyMerchant": 0,
+          "profitFromChaos": 0,
+          "destabilizeGuard": 0,
+          "exposeCorruption": 0,
+          "empowerUnderworld": 0
+        }
+      },
+      "stamina": 5,
+      "arcState": {
+        "commitment": 0,
+        "currentRoute": null,
+        "betrayalCount": 0
+      },
+      "equipped": {},
+      "pressure": 49,
+      "inventory": [
+        {
+          "qty": 1,
+          "itemId": "ITEM_MINOR_HEALING"
+        },
+        {
+          "qty": 1,
+          "itemId": "ITEM_STAMINA_TONIC"
+        }
+      ],
+      "npcStates": {
+        "NPC_ROSA": {
+          "funds": 50,
+          "npcId": "NPC_ROSA",
+          "agenda": "고아원 유지, 아이들 보호, 빈민가 안전",
+          "network": 50,
+          "posture": "FRIENDLY",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 5,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 5,
+          "encounterCount": 0
+        },
+        "NPC_MIRELA": {
+          "funds": 50,
+          "npcId": "NPC_MIRELA",
+          "agenda": "약초 장사와 단골 관리, 시장 소문 수집",
+          "network": 50,
+          "posture": "FRIENDLY",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 25,
+            "respect": 5,
+            "suspicion": 0,
+            "attachment": 2.6000000000000014
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": true,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 25,
+          "encounterCount": 1
+        },
+        "NPC_RENNICK": {
+          "funds": 50,
+          "npcId": "NPC_RENNICK",
+          "agenda": "정보 거래로 생계 유지, 경비대 연줄 활용",
+          "network": 50,
+          "posture": "CAUTIOUS",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 0,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 0,
+          "encounterCount": 0
+        },
+        "NPC_MOON_SEA": {
+          "funds": 50,
+          "npcId": "NPC_MOON_SEA",
+          "agenda": "상단 내부 정보 관리, 자기 안전 확보",
+          "network": 50,
+          "posture": "CAUTIOUS",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 5,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 5,
+          "encounterCount": 0
+        },
+        "NPC_SEO_DOYUN": {
+          "funds": 50,
+          "npcId": "NPC_SEO_DOYUN",
+          "agenda": "상단 장부 은폐, 개인 이익 추구",
+          "network": 50,
+          "posture": "FRIENDLY",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 25,
+            "respect": 4,
+            "suspicion": 5,
+            "attachment": 10.8
+          },
+          "influence": 50,
+          "suspicion": 5,
+          "introduced": true,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 25,
+          "encounterCount": 4
+        },
+        "NPC_YOON_HAMIN": {
+          "funds": 50,
+          "npcId": "NPC_YOON_HAMIN",
+          "agenda": "노동자 권리 보호, 부두 이권 사수",
+          "network": 50,
+          "posture": "FRIENDLY",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 10,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 10,
+          "encounterCount": 0
+        },
+        "NPC_INFO_BROKER": {
+          "funds": 50,
+          "npcId": "NPC_INFO_BROKER",
+          "agenda": "정보 거래로 이익 극대화",
+          "network": 50,
+          "posture": "CALCULATING",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 0,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 0,
+          "encounterCount": 0
+        },
+        "NPC_BAEK_SEUNGHO": {
+          "funds": 50,
+          "npcId": "NPC_BAEK_SEUNGHO",
+          "agenda": "밀수 루트 은폐, 생존",
+          "network": 50,
+          "posture": "CAUTIOUS",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": -5,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": -5,
+          "encounterCount": 0
+        },
+        "NPC_CAPTAIN_BREN": {
+          "funds": 50,
+          "npcId": "NPC_CAPTAIN_BREN",
+          "agenda": "치안 유지, 내부 부패 조사에 관심",
+          "network": 50,
+          "posture": "CAUTIOUS",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 0,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 0,
+          "encounterCount": 0
+        },
+        "NPC_KANG_CHAERIN": {
+          "funds": 50,
+          "npcId": "NPC_KANG_CHAERIN",
+          "agenda": "도시 치안 유지, 권력 기반 강화",
+          "network": 50,
+          "posture": "CALCULATING",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": -10,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": true,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": -10,
+          "encounterCount": 4
+        },
+        "NPC_GUARD_CAPTAIN": {
+          "funds": 50,
+          "npcId": "NPC_GUARD_CAPTAIN",
+          "agenda": "내부 부패 척결, 수비대 기강 확립",
+          "network": 50,
+          "posture": "CAUTIOUS",
+          "exposure": 0,
+          "emotional": {
+            "fear": 0,
+            "trust": 0,
+            "respect": 0,
+            "suspicion": 0,
+            "attachment": 0
+          },
+          "influence": 50,
+          "suspicion": 0,
+          "introduced": false,
+          "currentGoal": "",
+          "currentStage": "INITIAL",
+          "trustToPlayer": 0,
+          "encounterCount": 0
+        }
+      },
+      "maxStamina": 5,
+      "worldState": {
+        "day": 2,
+        "flags": {
+          "THEFT_STOPPED": true
+        },
+        "hubHeat": 20,
+        "mainArc": {
+          "unlockedArcIds": [],
+          "completedArcIds": []
+        },
+        "phaseV2": "DUSK",
+        "tension": 1,
+        "npcGoals": {},
+        "hubSafety": "SAFE",
+        "timePhase": "NIGHT",
+        "reputation": {
+          "CITY_GUARD": 0,
+          "LABOR_GUILD": 0,
+          "MERCHANT_CONSORTIUM": 10
+        },
+        "signalFeed": [
+          {
+            "id": "sig_INC_MARKET_THEFT_s0_RUMOR",
+            "text": "시장에서 소매치기가 늘었다",
+            "channel": "RUMOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 1,
+            "expiresAtClock": 25,
+            "sourceIncidentId": "INC_MARKET_THEFT"
+          },
+          {
+            "id": "sig_INC_SMUGGLING_RING_s0_SECURITY",
+            "text": "부두에서 수상한 화물 이동이 목격되었다",
+            "channel": "SECURITY",
+            "severity": 2,
+            "locationId": "LOC_HARBOR",
+            "createdAtClock": 1,
+            "expiresAtClock": 25,
+            "sourceIncidentId": "INC_SMUGGLING_RING"
+          },
+          {
+            "id": "sig_INC_MARKET_THEFT_s1_SECURITY",
+            "text": "경비대가 시장 순찰을 강화했다",
+            "channel": "SECURITY",
+            "severity": 2,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 7,
+            "expiresAtClock": 31,
+            "sourceIncidentId": "INC_MARKET_THEFT"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_7_OBSERVE",
+            "text": "누군가 주변을 살피고 있었다.",
+            "channel": "VISUAL",
+            "severity": 2,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 7,
+            "expiresAtClock": 19
+          },
+          {
+            "id": "sig_action_LOC_MARKET_8_INVESTIGATE",
+            "text": "수색 흔적이 남아있다.",
+            "channel": "VISUAL",
+            "severity": 2,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 8,
+            "expiresAtClock": 20
+          },
+          {
+            "id": "sig_action_LOC_MARKET_9_TALK",
+            "text": "대화가 오갔다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 9,
+            "expiresAtClock": 21
+          },
+          {
+            "id": "sig_action_LOC_MARKET_10_OBSERVE",
+            "text": "감시자가 들켰다.",
+            "channel": "VISUAL",
+            "severity": 3,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 10,
+            "expiresAtClock": 22
+          },
+          {
+            "id": "sig_action_LOC_MARKET_11_TALK",
+            "text": "대화가 오갔다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 11,
+            "expiresAtClock": 23
+          },
+          {
+            "id": "sig_INC_MERCHANT_WAR_s0_ECONOMY",
+            "text": "시장 물가가 불안정하다",
+            "channel": "ECONOMY",
+            "severity": 2,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 12,
+            "expiresAtClock": 36,
+            "sourceIncidentId": "INC_MERCHANT_WAR"
+          },
+          {
+            "id": "sig_action_LOC_MARKET_12_PERSUADE",
+            "text": "논쟁이 벌어진 듯하다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 2,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 12,
+            "expiresAtClock": 24
+          },
+          {
+            "id": "sig_action_LOC_MARKET_13_OBSERVE",
+            "text": "누군가 주변을 살피고 있었다.",
+            "channel": "VISUAL",
+            "severity": 2,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 13,
+            "expiresAtClock": 25
+          },
+          {
+            "id": "sig_action_LOC_MARKET_14_PERSUADE",
+            "text": "논쟁이 벌어진 듯하다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 2,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 14,
+            "expiresAtClock": 26
+          },
+          {
+            "id": "sig_action_LOC_MARKET_15_OBSERVE",
+            "text": "주의 깊은 관찰자가 목격되었다.",
+            "channel": "VISUAL",
+            "severity": 1,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 15,
+            "expiresAtClock": 27
+          },
+          {
+            "id": "sig_action_LOC_MARKET_16_HELP",
+            "text": "누군가 도움을 받았다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 16,
+            "expiresAtClock": 28
+          },
+          {
+            "id": "sig_action_LOC_MARKET_17_PERSUADE",
+            "text": "설득이 실패했다는 이야기가 들린다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 3,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 17,
+            "expiresAtClock": 29
+          },
+          {
+            "id": "sig_action_LOC_MARKET_18_TALK",
+            "text": "대화가 오갔다.",
+            "channel": "NPC_BEHAVIOR",
+            "severity": 1,
+            "locationId": "LOC_MARKET",
+            "createdAtClock": 18,
+            "expiresAtClock": 30
+          }
+        ],
+        "globalClock": 18,
+        "timeCounter": 18,
+        "worldDeltas": [
+          {
+            "clock": 9,
+            "turnNo": 12,
+            "changes": [
+              {
+                "to": 6,
+                "from": 3,
+                "kind": "REPUTATION",
+                "field": "reputation.MERCHANT_CONSORTIUM",
+                "detail": "MERCHANT_CONSORTIUM 평판 3 → 6"
+              }
+            ]
+          },
+          {
+            "clock": 10,
+            "turnNo": 13,
+            "changes": [
+              {
+                "to": 19,
+                "from": 17,
+                "kind": "HEAT",
+                "field": "hubHeat",
+                "detail": "도시 긴장도 17 → 19"
+              }
+            ]
+          },
+          {
+            "clock": 11,
+            "turnNo": 14,
+            "changes": []
+          },
+          {
+            "clock": 12,
+            "turnNo": 15,
+            "changes": [
+              {
+                "to": 16,
+                "from": 19,
+                "kind": "HEAT",
+                "field": "hubHeat",
+                "detail": "도시 긴장도 19 → 16"
+              },
+              {
+                "to": "DAWN",
+                "from": "NIGHT",
+                "kind": "TIME_PHASE",
+                "field": "phaseV2",
+                "detail": "시간대 NIGHT → DAWN"
+              },
+              {
+                "to": "CONTAINED",
+                "from": null,
+                "kind": "INCIDENT_RESOLVE",
+                "field": "incident:INC_MARKET_THEFT.outcome",
+                "detail": "사건 INC_MARKET_THEFT 종결: CONTAINED"
+              },
+              {
+                "to": 0,
+                "from": null,
+                "kind": "INCIDENT_SPAWN",
+                "field": "incident:INC_MERCHANT_WAR",
+                "detail": "새로운 사건 발생: INC_MERCHANT_WAR"
+              },
+              {
+                "to": 9,
+                "from": 6,
+                "kind": "REPUTATION",
+                "field": "reputation.MERCHANT_CONSORTIUM",
+                "detail": "MERCHANT_CONSORTIUM 평판 6 → 9"
+              },
+              {
+                "to": "SAVIOR",
+                "from": null,
+                "kind": "NARRATIVE_MARK",
+                "field": "narrativeMark:SAVIOR",
+                "detail": "서사 표식 획득: SAVIOR"
+              }
+            ]
+          },
+          {
+            "clock": 13,
+            "turnNo": 16,
+            "changes": []
+          },
+          {
+            "clock": 14,
+            "turnNo": 17,
+            "changes": [
+              {
+                "to": "DAY",
+                "from": "DAWN",
+                "kind": "TIME_PHASE",
+                "field": "phaseV2",
+                "detail": "시간대 DAWN → DAY"
+              }
+            ]
+          },
+          {
+            "clock": 15,
+            "turnNo": 18,
+            "changes": [
+              {
+                "to": 17,
+                "from": 16,
+                "kind": "HEAT",
+                "field": "hubHeat",
+                "detail": "도시 긴장도 16 → 17"
+              }
+            ]
+          },
+          {
+            "clock": 16,
+            "turnNo": 19,
+            "changes": [
+              {
+                "to": 18,
+                "from": 17,
+                "kind": "HEAT",
+                "field": "hubHeat",
+                "detail": "도시 긴장도 17 → 18"
+              }
+            ]
+          },
+          {
+            "clock": 17,
+            "turnNo": 20,
+            "changes": [
+              {
+                "to": 20,
+                "from": 18,
+                "kind": "HEAT",
+                "field": "hubHeat",
+                "detail": "도시 긴장도 18 → 20"
+              },
+              {
+                "to": 7,
+                "from": 9,
+                "kind": "REPUTATION",
+                "field": "reputation.MERCHANT_CONSORTIUM",
+                "detail": "MERCHANT_CONSORTIUM 평판 9 → 7"
+              }
+            ]
+          },
+          {
+            "clock": 18,
+            "turnNo": 21,
+            "changes": [
+              {
+                "to": "DUSK",
+                "from": "DAY",
+                "kind": "TIME_PHASE",
+                "field": "phaseV2",
+                "detail": "시간대 DAY → DUSK"
+              },
+              {
+                "to": 10,
+                "from": 7,
+                "kind": "REPUTATION",
+                "field": "reputation.MERCHANT_CONSORTIUM",
+                "detail": "MERCHANT_CONSORTIUM 평판 7 → 10"
+              }
+            ]
+          }
+        ],
+        "mainArcClock": {
+          "startDay": 1,
+          "triggered": false,
+          "softDeadlineDay": 14
+        },
+        "playerThreads": [
+          {
+            "status": "ACTIVE",
+            "summary": "시장에서 SOCIAL 접근 6회 (성공률 33%)",
+            "threadId": "thread_LOC_MARKET:SOCIAL:SHIFT_RELATION_4",
+            "failCount": 1,
+            "lastTurnNo": 20,
+            "locationId": "LOC_MARKET",
+            "actionCount": 6,
+            "firstTurnNo": 4,
+            "goalCategory": "SHIFT_RELATION",
+            "successCount": 2,
+            "approachVector": "SOCIAL",
+            "relatedIncidentId": "INC_MARKET_THEFT"
+          },
+          {
+            "status": "ACTIVE",
+            "summary": "시장에서 OBSERVATIONAL 접근 7회 (성공률 29%)",
+            "threadId": "thread_LOC_MARKET:OBSERVATIONAL:GET_INFO_5",
+            "failCount": 1,
+            "lastTurnNo": 18,
+            "locationId": "LOC_MARKET",
+            "actionCount": 7,
+            "firstTurnNo": 5,
+            "goalCategory": "GET_INFO",
+            "successCount": 2,
+            "approachVector": "OBSERVATIONAL",
+            "relatedIncidentId": "INC_MARKET_THEFT"
+          },
+          {
+            "status": "ACTIVE",
+            "summary": "시장에서 SOCIAL 접근 5회 (성공률 100%)",
+            "threadId": "thread_LOC_MARKET:SOCIAL:GET_INFO_6",
+            "failCount": 0,
+            "lastTurnNo": 21,
+            "locationId": "LOC_MARKET",
+            "actionCount": 5,
+            "firstTurnNo": 6,
+            "goalCategory": "GET_INFO",
+            "successCount": 5,
+            "approachVector": "SOCIAL",
+            "relatedIncidentId": "INC_MARKET_THEFT"
+          }
+        ],
+        "hubHeatReasons": [],
+        "locationStates": {
+          "LOC_GUARD": {
+            "crime": 10,
+            "unrest": 10,
+            "security": 80,
+            "spotlight": false
+          },
+          "LOC_SLUMS": {
+            "crime": 70,
+            "unrest": 60,
+            "security": 20,
+            "spotlight": false
+          },
+          "LOC_HARBOR": {
+            "crime": 50,
+            "unrest": 40,
+            "security": 40,
+            "spotlight": false
+          },
+          "LOC_MARKET": {
+            "crime": 30,
+            "unrest": 20,
+            "security": 60,
+            "spotlight": false
+          }
+        },
+        "narrativeMarks": [
+          {
+            "type": "SAVIOR",
+            "context": "INC_MARKET_THEFT 사태를 해결했다",
+            "permanent": true,
+            "incidentId": "*critical*",
+            "createdAtClock": 12
+          }
+        ],
+        "activeIncidents": [
+          {
+            "kind": "CRIMINAL",
+            "stage": 1,
+            "control": 89,
+            "outcome": "CONTAINED",
+            "vectors": [
+              {
+                "vector": "STEALTH",
+                "enabled": true,
+                "friction": 0,
+                "preferred": true,
+                "failForwardMode": "SUSPICION",
+                "effectivenessBase": 0.8
+              },
+              {
+                "vector": "SOCIAL",
+                "enabled": true,
+                "friction": 0,
+                "preferred": false,
+                "failForwardMode": "HEAT",
+                "effectivenessBase": 0.5
+              },
+              {
+                "vector": "VIOLENT",
+                "enabled": true,
+                "friction": 1,
+                "preferred": false,
+                "failForwardMode": "ESCALATION",
+                "effectivenessBase": 0.5
+              }
+            ],
+            "pressure": 30,
+            "resolved": true,
+            "security": 20,
+            "suspicion": 16,
+            "historyLog": [
+              {
+                "clock": 0,
+                "action": "SPAWN",
+                "detail": "Incident spawned: 시장 연쇄 절도"
+              },
+              {
+                "clock": 1,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 1,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +10",
+                "controlDelta": 10
+              },
+              {
+                "clock": 2,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 2,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +10",
+                "controlDelta": 10
+              },
+              {
+                "clock": 3,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 3,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +10",
+                "controlDelta": 10
+              },
+              {
+                "clock": 4,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 4,
+                "action": "CONTROL_CHANGE",
+                "detail": "PARTIAL: control +5",
+                "controlDelta": 5
+              },
+              {
+                "clock": 5,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 5,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +10",
+                "controlDelta": 10
+              },
+              {
+                "clock": 6,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 6,
+                "action": "STAGE_ADVANCE",
+                "detail": "PARTIAL: control +5",
+                "controlDelta": 5
+              },
+              {
+                "clock": 7,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 7,
+                "action": "CONTROL_CHANGE",
+                "detail": "PARTIAL: control +7",
+                "controlDelta": 7
+              },
+              {
+                "clock": 8,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 8,
+                "action": "CONTROL_CHANGE",
+                "detail": "PARTIAL: control +7",
+                "controlDelta": 7
+              },
+              {
+                "clock": 9,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 9,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +15",
+                "controlDelta": 15
+              },
+              {
+                "clock": 10,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 10,
+                "action": "CONTROL_CHANGE",
+                "detail": "FAIL: control -5",
+                "controlDelta": -5
+              },
+              {
+                "clock": 11,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 11,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +15",
+                "controlDelta": 15
+              },
+              {
+                "clock": 12,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 12,
+                "action": "RESOLVE",
+                "detail": "Resolved: CONTAINED"
+              }
+            ],
+            "incidentId": "INC_MARKET_THEFT",
+            "deadlineClock": 36,
+            "mutationFlags": [],
+            "rivalProgress": 5,
+            "playerProgress": 72,
+            "spawnedAtClock": 0
+          },
+          {
+            "kind": "CRIMINAL",
+            "stage": 0,
+            "control": 0,
+            "vectors": [
+              {
+                "vector": "STEALTH",
+                "enabled": true,
+                "friction": 0,
+                "preferred": true,
+                "failForwardMode": "SUSPICION",
+                "effectivenessBase": 0.8
+              },
+              {
+                "vector": "SOCIAL",
+                "enabled": true,
+                "friction": 1,
+                "preferred": false,
+                "failForwardMode": "HEAT",
+                "effectivenessBase": 0.5
+              },
+              {
+                "vector": "VIOLENT",
+                "enabled": true,
+                "friction": 1,
+                "preferred": false,
+                "failForwardMode": "ESCALATION",
+                "effectivenessBase": 0.5
+              }
+            ],
+            "pressure": 54,
+            "resolved": false,
+            "security": 20,
+            "suspicion": 0,
+            "historyLog": [
+              {
+                "clock": 0,
+                "action": "SPAWN",
+                "detail": "Incident spawned: 항만 밀수 조직"
+              },
+              {
+                "clock": 1,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 2,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 3,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 4,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 5,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 6,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 7,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 8,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 9,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 10,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 11,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 12,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 13,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 14,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 15,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 16,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 17,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              },
+              {
+                "clock": 18,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +3",
+                "pressureDelta": 3
+              }
+            ],
+            "incidentId": "INC_SMUGGLING_RING",
+            "deadlineClock": 48,
+            "mutationFlags": [],
+            "rivalProgress": 0,
+            "playerProgress": 0,
+            "spawnedAtClock": 0
+          },
+          {
+            "kind": "ECONOMIC",
+            "stage": 0,
+            "control": 41,
+            "vectors": [
+              {
+                "vector": "ECONOMIC",
+                "enabled": true,
+                "friction": 0,
+                "preferred": true,
+                "failForwardMode": "RIVAL_PROGRESS",
+                "effectivenessBase": 0.8
+              },
+              {
+                "vector": "SOCIAL",
+                "enabled": true,
+                "friction": 0,
+                "preferred": false,
+                "failForwardMode": "HEAT",
+                "effectivenessBase": 0.5
+              },
+              {
+                "vector": "STEALTH",
+                "enabled": true,
+                "friction": 1,
+                "preferred": false,
+                "failForwardMode": "SUSPICION",
+                "effectivenessBase": 0.5
+              }
+            ],
+            "pressure": 12,
+            "resolved": false,
+            "security": 20,
+            "suspicion": 11,
+            "historyLog": [
+              {
+                "clock": 12,
+                "action": "SPAWN",
+                "detail": "Incident spawned: 상인 길드 내전"
+              },
+              {
+                "clock": 12,
+                "action": "CONTROL_CHANGE",
+                "detail": "PARTIAL: control +5",
+                "controlDelta": 5
+              },
+              {
+                "clock": 13,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 13,
+                "action": "CONTROL_CHANGE",
+                "detail": "PARTIAL: control +5",
+                "controlDelta": 5
+              },
+              {
+                "clock": 14,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 14,
+                "action": "CONTROL_CHANGE",
+                "detail": "PARTIAL: control +5",
+                "controlDelta": 5
+              },
+              {
+                "clock": 15,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 15,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +10",
+                "controlDelta": 10
+              },
+              {
+                "clock": 16,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 16,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +10",
+                "controlDelta": 10
+              },
+              {
+                "clock": 17,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 17,
+                "action": "CONTROL_CHANGE",
+                "detail": "FAIL: control -4",
+                "controlDelta": -4
+              },
+              {
+                "clock": 18,
+                "action": "PRESSURE_CHANGE",
+                "detail": "pressure +2",
+                "pressureDelta": 2
+              },
+              {
+                "clock": 18,
+                "action": "CONTROL_CHANGE",
+                "detail": "SUCCESS: control +10",
+                "controlDelta": 10
+              }
+            ],
+            "incidentId": "INC_MERCHANT_WAR",
+            "deadlineClock": 60,
+            "mutationFlags": [],
+            "rivalProgress": 5,
+            "playerProgress": 39,
+            "spawnedAtClock": 12
+          }
+        ],
+        "deferredEffects": [],
+        "operationSession": null,
+        "combatWindowCount": 0,
+        "combatWindowStart": 0,
+        "currentLocationId": "LOC_MARKET"
+      },
+      "equipmentBag": [],
+      "lastPeakTurn": 21,
+      "npcRelations": {
+        "NPC_RONEN": 30,
+        "NPC_MIRELA": 54,
+        "NPC_SEO_DOYUN": 70,
+        "NPC_HARBOR_BOSS": 15,
+        "NPC_SLUM_LEADER": 10,
+        "NPC_GUARD_CAPTAIN": 20,
+        "NPC_MERCHANT_ELDER": 25
+      },
+      "actionHistory": [
+        {
+          "turnNo": 12,
+          "eventId": "EVT_MARKET_DSC_1",
+          "choiceId": "mkt_dsc1_search",
+          "inputText": "주변에 다른 문서가 더 있는지 찾아본다",
+          "actionType": "TALK",
+          "primaryNpcId": "NPC_SEO_DOYUN"
+        },
+        {
+          "turnNo": 13,
+          "eventId": "EVT_MARKET_INT_3",
+          "choiceId": "mkt_dsc1_look",
+          "inputText": "누가 버렸는지 주변을 살핀다",
+          "actionType": "OBSERVE",
+          "primaryNpcId": "NPC_MIRELA"
+        },
+        {
+          "turnNo": 14,
+          "eventId": "EVT_MARKET_INT_3",
+          "choiceId": "mkt_int3_talk",
+          "inputText": "미렐라에게 무엇을 사는지 묻는다",
+          "actionType": "TALK",
+          "primaryNpcId": "NPC_MIRELA"
+        },
+        {
+          "turnNo": 15,
+          "eventId": "EVT_MARKET_INT_3",
+          "choiceId": "mkt_int3_help",
+          "inputText": "약초 고르는 것을 도와준다",
+          "actionType": "PERSUADE",
+          "primaryNpcId": "NPC_MIRELA"
+        },
+        {
+          "turnNo": 16,
+          "eventId": "EVT_MARKET_ENC_DISPUTE",
+          "choiceId": "mkt_int3_watch",
+          "inputText": "미렐라가 어떤 약초를 고르는지 관찰한다",
+          "actionType": "OBSERVE"
+        },
+        {
+          "turnNo": 17,
+          "eventId": "EVT_MARKET_ENC_DISPUTE",
+          "choiceId": "mkt_enc_dis_mediate",
+          "inputText": "중재에 나선다",
+          "actionType": "PERSUADE"
+        },
+        {
+          "turnNo": 18,
+          "eventId": "EVT_MARKET_ENC_DISPUTE",
+          "choiceId": "mkt_enc_dis_watch",
+          "inputText": "결말을 지켜본다",
+          "actionType": "OBSERVE"
+        },
+        {
+          "turnNo": 19,
+          "eventId": "PROC_19",
+          "choiceId": "mkt_enc_dis_help",
+          "inputText": "약한 쪽을 도와준다",
+          "actionType": "HELP"
+        },
+        {
+          "turnNo": 20,
+          "eventId": "EVT_MARKET_INT_1",
+          "choiceId": "encounter_talk",
+          "inputText": "말을 건네본다",
+          "actionType": "PERSUADE",
+          "primaryNpcId": "NPC_SEO_DOYUN"
+        },
+        {
+          "turnNo": 21,
+          "eventId": "EVT_MARKET_INT_1",
+          "choiceId": "mkt_int1_talk",
+          "inputText": "맞은편에 앉아 안부를 묻는다",
+          "actionType": "TALK",
+          "primaryNpcId": "NPC_SEO_DOYUN"
+        }
+      ],
+      "relationships": {},
+      "eventCooldowns": {
+        "PROC_19": 19,
+        "EVT_MARKET_ATM_1": 6,
+        "EVT_MARKET_DSC_1": 12,
+        "EVT_MARKET_INT_1": 21,
+        "EVT_MARKET_INT_3": 15,
+        "EVT_MARKET_ENC_DISPUTE": 18
+      }
+    },
+    "memory": {
+      "theme": [
+        {
+          "key": "location",
+          "tags": [
+            "LOCATION",
+            "THEME"
+          ],
+          "value": "그레이마르 항만 — 왕국 남서부 최대 무역항. 세 세력(항만 노동 길드, 해관청, 밀수 조직)이 이권을 다툰다.",
+          "importance": 1
+        },
+        {
+          "key": "quest",
+          "tags": [
+            "QUEST",
+            "THEME"
+          ],
+          "value": "사라진 공물 장부 — 길드가 해관청에 바친 공물 내역이 담긴 장부가 도난당했다. 장부에는 뒷거래 기록도 포함되어 있어, 공개되면 길드 간부 다수가 처형당할 수 있다.",
+          "importance": 1
+        },
+        {
+          "key": "npc_client",
+          "tags": [
+            "NPC",
+            "THEME"
+          ],
+          "value": "의뢰인 로넨 — 항만 노동 길드의 말단 서기관. 장부 관리 책임자였으나 도난 사실을 상부에 보고하지 못해 쫓기는 처지.",
+          "importance": 0.9
+        },
+        {
+          "key": "hub_system",
+          "tags": [
+            "HUB",
+            "THEME"
+          ],
+          "value": "HUB 거점 — 그레이마르 항만의 허름한 선술집. 이곳에서 시장/경비대/항만/빈민가로 이동하며 임무를 수행한다.",
+          "importance": 0.8
+        },
+        {
+          "key": "protagonist",
+          "tags": [
+            "PROTAGONIST",
+            "THEME"
+          ],
+          "value": "이름 없는 용병 — 전직 왕국 수비대 병사 — 남부 수비대에서 복무했으나 상관의 민간인 약탈 명령에 항명하여 탈영했다. 군에서 익힌 검술과 전투 경험이 있으나 수배 중이라 신분을 숨기고 있다. 그레이마르에는 일거리를 찾아 며칠 전 도착했다.",
+          "importance": 0.8
+        }
+      ],
+      "storySummary": null,
+      "structuredMemory": null
+    },
+    "turns": [
+      {
+        "turnNo": 21,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "맞은편에 앉아 안부를 묻는다",
+        "summary": "플레이어가 대화를 했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 시장 거리에 놓인 벤치 맞은편에 자리를 잡았다. 발밑에서 가끔 바람에 흔들리는 낡은 천막이 살짝 스치는 소리가 들렸다. 고요한 밤공기 속에 먼 술집에서 흘러나오는 낮은 음률과 함께, 불빛이 흔들리는 등불들이 골목을 어슴푸레 밝히고 있었다. 맞은편에는 에드릭 베일이 앉아 있었으며, 그의 눈은 아직도 골목 어귀 뒤편 어둠 속을 주시하고 있었다. 당신은 천천히 몸을 앞으로 기울이며, 안부를 묻기 위한 눈빛과 표정을 지었다.\n\n에드릭은 잠시 고개를 들어 당신을 바라보았다. 그의 얼굴에는 긴장과 피로가 묻어 있었지만, 이내 입가에 미묘한 안도의 굴곡이 스며들었다. 그가 낮은 목소리로 말을 꺼냈다.\n\n\"그대가 이렇게 직접 와주니 안심이 되오. 이 시장 거리는 요즘 수상이 많이 오가니, 그대 같은 이가 있어야 하오.\"\n\n그의 말에는 깊은 고마움과 긴장이 뒤섞인 감정이 담겨 있었다. 당신의 시선이 에드릭이 가리키는 골목 어귀 쪽으로 향하자, 그는 잠시 말을 멈추고 주위를 살폈다. 바람이 불어와 먼지와 함께 기름 얼룩진 바닥을 스쳐 지나갔고, 그 냄새가 당신의 코끝에 은은하게 스며들었다.\n\n\"그 장부가 없으면 우리 길드와 상인들 모두 큰 위기에 처할 것이오. 다행히 그대 덕에 기름 얼룩 묻은 쪽지를 발견했으니, 조만간 누군가의 발걸음이 이 비밀을 풀 열쇠가 될 것이오.\"\n\n에드릭은 손에 들고 있던 조그마한 주머니를 꺼내 당신에게 건넸다. 황금빛이 도는 2골드가 반짝이며, 긴장된 공기 속에서도 희망의 빛을 드리웠다. 당신이 그 돈을 받자, 그의 눈에 잠시 미소가 스쳤다.\n\n\"이건 그대의 노고에 대한 작은 보상일 뿐이오. 하지만 이 일은 아직 끝나지 않았소. 그 대가로, 내가 아는 시장의 뒷거래 정보도 조심스레 전해 주겠소.\"\n\n에드릭의 목소리는 점점 낮아지고, 그의 눈빛은 은밀한 무언가를 공유하는 듯 빛났다. 그의 말에 따라 당신의 몸이 자연스럽게 긴장하고 집중하는 가운데, 주변 골목에서는 고요함을 깨뜨리는 낮은 발걸음 소리가 점점 가까워지고 있었다.\n\n\"그대에게 꼭 필요한 정보라오. 이 골목 너머, 오래된 창고 주변에서 최근 이상한 움직임이 자주 목격된다는 것이오. 이곳을 지키는 수상한 관리인이 있다는 소문도 있소. 그 인물이 바로 열쇠일 수 있지.\"\n\n에드릭은 말을 마친 뒤 다시금 주변을 경계하며, 당신의 반응을 기다렸다. 어둠 속에서 느껴지는 긴장감과 함께, 시장 거리는 다시 한 번 무거운 침묵에 잠겼다.",
+        "createdAt": "2026-03-18T08:38:05.818Z",
+        "resolveOutcome": null,
+        "eventTexts": [
+          "2골드를 획득했다."
+        ],
+        "choices": [
+          {
+            "id": "mkt_int1_persuade",
+            "label": "무슨 일인지 조심스럽게 캐묻는다"
+          },
+          {
+            "id": "mkt_int1_observe",
+            "label": "장부의 내용을 슬쩍 엿본다"
+          },
+          {
+            "id": "fu_mkt_s_dig",
+            "label": "상인들 사이에서 더 깊은 소문을 캔다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 대화를 했다."
+      },
+      {
+        "turnNo": 20,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "말을 건네본다",
+        "summary": "플레이어가 \"말을 건네본다\"를 시도하여 실패했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 골목 한쪽에 서서 다가오는 수상한 남자에게 말문을 열었다. 신중한 태도로 손을 살짝 들어 의사를 표시하며, 조심스레 대화를 시도하는 몸짓을 보였다. 그러나 그 인물은 당신의 접근에 즉각 경계심을 드러내며 몸을 돌려 등 돌렸다. 말 한 마디 섞이지 못한 채, 그의 눈빛은 차갑고 단호했다. 주변에선 가벼운 발소리와 함께 골목 깊은 곳으로 어둠이 더욱 짙게 드리워졌다.\n\n당신의 의도는 전달되지 못했고, 상대는 경계 태세를 늦추지 않았다. 그가 멀어지는 동안, 골목 주변의 기름 얼룩과 희미한 그림자가 긴장감을 더욱 끌어올렸다. 이윽고 미렐라가 당신 옆에서 낮은 목소리로 말했다.\n\n\"그 인물, 쉽게 말이 통할 상대는 아닌 듯하오. 조심하지 않으면 안 되겠소.\"\n\n그 순간, 멀리서 골목을 가로질러 다가오는 또 다른 발소리가 들렸다. 어둠이 깔린 시장 골목은 여전히 위태로운 분위기를 유지했다.",
+        "createdAt": "2026-03-18T08:37:05.124Z",
+        "resolveOutcome": "FAIL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_int1_talk",
+            "label": "맞은편에 앉아 안부를 묻는다"
+          },
+          {
+            "id": "mkt_int1_persuade",
+            "label": "무슨 일인지 조심스럽게 캐묻는다"
+          },
+          {
+            "id": "mkt_int1_observe",
+            "label": "장부의 내용을 슬쩍 엿본다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"말을 건네본다\"를 시도하여 실패했다."
+      },
+      {
+        "turnNo": 19,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "약한 쪽을 도와준다",
+        "summary": "플레이어가 \"약한 쪽을 도와준다\"를 시도하여 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 시장 골목 한쪽에서 휘청이는 노점 상인이 무거운 짐을 들다 균형을 잃는 순간, 재빠르게 다가가 그의 어깨를 부드럽게 받쳤다. 상인은 놀란 표정으로 당신을 쳐다봤지만, 곧 고마움이 스며든 눈빛으로 고개를 끄덕였다. 주변의 사람들 또한 당신의 행동을 눈여겨보며, 골목의 긴장된 공기가 잠시 누그러지는 듯했다.\n\n미렐라가 다가와 낮은 목소리로 말했다. \"그대가 이렇게 도와주니, 이곳 사람들도 한결 안심하리라. 이런 작은 배려가 곧 큰 변화를 불러오오.\" 그녀가 건넨 말에는 진심 어린 신뢰가 담겨 있었고, 당신의 행동이 이 골목에 긍정적인 파장을 일으키고 있음을 알 수 있었다.\n\n멀리서 에드릭이 조용히 당신에게 다가와 낮게 말했다. \"그대의 도움이 이 시장에 다시 평화를 가져올 것이오. 하지만 조심해야 하오. 아직도 어둠의 기운이 완전히 사라지지는 않았으니.\" 그의 눈빛에는 경계심이 완전히 사라지지 않은 채로, 신뢰와 기대가 섞여 있었다.\n\n바람이 살짝 불어와 골목에 흩어진 먼지를 가르고, 미렐라가 약초를 고르던 손길을 잠시 멈춘 채 주변을 살폈다. 당신은 이 작은 도움의 순간이 앞으로 펼쳐질 이야기의 단서가 될 것임을 직감하며, 골목 한편의 기름 얼룩 자국과 그늘진 창고 쪽을 바라보았다.",
+        "createdAt": "2026-03-18T08:36:04.467Z",
+        "resolveOutcome": "SUCCESS",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "encounter_talk",
+            "label": "말을 건네본다"
+          },
+          {
+            "id": "encounter_observe",
+            "label": "조용히 지켜본다"
+          },
+          {
+            "id": "encounter_help",
+            "label": "도움을 제안한다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"약한 쪽을 도와준다\"를 시도하여 성공했다."
+      },
+      {
+        "turnNo": 18,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "결말을 지켜본다",
+        "summary": "플레이어가 \"결말을 지켜본다\"를 시도하여 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "골목 어귀의 어둠 속에 서서 당신은 조용히 시선을 고정했다. 시장의 소음과 바람에 흔들리는 천막 너머로, 수상한 움직임이 더욱 분명하게 드러났다. 멀리서 경쾌한 발걸음 소리가 사뿐사뿐 다가오고, 사람들의 대화 사이로 낮은 속삭임이 희미하게 흘러나왔다. 당신은 숨을 죽인 채, 골목 끝에서 은밀히 교환되는 쪽지와 기름 얼룩 자국 위를 주의 깊게 관찰했다.\n\n미렐라가 당신 곁에서 조용히 속삭였다. “이곳은 말 그대로 전쟁터와 같소. 그대가 여기서 무슨 일을 보는지 감지할 수 있소.” 그녀는 주변 상인들과 지나가는 이들의 시선을 경계하며 몸을 낮췄다. 당신의 눈앞에서는 창고 관리인의 그림자가 잠시 드러났다가 다시 어둠 속으로 사라졌다. 그와 함께 경비대 몇 명이 은밀히 움직이는 모습도 포착되었다. 긴장감이 폭발 직전까지 이른 듯, 골목의 공기는 팽팽하게 당겨졌다.\n\n당신은 조용히 몸을 돌려 시장 중앙 쪽을 흘낏 보았다. 작은 상인들이 이따금씩 골목 어귀를 힐끗거리는 사이, 에드릭 베일이 노점 뒤에서 당신을 향해 손을 내밀었다. 그의 눈에는 불안과 희망이 공존하는 듯한 빛이 섞여 있었다. 당신은 그가 건넨 몇 골드 동전을 손에 쥐었다. 동전은 무거웠고, 그만큼 당신의 임무가 막바지에 이르렀음을 알렸다.\n\n“모든 것을 끝내고 나서, 이 돈은 그대가 받은 보상이오.” 에드릭이 낮게 말했다. “시장은 다시 평온을 되찾을 것이오. 하지만 그 무엇도 완전하지 않은 법, 그대는 이 결말을 몸소 지켜낸 것일 뿐이오.” 그의 말에 힘이 실렸다. 골목 한편에서 미묘하게 흔들리는 촛불 불빛과 함께, 당신의 숨결이 차갑게 내려앉았다.\n\n바람이 골목을 가르며 먼지와 함께 밤의 어둠이 더욱 짙어졌다. 당신은 그 순간, 이 도시의 숨겨진 어둠 한 조각을 마주한 채로 서 있었다.",
+        "createdAt": "2026-03-18T08:35:03.863Z",
+        "resolveOutcome": "SUCCESS",
+        "eventTexts": [
+          "2골드를 획득했다."
+        ],
+        "choices": [
+          {
+            "id": "mkt_enc_dis_help",
+            "label": "약한 쪽을 도와준다"
+          },
+          {
+            "id": "fu_mkt_s_use",
+            "label": "알아낸 정보로 다른 상인에게 접근한다"
+          },
+          {
+            "id": "fu_mkt_s_look",
+            "label": "노점 뒤쪽 골목을 살핀다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"결말을 지켜본다\"를 시도하여 성공했다."
+      },
+      {
+        "turnNo": 17,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "중재에 나선다",
+        "summary": "플레이어가 \"중재에 나선다\"를 시도하여 부분 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 미렐라 곁에서 조심스레 몸을 낮추며 양쪽의 불편한 기류를 가라앉히려 했다. 손짓으로 주의를 끌며, 상인들과 창고 관리인 사이에 흐르는 긴장감을 누그러뜨리고자 노력했다. 당신의 눈빛은 냉철하게 주변을 훑었고, 미세한 표정 변화와 숨소리마저 놓치지 않았다.\n\n미렐라는 당신의 움직임에 눈길을 주며, 골목 어귀에 어른거리는 그림자와 기름 얼룩 자국을 가리키듯 고개를 끄덕였다. “그대, 이런 긴장 상태가 오래가선 안 되오. 시장의 평화는 그 무엇보다 중요하니, 중재가 필요하오.” 그녀의 목소리는 낮았으나 확고했다.\n\n당신 쪽에서 한 발짝 앞으로 나서자 창고 관리인이 눈을 가늘게 뜨며 말을 건넸다. “그대, 저희 일에 간섭하지 않는 편이 나을 것이오. 하지만 무슨 말인지 하려는 의도가 있다면 들어보겠소.” 그의 태도는 경계심 섞인 냉담함이었으나, 당신의 침착한 태도에 조금씩 마음을 열기 시작했다.\n\n시장 노점상 몇몇도 당신의 중재 시도를 주시했다. 입소문과 소문이 점차 무거워지는 분위기 속에서 당신의 냉정한 중재는 일말의 희망을 품게 했다. “이런 긴장이 계속되면, 우리 모두가 손해를 보게 될 것이오. 그대와 나, 그리고 이 거리의 모든 이들이 안전할 수 있도록 방법을 찾자는 것이오.” 당신의 목소리에 힘이 실렸다.\n\n창고 관리인의 얼굴에 미묘한 흔들림이 일었고, 미렐라 역시 조용히 당신을 지지하는 눈빛을 보냈다. 주변의 소음과 사람들의 웅성거림 속에서도 당신의 말은 분명히 전해졌다. 긴장이 완전히 해소되진 않았지만, 순간적으로 골목의 공기가 한결 가벼워지는 듯했다.\n\n미렐라가 다시 입을 열었다. “그대, 이 기회를 살려 창고 주변의 수상한 움직임과 기름 얼룩의 진상을 더 파헤치기를 바라오. 시장의 평화를 위협하는 자들을 반드시 밝혀내야 하오.” 그녀의 말투에는 다급함과 함께 신뢰가 묻어났다.\n\n그 순간 멀리서 다시 한 번 발걸음 소리가 가까워지는 것이 들렸고, 주변의 그림자는 더욱 짙어졌다. 당신은 이 불안한 기운 속에서 다음 움직임을 준비하는 듯했다.",
+        "createdAt": "2026-03-18T08:34:03.241Z",
+        "resolveOutcome": "PARTIAL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_enc_dis_watch",
+            "label": "결말을 지켜본다"
+          },
+          {
+            "id": "mkt_enc_dis_help",
+            "label": "약한 쪽을 도와준다"
+          },
+          {
+            "id": "fu_mkt_p_push",
+            "label": "금화를 내밀며 입을 열게 한다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"중재에 나선다\"를 시도하여 부분 성공했다."
+      },
+      {
+        "turnNo": 16,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "미렐라가 어떤 약초를 고르는지 관찰한다",
+        "summary": "플레이어가 \"미렐라가 어떤 약초를 고르는지 관찰한다\"를 시도하여 부분 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 미렐라의 손길과 눈길에 집중하며 그녀가 고르는 약초 하나하나를 유심히 관찰했다. 그녀의 손끝이 먼저 부드러운 잎사귀를 살폈고, 그중에서도 특히 진한 녹색을 띠는 ‘달빛꽃’의 잎을 조심스레 만졌다. 미렐라가 고른 달빛꽃은 신선한 기운이 감돌았고, 잎사귀 아래쪽에 약간의 습기가 맺혀 있었다. 그녀는 이어서 심장풀 쪽으로 손을 뻗었는데, 그 약초의 줄기와 잎에는 특유의 미묘한 윤기가 감돌았다. 심장풀은 심장 질환에 특효가 있다고 미렐라가 전한 바, 그녀가 고르는 약초는 단순한 생필품 이상의 의미가 있음을 다시 한번 확인할 수 있었다.\n\n미렐라의 눈빛이 순간 하늘빛으로 옮겨가며 잠시 먼 곳을 응시했다가, 바로 약초 봉지 쪽으로 시선을 되돌렸다. 그녀의 표정에는 무언가 걱정스러운 기색이 스며 있었고, 손길은 신중하게 다음 약초를 선택했다. 이내 그녀가 조심스럽게 집어 든 것은 잔 가지에 작은 노란 꽃이 피어난 ‘황금나무뿌리’였다. 미렐라는 이 약초가 위장병과 관련된 증상 완화에 특효가 있다고 속삭이듯 말했다. 당신은 그녀의 말과 행동에서 이 약초들이 단순한 약재가 아니라, 최근 창고 주변에서 퍼지고 있는 질병과도 연관되어 있다는 단서를 엿볼 수 있었다.\n\n시장 거리의 소음과 분주함이 여전히 주변을 감싸지만, 당신의 시선은 미렐라의 세밀한 손길과 표정 변화에 고정됐다. 그녀가 약초를 고르면서도 끊임없이 주변을 살피는 듯한 모습은, 단순한 장사꾼 이상의 경계심과 긴장감을 드러냈다. 그 순간 멀리서 들려오는 발걸음 소리와 함께, 창고 근처 골목 어귀에 또 다른 그림자가 어른거렸다. 미렐라가 조용히 손가락으로 자신이 고른 약초 봉지를 두드리며 낮은 목소리로 말했다.\n\n\"그대, 이 약초들은 바깥에서 일어나는 일과 밀접하니 잘 간직하시오. 창고 쪽 기운이 예사롭지 않소.\"\n\n그녀의 말이 끝나자 주변 상인들의 발걸음 소리와 시장의 소음이 다시금 분주히 귓가를 채웠다.",
+        "createdAt": "2026-03-18T08:33:02.620Z",
+        "resolveOutcome": "PARTIAL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_enc_dis_mediate",
+            "label": "중재에 나선다"
+          },
+          {
+            "id": "mkt_enc_dis_watch",
+            "label": "결말을 지켜본다"
+          },
+          {
+            "id": "mkt_enc_dis_help",
+            "label": "약한 쪽을 도와준다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"미렐라가 어떤 약초를 고르는지 관찰한다\"를 시도하여 부분 성공했다."
+      },
+      {
+        "turnNo": 15,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "약초 고르는 것을 도와준다",
+        "summary": "플레이어가 \"약초 고르는 것을 도와준다\"를 시도하여 부분 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 미렐라의 손길을 따라 조심스레 약초 더미 사이를 살폈다. 그녀가 신중히 고르는 것은 잎사귀가 짙은 초록빛을 띠는 ‘심장풀’과, 말린 꽃잎이 은은한 자주색을 띠는 ‘달빛꽃’이었다. 미렐라는 손가락으로 잎의 결을 따라 천천히 문질렀다. \"이 풀은 빈민가에서 흔히 심장병과 기침에 쓰이는 약초요. 하지만 요즘엔 오히려 위장병에 효과가 좋다고 알려졌소. 달빛꽃은 독성을 줄이면서 숙면을 돕지요.\"\n\n당신이 고개를 끄덕이며 그녀의 설명에 집중하자, 미렐라는 반짝이는 눈빛으로 말을 이었다. \"시장이 온통 소문으로 들끓는 지금, 건강을 지키려는 이들이 늘고 있소. 그대가 이 약초들의 쓰임새를 안다면, 창고 주변의 수상한 움직임과도 무관치 않소.\" 그녀의 목소리는 낮고 조심스러웠지만 신뢰가 묻어났다.\n\n미렐라는 몇 가지 약초를 더 집어 올리며, 조심스레 봉투에 담았다. \"그대가 도와주니 마음이 한결 놓이오. 이런 일은 혼자선 감당하기 어렵소.\" 그녀는 약초 봉투를 당신 앞으로 내밀며, \"이걸로 빈민가 병자들에게도 도움이 될 것이오. 그대도 시장을 돌아다니며 필요한 걸 챙기시오.\"라고 덧붙였다.\n\n주변으로는 시장 상인들의 분주한 발걸음 소리와 천막 사이로 스며드는 햇살이 어우러졌다. 하지만 당신의 시선은 여전히 미렐라가 말한 창고 주변의 수상한 그림자와 그 골목길 어귀에 남은 기름 얼룩 자국에 머물렀다.\n\n\"시장의 불안이 점점 깊어가는 이때, 그대와 함께 할 수 있어 다행이오.\" 미렐라가 미소를 띠며 당신의 손에 담긴 약초 봉투를 가볍게 토닥였다.",
+        "createdAt": "2026-03-18T08:32:02.009Z",
+        "resolveOutcome": "PARTIAL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_int3_watch",
+            "label": "미렐라가 어떤 약초를 고르는지 관찰한다"
+          },
+          {
+            "id": "fu_enc_p_retry",
+            "label": "다시 한번 말을 건넨다"
+          },
+          {
+            "id": "fu_mkt_p_retry",
+            "label": "다른 노점에서 같은 질문을 던진다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"약초 고르는 것을 도와준다\"를 시도하여 부분 성공했다."
+      },
+      {
+        "turnNo": 14,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "미렐라에게 무엇을 사는지 묻는다",
+        "summary": "플레이어가 대화를 했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신이 미렐라에게 가까이 다가가자, 약초 노점 상인은 환한 미소를 지으며 손님을 맞이했다. 그녀의 손길은 신중하면서도 능숙하게 다양한 약초들을 정돈하고 있었다. 당신은 그녀의 눈을 바라보며 조용히 물음을 던졌다. 미렐라는 잠시 고개를 끄덕이며 몇 가지 약초를 집어 들었다. \"그대께서 궁금해하오니 말하겠소. 이건 ‘녹색뿌리’라 하오. 빈민가에서 흔히 쓰이는 해독제일 뿐 아니라, 최근 독이 퍼지는 일이 많아 그 수요가 늘었소.\" 그녀의 목소리에는 평소보다 약간 긴장된 기운이 섞여 있었다. \n\n미렐라는 다음으로 ‘달빛꽃’을 집어 올리며 설명을 이어갔다. \"이 꽃은 밤에 피어서 이름 붙여졌소. 주로 수면을 돕는 데 쓰이오. 최근 빈민가에서 위장병이 유행한다는 이야기를 들었소? 이 약초가 그 병에 효과가 있다 하여 사람들이 많이 찾고 있소.\" 그녀가 약초를 돌려가며 손님이 살펴보도록 했다. 시장 거리의 불빛이 약초들의 표면에 반사되어, 연한 녹색과 은은한 보랏빛이 미묘하게 어우러졌다.\n\n주변을 한 번 둘러본 미렐라는 당신 쪽으로 몸을 조금 기울이며 작은 목소리로 말했다. \"하지만 이 거리에서도 위험한 소문이 돌고 있소. 누군가가 창고 주변에서 이상한 움직임을 보인다는 것이오. 그대도 조심해야 하오.\" 그녀의 눈동자가 반짝이며 고개를 끄덕였다. 그 순간 시장 거리를 가로지르는 바람이 약초 냄새를 실어 나르며 당신의 후각을 자극했다.\n\n미렐라는 당신 앞에 놓인 몇 가지 약초를 가리키며 가볍게 웃었다. \"그대가 필요하다면 이 중에서 고를 수 있소. 작은 선물이라 생각하고, 오늘은 특별히 1골드에 넘기겠소.\" 그녀의 친절한 태도에 시장 거리가 잠시 활기를 띠는 듯했다. 당신은 호주머니에서 동전을 꺼내 그녀에게 건넸다. 미렐라는 받아 들고는 고개 숙여 감사의 뜻을 표했다.\n\n주변에서 낮게 속삭이던 사람들의 목소리는 잠시 잦아들고, 당신과 미렐라 사이에는 신뢰의 기운이 퍼졌다. 미렐라는 당신의 표정을 살피며, 다음 말을 꺼낼 듯 잠시 망설였다.\n\n\"이 약초들은 단순한 생필품 이상의 의미를 갖소. 그대가 이곳에서 무언가를 파악하려 한다면, 이 약초들을 파는 시장의 분위기를 잘 살펴야 하오.\"\n\n바람에 휘날리는 시장 거리의 천막과 이따금 들려오는 발걸음 소리가 서로 어우러지며, 당신 주위를 감쌌다.",
+        "createdAt": "2026-03-18T08:31:01.380Z",
+        "resolveOutcome": null,
+        "eventTexts": [
+          "1골드를 획득했다."
+        ],
+        "choices": [
+          {
+            "id": "mkt_int3_help",
+            "label": "약초 고르는 것을 도와준다"
+          },
+          {
+            "id": "mkt_int3_watch",
+            "label": "미렐라가 어떤 약초를 고르는지 관찰한다"
+          },
+          {
+            "id": "fu_mkt_s_dig",
+            "label": "상인들 사이에서 더 깊은 소문을 캔다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 대화를 했다."
+      },
+      {
+        "turnNo": 13,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "누가 버렸는지 주변을 살핀다",
+        "summary": "플레이어가 \"누가 버렸는지 주변을 살핀다\"를 시도하여 실패했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 주변 시장 거리를 천천히 살피기 시작했다. 바람에 실려 오는 먼지 냄새와 향신료 냄새 사이로, 금세 어두워진 골목 구석구석까지 눈을 두었다. 바닥에 버려진 양피지 조각들이 흩어져 있었지만, 누가 그것을 떨어뜨렸는지는 알 수 없었다. 주변 노점상들이 수상한 듯 당신을 흘깃 바라보았으나, 아무도 말없이 지나쳤다. 낮은 목소리로 속삭이는 소리들이 간간이 들려왔고, 발걸음 소리들은 빠르게 멀어졌다가도 다시 가까워지는 듯했다.\n\n짙어진 하늘 아래, 시장 골목은 점점 긴장감에 휩싸였다. 당신이 집중해서 관찰했으나, 의도한 단서나 인물을 특정할 수 없었다. 누군가가 문서의 존재를 눈치채고 경계하는 듯, 감시의 눈초리가 느껴졌다. 에드릭 베일이 옆에서 조심스레 낮게 말했다.\n\n\"이곳에선 발걸음 하나하나가 비밀처럼 숨겨지오. 누군가가 우리를 지켜보고 있다는 사실을 명심해야 하오. 지금은 너무 눈에 띄면 안 될 때라오.\"\n\n당신의 시선이 다시 어두운 골목 끝을 스쳤다. 무언가 불안한 기운이 피어올랐고, 바람결에 섞인 희미한 발소리가 다시 들려왔다. 시장 거리의 활기와는 완전히 어울리지 않는 긴장감이 주변을 감쌌다. 어느 누구도 그 발걸음의 주인공을 드러내지 않았다. 당신은 어깨를 움츠리며 다시 세밀히 주위를 살폈으나, 결정적인 단서는 찾지 못한 채 몸을 낮췄다. 주변에서 느껴지는 경계의 기운이 점점 무거워졌다.\n\n에드릭은 당신을 힐끗 바라보며, 더욱 낮은 음성으로 덧붙였다.\n\n\"이런 상황에선 조심 또 조심이오, 그대. 때로는 아무것도 발견하지 못하는 것이 최선일 때도 있소.\"\n\n시장 거리는 다시 불안한 속삭임으로 가득 차고, 당신의 시야에는 골목 어둠 속 흐릿한 그림자만이 어른거렸다.",
+        "createdAt": "2026-03-18T08:30:00.707Z",
+        "resolveOutcome": "FAIL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_int3_talk",
+            "label": "미렐라에게 무엇을 사는지 묻는다"
+          },
+          {
+            "id": "mkt_int3_help",
+            "label": "약초 고르는 것을 도와준다"
+          },
+          {
+            "id": "mkt_int3_watch",
+            "label": "미렐라가 어떤 약초를 고르는지 관찰한다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"누가 버렸는지 주변을 살핀다\"를 시도하여 실패했다."
+      },
+      {
+        "turnNo": 12,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "주변에 다른 문서가 더 있는지 찾아본다",
+        "summary": "플레이어가 대화를 했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 에드릭 베일 곁에 선 채, 조심스레 주변을 살폈다. 장부 일부를 펼쳐본 뒤, 혹시라도 놓친 문서가 더 있는지 살피려는 듯 주위를 두리번거린다. 낡은 나무 상자 사이, 향신료 노점 뒤편의 그림자 속까지 시선을 보내며, 바닥에 흩어진 종잇조각이나 쪽지 한 장이라도 발견할 수 있을까 꼼꼼하게 훑었다.\n\n에드릭은 당신의 행동을 주의 깊게 지켜보면서도, 주변 시장 상인들과 지나가는 이들을 경계하는 눈초리를 숨기지 않았다. 그의 말투에는 긴장감이 스며들었으나, 협력하는 태도는 여전했다.\n\n\"그대, 이 근처 골목마다 경비대 눈이 예리하오. 만약 다른 문서가 있다면 저들이 금세 알고 움직일 것이오.\" \n\n그의 경고처럼, 바람이 불자 먼지와 함께 낡은 종잇조각 하나가 빛바랜 돌바닥 위에 굴러 떨어졌다. 당신은 조심스럽게 그 조각을 집어 들었다. 희미한 글자와 기름 얼룩이 묻은 흔적이 눈에 띄었다. 에드릭이 이쪽으로 몸을 숙이며 속삭였다.\n\n\"이건... 아마도 누군가 급히 숨긴 쪽지일 테지. 장부와 관련된 다른 단서일 가능성이 크오.\"\n\n바로 그 순간, 맞은편 노점 앞에서 한 남자가 당신들의 쪽으로 살짝 눈길을 주며 지나갔다. 그의 눈빛에는 경계심과 동시에 어떤 메시지를 전하려는 듯한 신중한 기색이 배어 있었다. 시장 거리는 그 어느 때보다도 긴장감이 감돌았다.\n\n에드릭이 다시 입을 열었다.\n\n\"이 문서 외에도, 누군가 우리를 엿보고 있을지 모르겠소. 신중히 움직여야 하오, 그대.\"\n\n당신은 쪽지를 더 자세히 들여다보며 다음 움직임을 가늠한다. 고요한 시장 거리와는 대조적으로, 불안과 긴장이 서서히 고조되는 순간이었다.",
+        "createdAt": "2026-03-18T08:29:00.067Z",
+        "resolveOutcome": null,
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_dsc1_look",
+            "label": "누가 버렸는지 주변을 살핀다"
+          },
+          {
+            "id": "fu_mkt_s_use",
+            "label": "알아낸 정보로 다른 상인에게 접근한다"
+          },
+          {
+            "id": "fu_opp_s_more",
+            "label": "비슷한 기회가 더 없는지 살핀다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 대화를 했다."
+      },
+      {
+        "turnNo": 11,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "양피지를 조심스럽게 펼쳐 읽는다",
+        "summary": "플레이어가 \"양피지를 조심스럽게 펼쳐 읽는다\"를 시도하여 부분 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 양피지를 조심스럽게 펼쳤다. 질긴 고급 양피지 위에 빼곡하게 적힌 글자들이 어슴푸레한 등불 불빛 아래 미세하게 반짝였다. 잔필로 덧칠한 흔적과 낙서 같은 문구들 사이를 천천히 훑으며 한 줄 한 줄 입에 담듯 읽어 내려갔다. 공물 장부에 적힌 숫자와 이름, 그리고 날짜들은 단순한 거래 기록을 넘어선 모호한 암호처럼 느껴졌다. 여러 차례 덧칠된 흔적 사이로 ‘은밀한 배달’, ‘경비대 일부 협력’이라는 단어들이 얼핏 눈에 띄었고, 그 아래 낙서된 초상화 비슷한 그림은 누군가의 얼굴을 얼기설기 그린 듯했다.\n\n때때로 당신의 시선이 멈추는 곳마다 숨겨진 의미가 담긴 듯한 작은 메모들이 발견되었다. ‘밤 11시, 뒷문에서’, ‘감시자의 눈을 피해’ 같은 문구들이 은밀한 만남을 암시했다. 그러나 종이 가장자리에는 누군가가 급히 찢어낸 듯한 흔적이 남아 있어, 완전한 내용 전달은 어려워 보였다. 당신은 다시 한 번 양피지를 접어 조심스레 품에 넣었다.\n\n그 순간, 에드릭이 당신의 곁에서 낮게 말을 이었다.\n\n\"장부가 지닌 의미가 크오. 다만 이 조각만으로는 전모를 파악하기 어렵소. 누군가가 의도적으로 중요한 부분을 가려둔 듯하오.\"\n\n그의 눈빛은 깊은 고민에 잠긴 듯 무겁게 내려앉았다. 멀리 시장 골목 어둠 속에서 발소리가 또렷하게 들려왔다. 긴장감이 다시 한 번 시장 거리 전체로 퍼져나가는 듯했다.\n\n\"그대, 이 장부를 가지고 조심스럽게 움직여야 하오. 누군가가 이 정보를 노리고 있을 테니 말이오.\" \n\n에드릭의 경계 어린 말투가 긴장감을 더했다. 주변 노점과 골목 사이로 지나가는 바람이 양피지 냄새에 묻어 먼지와 섞여 흩날렸다. 당신은 주위를 살피며 다음 행동을 천천히 가늠한다.",
+        "createdAt": "2026-03-18T08:27:59.436Z",
+        "resolveOutcome": "PARTIAL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_dsc1_search",
+            "label": "주변에 다른 문서가 더 있는지 찾아본다"
+          },
+          {
+            "id": "mkt_dsc1_look",
+            "label": "누가 버렸는지 주변을 살핀다"
+          },
+          {
+            "id": "fu_mkt_p_push",
+            "label": "금화를 내밀며 입을 열게 한다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"양피지를 조심스럽게 펼쳐 읽는다\"를 시도하여 부분 성공했다."
+      },
+      {
+        "turnNo": 10,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "장부의 내용을 슬쩍 엿본다",
+        "summary": "플레이어가 \"장부의 내용을 슬쩍 엿본다\"를 시도하여 부분 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 조심스레 장부를 손에 들었다. 주변의 시선이 느껴져 몸을 굽히고 눈을 가늘게 뜬 채로 페이지 하나하나를 훑었다. 글자는 빽빽했지만 여느 장부와 달리 곳곳에 삐뚤삐뚤한 메모와 밑줄, 그리고 숫자 옆에 품목명을 축약한 듯한 낙서들이 섞여 있었다. 무심한 듯 적힌 이름들과 날짜, 무게 단위가 혼재해 있어, 표면적인 거래 기록 이면에 은밀한 거래 내역이 숨겨져 있음을 암시했다.\n\n어느 쪽에선가 먼지 낀 바람이 살며시 불어와 옅은 냄새와 함께 낡은 양피지를 흔들었고, 그 순간 당신의 눈에 한 줄 띠처럼 적힌 ‘은장부’라는 글자가 희미하게 빛났다. 부두 노동 길드의 공물 내역과 달리, 몇몇 기록에는 일반적인 공급품 대신 ‘뒷거래’라 표시된 것이 포함되어 있었다. 그리고 그 옆에는 ‘마른 생선’, ‘망치’, ‘짚단’ 같은 평범한 물품명도 섞여 있었으나, 그 숫자와 금액 배분은 상식적으로 맞지 않았다.\n\n당신이 눈을 들어 주변을 살피자, 에드릭 베일의 얼굴이 멀찍이 보였다. 그의 표정은 여전히 긴장한 듯했지만, 당신이 들여다본 장부의 일부 내용을 흘끗 흘겨본 눈빛은 미묘하게 흔들렸다. 그가 입을 열려다 말고, 주위 사람들의 시선이 느껴지자 빠르게 고개를 숙였다.\n\n바람에 실려 온 먼지와 함께 오래된 종잇조각이 살짝 흔들렸고, 창고 뒷골목 쪽에서는 누군가가 재빨리 움직이는 소리가 들려왔다. 이윽고 당신은 장부를 천천히 접어 다시 숨기듯 품에 넣었다. 시장 거리의 노점과 골목 사이, 불안과 긴장이 팽팽한 균형을 이루고 있었다.\n\n에드릭이 낮은 목소리로 말했다.\n\"이 장부가 없으면 다들 위험해지오. 그대도 이 내용을 누구에게도 보여주지 말게.\"\n\n그의 말이 끝남과 동시에, 저 먼 골목 어둠 속에서 누군가의 발걸음 소리가 불안하게 울려 퍼졌다. 주변의 풍경이 다시 한 번 긴장감에 휩싸였다.",
+        "createdAt": "2026-03-18T08:26:58.825Z",
+        "resolveOutcome": "PARTIAL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_dsc1_read",
+            "label": "양피지를 조심스럽게 펼쳐 읽는다"
+          },
+          {
+            "id": "mkt_dsc1_search",
+            "label": "주변에 다른 문서가 더 있는지 찾아본다"
+          },
+          {
+            "id": "mkt_dsc1_look",
+            "label": "누가 버렸는지 주변을 살핀다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"장부의 내용을 슬쩍 엿본다\"를 시도하여 부분 성공했다."
+      },
+      {
+        "turnNo": 9,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "무슨 일인지 조심스럽게 캐묻는다",
+        "summary": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 부분 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 에드릭에게 말을 건네려 몸을 약간 앞으로 기울이며 시선을 고정했다. 목소리를 낮추고 표정을 조심스럽게 바꾸어가며, 지금 이 순간이 중요한 정보를 얻어낼 기회임을 암시했다. 그가 숨기고 있는 진실에 살짝 다가설 수 있기를 염원하듯, 말을 이어갔다.\n\n에드릭은 순간 눈을 깜빡이며 당신의 태도를 살폈다. 그의 입술이 살며시 움직였지만, 곧 굳어졌다. 조심스러운 어투로 말했다. \"그대가 묻는 것이 무엇인지 알겠소. 창고 주변에서 일어나는 일이 말이오. 하지만 감히 말하자면, 누구에게나 입을 열 수 있는 일은 아니오. 경비대와 관리인 사이에 무언가가 오고간다는 소문은 분명하오. 다만 그 무언가가 무엇인지는 확실치 않소. 일부는 장부와 관련된 일일지도 모르지만, 확언하기는 어렵소.\"\n\n그의 눈이 주변을 한 번 더 훑으며 불안을 드러냈다. \"내가 들은 바로는, 경비대 일부가 이 사건에 연루되어 있어 조심해야 한다는 것이오. 만약 그대가 더 깊게 파고든다면, 위험이 따를 수 있다는 뜻이오.\"\n\n당신이 숨을 고르며 그의 말을 곱씹는 사이, 시장의 소음이 다시금 일렁였다. 장부 도난 사건의 그림자가 더욱 짙어지는 가운데, 에드릭의 표정은 여전히 어두웠다. 그의 말투에 배어 있는 경계심은 이 사건이 단순한 도난을 넘어선 더 깊은 음모를 품고 있음을 암시했다.\n\n그의 대답이 끝나자, 당신은 주변을 다시 한 번 훑었다. 창고의 뒷골목 어둠 속에서 무언가 움직이는 듯한 그림자가 어슴푸레하게 스며들었고, 바람이 지나가자 먼지와 함께 낡은 종잇조각이 살짝 흔들렸다. 시장 골목 곳곳에 스며든 불안한 기운이 점점 무거워져 가는 순간이었다.",
+        "createdAt": "2026-03-18T08:25:58.201Z",
+        "resolveOutcome": "PARTIAL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_int1_observe",
+            "label": "장부의 내용을 슬쩍 엿본다"
+          },
+          {
+            "id": "fu_enc_p_retry",
+            "label": "다시 한번 말을 건넨다"
+          },
+          {
+            "id": "fu_mkt_p_retry",
+            "label": "다른 노점에서 같은 질문을 던진다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 부분 성공했다."
+      },
+      {
+        "turnNo": 8,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "맞은편에 앉아 안부를 묻는다",
+        "summary": "플레이어가 대화를 했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 시장 거리에 늘어선 노점들 사이 맞은편 벤치에 천천히 걸어가 자리를 잡았다. 주변의 소란스러운 상인들과 지나가는 행인들 틈에서 시선은 향신료 냄새와 먼지 바람에 살짝 흐려진 창고 뒤편 골목으로 향했다. 당신은 조용히 몸을 낮추며 앉아 앞에 선 에드릭 베일의 시선을 마주했다. 그의 눈빛은 신중함과 경계가 뒤섞여 있었다.\n\n몇 초의 침묵이 흘렀다. 에드릭이 천천히 입을 열었다.\n\n\"그대가 다시 찾아오니 반갑소. 지난번 대화 이후로도 시장의 분위기는 더욱 뒤숭숭해지고 있소. 장부 도난 사건이 알려지기 전보다 경비대의 경계가 한층 더 엄격해졌고, 창고 주변에서 이상한 움직임이 자주 목격되고 있소.\"\n\n그는 잠시 목을 가다듬더니 낮은 목소리로 이어갔다.\n\n\"특히 야간 경비 책임자의 감시는 더욱 철저해졌으며, 수상한 인물이 창고 뒷골목을 드나들고 있다는 보고도 자주 들려오고 있소. 그대가 이 일을 맡은 것은 현명한 선택이라 하겠소만, 절대 혼자 움직이지 말도록 하시오. 이 일은 단순한 절도가 아니요, 길드 내부와 경비대까지 뒤엉킨 복잡한 사안이오.\"\n\n에드릭의 말에 당신의 시선은 다시 창고 뒷골목 쪽으로 향했다. 그곳 골목 어둠 속에서 간헐적으로 바스락거리는 발걸음 소리가 들려왔다. 바람에 섞인 먼지와 향신료 냄새가 코끝을 자극하는 가운데, 당신은 에드릭의 말이 단지 경고가 아님을 뼈저리게 느꼈다.\n\n그가 다시 말문을 열었다.\n\n\"어쩌면 그대에게 도움이 될 만한 소문 하나를 들었소. 바로 며칠 전, 창고 관리인과 몇몇 경비대원이 은밀히 만나 무언가를 주고받았다는 이야기요. 물론 그들의 진의가 무엇인지는 알 수 없지만, 이 사건과 무관치 않다고 보는 이가 많소.\"\n\n당신은 에드릭이 조용히 고개를 숙이며 주변을 살피는 모습을 주시했다. 그의 눈엔 여전히 불안한 기운이 서려 있었다. 당신이 이 정보를 어떻게 활용할지, 골목 어둠 속 무언가가 그 답을 쥐고 있을 듯했다.",
+        "createdAt": "2026-03-18T08:24:57.631Z",
+        "resolveOutcome": null,
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_int1_persuade",
+            "label": "무슨 일인지 조심스럽게 캐묻는다"
+          },
+          {
+            "id": "mkt_int1_observe",
+            "label": "장부의 내용을 슬쩍 엿본다"
+          },
+          {
+            "id": "fu_mkt_s_dig",
+            "label": "상인들 사이에서 더 깊은 소문을 캔다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 대화를 했다."
+      },
+      {
+        "turnNo": 7,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "인사를 건네고 다른 곳을 둘러본다",
+        "summary": "플레이어가 \"인사를 건네고 다른 곳을 둘러본다\"를 시도하여 부분 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 시장 거리 향신료 노점 앞에서 조심스레 인사를 건넸다. 거리의 소란 속에서도 당신의 목소리는 묵직하게 울려 퍼졌다. 향신료가루 사이로 서늘한 바람이 불어와 당신의 옷자락을 살짝 흔들었다. 에드릭 베일이 고개를 들어 당신을 바라보았다. 그의 눈에는 경계심과 약간의 호기심이 섞여 있었다.\n\n에드릭이 조심스레 입을 열었다.\n\"그대, 다시 만난 것을 반긴다오. 아직도 장부 문제로 골머리를 앓고 있소.\"\n\n당신이 고개를 끄덕이자, 에드릭은 시선을 멀리 창고 쪽으로 돌렸다. 그곳에는 몇몇 사람들이 오가며 무언가를 속삭이는 듯했다. 그의 눈빛은 그 움직임을 주시하고 있었다.\n\n\"그 창고 주변에선 요즘에도 이상한 움직임이 계속되고 있소. 밤마다 수상한 인물들이 드나들고, 경비대도 예전만큼 철통같지 않소. 그 때문에 시장 사람들 사이에선 불안이 커지고 있소.\"\n\n당신이 주변을 두리번거리며 시장 골목 저편을 바라보았다. 흔들리는 노점 천막 너머로 권위적인 야간 경비 책임자의 날카로운 눈초리가 번쩍였다. 그의 제복은 밤의 어둠 속에서 더욱 위엄 있어 보였다.\n\n길게 이어지는 시장 거리에서는 바삐 움직이는 주민들의 발걸음 소리와 먼지 섞인 향신료 냄새가 뒤섞여 있었다. 그 사이 어딘가에서 금속끼리 부딪히는 소리와 발자국이 간헐적으로 들려왔다. 당신은 그 불안한 배경 속에서 점점 더 많은 퍼즐 조각이 맞춰지는 듯한 기분을 느꼈다.\n\n에드릭이 다시 낮은 목소리로 말했다.\n\"그대가 이 문제에 관심이 있으면, 좀 더 깊이 파고들어 보시오. 하지만 조심해야 하오. 이 일은 단순한 절도가 아니라 큰 물줄기가 얽혀 있소.\"\n\n당신은 천천히 고개를 끄덕이며 주변을 살피기 시작했다. 아직 드러나지 않은 실마리가 시장 골목 그늘 사이에 숨겨져 있다는 것을 알 수 있을 듯했다.\n\n당신의 시선은 다시 향신료 노점 너머로 흐려진 햇살 밑 창고 뒷골목으로 향했다.",
+        "createdAt": "2026-03-18T08:23:56.987Z",
+        "resolveOutcome": "PARTIAL",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_int1_talk",
+            "label": "맞은편에 앉아 안부를 묻는다"
+          },
+          {
+            "id": "mkt_int1_persuade",
+            "label": "무슨 일인지 조심스럽게 캐묻는다"
+          },
+          {
+            "id": "mkt_int1_observe",
+            "label": "장부의 내용을 슬쩍 엿본다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"인사를 건네고 다른 곳을 둘러본다\"를 시도하여 부분 성공했다."
+      },
+      {
+        "turnNo": 6,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "상인에게 오늘 장사가 어떤지 묻는다",
+        "summary": "플레이어가 대화를 했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 향신료 노점상 앞에서 몸을 조금 앞으로 내밀며 상인의 주의를 끌었다. 노점 상인은 손에 든 향신료 자루를 잠시 내려놓고 당신 쪽으로 시선을 돌렸다. 그의 얼굴에는 하루 동안의 장사 땀과 먼지가 묻어 있었으나, 눈빛은 호기심과 조심스러움이 뒤섞여 있었다. 당신의 질문에 상인은 잠시 망설이다가 낮게 숨을 내쉬며 입을 열었다.\n\n\"오늘 장사는... 평소와 다르지 않소만, 어딘가 모르게 어수선한 기운이 도는 것은 사실이오. 창고 근처에 들리는 소문 때문일 것이오. 손님들이 갑자기 줄고, 나도 모르게 뒤를 자주 돌아보게 되는군요.\" 그의 목소리에는 불안과 불만이 묻어났다.\n\n주변의 다른 상인들도 당신 쪽을 힐끔거리며 귀를 기울였다. 당신이 묻자 노점상은 속삭이듯 말을 이었다.\n\n\"최근 동쪽 창고에서 수상한 배달이 잦다고 하오. 경비대도 예전 같지 않고, 누군가 뭔가를 숨기는 모양이오. 장사하는 우리만 불안해질 뿐이오.\"\n\n상인의 말이 끝나자 멀리서 권위적인 야간 경비 책임자가 또 한 번 주변을 둘러보았다. 그의 표정은 더욱 굳어져 있었고, 시장 안팎의 긴장감이 점점 짙어졌다. 바람이 다시 불어오며 먼지가 뿌옇게 일었고, 향신료 향이 코끝을 스쳤다. 당신은 상인의 말 속에 담긴 불안과 긴장, 그리고 창고 주변에서 벌어지는 은밀한 일들이 더욱 실체를 드러내기 시작했음을 감지했다.\n\n\"그런데 그대도 알겠지만, 이런 소문은 조심해서 다뤄야 하오. 잘못하다간 우리 모두 곤란해질 수 있소.\" 상인의 경계 어린 말투가 주변의 불안한 분위기를 더욱 짙게 만들었다.\n\n당신의 시선은 다시 창고 방향으로 향했다. 그곳에서 벌어지는 일들은 이제 단순한 소문을 넘어, 시장 전체의 운명을 좌우할 중요한 열쇠임을 암시하고 있었다.",
+        "createdAt": "2026-03-18T08:22:56.382Z",
+        "resolveOutcome": null,
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "fu_enc_s_wander",
+            "label": "인사를 건네고 다른 곳을 둘러본다"
+          },
+          {
+            "id": "fu_enc_s_deepen",
+            "label": "대화를 이어간다"
+          },
+          {
+            "id": "fu_mkt_s_look",
+            "label": "노점 뒤쪽 골목을 살핀다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 대화를 했다."
+      },
+      {
+        "turnNo": 5,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "향신료 가게 앞을 서성인다",
+        "summary": "플레이어가 \"향신료 가게 앞을 서성인다\"를 시도하여 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 향신료 가게 앞에 머무르며 주변을 주의 깊게 살폈다. 무심한 척하면서도 여러 방향을 번갈아 보며 지나가는 사람들의 발걸음 소리와 속삭임을 귀기울였다. 노점 앞에서 흘러나오는 달큰한 향신료 냄새가 코끝을 자극했으며, 따사로운 햇살이 가게 지붕 위에서 반짝였다. 가게 주인은 가끔씩 지나가는 행인에게 손짓하거나 작은 미소를 지으며 친근하게 인사를 건넸으나, 그 눈빛 한편에는 경계심이 섞여 있었다.\n\n서성이는 당신의 존재를 의식한 듯, 몇몇 상인들이 짧은 시선을 던지고는 곧 시선을 피했다. 노점 뒤쪽 골목에서 바스락거리는 소리가 간헐적으로 들려왔고, 몇 걸음 떨어진 곳에서는 빠르게 몸을 숨기는 그림자가 스쳐 지나갔다. 시장 한 켠, 낡은 나무 상자와 천막 사이로 누군가 몰래 무언가를 교환하는 모습이 희미하게 목격되었다. 이내 두 사람은 서로를 향해 낮게 속삭이며 신중한 표정을 지었다.\n\n가게의 친근한 상인은 당신을 발견하고는 조심스레 다가와 낮은 목소리로 말했다.\n\n\"그대, 오늘 시장은 평소와 다르게 사람들의 기운이 심상치 않소. 창고 주변에 사람들이 자주 드나들며, 그 중 몇은 눈에 띄지 않는 손길을 가진 듯하오.\"\n\n그녀는 뒷짐을 지고 주변을 살폈다. \"이곳 향신료 냄새 뒤에는 꽤 많은 비밀이 숨겨져 있다오. 그대가 조금만 더 주의 깊다면, 그 비밀의 실마리를 잡을 수 있을 것이오.\"\n\n한편, 시장 입구 쪽에서는 무거운 걸음 소리와 함께 권위적인 야간 경비 책임자가 멀리서 무전을 확인하는 듯한 모습을 볼 수 있었다. 그의 날카로운 시선이 시장 곳곳을 스캔하며 긴장된 공기가 감돌았다.\n\n서늘한 바람이 불어와 먼지와 섞인 향신료 냄새가 다시 코를 간질였고, 당신의 관찰은 점점 더 많은 퍼즐 조각을 맞춰 나가는 듯했다.",
+        "createdAt": "2026-03-18T08:21:55.767Z",
+        "resolveOutcome": "SUCCESS",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_atm1_talk",
+            "label": "상인에게 오늘 장사가 어떤지 묻는다"
+          },
+          {
+            "id": "fu_mkt_s_use",
+            "label": "알아낸 정보로 다른 상인에게 접근한다"
+          },
+          {
+            "id": "fu_mkt_s_look",
+            "label": "노점 뒤쪽 골목을 살핀다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"향신료 가게 앞을 서성인다\"를 시도하여 성공했다."
+      },
+      {
+        "turnNo": 4,
+        "nodeType": "LOCATION",
+        "inputType": "CHOICE",
+        "rawInput": "상인에게 소문을 묻는다",
+        "summary": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 향신료를 파는 노점 상인에게 다가가 시선과 몸짓으로 소문을 물었다. 상인은 갓 볶아낸 가루를 뒤적이다가, 잠시 당신을 살피며 입꼬리를 살짝 올렸다. 그의 눈은 주위를 경계하는 듯했지만, 곧 낮게 속삭이듯 말했다.\n\n\"요즘 창고 주변에서 이상한 움직임이 있소. 평소와 달리 밤마다 그림자들이 몰래 드나들고, 사람들 말로는 은밀한 거래가 일어난다 하오. 장부가 도난당했다는 소문도 퍼져 있지. 그 장부에는 단순한 공물 내역뿐 아니라 숨겨진 거래 기록도 있다 하니, 다들 조심하라 경고하는 중이오.\"\n\n상인의 목소리는 낮았지만 무게가 실렸다. 그는 손에 묻은 향신료 가루를 털며 주변을 훑었다. 당신에게 중요한 정보가 담긴 말을 건넨 뒤, 다시 노점 가판대로 돌아가 향신료 냄새를 퍼뜨리며 일에 집중하는 모습이었다. 주변에선 행인들이 바삐 지나가고, 몇몇은 멀찍이서 당신과 상인의 대화를 흘깃 쳐다보았다.\n\n바람이 불자 먼지와 섞인 향신료 냄새가 당신 코끝을 간질였다. 그 사이 창고 쪽에서는 누군가 빠르게 발걸음을 옮기는 소리가 간간이 들려왔다. 거리의 활기는 계속되었으나, 분위기 어딘가 불안이 깔린 듯했다.",
+        "createdAt": "2026-03-18T08:20:55.181Z",
+        "resolveOutcome": "SUCCESS",
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "mkt_atm1_look",
+            "label": "향신료 가게 앞을 서성인다"
+          },
+          {
+            "id": "mkt_atm1_talk",
+            "label": "상인에게 오늘 장사가 어떤지 묻는다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다."
+      },
+      {
+        "turnNo": 3,
+        "nodeType": "LOCATION",
+        "inputType": "SYSTEM",
+        "rawInput": "",
+        "summary": "[장소] 시장 거리 — 햇살이 비추는 시장 거리에 상인들의 호객 소리가 울려 퍼진다. 노점마다 과일과 향신료가 산처럼 쌓여 있고, 행상인들이 길손을 붙잡으며 물건을 내민다. 아이들이 좌판 사이를 뛰어다니고, 어딘가에서 고기 굽는 냄새가 코끝을 스친다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 시장 거리로 들어섰다. 햇살이 노점의 색색깔 과일과 향신료 자루를 반짝이게 한다. 상인들이 활기찬 목소리로 지나가는 이들을 붙잡는다. 한쪽에서는 신선한 고기가 숯불 위에서 지글지글 익고 있다. 아이들이 좌판 사이를 누비며 웃음소리를 흩뿌렸다. 행상인 중 한 명이 당신을 슬쩍 흘겨보았다가 말을 건넨다.\n\n\"그대, 이곳에도 어지간한 소문이 돌고 있소. 요즘 창고 쪽에 수상한 인물들이 몰려든다는 말이 있소.\"\n\n당신의 눈길이 자연스레 인파 속에 섞인 낯선 이들을 탐색한다. 몸을 낮추어 한 노점 옆에서 몰래 흘낏 본다. 어둡고 낡은 겉옷을 두른 남자가 누군가와 은밀하게 무언가를 건네는 모습이 포착된다. 대화는 짧고 낮았다. 주위 소음에 묻혀 대화 내용은 들리지 않는다.\n\n바람이 향신료 더미 사이로 살짝 스치며 매콤한 향이 코끝을 스쳤다. 시장은 평소와 다름없이 분주하지만, 곳곳에 숨겨진 긴장감이 도사리고 있었다.\n\n한 노점상인이 당신에게 다가와 무심한 듯 속삭인다.\n\n\"조심하시오, 그대. 이 거리도 예전 같지 않소. 창고 쪽에서 무슨 일이 벌어지고 있는지 눈여겨볼 필요가 있소.\"\n\n당신의 시선은 다시 그 낯선 남자와 그 주변 사람들에게로 돌아갔다. 그들은 금방이라도 움직일 듯 긴장된 태도를 보였다.",
+        "createdAt": "2026-03-18T08:19:54.680Z",
+        "resolveOutcome": null,
+        "eventTexts": [],
+        "choices": [
+          {
+            "id": "market_talk",
+            "label": "상인에게 소문을 묻는다"
+          },
+          {
+            "id": "market_observe",
+            "label": "노점 사이를 거닐며 살핀다"
+          },
+          {
+            "id": "market_trade",
+            "label": "물건을 둘러본다"
+          },
+          {
+            "id": "go_hub",
+            "label": "거점으로 돌아간다"
+          }
+        ],
+        "displaySummary": "시장 거리에 도착했다."
+      },
+      {
+        "turnNo": 2,
+        "nodeType": "HUB",
+        "inputType": "CHOICE",
+        "rawInput": "go_market",
+        "summary": "시장 거리(으)로 향한다.",
+        "llmStatus": "DONE",
+        "llmOutput": "당신은 어둠과 빛이 교차하는 그레이마르 시장 거리를 향해 발걸음을 옮겼다. 시장은 낮 동안 분주했을 테지만 이제는 한낮의 소란이 서서히 가라앉으며, 땅거미가 짙게 깔린 골목 사이로 간간히 노점상들의 조용한 움직임이 보인다. 발밑에 깔린 돌바닥은 오래된 듯 거칠고, 먼지와 바람에 날린 낙엽이 여기저기 흩어져 있었다.\n\n거리를 걷는 동안, 한쪽으로 치우친 빛줄기가 한 노점 앞에서 잠시 반짝였다. 약초 노점의 노부인이 천천히 걸음을 맞추며, 지나가는 손님들과 낮은 목소리로 이야기를 나누고 있었다. 당신의 시선은 그곳에서 담담한 분위기 속에도 무언가 수상한 기운을 감지했다.\n\n사람들의 발걸음 소리와 멀리서 들려오는 바다의 짭짤한 냄새가 어우러진 시장 거리는 복잡한 이권 다툼과 밀수의 그림자가 서서히 드리워지는 곳이었다. 당신은 이 거리 한복판에서 앞으로 수색해야 할 단서들이 숨어 있을 것임을 곧 알 수 있을 터였다.\n\n한참을 걸어가자, 골목 구석에 자리한 한 낡은 상점 앞에서 투박한 노동자가 당신을 향해 고개를 살짝 끄덕이며 가볍게 손짓했다. 그 인물의 얼굴에는 땀과 먼지가 뒤섞여 있었으나 눈빛은 또렷했다. 그가 무언가 중요한 정보를 전하려는 듯, 주변을 경계하는 눈치였다.\n\n시장은 아직도 일촉즉발의 긴장 속에 있었고, 당신은 그 중심에서 움직이고 있었다.\n\n\"그대, 이쪽으로 오시지. 말은 조용히 하겠소.\"\n\n그의 낮은 목소리가 바람을 타고 파고들었다.",
+        "createdAt": "2026-03-18T08:19:54.668Z",
+        "resolveOutcome": null,
+        "eventTexts": [
+          "시장 거리(으)로 향한다."
+        ],
+        "choices": [],
+        "displaySummary": "시장 거리(으)로 향한다."
+      }
+    ],
+    "page": {
+      "hasMore": true,
+      "nextCursor": 2
+    }
+  },
+  "memory": {
+    "theme": [
+      {
+        "key": "location",
+        "tags": [
+          "LOCATION",
+          "THEME"
+        ],
+        "value": "그레이마르 항만 — 왕국 남서부 최대 무역항. 세 세력(항만 노동 길드, 해관청, 밀수 조직)이 이권을 다툰다.",
+        "importance": 1
+      },
+      {
+        "key": "quest",
+        "tags": [
+          "QUEST",
+          "THEME"
+        ],
+        "value": "사라진 공물 장부 — 길드가 해관청에 바친 공물 내역이 담긴 장부가 도난당했다. 장부에는 뒷거래 기록도 포함되어 있어, 공개되면 길드 간부 다수가 처형당할 수 있다.",
+        "importance": 1
+      },
+      {
+        "key": "npc_client",
+        "tags": [
+          "NPC",
+          "THEME"
+        ],
+        "value": "의뢰인 로넨 — 항만 노동 길드의 말단 서기관. 장부 관리 책임자였으나 도난 사실을 상부에 보고하지 못해 쫓기는 처지.",
+        "importance": 0.9
+      },
+      {
+        "key": "hub_system",
+        "tags": [
+          "HUB",
+          "THEME"
+        ],
+        "value": "HUB 거점 — 그레이마르 항만의 허름한 선술집. 이곳에서 시장/경비대/항만/빈민가로 이동하며 임무를 수행한다.",
+        "importance": 0.8
+      },
+      {
+        "key": "protagonist",
+        "tags": [
+          "PROTAGONIST",
+          "THEME"
+        ],
+        "value": "이름 없는 용병 — 전직 왕국 수비대 병사 — 남부 수비대에서 복무했으나 상관의 민간인 약탈 명령에 항명하여 탈영했다. 군에서 익힌 검술과 전투 경험이 있으나 수배 중이라 신분을 숨기고 있다. 그레이마르에는 일거리를 찾아 며칠 전 도착했다.",
+        "importance": 0.8
+      }
+    ],
+    "storySummary": null,
+    "structuredMemory": null
+  },
+  "runState": {
+    "hp": 100,
+    "pbp": {
+      "scores": {
+        "greed": 0,
+        "stealth": 0,
+        "violence": 0,
+        "insistence": 0,
+        "lawfulness": 1,
+        "riskTaking": 0,
+        "negotiation": 3,
+        "investigation": 3
+      },
+      "dominant": "NEGOTIATION",
+      "secondary": "INVESTIGATION"
+    },
+    "gold": 50,
+    "maxHp": 100,
+    "agenda": {
+      "dominant": null,
+      "explicit": {
+        "type": null,
+        "intensity": 1
+      },
+      "implicit": {
+        "allyMerchant": 0,
+        "profitFromChaos": 0,
+        "destabilizeGuard": 0,
+        "exposeCorruption": 0,
+        "empowerUnderworld": 0
+      }
+    },
+    "stamina": 5,
+    "arcState": {
+      "commitment": 0,
+      "currentRoute": null,
+      "betrayalCount": 0
+    },
+    "equipped": {},
+    "pressure": 49,
+    "inventory": [
+      {
+        "qty": 1,
+        "itemId": "ITEM_MINOR_HEALING"
+      },
+      {
+        "qty": 1,
+        "itemId": "ITEM_STAMINA_TONIC"
+      }
+    ],
+    "npcStates": {
+      "NPC_ROSA": {
+        "funds": 50,
+        "npcId": "NPC_ROSA",
+        "agenda": "고아원 유지, 아이들 보호, 빈민가 안전",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_MIRELA": {
+        "funds": 50,
+        "npcId": "NPC_MIRELA",
+        "agenda": "약초 장사와 단골 관리, 시장 소문 수집",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 25,
+          "respect": 5,
+          "suspicion": 0,
+          "attachment": 2.6000000000000014
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 25,
+        "encounterCount": 1
+      },
+      "NPC_RENNICK": {
+        "funds": 50,
+        "npcId": "NPC_RENNICK",
+        "agenda": "정보 거래로 생계 유지, 경비대 연줄 활용",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_MOON_SEA": {
+        "funds": 50,
+        "npcId": "NPC_MOON_SEA",
+        "agenda": "상단 내부 정보 관리, 자기 안전 확보",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_SEO_DOYUN": {
+        "funds": 50,
+        "npcId": "NPC_SEO_DOYUN",
+        "agenda": "상단 장부 은폐, 개인 이익 추구",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 25,
+          "respect": 4,
+          "suspicion": 5,
+          "attachment": 10.8
+        },
+        "influence": 50,
+        "suspicion": 5,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 25,
+        "encounterCount": 4
+      },
+      "NPC_YOON_HAMIN": {
+        "funds": 50,
+        "npcId": "NPC_YOON_HAMIN",
+        "agenda": "노동자 권리 보호, 부두 이권 사수",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_INFO_BROKER": {
+        "funds": 50,
+        "npcId": "NPC_INFO_BROKER",
+        "agenda": "정보 거래로 이익 극대화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BAEK_SEUNGHO": {
+        "funds": 50,
+        "npcId": "NPC_BAEK_SEUNGHO",
+        "agenda": "밀수 루트 은폐, 생존",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -5,
+        "encounterCount": 0
+      },
+      "NPC_CAPTAIN_BREN": {
+        "funds": 50,
+        "npcId": "NPC_CAPTAIN_BREN",
+        "agenda": "치안 유지, 내부 부패 조사에 관심",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_KANG_CHAERIN": {
+        "funds": 50,
+        "npcId": "NPC_KANG_CHAERIN",
+        "agenda": "도시 치안 유지, 권력 기반 강화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -10,
+        "encounterCount": 4
+      },
+      "NPC_GUARD_CAPTAIN": {
+        "funds": 50,
+        "npcId": "NPC_GUARD_CAPTAIN",
+        "agenda": "내부 부패 척결, 수비대 기강 확립",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      }
+    },
+    "maxStamina": 5,
+    "worldState": {
+      "day": 2,
+      "flags": {
+        "THEFT_STOPPED": true
+      },
+      "hubHeat": 20,
+      "mainArc": {
+        "unlockedArcIds": [],
+        "completedArcIds": []
+      },
+      "phaseV2": "DUSK",
+      "tension": 1,
+      "npcGoals": {},
+      "hubSafety": "SAFE",
+      "timePhase": "NIGHT",
+      "reputation": {
+        "CITY_GUARD": 0,
+        "LABOR_GUILD": 0,
+        "MERCHANT_CONSORTIUM": 10
+      },
+      "signalFeed": [
+        {
+          "id": "sig_INC_MARKET_THEFT_s0_RUMOR",
+          "text": "시장에서 소매치기가 늘었다",
+          "channel": "RUMOR",
+          "severity": 1,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 1,
+          "expiresAtClock": 25,
+          "sourceIncidentId": "INC_MARKET_THEFT"
+        },
+        {
+          "id": "sig_INC_SMUGGLING_RING_s0_SECURITY",
+          "text": "부두에서 수상한 화물 이동이 목격되었다",
+          "channel": "SECURITY",
+          "severity": 2,
+          "locationId": "LOC_HARBOR",
+          "createdAtClock": 1,
+          "expiresAtClock": 25,
+          "sourceIncidentId": "INC_SMUGGLING_RING"
+        },
+        {
+          "id": "sig_INC_MARKET_THEFT_s1_SECURITY",
+          "text": "경비대가 시장 순찰을 강화했다",
+          "channel": "SECURITY",
+          "severity": 2,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 7,
+          "expiresAtClock": 31,
+          "sourceIncidentId": "INC_MARKET_THEFT"
+        },
+        {
+          "id": "sig_action_LOC_MARKET_7_OBSERVE",
+          "text": "누군가 주변을 살피고 있었다.",
+          "channel": "VISUAL",
+          "severity": 2,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 7,
+          "expiresAtClock": 19
+        },
+        {
+          "id": "sig_action_LOC_MARKET_8_INVESTIGATE",
+          "text": "수색 흔적이 남아있다.",
+          "channel": "VISUAL",
+          "severity": 2,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 8,
+          "expiresAtClock": 20
+        },
+        {
+          "id": "sig_action_LOC_MARKET_9_TALK",
+          "text": "대화가 오갔다.",
+          "channel": "NPC_BEHAVIOR",
+          "severity": 1,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 9,
+          "expiresAtClock": 21
+        },
+        {
+          "id": "sig_action_LOC_MARKET_10_OBSERVE",
+          "text": "감시자가 들켰다.",
+          "channel": "VISUAL",
+          "severity": 3,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 10,
+          "expiresAtClock": 22
+        },
+        {
+          "id": "sig_action_LOC_MARKET_11_TALK",
+          "text": "대화가 오갔다.",
+          "channel": "NPC_BEHAVIOR",
+          "severity": 1,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 11,
+          "expiresAtClock": 23
+        },
+        {
+          "id": "sig_INC_MERCHANT_WAR_s0_ECONOMY",
+          "text": "시장 물가가 불안정하다",
+          "channel": "ECONOMY",
+          "severity": 2,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 12,
+          "expiresAtClock": 36,
+          "sourceIncidentId": "INC_MERCHANT_WAR"
+        },
+        {
+          "id": "sig_action_LOC_MARKET_12_PERSUADE",
+          "text": "논쟁이 벌어진 듯하다.",
+          "channel": "NPC_BEHAVIOR",
+          "severity": 2,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 12,
+          "expiresAtClock": 24
+        },
+        {
+          "id": "sig_action_LOC_MARKET_13_OBSERVE",
+          "text": "누군가 주변을 살피고 있었다.",
+          "channel": "VISUAL",
+          "severity": 2,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 13,
+          "expiresAtClock": 25
+        },
+        {
+          "id": "sig_action_LOC_MARKET_14_PERSUADE",
+          "text": "논쟁이 벌어진 듯하다.",
+          "channel": "NPC_BEHAVIOR",
+          "severity": 2,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 14,
+          "expiresAtClock": 26
+        },
+        {
+          "id": "sig_action_LOC_MARKET_15_OBSERVE",
+          "text": "주의 깊은 관찰자가 목격되었다.",
+          "channel": "VISUAL",
+          "severity": 1,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 15,
+          "expiresAtClock": 27
+        },
+        {
+          "id": "sig_action_LOC_MARKET_16_HELP",
+          "text": "누군가 도움을 받았다.",
+          "channel": "NPC_BEHAVIOR",
+          "severity": 1,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 16,
+          "expiresAtClock": 28
+        },
+        {
+          "id": "sig_action_LOC_MARKET_17_PERSUADE",
+          "text": "설득이 실패했다는 이야기가 들린다.",
+          "channel": "NPC_BEHAVIOR",
+          "severity": 3,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 17,
+          "expiresAtClock": 29
+        },
+        {
+          "id": "sig_action_LOC_MARKET_18_TALK",
+          "text": "대화가 오갔다.",
+          "channel": "NPC_BEHAVIOR",
+          "severity": 1,
+          "locationId": "LOC_MARKET",
+          "createdAtClock": 18,
+          "expiresAtClock": 30
+        }
+      ],
+      "globalClock": 18,
+      "timeCounter": 18,
+      "worldDeltas": [
+        {
+          "clock": 9,
+          "turnNo": 12,
+          "changes": [
+            {
+              "to": 6,
+              "from": 3,
+              "kind": "REPUTATION",
+              "field": "reputation.MERCHANT_CONSORTIUM",
+              "detail": "MERCHANT_CONSORTIUM 평판 3 → 6"
+            }
+          ]
+        },
+        {
+          "clock": 10,
+          "turnNo": 13,
+          "changes": [
+            {
+              "to": 19,
+              "from": 17,
+              "kind": "HEAT",
+              "field": "hubHeat",
+              "detail": "도시 긴장도 17 → 19"
+            }
+          ]
+        },
+        {
+          "clock": 11,
+          "turnNo": 14,
+          "changes": []
+        },
+        {
+          "clock": 12,
+          "turnNo": 15,
+          "changes": [
+            {
+              "to": 16,
+              "from": 19,
+              "kind": "HEAT",
+              "field": "hubHeat",
+              "detail": "도시 긴장도 19 → 16"
+            },
+            {
+              "to": "DAWN",
+              "from": "NIGHT",
+              "kind": "TIME_PHASE",
+              "field": "phaseV2",
+              "detail": "시간대 NIGHT → DAWN"
+            },
+            {
+              "to": "CONTAINED",
+              "from": null,
+              "kind": "INCIDENT_RESOLVE",
+              "field": "incident:INC_MARKET_THEFT.outcome",
+              "detail": "사건 INC_MARKET_THEFT 종결: CONTAINED"
+            },
+            {
+              "to": 0,
+              "from": null,
+              "kind": "INCIDENT_SPAWN",
+              "field": "incident:INC_MERCHANT_WAR",
+              "detail": "새로운 사건 발생: INC_MERCHANT_WAR"
+            },
+            {
+              "to": 9,
+              "from": 6,
+              "kind": "REPUTATION",
+              "field": "reputation.MERCHANT_CONSORTIUM",
+              "detail": "MERCHANT_CONSORTIUM 평판 6 → 9"
+            },
+            {
+              "to": "SAVIOR",
+              "from": null,
+              "kind": "NARRATIVE_MARK",
+              "field": "narrativeMark:SAVIOR",
+              "detail": "서사 표식 획득: SAVIOR"
+            }
+          ]
+        },
+        {
+          "clock": 13,
+          "turnNo": 16,
+          "changes": []
+        },
+        {
+          "clock": 14,
+          "turnNo": 17,
+          "changes": [
+            {
+              "to": "DAY",
+              "from": "DAWN",
+              "kind": "TIME_PHASE",
+              "field": "phaseV2",
+              "detail": "시간대 DAWN → DAY"
+            }
+          ]
+        },
+        {
+          "clock": 15,
+          "turnNo": 18,
+          "changes": [
+            {
+              "to": 17,
+              "from": 16,
+              "kind": "HEAT",
+              "field": "hubHeat",
+              "detail": "도시 긴장도 16 → 17"
+            }
+          ]
+        },
+        {
+          "clock": 16,
+          "turnNo": 19,
+          "changes": [
+            {
+              "to": 18,
+              "from": 17,
+              "kind": "HEAT",
+              "field": "hubHeat",
+              "detail": "도시 긴장도 17 → 18"
+            }
+          ]
+        },
+        {
+          "clock": 17,
+          "turnNo": 20,
+          "changes": [
+            {
+              "to": 20,
+              "from": 18,
+              "kind": "HEAT",
+              "field": "hubHeat",
+              "detail": "도시 긴장도 18 → 20"
+            },
+            {
+              "to": 7,
+              "from": 9,
+              "kind": "REPUTATION",
+              "field": "reputation.MERCHANT_CONSORTIUM",
+              "detail": "MERCHANT_CONSORTIUM 평판 9 → 7"
+            }
+          ]
+        },
+        {
+          "clock": 18,
+          "turnNo": 21,
+          "changes": [
+            {
+              "to": "DUSK",
+              "from": "DAY",
+              "kind": "TIME_PHASE",
+              "field": "phaseV2",
+              "detail": "시간대 DAY → DUSK"
+            },
+            {
+              "to": 10,
+              "from": 7,
+              "kind": "REPUTATION",
+              "field": "reputation.MERCHANT_CONSORTIUM",
+              "detail": "MERCHANT_CONSORTIUM 평판 7 → 10"
+            }
+          ]
+        }
+      ],
+      "mainArcClock": {
+        "startDay": 1,
+        "triggered": false,
+        "softDeadlineDay": 14
+      },
+      "playerThreads": [
+        {
+          "status": "ACTIVE",
+          "summary": "시장에서 SOCIAL 접근 6회 (성공률 33%)",
+          "threadId": "thread_LOC_MARKET:SOCIAL:SHIFT_RELATION_4",
+          "failCount": 1,
+          "lastTurnNo": 20,
+          "locationId": "LOC_MARKET",
+          "actionCount": 6,
+          "firstTurnNo": 4,
+          "goalCategory": "SHIFT_RELATION",
+          "successCount": 2,
+          "approachVector": "SOCIAL",
+          "relatedIncidentId": "INC_MARKET_THEFT"
+        },
+        {
+          "status": "ACTIVE",
+          "summary": "시장에서 OBSERVATIONAL 접근 7회 (성공률 29%)",
+          "threadId": "thread_LOC_MARKET:OBSERVATIONAL:GET_INFO_5",
+          "failCount": 1,
+          "lastTurnNo": 18,
+          "locationId": "LOC_MARKET",
+          "actionCount": 7,
+          "firstTurnNo": 5,
+          "goalCategory": "GET_INFO",
+          "successCount": 2,
+          "approachVector": "OBSERVATIONAL",
+          "relatedIncidentId": "INC_MARKET_THEFT"
+        },
+        {
+          "status": "ACTIVE",
+          "summary": "시장에서 SOCIAL 접근 5회 (성공률 100%)",
+          "threadId": "thread_LOC_MARKET:SOCIAL:GET_INFO_6",
+          "failCount": 0,
+          "lastTurnNo": 21,
+          "locationId": "LOC_MARKET",
+          "actionCount": 5,
+          "firstTurnNo": 6,
+          "goalCategory": "GET_INFO",
+          "successCount": 5,
+          "approachVector": "SOCIAL",
+          "relatedIncidentId": "INC_MARKET_THEFT"
+        }
+      ],
+      "hubHeatReasons": [],
+      "locationStates": {
+        "LOC_GUARD": {
+          "crime": 10,
+          "unrest": 10,
+          "security": 80,
+          "spotlight": false
+        },
+        "LOC_SLUMS": {
+          "crime": 70,
+          "unrest": 60,
+          "security": 20,
+          "spotlight": false
+        },
+        "LOC_HARBOR": {
+          "crime": 50,
+          "unrest": 40,
+          "security": 40,
+          "spotlight": false
+        },
+        "LOC_MARKET": {
+          "crime": 30,
+          "unrest": 20,
+          "security": 60,
+          "spotlight": false
+        }
+      },
+      "narrativeMarks": [
+        {
+          "type": "SAVIOR",
+          "context": "INC_MARKET_THEFT 사태를 해결했다",
+          "permanent": true,
+          "incidentId": "*critical*",
+          "createdAtClock": 12
+        }
+      ],
+      "activeIncidents": [
+        {
+          "kind": "CRIMINAL",
+          "stage": 1,
+          "control": 89,
+          "outcome": "CONTAINED",
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 0,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 30,
+          "resolved": true,
+          "security": 20,
+          "suspicion": 16,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 시장 연쇄 절도"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 1,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 2,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 3,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 4,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +5",
+              "controlDelta": 5
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 5,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 6,
+              "action": "STAGE_ADVANCE",
+              "detail": "PARTIAL: control +5",
+              "controlDelta": 5
+            },
+            {
+              "clock": 7,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 7,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +7",
+              "controlDelta": 7
+            },
+            {
+              "clock": 8,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 8,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +7",
+              "controlDelta": 7
+            },
+            {
+              "clock": 9,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 9,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +15",
+              "controlDelta": 15
+            },
+            {
+              "clock": 10,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 10,
+              "action": "CONTROL_CHANGE",
+              "detail": "FAIL: control -5",
+              "controlDelta": -5
+            },
+            {
+              "clock": 11,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 11,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +15",
+              "controlDelta": 15
+            },
+            {
+              "clock": 12,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 12,
+              "action": "RESOLVE",
+              "detail": "Resolved: CONTAINED"
+            }
+          ],
+          "incidentId": "INC_MARKET_THEFT",
+          "deadlineClock": 36,
+          "mutationFlags": [],
+          "rivalProgress": 5,
+          "playerProgress": 72,
+          "spawnedAtClock": 0
+        },
+        {
+          "kind": "CRIMINAL",
+          "stage": 0,
+          "control": 0,
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 54,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 0,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 항만 밀수 조직"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 7,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 8,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 9,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 10,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 11,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 12,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 13,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 14,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 15,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 16,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 17,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 18,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            }
+          ],
+          "incidentId": "INC_SMUGGLING_RING",
+          "deadlineClock": 48,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 0,
+          "spawnedAtClock": 0
+        },
+        {
+          "kind": "ECONOMIC",
+          "stage": 0,
+          "control": 41,
+          "vectors": [
+            {
+              "vector": "ECONOMIC",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "RIVAL_PROGRESS",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 0,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 12,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 11,
+          "historyLog": [
+            {
+              "clock": 12,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 상인 길드 내전"
+            },
+            {
+              "clock": 12,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +5",
+              "controlDelta": 5
+            },
+            {
+              "clock": 13,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 13,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +5",
+              "controlDelta": 5
+            },
+            {
+              "clock": 14,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 14,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +5",
+              "controlDelta": 5
+            },
+            {
+              "clock": 15,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 15,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 16,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 16,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 17,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 17,
+              "action": "CONTROL_CHANGE",
+              "detail": "FAIL: control -4",
+              "controlDelta": -4
+            },
+            {
+              "clock": 18,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 18,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            }
+          ],
+          "incidentId": "INC_MERCHANT_WAR",
+          "deadlineClock": 60,
+          "mutationFlags": [],
+          "rivalProgress": 5,
+          "playerProgress": 39,
+          "spawnedAtClock": 12
+        }
+      ],
+      "deferredEffects": [],
+      "operationSession": null,
+      "combatWindowCount": 0,
+      "combatWindowStart": 0,
+      "currentLocationId": "LOC_MARKET"
+    },
+    "equipmentBag": [],
+    "lastPeakTurn": 21,
+    "npcRelations": {
+      "NPC_RONEN": 30,
+      "NPC_MIRELA": 54,
+      "NPC_SEO_DOYUN": 70,
+      "NPC_HARBOR_BOSS": 15,
+      "NPC_SLUM_LEADER": 10,
+      "NPC_GUARD_CAPTAIN": 20,
+      "NPC_MERCHANT_ELDER": 25
+    },
+    "actionHistory": [
+      {
+        "turnNo": 12,
+        "eventId": "EVT_MARKET_DSC_1",
+        "choiceId": "mkt_dsc1_search",
+        "inputText": "주변에 다른 문서가 더 있는지 찾아본다",
+        "actionType": "TALK",
+        "primaryNpcId": "NPC_SEO_DOYUN"
+      },
+      {
+        "turnNo": 13,
+        "eventId": "EVT_MARKET_INT_3",
+        "choiceId": "mkt_dsc1_look",
+        "inputText": "누가 버렸는지 주변을 살핀다",
+        "actionType": "OBSERVE",
+        "primaryNpcId": "NPC_MIRELA"
+      },
+      {
+        "turnNo": 14,
+        "eventId": "EVT_MARKET_INT_3",
+        "choiceId": "mkt_int3_talk",
+        "inputText": "미렐라에게 무엇을 사는지 묻는다",
+        "actionType": "TALK",
+        "primaryNpcId": "NPC_MIRELA"
+      },
+      {
+        "turnNo": 15,
+        "eventId": "EVT_MARKET_INT_3",
+        "choiceId": "mkt_int3_help",
+        "inputText": "약초 고르는 것을 도와준다",
+        "actionType": "PERSUADE",
+        "primaryNpcId": "NPC_MIRELA"
+      },
+      {
+        "turnNo": 16,
+        "eventId": "EVT_MARKET_ENC_DISPUTE",
+        "choiceId": "mkt_int3_watch",
+        "inputText": "미렐라가 어떤 약초를 고르는지 관찰한다",
+        "actionType": "OBSERVE"
+      },
+      {
+        "turnNo": 17,
+        "eventId": "EVT_MARKET_ENC_DISPUTE",
+        "choiceId": "mkt_enc_dis_mediate",
+        "inputText": "중재에 나선다",
+        "actionType": "PERSUADE"
+      },
+      {
+        "turnNo": 18,
+        "eventId": "EVT_MARKET_ENC_DISPUTE",
+        "choiceId": "mkt_enc_dis_watch",
+        "inputText": "결말을 지켜본다",
+        "actionType": "OBSERVE"
+      },
+      {
+        "turnNo": 19,
+        "eventId": "PROC_19",
+        "choiceId": "mkt_enc_dis_help",
+        "inputText": "약한 쪽을 도와준다",
+        "actionType": "HELP"
+      },
+      {
+        "turnNo": 20,
+        "eventId": "EVT_MARKET_INT_1",
+        "choiceId": "encounter_talk",
+        "inputText": "말을 건네본다",
+        "actionType": "PERSUADE",
+        "primaryNpcId": "NPC_SEO_DOYUN"
+      },
+      {
+        "turnNo": 21,
+        "eventId": "EVT_MARKET_INT_1",
+        "choiceId": "mkt_int1_talk",
+        "inputText": "맞은편에 앉아 안부를 묻는다",
+        "actionType": "TALK",
+        "primaryNpcId": "NPC_SEO_DOYUN"
+      }
+    ],
+    "relationships": {},
+    "eventCooldowns": {
+      "PROC_19": 19,
+      "EVT_MARKET_ATM_1": 6,
+      "EVT_MARKET_DSC_1": 12,
+      "EVT_MARKET_INT_1": 21,
+      "EVT_MARKET_INT_3": 15,
+      "EVT_MARKET_ENC_DISPUTE": 18
+    }
+  }
+}
