@@ -1,0 +1,1639 @@
+{
+  "meta": {
+    "preset": "DESERTER",
+    "gender": "male",
+    "maxTurns": 20,
+    "actualTurns": 20,
+    "timestamp": "2026-03-19 20:37:36"
+  },
+  "runId": "c0cfa4ea-d9ad-4e46-9ead-2bc92369485c",
+  "turns": [
+    {
+      "turn": 1,
+      "turnNo": 0,
+      "nodeType": "HUB",
+      "input": "CHOICE:accept_quest",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 느릿하게 고개를 끄덕였다. 손에 쥔 잔을 조용히 내려놓고 자리에서 몸을 일으킨다. 로넨의 눈가에 겨우 드러나는 안도감이 느껴졌다. 그의 목소리가 낮게 울렸다.\n\n\"고맙소. 그 은혜는 잊지 않겠소.\"\n\n로넨은 잠시 당신을 바라보다가 고개를 끄덕이며 자리를 지켰다. 당신은 문 쪽으로 향하며 나지막한 발소리를 남겼다. 선술집의 나무문을 밀고 바깥으로 나서자, 밤의 그레이마르 거리가 펼쳐졌다. 가로등 불빛이 겨우 어둠을 밝히고, 먼 파도 소리가 멀리서 요란하게 들려왔다."
+    },
+    {
+      "turn": 2,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_market",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 선술집 문을 나서며 발걸음을 옮겼다. 거리의 돌바닥 위에는 햇살이 부서져 반짝였다. 시장 골목으로 접어들자, 가게마다 내건 천막과 나무 장대들이 늘어서 있었다. 가벼운 바람결에 천막이 살짝 흔들리고, 멀리서 상인들의 목소리와 손님들의 흥정 소리가 뒤섞여 들려왔다.\n\n주변에는 신선한 채소와 과일을 늘어놓은 노점상이 여러 줄로 이어지고, 치즈와 빵을 파는 상인들은 손님들과 활발히 대화를 나누고 있다. 지나가는 시민들의 발걸음과 말소리가 어우러져 시장 특유의 활기가 묻어났다.\n\n당신의 시선은 시장 한가운데 놓인 닳고 낡은 장부를 "
+    },
+    {
+      "turn": 3,
+      "turnNo": 3,
+      "nodeType": "LOCATION",
+      "input": "ACTION:물건을 훔친다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "GOLD",
+        "LOOT",
+        "NPC"
+      ],
+      "narrative": "당신은 재빠른 손놀림으로 한 상인의 팔짱 낀 외투 주머니에 손을 뻗었다. 주변의 소란과 시장 통행인들의 분주한 움직임이 당신의 행동을 가려주었다. 팔짱 낀 외투가 살짝 들리자마자 손끝에 닿은 차가운 금화 몇 개와 작은 병이 손안에 들어왔다. 발걸음은 가볍게 뒤로 물러서며 재빨리 그 자리를 떠났다.\n\n바닥에 흩어진 사과 더미를 수습하느라 정신이 팔린 상인은 뒤돌아 당신을 뒤쫓을 겨를조차 없었다. 아이들이 재빠르게 몇 개의 과일을 움켜쥐고 달아나는 소란 속에서 당신은 한 손에 금화, 다른 손에 체력 강장제 병을 쥐고 있었다.\n\n시장의 "
+    },
+    {
+      "turn": 4,
+      "turnNo": 4,
+      "nodeType": "LOCATION",
+      "input": "ACTION:수상한 곳을 조사한다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 눈에 띄지 않도록 시장 골목의 한 켠으로 몸을 숨기며 수상한 흔적을 찾아내려 시선을 집중했다. 바닥에 떨어진 작은 종잇조각과 희미하게 남아 있는 기름 얼룩, 그리고 어딘가에 숨겨진 듯한 닫힌 판자문이 눈에 들어왔다. 다가가서 조심스럽게 문에 손을 댔다가, 주변 소란과 시장 사람들의 움직임을 살피며 문틈 사이를 들여다보았다. 빛바랜 나무 판자가 바람에 살짝 흔들리며 바깥 공기와는 달리 안쪽에서는 차가운 공기가 새어 나왔다.\n\n멀리서 약초 노점의 노부인이 지나가던 행인을 부르며 무언가를 조곤조곤 알려주는 소리가 들렸고, 그 옆에"
+    },
+    {
+      "turn": 5,
+      "turnNo": 5,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:mkt_atm3_watch",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "FAIL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 시장 골목 구석에 몸을 숨기고 분주하게 움직이는 군중 사이로 시선을 고정했다. 소란을 일으킨 이들의 얼굴과 몸짓을 하나하나 주의 깊게 살피려 애썼다. 하지만 사람들의 움직임이 너무 빠르고, 금세 군중에 섞여 버린 탓에 결정적인 장면을 포착하지 못했다. 주변에선 갑작스러운 고함소리와 발소리가 뒤섞이며 긴장이 감돌았다.\n\n한편, 그곳에 있던 약초 노점의 노부인이 그의 수상한 움직임을 눈치채고 다가왔다. 그러나 당신의 시선이 집중된 소동 현장과는 달리 그녀의 말은 낮고 조심스러웠다.\n\n\"그대, 이 소동 속에 너무 깊이 끼면 안 되"
+    },
+    {
+      "turn": 6,
+      "turnNo": 6,
+      "nodeType": "LOCATION",
+      "input": "ACTION:조심스럽게 잠입한다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "FAIL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 시장 골목의 어수선한 틈을 타 조심스럽게 숨어들었다. 낡은 목재 난간과 어지럽게 늘어진 천막들 뒤에 몸을 낮추고, 발걸음을 최대한 조심스레 옮기며 시선을 분산시키려 애썼다. 그러나 당신의 숨결이 바람에 실려 멀리까지 퍼졌는지, 골목 한편에서 누군가가 날카로운 눈을 빛내며 당신 쪽으로 시선을 돌렸다. 곧이어 날카로운 눈매의 회계사가 조용히 몸을 일으키며 주변을 살폈다.\n\n그의 눈빛은 경계심으로 가득했고, 그가 바삐 움직이면서 당신의 위치를 파악하려는 듯 머리를 돌렸다. 바로 그 순간, 당신의 발에 밟힌 조그만 돌멩이가 탁하고 "
+    },
+    {
+      "turn": 7,
+      "turnNo": 7,
+      "nodeType": "LOCATION",
+      "input": "ACTION:move_location",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 느릿하게 발길을 돌려 시장 골목에서 빠져나왔다. 좁고 어수선한 골목길을 지나며 뒤를 흘낏 살핀다. 눈앞에는 사람들로 붐비는 거리와 오래된 목재 가게들이 어우러졌다. 바람에 실려 오는 뒤섞인 목소리와 먼 바다 내음이 뒤섞여 있다. 고개를 돌리자 조금 더 넓고 평온한 거리가 나타났다. 그곳을 향해 발걸음을 옮기며, 당신은 그레이마르 허름한 선술집, 즉 거점으로 향한다.\n\n주변에선 낮게 대화를 나누는 행인들이 드문드문 지나가고, 시장 소란과 대비되는 평화로운 공기가 감돈다. 낡은 돌길 위에서 발자국 소리가 묵직하게 울렸고, 먼 파"
+    },
+    {
+      "turn": 8,
+      "turnNo": 9,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_harbor",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신이 발걸음을 옮기자, 바닷바람이 짠내를 실어 나른다. 거친 돌바닥 위에 신발이 단단히 닿으며 묵직한 소리를 냈다. 항만 부두로 향하는 길목에는 거센 파도가 부딪히며 부두의 오래된 목재가 흔들리는 소리가 뒤섞였다. 그윽한 갈색 망토가 어깨를 감싸며 바람 속으로 흩날렸다.\n\n부두 입구에 다다르자, 무거운 닻과 밧줄들이 어지럽게 쌓여 있고, 굵은 밧줄이 철제 고리에 단단히 감겨 있었다. 한편으로는 상선의 돛대에 매달린 깃발이 서서히 펄럭이고, 바닷물에 젖은 나무판자 사이로는 물결이 출렁였다.\n\n부두 가장자리에서 투박한 노동자가 어깨를"
+    },
+    {
+      "turn": 9,
+      "turnNo": 11,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:harbor_talk",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 하를런 보스에게 다가가 말을 건넸다. 그의 굵직한 손이 잠시 멈추고 당신을 향해 고개를 돌렸다. 해질 무렵 부두를 감도는 짙은 바다 내음과 짠 바람이 둘 사이를 감쌌다. 하를런은 물통을 내려놓으며 다정한 눈길을 보냈다.\n\n\"그대, 오랜만이오. 뭔가 도움이 될 만한 일이 있소?\" 그의 목소리는 부드러우면서도 권위가 느껴졌다. 주변의 선원들이 당신을 주시하고 있었으나, 하를런의 태도는 분명 신뢰를 바탕으로 한 것이었다.\n\n당신이 최근 부두에서의 움직임과 밀수에 대해 조심스레 말을 꺼내자, 하를런의 표정이 굳어졌다. \"밀수꾼들이 "
+    },
+    {
+      "turn": 10,
+      "turnNo": 12,
+      "nodeType": "LOCATION",
+      "input": "ACTION:골목길 벽에 기대어 주변을 관찰한다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "GOLD",
+        "NPC"
+      ],
+      "narrative": "당신은 골목길의 차가운 벽면에 몸을 기댔다. 숨소리를 억누르며 어둠 속에서 주변을 살피자, 부두의 밤 공기가 짙은 염분 냄새와 함께 은은한 나무 타는 향을 머금고 흘러들었다. 먼발치 동쪽 창고 쪽에서 사람들의 발자국 소리가 조용히 울려 퍼졌다. 그 발걸음은 규칙적이면서도 긴장감이 감돌았다. 벽에 기대어 고개를 살짝 내밀자, 나무판자로 둘러싸인 창고 주변에 낮은 음성들이 희미하게 들려왔다.\n\n근처에서는 하를런이 조용히 당신을 지켜보며 잠시 몸을 굽혔다가 다시 똑바로 섰다. 그의 표정은 한층 안도감이 섞여 있으나, 여전히 경계심을 놓지"
+    },
+    {
+      "turn": 11,
+      "turnNo": 13,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:hbr_int1_greet",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 하를런 보스에게 다가가자, 그는 말없이 고개를 끄덕이며 반갑게 맞았다. 그의 얼굴에는 밤바람에 그을린 주름이 깊게 패여 있었고, 짙은 수염 사이로는 미소가 번졌다. 두 손을 허리에 얹고 당신을 바라보는 그의 눈빛은 신뢰를 담고 있었다.\n\n하를런은 낮은 목소리로 말을 이었다. \"그대가 다시 온 것을 반기오. 이 부두에서 그대만큼 밤의 숨결을 잘 읽는 이는 드물지. 이제는 사람들이 더욱 조심스러워졌고, 한 치의 방심도 금물이오.\" 그는 주위를 살피며, \"동쪽 창고 주변의 움직임이 예사롭지 않소. 지난 밤에도 낯선 이들이 몰래 오"
+    },
+    {
+      "turn": 12,
+      "turnNo": 14,
+      "nodeType": "LOCATION",
+      "input": "ACTION:골목길 벽에 기대어 주변을 관찰한다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 골목길의 차가운 벽에 몸을 기대었다. 발끝에 바닷바람이 스치고, 멀리서 파도 소리가 은은하게 들려오는 가운데, 눈앞에 펼쳐진 어둠 속 움직임을 예리하게 주시했다. 골목 깊숙한 곳에서 불빛 하나가 희미하게 흔들리고, 어둠에 숨어든 그림자들이 조심스레 이쪽으로 다가왔다가 금방 다시 물러나는 모습이 관찰됐다. 그러나 밀폐된 공간의 협소함과 골목 모퉁이마다 숨은 시선들 탓에 모든 움직임을 완벽히 파악하지는 못했다. 당신의 시야 한쪽에서, 소매를 살짝 걷어 올린 하를런이 근처를 조용히 맴돌며 무언가를 확인하는 듯한 태도를 보였다. 그"
+    },
+    {
+      "turn": 13,
+      "turnNo": 15,
+      "nodeType": "LOCATION",
+      "input": "ACTION:move_location",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 부두 골목을 등지고 천천히 발걸음을 옮기기 시작했다. 바람에 실려 오는 짠내와 오래된 목재의 냄새가 뒤편으로 멀어졌다. 그림자가 길게 드리워진 좁은 골목을 벗어나자, 주변의 소음이 조금씩 바뀌었다. 멀리서 선술집의 불빛이 희미하게 눈에 들어왔다. 걸음을 재촉하며, 당신은 거점으로 향하는 길을 따라 움직였다.\n\n주변의 공기는 이전 골목의 긴장감과는 달리 한결 여유로웠다. 부두에서 멀어질수록 낮게 들려오던 배의 쇠사슬 끼익거림과 선원들의 웅성거림도 서서히 잦아들었다. 하지만 거점 근처에 다다르자, 거리의 불빛이 깜빡이며 누군가의"
+    },
+    {
+      "turn": 14,
+      "turnNo": 17,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_market",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 어둠이 깔린 골목을 빠져나와 시장 거리를 향해 걸음을 옮겼다. 발밑에 깔린 자갈이 무심코 부딪치며 경쾌한 소리를 냈고, 희미한 가로등 불빛이 이따금씩 바람에 흔들리며 그림자를 길게 늘어뜨렸다. 얼마 지나지 않아 시장 거리의 북적임과 함께 낡은 석조 건물과 천막들이 어깨를 맞대고 늘어서 있는 풍경이 시야에 들어왔다.\n\n거리 곳곳에서는 노점 상인들의 목소리가 희미하게 들려왔다. 어깨에 낡은 망토를 두른 약초 노점의 노부인이 다가와 당신을 힐끗 바라보았다. 그녀의 손에는 신선한 허브 다발이 들려 있었고, 고개를 숙이며 낮은 목소리"
+    },
+    {
+      "turn": 15,
+      "turnNo": 19,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:market_observe",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 좁은 노점 사이를 천천히 누비듯 걸었다. 시장의 이른 저녁 햇살이 굳은 바닥 타일과 헐거워진 나무 천막 사이로 비치며, 바람에 실려 온 생선 내음과 구운 고기 냄새가 코끝을 간질였다. 지나가는 사람들의 발걸음 소리 사이로, 낮은 속삭임과 흥정하는 목소리가 귓가에 스쳤다. 당신은 주위를 면밀히 살피며, 노점 상인들의 표정과 움직임에 집중했다.\n\n어느 약초 노점 앞에서 다정한 보육원 여인이 묵묵히 손님을 맞고 있었다. 그녀의 눈빛은 따스했고, 주위를 살피는 당신에게 가끔씩 눈인사를 건네며 호의를 내비쳤다. 조금 더 걸음을 옮기자"
+    },
+    {
+      "turn": 16,
+      "turnNo": 20,
+      "nodeType": "LOCATION",
+      "input": "ACTION:조심스럽게 잠입한다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "GOLD",
+        "NPC"
+      ],
+      "narrative": "당신의 몸이 그늘진 노점 사이를 조용히 미끄러지듯 움직인다. 발걸음 하나하나를 최대한 가볍게 하여 바닥에 떨어진 부스러기마저 밟지 않도록 주의했다. 주변의 소음과 사람들의 웅성임이 점차 멀어지는 사이, 노점 뒤편의 어두운 골목으로 살포시 몸을 숨겼다. 숨결이 차갑게 느껴지는 골목 안, 둔탁한 나무 문 사이로 희미한 빛이 새어나온다. 이윽고 발밑에서 반짝이는 무언가가 눈에 들어왔다. 당신은 조심스레 구부려 그 자리의 금화를 손에 쥐었다. 손끝에 닿은 금화는 차갑지만 묵직했고, 은밀한 보상처럼 느껴졌다.\n\n그 순간, 가까운 쪽에서 무심"
+    },
+    {
+      "turn": 17,
+      "turnNo": 21,
+      "nodeType": "LOCATION",
+      "input": "ACTION:조심스럽게 잠입한다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "GOLD",
+        "NPC"
+      ],
+      "narrative": "당신은 골목 구석 어둠 속으로 몸을 낮추었다. 차가운 벽돌 벽에 등을 기댄 채, 주변의 소음과 발걸음 소리를 예민하게 듣는다. 바람이 불 때마다 파편들이 조용히 흔들렸고, 먼 거리에서 가끔 들려오는 술꾼의 흐느적거리는 노랫소리가 잔잔하게 귓가를 스쳤다. 당신의 심장은 빠르게 뛰었지만 숨을 조절하며, 조용히 한걸음씩 앞으로 나아갔다.\n\n빛 한 줄기 들어오지 않는 그늘진 통로를 따라 천천히 움직일 때, 당신은 발밑에 무심코 놓인 5골드가 반짝이는 것을 발견했다. 금화는 차갑고 단단했다. 손끝에 닿는 감촉이 은밀한 긴장감을 더했다. 당신"
+    },
+    {
+      "turn": 18,
+      "turnNo": 22,
+      "nodeType": "LOCATION",
+      "input": "ACTION:경비병의 동태를 살핀다",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 시장 거리 한복판에서 경비병의 동태를 유심히 살폈다. 태양이 중천에 올라 강한 빛을 쏟아내는 와중에도, 그들의 움직임은 기민했고 주위를 꼼꼼히 경계하는 모습이었다. 몇몇 경비병은 시장 상인들과 짧게 눈인사를 나누며 순찰 경로를 점검했고, 그 중 권위적인 야간 경비 책임자의 눈빛은 특히 예리했다. 그 인물은 팔짱을 끼고 둔중한 표정으로 주변을 관찰하며, 지나가는 행인들의 미세한 행동까지 놓치지 않으려는 듯했다.\n\n그의 시선이 당신 쪽으로 스쳤지만 곧 다른 곳으로 옮겨갔다. 주변 경비병들은 단체로 움직이지 않고 간격을 벌려 분산"
+    },
+    {
+      "turn": 19,
+      "turnNo": 23,
+      "nodeType": "LOCATION",
+      "input": "ACTION:move_location",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 시장 거리의 혼잡한 골목을 뒤로하고 천천히 발걸음을 돌렸다. 낮게 깔린 상인들의 소란과 멀리서 들려오는 바람에 실린 바다 냄새가 점차 희미해졌다. 길모퉁이마다 어두운 그림자가 고여 있었고, 금세 사라질 듯한 햇빛이 길게 늘어진 틈새 사이로 스며들었다. 당신은 조심스레 주위를 살피며, 이전에 지나쳤던 좁은 골목과 떠들썩한 광장을 지나쳐 허름한 선술집이 자리한 그레이마르 거점으로 향했다.\n\n시장의 사람들은 여전히 분주하게 움직이고 있었지만, 당신의 움직임에 크게 신경 쓰지 않는 듯했다. 입가에 희미한 미소를 띤 약초 노점의 노부"
+    },
+    {
+      "turn": 20,
+      "turnNo": 25,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_harbor",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신이 부두 쪽으로 발걸음을 옮기자, 짙은 소금기와 퀴퀴한 선창 냄새가 코끝을 스쳤다. 부두는 이른 시간임에도 이미 몇몇 선원과 노동자들이 분주하게 움직이고 있었다. 목재로 만든 짙은 갈색의 난간 너머로는 바람에 부딪혀 삐걱거리는 오래된 선박 몇 척이 정박해 있었다. 물살 위로는 갈매기들의 울음소리가 가볍게 울려 퍼졌다.\n\n당신은 부두를 따라 걷다가, 뒤쪽 한켠에 반쯤 물에 잠긴 채 누워 있는 난파 보트를 발견했다. 오래된 보트의 나무 판자가 부스러져 있었고, 거무튀튀한 해조가 여기저기 붙어 있어 오랜 세월 방치된 흔적이 역력했다."
+    }
+  ],
+  "finalState": {
+    "hp": 100,
+    "gold": 63,
+    "npcStates": {
+      "NPC_ROSA": {
+        "funds": 50,
+        "npcId": "NPC_ROSA",
+        "agenda": "고아원 유지, 아이들 보호, 빈민가 안전",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_MIRELA": {
+        "funds": 50,
+        "npcId": "NPC_MIRELA",
+        "agenda": "약초 장사와 단골 관리, 시장 소문 수집",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_RENNICK": {
+        "funds": 50,
+        "npcId": "NPC_RENNICK",
+        "agenda": "정보 거래로 생계 유지, 경비대 연줄 활용",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_MOON_SEA": {
+        "funds": 50,
+        "npcId": "NPC_MOON_SEA",
+        "agenda": "상단 내부 정보 관리, 자기 안전 확보",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_SEO_DOYUN": {
+        "funds": 50,
+        "npcId": "NPC_SEO_DOYUN",
+        "agenda": "상단 장부 은폐, 개인 이익 추구",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -2,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -2,
+        "encounterCount": 1
+      },
+      "NPC_YOON_HAMIN": {
+        "funds": 50,
+        "npcId": "NPC_YOON_HAMIN",
+        "agenda": "노동자 권리 보호, 부두 이권 사수",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 22,
+          "respect": 8,
+          "suspicion": 2.5,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 2.5,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 22,
+        "encounterCount": 1
+      },
+      "NPC_INFO_BROKER": {
+        "funds": 50,
+        "npcId": "NPC_INFO_BROKER",
+        "agenda": "정보 거래로 이익 극대화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BAEK_SEUNGHO": {
+        "funds": 50,
+        "npcId": "NPC_BAEK_SEUNGHO",
+        "agenda": "밀수 루트 은폐, 생존",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -5,
+        "encounterCount": 0
+      },
+      "NPC_CAPTAIN_BREN": {
+        "funds": 50,
+        "npcId": "NPC_CAPTAIN_BREN",
+        "agenda": "치안 유지, 내부 부패 조사에 관심",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_KANG_CHAERIN": {
+        "funds": 50,
+        "npcId": "NPC_KANG_CHAERIN",
+        "agenda": "도시 치안 유지, 권력 기반 강화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -10,
+        "encounterCount": 0
+      },
+      "NPC_GUARD_CAPTAIN": {
+        "funds": 50,
+        "npcId": "NPC_GUARD_CAPTAIN",
+        "agenda": "내부 부패 척결, 수비대 기강 확립",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      }
+    },
+    "worldState": {
+      "hubHeat": 12,
+      "activeIncidents": [
+        {
+          "kind": "CRIMINAL",
+          "stage": 1,
+          "control": 52,
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 0,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 44,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 3,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 항만 밀수 조직"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 5,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +15",
+              "controlDelta": 15
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 6,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +15",
+              "controlDelta": 15
+            },
+            {
+              "clock": 7,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 7,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +15",
+              "controlDelta": 15
+            },
+            {
+              "clock": 8,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 8,
+              "action": "STAGE_ADVANCE",
+              "detail": "PARTIAL: control +7",
+              "controlDelta": 7
+            },
+            {
+              "clock": 9,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +5",
+              "pressureDelta": 5
+            },
+            {
+              "clock": 10,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +5",
+              "pressureDelta": 5
+            },
+            {
+              "clock": 11,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +5",
+              "pressureDelta": 5
+            },
+            {
+              "clock": 12,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +5",
+              "pressureDelta": 5
+            }
+          ],
+          "incidentId": "INC_SMUGGLING_RING",
+          "deadlineClock": 48,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 33,
+          "spawnedAtClock": 0
+        },
+        {
+          "kind": "CRIMINAL",
+          "stage": 1,
+          "control": 54,
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 24,
+          "resolved": false,
+          "security": 23,
+          "suspicion": 15,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 시장 연쇄 절도"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 1,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 2,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 3,
+              "action": "CONTROL_CHANGE",
+              "detail": "FAIL: control -3",
+              "controlDelta": -3
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 4,
+              "action": "CONTROL_CHANGE",
+              "detail": "FAIL: control -3",
+              "controlDelta": -3
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 7,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 8,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 9,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 9,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 10,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 10,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 11,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 11,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 12,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 12,
+              "action": "STAGE_ADVANCE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            }
+          ],
+          "incidentId": "INC_MARKET_THEFT",
+          "deadlineClock": 36,
+          "mutationFlags": [],
+          "rivalProgress": 10,
+          "playerProgress": 60,
+          "spawnedAtClock": 0
+        },
+        {
+          "kind": "ECONOMIC",
+          "stage": 0,
+          "control": 0,
+          "vectors": [
+            {
+              "vector": "ECONOMIC",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "RIVAL_PROGRESS",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 0,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 0,
+          "historyLog": [
+            {
+              "clock": 12,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 상인 길드 내전"
+            }
+          ],
+          "incidentId": "INC_MERCHANT_WAR",
+          "deadlineClock": 60,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 0,
+          "spawnedAtClock": 12
+        }
+      ],
+      "day": 2,
+      "globalClock": 12
+    },
+    "memory": {
+      "theme": [
+        {
+          "key": "location",
+          "tags": [
+            "LOCATION",
+            "THEME"
+          ],
+          "value": "그레이마르 항만 — 왕국 남서부 최대 무역항. 세 세력(항만 노동 길드, 해관청, 밀수 조직)이 이권을 다툰다.",
+          "importance": 1
+        },
+        {
+          "key": "quest",
+          "tags": [
+            "QUEST",
+            "THEME"
+          ],
+          "value": "사라진 공물 장부 — 길드가 해관청에 바친 공물 내역이 담긴 장부가 도난당했다. 장부에는 뒷거래 기록도 포함되어 있어, 공개되면 길드 간부 다수가 처형당할 수 있다.",
+          "importance": 1
+        },
+        {
+          "key": "npc_client",
+          "tags": [
+            "NPC",
+            "THEME"
+          ],
+          "value": "의뢰인 로넨 — 항만 노동 길드의 말단 서기관. 장부 관리 책임자였으나 도난 사실을 상부에 보고하지 못해 쫓기는 처지.",
+          "importance": 0.9
+        },
+        {
+          "key": "hub_system",
+          "tags": [
+            "HUB",
+            "THEME"
+          ],
+          "value": "HUB 거점 — 그레이마르 항만의 허름한 선술집. 이곳에서 시장/경비대/항만/빈민가로 이동하며 임무를 수행한다.",
+          "importance": 0.8
+        },
+        {
+          "key": "protagonist",
+          "tags": [
+            "PROTAGONIST",
+            "THEME"
+          ],
+          "value": "이름 없는 용병 — 전직 왕국 수비대 병사 — 남부 수비대에서 복무했으나 상관의 민간인 약탈 명령에 항명하여 탈영했다. 군에서 익힌 검술과 전투 경험이 있으나 수배 중이라 신분을 숨기고 있다. 그레이마르에는 일거리를 찾아 며칠 전 도착했다.",
+          "importance": 0.8
+        }
+      ],
+      "storySummary": "[시장 거리 방문] 절도(성공), 조사(성공), 관찰(실패). 에드릭 베일 만남\n[항만 부두 방문] 설득(성공), 관찰(성공), 대화(성공). 하를런 보스 만남\n[시장 거리 방문] 관찰(성공), 잠입(성공), 잠입(성공)",
+      "structuredMemory": {
+        "version": 2,
+        "visitLog": [
+          {
+            "day": 1,
+            "phase": "DAY",
+            "actions": [
+              {
+                "brief": "시장 한가운데서 수레가 뒤집어지며 사과가 바닥에 쏟아진다. 상인이 절규하",
+                "eventId": "EVT_MARKET_ATM_3",
+                "outcome": "SUCCESS",
+                "rawInput": "물건을 훔친다",
+                "actionType": "STEAL",
+                "summaryShort": "플레이어가 \"물건을 훔친다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "시장 한가운데서 수레가 뒤집어지며 사과가 바닥에 쏟아진다. 상인이 절규하",
+                "eventId": "EVT_MARKET_ATM_3",
+                "outcome": "SUCCESS",
+                "rawInput": "수상한 곳을 조사한다",
+                "actionType": "INVESTIGATE",
+                "summaryShort": "플레이어가 \"수상한 곳을 조사한다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "서도윤이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 ",
+                "eventId": "EVT_MARKET_INT_1",
+                "outcome": "FAIL",
+                "rawInput": "소동을 지켜본다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_SEO_DOYUN",
+                "summaryShort": "플레이어가 \"소동을 지켜본다\"를 시도하여 실패했다."
+              },
+              {
+                "brief": "서도윤이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 ",
+                "eventId": "EVT_MARKET_INT_1",
+                "outcome": "FAIL",
+                "rawInput": "조심스럽게 잠입한다",
+                "actionType": "SNEAK",
+                "relatedNpcId": "NPC_SEO_DOYUN",
+                "summaryShort": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 실패했다."
+              }
+            ],
+            "outcomes": {
+              "fail": 2,
+              "partial": 0,
+              "success": 2
+            },
+            "goldDelta": 8,
+            "turnRange": [
+              4,
+              8
+            ],
+            "importance": 0.5,
+            "locationId": "LOC_MARKET",
+            "summaryText": "절도(성공), 조사(성공), 관찰(실패). 에드릭 베일 만남",
+            "locationName": "시장 거리",
+            "npcsEncountered": [
+              "NPC_SEO_DOYUN"
+            ],
+            "reputationChanges": {
+              "MERCHANT_CONSORTIUM": -4
+            }
+          },
+          {
+            "day": 1,
+            "phase": "NIGHT",
+            "actions": [
+              {
+                "brief": "하를런 보스이 하역 작업을 감독하며 인부들에게 지시를 내리고 있다. 커다",
+                "eventId": "EVT_HARBOR_INT_1",
+                "outcome": "SUCCESS",
+                "rawInput": "선원들에게 말을 건다",
+                "actionType": "PERSUADE",
+                "relatedNpcId": "NPC_YOON_HAMIN",
+                "summaryShort": "플레이어가 \"선원들에게 말을 건다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "하를런 보스이 하역 작업을 감독하며 인부들에게 지시를 내리고 있다. 커다",
+                "eventId": "EVT_HARBOR_INT_1",
+                "outcome": "SUCCESS",
+                "rawInput": "골목길 벽에 기대어 주변을 관찰한다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_YOON_HAMIN",
+                "summaryShort": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "연기 냄새가 난다 인부이(가) 몸싸움이 벌어지고 있다 도움이 될 만한 사",
+                "eventId": "PROC_14",
+                "outcome": "SUCCESS",
+                "rawInput": "하를런 보스에게 다가가 인사한다",
+                "actionType": "TALK",
+                "summaryShort": "플레이어가 대화를 했다."
+              },
+              {
+                "brief": "부두 끝에 반쯤 침수된 난파 보트가 걸려 있다. 배는 버려진 지 오래되었",
+                "eventId": "EVT_HARBOR_OPP_WRECK",
+                "outcome": "PARTIAL",
+                "rawInput": "골목길 벽에 기대어 주변을 관찰한다",
+                "actionType": "OBSERVE",
+                "summaryShort": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 부분 성공했다."
+              }
+            ],
+            "outcomes": {
+              "fail": 0,
+              "partial": 1,
+              "success": 3
+            },
+            "goldDelta": 1,
+            "turnRange": [
+              12,
+              16
+            ],
+            "importance": 0.5,
+            "locationId": "LOC_HARBOR",
+            "summaryText": "설득(성공), 관찰(성공), 대화(성공). 하를런 보스 만남",
+            "locationName": "항만 부두",
+            "npcsEncountered": [
+              "NPC_YOON_HAMIN"
+            ],
+            "reputationChanges": {
+              "LABOR_GUILD": 6
+            }
+          },
+          {
+            "day": 2,
+            "phase": "DAWN",
+            "actions": [
+              {
+                "brief": "시장 광장 분수대 앞에서 거리 악사가 류트를 켜며 풍자 노래를 부르고 있",
+                "eventId": "EVT_MARKET_ENC_BUSKER",
+                "outcome": "SUCCESS",
+                "rawInput": "노점 사이를 거닐며 살핀다",
+                "actionType": "OBSERVE",
+                "summaryShort": "플레이어가 \"노점 사이를 거닐며 살핀다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "시장 광장 분수대 앞에서 거리 악사가 류트를 켜며 풍자 노래를 부르고 있",
+                "eventId": "EVT_MARKET_ENC_BUSKER",
+                "outcome": "SUCCESS",
+                "rawInput": "조심스럽게 잠입한다",
+                "actionType": "SNEAK",
+                "summaryShort": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리",
+                "eventId": "EVT_MARKET_ENC_DISPUTE",
+                "outcome": "SUCCESS",
+                "rawInput": "조심스럽게 잠입한다",
+                "actionType": "SNEAK",
+                "summaryShort": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리",
+                "eventId": "EVT_MARKET_ENC_DISPUTE",
+                "outcome": "SUCCESS",
+                "rawInput": "경비병의 동태를 살핀다",
+                "actionType": "OBSERVE",
+                "summaryShort": "플레이어가 \"경비병의 동태를 살핀다\"를 시도하여 성공했다."
+              }
+            ],
+            "outcomes": {
+              "fail": 0,
+              "partial": 0,
+              "success": 4
+            },
+            "goldDelta": 9,
+            "turnRange": [
+              20,
+              24
+            ],
+            "importance": 0.5,
+            "locationId": "LOC_MARKET",
+            "summaryText": "관찰(성공), 잠입(성공), 잠입(성공)",
+            "locationName": "시장 거리",
+            "npcsEncountered": [],
+            "reputationChanges": {}
+          }
+        ],
+        "milestones": [
+          {
+            "day": 1,
+            "type": "FIRST_VISIT",
+            "detail": "시장 거리 첫 방문",
+            "turnNo": 8,
+            "importance": 0.4
+          },
+          {
+            "day": 1,
+            "type": "REPUTATION_SHIFT",
+            "detail": "상인 길드 평판 -4 (총 -4)",
+            "turnNo": 8,
+            "importance": 0.5
+          },
+          {
+            "day": 1,
+            "type": "FIRST_VISIT",
+            "detail": "항만 부두 첫 방문",
+            "turnNo": 16,
+            "importance": 0.4
+          },
+          {
+            "day": 1,
+            "type": "REPUTATION_SHIFT",
+            "detail": "노동 길드 평판 +6 (총 6)",
+            "turnNo": 16,
+            "importance": 0.5
+          }
+        ],
+        "npcJournal": [
+          {
+            "marks": [],
+            "npcId": "NPC_SEO_DOYUN",
+            "npcName": "에드릭 베일",
+            "summaryText": "에드릭 베일: 중립(-2) 태도CAUTIOUS. 최근 잠입(실패)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "FAIL",
+                "snippet": "플레이어가 \"소동을 지켜본다\"를 시도하여 실패했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "FAIL",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 실패했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -2,
+              "posture": "CAUTIOUS",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_ROSA",
+            "npcName": "로자",
+            "summaryText": "로자: 중립(5) 태도FRIENDLY. 최근 잠입(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"노점 사이를 거닐며 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_MIRELA",
+            "npcName": "미렐라",
+            "summaryText": "미렐라: 중립(10) 태도FRIENDLY. 최근 잠입(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"노점 사이를 거닐며 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_MOON_SEA",
+            "npcName": "라이라 케스텔",
+            "summaryText": "라이라 케스텔: 중립(5) 태도CAUTIOUS. 최근 잠입(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"노점 사이를 거닐며 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "CAUTIOUS",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_YOON_HAMIN",
+            "npcName": "하를런 보스",
+            "summaryText": "하를런 보스: 신뢰22 태도FRIENDLY. 최근 잠입(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"노점 사이를 거닐며 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 22,
+              "posture": "FRIENDLY",
+              "respect": 8,
+              "suspicion": 2.5,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_BAEK_SEUNGHO",
+            "npcName": "토브렌 하위크",
+            "summaryText": "토브렌 하위크: 중립(-5) 태도CAUTIOUS. 최근 잠입(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"노점 사이를 거닐며 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -5,
+              "posture": "CAUTIOUS",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_KANG_CHAERIN",
+            "npcName": "마이렐 단 경",
+            "summaryText": "마이렐 단 경: 중립(-10) 태도CALCULATING. 최근 잠입(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"노점 사이를 거닐며 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -10,
+              "posture": "CALCULATING",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          }
+        ],
+        "llmExtracted": [
+          {
+            "text": "항만 밀수 조직 — 관찰",
+            "turnNo": 16,
+            "category": "PLOT_HINT",
+            "importance": 0.8
+          },
+          {
+            "text": "시장 연쇄 절도 — 관찰",
+            "turnNo": 8,
+            "category": "PLOT_HINT",
+            "importance": 0.8
+          },
+          {
+            "text": "하를런 보스는 동료애가 강하지만 경계심도 많아 신중하게 정보를 준다",
+            "turnNo": 27,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "부두 한쪽 상자에 기름 얼룩과 금속성 빛깔이 어렴풋이 비친다",
+            "turnNo": 27,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "권위적인 야간 경비 책임자가 시장 경계 태세가 강화되었음을 알림",
+            "turnNo": 23,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "경비병들의 삼엄한 경계와 시장 내 긴장감이 고조됨",
+            "turnNo": 23,
+            "category": "ATMOSPHERE",
+            "importance": 0.7
+          },
+          {
+            "text": "시장 거리 골목 벽에 낡은 깃발이 흔들리며 숨겨진 표시가 있을 가능성",
+            "turnNo": 23,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "약초 노점의 노부인이 골목이 위험해졌으니 조심하라 경고함",
+            "turnNo": 22,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "골목 어둠 속에 5골드가 떨어져 있었고 금화는 단단하고 차가웠다",
+            "turnNo": 22,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "입이 가벼운 술꾼이 순간적으로 플레이어를 주시했으나 곧 관심을 거둠",
+            "turnNo": 22,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "약초 노점의 노부인이 골목에서 수상한 움직임을 조심스레 경고함",
+            "turnNo": 21,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "골목 어둠 속에서 금화가 반짝이며 은밀한 방문 흔적을 남김",
+            "turnNo": 21,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "조용한 문서 실무자가 지나치게 경계심을 드러내며 서성거림",
+            "turnNo": 21,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "입이 가벼운 술꾼이 시장의 긴장과 경계심을 경고함",
+            "turnNo": 20,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "풍자 노래가 시장 사람들의 불만과 긴장감을 은유적으로 전달함",
+            "turnNo": 20,
+            "category": "ATMOSPHERE",
+            "importance": 0.7
+          },
+          {
+            "text": "시장 골목 끝에 반짝이는 금화가 급작스런 방문 흔적으로 남음",
+            "turnNo": 20,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "약초 노점의 노부인은 촛불과 두루마리를 들고 수상한 거래를 목격함",
+            "turnNo": 19,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "날카로운 눈매의 회계사는 조심스러운 태도로 장부와 쪽지를 다룸",
+            "turnNo": 19,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "시장 거리는 밤이면 도박판과 노점으로 활기차지만 긴장도 감돈다",
+            "turnNo": 19,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "약초 노점의 노부인이 회계사와 연관된 은밀한 거래를 목격했다고 알림",
+            "turnNo": 19,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          }
+        ],
+        "npcKnowledge": {
+          "NPC_RONNEN": [
+            {
+              "text": "로넨이 당신에게 사라진 공물 장부를 찾는 의뢰를 맡겼음",
+              "factId": "nk_llm_1_NPC_RONNEN",
+              "source": "WITNESSED",
+              "turnNo": 1,
+              "importance": 0.7,
+              "locationId": ""
+            }
+          ],
+          "NPC_YOON_HAMIN": [
+            {
+              "text": "PERSUADE → SUCCESS: 선원들에게 말을 건다",
+              "factId": "nk_12_NPC_YOON_HAMIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 12,
+              "importance": 0.8,
+              "locationId": "LOC_HARBOR"
+            },
+            {
+              "text": "OBSERVE → SUCCESS: 골목길 벽에 기대어 주변을 관찰한다",
+              "factId": "nk_13_NPC_YOON_HAMIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 13,
+              "importance": 0.8,
+              "locationId": "LOC_HARBOR"
+            }
+          ],
+          "NPC_HARLAN_BOSS": [
+            {
+              "text": "하를런 보스가 부두에서 밤마다 수상한 움직임이 증가했다고 경고함",
+              "factId": "nk_llm_27_NPC_HARLAN_BOSS",
+              "source": "WITNESSED",
+              "turnNo": 27,
+              "importance": 0.7,
+              "locationId": ""
+            }
+          ]
+        },
+        "worldSnapshot": {
+          "day": 2,
+          "hubHeat": 17,
+          "hubSafety": "SAFE",
+          "timePhase": "DAWN",
+          "reputation": {
+            "CITY_GUARD": 0,
+            "LABOR_GUILD": 6,
+            "MERCHANT_CONSORTIUM": -4
+          },
+          "arcCommitment": 0,
+          "updatedAtTurnNo": 24,
+          "activeIncidentCount": 3,
+          "resolvedIncidentCount": 0
+        },
+        "lastExitSummary": {
+          "turnCount": 4,
+          "keyActions": [
+            "잠입(성공): 시장 광장 분수대 앞에서 거리 악사가 류트를 켜며 풍자 노래를 부르고 있",
+            "잠입(성공): 두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리",
+            "관찰(성공): 두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리"
+          ],
+          "locationId": "LOC_MARKET",
+          "keyDialogues": [],
+          "locationName": "시장 거리",
+          "unresolvedLeads": []
+        },
+        "incidentChronicle": [
+          {
+            "kind": "CRIMINAL",
+            "title": "시장 연쇄 절도",
+            "resolved": false,
+            "incidentId": "INC_MARKET_THEFT",
+            "playerInvolvements": [
+              {
+                "turnNo": 8,
+                "outcome": "FAIL",
+                "snippet": "서도윤이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 ",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "controlDelta": 0,
+                "pressureDelta": 8
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "controlDelta": 0,
+                "pressureDelta": 8
+              }
+            ]
+          },
+          {
+            "kind": "CRIMINAL",
+            "title": "항만 밀수 조직",
+            "resolved": false,
+            "incidentId": "INC_SMUGGLING_RING",
+            "playerInvolvements": [
+              {
+                "turnNo": 16,
+                "outcome": "PARTIAL",
+                "snippet": "부두 끝에 반쯤 침수된 난파 보트가 걸려 있다. 배는 버려진 지 오래되었",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "controlDelta": 0,
+                "pressureDelta": 12
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "verification": {
+    "V1_incidents": true,
+    "V2_encounter": true,
+    "V3_posture": true,
+    "V4_emotion": true,
+    "V5_memory": true,
+    "V6_resolve": true
+  }
+}
