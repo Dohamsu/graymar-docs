@@ -1,0 +1,184 @@
+{
+  "turns": [
+    {
+      "turn": 0,
+      "nodeType": "HUB",
+      "turnNo": 0,
+      "response": {
+        "narrative": "짙은 안개가 항만을 감싸는 밤이었다. 선술집 '잠긴 닻'의 구석 자리에서 당신은 싸구려 에일을 홀짝이고 있었다. 기름때 묻은 등잔이 흔들릴 때마다 주변의 그림자가 일렁였다.\n\n\"실례하겠소. 항만 노동 길드 서기관 로넨이라 하오.\" 초라한 행색의 사내가 테이블 건너편에 조심스럽게 앉았다. 끊임없이 문 쪽을 훔쳐보는 눈동자가 불안을 감추지 못했다.\n\n당신은 잔을 내려놓고 사내를 살폈다. 길드 서기라기엔 너무 핏기 없는 얼굴이었다.\n\n\"당신이 군적에서 이름을 지웠다는 소문을 들었소. 신분을 숨기고 있는 자라면… 오히려 입단속이 될 것이오.\" 로넨이 목소리를 한층 낮췄다. \"장부가 사라졌소. 이틀 전 밤에 사무실을 털렸는데… 공물 내역만이 아니오. 뒷거래 기록이 전부 들어 있소.\"\n\n당신의 눈이 좁아졌다.\n\n\"길드 간부들이 해관청에 흘린 뇌물 목록이오.\" 로넨의 손이 잔 위에서 미세하게 떨렸다. \"그 장부를 찾아주시오. 보수는… 넉넉히 치르겠소.\"",
+        "nodeType": "HUB",
+        "choices": [
+          {
+            "id": "accept_quest",
+            "label": "의뢰를 받아들인다",
+            "hint": "로넨의 부탁을 수락하고 장부를 찾기로 한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {}
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": "enter_quest_0",
+            "kind": "QUEST",
+            "text": "[의뢰] 사라진 공물 장부 — 도시의 네 구역을 탐색하여 단서를 모으고 장부의 행방을 추적하라.",
+            "tags": [
+              "QUEST",
+              "QUEST_START"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "turn": 1,
+      "nodeType": "HUB",
+      "turnNo": 0,
+      "input": {
+        "type": "ACTION",
+        "text": "market로 이동한다"
+      }
+    },
+    {
+      "turn": 2,
+      "nodeType": "HUB",
+      "turnNo": 0,
+      "input": {
+        "type": "ACTION",
+        "text": "market로 이동한다"
+      }
+    },
+    {
+      "turn": 3,
+      "nodeType": "HUB",
+      "turnNo": 0,
+      "input": {
+        "type": "ACTION",
+        "text": "market로 이동한다"
+      }
+    },
+    {
+      "turn": 4,
+      "nodeType": "HUB",
+      "turnNo": 0,
+      "input": {
+        "type": "ACTION",
+        "text": "market로 이동한다"
+      }
+    },
+    {
+      "turn": 5,
+      "nodeType": "HUB",
+      "turnNo": 0,
+      "input": {
+        "type": "ACTION",
+        "text": "market로 이동한다"
+      }
+    },
+    {
+      "turn": 6,
+      "nodeType": "UNKNOWN",
+      "turnNo": 6,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 7,
+      "nodeType": "UNKNOWN",
+      "turnNo": 7,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 8,
+      "nodeType": "UNKNOWN",
+      "turnNo": 8,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 9,
+      "nodeType": "UNKNOWN",
+      "turnNo": 9,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 10,
+      "nodeType": "UNKNOWN",
+      "turnNo": 10,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 11,
+      "nodeType": "UNKNOWN",
+      "turnNo": 11,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 12,
+      "nodeType": "UNKNOWN",
+      "turnNo": 12,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 13,
+      "nodeType": "UNKNOWN",
+      "turnNo": 13,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 14,
+      "nodeType": "UNKNOWN",
+      "turnNo": 14,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 15,
+      "nodeType": "UNKNOWN",
+      "turnNo": 15,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 16,
+      "nodeType": "UNKNOWN",
+      "turnNo": 16,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 17,
+      "nodeType": "UNKNOWN",
+      "turnNo": 17,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 18,
+      "nodeType": "UNKNOWN",
+      "turnNo": 18,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 19,
+      "nodeType": "UNKNOWN",
+      "turnNo": 19,
+      "error": "Unknown: UNKNOWN"
+    },
+    {
+      "turn": 20,
+      "nodeType": "UNKNOWN",
+      "turnNo": 20,
+      "error": "Unknown: UNKNOWN"
+    }
+  ],
+  "meta": {
+    "runId": "e9b5e880-19af-4d86-8f3d-8eeca6b6d725",
+    "preset": "DESERTER",
+    "gender": "male",
+    "startTime": "2026-03-18 12:59:10",
+    "endTime": "2026-03-18 12:59:10",
+    "totalTurns": 21
+  },
+  "runState": null,
+  "finalState": {
+    "code": "HTTP_ERROR",
+    "message": "ThrottlerException: Too Many Requests",
+    "details": null
+  }
+}

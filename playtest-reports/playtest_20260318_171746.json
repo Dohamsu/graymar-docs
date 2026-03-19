@@ -1,0 +1,334 @@
+{
+  "turns": [
+    {
+      "turn": 1,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 2,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 3,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 4,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 5,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 6,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 7,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 8,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 9,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 10,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 11,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 12,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 13,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 14,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 15,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 16,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 17,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 18,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 19,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    },
+    {
+      "turn": 20,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": {
+        "type": "ACTION",
+        "text": "market으로 이동한다"
+      },
+      "events": [],
+      "narrative": "",
+      "choices": [],
+      "resolveOutcome": null,
+      "nodeOutcome": null,
+      "llmStatus": null,
+      "status": "SUBMIT_FAILED"
+    }
+  ],
+  "runId": null,
+  "preset": "DESERTER",
+  "gender": "male",
+  "finalState": {
+    "code": "HTTP_ERROR",
+    "message": "ThrottlerException: Too Many Requests",
+    "details": null
+  },
+  "memory": {},
+  "runState": {}
+}
