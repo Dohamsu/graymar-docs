@@ -1,0 +1,13 @@
+{
+  "scenarioId": "graymar_v1",
+  "name": "그레이마르 항구",
+  "description": "부패한 항구 도시에서 시작하는 첫 번째 임무",
+  "order": 1,
+  "prerequisites": [],
+  "carryOverRules": {
+    "goldRate": 1.0,
+    "itemsCarry": true,
+    "reputationDecay": 0.5,
+    "statBonusPerScenario": { "MaxHP": 10, "ATK": 1, "DEF": 1 }
+  }
+}
