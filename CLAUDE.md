@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 curl -s -X POST -H 'Content-type: application/json' \
   --data "{\"text\":\"✅ [작업 요약 메시지]\"}" \
-  "$(grep SLACK_WEBHOOK_URL /Users/dohamsu/Workspace/mdfile/.env | cut -d= -f2)"
+  "$(grep SLACK_WEBHOOK_URL /Users/dohamsu/Workspace/graymar/.env | cut -d= -f2)"
 ```
 
 ### 중간 진행 알림 (10분 이상 소요 작업)
@@ -19,7 +19,7 @@ curl -s -X POST -H 'Content-type: application/json' \
 ```bash
 curl -s -X POST -H 'Content-type: application/json' \
   --data "{\"text\":\"🔄 [진행 상황 메시지]\"}" \
-  "$(grep SLACK_WEBHOOK_URL /Users/dohamsu/Workspace/mdfile/.env | cut -d= -f2)"
+  "$(grep SLACK_WEBHOOK_URL /Users/dohamsu/Workspace/graymar/.env | cut -d= -f2)"
 ```
 
 - 웹훅 URL: 프로젝트 루트 `.env` 파일의 `SLACK_WEBHOOK_URL`
