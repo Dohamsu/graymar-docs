@@ -12,6 +12,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 10,
+    "tier": "CORE",
     "agenda": "노동자 권리 보호, 부두 이권 사수",
     "personality": {
       "core": "거친 외모 아래 동료를 지키려는 의리꾼. 힘이 곧 정의라 믿지만, 폭력에 기대는 자신을 부끄러워한다.",
@@ -44,6 +45,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
+    "tier": "CORE",
     "agenda": "상단 장부 은폐, 개인 이익 추구",
     "personality": {
       "core": "숫자 뒤에 숨는 소심한 지식인. 상단의 비리를 알지만 고발할 용기가 없어 공범이 되어간다.",
@@ -95,6 +97,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": -10,
+    "tier": "CORE",
     "agenda": "도시 치안 유지, 권력 기반 강화",
     "personality": {
       "core": "귀족 가문의 자존심과 군인의 실용주의가 공존하는 인물. 부패했지만 나름의 질서를 지키려 한다.",
@@ -135,6 +138,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": -5,
+    "tier": "SUB",
     "agenda": "밀수 루트 은폐, 생존",
     "personality": {
       "core": "생존 본능으로 움직이는 소시민. 밀수에 가담했지만 주도자가 아니라 협박당한 하수인이다.",
@@ -167,6 +171,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 5,
+    "tier": "SUB",
     "agenda": "상단 내부 정보 관리, 자기 안전 확보",
     "personality": {
       "core": "관찰력이 뛰어난 내향적 실무자. 모든 것을 기록하고 기억하지만, 함부로 입을 열지 않는다.",
@@ -181,7 +186,7 @@
       "default": {
         "DAWN": { "locationId": "LOC_MARKET", "activity": "상단 문서실에서 전날 서류를 정리하고 암호 메모를 해독한다", "interactable": false },
         "DAY": { "locationId": "LOC_MARKET", "activity": "상단 업무를 처리하며 거래 기록을 꼼꼼히 남긴다", "interactable": true },
-        "DUSK": { "locationId": "LOC_MARKET", "activity": "문서실을 잠그고 시장 골목에서 잠시 바람을 쐰다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "문서실을 잠그고 시장 골목에서 잠시 바람을 쐔다", "interactable": true },
         "NIGHT": { "locationId": "LOC_TAVERN", "activity": "선술집 조용한 자리에서 수첩에 하루를 정리한다", "interactable": true }
       }
     }
@@ -199,6 +204,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 10,
+    "tier": "SUB",
     "agenda": "약초 장사와 단골 관리, 시장 소문 수집",
     "personality": {
       "core": "시장의 살아있는 정보망. 친근한 할머니처럼 보이지만 날카로운 관찰력으로 모든 것을 꿰뚫는다. 상단 소속이지만 독립적으로 움직인다.",
@@ -231,6 +237,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
+    "tier": "SUB",
     "agenda": "인맥 유지, 생존을 위한 줄타기",
     "personality": {
       "core": "겉으로는 술에 절은 허풍쟁이, 실은 누구와든 10분 안에 친해지는 사교의 달인. 정확한 정보보다 사람과 사람을 잇는 것이 진짜 가치.",
@@ -263,6 +270,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
+    "tier": "SUB",
     "agenda": "치안 유지, 내부 부패 조사에 관심",
     "personality": {
       "core": "불의를 참지 못하는 청년 장교. 신중함보다 행동이 앞서고, 참다가 한계에 도달하면 폭발한다. 혼자라도 싸울 각오가 있다.",
@@ -295,6 +303,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 5,
+    "tier": "SUB",
     "agenda": "고아원 유지, 아이들 보호, 빈민가 안전",
     "personality": {
       "core": "부드러운 겉모습 안에 강철 같은 의지. 아이들을 위해서라면 어떤 세력과도 거래하고, 필요하면 거짓말도 한다.",
@@ -327,6 +336,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": 0,
+    "tier": "SUB",
     "agenda": "정보 거래로 이익 극대화",
     "personality": {
       "core": "모든 것을 거래 가치로 환산하는 직업적 냉소주의자. 하지만 자신만의 선은 있다 — 아이와 무고한 자는 건드리지 않는다.",
@@ -359,6 +369,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
+    "tier": "SUB",
     "agenda": "내부 부패 척결, 수비대 기강 확립",
     "personality": {
       "core": "체스 두듯 전략적으로 움직이는 노련한 지휘관. 인내를 최고의 무기로 삼지만, 그 인내가 부하들의 신뢰를 깎아먹고 있다는 걸 안다.",
@@ -391,6 +402,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": -5,
+    "tier": "CORE",
     "agenda": "도시 의회에서의 영향력 확대, 비밀 결사와의 유대 강화",
     "personality": {
       "core": "우아한 미소 뒤에 차가운 계산기를 숨긴 권력자. 공짜로 주는 법이 없고, 대가 없는 호의는 가장 비싼 빚이라 믿는다. 그러나 자신이 '질서'라 부르는 것에 진심으로 헌신한다.",
@@ -427,6 +439,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 15,
+    "tier": "SUB",
     "agenda": "선술집의 중립 지대 유지, 단골 보호, 평화로운 장사",
     "personality": {
       "core": "따뜻한 웃음 뒤에 날카로운 귀를 가진 사나이. 30년간 술집을 운영하며 비밀을 지키는 법을 체득했다. 누구의 편도 들지 않지만, 술집에서 피가 흐르는 건 절대 용납하지 않는다.",
@@ -463,6 +476,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
+    "tier": "SUB",
     "agenda": "창고구 이권 유지, 밀수품 중개료 확보, 자기 안전",
     "personality": {
       "core": "감정보다 효율을 우선하는 실용주의자. 돈이면 대부분 협조하지만, 자신이 위험해지는 거래는 거부한다. 냉정해 보이지만 부두 노동자들의 처우에는 나름의 선이 있다.",
@@ -499,6 +513,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": 0,
+    "tier": "SUB",
     "agenda": "사교계 영향력 유지, 귀족들의 약점 수집, 남편의 죽음에 얽힌 진실 추적",
     "personality": {
       "core": "우아한 독설의 달인이자 약점 수집가. 사교 모임의 꽃으로 보이지만, 그 미소 아래에서 모든 대화를 무기로 가공한다. 남편을 잃은 후 아무도 믿지 않기로 했지만, 진실을 찾는 데 목숨을 건다.",
@@ -553,6 +568,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "HOSTILE",
     "initialTrust": -10,
+    "tier": "CORE",
     "agenda": "빈민가 지하 조직 유지, 정보 독점, 경비대의 접근 차단",
     "personality": {
       "core": "편집증적 경계심으로 살아남은 빈민가의 왕. 모든 것에 대가를 요구하고, 공짜로 얻은 것은 반드시 덫이라 믿는다. 하지만 빈민가 주민을 외부 세력으로부터 지키는 것만큼은 진심이다.",
@@ -589,6 +605,7 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 5,
+    "tier": "SUB",
     "agenda": "정의로운 경비병이 되기, 상관들의 부패를 이해하고 대처하기",
     "personality": {
       "core": "경비대에 입대한 지 2년 된 젊은이. 시민을 지키겠다는 순수한 이상으로 입대했지만, 상관들의 부패를 목격하며 혼란에 빠져있다. 아직 세상에 대한 믿음을 버리지 못했다.",
@@ -609,6 +626,782 @@
         "DAY": { "locationId": "LOC_GUARD", "activity": "경비대 지구를 순찰하며 시민들의 민원을 처리한다", "interactable": true },
         "DUSK": { "locationId": "LOC_GUARD", "activity": "교대 보고서를 작성하고 야간 근무 준비를 한다", "interactable": true },
         "NIGHT": { "locationId": "LOC_MARKET", "activity": "시장 거리 야간 순찰을 돌며 수상한 움직임을 감시한다", "interactable": true }
+      }
+    }
+  },
+
+  {
+    "npcId": "NPC_BG_FISHMONGER",
+    "name": "거너",
+    "unknownAlias": "목소리 큰 생선상인",
+    "role": "시장 거리 생선 노점상. 목청 좋은 호객꾼으로 시장의 활기를 대표한다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "새벽부터 목청을 높이는 타고난 장사꾼. 시장 사람이라면 누구와든 안면이 있고, 부두에서 들어오는 소식에 밝다.",
+      "traits": ["목소리가 시장 끝까지 울린다"],
+      "speechStyle": "큰 소리의 반말. 호탕하고 붙임성 좋다. 생선 이름을 섞어 비유한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["생선을 들어 보이며 말을 건다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_HARBOR", "activity": "부두에서 새벽 어획물을 직접 받아온다", "interactable": true },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "시장 노점에서 큰 소리로 생선을 팔며 호객한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "남은 생선을 할인하며 마감 장사를 한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "선술집에서 하루 장사를 마치고 맥주 한잔 한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_FRUIT_VENDOR",
+    "name": "마리엘",
+    "unknownAlias": "웃는 얼굴의 과일장수",
+    "role": "시장 거리 과일 노점상. 미소 뒤에 날카로운 흥정 실력을 숨기고 있다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "웃는 얼굴로 손님을 끌지만, 가격 흥정에서는 한 푼도 양보하지 않는 영리한 장사꾼.",
+      "traits": ["흥정에 절대 지지 않는다"],
+      "speechStyle": "밝은 목소리의 존댓말. 칭찬으로 시작해 가격을 슬쩍 올린다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["과일을 맛보게 권하며 대화를 시작한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_MARKET", "activity": "과일을 정갈하게 진열하며 개장을 준비한다", "interactable": true },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "노점에서 과일을 팔며 손님들과 흥정한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "노점을 정리하며 내일 물량을 계산한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 근처 집으로 돌아가 쉰다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_ANTIQUE_DEALER",
+    "name": "제롬 영감",
+    "unknownAlias": "골동품 가게의 노인",
+    "role": "시장 골목 골동품상. 과거 이야기를 좋아하며 온갖 잡동사니 속에 가끔 진품이 섞여 있다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "옛 시절을 그리워하는 노인. 물건마다 이야기를 붙여 파는데, 그 이야기가 절반은 진짜다.",
+      "traits": ["물건에 얽힌 이야기를 끝없이 한다"],
+      "speechStyle": "느긋한 존댓말. 추억에 잠기듯 말하며 화제가 자주 옆길로 샌다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["골동품을 어루만지며 이야기를 꺼낸다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_MARKET", "activity": "가게 문을 열고 먼지 쌓인 물건들을 닦는다", "interactable": true },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "가게에 앉아 손님을 기다리며 골동품 이야기를 들려준다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "선술집에서 옛 친구들과 차를 마시며 담소를 나눈다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_MARKET", "activity": "가게 뒷방에서 잡동사니를 정리하며 잠든다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_SHOE_SHINE",
+    "name": "핍",
+    "unknownAlias": "재빠른 구두닦이 소년",
+    "role": "시장 거리 구두닦이. 어린 나이에 시장 곳곳을 누비며 온갖 소식을 줍는 소식통.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "눈치 빠르고 발이 빠른 거리의 아이. 구두를 닦으며 주워듣는 대화가 그의 진짜 자산이다.",
+      "traits": ["어디서든 소식을 주워듣는다"],
+      "speechStyle": "빠르고 활기찬 반말. 말보다 행동이 먼저다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["구두닦이 도구를 딸깍거리며 다가온다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_MARKET", "activity": "시장 어귀에서 일찍 자리를 잡고 출근하는 사람들을 기다린다", "interactable": true },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "시장을 돌아다니며 구두를 닦고 소식을 줍는다", "interactable": true },
+        "DUSK": { "locationId": "LOC_NOBLE", "activity": "귀족 거리로 가서 저녁 나들이객의 구두를 닦는다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 골목 구석에서 잠을 청한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_MESSENGER",
+    "name": "릴리",
+    "unknownAlias": "숨이 찬 전령",
+    "role": "경비대 전령. 본부와 순찰대 사이를 쉬지 않고 오가며 명령을 전달한다.",
+    "faction": "CITY_GUARD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "항상 바쁘고 숨이 찬 전령. 경비대 내부 사정을 가장 많이 들으면서도 입을 다무는 법을 안다.",
+      "traits": ["비밀을 지키는 데 타고났다"],
+      "speechStyle": "빠르고 사무적인 존댓말. 말을 줄이고 핵심만 전달한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["뛰어오면서 말을 건다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_GUARD", "activity": "경비대 본부에서 아침 전달 사항을 정리한다", "interactable": true },
+        "DAY": { "locationId": "LOC_GUARD", "activity": "본부와 각 초소를 오가며 명령과 보고서를 전달한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장 쪽 초소에 저녁 교대 명령을 전달하러 간다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_GUARD", "activity": "병영에서 내일 전달 사항을 미리 확인하고 쉰다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_ARMORER",
+    "name": "갤러스",
+    "unknownAlias": "과묵한 무기관리병",
+    "role": "경비대 무기고 관리병. 무기에 대해서만큼은 입이 열린다.",
+    "faction": "CITY_GUARD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "말수가 적고 무뚝뚝하지만, 무기와 갑옷 이야기가 나오면 눈이 빛나며 수다스러워지는 장인 기질의 병사.",
+      "traits": ["무기 손질에 자부심이 강하다"],
+      "speechStyle": "짧은 단문 위주. 무기 관련 질문에만 길게 답한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["무기를 손질하며 대화한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_GUARD", "activity": "무기고를 열고 장비 점검을 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_GUARD", "activity": "무기를 정비하고 순찰대에 장비를 지급한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_GUARD", "activity": "반납된 장비를 검수하고 무기고를 정리한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "선술집에서 조용히 맥주를 마시며 칼날 손질 도구를 다듬는다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_CLERK",
+    "name": "하워드",
+    "unknownAlias": "딱딱한 민원접수관",
+    "role": "경비대 민원접수 담당. 관료적이고 융통성이 없지만 규정만큼은 완벽히 숙지하고 있다.",
+    "faction": "CITY_GUARD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "규정의 화신. 예외를 인정하지 않으며, 서류가 한 장이라도 빠지면 접수를 거부한다. 하지만 그 고집이 때로 부패를 막는 방패가 된다.",
+      "traits": ["규정을 한 글자도 어기지 않는다"],
+      "speechStyle": "사무적인 경어. 규정 조항 번호를 외워서 인용한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["서류 더미 뒤에 앉아 도장을 찍으며 말한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_GUARD", "activity": "민원 접수대를 열고 전날 서류를 정리한다", "interactable": true },
+        "DAY": { "locationId": "LOC_GUARD", "activity": "시민들의 민원을 접수하고 서류를 처리한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_GUARD", "activity": "접수대를 마감하고 처리된 서류를 보관한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_NOBLE", "activity": "귀족 거리 근처 하숙집으로 퇴근한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_CAPTAIN_OLD",
+    "name": "노선장 그래디",
+    "unknownAlias": "파이프 문 은퇴 선장",
+    "role": "은퇴한 선장. 부두 벤치에 앉아 바다 이야기를 들려주는 항구의 명물.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "30년 뱃길을 누빈 노선장. 은퇴 후 부두를 떠나지 못하고 매일 같은 벤치에서 바다를 바라본다. 이야기 보따리가 끝이 없다.",
+      "traits": ["바다 이야기를 시작하면 멈추지 못한다"],
+      "speechStyle": "느긋한 반말. 모든 이야기에 '그때 말이야...'로 시작하는 옛날이야기가 끼어든다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["파이프를 물고 먼 바다를 바라보며 말한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_HARBOR", "activity": "부두 벤치에 앉아 새벽 안개 속 배들을 바라본다", "interactable": true },
+        "DAY": { "locationId": "LOC_HARBOR", "activity": "부두를 거닐며 젊은 선원들에게 항해 조언을 한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_HARBOR", "activity": "석양을 보며 벤치에서 파이프를 피운다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "선술집에서 옛 동료들과 술잔을 기울이며 항해담을 나눈다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_DOCKER",
+    "name": "벅",
+    "unknownAlias": "덩치 큰 하역 인부",
+    "role": "부두 하역 인부. 힘이 세고 말이 적지만 믿음직하다.",
+    "faction": "LABOR_GUILD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "말보다 행동이 먼저인 묵묵한 노동자. 형제단에 속해 있으며 하를런을 존경한다.",
+      "traits": ["힘으로 해결할 수 있는 일은 말로 하지 않는다"],
+      "speechStyle": "극도로 짧은 단문. 고개를 끄덕이거나 어깨를 으쓱하는 것으로 대부분 의사를 전달한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["짐을 나르면서 대화한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_HARBOR", "activity": "부두에서 새벽 하역 작업을 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_HARBOR", "activity": "무거운 화물을 나르며 묵묵히 일한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "선술집에서 동료들과 조용히 맥주를 마신다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_HARBOR", "activity": "부두 근처 숙소에서 잠든다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_ROPE_MAKER",
+    "name": "엘사",
+    "unknownAlias": "손재주 좋은 밧줄장인",
+    "role": "항구 밧줄 공방 운영. 손재주가 뛰어나며 부두 사람들과 친하다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "밧줄을 꼬며 부두 사람들의 이야기를 듣는 중년 여성. 손은 쉬지 않고 귀는 항상 열려 있다.",
+      "traits": ["일하면서 듣고, 듣는 동안 일한다"],
+      "speechStyle": "따뜻한 반말. 걱정하는 투로 말하며 조언을 슬쩍 끼워넣는다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["밧줄을 꼬면서 이야기한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_HARBOR", "activity": "공방을 열고 밧줄 재료를 준비한다", "interactable": true },
+        "DAY": { "locationId": "LOC_HARBOR", "activity": "밧줄을 꼬며 부두 사람들과 수다를 떤다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장에서 실과 재료를 구입한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_HARBOR", "activity": "공방 뒷방에서 밧줄 주문을 정리하며 쉰다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_CUSTOMS",
+    "name": "피터슨",
+    "unknownAlias": "날카로운 눈의 세관원",
+    "role": "항구 세관 담당. 화물을 검사하지만 적절한 대가에 약한 면이 있다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "겉으로는 엄격한 세관원이지만, 적절한 사례금 앞에서는 눈을 감아주는 이중성. 자신만의 가격표가 있다.",
+      "traits": ["뇌물의 적정가를 정확히 안다"],
+      "speechStyle": "사무적인 경어. 규정을 들먹이다가 금액이 나오면 목소리가 낮아진다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["화물 서류를 들여다보며 혀를 찬다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_HARBOR", "activity": "새벽 입항 선박의 화물을 검사한다", "interactable": true },
+        "DAY": { "locationId": "LOC_HARBOR", "activity": "세관 사무소에서 화물 서류를 처리하고 검사를 진행한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_HARBOR", "activity": "저녁 출항 선박의 최종 검사를 마무리한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "창고구에서 은밀한 화물 통관을 처리한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_HERB_CRONE",
+    "name": "마그다",
+    "unknownAlias": "약초 파는 노파",
+    "role": "빈민가 골목 약초상 겸 점술사. 허브와 미신의 경계에서 장사한다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "약초와 점술로 빈민가에서 나름의 존경을 받는 노파. 진짜 약효가 있는 것과 허풍의 경계가 묘하다.",
+      "traits": ["모든 것에 점괘를 붙인다"],
+      "speechStyle": "중얼거리듯 말한다. 의미심장한 경고를 자주 던진다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["마른 허브를 손가락으로 비비며 냄새를 맡는다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_SLUMS", "activity": "골목 구석에서 약초를 말리고 정리한다", "interactable": true },
+        "DAY": { "locationId": "LOC_SLUMS", "activity": "빈민가 골목에서 약초와 점술을 팔며 손님을 맞는다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장 뒷골목에서 재료를 구하고 미렐라와 약초를 교환한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "움막에서 허브를 달이며 내일의 점괘를 본다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_STREET_KID",
+    "name": "날쌘돌이 짐",
+    "unknownAlias": "재빠른 골목 아이",
+    "role": "빈민가 골목 소년. 전령과 소식통 역할을 하며 쥐왕의 조직과 느슨한 연결이 있다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "빈민가에서 자란 영리한 아이. 골목 구석구석을 꿰뚫고 있으며, 작은 심부름 대가로 살아간다.",
+      "traits": ["골목 지리를 완벽히 꿰고 있다"],
+      "speechStyle": "빠르고 거침없는 반말. 은어를 자연스럽게 섞는다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["벽 위를 타고 나타난다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_SLUMS", "activity": "빈민가 골목을 돌며 밤사이 소식을 수집한다", "interactable": true },
+        "DAY": { "locationId": "LOC_SLUMS", "activity": "심부름과 전령 일을 하며 골목을 누빈다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장 마감 때 떨이 음식을 얻으러 간다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "로자의 고아원 근처에서 잠을 청한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_VAGRANT",
+    "name": "한눈 잭",
+    "unknownAlias": "술에 절은 떠돌이",
+    "role": "빈민가 떠돌이. 전직 용병으로 술에 절어 있지만, 가끔 쓸만한 정보를 흘린다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "한쪽 눈을 잃은 전직 용병. 전쟁 후유증과 술에 절어 빈민가에 주저앉았지만, 전투 감각은 아직 녹슬지 않았다.",
+      "traits": ["술 한 잔이면 입이 열린다"],
+      "speechStyle": "흐릿한 반말. 횡설수설하다 갑자기 명징한 한마디를 던진다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["빈 술병을 굴리며 중얼거린다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_SLUMS", "activity": "골목 구석에서 숙취에 시달리며 깨어난다", "interactable": true },
+        "DAY": { "locationId": "LOC_SLUMS", "activity": "빈민가를 배회하며 구걸하고 소식을 줍는다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "선술집 문 앞에서 동전을 구걸하며 들어오는 사람들을 관찰한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "골목 뒤편에서 담요를 뒤집어쓰고 잠든다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_BEGGAR",
+    "name": "엘리자",
+    "unknownAlias": "초라한 구걸 여인",
+    "role": "빈민가에서 구걸하는 여인. 실은 이전 귀족가 하녀 출신으로 상류층 사정에 밝다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FEARFUL",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "한때 귀족가 하녀였으나 주인집 몰락과 함께 거리로 나왔다. 상류층의 예절과 비밀을 알지만, 두려움에 입을 닫고 산다.",
+      "traits": ["귀족 사회의 관습을 속속들이 안다"],
+      "speechStyle": "떨리는 낮은 목소리. 존댓말을 쓰되 눈을 마주치지 못한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["낡은 숄을 움켜쥐며 고개를 숙인다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_SLUMS", "activity": "빈민가 구석에서 조용히 하루를 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_NOBLE", "activity": "귀족 거리 골목에서 지나가는 사람들에게 구걸한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장 마감 때 남은 음식을 얻으러 다닌다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 움막에서 몸을 웅크리고 잠든다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_BUTLER",
+    "name": "올드릭",
+    "unknownAlias": "노련한 집사",
+    "role": "밴스 경의 저택 집사. 30년간 밴스가를 섬기며 모든 비밀을 알고 있다.",
+    "faction": "ARCANE_SOCIETY",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "완벽한 충성심과 비밀 유지의 화신. 밴스가의 모든 것을 알지만 주인의 허락 없이는 한 마디도 하지 않는다.",
+      "traits": ["주인의 의중을 한 발 앞서 읽는다"],
+      "speechStyle": "극도로 정중한 경어. 감정 없이 매끄럽다. 거절도 우아하게 한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["허리를 꼿꼿이 세우고 손을 모은 채 말한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_NOBLE", "activity": "저택을 열고 하인들에게 아침 업무를 배분한다", "interactable": true },
+        "DAY": { "locationId": "LOC_NOBLE", "activity": "밴스 경의 일정을 관리하고 방문객을 접수한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_NOBLE", "activity": "저녁 만찬 준비를 감독하고 와인을 선별한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_NOBLE", "activity": "저택을 순시하고 문단속을 확인한 뒤 쉰다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_GARDENER",
+    "name": "토마스",
+    "unknownAlias": "햇볕에 그을린 정원사",
+    "role": "귀족 거리 공용 정원 관리인. 꽃과 나무를 돌보며 귀족가 뒷이야기를 줍는다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "정원 울타리 너머로 귀족들의 대화를 듣는 소박한 정원사. 식물 이야기를 핑계로 세상 돌아가는 이야기를 전한다.",
+      "traits": ["들은 이야기를 식물 비유로 풀어낸다"],
+      "speechStyle": "느긋한 반말. 화초 이름을 섞어가며 빗대어 말한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["흙 묻은 손을 대충 털며 말을 건다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_NOBLE", "activity": "정원에 물을 주고 가지를 치며 하루를 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_NOBLE", "activity": "귀족 저택들의 정원을 돌며 관리 작업을 한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_NOBLE", "activity": "도구를 정리하고 내일 작업 계획을 세운다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 외곽 작은 집으로 돌아가 쉰다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_NOBLE_MAID",
+    "name": "클라라",
+    "unknownAlias": "조용한 귀족 시녀",
+    "role": "귀족 거리 여러 저택에서 일하는 시녀. 조용하지만 눈치가 빠르다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "여러 귀족 저택을 오가며 일하는 시녀. 존재감을 지우는 데 능숙하고, 그래서 더 많은 것을 보고 듣는다.",
+      "traits": ["존재감을 지우는 데 천부적이다"],
+      "speechStyle": "낮은 목소리의 존댓말. 필요한 말만 최소한으로 한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["고개를 살짝 숙이며 눈만 들어 상대를 본다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_NOBLE", "activity": "귀족 저택에서 아침 준비와 청소를 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_NOBLE", "activity": "저택 사이를 오가며 시중을 든다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장에서 저택에 필요한 물자를 구입한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 외곽 하숙집에서 쉰다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_BARD",
+    "name": "단테",
+    "unknownAlias": "류트를 든 음유시인",
+    "role": "떠돌이 음유시인. 노래와 이야기로 선술집에서 환대받으며, 소문을 멜로디에 실어 전파한다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "노래에 진실을 숨기고, 이야기에 풍자를 담는 예술가. 환대와 술값을 위해 공연하지만, 노래에는 진심이 담겨있다.",
+      "traits": ["소문을 노래 가사에 녹여낸다"],
+      "speechStyle": "시적인 표현이 섞인 유쾌한 말투. 대화도 노래하듯 리듬감 있게 한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["류트를 퉁기며 대화의 운율을 맞춘다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_HARBOR", "activity": "부두에서 선원들에게 아침 노래를 불러주고 소식을 듣는다", "interactable": true },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "시장 광장에서 거리 공연을 하며 동전을 모은다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "선술집에서 저녁 공연을 시작하며 손님들을 즐겁게 한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "밤늦게까지 노래하며 취객들의 이야기를 듣는다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_COOK",
+    "name": "헬가",
+    "unknownAlias": "투박한 체구의 요리사",
+    "role": "잠긴 닻 선술집 주방장. 투박하지만 따뜻한 음식으로 손님들을 채운다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "주방이 곧 왕국인 투박한 요리사. 음식에 대한 자부심이 강하고, 배고픈 사람에겐 몰래 한 그릇 더 퍼준다.",
+      "traits": ["음식 맛을 깎아내리면 분노한다"],
+      "speechStyle": "거친 반말. 짧고 직설적이다. 칭찬받으면 퉁명스럽게 '당연하지'라고 답한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["국자를 흔들며 소리친다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_MARKET", "activity": "시장에서 신선한 재료를 직접 골라 사온다", "interactable": true },
+        "DAY": { "locationId": "LOC_TAVERN", "activity": "주방에서 점심 메뉴를 준비하고 요리한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "저녁 피크 타임 주방을 진두지휘한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "주방을 청소하고 내일 메뉴를 구상하며 마감한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_BARMAID",
+    "name": "리나",
+    "unknownAlias": "상냥한 서빙꾼",
+    "role": "잠긴 닻 선술집 서빙 담당. 손님들의 대화를 자연스럽게 듣는 위치에 있다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "밝은 미소로 서빙하면서 손님들의 대화를 놓치지 않는 눈치 빠른 젊은 여성. 오웬에게 충성하며 술집의 평화를 지키는 데 일조한다.",
+      "traits": ["들은 이야기를 오웬에게만 보고한다"],
+      "speechStyle": "상냥한 존댓말. 주문을 받으며 자연스럽게 안부를 묻는다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["쟁반을 들고 테이블 사이를 오가며 미소 짓는다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_TAVERN", "activity": "술집 테이블을 정리하고 개장을 준비한다", "interactable": true },
+        "DAY": { "locationId": "LOC_TAVERN", "activity": "점심 손님들에게 서빙하며 분위기를 살핀다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "저녁 손님들로 붐비는 홀을 바쁘게 오간다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 근처 집으로 퇴근한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_DRUNK",
+    "name": "파울",
+    "unknownAlias": "만취한 취객",
+    "role": "잠긴 닻 선술집의 단골 취객. 헛소리 같은 말 속에 가끔 진실이 섞여 있다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "만성 음주자이지만 한때는 상단의 하급 직원이었다. 술김에 뱉는 헛소리 속에 상단의 옛 비밀이 섞여 나온다.",
+      "traits": ["술에 취하면 과거 비밀을 무의식적으로 흘린다"],
+      "speechStyle": "흐릿하고 어눌한 반말. 주제가 수시로 바뀌고 같은 말을 반복한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["술잔을 꼭 쥐고 허공을 가리키며 중얼거린다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_TAVERN", "activity": "술집 구석에서 전날 마시다 잠든 채 깨어난다", "interactable": true },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "시장을 배회하며 술값을 구걸한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "술집에 돌아와 자리를 잡고 마시기 시작한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "만취 상태로 횡설수설하며 주변 사람에게 말을 건다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_WAREHOUSE_GUARD",
+    "name": "마일로",
+    "unknownAlias": "졸음에 싸우는 야간 경비",
+    "role": "창고구 야간 경비. 졸음과 싸우며 밤을 지키지만, 이상한 것을 목격해도 무시하는 편이다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "만성 수면 부족에 시달리는 야간 경비. 문제가 생기면 못 본 척하는 게 생존법이라 체득했다.",
+      "traits": ["문제를 피하는 것이 최고의 전략이라 믿는다"],
+      "speechStyle": "졸린 목소리의 반말. 하품을 참으며 짧게 답한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["랜턴을 흔들며 하품한다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "야간 근무를 마치고 교대를 기다리며 졸고 있다", "interactable": true },
+        "DAY": { "locationId": "LOC_SLUMS", "activity": "빈민가 근처 하숙집에서 낮잠을 잔다", "interactable": false },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "야간 근무 전 선술집에서 간단히 식사한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "창고구를 순찰하며 졸음과 싸운다", "interactable": true }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_DOG_HANDLER",
+    "name": "네드",
+    "unknownAlias": "경비견을 끌고 다니는 남자",
+    "role": "창고구 경비견 관리자. 사람보다 개와 더 잘 통하는 과묵한 남자.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "경비견 세 마리와 함께 창고구를 순찰하는 조용한 남자. 개에게는 다정하지만 사람에게는 어색하다.",
+      "traits": ["개의 반응으로 상대를 판단한다"],
+      "speechStyle": "어색한 짧은 반말. 개에게 말할 때만 목소리가 부드러워진다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["경비견의 목줄을 잡고 다가온다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "경비견들에게 먹이를 주고 아침 순찰을 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "경비견과 함께 창고 사이를 순찰한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_HARBOR", "activity": "부두 쪽으로 경비견을 데리고 산책 겸 순찰을 한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "경비견들과 함께 창고 입구에서 야간 경비를 선다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_BG_CARGO_INSPECTOR",
+    "name": "밀드레드",
+    "unknownAlias": "꼼꼼한 화물 검수원",
+    "role": "창고구 화물 검수원. 꼼꼼하고 원칙적이며 뇌물이 통하지 않는 드문 인물.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "personality": {
+      "core": "화물 하나하나를 빠짐없이 검수하는 원칙주의자. 뇌물을 시도하면 즉시 보고하며, 이 때문에 밀수업자들에게 미움을 사고 있다.",
+      "traits": ["원칙을 어기는 것을 절대 용납하지 않는다"],
+      "speechStyle": "딱딱한 경어. 수량과 품목을 정확히 나열하며, 감정 없이 사실만 말한다.",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": ["검수 목록에 체크하며 고개도 안 든다"]
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "새벽 입고 화물의 검수를 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "창고 전체 화물을 순차적으로 검수하고 기록한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "하루 검수 보고서를 작성하고 마감한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_HARBOR", "activity": "부두 근처 숙소로 돌아가 쉰다", "interactable": false }
       }
     }
   }
