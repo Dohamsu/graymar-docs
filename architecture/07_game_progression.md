@@ -7,19 +7,37 @@
 
 ## 1. RUN 구조 & 현재 게임 모드
 
-### 1.1 현재 모드: HUB 중심 탐험 (구현됨)
+### 1.1 현재 모드: 장소 기반 자유 탐험 (구현됨)
 
-현재 구현된 게임 모드는 **HUB 중심 순환 탐험**이다.
+현재 구현된 게임 모드는 **장소 기반 자유 탐험**이다. 기존 HUB 허브스포크 구조에서, 장소 간 직접 이동이 가능한 구조로 확장되었다.
 
 ```
-HUB → LOCATION(4개) ⇄ COMBAT → HUB (순환)
+LOCATION(7개) ⇄ LOCATION (직접 이동) ⇄ COMBAT
+  LOC_TAVERN이 탐험 거점 역할
 ```
 
-- HUB에서 4개 LOCATION(시장/경비대/항만/빈민가) 중 선택
+- 7개 LOCATION(시장/경비대/항만/빈민가/귀족 구역/선착장 주점/부두 창고지대)
+- **장소 간 직접 이동 가능**: MOVE_LOCATION으로 장소에서 장소로 직접 이동
+- **LOC_TAVERN이 거점**: HUB 대신 선착장 주점이 탐험의 기준점 역할
+- **이동 비용**: 인접 장소 1턴, 비인접 장소 2턴 소요
 - LOCATION에서 Action-First 파이프라인으로 이벤트 진행
-- COMBAT 발생 시 전투 처리 후 HUB 복귀
+- COMBAT 발생 시 전투 처리 후 현재 LOCATION으로 복귀
 - Arc 시스템(EXPOSE/PROFIT/ALLY)으로 장기 목표 추적
 - WorldState(Heat/Time/Safety)로 세계 상태 관리
+
+#### 장소 인접 관계
+
+```
+LOC_TAVERN ─── LOC_MARKET ─── LOC_NOBLE
+    │              │
+LOC_HARBOR ─── LOC_GUARD
+    │
+LOC_DOCKS_WAREHOUSE ─── LOC_SLUMS
+```
+
+- 연결선이 있는 장소는 **인접** (이동 1턴)
+- 연결선이 없는 장소는 **비인접** (이동 2턴)
+- HUB 노드는 여전히 존재하며, 목표 장소 불명확 시 HUB 복귀 fallback으로 동작
 
 > 캐릭터 프리셋 4종(부두 노동자/탈영병/밀수업자/약초상)이 구현되어 있다.
 > 각 프리셋의 스탯 분배는 LOCATION 판정에 `floor(stat/3)` 보너스로 반영된다.
@@ -276,7 +294,7 @@ GP로 투자 가능한 13종 영구 능력치:
 | 항목 | 상태 | 비고 |
 |------|------|------|
 | **게임 모드** | | |
-| HUB 중심 탐험 | ✅ 구현 | HUB → LOCATION ⇄ COMBAT 순환 |
+| 장소 기반 자유 탐험 | ✅ 구현 | LOCATION ⇄ LOCATION 직접 이동 (LOC_TAVERN 거점, 인접 1턴/비인접 2턴) |
 | 선형 RUN (8~12 Node) | ❌ 미구현 | 향후 미션 모드로 재활용 가능 |
 | **Node 타입** | | |
 | HUB / LOCATION / COMBAT | ✅ 구현 | 현재 HUB 모드 주요 타입 |

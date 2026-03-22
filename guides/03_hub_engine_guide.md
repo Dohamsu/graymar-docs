@@ -2,7 +2,7 @@
 
 > 정본 위치: `server/src/engine/hub/`
 > 설계 문서: `architecture/03_hub_engine.md`, `14~17`, `18~20`
-> 최종 갱신: 2026-03-17
+> 최종 갱신: 2026-03-22 (Living World v2 시스템 추가)
 
 ## Action-First 파이프라인
 
@@ -221,6 +221,90 @@ NotificationAssembler → scope × presentation 기반 알림 조립
 | 노동 길드 | LABOR_GUILD | LABOR_GUILD, WORKER_RIGHTS, DOCK_THUGS |
 
 판정 결과: SUCCESS +3, FAIL -2, PARTIAL 0
+
+---
+
+## Living World v2 시스템
+
+Living World v2는 7개 서비스로 구성되며, 세계가 플레이어 행동과 독립적으로 살아 움직이는 느낌을 제공한다.
+
+### WorldFact 시스템
+
+`server/src/engine/hub/world-fact.service.ts`
+
+플레이어 행동과 이벤트 결과에서 발생하는 **사실(Fact)**을 누적 관리한다.
+
+- **Fact 생성**: 판정 결과, Incident 진행, NPC 상호작용에서 자동 생성
+- **Fact 조회**: SituationGenerator, EventMatcher conditions에서 참조
+- **Fact 만료**: 시간 경과 또는 조건 충족 시 자동 정리 (WorldTick 연동)
+- 예: `{ factId: "MARKET_FIGHT_WITNESSED", locationId: "LOC_MARKET", ttl: 5 }`
+
+### LocationDynamicState (장소 동적 상태)
+
+`server/src/engine/hub/location-state.service.ts`
+
+장소별 동적 상태(security, crime, unrest)를 관리한다.
+
+- **초기값**: `locations.json`에 정의
+- **변동**: ConsequenceProcessor가 판정 결과에 따라 업데이트
+- **감쇠**: WorldTick에서 시간 경과 시 중립값으로 자동 감쇠
+- **SituationGenerator Layer 1 입력**: 장소 상태가 임계치를 넘으면 랜드마크 이벤트 트리거
+
+### NpcSchedule (시간대별 NPC 위치)
+
+`server/src/engine/hub/npc-schedule.service.ts`
+
+- NPC별 DAWN/DAY/DUSK/NIGHT 위치를 `npcs.json`의 `schedule` 필드에서 로드
+- WorldTick 시간대 변경 시 NPC 위치 자동 업데이트
+- 이벤트 매칭 시 현재 장소에 있는 NPC만 상호작용 대상으로 필터링
+- Incident에 의한 임시 스케줄 오버라이드 지원
+
+### NpcAgenda (NPC 장기 목표)
+
+`server/src/engine/hub/npc-agenda.service.ts`
+
+CORE/SUB NPC의 장기 목표를 자율적으로 진행한다.
+
+- **Tick 진행**: 매 WorldTick에서 progress 자동 증가
+- **플레이어 영향**: 판정 결과가 NPC agenda를 가속/차단 가능
+- **Incident 트리거**: agenda 진행도가 임계치 도달 시 새 Incident spawn
+- **SituationGenerator Layer 3 입력**: NPC agenda 상태가 상황 생성에 반영
+
+### ConsequenceProcessor (판정 결과 → 세계 변화)
+
+`server/src/engine/hub/consequence-processor.service.ts`
+
+ResolveService 판정 결과를 WorldFact + LocationDynamicState에 반영한다.
+
+- **판정 → Fact**: SUCCESS/PARTIAL/FAIL에 따라 서로 다른 Fact 생성
+- **판정 → LocationState**: 전투/위협 행동은 security 감소, 도움 행동은 unrest 감소 등
+- **파이프라인 위치**: ResolveService 직후, WorldDelta 이전에 실행
+
+### SituationGenerator (3계층 상황 생성)
+
+`server/src/engine/hub/situation-generator.service.ts`
+
+EventMatcher보다 **우선 실행**되는 맥락적 상황 생성기.
+
+| Layer | 이름 | 입력 | 예시 |
+|-------|------|------|------|
+| 1 | Landmark | LocationDynamicState | crime > 70이면 "밀수품 거래 현장 목격" |
+| 2 | Incident-Driven | ActiveIncidents + WorldFact | 파업 사건 + 부두 위치 → "노동자 시위 조우" |
+| 3 | World-State | NpcAgenda + Schedule + Fact | 마이렐 야간 순찰 + 부두 창고 → "경비대 수색 목격" |
+
+- 3 Layer 순차 시도 → 유효한 상황 생성 시 반환, 모두 실패 시 null → EventMatcher fallback
+- **Procedural Plot Protection**: arcRouteTag/commitmentDelta 생성 절대 금지
+
+### PlayerGoal (플레이어 목표)
+
+`server/src/engine/hub/player-goal.service.ts`
+
+플레이어의 현재 추구 목표를 추적하고 진행도를 관리한다.
+
+- **목표 등록**: 퀘스트 진행, Fact 발견, NPC 대화에서 자동/수동 등록
+- **진행도 추적**: 관련 행동 수행 시 자동 업데이트
+- **알림 연동**: NotificationAssembler에 목표 진행/완료 알림 전달
+- **LLM 컨텍스트**: 현재 활성 목표를 LLM 프롬프트에 전달하여 서술 방향 유도
 
 ---
 

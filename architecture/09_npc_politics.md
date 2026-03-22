@@ -3,7 +3,7 @@
 > 원본 참조: `State_Storage_Spec_v1.md`, `specs/political_narrative_system_v1.md`, `specs/llm_context_memory_v1_1.md`
 > 상태: **부분 구현** — NPC 감정 모델, 소개 시스템, TurnOrchestration NPC 주입, posture 계산, PBP, Off-screen Tick 구현됨. Leverage(타입만 정의), LocationRuntimeState(부분) 미완.
 > 의존: WorldState (구현됨), Reputation (구현됨), TurnOrchestration (구현됨)
-> 마지막 갱신: 2026-03-17
+> 마지막 갱신: 2026-03-22 (NPC 42명 3계층, Schedule/Agenda 시스템 추가)
 
 ---
 
@@ -45,21 +45,34 @@ interface NpcEmotionalState {
 type NpcPosture = 'FRIENDLY' | 'CAUTIOUS' | 'HOSTILE' | 'FEARFUL' | 'CALCULATING';
 ```
 
-### 1.2 Base Posture
+### 1.2 NPC 3계층 (42명)
 
-`content/graymar_v1/npcs.json`에 각 NPC의 `basePosture` 필드로 정의:
+NPC는 **CORE / SUB / BACKGROUND** 3계층으로 구분된다.
 
-| NPC | basePosture | unknownAlias (소개 전 별칭) |
-|-----|------------|---------------------------|
-| 하를런 보스 | FRIENDLY | 투박한 노동자 |
-| 에드릭 베일 | CAUTIOUS | 날카로운 눈매의 회계사 |
-| 마이렐 단 경 | CALCULATING | 권위적인 야간 경비 책임자 |
-| 토브렌 하위크 | CAUTIOUS | 수상한 창고 관리인 |
-| 라이라 케스텔 | FEARFUL | 조용한 문서 실무자 |
-| 쉐도우 | CALCULATING | 후드를 깊이 쓴 정보상 |
-| 벨론 대위 | CAUTIOUS | 위풍당당한 수비대 장교 |
+| 계층 | 수 | 설명 | 감정 모델 | Agenda |
+|------|---|------|----------|--------|
+| **CORE** | 5명 | 메인 아크 핵심 인물 | 5축 감정 완비 | 고유 장기 목표 |
+| **SUB** | 12명 | 세력/장소 중간 인물 | 5축 감정 완비 | 세력 연동 목표 |
+| **BACKGROUND** | 25명 | 도시 배경 NPC | 간소화 (posture만) | 없음 (스케줄만) |
 
-### 1.3 Posture 계산 (구현됨)
+CORE NPC: 하를런 보스, 마이렐 단 경, 에드릭 베일, 쉐도우, 벨론 대위
+
+### 1.3 Base Posture
+
+`content/graymar_v1/npcs.json`에 각 NPC의 `basePosture` 필드로 정의 (CORE/SUB 대표):
+
+| NPC | 계층 | basePosture | unknownAlias (소개 전 별칭) |
+|-----|------|------------|---------------------------|
+| 하를런 보스 | CORE | FRIENDLY | 투박한 노동자 |
+| 에드릭 베일 | CORE | CAUTIOUS | 날카로운 눈매의 회계사 |
+| 마이렐 단 경 | CORE | CALCULATING | 권위적인 야간 경비 책임자 |
+| 쉐도우 | CORE | CALCULATING | 후드를 깊이 쓴 정보상 |
+| 벨론 대위 | CORE | CAUTIOUS | 위풍당당한 수비대 장교 |
+| 토브렌 하위크 | SUB | CAUTIOUS | 수상한 창고 관리인 |
+| 라이라 케스텔 | SUB | FEARFUL | 조용한 문서 실무자 |
+| 미렐라 | SUB | FRIENDLY | 약초 향이 나는 노점상 |
+
+### 1.4 Posture 계산 (구현됨)
 
 > 정본: `server/src/engine/hub/npc-emotional.service.ts`
 
@@ -74,7 +87,7 @@ effectivePosture = f(basePosture, emotional.trust, emotional.fear, emotional.sus
 - fear > 50 → FEARFUL 경향
 - LLM 실패 시 기본값 CAUTIOUS (Safe Degradation)
 
-### 1.4 NPC 소개(Introduction) 시스템 (구현됨)
+### 1.5 NPC 소개(Introduction) 시스템 (구현됨)
 
 NPC 성격에 따라 이름 공개 시점이 다르다. 소개 전에는 `unknownAlias`(묘사적 별칭)로 표시.
 
@@ -94,6 +107,54 @@ NPC 성격에 따라 이름 공개 시점이 다르다. 소개 전에는 `unknow
 - 새로 소개되는 NPC → "[첫 만남 — 자기소개하세요]" 또는 "[이름이 드러남 — 상황/타인 통해]"
 - 아직 미소개 NPC → "[이름 미공개 — 별칭으로만 지칭하세요]"
 - context-builder가 `introducedNpcIds`, `newlyIntroducedNpcIds`, `newlyEncounteredNpcIds`를 LlmContext에 전달
+
+### 1.6 NPC Schedule 시스템 (Living World v2)
+
+> 정본: `server/src/engine/hub/npc-schedule.service.ts`
+
+각 NPC는 시간대(DAWN/DAY/DUSK/NIGHT)별 위치가 정의된 스케줄을 가진다.
+
+```typescript
+interface NpcScheduleEntry {
+  npcId: string;
+  schedule: Record<TimePhaseV2, string | null>;  // locationId or null (부재)
+}
+```
+
+- **WorldTick 연동**: `WorldTickService`의 시간대 변경 시 `NpcScheduleService`가 NPC 위치 자동 업데이트
+- **이벤트 매칭 영향**: 현재 장소에 스케줄상 존재하는 NPC만 이벤트/상호작용 대상
+- **CORE/SUB**: 고유 스케줄 보유. BACKGROUND: 장소 고정 또는 단순 DAY/NIGHT 패턴
+- Incident/WorldFact에 의해 임시 스케줄 오버라이드 가능
+
+### 1.7 NPC Agenda 시스템 (Living World v2)
+
+> 정본: `server/src/engine/hub/npc-agenda.service.ts`
+
+CORE/SUB NPC는 장기 목표(Agenda)를 가지며, 플레이어 행동과 독립적으로 자율 진행한다.
+
+```typescript
+interface NpcAgenda {
+  npcId: string;
+  goalId: string;           // 현재 추구 중인 목표
+  progress: number;         // 0~100 진행도
+  priority: number;         // 목표 우선순위
+  blockedBy: string | null; // 차단 조건 (Fact/Flag)
+}
+```
+
+- **Tick 기반 자율 진행**: `NpcAgendaService`가 매 WorldTick에서 NPC 목표 진행도 업데이트
+- **플레이어 행동 영향**: 플레이어의 판정 결과가 NPC agenda 진행을 가속/차단
+- **Incident 연동**: agenda 진행이 임계치 도달 시 Incident spawn 트리거 가능
+- **SituationGenerator 입력**: NPC agenda 상태가 상황 생성의 주요 입력
+
+### 1.8 NPC 자동 상호작용 (Living World v2)
+
+같은 장소에 있는 NPC 간 자동 상호작용이 발생한다.
+
+- **조건**: 동일 장소 + 동일 시간대에 2명 이상 NPC 존재
+- **상호작용 유형**: 협력(같은 세력), 갈등(대립 세력), 정보 교환
+- **결과**: WorldFact 생성, NPC 감정 상태 변동, Signal Feed 시그널 발생
+- **플레이어 관찰 가능**: 해당 장소에 플레이어가 있으면 상호작용이 이벤트/서술에 반영
 
 ---
 
@@ -325,3 +386,7 @@ NPCState, PBP, Relationship을 L2/L4에 주입.
 | Leverage (약점/정보) | ⚠️ 타입만 정의 | `db/types/npc-state.ts` — 런타임 로직 미구현 |
 | LocationRuntimeState | ⚠️ 부분 구현 | 기본 구조 존재, 동적 업데이트 미완 |
 | Off-screen Tick | ✅ 구현 | `world-tick.service.ts` — preStepTick/postStepTick |
+| NPC 3계층 (42명) | ✅ 구현 | CORE 5 + SUB 12 + BACKGROUND 25 |
+| NPC Schedule | ✅ 구현 | `npc-schedule.service.ts` — 시간대별 위치, WorldTick 연동 |
+| NPC Agenda | ✅ 구현 | `npc-agenda.service.ts` — 장기 목표 자율 진행 |
+| NPC 자동 상호작용 | ✅ 구현 | 동일 장소 NPC 간 상호작용 → WorldFact/Signal 생성 |

@@ -1,7 +1,7 @@
 # 서버 모듈/서비스 맵
 
 > 정본 위치: `server/src/`
-> 최종 갱신: 2026-03-17
+> 최종 갱신: 2026-03-22
 
 ## 모듈 구조 (9 modules, 60+ services, 5 controllers)
 
@@ -47,7 +47,7 @@ main.ts → AppModule
 │   │   └── affix.service       ← 리전 접미사 처리
 │   ├── planner/         ← RUN 계획 (1 service)
 │   │   └── run-planner.service ← RUN 구조 생성
-│   └── hub/             ← HUB 엔진 (29 services, 5 서브시스템, 아래 상세)
+│   └── hub/             ← HUB 엔진 (36 services, 6 서브시스템, 아래 상세)
 ├── runs/                ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 └── llm/                 ← Async LLM narrative (아래 상세)
@@ -55,7 +55,7 @@ main.ts → AppModule
 
 ---
 
-## HUB 엔진 서비스 (29 services, 5 서브시스템)
+## HUB 엔진 서비스 (36 services, 6 서브시스템)
 
 `server/src/engine/hub/`
 
@@ -112,6 +112,18 @@ main.ts → AppModule
 | EventDirectorService | event-director.service.ts | 5단계 정책 파이프라인 (Stage→Condition→Cooldown→Priority→Weighted) |
 | ProceduralEventService | procedural-event.service.ts | 동적 이벤트 생성 (Trigger+Subject+Action+Outcome) |
 | LlmIntentParserService | llm-intent-parser.service.ts | LLM 기반 의도 파싱 (폴백) |
+
+### 6. Living World v2 (7 services) — 설계문서 21
+
+| 서비스 | 파일 | 역할 |
+|--------|------|------|
+| LocationStateService | location-state.service.ts | 장소별 동적 상태 관리 (crowdLevel, mood, activeTags) |
+| WorldFactService | world-fact.service.ts | 세계 사실 기록/조회 (최대 50개, FactCategory 5종) |
+| NpcScheduleService | npc-schedule.service.ts | NPC 위치/스케줄 관리 (시간대별 이동) |
+| NpcAgendaService | npc-agenda.service.ts | NPC 개별 의제/목표 추적 |
+| ConsequenceProcessorService | consequence-processor.service.ts | 플레이어 행동 결과의 세계 반영 (연쇄 효과) |
+| SituationGeneratorService | situation-generator.service.ts | 상황 동적 생성 (9종 SituationTrigger) |
+| PlayerGoalService | player-goal.service.ts | 플레이어 목표 추적/관리 (최대 5개) |
 
 ---
 
