@@ -10,14 +10,12 @@
     "stats": {
       "MaxHP": 120,
       "MaxStamina": 5,
-      "ATK": 16,
-      "DEF": 14,
-      "ACC": 3,
-      "EVA": 2,
-      "CRIT": 4,
-      "CRIT_DMG": 1.4,
-      "RESIST": 7,
-      "SPEED": 4
+      "str": 16,
+      "dex": 5,
+      "wit": 4,
+      "con": 14,
+      "per": 5,
+      "cha": 5
     },
     "startingGold": 30,
     "startingItems": [
@@ -35,14 +33,12 @@
     "stats": {
       "MaxHP": 100,
       "MaxStamina": 5,
-      "ATK": 17,
-      "DEF": 11,
-      "ACC": 7,
-      "EVA": 3,
-      "CRIT": 5,
-      "CRIT_DMG": 1.5,
-      "RESIST": 5,
-      "SPEED": 5
+      "str": 14,
+      "dex": 8,
+      "wit": 8,
+      "con": 10,
+      "per": 7,
+      "cha": 6
     },
     "startingGold": 45,
     "startingItems": [
@@ -61,14 +57,12 @@
     "stats": {
       "MaxHP": 80,
       "MaxStamina": 6,
-      "ATK": 14,
-      "DEF": 7,
-      "ACC": 5,
-      "EVA": 7,
-      "CRIT": 8,
-      "CRIT_DMG": 1.7,
-      "RESIST": 3,
-      "SPEED": 7
+      "str": 10,
+      "dex": 12,
+      "wit": 6,
+      "con": 7,
+      "per": 8,
+      "cha": 10
     },
     "startingGold": 60,
     "startingItems": [
@@ -87,14 +81,12 @@
     "stats": {
       "MaxHP": 90,
       "MaxStamina": 7,
-      "ATK": 11,
-      "DEF": 9,
-      "ACC": 6,
-      "EVA": 4,
-      "CRIT": 4,
-      "CRIT_DMG": 1.4,
-      "RESIST": 9,
-      "SPEED": 4
+      "str": 8,
+      "dex": 7,
+      "wit": 10,
+      "con": 10,
+      "per": 10,
+      "cha": 6
     },
     "startingGold": 40,
     "startingItems": [
