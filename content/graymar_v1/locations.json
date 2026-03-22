@@ -6,7 +6,14 @@
     "tags": ["TRADE", "SOCIAL", "CROWDED"],
     "dangerLevel": 1,
     "availableAtNight": true,
-    "nightDescription": "등불 아래 야시장이 열린다. 낮보다 은밀한 거래가 이뤄진다."
+    "nightDescription": "등불 아래 야시장이 열린다. 낮보다 은밀한 거래가 이뤄진다.",
+    "adjacentLocations": ["LOC_TAVERN", "LOC_NOBLE", "LOC_HARBOR", "LOC_GUARD"],
+    "baseState": {
+      "controllingFaction": "MERCHANT_CONSORTIUM",
+      "security": 60,
+      "prosperity": 80,
+      "unrest": 20
+    }
   },
   {
     "locationId": "LOC_GUARD",
@@ -15,7 +22,14 @@
     "tags": ["AUTHORITY", "MILITARY", "STRICT"],
     "dangerLevel": 2,
     "availableAtNight": true,
-    "nightDescription": "야간 순찰이 강화된다. 허가 없이 돌아다니면 의심받는다."
+    "nightDescription": "야간 순찰이 강화된다. 허가 없이 돌아다니면 의심받는다.",
+    "adjacentLocations": ["LOC_MARKET", "LOC_NOBLE", "LOC_TAVERN"],
+    "baseState": {
+      "controllingFaction": "CITY_GUARD",
+      "security": 90,
+      "prosperity": 50,
+      "unrest": 10
+    }
   },
   {
     "locationId": "LOC_HARBOR",
@@ -24,7 +38,14 @@
     "tags": ["MARITIME", "DANGEROUS", "NIGHT"],
     "dangerLevel": 3,
     "availableAtNight": true,
-    "nightDescription": "밤이면 밀수선이 드나들고, 부두 깡패들이 활개친다."
+    "nightDescription": "밤이면 밀수선이 드나들고, 부두 깡패들이 활개친다.",
+    "adjacentLocations": ["LOC_MARKET", "LOC_DOCKS_WAREHOUSE", "LOC_TAVERN"],
+    "baseState": {
+      "controllingFaction": "LABOR_GUILD",
+      "security": 40,
+      "prosperity": 60,
+      "unrest": 40
+    }
   },
   {
     "locationId": "LOC_SLUMS",
@@ -33,6 +54,61 @@
     "tags": ["UNDERGROUND", "DANGER", "HIDDEN"],
     "dangerLevel": 4,
     "availableAtNight": true,
-    "nightDescription": "어둠 속에서 암흑가의 진짜 얼굴이 드러난다."
+    "nightDescription": "어둠 속에서 암흑가의 진짜 얼굴이 드러난다.",
+    "adjacentLocations": ["LOC_DOCKS_WAREHOUSE", "LOC_TAVERN"],
+    "baseState": {
+      "controllingFaction": null,
+      "security": 15,
+      "prosperity": 15,
+      "unrest": 70
+    }
+  },
+  {
+    "locationId": "LOC_NOBLE",
+    "name": "상류 거리",
+    "description": "귀족들의 저택과 정원이 늘어선 조용한 거리. 화려하지만 음모가 도사린다.",
+    "tags": ["NOBLE", "POLITICAL", "INTRIGUE"],
+    "dangerLevel": 2,
+    "availableAtNight": true,
+    "nightDescription": "저택의 불빛 뒤에서 비밀스러운 모임이 열린다.",
+    "adjacentLocations": ["LOC_MARKET", "LOC_GUARD"],
+    "baseState": {
+      "controllingFaction": "ARCANE_SOCIETY",
+      "security": 80,
+      "prosperity": 90,
+      "unrest": 10
+    }
+  },
+  {
+    "locationId": "LOC_TAVERN",
+    "name": "잠긴 닻 선술집",
+    "description": "항구 도시의 오래된 선술집. 여행자와 현지인 모두가 모이는 정보의 교차점.",
+    "tags": ["SOCIAL", "REST", "INFORMATION"],
+    "dangerLevel": 1,
+    "availableAtNight": true,
+    "nightDescription": "밤이 깊어질수록 목소리가 낮아지고, 진짜 이야기가 시작된다.",
+    "adjacentLocations": ["LOC_MARKET", "LOC_GUARD", "LOC_HARBOR", "LOC_SLUMS", "LOC_DOCKS_WAREHOUSE"],
+    "baseState": {
+      "controllingFaction": null,
+      "security": 50,
+      "prosperity": 60,
+      "unrest": 20
+    }
+  },
+  {
+    "locationId": "LOC_DOCKS_WAREHOUSE",
+    "name": "항만 창고구",
+    "description": "거대한 창고들이 늘어선 구역. 합법적인 화물과 불법 물건이 뒤섞인다.",
+    "tags": ["MARITIME", "HIDDEN", "TRADE"],
+    "dangerLevel": 3,
+    "availableAtNight": true,
+    "nightDescription": "창고 사이 어둠 속에서 비밀 거래가 이뤄진다.",
+    "adjacentLocations": ["LOC_HARBOR", "LOC_SLUMS", "LOC_TAVERN"],
+    "baseState": {
+      "controllingFaction": null,
+      "security": 25,
+      "prosperity": 45,
+      "unrest": 50
+    }
   }
 ]

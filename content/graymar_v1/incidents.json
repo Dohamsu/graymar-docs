@@ -69,6 +69,11 @@
         "ESCALATED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "CITY_GUARD": -5 }, "flagsSet": ["SMUGGLING_ESCALATED"] },
         "EXPIRED": { "heatDelta": 5, "tensionDelta": 1, "reputationChanges": {}, "flagsSet": ["SMUGGLING_IGNORED"] }
       },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [{ "targetIncident": "INC_GUARD_CORRUPTION", "condition": "ESCALATED", "effect": "pressure", "value": 20 }],
+        "mutuallyExclusive": []
+      },
       "relatedNpcIds": ["NPC_SEO_DOYUN", "NPC_YOON_HAMIN"],
       "tags": ["HARBOR", "CRIMINAL", "TRADE"],
       "isCritical": true
@@ -136,6 +141,14 @@
         "ESCALATED": { "heatDelta": 20, "tensionDelta": 4, "reputationChanges": { "CITY_GUARD": -10 }, "flagsSet": ["CORRUPTION_COVERUP"] },
         "EXPIRED": { "heatDelta": 8, "tensionDelta": 2, "reputationChanges": { "CITY_GUARD": -3 }, "flagsSet": ["CORRUPTION_FESTERED"] }
       },
+      "dependencies": {
+        "triggeredBy": [
+          { "sourceIncident": "INC_SMUGGLING_RING", "condition": "ESCALATED", "effect": "pressure", "value": 20 },
+          { "sourceIncident": "INC_NOBLE_CONSPIRACY", "condition": "stage_2", "effect": "spawn" }
+        ],
+        "triggers": [],
+        "mutuallyExclusive": []
+      },
       "relatedNpcIds": ["NPC_KANG_CHAERIN", "NPC_GUARD_CAPTAIN"],
       "tags": ["GUARD", "POLITICAL", "CORRUPTION"],
       "isCritical": true
@@ -161,7 +174,12 @@
           "pressurePerTick": 3,
           "controlReward": 12,
           "controlPenalty": 5,
-          "sceneFrame": "부두 노동자들이 삼삼오오 모여 낮은 목소리로 이야기하고 있다."
+          "sceneFrame": "부두 노동자들이 삼삼오오 모여 낮은 목소리로 이야기하고 있다.",
+          "choices": [
+            { "id": "inc_strike_listen", "label": "노동자들의 이야기를 듣는다", "hint": "불만의 원인을 파악", "affordance": "OBSERVE" },
+            { "id": "inc_strike_join", "label": "노동자들에게 동조한다", "hint": "신뢰를 얻을 수 있다", "affordance": "HELP" },
+            { "id": "inc_strike_mediate", "label": "중재를 제안한다", "hint": "평화적 해결 시도", "affordance": "PERSUADE" }
+          ]
         },
         {
           "stage": 1,
@@ -171,13 +189,28 @@
           "pressurePerTick": 5,
           "controlReward": 16,
           "controlPenalty": 7,
-          "sceneFrame": "노동자들이 공개적으로 모이기 시작했다. 경비대가 주시하고 있다."
+          "sceneFrame": "노동자들이 공개적으로 모이기 시작했다. 경비대가 주시하고 있다.",
+          "choices": [
+            { "id": "inc_strike_support", "label": "파업 지도부를 지원한다", "hint": "노동자 편에 선다", "affordance": "HELP" },
+            { "id": "inc_strike_negotiate", "label": "상단과 협상을 중재한다", "hint": "양쪽 모두의 신뢰 필요", "affordance": "PERSUADE" }
+          ]
+        },
+        {
+          "stage": 2,
+          "description": "파업이 폭력화 직전이다",
+          "affordances": ["FIGHT", "PERSUADE", "HELP", "THREATEN"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 7,
+          "controlReward": 20,
+          "controlPenalty": 10,
+          "sceneFrame": "부두 입구에서 노동자들과 경비대원들이 대치하고 있다. 돌멩이가 날아다닌다."
         }
       ],
       "signalTemplates": [
         { "channel": "RUMOR", "severity": 2, "textTemplate": "항만 노동자들이 불만을 토로하고 있다", "triggerStage": 0 },
         { "channel": "ECONOMY", "severity": 3, "textTemplate": "부두 화물 처리가 지연되고 있다", "triggerStage": 1 },
-        { "channel": "VISUAL", "severity": 4, "textTemplate": "노동자들이 부두 입구에서 구호를 외치고 있다", "triggerStage": 1, "triggerPressure": 60 }
+        { "channel": "VISUAL", "severity": 4, "textTemplate": "노동자들이 부두 입구에서 구호를 외치고 있다", "triggerStage": 1, "triggerPressure": 60 },
+        { "channel": "SECURITY", "severity": 5, "textTemplate": "부두에서 폭력 사태가 임박하다", "triggerStage": 2, "triggerPressure": 80 }
       ],
       "resolutionConditions": {
         "controlThreshold": 80,
@@ -189,7 +222,12 @@
         "ESCALATED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "LABOR_GUILD": -5, "MERCHANT_CONSORTIUM": -3 }, "flagsSet": ["STRIKE_RIOT"] },
         "EXPIRED": { "heatDelta": 10, "tensionDelta": 1, "reputationChanges": { "LABOR_GUILD": -2 }, "flagsSet": ["STRIKE_FIZZLED"] }
       },
-      "relatedNpcIds": ["NPC_YOON_HAMIN"],
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [{ "targetIncident": "INC_MERCHANT_MONOPOLY", "condition": "CONTAINED", "effect": "pressure", "value": -10 }],
+        "mutuallyExclusive": ["INC_SLUM_UPRISING"]
+      },
+      "relatedNpcIds": ["NPC_YOON_HAMIN", "NPC_KANG_CHAERIN"],
       "tags": ["HARBOR", "SOCIAL", "LABOR"],
       "isCritical": false
     },
@@ -240,6 +278,11 @@
         "CONTAINED": { "heatDelta": -5, "tensionDelta": -1, "reputationChanges": { "MERCHANT_CONSORTIUM": 5 }, "flagsSet": ["MERCHANT_PEACE"] },
         "ESCALATED": { "heatDelta": 12, "tensionDelta": 2, "reputationChanges": { "MERCHANT_CONSORTIUM": -8 }, "flagsSet": ["MERCHANT_SPLIT"] },
         "EXPIRED": { "heatDelta": 5, "tensionDelta": 1, "reputationChanges": { "MERCHANT_CONSORTIUM": -2 }, "flagsSet": ["MERCHANT_STALEMATE"] }
+      },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": []
       },
       "relatedNpcIds": ["NPC_SEO_DOYUN", "NPC_MOON_SEA"],
       "tags": ["MARKET", "ECONOMIC", "FACTION"],
@@ -294,6 +337,11 @@
         "ESCALATED": { "heatDelta": 20, "tensionDelta": 5, "reputationChanges": { "CITY_GUARD": -3 }, "flagsSet": ["PLAGUE_SPREAD"] },
         "EXPIRED": { "heatDelta": 10, "tensionDelta": 2, "reputationChanges": {}, "flagsSet": ["PLAGUE_SUBSIDED"] }
       },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": []
+      },
       "relatedNpcIds": ["NPC_BAEK_SEUNGHO"],
       "tags": ["SLUMS", "SOCIAL", "HEALTH"],
       "isCritical": true
@@ -347,6 +395,11 @@
         "ESCALATED": { "heatDelta": 25, "tensionDelta": 6, "reputationChanges": { "CITY_GUARD": -15 }, "flagsSet": ["ASSASSINATION_SUCCESS"] },
         "EXPIRED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "CITY_GUARD": -5 }, "flagsSet": ["ASSASSINATION_UNKNOWN"] }
       },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": []
+      },
       "relatedNpcIds": ["NPC_INFO_BROKER", "NPC_KANG_CHAERIN"],
       "tags": ["SLUMS", "POLITICAL", "VIOLENCE"],
       "isCritical": true
@@ -397,6 +450,11 @@
         "CONTAINED": { "heatDelta": -3, "tensionDelta": -1, "reputationChanges": { "MERCHANT_CONSORTIUM": 3 }, "flagsSet": ["THEFT_STOPPED"] },
         "ESCALATED": { "heatDelta": 8, "tensionDelta": 1, "reputationChanges": { "MERCHANT_CONSORTIUM": -3 }, "flagsSet": ["THEFT_RAMPANT"] },
         "EXPIRED": { "heatDelta": 3, "tensionDelta": 0, "reputationChanges": {}, "flagsSet": ["THEFT_ONGOING"] }
+      },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": []
       },
       "relatedNpcIds": [],
       "tags": ["MARKET", "CRIMINAL", "MINOR"],
@@ -452,9 +510,404 @@
         "ESCALATED": { "heatDelta": 25, "tensionDelta": 5, "reputationChanges": { "LABOR_GUILD": -15, "CITY_GUARD": 3 }, "flagsSet": ["RAID_EXECUTED"] },
         "EXPIRED": { "heatDelta": 12, "tensionDelta": 2, "reputationChanges": { "LABOR_GUILD": -5 }, "flagsSet": ["RAID_DELAYED"] }
       },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": []
+      },
       "relatedNpcIds": ["NPC_GUARD_CAPTAIN", "NPC_YOON_HAMIN"],
       "tags": ["GUARD", "MILITARY", "SLUMS"],
       "isCritical": true
+    },
+    {
+      "incidentId": "INC_MERCHANT_MONOPOLY",
+      "kind": "ECONOMIC",
+      "title": "상인 독점",
+      "description": "대형 상단이 시장을 독점하려는 음모를 꾸미고 있다. 소상인들이 압박받고 물가가 폭등하고 있다.",
+      "locationId": "LOC_MARKET",
+      "priority": 3,
+      "weight": 8,
+      "spawnConditions": {
+        "minDay": 3,
+        "minHeat": 15
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "특정 상단이 원자재를 사재기하며 가격을 조작하고 있다",
+          "affordances": ["INVESTIGATE", "OBSERVE", "TRADE", "PERSUADE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 12,
+          "controlPenalty": 5,
+          "sceneFrame": "시장의 곡물 가격이 하루 사이에 두 배로 뛰었다. 소상인들이 한숨을 쉬며 빈 가판대를 바라보고 있다.",
+          "choices": [
+            { "id": "inc_mono_trace", "label": "가격 폭등의 원인을 추적한다", "hint": "사재기 경로를 파악", "affordance": "INVESTIGATE" },
+            { "id": "inc_mono_talk", "label": "소상인들에게 상황을 묻는다", "hint": "피해 규모를 확인", "affordance": "OBSERVE" },
+            { "id": "inc_mono_buy", "label": "비정상 거래를 직접 확인한다", "hint": "장부 조작의 단서", "affordance": "TRADE" }
+          ]
+        },
+        {
+          "stage": 1,
+          "description": "경쟁 상인들이 하나둘 가게를 닫고 있다",
+          "affordances": ["PERSUADE", "THREATEN", "INVESTIGATE", "HELP"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 5,
+          "controlReward": 18,
+          "controlPenalty": 8,
+          "sceneFrame": "시장 거리 절반의 가판대가 비었다. 남은 상인들이 모여 대책을 논의하지만 표정이 어둡다.",
+          "choices": [
+            { "id": "inc_mono_rally", "label": "소상인들을 규합한다", "hint": "집단 저항 조직", "affordance": "PERSUADE" },
+            { "id": "inc_mono_expose", "label": "독점 증거를 공개한다", "hint": "여론을 움직인다", "affordance": "INVESTIGATE" }
+          ]
+        },
+        {
+          "stage": 2,
+          "description": "상단이 시장을 완전히 장악하려 한다",
+          "affordances": ["FIGHT", "THREATEN", "PERSUADE", "BRIBE"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 7,
+          "controlReward": 24,
+          "controlPenalty": 10,
+          "sceneFrame": "대형 상단의 깡패들이 마지막 독립 상점을 위협하고 있다. 시장 거리에 긴장감이 흐른다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "ECONOMY", "severity": 2, "textTemplate": "시장 물가가 비정상적으로 오르고 있다", "triggerStage": 0 },
+        { "channel": "RUMOR", "severity": 3, "textTemplate": "대형 상단이 소상인들을 압박한다는 소문이 퍼지고 있다", "triggerStage": 1 },
+        { "channel": "VISUAL", "severity": 4, "textTemplate": "시장 거리에서 상단 깡패들이 행패를 부리고 있다", "triggerStage": 2, "triggerPressure": 70 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 42
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -6, "tensionDelta": -2, "reputationChanges": { "MERCHANT_CONSORTIUM": 6, "LABOR_GUILD": 3 }, "flagsSet": ["MONOPOLY_BROKEN"] },
+        "ESCALATED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "MERCHANT_CONSORTIUM": -10, "LABOR_GUILD": -5 }, "flagsSet": ["MONOPOLY_COMPLETE"] },
+        "EXPIRED": { "heatDelta": 8, "tensionDelta": 1, "reputationChanges": { "MERCHANT_CONSORTIUM": -3 }, "flagsSet": ["MONOPOLY_ENTRENCHED"] }
+      },
+      "dependencies": {
+        "triggeredBy": [
+          { "sourceIncident": "INC_LABOR_STRIKE", "condition": "CONTAINED", "effect": "pressure", "value": -10 }
+        ],
+        "triggers": [],
+        "mutuallyExclusive": []
+      },
+      "relatedNpcIds": ["NPC_SEO_DOYUN", "NPC_MOON_SEA"],
+      "tags": ["MARKET", "ECONOMIC", "MONOPOLY"],
+      "isCritical": false
+    },
+    {
+      "incidentId": "INC_NOBLE_CONSPIRACY",
+      "kind": "POLITICAL",
+      "title": "귀족 음모",
+      "description": "귀족들이 도시 권력을 장악하려는 비밀 모임을 결성했다. 경비대 매수를 통해 쿠데타를 준비 중이다.",
+      "locationId": "LOC_NOBLE",
+      "priority": 5,
+      "weight": 6,
+      "spawnConditions": {
+        "minDay": 4,
+        "minHeat": 30
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "상류 거리에서 비밀 회합이 열리고 있다",
+          "affordances": ["SNEAK", "INVESTIGATE", "OBSERVE", "PERSUADE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 6,
+          "sceneFrame": "밴스 경의 저택에서 밤마다 마차들이 드나든다. 하인들이 입을 굳게 다물고 있다.",
+          "choices": [
+            { "id": "inc_noble_spy", "label": "모임에 잠입한다", "hint": "위험하지만 핵심 정보", "affordance": "SNEAK" },
+            { "id": "inc_noble_servant", "label": "하인에게 접근한다", "hint": "내부 정보를 얻을 수 있다", "affordance": "PERSUADE" },
+            { "id": "inc_noble_watch", "label": "저택 주변을 감시한다", "hint": "참석자 명단 파악", "affordance": "OBSERVE" }
+          ]
+        },
+        {
+          "stage": 1,
+          "description": "귀족들이 경비대 매수를 시도하고 있다",
+          "affordances": ["INVESTIGATE", "PERSUADE", "THREATEN", "STEAL"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 5,
+          "controlReward": 20,
+          "controlPenalty": 9,
+          "sceneFrame": "경비대 지구에서 귀족 가문의 전령이 자주 목격된다. 일부 장교들의 표정이 달라졌다.",
+          "choices": [
+            { "id": "inc_noble_intercept", "label": "뇌물 전달을 가로챈다", "hint": "증거 확보", "affordance": "STEAL" },
+            { "id": "inc_noble_warn", "label": "벨론 대위에게 경고한다", "hint": "경비대 내부 동맹", "affordance": "PERSUADE" }
+          ]
+        },
+        {
+          "stage": 2,
+          "description": "쿠데타가 임박했다",
+          "affordances": ["FIGHT", "PERSUADE", "THREATEN", "HELP"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 8,
+          "controlReward": 28,
+          "controlPenalty": 12,
+          "sceneFrame": "도시 전체에 긴장감이 감돈다. 귀족 저택에서 무장한 사병들이 모이고 있다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "NPC_BEHAVIOR", "severity": 2, "textTemplate": "밴스 경이 최근 비밀 면담을 자주 하고 있다", "triggerStage": 0 },
+        { "channel": "SECURITY", "severity": 4, "textTemplate": "경비대 내부에서 충성 서약을 요구하는 문서가 돌고 있다", "triggerStage": 1 },
+        { "channel": "RUMOR", "severity": 5, "textTemplate": "도시 의회를 전복하려는 음모가 있다는 소문", "triggerStage": 2, "triggerPressure": 75 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -12, "tensionDelta": -4, "reputationChanges": { "CITY_GUARD": 10, "ARCANE_SOCIETY": -8 }, "flagsSet": ["CONSPIRACY_FOILED"], "npcEmotionalChanges": { "NPC_GUARD_CAPTAIN": { "trust": 15, "respect": 10 } } },
+        "ESCALATED": { "heatDelta": 25, "tensionDelta": 6, "reputationChanges": { "CITY_GUARD": -12, "ARCANE_SOCIETY": 5 }, "flagsSet": ["CONSPIRACY_SUCCEEDED"] },
+        "EXPIRED": { "heatDelta": 10, "tensionDelta": 2, "reputationChanges": { "ARCANE_SOCIETY": -2 }, "flagsSet": ["CONSPIRACY_DORMANT"] }
+      },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [{ "targetIncident": "INC_GUARD_CORRUPTION", "condition": "stage_2", "effect": "spawn" }],
+        "mutuallyExclusive": []
+      },
+      "relatedNpcIds": ["NPC_LORD_VANCE", "NPC_PARK_SUNWOO"],
+      "tags": ["NOBLE", "POLITICAL", "COUP"],
+      "isCritical": true
+    },
+    {
+      "incidentId": "INC_SLUM_UPRISING",
+      "kind": "SOCIAL",
+      "title": "빈민가 봉기",
+      "description": "빈민가 주민들의 자발적 저항이 시작되었다. 치안 붕괴와 무장 충돌의 위기가 고조되고 있다.",
+      "locationId": "LOC_SLUMS",
+      "priority": 4,
+      "weight": 7,
+      "spawnConditions": {
+        "minDay": 5,
+        "minHeat": 35
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "빈민가 곳곳에서 소요가 일어나고 있다",
+          "affordances": ["OBSERVE", "HELP", "PERSUADE", "INVESTIGATE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 4,
+          "controlReward": 14,
+          "controlPenalty": 6,
+          "sceneFrame": "빈민가 골목에서 고함이 들리고 상점 유리창이 깨지는 소리가 울린다. 주민들이 거리로 쏟아져 나오고 있다.",
+          "choices": [
+            { "id": "inc_uprising_calm", "label": "주민들을 진정시킨다", "hint": "폭력 확산을 막는다", "affordance": "PERSUADE" },
+            { "id": "inc_uprising_listen", "label": "불만의 원인을 조사한다", "hint": "근본 문제를 파악", "affordance": "INVESTIGATE" },
+            { "id": "inc_uprising_aid", "label": "부상자를 돕는다", "hint": "주민들의 신뢰를 얻는다", "affordance": "HELP" }
+          ]
+        },
+        {
+          "stage": 1,
+          "description": "주민들이 바리케이드를 세우기 시작했다",
+          "affordances": ["PERSUADE", "HELP", "FIGHT", "SNEAK"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 6,
+          "controlReward": 20,
+          "controlPenalty": 9,
+          "sceneFrame": "빈민가 주요 골목이 뒤집힌 수레와 가구로 막혀있다. 주민들이 돌과 막대기를 들고 경비대를 경계하고 있다.",
+          "choices": [
+            { "id": "inc_uprising_negotiate", "label": "경비대와 주민 사이를 중재한다", "hint": "양쪽 모두의 신뢰 필요", "affordance": "PERSUADE" },
+            { "id": "inc_uprising_supply", "label": "식량과 물자를 전달한다", "hint": "포위 상태를 완화", "affordance": "HELP" }
+          ]
+        },
+        {
+          "stage": 2,
+          "description": "무장 저항으로 전환되고 있다",
+          "affordances": ["FIGHT", "PERSUADE", "THREATEN", "HELP"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 8,
+          "controlReward": 25,
+          "controlPenalty": 12,
+          "sceneFrame": "빈민가에서 화염이 오르고 있다. 무장한 주민들과 경비대가 대치 중이다. 누군가 결단을 내려야 한다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "VISUAL", "severity": 3, "textTemplate": "빈민가에서 연기가 피어오르고 있다", "triggerStage": 0 },
+        { "channel": "SECURITY", "severity": 4, "textTemplate": "빈민가 입구가 바리케이드로 차단되었다", "triggerStage": 1 },
+        { "channel": "SECURITY", "severity": 5, "textTemplate": "빈민가에서 무장 충돌이 임박하다", "triggerStage": 2, "triggerPressure": 75 },
+        { "channel": "RUMOR", "severity": 5, "textTemplate": "쥐왕이 빈민가 전체를 봉쇄하겠다고 선언했다", "triggerStage": 2, "triggerPressure": 85 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 30
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -10, "tensionDelta": -3, "reputationChanges": { "LABOR_GUILD": 10 }, "flagsSet": ["UPRISING_QUELLED"], "npcEmotionalChanges": { "NPC_RAT_KING": { "trust": 10, "respect": 15 }, "NPC_HAN_SOOYEON": { "trust": 10, "attachment": 5 } } },
+        "ESCALATED": { "heatDelta": 25, "tensionDelta": 6, "reputationChanges": { "LABOR_GUILD": -10, "CITY_GUARD": -8 }, "flagsSet": ["UPRISING_WARZONE"] },
+        "EXPIRED": { "heatDelta": 15, "tensionDelta": 3, "reputationChanges": { "LABOR_GUILD": -3 }, "flagsSet": ["UPRISING_SMOLDERING"] }
+      },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": ["INC_LABOR_STRIKE"]
+      },
+      "relatedNpcIds": ["NPC_RAT_KING", "NPC_HAN_SOOYEON"],
+      "tags": ["SLUMS", "SOCIAL", "UPRISING"],
+      "isCritical": true
+    },
+    {
+      "incidentId": "INC_ARCANE_EXPERIMENT",
+      "kind": "POLITICAL",
+      "title": "비밀 실험",
+      "description": "아케인 소사이어티가 상류 거리 지하에서 위험한 마법 실험을 진행하고 있다. 부작용이 도시 전체를 위협할 수 있다.",
+      "locationId": "LOC_NOBLE",
+      "priority": 4,
+      "weight": 6,
+      "spawnConditions": {
+        "minDay": 5,
+        "minHeat": 25
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "상류 거리 지하에서 비밀 연구가 진행되고 있다",
+          "affordances": ["SNEAK", "INVESTIGATE", "OBSERVE"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 14,
+          "controlPenalty": 5,
+          "sceneFrame": "밤마다 상류 거리의 한 저택 지하에서 기묘한 빛이 새어나온다. 근처를 지나는 사람들이 두통을 호소한다.",
+          "choices": [
+            { "id": "inc_arcane_sneak", "label": "지하로 잠입한다", "hint": "실험 내용을 직접 확인", "affordance": "SNEAK" },
+            { "id": "inc_arcane_ask", "label": "주변 하인들에게 물어본다", "hint": "간접적 정보 수집", "affordance": "INVESTIGATE" },
+            { "id": "inc_arcane_watch", "label": "저택 출입자를 감시한다", "hint": "관련자 파악", "affordance": "OBSERVE" }
+          ]
+        },
+        {
+          "stage": 1,
+          "description": "실험 부작용이 주변에 나타나기 시작했다",
+          "affordances": ["INVESTIGATE", "HELP", "PERSUADE", "THREATEN"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 5,
+          "controlReward": 20,
+          "controlPenalty": 8,
+          "sceneFrame": "상류 거리의 정원에서 식물이 기형적으로 자라고, 가축이 이상 행동을 보인다. 하인들이 원인 모를 병에 걸리고 있다.",
+          "choices": [
+            { "id": "inc_arcane_evidence", "label": "부작용의 증거를 수집한다", "hint": "실험 중단의 명분", "affordance": "INVESTIGATE" },
+            { "id": "inc_arcane_confront", "label": "이졸데 여사에게 따진다", "hint": "후원을 끊게 할 수 있다", "affordance": "PERSUADE" }
+          ]
+        },
+        {
+          "stage": 2,
+          "description": "실험이 통제를 벗어나고 있다",
+          "affordances": ["FIGHT", "HELP", "INVESTIGATE", "THREATEN"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 8,
+          "controlReward": 26,
+          "controlPenalty": 12,
+          "sceneFrame": "지하 실험실에서 에너지 파동이 뿜어져 나오고 있다. 저택 벽에 균열이 생기고, 거리의 등불이 깜빡인다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "VISUAL", "severity": 2, "textTemplate": "상류 거리에서 밤마다 기묘한 빛이 목격되고 있다", "triggerStage": 0 },
+        { "channel": "RUMOR", "severity": 3, "textTemplate": "귀족 저택 근처에서 원인 모를 질병이 퍼지고 있다", "triggerStage": 1 },
+        { "channel": "VISUAL", "severity": 5, "textTemplate": "상류 거리에서 강력한 에너지 파동이 감지되었다", "triggerStage": 2, "triggerPressure": 70 },
+        { "channel": "SECURITY", "severity": 5, "textTemplate": "경비대가 상류 거리 일부를 긴급 봉쇄했다", "triggerStage": 2, "triggerPressure": 85 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 36
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -8, "tensionDelta": -3, "reputationChanges": { "ARCANE_SOCIETY": -5, "CITY_GUARD": 5 }, "flagsSet": ["EXPERIMENT_STOPPED"], "npcEmotionalChanges": { "NPC_PARK_SUNWOO": { "trust": 10, "respect": 5 } } },
+        "ESCALATED": { "heatDelta": 22, "tensionDelta": 5, "reputationChanges": { "ARCANE_SOCIETY": -15 }, "flagsSet": ["EXPERIMENT_CATASTROPHE"] },
+        "EXPIRED": { "heatDelta": 12, "tensionDelta": 2, "reputationChanges": { "ARCANE_SOCIETY": -3 }, "flagsSet": ["EXPERIMENT_DORMANT"] }
+      },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": []
+      },
+      "relatedNpcIds": ["NPC_PARK_SUNWOO", "NPC_DAME_ISOLDE"],
+      "tags": ["NOBLE", "POLITICAL", "ARCANE"],
+      "isCritical": true
+    },
+    {
+      "incidentId": "INC_TAVERN_INTRIGUE",
+      "kind": "CRIMINAL",
+      "title": "정보전",
+      "description": "잠긴 닻 선술집을 중심으로 각 세력의 정보원들이 치열한 정보 수집전을 벌이고 있다.",
+      "locationId": "LOC_TAVERN",
+      "priority": 2,
+      "weight": 9,
+      "spawnConditions": {
+        "minDay": 2,
+        "minHeat": 10
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "각 세력의 정보원들이 선술집에 침투하고 있다",
+          "affordances": ["OBSERVE", "INVESTIGATE", "SNEAK", "TALK"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 2,
+          "controlReward": 12,
+          "controlPenalty": 4,
+          "sceneFrame": "선술집에 낯선 얼굴들이 늘었다. 평소보다 조용히 술을 마시며 주위를 살피는 사람들이 눈에 띈다.",
+          "choices": [
+            { "id": "inc_tavern_observe", "label": "낯선 이들을 관찰한다", "hint": "정보원을 식별", "affordance": "OBSERVE" },
+            { "id": "inc_tavern_mingle", "label": "자연스럽게 어울린다", "hint": "대화로 정보 수집", "affordance": "TALK" },
+            { "id": "inc_tavern_tail", "label": "수상한 인물을 미행한다", "hint": "접선 상대 파악", "affordance": "SNEAK" }
+          ]
+        },
+        {
+          "stage": 1,
+          "description": "이중 스파이가 발각되었다",
+          "affordances": ["INVESTIGATE", "PERSUADE", "THREATEN", "FIGHT"],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 4,
+          "controlReward": 18,
+          "controlPenalty": 7,
+          "sceneFrame": "선술집 2층에서 고성이 들렸다. 누군가가 이중 첩자로 밝혀져 쫓기고 있다. 오웬이 인상을 찌푸리고 있다.",
+          "choices": [
+            { "id": "inc_tavern_protect", "label": "발각된 첩자를 보호한다", "hint": "정보를 얻을 수 있다", "affordance": "HELP" },
+            { "id": "inc_tavern_interrogate", "label": "첩자를 심문한다", "hint": "배후를 밝혀낸다", "affordance": "THREATEN" }
+          ]
+        },
+        {
+          "stage": 2,
+          "description": "핵심 정보가 유출 직전이다",
+          "affordances": ["FIGHT", "SNEAK", "INVESTIGATE", "THREATEN"],
+          "matchPolicy": "NEUTRAL",
+          "pressurePerTick": 6,
+          "controlReward": 22,
+          "controlPenalty": 10,
+          "sceneFrame": "도시의 방어 배치도가 외부 세력에 넘어가려 하고 있다. 선술집이 최후의 거래 장소로 지목되었다."
+        }
+      ],
+      "signalTemplates": [
+        { "channel": "NPC_BEHAVIOR", "severity": 2, "textTemplate": "선술집에 낯선 사람들이 부쩍 늘었다", "triggerStage": 0 },
+        { "channel": "RUMOR", "severity": 3, "textTemplate": "선술집에서 첩자가 발각되었다는 소문", "triggerStage": 1 },
+        { "channel": "SECURITY", "severity": 4, "textTemplate": "도시 기밀 정보가 유출될 위험이 있다", "triggerStage": 2, "triggerPressure": 65 },
+        { "channel": "NPC_BEHAVIOR", "severity": 5, "textTemplate": "오웬이 선술집 출입을 제한하기 시작했다", "triggerStage": 2, "triggerPressure": 80 }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 42
+      },
+      "impactOnResolve": {
+        "CONTAINED": { "heatDelta": -5, "tensionDelta": -2, "reputationChanges": { "CITY_GUARD": 5, "MERCHANT_CONSORTIUM": 3 }, "flagsSet": ["INTRIGUE_RESOLVED"], "npcEmotionalChanges": { "NPC_OWEN_KEEPER": { "trust": 10, "attachment": 5 } } },
+        "ESCALATED": { "heatDelta": 18, "tensionDelta": 4, "reputationChanges": { "CITY_GUARD": -8 }, "flagsSet": ["INTRIGUE_LEAKED"] },
+        "EXPIRED": { "heatDelta": 8, "tensionDelta": 1, "reputationChanges": {}, "flagsSet": ["INTRIGUE_FADED"] }
+      },
+      "dependencies": {
+        "triggeredBy": [],
+        "triggers": [],
+        "mutuallyExclusive": []
+      },
+      "relatedNpcIds": ["NPC_KIM_JIHOON", "NPC_OWEN_KEEPER"],
+      "tags": ["TAVERN", "CRIMINAL", "ESPIONAGE"],
+      "isCritical": false
     }
   ]
 }

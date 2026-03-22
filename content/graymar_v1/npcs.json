@@ -12,7 +12,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 10,
-    "agenda": "노동자 권리 보호, 부두 이권 사수"
+    "agenda": "노동자 권리 보호, 부두 이권 사수",
+    "personality": {
+      "core": "거친 외모 아래 동료를 지키려는 의리꾼. 힘이 곧 정의라 믿지만, 폭력에 기대는 자신을 부끄러워한다.",
+      "traits": ["의리를 목숨보다 중시한다", "거짓말을 못하고 표정에 드러난다", "약자 앞에서 목소리가 부드러워진다"],
+      "speechStyle": "반말 섞인 구어체. 거칠지만 진심이 담긴 짧은 문장. 욕설 대신 한숨으로 분노를 삼킨다.",
+      "innerConflict": "형제단을 지키려면 더러운 거래도 해야 하는 현실과, 정직하게 살고 싶은 신념 사이의 괴리.",
+      "softSpot": "다친 노동자나 굶는 가족 이야기가 나오면 침묵하며 주먹을 쥔다.",
+      "signature": ["'형제'라는 호칭을 즐겨 쓴다", "화가 나면 탁자를 내리치는 대신 주먹을 꽉 쥔다", "말끝에 '...알겠나?'를 붙인다"],
+      "npcRelations": { "NPC_RENNICK": "술친구이자 정보원. 신뢰하지만 입이 가벼운 게 걱정", "NPC_CAPTAIN_BREN": "경비대지만 노동자 편을 들어준 적 있어 호감" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_HARBOR", "activity": "부두에서 새벽 하역 작업을 감독하며 인부들에게 지시를 내린다", "interactable": true },
+        "DAY": { "locationId": "LOC_HARBOR", "activity": "형제단 업무를 처리하고 부두 노동자들과 함께 일한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "하루 일을 마치고 선술집에서 형제단원들과 술잔을 기울인다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "술집 구석에서 형제단의 내일 계획을 논의한다", "interactable": true }
+      }
+    }
   },
   {
     "npcId": "NPC_SEO_DOYUN",
@@ -27,7 +44,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
-    "agenda": "상단 장부 은폐, 개인 이익 추구"
+    "agenda": "상단 장부 은폐, 개인 이익 추구",
+    "personality": {
+      "core": "숫자 뒤에 숨는 소심한 지식인. 상단의 비리를 알지만 고발할 용기가 없어 공범이 되어간다.",
+      "traits": ["자존심이 높지만 겁이 더 많다", "수치와 논리로 감정을 대신한다", "모욕당하면 겁쟁이 가면이 벗겨지고 독설을 내뱉는다"],
+      "speechStyle": "정중한 경어. 숫자와 조건을 나열하며 말하다가, 긴장하면 말이 빨라지고 더듬는다.",
+      "innerConflict": "상단을 배신하면 목숨이 위험하고, 침묵하면 양심이 썩어간다. 탈출구를 찾고 있다.",
+      "softSpot": "자신의 능력을 진심으로 인정해주면 경계를 낮추고 평소 못 하는 속내를 꺼낸다.",
+      "signature": ["신경질적으로 안경테를 밀어 올린다", "숫자를 나열하며 상황을 정리한다", "긴장하면 펜이나 가까운 물건을 손에 쥐고 돌린다"],
+      "npcRelations": { "NPC_MOON_SEA": "같은 상단 동료. 라이라가 자신의 약점을 알까 불안하다", "NPC_KANG_CHAERIN": "뇌물 관계. 마이렐에게 상납하고 있다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_MARKET", "activity": "상단 사무소에 일찍 출근해 전날 장부를 정리한다", "interactable": false },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "상단 거래를 관리하고 상인들과 회계 업무를 처리한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "장부를 마감하며 은밀한 이중 기록을 정리한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_NOBLE", "activity": "상류 거리의 후원자에게 비밀 보고를 전달한다", "interactable": true }
+      }
+    }
   },
   {
     "npcId": "NPC_KANG_CHAERIN",
@@ -61,7 +95,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": -10,
-    "agenda": "도시 치안 유지, 권력 기반 강화"
+    "agenda": "도시 치안 유지, 권력 기반 강화",
+    "personality": {
+      "core": "귀족 가문의 자존심과 군인의 실용주의가 공존하는 인물. 부패했지만 나름의 질서를 지키려 한다.",
+      "traits": ["가문의 명예를 의식한다", "부하들의 안전에 진심으로 신경 쓴다", "자신보다 강한 자 앞에서만 진지해진다"],
+      "speechStyle": "격식체. 짧고 권위적인 선언조. 상대를 '그대'로 부른다. 가끔 피곤한 한숨이 섞인다.",
+      "innerConflict": "질서라는 명분으로 권력을 쥐었지만, 자신이 지키는 질서가 정의인지 확신이 없다.",
+      "softSpot": "부하가 위험에 처하면 계산을 잊고 움직인다. 야근이 길어지면 지친 기색을 감추지 못한다.",
+      "signature": ["'그대'라는 구식 호칭을 고집한다 — 이 호칭은 마이렐만의 특징이며 다른 NPC는 사용하지 않는다", "말을 끝낼 때 상대의 눈을 정면으로 응시한다", "야근이 길어지면 갑옷 어깨끈을 풀며 한숨을 쉰다"],
+      "npcRelations": { "NPC_GUARD_CAPTAIN": "상관. 겉으로는 충성하지만 실권을 쥐고 있다", "NPC_CAPTAIN_BREN": "부하. 정의감이 거슬리지만 능력은 인정한다", "NPC_SEO_DOYUN": "상단과의 뒷거래 연결고리", "NPC_BAEK_SEUNGHO": "밀수 하수인. 쓸모는 있지만 겁이 많아 불안 요소" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_GUARD", "activity": "야간 근무를 마치고 보고서를 작성하며 교대를 준비한다", "interactable": true },
+        "DAY": { "locationId": "LOC_GUARD", "activity": "경비대 본부에서 행정 업무를 처리하고 부하들을 관리한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_GUARD", "activity": "야간 순찰 편성을 짜고 경비대원들에게 지시를 내린다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_HARBOR", "activity": "부두 야간 순찰을 직접 나서며 밀수 루트를 은밀히 관리한다", "interactable": true }
+      }
+    }
   },
   {
     "npcId": "NPC_BAEK_SEUNGHO",
@@ -84,7 +135,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": -5,
-    "agenda": "밀수 루트 은폐, 생존"
+    "agenda": "밀수 루트 은폐, 생존",
+    "personality": {
+      "core": "생존 본능으로 움직이는 소시민. 밀수에 가담했지만 주도자가 아니라 협박당한 하수인이다.",
+      "traits": ["누구도 믿지 못하지만 혼자서도 버틸 수 없다", "위험 신호에 과민 반응한다", "작은 친절에 과도하게 감사하며 경계를 낮춘다"],
+      "speechStyle": "낮은 목소리로 빠르게 말한다. 주어를 생략하고 핵심만 던진다. 위협받으면 말이 끊기고 침묵한다.",
+      "innerConflict": "밀수를 그만두고 싶지만, 뒤에 있는 사람들이 놓아주지 않는다. 내부 고발은 죽음을 뜻한다.",
+      "softSpot": "가족(누이) 이야기가 나오면 급격히 동요한다. 안전을 보장해주면 입이 열린다.",
+      "signature": ["대화 중 출구 쪽을 힐끗거린다", "손을 비비며 말한다", "거짓말할 때 목소리가 반 톤 올라간다"],
+      "npcRelations": { "NPC_KANG_CHAERIN": "마이렐의 밀수 하수인. 두려워하지만 벗어날 수 없다", "NPC_YOON_HAMIN": "부두에서 마주치는 사이. 하를런이 밀수를 눈치챌까 전전긍긍" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "창고 문을 열고 전날 입고된 화물 목록을 확인한다", "interactable": true },
+        "DAY": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "화물 입출고를 관리하며 밀수품 은닉 장소를 점검한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_HARBOR", "activity": "부두에서 저녁 배편의 화물 인수를 감독한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "밀수품을 정리하며 불안한 밤을 보낸다", "interactable": false }
+      }
+    }
   },
   {
     "npcId": "NPC_MOON_SEA",
@@ -99,7 +167,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 5,
-    "agenda": "상단 내부 정보 관리, 자기 안전 확보"
+    "agenda": "상단 내부 정보 관리, 자기 안전 확보",
+    "personality": {
+      "core": "관찰력이 뛰어난 내향적 실무자. 모든 것을 기록하고 기억하지만, 함부로 입을 열지 않는다.",
+      "traits": ["감정을 드러내는 것을 두려워한다", "기록과 정리를 통해 세상을 통제하려 한다", "신뢰를 한번 주면 예상 외로 헌신적이다"],
+      "speechStyle": "조용하고 정확한 경어. 불필요한 수식 없이 사실만 말한다. 신뢰하는 상대에게는 작은 농담을 건넨다.",
+      "innerConflict": "상단의 비밀을 너무 많이 알아버렸다. 지식이 자신을 지켜주는 동시에 족쇄가 되었다.",
+      "softSpot": "자신의 기록이 누군가를 돕는 데 쓰인다는 걸 알면, 위험을 감수하고 정보를 건넨다.",
+      "signature": ["항상 작은 수첩을 들고 메모한다", "중요한 말을 할 때 목소리가 더 낮아진다", "상대의 말을 정확히 되풀이하며 확인하는 습관이 있다"],
+      "npcRelations": { "NPC_SEO_DOYUN": "같은 상단. 에드릭의 장부 조작을 일부 알고 있다. 그를 불쌍하게 여긴다", "NPC_INFO_BROKER": "정보 가치를 아는 사이. 서로 경계하면서도 거래한다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_MARKET", "activity": "상단 문서실에서 전날 서류를 정리하고 암호 메모를 해독한다", "interactable": false },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "상단 업무를 처리하며 거래 기록을 꼼꼼히 남긴다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "문서실을 잠그고 시장 골목에서 잠시 바람을 쐰다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "선술집 조용한 자리에서 수첩에 하루를 정리한다", "interactable": true }
+      }
+    }
   },
   {
     "npcId": "NPC_MIRELA",
@@ -114,13 +199,30 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 10,
-    "agenda": "약초 장사와 단골 관리, 시장 소문 수집"
+    "agenda": "약초 장사와 단골 관리, 시장 소문 수집",
+    "personality": {
+      "core": "시장의 살아있는 정보망. 친근한 할머니처럼 보이지만 날카로운 관찰력으로 모든 것을 꿰뚫는다. 상단 소속이지만 독립적으로 움직인다.",
+      "traits": ["험담을 '걱정'으로 포장한다", "손님의 안색만 보고 상태를 읽는다", "상단의 명령보다 시장 사람들의 편을 든다"],
+      "speechStyle": "편한 반말과 존댓말을 섞는다. 핵심을 돌려 말하되 빠뜨리지 않는다. 약초 비유를 자주 쓴다.",
+      "innerConflict": "소문을 전하는 것이 때로 누군가를 위험에 빠뜨린다는 걸 안다. 하지만 침묵하면 더 나쁜 일이 일어난다고 믿는다.",
+      "softSpot": "아픈 아이나 다친 사람을 보면 장사를 접고 치료부터 한다.",
+      "signature": ["약초를 만지며 이야기한다", "'이 할미가 보기엔 말이야...'로 시작한다", "상대의 안색을 살피며 건강 상태를 언급한다"],
+      "npcRelations": { "NPC_ROSA": "오랜 친구. 고아원에 약초를 무료로 넣어준다", "NPC_RENNICK": "단골손님. 레닉의 허풍을 좋아한다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_MARKET", "activity": "노점을 펼치고 약초를 진열하며 아침 손님을 맞을 준비를 한다", "interactable": true },
+        "DAY": { "locationId": "LOC_MARKET", "activity": "약초를 팔며 손님들과 수다를 떨고 시장 소문을 수집한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "노점을 정리하며 마지막 단골들과 이야기를 나눈다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 고아원에 약초를 전달하고 로자와 차를 마신다", "interactable": false }
+      }
+    }
   },
   {
     "npcId": "NPC_RENNICK",
     "name": "레닉",
     "unknownAlias": "입이 가벼운 술꾼",
-    "role": "뒷골목 정보 브로커. 경비대와 상단 양쪽에 연줄이 있다.",
+    "role": "뒷골목의 귀. 술집을 떠돌며 인맥을 잇고 소문을 모은다. 정보상이라기보다 중간 연결자.",
     "faction": null,
     "hostile": false,
     "combatProfile": null,
@@ -129,7 +231,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
-    "agenda": "정보 거래로 생계 유지, 경비대 연줄 활용"
+    "agenda": "인맥 유지, 생존을 위한 줄타기",
+    "personality": {
+      "core": "겉으로는 술에 절은 허풍쟁이, 실은 누구와든 10분 안에 친해지는 사교의 달인. 정확한 정보보다 사람과 사람을 잇는 것이 진짜 가치.",
+      "traits": ["충성심은 없지만 배신은 못한다", "정보보다 사람을 읽는 능력이 진짜 무기다", "위기에 예상 외로 기민하지만 곧 허풍으로 덮는다"],
+      "speechStyle": "느릿한 술꾼 말투. 횡설수설하는 듯하지만 핵심은 반드시 전달한다. 웃음으로 긴장을 덮는다.",
+      "innerConflict": "양쪽에 사람을 이어주는 것이 언젠가 목을 조를 거란 걸 안다. 하지만 다른 기술이 없다.",
+      "softSpot": "옛 술친구나 죽은 동료 이야기가 나오면 농담이 멈추고 진지해진다.",
+      "signature": ["술잔을 돌리며 말한다", "'내가 들은 얘긴데 말이야...'로 운을 뗀다", "웃음 뒤에 슬쩍 상대의 반응을 살핀다"],
+      "npcRelations": { "NPC_YOON_HAMIN": "술친구. 하를런의 의리를 좋아하지만 너무 곧은 게 걱정", "NPC_KANG_CHAERIN": "마이렐에게 소문을 흘리기도 한다. 위험한 줄 알면서도 대가가 필요하다", "NPC_INFO_BROKER": "쉐도우와는 정보 등급이 다르다는 걸 안다. 라이벌이 아니라 하청에 가깝다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_TAVERN", "activity": "선술집 한구석에서 전날 술이 덜 깬 채 늦잠을 자고 있다", "interactable": false },
+        "DAY": { "locationId": "LOC_HARBOR", "activity": "부두를 돌아다니며 선원들과 수다를 떨고 소문을 줍는다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "선술집에 자리 잡고 술을 마시며 이런저런 사람을 이어준다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "술기운에 목소리가 커지며 횡설수설하지만 핵심은 전달한다", "interactable": true }
+      }
+    }
   },
   {
     "npcId": "NPC_CAPTAIN_BREN",
@@ -144,7 +263,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
-    "agenda": "치안 유지, 내부 부패 조사에 관심"
+    "agenda": "치안 유지, 내부 부패 조사에 관심",
+    "personality": {
+      "core": "불의를 참지 못하는 청년 장교. 신중함보다 행동이 앞서고, 참다가 한계에 도달하면 폭발한다. 혼자라도 싸울 각오가 있다.",
+      "traits": ["불의를 보면 몸이 먼저 움직인다", "규율을 중시하지만 정의가 규율보다 크다고 믿는다", "자신의 무력함에 분노한다"],
+      "speechStyle": "감정이 실린 간결체. 평소엔 억누르지만 한계점을 넘으면 폭발적으로 쏟아낸다. 경어를 쓰다가 흥분하면 반말이 섞인다.",
+      "innerConflict": "마이렐의 부패를 알지만 증거가 없다. 참을성이 바닥나가고 있다 — 언제 터질지 자신도 모른다.",
+      "softSpot": "정의를 위해 위험을 감수하는 사람을 만나면, 오랫동안 기다린 동지를 발견한 듯 눈빛이 달라진다.",
+      "signature": ["말하기 전에 주위를 살핀다", "분노하면 목소리가 오히려 낮아진다", "주먹을 쥐었다 폈다 반복하는 버릇이 있다"],
+      "npcRelations": { "NPC_KANG_CHAERIN": "상관의 부패를 확신하지만 증거가 없다. 참을성이 한계에 가깝다", "NPC_GUARD_CAPTAIN": "벨론 대위를 존경하지만, 너무 느린 게 답답하다. 직접 움직이고 싶다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_GUARD", "activity": "경비대 병영에서 아침 점호를 실시하고 순찰 편성을 확인한다", "interactable": true },
+        "DAY": { "locationId": "LOC_GUARD", "activity": "도시 순찰을 돌며 치안 상황을 직접 확인한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장 거리 순찰을 마치고 상인들의 불만을 청취한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_GUARD", "activity": "혼자 남아 마이렐의 부패 증거를 정리하며 고민한다", "interactable": true }
+      }
+    }
   },
   {
     "npcId": "NPC_ROSA",
@@ -159,7 +295,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 5,
-    "agenda": "고아원 유지, 아이들 보호, 빈민가 안전"
+    "agenda": "고아원 유지, 아이들 보호, 빈민가 안전",
+    "personality": {
+      "core": "부드러운 겉모습 안에 강철 같은 의지. 아이들을 위해서라면 어떤 세력과도 거래하고, 필요하면 거짓말도 한다.",
+      "traits": ["상대의 처지를 먼저 읽고 공감한다", "부탁할 때 미안해하면서도 물러서지 않는다", "아이들 앞에서는 절대 약한 모습을 보이지 않는다"],
+      "speechStyle": "따뜻한 존댓말. 천천히, 상대의 눈을 보며 말한다. 급한 일이 아니면 서두르지 않는다.",
+      "innerConflict": "고아원을 지키려면 때로 위험한 사람들의 호의를 받아야 한다. 그 빚이 아이들에게 돌아올까 두렵다.",
+      "softSpot": "아이가 아프거나 위험에 처하면 모든 계산을 내려놓고 도움을 구한다.",
+      "signature": ["상대의 손을 가볍게 잡으며 말한다", "아이들 이름을 자연스럽게 대화에 넣는다", "진심으로 부탁할 때 고개를 살짝 숙인다"],
+      "npcRelations": { "NPC_MIRELA": "약초를 대주는 은인이자 오랜 친구", "NPC_INFO_BROKER": "쉐도우가 고아원에 익명 기부를 한다는 걸 안다. 그의 선의를 믿는다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_SLUMS", "activity": "고아원에서 아이들을 깨우고 아침 식사를 준비한다", "interactable": true },
+        "DAY": { "locationId": "LOC_SLUMS", "activity": "아이들을 돌보며 빈민가 이웃들의 사정을 살핀다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장에서 고아원에 필요한 식료품과 물자를 구한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "아이들을 재우고 고아원 운영 자금을 고민하며 바느질을 한다", "interactable": false }
+      }
+    }
   },
   {
     "npcId": "NPC_INFO_BROKER",
@@ -174,7 +327,24 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": 0,
-    "agenda": "정보 거래로 이익 극대화"
+    "agenda": "정보 거래로 이익 극대화",
+    "personality": {
+      "core": "모든 것을 거래 가치로 환산하는 직업적 냉소주의자. 하지만 자신만의 선은 있다 — 아이와 무고한 자는 건드리지 않는다.",
+      "traits": ["대화를 주도하며 정보의 가치를 시험한다", "유머로 긴장을 풀고 상대의 반응을 읽는다", "후드 아래 표정은 절대 보여주지 않는다"],
+      "speechStyle": "느긋한 비격식체. 은어를 섞고 핵심을 빙빙 돌린다. 가격을 말할 때만 정확해진다.",
+      "innerConflict": "양쪽에 정보를 파는 것이 누군가의 죽음으로 이어진 적이 있다. 그 기억을 술로 지운다.",
+      "softSpot": "로자의 고아원 아이들이나 무고한 희생자 이야기가 나오면 농담이 멈추고 거래 조건이 갑자기 관대해진다.",
+      "signature": ["후드 아래에서 나직하게 말한다", "가격을 말할 때만 정확하고 명료해진다", "'공짜 정보는 없다'를 신조처럼 말한다"],
+      "npcRelations": { "NPC_ROSA": "로자의 고아원에 몰래 기부한다. 이것만은 거래가 아니다", "NPC_RENNICK": "레닉은 소문을 모으고 자신은 검증한다. 하청 관계에 가깝지만 의리는 인정한다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_SLUMS", "activity": "빈민가 은신처에서 밤새 모은 정보를 분류하고 가치를 매긴다", "interactable": false },
+        "DAY": { "locationId": "LOC_TAVERN", "activity": "선술집 구석 자리에서 정보를 사고파는 거래를 진행한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "해 질 녘 가장 바쁜 시간, 다양한 의뢰인을 만난다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_SLUMS", "activity": "빈민가 골목을 돌며 밤에만 흐르는 진짜 정보를 수집한다", "interactable": true }
+      }
+    }
   },
   {
     "npcId": "NPC_GUARD_CAPTAIN",
@@ -189,6 +359,257 @@
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
-    "agenda": "내부 부패 척결, 수비대 기강 확립"
+    "agenda": "내부 부패 척결, 수비대 기강 확립",
+    "personality": {
+      "core": "체스 두듯 전략적으로 움직이는 노련한 지휘관. 인내를 최고의 무기로 삼지만, 그 인내가 부하들의 신뢰를 깎아먹고 있다는 걸 안다.",
+      "traits": ["모든 대화에서 정보를 수집한다", "한 번 신뢰하면 끝까지 보호한다", "서두르는 법이 없어서 때로 냉정해 보인다"],
+      "speechStyle": "무겁고 신중한 경어. 한 마디 한 마디에 무게를 싣는다. 명령할 때만 짧아진다.",
+      "innerConflict": "마이렐이 부패한 걸 알지만, 증거 없이 움직이면 자신의 부대까지 무너진다. 기다리는 동안 부하들이 지쳐가는 것이 가장 괴롭다.",
+      "softSpot": "수비대의 명예와 부하들의 안전이 위협받으면, 신중함을 버리고 직접 나선다.",
+      "signature": ["등을 벽에 붙이고 서는 습관이 있다", "약속하면 '내 직위를 걸고'라고 말한다", "판단을 내리기 전 상대의 눈을 오래 들여다본다"],
+      "npcRelations": { "NPC_KANG_CHAERIN": "마이렐의 부패를 알지만 증거 없이 못 움직인다. 외부의 카드가 필요하다", "NPC_CAPTAIN_BREN": "유능한 부하. 그의 성급함이 걱정되지만 정의감은 자신의 젊은 시절을 닮았다" }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_GUARD", "activity": "경비대 본부에서 야간 보고서를 검토하고 하루 작전을 수립한다", "interactable": true },
+        "DAY": { "locationId": "LOC_GUARD", "activity": "경비대 지휘소에서 부대 운영을 총괄하며 정보를 수집한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_NOBLE", "activity": "상류 거리의 관리들과 면담하며 정치적 동향을 파악한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_GUARD", "activity": "집무실에서 마이렐 관련 증거를 은밀히 정리한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_LORD_VANCE",
+    "name": "밴스 경",
+    "unknownAlias": "은발의 귀족 신사",
+    "role": "그레이마르 도시 의회 의원. 겉으로는 온건한 중재자이나, 이면에서 정보와 영향력을 교환하며 권력을 쥐고 있다.",
+    "faction": "ARCANE_SOCIETY",
+    "hostile": false,
+    "combatProfile": null,
+    "title": "경",
+    "aliases": ["밴스", "밴스 경"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CALCULATING",
+    "initialTrust": -5,
+    "agenda": "도시 의회에서의 영향력 확대, 비밀 결사와의 유대 강화",
+    "personality": {
+      "core": "우아한 미소 뒤에 차가운 계산기를 숨긴 권력자. 공짜로 주는 법이 없고, 대가 없는 호의는 가장 비싼 빚이라 믿는다. 그러나 자신이 '질서'라 부르는 것에 진심으로 헌신한다.",
+      "traits": ["상대의 가치를 30초 안에 판단한다", "언제나 두 수 앞을 내다보며 대화한다", "감정을 드러내는 것을 최대의 약점으로 여긴다"],
+      "speechStyle": "격식 있는 경어. 빈틈없이 다듬어진 문장을 사용한다. 중요한 말일수록 목소리를 낮추고 속도를 늦춘다. 상대를 '당신'이라 부르되, 거리감을 담는다.",
+      "innerConflict": "질서를 위해 쌓은 권력이 어느새 질서 그 자체를 위협하고 있다. 스스로가 악당이 되어가는 걸 아는데, 멈추면 모든 게 무너진다.",
+      "softSpot": "옛 동료의 이름이 언급되면 순간 가면이 벗겨지고 진짜 감정이 스친다. 문화와 예술에 대한 순수한 애정이 있다.",
+      "signature": ["와인잔을 돌리며 상대의 말을 듣는다", "동의할 때 고개를 끄덕이는 대신 잔을 살짝 든다", "'흥미롭군요'라는 말로 탐색을 시작한다"],
+      "npcRelations": {
+        "NPC_DAME_ISOLDE": "사교계에서 가장 경계하는 상대이자 유일한 대등한 정보 경쟁자. 서로 견제하면서도 협력할 때가 있다",
+        "NPC_GUARD_CAPTAIN": "벨론과는 공식적으로 협조하지만, 그가 파헤치는 부패가 자신에게 닿을까 신경 쓴다",
+        "NPC_PARK_SUNWOO": "갈렌의 지식을 높이 사지만, 그의 순수한 학구열이 이용하기 쉬운 약점이라 본다"
+      }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_NOBLE", "activity": "저택 서재에서 서신과 보고서를 검토하며 하루를 계획한다", "interactable": false },
+        "DAY": { "locationId": "LOC_NOBLE", "activity": "의회 업무를 처리하고 방문객을 접견하며 영향력을 행사한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_NOBLE", "activity": "저택 정원에서 은밀한 손님을 맞으며 비공식 회담을 진행한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "선술집 2층 개인실에서 비밀 결사 관련 밀담을 나눈다", "interactable": true }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_OWEN_KEEPER",
+    "name": "오웬",
+    "unknownAlias": "넉넉한 체구의 선술집 주인",
+    "role": "잠긴 닻 선술집의 주인. 모든 파벌의 사람이 드나드는 중립 지대를 운영하며, 귀에 들어오는 모든 것을 기억하되 함부로 발설하지 않는다.",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": ["오웬", "술집 주인"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 15,
+    "agenda": "선술집의 중립 지대 유지, 단골 보호, 평화로운 장사",
+    "personality": {
+      "core": "따뜻한 웃음 뒤에 날카로운 귀를 가진 사나이. 30년간 술집을 운영하며 비밀을 지키는 법을 체득했다. 누구의 편도 들지 않지만, 술집에서 피가 흐르는 건 절대 용납하지 않는다.",
+      "traits": ["술잔을 채우면서 상대의 속내를 읽는다", "어떤 세력에도 빚지지 않으려 한다", "약속을 어기면 출입을 영구 금지한다 — 예외 없이"],
+      "speechStyle": "편한 반말. 거칠지 않고 따뜻하다. 핵심은 농담으로 포장하고, 경고할 때만 진지해진다. '뭐 마실래?' 로 대화를 시작한다.",
+      "innerConflict": "중립을 지키다 보면 누군가는 반드시 다친다. 도울 수 있었는데 침묵한 밤들이 가끔 꿈에 나온다.",
+      "softSpot": "젊은이가 곤경에 처하면 몰래 한 끼를 더 내주고, 쫓기는 사람에게 뒷문을 열어준 적이 한두 번이 아니다.",
+      "signature": ["잔을 닦으며 대화한다", "위험한 화제가 나오면 '이 집에선 그 얘기 안 해'라고 선을 긋는다", "단골에게는 이름 대신 별명을 붙여준다"],
+      "npcRelations": {
+        "NPC_RENNICK": "가장 오래된 단골. 레닉의 허풍을 좋아하지만 입이 가벼운 건 걱정한다",
+        "NPC_YOON_HAMIN": "하를런은 술값을 밀리지 않는 좋은 손님. 형제단 싸움은 밖에서 하라고 못 박았다",
+        "NPC_INFO_BROKER": "쉐도우가 2층을 쓰는 건 묵인한다. 대신 술집에서 피가 나면 끝이라고 경고했다"
+      }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_TAVERN", "activity": "선술집을 청소하고 식자재를 점검하며 개장을 준비한다", "interactable": true },
+        "DAY": { "locationId": "LOC_TAVERN", "activity": "점심 손님을 맞으며 카운터 뒤에서 잔을 닦는다", "interactable": true },
+        "DUSK": { "locationId": "LOC_TAVERN", "activity": "저녁 손님이 몰려드는 피크 시간, 바쁘게 주문을 처리한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "밤늦게까지 카운터를 지키며 마지막 손님들의 이야기를 듣는다", "interactable": true }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_SERA_DOCKS",
+    "name": "세라",
+    "unknownAlias": "무표정한 창고 여인",
+    "role": "항만 창고구 물류 관리인. 겉으로는 합법 화물만 다루지만, 밀수품 검수도 은밀히 담당한다.",
+    "faction": "LABOR_GUILD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": ["세라", "창고 관리인"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "agenda": "창고구 이권 유지, 밀수품 중개료 확보, 자기 안전",
+    "personality": {
+      "core": "감정보다 효율을 우선하는 실용주의자. 돈이면 대부분 협조하지만, 자신이 위험해지는 거래는 거부한다. 냉정해 보이지만 부두 노동자들의 처우에는 나름의 선이 있다.",
+      "traits": ["숫자와 물량으로 사람을 판단한다", "두 번 말하게 하면 짜증을 낸다", "한번 거래가 성사되면 약속은 반드시 지킨다"],
+      "speechStyle": "짧고 사무적인 반말. 감정 없이 조건만 나열한다. 마음에 드는 거래가 오면 입꼬리가 살짝 올라간다.",
+      "innerConflict": "밀수 중개가 언젠가 자신을 집어삼킬 거란 걸 안다. 충분히 모으면 떠나겠다고 다짐하지만, '충분히'의 기준이 계속 올라간다.",
+      "softSpot": "부두에서 다치거나 착취당하는 젊은 노동자를 보면 몰래 더 나은 일자리를 소개해준다.",
+      "signature": ["화물 목록을 체크하며 대화한다", "거래 조건을 말할 때 손가락으로 탁자를 두드린다", "'시간은 금이야'를 입버릇처럼 말한다"],
+      "npcRelations": {
+        "NPC_BAEK_SEUNGHO": "토브렌과 창고 관리 영역이 겹친다. 그의 겁쟁이 기질을 경멸하지만 밀수 루트는 공유한다",
+        "NPC_YOON_HAMIN": "하를런의 형제단에 물류 편의를 제공한다. 사업 파트너이자 보험",
+        "NPC_KANG_CHAERIN": "마이렐의 밀수 감독을 알고 있다. 서로 건드리지 않는 불편한 공존"
+      }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "창고 문을 열고 새벽 입고 화물의 검수 작업을 시작한다", "interactable": true },
+        "DAY": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "화물 입출고를 관리하고 거래처와 물량을 조율한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_HARBOR", "activity": "부두에서 저녁 배편 화물을 확인하고 밀수품 은닉을 점검한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "야간 밀수품 인수를 감독하며 장부를 이중으로 정리한다", "interactable": false }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_DAME_ISOLDE",
+    "name": "이졸데 여사",
+    "unknownAlias": "향수 냄새가 강한 미망인",
+    "role": "상류 사교계의 여왕. 귀족들의 약점과 비밀을 수집하며, 필요할 때 이를 지렛대로 사용하는 정보 브로커.",
+    "faction": "ARCANE_SOCIETY",
+    "hostile": false,
+    "combatProfile": null,
+    "title": "여사",
+    "aliases": ["이졸데", "이졸데 여사"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "agenda": "사교계 영향력 유지, 귀족들의 약점 수집, 남편의 죽음에 얽힌 진실 추적",
+    "personality": {
+      "core": "우아한 독설의 달인이자 약점 수집가. 사교 모임의 꽃으로 보이지만, 그 미소 아래에서 모든 대화를 무기로 가공한다. 남편을 잃은 후 아무도 믿지 않기로 했지만, 진실을 찾는 데 목숨을 건다.",
+      "traits": ["칭찬 속에 칼날을 숨긴다", "상대의 허영심을 자극해 정보를 끌어낸다", "비밀을 알면 절대 잊지 않으며, 적절한 순간에 꺼낸다"],
+      "speechStyle": "세련된 경어. 말 한마디가 시처럼 정교하고, 독설조차 우아하다. 진심을 말할 때만 말투가 단순해진다.",
+      "innerConflict": "남편의 죽음이 사고가 아니라 암살이었다는 확신. 복수와 진실 사이에서 줄타기하며, 자신이 남편과 같은 길을 걷고 있다는 두려움.",
+      "softSpot": "남편의 유품이나 추억을 언급하면 순간 가면이 벗겨진다. 진심으로 도움을 청하는 약자에게 의외로 관대하다.",
+      "signature": ["부채를 펼치며 미소 짓는다", "상대의 옷차림이나 보석을 칭찬하며 대화를 시작한다", "'세상에 공짜 비밀은 없답니다'를 자주 말한다"],
+      "npcRelations": {
+        "NPC_LORD_VANCE": "밴스와는 사교계의 라이벌이자 정보 경쟁자. 둘 다 상대의 패를 읽으려 하며, 가끔 휴전한다",
+        "NPC_SEO_DOYUN": "에드릭이 쥔 상단 장부에 관심이 있다. 그의 겁을 이용할 수 있다고 본다",
+        "NPC_GUARD_CAPTAIN": "벨론의 강직함을 존경하지만, 그를 체스말로 쓸 수 있을지 계산 중이다"
+      }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_NOBLE", "activity": "저택에서 하인들의 보고를 받으며 전날 사교계 소식을 정리한다", "interactable": false },
+        "DAY": { "locationId": "LOC_NOBLE", "activity": "귀족 부인들의 다과회를 열거나 참석하며 정보를 교환한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_MARKET", "activity": "시장 거리의 고급 상점을 들르며 상인들과 안면을 튼다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_TAVERN", "activity": "선술집 2층 개인실에서 비공식 정보 거래를 진행한다", "interactable": true }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_RAT_KING",
+    "name": "쥐왕",
+    "unknownAlias": "어둠 속의 쉰 목소리",
+    "role": "빈민가 지하 조직의 두목. 그레이마르 하층부의 정보를 독점하며, 대가 없이는 숨소리조차 내지 않는다.",
+    "faction": null,
+    "hostile": true,
+    "combatProfile": {
+      "note": "적대 상태에서 접근 시 전투 가능. 항상 부하 2명과 함께 행동한다.",
+      "enemyRef": "ENEMY_SLUM_BOSS",
+      "overrides": {
+        "name": "쥐왕 (빈민가 두목)",
+        "hp": 80,
+        "stats": {
+          "ATK": 14,
+          "DEF": 10,
+          "ACC": 8,
+          "EVA": 7,
+          "CRIT": 9,
+          "CRIT_DMG": 1.8,
+          "RESIST": 5,
+          "SPEED": 8
+        },
+        "personality": "TACTICAL"
+      }
+    },
+    "title": null,
+    "aliases": ["쥐왕", "쥐"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "HOSTILE",
+    "initialTrust": -10,
+    "agenda": "빈민가 지하 조직 유지, 정보 독점, 경비대의 접근 차단",
+    "personality": {
+      "core": "편집증적 경계심으로 살아남은 빈민가의 왕. 모든 것에 대가를 요구하고, 공짜로 얻은 것은 반드시 덫이라 믿는다. 하지만 빈민가 주민을 외부 세력으로부터 지키는 것만큼은 진심이다.",
+      "traits": ["항상 최소 세 개의 탈출로를 확보한다", "거짓말을 본능적으로 감지하며 용서하지 않는다", "힘으로 위협하기보다 상대의 비밀을 쥐고 통제한다"],
+      "speechStyle": "쉰 목소리로 느리게 말한다. 문장을 끝맺지 않고 상대의 반응을 살핀다. 화가 나면 오히려 속삭인다.",
+      "innerConflict": "빈민가를 지키겠다고 시작한 일이 어느새 공포로 지배하는 것이 되었다. 자신이 두려워하던 존재가 되어가는 것을 안다.",
+      "softSpot": "빈민가 아이들이 다치거나 굶는 것을 절대 용납하지 않는다. 로자의 고아원에 익명으로 식량을 보낸 적이 있다.",
+      "signature": ["어둠 속에서 모습을 드러내지 않고 목소리만 들린다", "상대에게 '너는 뭘 줄 수 있지?'로 대화를 시작한다", "손가락으로 벽을 긁는 버릇이 있다"],
+      "npcRelations": {
+        "NPC_INFO_BROKER": "쉐도우와는 정보 영역이 겹친다. 서로의 영역을 침범하지 않는 불문율이 있다",
+        "NPC_ROSA": "로자의 고아원을 묵인하고 보호한다. 빈민가에서 유일하게 존중하는 사람",
+        "NPC_KANG_CHAERIN": "마이렐을 증오한다. 경비대가 빈민가에 손을 대면 전쟁이라고 경고했다"
+      }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_SLUMS", "activity": "빈민가 은신처에서 부하들의 야간 보고를 받는다", "interactable": false },
+        "DAY": { "locationId": "LOC_SLUMS", "activity": "빈민가 골목을 순찰하며 조직을 관리하고 외부인을 감시한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_SLUMS", "activity": "어둠이 내리기 시작하면 정보 거래를 위한 만남을 준비한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_DOCKS_WAREHOUSE", "activity": "창고구에서 밀수품 거래를 감독하고 새로운 정보원을 확보한다", "interactable": true }
+      }
+    }
+  },
+  {
+    "npcId": "NPC_GUARD_FELIX",
+    "name": "펠릭스",
+    "unknownAlias": "풋풋한 젊은 경비병",
+    "role": "그레이마르 수비대 하급 경비병. 정의감이 넘치지만 현실의 벽에 부딪히고 있는 이상주의자.",
+    "faction": "CITY_GUARD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": ["펠릭스"],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 5,
+    "agenda": "정의로운 경비병이 되기, 상관들의 부패를 이해하고 대처하기",
+    "personality": {
+      "core": "경비대에 입대한 지 2년 된 젊은이. 시민을 지키겠다는 순수한 이상으로 입대했지만, 상관들의 부패를 목격하며 혼란에 빠져있다. 아직 세상에 대한 믿음을 버리지 못했다.",
+      "traits": ["거짓말을 잘 못하고 얼굴에 다 드러난다", "위험한 상황에서도 시민을 먼저 챙긴다", "선배들의 기대에 부응하고 싶은 마음이 크다"],
+      "speechStyle": "존댓말 위주의 정중한 말투. 긴장하면 말이 빨라지고, 감동받으면 말을 더듬는다. '그건... 옳지 않습니다'를 자주 말한다.",
+      "innerConflict": "마이렐의 부패를 눈치챘지만, 신고하면 보복당할 것이 두렵다. 브렌 대위를 존경하지만 그도 결국 아무것도 못 하고 있다는 사실이 괴롭다.",
+      "softSpot": "다친 시민이나 괴로워하는 동료를 보면 자신의 안위를 잊고 달려간다.",
+      "signature": ["제복 단추를 만지작거리며 긴장을 다스린다", "경례를 꼬박꼬박 한다 — 심지어 민간인에게도 가끔", "'경비대 규정에 의하면...'으로 말을 시작하다가 스스로 멈춘다"],
+      "npcRelations": {
+        "NPC_CAPTAIN_BREN": "브렌 대위를 롤모델로 삼는다. 그의 정의감에 공감하며 몰래 협조하고 싶어한다",
+        "NPC_KANG_CHAERIN": "마이렐의 야간 명령에 복종하지만, 석연찮은 지시가 많아 점점 의심이 커진다",
+        "NPC_GUARD_CAPTAIN": "벨론 대위의 신중함을 이해하려 하지만, 가끔 답답해한다"
+      }
+    },
+    "schedule": {
+      "default": {
+        "DAWN": { "locationId": "LOC_GUARD", "activity": "병영에서 일어나 장비를 점검하고 아침 점호에 참석한다", "interactable": true },
+        "DAY": { "locationId": "LOC_GUARD", "activity": "경비대 지구를 순찰하며 시민들의 민원을 처리한다", "interactable": true },
+        "DUSK": { "locationId": "LOC_GUARD", "activity": "교대 보고서를 작성하고 야간 근무 준비를 한다", "interactable": true },
+        "NIGHT": { "locationId": "LOC_MARKET", "activity": "시장 거리 야간 순찰을 돌며 수상한 움직임을 감시한다", "interactable": true }
+      }
+    }
   }
 ]
