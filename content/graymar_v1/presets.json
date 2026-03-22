@@ -10,12 +10,12 @@
     "stats": {
       "MaxHP": 120,
       "MaxStamina": 5,
-      "str": 16,
+      "str": 14,
       "dex": 5,
-      "wit": 4,
-      "con": 14,
-      "per": 5,
-      "cha": 5
+      "wit": 5,
+      "con": 13,
+      "per": 6,
+      "cha": 6
     },
     "startingGold": 30,
     "startingItems": [
@@ -64,9 +64,9 @@
     "protagonistTheme": "전직 밀수 운반책 — 밀수 조직 '검은 조류'에서 하급 운반책으로 일했다. 조직이 와해된 후 증거 인멸을 위해 제거 대상이 되어 도주 중이다. 어둠 속에서 움직이는 데 익숙하고 급소를 노리는 싸움에 능하다.",
     "prologueHook": "당신이 세관을 교묘히 빠져나간다는 걸 알고 있소. 사람을 찾아야 하는데… 그런 재주가 필요하오.",
     "stats": {
-      "MaxHP": 80,
+      "MaxHP": 85,
       "MaxStamina": 6,
-      "str": 10,
+      "str": 11,
       "dex": 12,
       "wit": 6,
       "con": 7,
