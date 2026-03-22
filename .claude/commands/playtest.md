@@ -4,17 +4,27 @@
 
 ## 모드
 
-`$ARGUMENTS`를 파싱하여 모드를 결정한다:
+`$ARGUMENTS`를 파싱하여 모드와 옵션을 결정한다:
 
 | 입력 | 모드 | 동작 |
 |------|------|------|
 | `/playtest` | **분석 모드** | 런 실행 → 분석 리포트 |
+| `/playtest 30` | **분석 모드 (30턴)** | 턴 수 지정 |
 | `/playtest -fix` | **수정 모드** | 런 실행 → 분석 → 코드 수정 → 서버 재시작 → 재테스트 → 비교 |
+| `/playtest 25 -fix` | **수정 모드 (25턴)** | 턴 수 지정 + 수정 |
 | `/playtest -fix -commit` | **커밋 모드** | 수정 모드 + 개선 확인 시 git commit & push |
+
+### 인자 파싱 규칙
+
+`$ARGUMENTS`에서 숫자를 추출하면 턴 수로 사용한다. 없으면 기본값 20.
+
+- `/playtest` → 10턴
+- `/playtest 30` → 30턴
+- `/playtest 15 -fix` → 15턴 + 수정 모드
 
 ## 기본 설정
 
-- **턴 수**: 20
+- **턴 수**: 10 (인자로 변경 가능)
 - **프리셋**: DESERTER
 - **성별**: male
 - **장소 순환**: market → guard → harbor → slums
@@ -48,26 +58,28 @@
 
 ### 3단계: 플레이테스트 실행 (1차)
 
-Python 스크립트를 인라인으로 실행한다. 위 기본 설정(20턴, DESERTER, male)을 사용.
+**정본 스크립트 `scripts/playtest.py`를 실행한다.** 인라인 스크립트를 새로 작성하지 않는다.
 
-핵심 흐름:
+```bash
+cd /Users/dohamsu/Workspace/mdfile
+python3 scripts/playtest.py --turns {턴수} --preset DESERTER --gender male
+```
+
+옵션:
+- `--turns N` — 턴 수 변경 (기본 20)
+- `--preset X` — DESERTER, SMUGGLER, DOCKWORKER, HERBALIST
+- `--output path.json` — 결과 파일 경로 지정
+- `--loc-turns N` — 장소당 체류 턴 수 (기본 4)
+
+스크립트 핵심 흐름:
 1. 회원가입 → 로그인 (랜덤 이메일)
 2. RUN 생성 (프리셋, 성별)
 3. HUB: 선택지(accept_quest → 장소 이동)로 LOCATION 진입
-4. LOCATION: 다양한 ACTION 입력 순환 (관찰, 대화, 조사, 이동, 설득, 잠입, 위협, 거래, 돕기 등)
-   - CHOICE 필요 시 자동 처리 (첫 번째 선택지 또는 LLM 선택지)
-   - HUB 복귀 시 다음 장소로 자동 순환 (market→guard→harbor→slums 로테이션)
-   - RUN_ENDED 시 중단
-5. LLM 폴링 (최대 60초)
-6. 전체 턴 로그 + 최종 상태를 JSON 저장 (`playtest-reports/` 폴더)
+4. LOCATION: 다양한 ACTION 입력 순환, CHOICE 자동 처리, 장소 순환
+5. LLM 폴링 (최대 90초) + TURN_NO_MISMATCH 자동 복구
+6. 전체 턴 로그 + 최종 상태 + 검증 결과를 JSON 저장 (`playtest-reports/`)
 
-**API 주의사항**:
-- ACTION: `{"input": {"type": "ACTION", "text": "..."}, "expectedNextTurnNo": N, "idempotencyKey": "uuid"}`
-- CHOICE: `{"input": {"type": "CHOICE", "choiceId": "..."}, "expectedNextTurnNo": N, "idempotencyKey": "uuid"}`
-- TURN_NO_MISMATCH(409) → `details.expected`로 턴 번호 동기화
-- NODE_ENDED → `GET /v1/runs/:runId`로 상태 갱신 후 currentTurnNo+1로 재개
-- storySummary는 `memory.storySummary` 경로 (runState 아님)
-- LLM narrative 최대 1000자까지 기록. events, choices, resolveOutcome, nodeOutcome 모두 수집
+**주의: 스크립트를 수정해야 할 경우 `scripts/playtest.py`만 편집한다. 새 스크립트를 생성하지 않는다.**
 
 ### 4단계: 기본 분석 리포트 작성 (항상 수행)
 

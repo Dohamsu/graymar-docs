@@ -85,13 +85,13 @@
     "arcRouteTag": "EXPOSE_CORRUPTION",
     "commitmentDeltaOnSuccess": 10,
     "payload": {
-      "sceneFrame": "상인 길드 연합의 회계 담당 에드릭 베일이 좌판 뒤편 창고에서 장부를 검토하고 있다. 그는 긴장한 기색으로 주변을 살피다가 당신의 시선을 의식한다. 그의 탁자 위에는 두 종류의 장부가 나란히 놓여 있다.",
+      "sceneFrame": "상인 길드 연합의 회계 담당 {npc:NPC_SEO_DOYUN}이 좌판 뒤편 창고에서 장부를 검토하고 있다. 그는 긴장한 기색으로 주변을 살피다가 당신의 시선을 의식한다. 그의 탁자 위에는 두 종류의 장부가 나란히 놓여 있다.",
       "primaryNpcId": "NPC_SEO_DOYUN",
       "choices": [
         {
           "id": "mkt_faction_persuade",
           "label": "정직한 장부 관리가 길드에도 이롭다고 설득한다",
-          "hint": "에드릭의 신뢰를 얻을 수 있다",
+          "hint": "{npc:NPC_SEO_DOYUN}의 신뢰를 얻을 수 있다",
           "affordance": "PERSUADE",
           "riskLevel": 2
         },
@@ -111,7 +111,7 @@
         },
         {
           "id": "mkt_faction_observe",
-          "label": "에드릭의 행동 패턴을 관찰한다",
+          "label": "{npc:NPC_SEO_DOYUN}의 행동 패턴을 관찰한다",
           "hint": "장부 접근 시간대를 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -328,7 +328,7 @@
     "arcRouteTag": "ALLY_GUARD",
     "commitmentDeltaOnSuccess": 15,
     "payload": {
-      "sceneFrame": "경비대 본부 뒤편의 조용한 골목. 벨론 대위가 사복 차림으로 기다리고 있다. 그의 눈 밑에는 짙은 그림자가 드리워져 있고, 목소리를 낮춘 채 내부 부패에 대한 고민을 토로한다. 외부인의 도움이 필요하다는 것이다.",
+      "sceneFrame": "경비대 본부 뒤편의 조용한 골목. {npc:NPC_GUARD_CAPTAIN}가 사복 차림으로 기다리고 있다. 그의 눈 밑에는 짙은 그림자가 드리워져 있고, 목소리를 낮춘 채 내부 부패에 대한 고민을 토로한다. 외부인의 도움이 필요하다는 것이다.",
       "primaryNpcId": "NPC_GUARD_CAPTAIN",
       "choices": [
         {
@@ -394,7 +394,7 @@
       "choices": [
         {
           "id": "grd_chk_persuade",
-          "label": "허가증을 제시하거나 벨론 대위의 이름을 댄다",
+          "label": "허가증을 제시하거나 {npc:NPC_GUARD_CAPTAIN}의 이름을 댄다",
           "hint": "정당한 접근 수단이 있으면 통과",
           "affordance": "PERSUADE",
           "riskLevel": 1
@@ -548,7 +548,7 @@
         },
         {
           "id": "grd_amb_threaten",
-          "label": "벨론 대위가 이미 알고 있다고 허세를 부린다",
+          "label": "{npc:NPC_GUARD_CAPTAIN}가 이미 알고 있다고 허세를 부린다",
           "hint": "상대가 동요하면 전투를 피할 수 있다",
           "affordance": "THREATEN",
           "riskLevel": 3
@@ -714,7 +714,7 @@
         },
         {
           "id": "hbr_amb_threaten",
-          "label": "하를런 보스의 이름을 들먹인다",
+          "label": "{npc:NPC_YOON_HAMIN}의 이름을 들먹인다",
           "hint": "노동 길드 평판이 충분하면 물러선다",
           "affordance": "THREATEN",
           "riskLevel": 2
@@ -765,7 +765,7 @@
     "arcRouteTag": "PROFIT_FROM_CHAOS",
     "commitmentDeltaOnSuccess": 20,
     "payload": {
-      "sceneFrame": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이 지워진 상자를 서둘러 내리고, 토브렌 하위크가 직접 검수하고 있다. 그의 장부에 밀수품 목록이 적혀 있을 것이다.",
+      "sceneFrame": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이 지워진 상자를 서둘러 내리고, {npc:NPC_BAEK_SEUNGHO}가 직접 검수하고 있다. 그의 장부에 밀수품 목록이 적혀 있을 것이다.",
       "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
@@ -777,7 +777,7 @@
         },
         {
           "id": "hbr_arc_sneak",
-          "label": "어둠을 이용해 토브렌의 장부를 훔쳐본다",
+          "label": "어둠을 이용해 {npc:NPC_BAEK_SEUNGHO}의 장부를 훔쳐본다",
           "hint": "밀수품 목록이라는 결정적 증거를 확보한다",
           "affordance": "SNEAK",
           "riskLevel": 3
@@ -933,7 +933,7 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "빈민가 모퉁이의 허름한 술집. 어둑한 구석에서 쉐도우가 평소처럼 의뢰인을 기다리고 있다. 그의 테이블 위에는 여러 장의 메모가 놓여 있고, 당신이 다가오자 의미심장한 미소를 짓는다. '들을 만한 이야기가 있지. 물론, 공짜는 아니야.'",
+      "sceneFrame": "빈민가 모퉁이의 허름한 술집. 어둑한 구석에서 {npc:NPC_INFO_BROKER}가 평소처럼 의뢰인을 기다리고 있다. 그의 테이블 위에는 여러 장의 메모가 놓여 있고, 당신이 다가오자 의미심장한 미소를 짓는다. '들을 만한 이야기가 있지. 물론, 공짜는 아니야.'",
       "primaryNpcId": "NPC_INFO_BROKER",
       "choices": [
         {
@@ -946,13 +946,13 @@
         {
           "id": "slm_rumor_bribe",
           "label": "금화를 테이블에 올려놓는다",
-          "hint": "쉐도우의 최신 정보를 모두 듣는다",
+          "hint": "{npc:NPC_INFO_BROKER}의 최신 정보를 모두 듣는다",
           "affordance": "BRIBE",
           "riskLevel": 1
         },
         {
           "id": "slm_rumor_observe",
-          "label": "쉐도우의 다른 손님들을 관찰한다",
+          "label": "{npc:NPC_INFO_BROKER}의 다른 손님들을 관찰한다",
           "hint": "누가 정보를 사고 있는지 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -1003,7 +1003,7 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "빈민가 안쪽의 폐건물. 하를런 보스가 노동 길드의 비공식 모임을 이끌고 있다. 억울하게 임금을 떼인 인부들이 분노에 찬 목소리로 상황을 토로한다. 하를런이 당신을 보더니 고개를 끄덕이며 자리를 권한다.",
+      "sceneFrame": "빈민가 안쪽의 폐건물. {npc:NPC_YOON_HAMIN}가 노동 길드의 비공식 모임을 이끌고 있다. 억울하게 임금을 떼인 인부들이 분노에 찬 목소리로 상황을 토로한다. {npc:NPC_YOON_HAMIN}이 당신을 보더니 고개를 끄덕이며 자리를 권한다.",
       "primaryNpcId": "NPC_YOON_HAMIN",
       "choices": [
         {
@@ -1136,12 +1136,12 @@
     "arcRouteTag": "PROFIT_FROM_CHAOS",
     "commitmentDeltaOnSuccess": 15,
     "payload": {
-      "sceneFrame": "빈민가의 폐가 지하실. 라이라 케스텔이 떨리는 손으로 문서 묶음을 안고 숨어 있다. 상인 길드에서 도주한 그녀는 암호화된 장부 사본을 가지고 있다. 눈에 공포가 가득하지만, 누군가에게 진실을 알려야 한다는 의지도 엿보인다.",
+      "sceneFrame": "빈민가의 폐가 지하실. {npc:NPC_MOON_SEA}이 떨리는 손으로 문서 묶음을 안고 숨어 있다. 상인 길드에서 도주한 그녀는 암호화된 장부 사본을 가지고 있다. 눈에 공포가 가득하지만, 누군가에게 진실을 알려야 한다는 의지도 엿보인다.",
       "primaryNpcId": "NPC_MOON_SEA",
       "choices": [
         {
           "id": "slm_arc_investigate",
-          "label": "라이라의 문서를 함께 분석한다",
+          "label": "{npc:NPC_MOON_SEA}의 문서를 함께 분석한다",
           "hint": "암호를 풀면 결정적 증거가 된다",
           "affordance": "INVESTIGATE",
           "riskLevel": 1
@@ -1156,7 +1156,7 @@
         {
           "id": "slm_arc_sneak",
           "label": "추적자가 오기 전에 문서만 가지고 빠진다",
-          "hint": "빠르지만 라이라를 위험에 빠뜨린다",
+          "hint": "빠르지만 {npc:NPC_MOON_SEA}를 위험에 빠뜨린다",
           "affordance": "SNEAK",
           "riskLevel": 2
         }
@@ -1313,7 +1313,7 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "부두의 하역 현장. 노동 길드 인부들이 쉬는 시간에 모여 수군거린다. 최근 동쪽 부두의 하역량이 급증했는데, 공식 기록에는 반영되지 않았다는 것이다. 한 인부가 창고 관리자 토브렌을 언급하며 고개를 젓는다.",
+      "sceneFrame": "부두의 하역 현장. 노동 길드 인부들이 쉬는 시간에 모여 수군거린다. 최근 동쪽 부두의 하역량이 급증했는데, 공식 기록에는 반영되지 않았다는 것이다. 한 인부가 창고 관리자 {npc:NPC_BAEK_SEUNGHO}을 언급하며 고개를 젓는다.",
       "primaryNpcId": "NPC_BAEK_SEUNGHO",
       "choices": [
         {
@@ -1333,7 +1333,7 @@
         {
           "id": "hbr_rumor_g_observe",
           "label": "하역 현장을 직접 관찰한다",
-          "hint": "토브렌의 행동 패턴을 파악한다",
+          "hint": "{npc:NPC_BAEK_SEUNGHO}의 행동 패턴을 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
         }
@@ -1435,7 +1435,7 @@
     "arcRouteTag": "ALLY_GUARD",
     "commitmentDeltaOnSuccess": 25,
     "payload": {
-      "sceneFrame": "벨론 대위가 비밀리에 확보한 마이렐의 개인 집무실 열쇠를 건넨다. 집무실 금고 안에 횡령의 결정적 증거인 원본 장부가 있을 것이다. 그러나 마이렐의 충성 부하가 야간에도 집무실을 순찰하고 있어 위험하다.",
+      "sceneFrame": "{npc:NPC_GUARD_CAPTAIN}가 비밀리에 확보한 마이렐의 개인 집무실 열쇠를 건넨다. 집무실 금고 안에 횡령의 결정적 증거인 원본 장부가 있을 것이다. 그러나 마이렐의 충성 부하가 야간에도 집무실을 순찰하고 있어 위험하다.",
       "primaryNpcId": "NPC_GUARD_CAPTAIN",
       "choices": [
         {
@@ -2983,19 +2983,19 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "레닉이 시장 골목 어둠 속에서 후드를 깊이 눌러쓴 채 기다리고 있다. 당신을 보자 손짓으로 조용히 부른다. '들을 만한 이야기가 있어. 이번에는 좀 큰 건이야.' 그의 눈이 평소보다 날카롭게 빛난다.",
+      "sceneFrame": "{npc:NPC_RENNICK}이 시장 골목 어둠 속에서 후드를 깊이 눌러쓴 채 기다리고 있다. 당신을 보자 손짓으로 조용히 부른다. '들을 만한 이야기가 있어. 이번에는 좀 큰 건이야.' 그의 눈이 평소보다 날카롭게 빛난다.",
       "primaryNpcId": "NPC_RENNICK",
       "choices": [
         {
           "id": "mkt_int2_listen",
-          "label": "레닉의 이야기를 듣는다",
+          "label": "{npc:NPC_RENNICK}의 이야기를 듣는다",
           "hint": "중요한 정보를 얻을 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
         },
         {
           "id": "mkt_int2_assess",
-          "label": "레닉의 의도를 먼저 파악한다",
+          "label": "{npc:NPC_RENNICK}의 의도를 먼저 파악한다",
           "hint": "함정인지 확인한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -3039,12 +3039,12 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "미렐라가 시장의 약재상 앞에서 약초 묶음을 고르고 있다. 등에 진 바구니에는 이미 여러 종류의 풀이 담겨 있다. 그녀는 당신을 보자 미소를 짓지만, 어딘가 걱정스러운 기색이 섞여 있다.",
+      "sceneFrame": "{npc:NPC_MIRELA}가 시장의 약재상 앞에서 약초 묶음을 고르고 있다. 등에 진 바구니에는 이미 여러 종류의 풀이 담겨 있다. 그녀는 당신을 보자 미소를 짓지만, 어딘가 걱정스러운 기색이 섞여 있다.",
       "primaryNpcId": "NPC_MIRELA",
       "choices": [
         {
           "id": "mkt_int3_talk",
-          "label": "미렐라에게 무엇을 사는지 묻는다",
+          "label": "{npc:NPC_MIRELA}에게 무엇을 사는지 묻는다",
           "hint": "빈민가 상황을 들을 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
@@ -3052,13 +3052,13 @@
         {
           "id": "mkt_int3_help",
           "label": "약초 고르는 것을 도와준다",
-          "hint": "미렐라의 호감을 얻을 수 있다",
+          "hint": "{npc:NPC_MIRELA}의 호감을 얻을 수 있다",
           "affordance": "PERSUADE",
           "riskLevel": 1
         },
         {
           "id": "mkt_int3_watch",
-          "label": "미렐라가 어떤 약초를 고르는지 관찰한다",
+          "label": "{npc:NPC_MIRELA}가 어떤 약초를 고르는지 관찰한다",
           "hint": "빈민가에서 유행하는 병을 짐작할 수 있다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -3533,7 +3533,7 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "브렌 대위가 경비대 마당 한쪽 벤치에 앉아 지친 표정으로 보고서를 넘기고 있다. 부하들이 멀리서 눈치를 보며 다가가지 못한다. 대위의 옆자리가 비어 있다.",
+      "sceneFrame": "{npc:NPC_CAPTAIN_BREN}가 경비대 마당 한쪽 벤치에 앉아 지친 표정으로 보고서를 넘기고 있다. 부하들이 멀리서 눈치를 보며 다가가지 못한다. 대위의 옆자리가 비어 있다.",
       "primaryNpcId": "NPC_CAPTAIN_BREN",
       "choices": [
         {
@@ -3589,12 +3589,12 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "에드릭이 경비대 지구 입구에서 상인 길드 물자 납품을 감독하고 있다. 장부를 확인하며 이따금 경비병과 짧은 대화를 나눈다. 길드와 경비대 사이의 미묘한 관계가 그의 표정에서 읽힌다.",
+      "sceneFrame": "{npc:NPC_SEO_DOYUN}이 경비대 지구 입구에서 상인 길드 물자 납품을 감독하고 있다. 장부를 확인하며 이따금 경비병과 짧은 대화를 나눈다. 길드와 경비대 사이의 미묘한 관계가 그의 표정에서 읽힌다.",
       "primaryNpcId": "NPC_SEO_DOYUN",
       "choices": [
         {
           "id": "grd_int2_approach",
-          "label": "에드릭에게 다가가 말을 건다",
+          "label": "{npc:NPC_SEO_DOYUN}에게 다가가 말을 건다",
           "hint": "길드의 경비대 납품 사정을 들을 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
@@ -3608,7 +3608,7 @@
         },
         {
           "id": "grd_int2_watch",
-          "label": "에드릭과 경비병의 대화를 관찰한다",
+          "label": "{npc:NPC_SEO_DOYUN}과 경비병의 대화를 관찰한다",
           "hint": "길드-경비대 관계의 실체를 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -3647,13 +3647,13 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "레닉이 경비대 지구 외곽의 술집에서 경비병 한 명과 은밀히 대화하고 있다. 두 사람은 서로를 경계하면서도 무언가를 교환하는 중이다. 레닉이 당신을 발견하면 찰나의 당혹감을 보이지만, 곧 여유로운 미소를 짓는다.",
+      "sceneFrame": "{npc:NPC_RENNICK}이 경비대 지구 외곽의 술집에서 경비병 한 명과 은밀히 대화하고 있다. 두 사람은 서로를 경계하면서도 무언가를 교환하는 중이다. {npc:NPC_RENNICK}이 당신을 발견하면 찰나의 당혹감을 보이지만, 곧 여유로운 미소를 짓는다.",
       "primaryNpcId": "NPC_RENNICK",
       "choices": [
         {
           "id": "grd_int3_confront",
           "label": "무슨 거래인지 묻는다",
-          "hint": "레닉의 정보망을 엿볼 수 있다",
+          "hint": "{npc:NPC_RENNICK}의 정보망을 엿볼 수 있다",
           "affordance": "PERSUADE",
           "riskLevel": 2
         },
@@ -3667,7 +3667,7 @@
         {
           "id": "grd_int3_observe",
           "label": "거리를 두고 관찰한다",
-          "hint": "레닉의 정보원 네트워크를 파악한다",
+          "hint": "{npc:NPC_RENNICK}의 정보원 네트워크를 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
         }
@@ -3783,7 +3783,7 @@
         },
         {
           "id": "grd_cft2_bluff",
-          "label": "브렌 대위에게 이미 보고했다고 말한다",
+          "label": "{npc:NPC_CAPTAIN_BREN}에게 이미 보고했다고 말한다",
           "hint": "상대가 망설이면 기회가 생긴다",
           "affordance": "THREATEN",
           "riskLevel": 2
@@ -4189,12 +4189,12 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "하를런이 하역 작업을 감독하며 인부들에게 지시를 내리고 있다. 커다란 체구에서 나오는 우렁찬 목소리가 부두에 울린다. 잠시 짬이 나자 물통을 집어 들고 땀을 닦는다. 그가 당신을 알아본다.",
+      "sceneFrame": "{npc:NPC_YOON_HAMIN}이 하역 작업을 감독하며 인부들에게 지시를 내리고 있다. 커다란 체구에서 나오는 우렁찬 목소리가 부두에 울린다. 잠시 짬이 나자 물통을 집어 들고 땀을 닦는다. 그가 당신을 알아본다.",
       "primaryNpcId": "NPC_YOON_HAMIN",
       "choices": [
         {
           "id": "hbr_int1_greet",
-          "label": "하를런에게 다가가 인사한다",
+          "label": "{npc:NPC_YOON_HAMIN}에게 다가가 인사한다",
           "hint": "노동 길드의 최근 상황을 들을 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
@@ -4208,7 +4208,7 @@
         },
         {
           "id": "hbr_int1_watch",
-          "label": "하를런의 작업 방식을 관찰한다",
+          "label": "{npc:NPC_YOON_HAMIN}의 작업 방식을 관찰한다",
           "hint": "그의 영향력을 가늠한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -4246,26 +4246,26 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "에드릭이 부두 창고 앞에서 화물 목록을 대조하고 있다. 평소의 침착한 모습이지만, 특정 상자들을 확인할 때 미묘하게 긴장하는 것이 보인다. 그는 당신의 접근을 눈치채고 장부를 재빨리 덮는다.",
+      "sceneFrame": "{npc:NPC_SEO_DOYUN}이 부두 창고 앞에서 화물 목록을 대조하고 있다. 평소의 침착한 모습이지만, 특정 상자들을 확인할 때 미묘하게 긴장하는 것이 보인다. 그는 당신의 접근을 눈치채고 장부를 재빨리 덮는다.",
       "primaryNpcId": "NPC_SEO_DOYUN",
       "choices": [
         {
           "id": "hbr_int2_ask",
           "label": "무슨 화물인지 물어본다",
-          "hint": "에드릭의 반응에서 단서를 얻는다",
+          "hint": "{npc:NPC_SEO_DOYUN}의 반응에서 단서를 얻는다",
           "affordance": "PERSUADE",
           "riskLevel": 2
         },
         {
           "id": "hbr_int2_chat",
           "label": "가벼운 대화를 나눈다",
-          "hint": "에드릭의 경계를 풀 수 있다",
+          "hint": "{npc:NPC_SEO_DOYUN}의 경계를 풀 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
         },
         {
           "id": "hbr_int2_note",
-          "label": "에드릭이 긴장한 상자를 기억해둔다",
+          "label": "{npc:NPC_SEO_DOYUN}이 긴장한 상자를 기억해둔다",
           "hint": "나중에 추적할 수 있다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -4304,13 +4304,13 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "미렐라가 부두 근처에서 해초와 조개류를 채집하고 있다. 약재로 쓸 것들이다. 파도가 발을 적시는 것도 아랑곳하지 않고 꼼꼼하게 재료를 골라 바구니에 담는다. 물가에 홀로 있는 그녀의 모습이 쓸쓸해 보인다.",
+      "sceneFrame": "{npc:NPC_MIRELA}가 부두 근처에서 해초와 조개류를 채집하고 있다. 약재로 쓸 것들이다. 파도가 발을 적시는 것도 아랑곳하지 않고 꼼꼼하게 재료를 골라 바구니에 담는다. 물가에 홀로 있는 그녀의 모습이 쓸쓸해 보인다.",
       "primaryNpcId": "NPC_MIRELA",
       "choices": [
         {
           "id": "hbr_int3_help",
           "label": "채집을 도와준다",
-          "hint": "미렐라와 친해질 수 있다",
+          "hint": "{npc:NPC_MIRELA}와 친해질 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
         },
@@ -4323,7 +4323,7 @@
         },
         {
           "id": "hbr_int3_watch",
-          "label": "미렐라의 약초 지식을 관찰한다",
+          "label": "{npc:NPC_MIRELA}의 약초 지식을 관찰한다",
           "hint": "유용한 약초 정보를 얻을 수 있다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -4738,12 +4738,12 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "로자가 고아원 앞에서 아이들에게 빵을 나눠주고 있다. 빵이 부족한지 아이들에게 작게 잘라 주며 미안한 표정을 짓는다. 그녀의 앞치마에는 밀가루가 묻어 있고, 손에는 반죽 자국이 남아 있다.",
+      "sceneFrame": "{npc:NPC_ROSA}가 고아원 앞에서 아이들에게 빵을 나눠주고 있다. 빵이 부족한지 아이들에게 작게 잘라 주며 미안한 표정을 짓는다. 그녀의 앞치마에는 밀가루가 묻어 있고, 손에는 반죽 자국이 남아 있다.",
       "primaryNpcId": "NPC_ROSA",
       "choices": [
         {
           "id": "slm_int1_talk",
-          "label": "로자에게 고아원 사정을 묻는다",
+          "label": "{npc:NPC_ROSA}에게 고아원 사정을 묻는다",
           "hint": "빈민가 아이들의 상황을 알 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
@@ -4751,13 +4751,13 @@
         {
           "id": "slm_int1_help",
           "label": "빵을 나누는 것을 도와준다",
-          "hint": "로자의 신뢰를 얻을 수 있다",
+          "hint": "{npc:NPC_ROSA}의 신뢰를 얻을 수 있다",
           "affordance": "PERSUADE",
           "riskLevel": 1
         },
         {
           "id": "slm_int1_watch",
-          "label": "로자와 아이들을 지켜본다",
+          "label": "{npc:NPC_ROSA}와 아이들을 지켜본다",
           "hint": "빈민가의 인적 네트워크를 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -4794,27 +4794,27 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "레닉이 빈민가 외곽의 폐허에서 누군가와 만남을 끝내고 돌아오는 길이다. 평소의 여유로운 태도 대신 다소 급한 걸음으로 걷고 있다. 당신을 보자 발걸음을 늦추며 평소처럼 미소를 짓지만, 눈에는 경계가 남아 있다.",
+      "sceneFrame": "{npc:NPC_RENNICK}이 빈민가 외곽의 폐허에서 누군가와 만남을 끝내고 돌아오는 길이다. 평소의 여유로운 태도 대신 다소 급한 걸음으로 걷고 있다. 당신을 보자 발걸음을 늦추며 평소처럼 미소를 짓지만, 눈에는 경계가 남아 있다.",
       "primaryNpcId": "NPC_RENNICK",
       "choices": [
         {
           "id": "slm_int2_ask",
           "label": "어디서 오는 길인지 물어본다",
-          "hint": "레닉의 비밀 연락망을 알 수 있다",
+          "hint": "{npc:NPC_RENNICK}의 비밀 연락망을 알 수 있다",
           "affordance": "PERSUADE",
           "riskLevel": 2
         },
         {
           "id": "slm_int2_chat",
           "label": "가볍게 대화를 나눈다",
-          "hint": "레닉이 자연스럽게 정보를 흘릴 수 있다",
+          "hint": "{npc:NPC_RENNICK}이 자연스럽게 정보를 흘릴 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
         },
         {
           "id": "slm_int2_tail",
-          "label": "레닉이 어디로 가는지 뒤를 밟는다",
-          "hint": "레닉의 활동 범위를 파악한다",
+          "label": "{npc:NPC_RENNICK}이 어디로 가는지 뒤를 밟는다",
+          "hint": "{npc:NPC_RENNICK}의 활동 범위를 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 2
         }
@@ -4851,19 +4851,19 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "미렐라가 빈민가의 허름한 진료소에서 환자를 치료하고 있다. 약초를 달이는 냄새가 좁은 방 안에 가득하다. 기다리는 사람이 몇 명 있는데, 모두 피로하고 수척한 얼굴이다. 미렐라는 지칠 줄 모르고 일한다.",
+      "sceneFrame": "{npc:NPC_MIRELA}가 빈민가의 허름한 진료소에서 환자를 치료하고 있다. 약초를 달이는 냄새가 좁은 방 안에 가득하다. 기다리는 사람이 몇 명 있는데, 모두 피로하고 수척한 얼굴이다. {npc:NPC_MIRELA}는 지칠 줄 모르고 일한다.",
       "primaryNpcId": "NPC_MIRELA",
       "choices": [
         {
           "id": "slm_int3_assist",
           "label": "진료를 도와준다",
-          "hint": "미렐라의 깊은 신뢰를 얻는다",
+          "hint": "{npc:NPC_MIRELA}의 깊은 신뢰를 얻는다",
           "affordance": "TALK",
           "riskLevel": 1
         },
         {
           "id": "slm_int3_watch",
-          "label": "미렐라의 치료법을 관찰한다",
+          "label": "{npc:NPC_MIRELA}의 치료법을 관찰한다",
           "hint": "약초 지식을 배울 수 있다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -4920,7 +4920,7 @@
         },
         {
           "id": "slm_cft1_threaten",
-          "label": "하를런의 이름을 대며 위협한다",
+          "label": "{npc:NPC_YOON_HAMIN}의 이름을 대며 위협한다",
           "hint": "노동 길드의 영향력을 활용한다",
           "affordance": "THREATEN",
           "riskLevel": 2
