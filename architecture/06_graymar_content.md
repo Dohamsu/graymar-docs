@@ -33,7 +33,7 @@
 현재 구현된 시스템은 **HUB 중심 순환 탐험**이다:
 
 ```
-HUB (4개 LOCATION 선택)
+HUB (7개 LOCATION 선택)
   └─ LOCATION (Action-First 파이프라인)
        ├─ EventMatcher → ResolveService → 결과
        ├─ COMBAT 발생 가능
@@ -55,10 +55,10 @@ HUB (4개 LOCATION 선택)
 | 3 | `enemies.json` | 적 9종 정의 | enemyId |
 | 4 | `encounters.json` | 전투 조합 9종 + 보상 | encounterId |
 | 5 | `items.json` | 아이템 카탈로그 (단서 3 + 소모품 + 키 아이템) | itemId |
-| 6 | `npcs.json` | NPC 11명 + unknownAlias (소개 전 별칭) | npcId |
+| 6 | `npcs.json` | NPC 42명 (CORE 5 + SUB 12 + BACKGROUND 25) + unknownAlias + schedule | npcId |
 | 7 | `factions.json` | 세력 4개 + 초기 평판 | factionId |
 | 8 | `quest.json` | 메인 퀘스트 상태/Fact 정의 | questId |
-| 9 | `locations.json` | 4개 LOCATION 정의 | locationId |
+| 9 | `locations.json` | 7개 LOCATION 정의 | locationId |
 | 10 | `events_v2.json` | HUB 이벤트 88개 (LOCATION당 22개, eventCategory 포함) | eventId |
 | 11 | `scene_shells.json` | LOCATION x TimePhase x Safety 분위기 텍스트 (v1) | locationId.timePhase.safety |
 | 12 | `scene_shells_v2.json` | 확장 분위기 텍스트 (v2) | locationId.timePhase.safety |
@@ -68,13 +68,13 @@ HUB (4개 LOCATION 선택)
 | 16 | `shops.json` | 상점 정의 (아이템/가격) | shopId |
 | 17 | `sets.json` | 장비 세트 정의 | setId |
 | 18 | `region_affixes.json` | 리전 접미사 정의 | affixId |
-| 19 | `incidents.json` | Incident 정의 (Narrative Engine v1) | incidentId |
+| 19 | `incidents.json` | Incident 8개 + 사건 간 인과관계(dependencies) | incidentId |
 | 20 | `endings.json` | 엔딩 조건/결과 정의 | endingId |
 | 21 | `narrative_marks.json` | 12개 불가역 표식 정의 | markId |
 
 ---
 
-## 3. 4개 LOCATION 설계
+## 3. 7개 LOCATION 설계
 
 ### 3.1 LOCATION 목록
 
@@ -84,6 +84,9 @@ HUB (4개 LOCATION 선택)
 | `LOC_GUARD` | 경비대 지구 | AUTHORITY, MILITARY, STRICT | 2 | O |
 | `LOC_HARBOR` | 항만 부두 | MARITIME, DANGEROUS, NIGHT | 3 | O |
 | `LOC_SLUMS` | 빈민가 | UNDERGROUND, DANGER, HIDDEN | 4 | O |
+| `LOC_NOBLE` | 귀족 구역 | POLITICS, WEALTH, RESTRICTED | 2 | O |
+| `LOC_TAVERN` | 선착장 주점 | SOCIAL, REST, INFORMATION | 1 | O |
+| `LOC_DOCKS_WAREHOUSE` | 부두 창고지대 | STORAGE, SMUGGLING, NIGHT | 3 | O |
 
 ### 3.2 LOCATION 특성
 
@@ -95,6 +98,12 @@ HUB (4개 LOCATION 선택)
 
 **빈민가** (LOC_SLUMS) -- 법의 손길이 닿지 않는 암흑가. 정보 브로커 쉐도우가 거점으로 삼는다. 위험도 최고, PROFIT_FROM_CHAOS 아크의 후반 무대.
 
+**귀족 구역** (LOC_NOBLE) -- 도시 상류층의 거주지. 정치적 모의와 권력 거래가 이루어지는 곳. 접근 제한이 있어 평판이나 특정 조건이 필요하다.
+
+**선착장 주점** (LOC_TAVERN) -- 항만 인근의 주점으로, 모든 계층이 모이는 정보 교차점. **LOC_TAVERN은 탐험 거점 역할**을 하며, 장소 간 직접 이동의 기준점이 된다.
+
+**부두 창고지대** (LOC_DOCKS_WAREHOUSE) -- 항만 부두 배후의 대형 창고 구역. 밀수품 은닉과 비밀 거래가 이루어지며, 야간에 특히 위험하다.
+
 ### 3.3 Scene Shell 구조
 
 `scene_shells.json`은 LOCATION x TimePhase(DAY/NIGHT) x Safety(SAFE/ALERT/DANGER) 조합으로 분위기 텍스트를 제공한다. SceneShellService가 현재 WorldState에 따라 적절한 텍스트를 선택하여 LLM 프롬프트에 전달한다.
@@ -103,7 +112,7 @@ HUB (4개 LOCATION 선택)
 scene_shells[locationId][timePhase][safety] → 분위기 텍스트 (1~2문단)
 ```
 
-총 조합: 4 LOCATION x 2 TimePhase x 3 Safety = **24개 분위기 텍스트**
+총 조합: 7 LOCATION x 2 TimePhase x 3 Safety = **42개 분위기 텍스트**
 
 ---
 
@@ -233,21 +242,61 @@ EventMatcherService의 6단계 필터링:
 | CITY_GUARD | 도시 수비대 | 0 | 마이렐의 부패 vs 벨론의 정의 |
 | ARCANE_SOCIETY | 비전 학회 | 0 | (현재 시나리오에서 주요 역할 없음) |
 
-### 6.2 NPC (11명)
+### 6.2 NPC (42명, 3계층)
 
-| npcId | 이름 | unknownAlias (소개 전) | 역할 | 세력 | basePosture |
-|-------|------|----------------------|------|------|------------|
+NPC는 **CORE / SUB / BACKGROUND** 3계층으로 구분된다.
+
+| 계층 | 수 | 설명 |
+|------|---|------|
+| **CORE** | 5명 | 메인 아크에 직접 관여하는 핵심 NPC. 고유 퀘스트/대사/감정 모델 완비 |
+| **SUB** | 12명 | 세력/장소의 중간 인물. 이벤트에 등장하며 플레이어 행동에 반응 |
+| **BACKGROUND** | 25명 | 도시 생활감을 부여하는 배경 NPC. 스케줄 기반 등장, 간단한 반응 |
+
+#### CORE NPC (5명)
+
+| npcId | 이름 | unknownAlias | 역할 | 세력 | basePosture |
+|-------|------|-------------|------|------|------------|
 | NPC_YOON_HAMIN | 하를런 보스 | 투박한 노동자 | 부두 노동 형제단 연락책 | LABOR_GUILD | FRIENDLY |
-| NPC_SEO_DOYUN | 에드릭 베일 | 날카로운 눈매의 회계사 | 은장부 상단 회계 담당 | MERCHANT_CONSORTIUM | CAUTIOUS |
 | NPC_KANG_CHAERIN | 마이렐 단 경 | 권위적인 야간 경비 책임자 | 수비대 야간 책임자 (핵심 악역) | CITY_GUARD | CALCULATING |
-| NPC_BAEK_SEUNGHO | 토브렌 하위크 | 수상한 창고 관리인 | 동부 부두 창고 관리자 | 무소속 | CAUTIOUS |
-| NPC_MOON_SEA | 라이라 케스텔 | 조용한 문서 실무자 | 상단 문서실 암호 메모 실무자 | MERCHANT_CONSORTIUM | FEARFUL |
+| NPC_SEO_DOYUN | 에드릭 베일 | 날카로운 눈매의 회계사 | 은장부 상단 회계 담당 | MERCHANT_CONSORTIUM | CAUTIOUS |
 | NPC_INFO_BROKER | 쉐도우 | 후드를 깊이 쓴 정보상 | 뒷골목 정보 브로커 | 무소속 | CALCULATING |
 | NPC_GUARD_CAPTAIN | 벨론 대위 | 위풍당당한 수비대 장교 | 수비대 대위, 내부 부패 진압 의지 | CITY_GUARD | CAUTIOUS |
+
+#### SUB NPC (12명, 대표)
+
+| npcId | 이름 | unknownAlias | 역할 | 세력 | basePosture |
+|-------|------|-------------|------|------|------------|
+| NPC_BAEK_SEUNGHO | 토브렌 하위크 | 수상한 창고 관리인 | 동부 부두 창고 관리자 | 무소속 | CAUTIOUS |
+| NPC_MOON_SEA | 라이라 케스텔 | 조용한 문서 실무자 | 상단 문서실 암호 메모 실무자 | MERCHANT_CONSORTIUM | FEARFUL |
 | NPC_MIRELA | 미렐라 | 약초 향이 나는 노점상 | 시장 약초 노점상 | MERCHANT_CONSORTIUM | FRIENDLY |
 | NPC_RENNICK | 레닉 | 그림자 속 얼굴 | 정보 브로커, 경비대 연줄 보유 | 무소속 | CAUTIOUS |
 | NPC_CAPTAIN_BREN | 브렌 대위 | 날카로운 눈의 장교 | 경비대 장교, 벨론 휘하 | CITY_GUARD | CAUTIOUS |
 | NPC_ROSA | 로사 | 따뜻한 눈빛의 여인 | 고아원 관련 인물 | 무소속 | FRIENDLY |
+| ... | (나머지 6명) | | 세력별 중간 연락책, 상인, 정보원 등 | | |
+
+#### BACKGROUND NPC (25명)
+
+장소별 배경 NPC로, 스케줄 시스템에 따라 시간대별 위치가 결정된다. 플레이어와 직접 대화 가능하나, 개별 감정 모델 없이 간단한 반응만 제공한다.
+
+#### NPC Schedule 필드
+
+각 NPC는 `schedule` 필드를 가진다. 시간대(DAWN/DAY/DUSK/NIGHT)별 위치를 정의한다.
+
+```json
+{
+  "npcId": "NPC_MIRELA",
+  "schedule": {
+    "DAWN": "LOC_MARKET",
+    "DAY": "LOC_MARKET",
+    "DUSK": "LOC_TAVERN",
+    "NIGHT": null
+  }
+}
+```
+
+- `null`은 해당 시간대에 등장하지 않음을 의미
+- NpcScheduleService가 WorldTick 시간대 변경 시 NPC 위치를 자동 업데이트
+- 이벤트 매칭/SituationGenerator에서 현재 장소에 있는 NPC만 상호작용 대상
 
 > NPC 소개 시스템: 첫 만남에서 `unknownAlias`로 표시. posture에 따라 1~3회 만남 후 실명 공개. 상세: `09_npc_politics.md` §1.4
 

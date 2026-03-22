@@ -2,7 +2,7 @@
 
 > 통합 정본. 원본: `HUB_Exploration_RPG_Architecture_v1.md`, `Action_First_Architecture_v2.md`, `HUB_RPG_Engine_Spec_v2.md`
 > 구현 코드: `server/src/engine/hub/*.service.ts`
-> 마지막 갱신: 2026-03-17 (서비스 목록 29개, 5 서브시스템 반영)
+> 마지막 갱신: 2026-03-22 (서비스 목록 36개, 6 서브시스템 반영 — Living World v2 추가)
 
 ---
 
@@ -85,6 +85,12 @@ type WorldState = {
 - 이벤트 분기 및 Heat 계산에 활용 (NIGHT → Heat +3 보너스)
 - Legacy: `timePhase` (DAY/NIGHT) 5턴 전환은 하위 호환용으로 유지
 
+**WorldTick 확장** (Living World v2):
+- NPC 스케줄 tick: 시간대 변경 시 NPC 위치 자동 업데이트 (`NpcScheduleService`)
+- NPC 어젠다 tick: 매 tick마다 NPC 장기 목표 자율 진행 (`NpcAgendaService`)
+- WorldFact 정리: 만료 조건 충족 Fact 자동 제거
+- 조건 만료: 시간 경과 기반 locationDynamicState 자동 감쇠
+
 ### 2-3. Reputation 시스템
 
 ```typescript
@@ -103,7 +109,8 @@ reputation: Record<string, number>  // CITY_GUARD, MERCHANT_CONSORTIUM, LABOR_GU
 ```
 LOCATION 진입 → Scene Shell(분위기) → 플레이어 입력
   → IntentParserV2 → ParsedIntentV2
-  → EventMatcherService → EventDefV2 선택
+  → SituationGenerator (3계층 상황 생성, 우선 시도)
+  → 실패 시 EventMatcherService → EventDefV2 선택 (fallback)
   → ResolveService → ResolveResult
   → WorldState/Agenda/Arc 업데이트 → LLM 서술
 ```
@@ -205,7 +212,19 @@ score = 1d6 + floor(stat / 3) + baseMod
 
 ---
 
-## 5. 이벤트 매칭 알고리즘 (6단계)
+## 5. 이벤트 매칭 알고리즘
+
+### 5-0. SituationGenerator 우선 (Living World v2)
+
+이벤트 매칭 시 **SituationGenerator가 우선 시도**된다. SituationGenerator는 현재 월드 상태(WorldFact, LocationDynamicState, NpcAgenda)를 기반으로 맥락적 상황을 생성한다. SituationGenerator가 유효한 상황을 생성하지 못할 경우, 기존 **EventMatcher가 fallback**으로 동작한다.
+
+```
+SituationGenerator.generate(context)
+  → 성공? → SituationEvent 반환
+  → 실패? → EventMatcherService.match() fallback (아래 6단계)
+```
+
+### 5-1 이하. EventMatcher 6단계 (fallback)
 
 ### 5-1. EventDefV2 스키마
 
@@ -315,11 +334,11 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 |------|------|------|
 | 1 | event.payload.choices | 이벤트 고유 선택지 |
 | 2 | suggested_choices.json | eventType별 템플릿 (RUMOR, FACTION, ARC_HINT 등) |
-| 3 | LOCATION별 기본 선택지 | LOC_MARKET/GUARD/HARBOR/SLUMS 각 3개 |
+| 3 | LOCATION별 기본 선택지 | LOC_MARKET/GUARD/HARBOR/SLUMS/NOBLE/TAVERN/DOCKS_WAREHOUSE 각 3개 |
 | fallback | 범용 탐색 선택지 | OBSERVE, PERSUADE, INVESTIGATE |
 
 - **go_hub** (거점 복귀) 선택지는 항상 포함
-- HUB에서는 4개 LOCATION 이동 + Heat 해결 옵션(Heat > 0일 때 CONTACT_ALLY, PAY_COST)
+- HUB에서는 7개 LOCATION 이동 + Heat 해결 옵션(Heat > 0일 때 CONTACT_ALLY, PAY_COST)
 
 ### 7-3. LOCATION 구성 (Graymar Harbor)
 
@@ -329,6 +348,9 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 | LOC_GUARD | 경비대 지구 | 질서, 감시, 정보 |
 | LOC_HARBOR | 항만 부두 | 선원, 밀수, 화물 |
 | LOC_SLUMS | 빈민가 | 암흑가, 위험, 단서 |
+| LOC_NOBLE | 귀족 구역 | 정치, 권력, 제한 구역 |
+| LOC_TAVERN | 선착장 주점 | 교류, 정보, 거점 |
+| LOC_DOCKS_WAREHOUSE | 부두 창고지대 | 밀수, 은닉, 야간 |
 
 ---
 
@@ -411,10 +433,22 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 | ProceduralEventService | `procedural-event.service.ts` | 동적 이벤트 생성 (Trigger+Subject+Action+Outcome) |
 | LlmIntentParserService | `llm-intent-parser.service.ts` | LLM 기반 의도 파싱 (폴백) |
 
-> **총 29개 서비스** — `server/src/engine/hub/` 디렉토리
-> Base 9 + Narrative v1 8 + Orchestration 1 + Memory v2 2 + Bridge 6 + Narrative/Event v2 3
+> **총 36개 서비스** — `server/src/engine/hub/` 디렉토리
+> Base 9 + Narrative v1 8 + Orchestration 1 + Memory v2 2 + Bridge 6 + Narrative/Event v2 3 + Living World v2 7
 
-### 9.7 콘텐츠 데이터 (`content/graymar_v1/`)
+### 9.7 Living World v2 서비스 (7개)
+
+| 서비스 | 파일 | 역할 |
+|--------|------|------|
+| LocationStateService | `location-state.service.ts` | 장소 동적 상태 관리 (security, crime, unrest 등) |
+| WorldFactService | `world-fact.service.ts` | 행동→사실 누적. Fact 생성/조회/만료 |
+| NpcScheduleService | `npc-schedule.service.ts` | 시간대별 NPC 위치 관리. WorldTick 연동 |
+| NpcAgendaService | `npc-agenda.service.ts` | NPC 장기 목표 자율 진행 (tick 기반) |
+| ConsequenceProcessorService | `consequence-processor.service.ts` | 판정 결과 → WorldFact + LocationDynamicState 반영 |
+| SituationGeneratorService | `situation-generator.service.ts` | 3계층 상황 생성 (Landmark / Incident-Driven / World-State) |
+| PlayerGoalService | `player-goal.service.ts` | 플레이어 목표 추적 및 진행도 관리 |
+
+### 9.8 콘텐츠 데이터 (`content/graymar_v1/`)
 
 - `events_v2.json` --- 88개 이벤트 (LOCATION당 22개, eventCategory 포함)
 - `scene_shells.json` / `scene_shells_v2.json` --- LOCATION x TimePhase x Safety 분위기 텍스트

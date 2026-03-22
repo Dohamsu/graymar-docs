@@ -1,6 +1,6 @@
 # RunState 구조 & 핵심 상수
 
-> 최종 갱신: 2026-03-17
+> 최종 갱신: 2026-03-22
 
 ## RunState Structure (서버 JSONB)
 
@@ -41,6 +41,12 @@ RunState {
 
   // Narrative v2 (설계문서 18~20)
   proceduralHistory?: ProceduralHistoryEntry[]  // 절차적 이벤트 이력 (max 15)
+
+  // Living World v2 (설계문서 21)
+  worldFacts?: WorldFact[]                                    // 세계 사실 기록 (최대 50개)
+  npcLocations?: Record<string, string>                       // NPC별 현재 위치
+  locationDynamicStates?: Record<string, LocationDynamicState> // 장소별 동적 상태 (7개 장소)
+  playerGoals?: PlayerGoal[]                                  // 플레이어 목표 (최대 5개)
 }
 ```
 
