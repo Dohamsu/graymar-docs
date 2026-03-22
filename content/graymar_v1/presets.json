@@ -19,7 +19,10 @@
     },
     "startingGold": 30,
     "startingItems": [
-      { "itemId": "ITEM_MINOR_HEALING", "qty": 2 }
+      {
+        "itemId": "ITEM_MINOR_HEALING",
+        "qty": 2
+      }
     ]
   },
   {
@@ -42,8 +45,14 @@
     },
     "startingGold": 45,
     "startingItems": [
-      { "itemId": "ITEM_MINOR_HEALING", "qty": 1 },
-      { "itemId": "ITEM_STAMINA_TONIC", "qty": 1 }
+      {
+        "itemId": "ITEM_MINOR_HEALING",
+        "qty": 1
+      },
+      {
+        "itemId": "ITEM_STAMINA_TONIC",
+        "qty": 1
+      }
     ]
   },
   {
@@ -66,8 +75,16 @@
     },
     "startingGold": 60,
     "startingItems": [
-      { "itemId": "ITEM_SMOKE_BOMB", "qty": 1 },
-      { "itemId": "ITEM_POISON_NEEDLE", "qty": 1 }
+      {
+        "itemId": "ITEM_MINOR_HEALING",
+        "name": "하급 치료제",
+        "qty": 1
+      },
+      {
+        "itemId": "ITEM_LOCKPICK",
+        "name": "잠금해제 도구",
+        "qty": 1
+      }
     ]
   },
   {
@@ -90,9 +107,18 @@
     },
     "startingGold": 40,
     "startingItems": [
-      { "itemId": "ITEM_MINOR_HEALING", "qty": 2 },
-      { "itemId": "ITEM_POISON_NEEDLE", "qty": 2 },
-      { "itemId": "ITEM_STAMINA_TONIC", "qty": 1 }
+      {
+        "itemId": "ITEM_MINOR_HEALING",
+        "qty": 2
+      },
+      {
+        "itemId": "ITEM_POISON_NEEDLE",
+        "qty": 2
+      },
+      {
+        "itemId": "ITEM_STAMINA_TONIC",
+        "qty": 1
+      }
     ]
   }
 ]
