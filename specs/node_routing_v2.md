@@ -1,6 +1,6 @@
 # Node Routing v2 — 조건부 분기 DAG 설계서
 
-> ❌ **미구현** — Phase 2 (Structured Mission 모드) 예정. 현재 HUB 중심 탐험 모드 운영 중.
+> ✅ **구현됨** — DAG 24노드 그래프 + 3루트 조건부 분기 구현 완료.
 > **정본**: 노드 라우팅 시스템 재설계 (선형 고정 → 조건부 분기)
 > **대상**: Graymar Vertical Slice (항만 실종 사건)
 > **의존 문서**: `run_node_system.md`, `node_resolve_rules_v1.md`, `vertical_slice_v1.md`, `07_database_schema.md`
