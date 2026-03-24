@@ -23,7 +23,17 @@
         "itemId": "ITEM_MINOR_HEALING",
         "qty": 2
       }
-    ]
+    ],
+    "npcPostureOverrides": {
+      "NPC_OWEN_KEEPER": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_BG_DOCKER": { "posture": "FRIENDLY", "trustDelta": 5 },
+      "NPC_BG_ROPE_MAKER": { "posture": "FRIENDLY", "trustDelta": 5 },
+      "NPC_BG_CARGO_INSPECTOR": { "posture": "FRIENDLY", "trustDelta": 5 }
+    },
+    "actionBonuses": {
+      "FIGHT": 1,
+      "THREATEN": 1
+    }
   },
   {
     "presetId": "DESERTER",
@@ -53,7 +63,16 @@
         "itemId": "ITEM_STAMINA_TONIC",
         "qty": 1
       }
-    ]
+    ],
+    "npcPostureOverrides": {
+      "NPC_GUARD_FELIX": { "posture": "HOSTILE", "trustDelta": -15 },
+      "NPC_CAPTAIN_BREN": { "posture": "HOSTILE", "trustDelta": -15 },
+      "NPC_BAEK_SEUNGHO": { "posture": "FRIENDLY", "trustDelta": 10 }
+    },
+    "actionBonuses": {
+      "FIGHT": 1,
+      "OBSERVE": 1
+    }
   },
   {
     "presetId": "SMUGGLER",
@@ -85,7 +104,16 @@
         "name": "잠금해제 도구",
         "qty": 1
       }
-    ]
+    ],
+    "npcPostureOverrides": {
+      "NPC_SERA_DOCKS": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_MOON_SEA": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_KANG_CHAERIN": { "posture": "FRIENDLY", "trustDelta": 5 }
+    },
+    "actionBonuses": {
+      "SNEAK": 1,
+      "BRIBE": 1
+    }
   },
   {
     "presetId": "HERBALIST",
@@ -119,6 +147,15 @@
         "itemId": "ITEM_STAMINA_TONIC",
         "qty": 1
       }
-    ]
+    ],
+    "npcPostureOverrides": {
+      "NPC_INFO_BROKER": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_MIRELA": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_BG_HERB_CRONE": { "posture": "FRIENDLY", "trustDelta": 5 }
+    },
+    "actionBonuses": {
+      "INVESTIGATE": 1,
+      "HELP": 1
+    }
   }
 ]
