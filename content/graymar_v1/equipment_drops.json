@@ -1,0 +1,187 @@
+[
+  {
+    "enemyId": "ENEMY_DOCK_THUG",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.06 },
+      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.04 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_HARBOR_WATCHMAN",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.06 },
+      { "baseItemId": "EQ_DOCK_BOOTS", "chance": 0.05 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_SMUGGLER",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_SMUGGLER_DAGGER", "chance": 0.07 },
+      { "baseItemId": "EQ_SILENT_BOOTS", "chance": 0.05 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_CORRUPT_GUARD",
+    "isBoss": false,
+    "locationId": "LOC_GUARD",
+    "drops": [
+      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.07 },
+      { "baseItemId": "EQ_SCOUTS_GOGGLES", "chance": 0.05 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_WAREHOUSE_GUARD",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.08 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_HIRED_MUSCLE",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.06 },
+      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.05 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_CORRUPT_GUARD_LOYAL",
+    "isBoss": false,
+    "locationId": "LOC_GUARD",
+    "drops": [
+      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.08 },
+      { "baseItemId": "EQ_SCOUTS_GOGGLES", "chance": 0.06 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_GUILD_THUG_ELITE",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.08 },
+      { "baseItemId": "EQ_DOCK_BOOTS", "chance": 0.06 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_SLUM_THUG",
+    "isBoss": false,
+    "locationId": "LOC_SLUMS",
+    "drops": [
+      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.06 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_SLUM_KNIFE",
+    "isBoss": false,
+    "locationId": "LOC_SLUMS",
+    "drops": [
+      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.08 },
+      { "baseItemId": "EQ_SILENT_BOOTS", "chance": 0.05 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_MARKET_ENFORCER",
+    "isBoss": false,
+    "locationId": "LOC_MARKET",
+    "drops": [
+      { "baseItemId": "EQ_MERCHANT_RING", "chance": 0.05 },
+      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.06 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_HARBOR_PIRATE",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_SMUGGLER_DAGGER", "chance": 0.08 },
+      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.06 }
+    ]
+  },
+  {
+    "enemyId": "ENEMY_TOBREN_COMBAT",
+    "isBoss": false,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_MERCHANT_LEDGER", "chance": 0.10 }
+    ]
+  },
+
+  {
+    "encounterId": "ENC_GUARD_CONFRONTATION",
+    "isBoss": true,
+    "locationId": "LOC_GUARD",
+    "drops": [
+      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.25 },
+      { "baseItemId": "EQ_HARBOR_SEAL", "chance": 0.20 }
+    ]
+  },
+  {
+    "encounterId": "ENC_GUILD_BOSS",
+    "isBoss": true,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.25 },
+      { "baseItemId": "EQ_SHADOW_DAGGER", "chance": 0.20 }
+    ]
+  },
+  {
+    "encounterId": "ENC_GUARD_BOSS",
+    "isBoss": true,
+    "locationId": "LOC_GUARD",
+    "drops": [
+      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.25 },
+      { "baseItemId": "EQ_HARBOR_SEAL", "chance": 0.22 }
+    ]
+  },
+  {
+    "encounterId": "ENC_SOLO_BOSS",
+    "isBoss": true,
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_SHADOW_DAGGER", "chance": 0.30 },
+      { "baseItemId": "EQ_SHADOW_CLOAK", "chance": 0.25 },
+      { "baseItemId": "EQ_HARBOR_SEAL", "chance": 0.20 }
+    ]
+  },
+
+  {
+    "locationId": "LOC_HARBOR",
+    "drops": [
+      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.04 },
+      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.04 },
+      { "baseItemId": "EQ_DOCK_BOOTS", "chance": 0.03 },
+      { "baseItemId": "EQ_SMUGGLER_DAGGER", "chance": 0.03 }
+    ]
+  },
+  {
+    "locationId": "LOC_GUARD",
+    "drops": [
+      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.04 },
+      { "baseItemId": "EQ_SCOUTS_GOGGLES", "chance": 0.03 }
+    ]
+  },
+  {
+    "locationId": "LOC_MARKET",
+    "drops": [
+      { "baseItemId": "EQ_MERCHANT_LEDGER", "chance": 0.03 },
+      { "baseItemId": "EQ_MERCHANT_RING", "chance": 0.03 },
+      { "baseItemId": "EQ_MERCHANT_CLOAK", "chance": 0.02 }
+    ]
+  },
+  {
+    "locationId": "LOC_SLUMS",
+    "drops": [
+      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.05 },
+      { "baseItemId": "EQ_SILENT_BOOTS", "chance": 0.04 },
+      { "baseItemId": "EQ_SHADOW_CLOAK", "chance": 0.02 }
+    ]
+  }
+]
