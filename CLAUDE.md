@@ -183,7 +183,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 9. **HUB Heat ±8 clamp** — 한 턴에 Heat 변동은 ±8 제한. 0~100 범위.
 10. **Action-First 파이프라인** — LOCATION에서 플레이어 ACTION이 먼저, 이벤트 매칭이 후.
 11. **고집(Insistence) 에스컬레이션** — suppressedActionType 3회 연속 → 강한 actionType 승격.
-12. **LOCATION 판정 = 1d6 + floor(stat/3) + baseMod** — SUCCESS ≥ 6, PARTIAL 3~5, FAIL < 3.
+12. **LOCATION 판정 = 1d6 + floor(stat/3) + baseMod** — SUCCESS ≥ 7, PARTIAL 4~6, FAIL < 4.
 13. **이벤트 고유 선택지 우선** — payload.choices > suggested_choices > LOCATION 기본.
 14. **LOCATION 단기기억** — locationSessionTurns(최대 6턴+MidSummary) LLM 전달. 떠날 때 요약 저장.
 15. **NPC 이름 비공개→공개** — FRIENDLY 1회 / CAUTIOUS 2회 / HOSTILE 3회 소개.
