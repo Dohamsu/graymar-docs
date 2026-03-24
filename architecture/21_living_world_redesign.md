@@ -18,7 +18,7 @@
 
 | 측면 | 현재 (v1) | 재설계 (v2) |
 |------|-----------|-------------|
-| 이벤트 | 88개 정적 이벤트 로테이션 | 세계 상태가 상황을 생성 |
+| 이벤트 | 112개 정적 이벤트 로테이션 | 세계 상태가 상황을 생성 |
 | 장소 | 4개 고정, 독립적 | 6~8개, 상호 연결, 동적 상태 |
 | NPC | 이벤트에 붙은 속성 | 장소에 존재하는 개체, 일정/목표 보유 |
 | 시간 | DAY/NIGHT 표시용 | 세계가 시간에 따라 변화 |
@@ -71,7 +71,7 @@
 | EventMatcher 6단계 | → SituationGenerator로 교체 (세계 상태 → 상황 생성) |
 | HUB→LOCATION 허브스포크 | → 장소↔장소 자유 이동 |
 | Node 시스템 (COMBAT/EVENT/...) | → LOCATION이 기본, COMBAT은 서브노드로 유지 |
-| 88개 정적 이벤트 | → 시드 이벤트(랜드마크) + 동적 상황 생성 |
+| 112개 정적 이벤트 | → 시드 이벤트(랜드마크) + 동적 상황 생성 |
 | SceneShell 선택지 생성 | → 장소 상태 기반 동적 선택지 |
 
 ---
@@ -352,7 +352,7 @@ type FactCategory =
 
 #### 4.1 개념
 
-기존 EventMatcher(88개 정적 이벤트에서 선택)를 대체.
+기존 EventMatcher(112개 정적 이벤트에서 선택)를 대체.
 **세계의 현재 상태에서 상황을 생성**한다.
 
 #### 4.2 상황 생성 파이프라인
@@ -446,7 +446,7 @@ affordances: [PERSUADE, THREATEN, SNEAK, OBSERVE, HELP, FIGHT]
 
 **각 결과가 fact로 남고, 다음 방문 시 상황에 영향.**
 
-#### 4.5 기존 이벤트(88개)의 역할 변경
+#### 4.5 기존 이벤트(112개)의 역할 변경
 
 | 기존 역할 | 변경 후 역할 |
 |----------|-------------|
@@ -460,7 +460,7 @@ affordances: [PERSUADE, THREATEN, SNEAK, OBSERVE, HELP, FIGHT]
 | CHECKPOINT (2개) | → LocationCondition 기반 |
 | SHOP (2개) | → LOC_MARKET/LOC_TAVERN의 ROUTINE |
 
-**88개 이벤트를 버리지 않고, 상황 생성의 재료/템플릿으로 재활용.**
+**112개 이벤트를 버리지 않고, 상황 생성의 재료/템플릿으로 재활용.**
 
 ---
 
@@ -795,7 +795,7 @@ INC_NOBLE_CONSPIRACY stage 2 → INC_GUARD_CORRUPTION spawn (경비대에 압력
 
 ### 5.4 events_v2.json 역할 변경
 
-88개 기존 이벤트를 삭제하지 않고 **SituationTemplate**으로 재분류:
+112개 기존 이벤트를 삭제하지 않고 **SituationTemplate**으로 재분류:
 
 ```json
 {
@@ -880,7 +880,7 @@ INC_NOBLE_CONSPIRACY stage 2 → INC_GUARD_CORRUPTION spawn (경비대에 압력
    - Layer 3: World-State (신규)
 
 2. **SituationTemplate** 시스템
-   - 기존 88개 이벤트를 템플릿으로 변환
+   - 기존 112개 이벤트를 템플릿으로 변환
    - NPC 슬롯, 조건부 분기 추가
 
 3. **PlayerGoal** 시스템

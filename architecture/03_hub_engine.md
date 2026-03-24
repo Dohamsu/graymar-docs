@@ -178,11 +178,20 @@ score = 1d6 + floor(stat / 3) + baseMod
 
 | ActionType | Stat | 비고 |
 |------------|------|------|
-| FIGHT, THREATEN | ATK | 전투/위협 |
-| SNEAK, OBSERVE, STEAL | EVA | 은밀 행동 |
-| INVESTIGATE | ACC | 정밀 탐색 |
-| PERSUADE, BRIBE, TRADE | SPEED | 사교/거래 |
-| HELP | DEF | 보호/지원 |
+| INVESTIGATE | wit | 정밀 탐색 |
+| PERSUADE | cha | 설득 |
+| SNEAK | dex | 은밀 행동 |
+| BRIBE | cha | 매수 |
+| THREATEN | str | 위협 |
+| HELP | con | 보호/지원 |
+| STEAL | dex | 절도 |
+| FIGHT | str | 전투 |
+| OBSERVE | per | 관찰 |
+| TRADE | cha | 거래 |
+| TALK | cha | 대화 |
+| SEARCH | per | 탐색 |
+| REST | con | 휴식 |
+| SHOP | cha | 상점 |
 
 ### 4-3. 판정 결과
 
@@ -356,17 +365,17 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 
 ## 8. 캐릭터 프리셋
 
-| Preset | HP | ATK | DEF | ACC | EVA | SPEED | RESIST | 특성 |
-|--------|-----|-----|-----|-----|-----|-------|--------|------|
-| DOCKWORKER (부두 노동자) | 120 | 16 | 14 | 3 | 2 | 4 | 7 | 근접 탱커, 높은 체력/방어 |
-| DESERTER (탈영병) | 100 | 17 | 11 | 7 | 3 | 5 | 5 | 밸런스 근접, 정석 전투 |
-| SMUGGLER (밀수업자) | 80 | 14 | 7 | 5 | 7 | 7 | 3 | 스텔스, 높은 회피/치명타 |
-| HERBALIST (약초상) | 90 | 11 | 9 | 6 | 4 | 4 | 9 | 유틸, 아이템 활용 |
+| Preset | HP | str | dex | wit | con | per | cha | 특성 |
+|--------|-----|-----|-----|-----|-----|-----|-----|------|
+| DOCKWORKER (부두 노동자) | 120 | 14 | 5 | 5 | 13 | 6 | 6 | 근접 탱커, 높은 체력/방어 |
+| DESERTER (탈영병) | 100 | 14 | 8 | 8 | 10 | 7 | 6 | 밸런스 근접, 정석 전투 |
+| SMUGGLER (밀수업자) | 85 | 11 | 12 | 6 | 7 | 8 | 10 | 스텔스, 높은 회피/치명타 |
+| HERBALIST (약초상) | 90 | 8 | 7 | 10 | 10 | 10 | 6 | 유틸, 아이템 활용 |
 
 **Resolve 적용 예시** (score = 1d6 + floor(stat/3) + baseMod):
-- DOCKWORKER가 FIGHT(ATK 16) → statBonus = floor(16/3) = 5
-- SMUGGLER가 SNEAK(EVA 7) → statBonus = floor(7/3) = 2
-- HERBALIST가 HELP(DEF 9) → statBonus = floor(9/3) = 3
+- DOCKWORKER가 FIGHT(str 14) → statBonus = floor(14/3) = 4
+- SMUGGLER가 SNEAK(dex 12) → statBonus = floor(12/3) = 4
+- HERBALIST가 HELP(con 10) → statBonus = floor(10/3) = 3
 
 ---
 
@@ -450,7 +459,7 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 
 ### 9.8 콘텐츠 데이터 (`content/graymar_v1/`)
 
-- `events_v2.json` --- 88개 이벤트 (LOCATION당 22개, eventCategory 포함)
+- `events_v2.json` --- 112개 이벤트 (7개 LOCATION, eventCategory 포함)
 - `scene_shells.json` / `scene_shells_v2.json` --- LOCATION x TimePhase x Safety 분위기 텍스트
 - `suggested_choices.json` --- eventType별 선택지 템플릿
 - `arc_events.json` --- Arc route별 이벤트

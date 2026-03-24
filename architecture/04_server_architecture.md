@@ -65,13 +65,19 @@
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| POST | `/v1/auth/guest` | 게스트 인증 토큰 발급 |
+| POST | `/v1/auth/register` | 회원가입 (email, password, nickname) |
+| POST | `/v1/auth/login` | 로그인 (email, password) → JWT |
 | POST | `/v1/runs` | 새 RUN 생성 |
 | GET | `/v1/runs` | 활성 RUN 조회 (userId 기반) |
 | GET | `/v1/runs/:runId` | RUN 상태 조회 (재접속/복구) |
 | POST | `/v1/runs/:runId/turns` | 턴 제출 (ACTION/CHOICE) |
+| GET | `/v1/runs/:runId/turns/llm-usage` | LLM 사용량 조회 |
 | GET | `/v1/runs/:runId/turns/:turnNo` | 턴 상세 (LLM 폴링용) |
 | POST | `/v1/runs/:runId/turns/:turnNo/retry-llm` | LLM 재시도 (FAILED → PENDING) |
+| POST | `/v1/campaigns` | 캠페인 생성 |
+| GET | `/v1/campaigns` | 활성 캠페인 조회 |
+| GET | `/v1/campaigns/:id` | 캠페인 상세 조회 |
+| GET | `/v1/campaigns/:id/scenarios` | 시나리오 목록 조회 |
 | GET | `/v1/settings/llm` | LLM 설정 조회 |
 | PATCH | `/v1/settings/llm` | LLM 설정 변경 |
 
@@ -500,7 +506,7 @@ TITLE → LOADING → HUB → LOCATION ⇄ COMBAT → HUB (순환)
 | LLM Worker | ✅ 구현 | DB 폴링, 2초 간격 |
 | LLM 재시도 | ✅ 구현 | POST retry-llm → FAILED→PENDING 리셋, Worker 자동 재처리 |
 | 전투 LLM 스킵 | ✅ 구현 | skipLlm → 1-2초 응답 |
-| Auth 시스템 | ✅ 구현 | `server/src/auth/` — 게스트 인증 + JWT |
+| Auth 시스템 | ✅ 구현 | `server/src/auth/` — 회원가입/로그인 + JWT |
 | NPC Injection + peakMode | ✅ 구현 | TurnOrchestrationService (pressure 기반) |
 | NPC Emotional + Posture | ✅ 구현 | NpcEmotionalService (5축 감정 모델) |
 | NPC Introduction | ✅ 구현 | shouldIntroduce + getNpcDisplayName |
