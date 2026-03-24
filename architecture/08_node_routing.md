@@ -1,7 +1,7 @@
 # 08 — 노드 라우팅 아키텍처 (DAG 분기)
 
 > 원본 참조: `specs/node_routing_v2.md` (41KB 전문)
-> 상태: **부분 구현** — DAG 기반 아키텍처(PlannedNodeV2, Edge, resolveNextNodeId) 구현됨. 그래프 정의(미션별 노드 배치)만 미완. 현재 HUB 중심 탐험 모드 사용 중.
+> 상태: **✅ 구현됨** — DAG 기반 아키텍처(PlannedNodeV2, Edge, resolveNextNodeId) + 24노드 그래프 정의 + 3루트 조건부 분기 완료.
 > 의존: `run_node_system.md`, `node_resolve_rules_v1.md`, `vertical_slice_v1.md`
 
 ---

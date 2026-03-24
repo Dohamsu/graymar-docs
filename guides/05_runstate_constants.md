@@ -30,7 +30,9 @@ RunState {
 
   // Equipment
   equipped: EquippedGear
-  equipmentBag: ItemInstance[]
+  equipmentBag: ItemInstance[]      // 장비 가방 (미장착 장비 목록, ItemInstance 구조)
+  legendaryRewards?: string[]       // 획득한 전설 장비 ID 목록
+  regionEconomy?: RegionEconomy     // 상점 인벤토리 + 가격지수 (동적 경제)
 
   // Narrative Engine v1
   activeIncidents: IncidentRuntime[]    // 활성 사건 목록

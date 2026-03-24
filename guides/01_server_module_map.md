@@ -40,11 +40,12 @@ main.ts → AppModule
 │   │   ├── rest-node.service       ← REST 노드 처리
 │   │   ├── shop-node.service       ← SHOP 노드 처리
 │   │   └── exit-node.service       ← EXIT 노드 처리
-│   ├── rewards/         ← 보상 + 인벤토리 + 장비 (4 services)
-│   │   ├── rewards.service     ← 보상 계산
-│   │   ├── inventory.service   ← 아이템 추가/제거
-│   │   ├── equipment.service   ← 장비 장착/해제
-│   │   └── affix.service       ← 리전 접미사 처리
+│   ├── rewards/         ← 보상 + 인벤토리 + 장비 (5 services)
+│   │   ├── rewards.service          ← 보상 계산
+│   │   ├── inventory.service        ← 아이템 추가/제거
+│   │   ├── equipment.service        ← 장비 장착/해제
+│   │   ├── affix.service            ← 리전 접미사 처리
+│   │   └── legendary-reward.service ← 전설 장비 보상 처리
 │   ├── planner/         ← RUN 계획 (1 service)
 │   │   └── run-planner.service ← RUN 구조 생성
 │   └── hub/             ← HUB 엔진 (36 services, 6 서브시스템, 아래 상세)

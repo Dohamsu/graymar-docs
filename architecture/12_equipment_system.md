@@ -1,5 +1,7 @@
 # equipment_system_v2_sets_regions.md
 
+> 상태: **✅ 구현됨** — 장비 드랍/착용, 동적 경제, 세트 효과, Legendary 보상 모두 구현 완료.
+
 ## Overview
 
 Equipment system v2 including: - Rarity (COMMON, RARE, UNIQUE,
