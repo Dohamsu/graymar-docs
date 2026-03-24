@@ -8,14 +8,14 @@
     "protagonistTheme": "전직 항만 노동자 — 그레이마르 항만 노동 길드에서 10년간 일했다. 간부의 횡령을 목격한 뒤 '사고'로 위장된 습격을 당해 길드에서 쫓겨났다. 거친 부두에서 단련된 육체와 주먹만이 남은 재산이다.",
     "prologueHook": "부두에서 당신이 일하는 것을 봤소. 길드 안 사람은 아무도 믿을 수가 없어서… 외부 사람이 필요했소.",
     "stats": {
-      "MaxHP": 120,
+      "MaxHP": 130,
       "MaxStamina": 5,
-      "str": 14,
-      "dex": 5,
-      "wit": 5,
-      "con": 13,
-      "per": 6,
-      "cha": 6
+      "str": 16,
+      "dex": 4,
+      "wit": 4,
+      "con": 14,
+      "per": 5,
+      "cha": 5
     },
     "startingGold": 30,
     "startingItems": [
@@ -36,11 +36,11 @@
     "stats": {
       "MaxHP": 100,
       "MaxStamina": 5,
-      "str": 14,
-      "dex": 8,
-      "wit": 8,
-      "con": 10,
-      "per": 7,
+      "str": 11,
+      "dex": 10,
+      "wit": 9,
+      "con": 9,
+      "per": 8,
       "cha": 6
     },
     "startingGold": 45,
@@ -64,14 +64,14 @@
     "protagonistTheme": "전직 밀수 운반책 — 밀수 조직 '검은 조류'에서 하급 운반책으로 일했다. 조직이 와해된 후 증거 인멸을 위해 제거 대상이 되어 도주 중이다. 어둠 속에서 움직이는 데 익숙하고 급소를 노리는 싸움에 능하다.",
     "prologueHook": "당신이 세관을 교묘히 빠져나간다는 걸 알고 있소. 사람을 찾아야 하는데… 그런 재주가 필요하오.",
     "stats": {
-      "MaxHP": 85,
+      "MaxHP": 80,
       "MaxStamina": 6,
-      "str": 11,
-      "dex": 12,
+      "str": 7,
+      "dex": 14,
       "wit": 6,
-      "con": 7,
-      "per": 8,
-      "cha": 10
+      "con": 6,
+      "per": 9,
+      "cha": 12
     },
     "startingGold": 60,
     "startingItems": [
@@ -96,14 +96,14 @@
     "protagonistTheme": "항만 뒷골목 약사 — 합법 약재와 밀수 독초를 함께 취급하며 세 세력 모두와 거래해왔다. 직접 싸우는 것보다 약물과 도구를 활용하는 데 능하며, 독과 해독에 관한 깊은 지식을 가지고 있다.",
     "prologueHook": "당신의 약초 솜씨가 이 도시에서 꽤 알려졌다더군요. 세 세력 모두와 거래하는 사람이라면… 어디든 자연스럽게 드나들 수 있을 것이오.",
     "stats": {
-      "MaxHP": 90,
+      "MaxHP": 95,
       "MaxStamina": 7,
-      "str": 8,
-      "dex": 7,
-      "wit": 10,
+      "str": 6,
+      "dex": 6,
+      "wit": 13,
       "con": 10,
-      "per": 10,
-      "cha": 6
+      "per": 12,
+      "cha": 5
     },
     "startingGold": 40,
     "startingItems": [
