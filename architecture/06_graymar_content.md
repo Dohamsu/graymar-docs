@@ -1,6 +1,6 @@
 # 06 --- Graymar 콘텐츠 설계
 
-> **정본 데이터**: `content/graymar_v1/` (21 JSON + 1 README)
+> **정본 데이터**: `content/graymar_v1/` (23 JSON + 1 README)
 > **의존 문서**: `HUB_RPG_Engine_Spec_v2.md` (HUB 엔진), `03_combat_rules.md` (전투 수치)
 > **이전 문서**: `08_graymar_scenario.md` (DAG 라우팅 포함, 본 문서로 대체)
 
@@ -46,7 +46,7 @@ HUB (7개 LOCATION 선택)
 
 ## 2. 콘텐츠 파일 목록
 
-`content/graymar_v1/` 디렉토리에 21개 JSON 파일이 존재한다.
+`content/graymar_v1/` 디렉토리에 23개 JSON 파일이 존재한다.
 
 | # | 파일명 | 용도 | 주요 키 |
 |---|--------|------|---------|
@@ -59,7 +59,7 @@ HUB (7개 LOCATION 선택)
 | 7 | `factions.json` | 세력 4개 + 초기 평판 | factionId |
 | 8 | `quest.json` | 메인 퀘스트 상태/Fact 정의 | questId |
 | 9 | `locations.json` | 7개 LOCATION 정의 | locationId |
-| 10 | `events_v2.json` | HUB 이벤트 88개 (LOCATION당 22개, eventCategory 포함) | eventId |
+| 10 | `events_v2.json` | HUB 이벤트 112개 (7개 LOCATION, eventCategory 포함) | eventId |
 | 11 | `scene_shells.json` | LOCATION x TimePhase x Safety 분위기 텍스트 (v1) | locationId.timePhase.safety |
 | 12 | `scene_shells_v2.json` | 확장 분위기 텍스트 (v2) | locationId.timePhase.safety |
 | 13 | `suggested_choices.json` | eventType별 선택지 템플릿 | eventType |
@@ -71,6 +71,8 @@ HUB (7개 LOCATION 선택)
 | 19 | `incidents.json` | Incident 8개 + 사건 간 인과관계(dependencies) | incidentId |
 | 20 | `endings.json` | 엔딩 조건/결과 정의 | endingId |
 | 21 | `narrative_marks.json` | 12개 불가역 표식 정의 | markId |
+| 22 | `equipment_drops.json` | 장비 드랍 정의 | -- |
+| 23 | `scenario.json` | 시나리오 정의 | scenarioId |
 
 ---
 
@@ -116,11 +118,11 @@ scene_shells[locationId][timePhase][safety] → 분위기 텍스트 (1~2문단)
 
 ---
 
-## 4. 이벤트 시스템 (88개)
+## 4. 이벤트 시스템 (112개)
 
 ### 4.1 이벤트 분포
 
-`events_v2.json`에 88개 이벤트가 정의되어 있다 (LOCATION당 22개).
+`events_v2.json`에 112개 이벤트가 정의되어 있다 (7개 LOCATION).
 
 | LOCATION | 이벤트 수 | eventType 구성 |
 |----------|----------|----------------|
@@ -128,6 +130,9 @@ scene_shells[locationId][timePhase][safety] → 분위기 텍스트 (1~2문단)
 | LOC_GUARD | 22 | FACTION, CHECKPOINT, ARC_HINT, AMBUSH, ENCOUNTER, OPPORTUNITY, FALLBACK 등 |
 | LOC_HARBOR | 22 | RUMOR, AMBUSH, ARC_HINT, ENCOUNTER, OPPORTUNITY, SHOP, FALLBACK 등 |
 | LOC_SLUMS | 22 | RUMOR, FACTION, AMBUSH, ARC_HINT, ENCOUNTER, OPPORTUNITY, FALLBACK 등 |
+| LOC_NOBLE | 8 | FACTION, ARC_HINT, ENCOUNTER, OPPORTUNITY, FALLBACK 등 |
+| LOC_TAVERN | 8 | RUMOR, ENCOUNTER, OPPORTUNITY, FALLBACK 등 |
+| LOC_DOCKS_WAREHOUSE | 8 | AMBUSH, ENCOUNTER, OPPORTUNITY, FALLBACK 등 |
 | **FALLBACK** | (각 LOCATION에 포함) | 다른 이벤트가 매칭되지 않을 때 사용 |
 
 ### 4.2 eventType 설명
