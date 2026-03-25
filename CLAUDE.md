@@ -102,13 +102,13 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 > 상세 서비스 맵: `guides/01_server_module_map.md`
 > 상세 컴포넌트 맵: `guides/02_client_component_map.md`
 
-### Server — 9 modules, 60+ services, 5 controllers
+### Server — 10 modules, 65+ services, 6 controllers
 
 | 모듈 | 서비스 수 | 역할 |
 |------|----------|------|
 | common/ | - | Guards, Filters, Pipes, Decorators |
 | auth/ | 1 | JWT 인증 (register/login) |
-| db/ | - | Drizzle ORM (10 tables, 35 타입 파일) |
+| db/ | - | Drizzle ORM (11 tables, 35 타입 파일) |
 | content/ | 1 | 게임 콘텐츠 로더 (graymar_v1 JSON 22개) |
 | engine/rng,stats,status | 3 | RNG, 스탯 계산, 상태효과 |
 | engine/combat | 4 | Hit, Damage, EnemyAI, CombatService |
@@ -119,6 +119,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | runs/ | 1 | RUN 생성/조회 |
 | turns/ | 1 | 턴 제출/조회 |
 | llm/ | 8 | LLM Worker, Context Builder, Token Budget, Prompt |
+| bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
 
 ### HUB 엔진 6 서브시스템 (36 services)
 
@@ -133,7 +134,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 
 > 상세: `guides/03_hub_engine_guide.md`
 
-### Client — 31 components, 3 stores
+### Client — 37 components, 3 stores
 
 | 영역 | 수 | 핵심 |
 |------|---|------|
@@ -142,9 +143,9 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | hub/ | 11 | HubScreen, SignalFeed, Incident, NPC, Notifications |
 | location/ | 2 | TurnResultBanner, LocationToastLayer |
 | screens/ | 4 | StartScreen, EndingScreen |
-| side-panel/ | 3 | SidePanel, CharacterTab, InventoryTab |
-| ui/ | 4 | ErrorBanner, LlmFailureModal |
-| layout/ | 2 | Header, MobileBottomNav |
+| side-panel/ | 5 | SidePanel, CharacterTab, InventoryTab, EquipmentTab, SetBonusDisplay |
+| ui/ | 6 | ErrorBanner, LlmFailureModal, BugReportButton, BugReportModal |
+| layout/ | 2 | Header (자동 숨김), MobileBottomNav (햄버거 메뉴) |
 | battle/ | 1 | BattlePanel |
 
 ### Key Data Flow
@@ -195,6 +196,8 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 21. **MOVE_LOCATION fallback** — 목표 장소 불명확 시 HUB 복귀 처리 (이동 의도 무시 방지).
 22. **Living World 초기화** — createRun 시 locationDynamicStates(7개 장소), worldFacts(빈 배열), npcLocations, playerGoals 초기화 필수.
 23. **NPC 3계층** — CORE(5) 우선 상황 생성, BACKGROUND(25) 배경만, SUB(12) 일반.
+24. **선별 주입(Selective Injection)** — LLM 컨텍스트에 메모리를 주입할 때, 전체가 아닌 현재 턴에 관련된 것만 선별: NpcPersonalMemory는 등장 NPC만, LocationMemory는 현재 장소만, IncidentMemory는 관련 사건만, ItemMemory는 장착/획득(RARE 이상) 아이템만.
+25. **프리셋 배경 참조** — 프리셋별 npcPostureOverrides(NPC 초기 태도 오버라이드), actionBonuses(행동 보너스), LLM 배경 텍스트가 게임 메카닉과 서술 모두에 반영.
 
 ## Canonical Enums (정본)
 
@@ -253,6 +256,10 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | POST | `/v1/runs/:runId/turns/:turnNo/retry-llm` | LLM 재시도 (FAILED → PENDING 리셋) |
 | GET | `/v1/settings/llm` | LLM 설정 조회 (API 키 마스킹) |
 | PATCH | `/v1/settings/llm` | LLM 설정 변경 (런타임) |
+| POST | `/v1/bug-reports` | 버그 리포트 생성 (runId, turnNo, category, description) |
+| GET | `/v1/bug-reports` | 버그 리포트 목록 조회 (페이징) |
+| GET | `/v1/bug-reports/:id` | 버그 리포트 상세 조회 |
+| PATCH | `/v1/bug-reports/:id` | 버그 리포트 상태 변경 (resolved 등) |
 
 ## Environment Variables (`server/.env`)
 
@@ -287,6 +294,11 @@ LLM_FALLBACK_PROVIDER=mock
 | **Fixplan3** | P1 메모리통합 + P2 NPC소개 + P4 이동 + P5 씬연속 + P7 엔딩가드 + P10 조사 | ✅ 완료 |
 | **Living World v2** | LocationState + WorldFact + NpcSchedule + SituationGenerator + ConsequenceProcessor + PlayerGoal | ✅ 완료 |
 | **Phase 4** | 장비 v2 (세트/리전) + 리전 경제 | ✅ 완료 — 장비 드랍/착용, 동적 경제, 세트효과, Legendary |
+| **Memory v3** | NpcPersonalMemory + LocationMemory + IncidentMemory + ItemMemory (선별 LLM 주입) | ✅ 완료 |
+| **Preset v2** | 프리셋 배경 시스템 (npcPostureOverrides, actionBonuses, LLM 배경 참조) | ✅ 완료 |
+| **Bug Report** | 인게임 버그 리포트 시스템 (bug_reports 테이블, API 4개) | ✅ 완료 |
+| **Assets** | 캐릭터 초상화 8장 + 장소 이미지 24장 (Gemini 생성) | ✅ 완료 |
+| **Mobile UX** | 헤더 자동 숨김 + 하단 네비 햄버거 + 대화창 최대화 + OG 메타데이터 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 

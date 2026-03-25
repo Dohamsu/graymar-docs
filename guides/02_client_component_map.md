@@ -1,9 +1,9 @@
 # 클라이언트 컴포넌트 맵
 
 > 정본 위치: `client/src/`
-> 최종 갱신: 2026-03-17
+> 최종 갱신: 2026-03-25
 
-## 컴포넌트 구조 (31 components, 3 stores)
+## 컴포넌트 구조 (37 components, 3 stores)
 
 ```
 app/
@@ -44,14 +44,18 @@ components/ (31개)
 │   ├── EndingScreen.tsx           ← 엔딩 (NPC epilogues, 행동 성향)
 │   └── NodeTransitionScreen.tsx   ← 노드 전환
 ├── side-panel/      ← 사이드 패널
-│   ├── SidePanel.tsx              ← 3탭 컨테이너
+│   ├── SidePanel.tsx              ← 4탭 컨테이너
 │   ├── CharacterTab.tsx           ← 능력치 6개, 장비 슬롯
-│   └── InventoryTab.tsx           ← 소지품/골드
+│   ├── InventoryTab.tsx           ← 소지품/골드
+│   ├── EquipmentTab.tsx           ← 장비 관리 (장착/해제, 세트 보너스)
+│   └── SetBonusDisplay.tsx        ← 장비 세트 보너스 시각화
 └── ui/              ← 공통 UI
     ├── ErrorBanner.tsx            ← 에러 표시
     ├── LlmSettingsModal.tsx       ← LLM 설정 모달
     ├── LlmFailureModal.tsx        ← LLM 실패 모달 (재시도/건너뛰기/닫기)
-    └── StatTooltip.tsx            ← 스탯 툴팁
+    ├── StatTooltip.tsx            ← 스탯 툴팁
+    ├── BugReportButton.tsx        ← 인게임 버그 리포트 트리거 버튼
+    └── BugReportModal.tsx         ← 버그 리포트 작성 모달 (category, description)
 ```
 
 ---

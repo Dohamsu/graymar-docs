@@ -1,9 +1,9 @@
 # 서버 모듈/서비스 맵
 
 > 정본 위치: `server/src/`
-> 최종 갱신: 2026-03-22
+> 최종 갱신: 2026-03-25
 
-## 모듈 구조 (9 modules, 60+ services, 5 controllers)
+## 모듈 구조 (10 modules, 65+ services, 6 controllers)
 
 ```
 main.ts → AppModule
@@ -51,7 +51,10 @@ main.ts → AppModule
 │   └── hub/             ← HUB 엔진 (36 services, 6 서브시스템, 아래 상세)
 ├── runs/                ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
-└── llm/                 ← Async LLM narrative (아래 상세)
+├── llm/                 ← Async LLM narrative (아래 상세)
+└── bug-report/          ← 인게임 버그 리포트
+    ├── bug-report.controller  ← POST/GET/PATCH /v1/bug-reports
+    └── bug-report.service     ← 버그 리포트 CRUD
 ```
 
 ---
@@ -150,7 +153,18 @@ main.ts → AppModule
 
 ---
 
-## DB 스키마 (10 tables)
+## NPC Personal Memory 유틸
+
+`server/src/engine/hub/memory-collector.service.ts` 내 NPC 개인 기록 관련 함수:
+
+| 함수 | 역할 |
+|------|------|
+| recordNpcEncounter() | NPC 만남 기록 (턴, 장소, 행동, 결과) → NpcState.personalMemory에 축적 |
+| selectNpcMemories() | 현재 턴에 등장하는 NPC의 personalMemory만 선별하여 LLM 컨텍스트에 주입 |
+
+---
+
+## DB 스키마 (11 tables)
 
 `server/src/db/schema/`
 
@@ -167,6 +181,7 @@ main.ts → AppModule
 | node_memories | 노드 메모리 (narrativeThread) |
 | recent_summaries | 최근 요약 |
 | ai_turn_logs | LLM 호출 로그 |
+| bug_reports | 인게임 버그 리포트 (runId, turnNo, category, description, resolved) |
 
 ---
 

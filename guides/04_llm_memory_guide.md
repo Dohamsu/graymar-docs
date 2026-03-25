@@ -2,7 +2,7 @@
 
 > 정본 위치: `server/src/llm/`
 > 설계 문서: `architecture/05_llm_narrative.md`, `18_narrative_runtime_patch.md`
-> 최종 갱신: 2026-03-17
+> 최종 갱신: 2026-03-25
 
 ## LLM Narrative Pipeline
 
@@ -177,3 +177,85 @@ NPC 소개 5-way 분기 (`prompt-builder.service.ts`):
 - **NPC 별칭 대명사 허용** (Fixplan5): `[이름 미공개]` NPC는 첫 등장 시 별칭(unknownAlias) 사용 후, 같은 장면 내에서 "그", "그녀", "그 인물" 등 짧은 대명사로 대체 가능. 매 문장 전체 별칭 반복 방지.
 
 `[MEMORY:NPC_KNOWLEDGE:NPC_ID]` 태그 regex (Fixplan5): `[\w:]` → `[^\]]` 변경으로 한국어 NPC 이름 포함 매칭 지원. 기존 regex는 `\w`가 한국어를 포함하지 않아 태그가 서술에 노출되는 버그 존재.
+
+---
+
+## 선별 주입 시스템 (Selective Injection)
+
+> 핵심 원칙: LLM 컨텍스트에 전체 메모리를 주입하지 않고, **현재 턴에 관련된 것만 선별**하여 토큰을 절약하고 일관성을 높인다.
+
+### 4가지 선별 메모리
+
+| 메모리 종류 | 선별 기준 | 주입 조건 |
+|------------|----------|----------|
+| **NpcPersonalMemory** | 현재 턴에 등장/관련된 NPC | 해당 NPC의 personalMemory만 주입 |
+| **LocationMemory** | 현재 플레이어가 위치한 장소 | 현재 장소의 locationMemory만 주입 |
+| **IncidentMemory** | 현재 활성 사건 또는 관련 사건 | 관련 incidentMemory만 주입 |
+| **ItemMemory** | 장착 중이거나 이번 턴에 획득한 아이템 | RARE 이상 등급 아이템의 itemMemory만 주입 |
+
+### NPC Personal Memory
+
+`NpcState.personalMemory: NpcPersonalMemoryEntry[]`
+
+```
+NpcPersonalMemoryEntry {
+  turnNo: number          // 기록된 턴
+  locationId: string      // 만남 장소
+  action: string          // 플레이어 행동 요약
+  outcome: string         // 결과 요약
+  emotionalImpact?: string // 감정 변화
+}
+```
+
+- 축적: `MemoryCollectorService.recordNpcEncounter()` — NPC 관련 행동 발생 시 자동 기록
+- 선별: `ContextBuilderService` — 현재 턴에 등장하는 NPC의 personalMemory만 프롬프트에 포함
+- 렌더: `MemoryRendererService` — `[NPC 개인 기록]` 블록으로 렌더링
+
+### Location Memory
+
+`RunState.locationMemories: Record<string, LocationMemoryEntry[]>`
+
+```
+LocationMemoryEntry {
+  turnNo: number
+  summary: string         // 행동+결과 요약
+  significantEvent?: string  // 주요 이벤트 ID
+}
+```
+
+- 축적: LOCATION 방문 중 매 턴 기록
+- 선별: 현재 장소 ID로 필터 → 해당 장소의 기록만 주입
+- 용도: "이 장소에서 이전에 무엇을 했는지" LLM에 전달
+
+### Incident Memory
+
+`RunState.incidentMemories: Record<string, IncidentMemoryEntry[]>`
+
+```
+IncidentMemoryEntry {
+  turnNo: number
+  action: string          // 사건 관련 행동
+  impact: string          // 사건에 미친 영향
+  controlDelta?: number   // control 변동
+  pressureDelta?: number  // pressure 변동
+}
+```
+
+- 축적: 사건 관련 행동 발생 시 자동 기록
+- 선별: 현재 활성 사건 ID로 필터 → 관련 사건의 기록만 주입
+
+### Item Memory
+
+`RunState.itemMemories: Record<string, ItemMemoryEntry[]>`
+
+```
+ItemMemoryEntry {
+  turnNo: number
+  action: string          // 획득/사용/장착 등
+  context: string         // 상황 설명
+}
+```
+
+- 축적: RARE 이상 등급 아이템의 획득/사용/장착 시 기록
+- 선별: 현재 장착 중 + 이번 턴에 획득한 아이템만 주입
+- 용도: "이 아이템의 내력" LLM에 전달하여 서사적 일관성 유지
