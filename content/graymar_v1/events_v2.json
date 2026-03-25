@@ -529,7 +529,7 @@
     "friction": 3,
     "matchPolicy": "BLOCK",
     "payload": {
-      "sceneFrame": "경비대 지구를 빠져나가려는 순간, 골목 양쪽에서 매수된 수비대원들이 길을 막는다. 마이렐 경의 명을 받은 자들이다. 선두의 병사가 검을 뽑으며 말한다. '여기서 조용히 끝내자. 대위에게 보고할 일은 없을 거다.'",
+      "sceneFrame": "경비대 지구를 빠져나가려는 순간, 골목 양쪽에서 매수된 수비대원들이 길을 막는다. {npc:NPC_KANG_CHAERIN}의 명을 받은 자들이다. 선두의 병사가 검을 뽑으며 말한다. '여기서 조용히 끝내자. 대위에게 보고할 일은 없을 거다.'",
       "primaryNpcId": "NPC_KANG_CHAERIN",
       "choices": [
         {
@@ -1251,7 +1251,7 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "야시장 한쪽의 비밀 경매장. 등불이 어둡게 켜진 천막 안에서 속삭이는 목소리가 들린다. 경비대 내부 문서의 사본이 경매에 올랐다는 소문이다. 이 문서가 있으면 마이렐 경의 비리를 입증할 수 있을지 모른다.",
+      "sceneFrame": "야시장 한쪽의 비밀 경매장. 등불이 어둡게 켜진 천막 안에서 속삭이는 목소리가 들린다. 경비대 내부 문서의 사본이 경매에 올랐다는 소문이다. 이 문서가 있으면 {npc:NPC_KANG_CHAERIN}의 비리를 입증할 수 있을지 모른다.",
       "primaryNpcId": null,
       "choices": [
         {
@@ -1371,7 +1371,7 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "빈민가의 어둠 속에서 한 거지가 다가온다. 자세히 보니 전직 수비대원이다. 마이렐의 비리를 알고 쫓겨났다며, 빵 한 조각만 주면 아는 것을 말해주겠다고 한다. 그의 눈에는 복수심과 절박함이 교차한다.",
+      "sceneFrame": "빈민가의 어둠 속에서 한 거지가 다가온다. 자세히 보니 전직 수비대원이다. {npc:NPC_KANG_CHAERIN}의 비리를 알고 쫓겨났다며, 빵 한 조각만 주면 아는 것을 말해주겠다고 한다. 그의 눈에는 복수심과 절박함이 교차한다.",
       "primaryNpcId": "NPC_KANG_CHAERIN",
       "choices": [
         {
@@ -1435,7 +1435,7 @@
     "arcRouteTag": "ALLY_GUARD",
     "commitmentDeltaOnSuccess": 25,
     "payload": {
-      "sceneFrame": "{npc:NPC_GUARD_CAPTAIN}가 비밀리에 확보한 마이렐의 개인 집무실 열쇠를 건넨다. 집무실 금고 안에 횡령의 결정적 증거인 원본 장부가 있을 것이다. 그러나 마이렐의 충성 부하가 야간에도 집무실을 순찰하고 있어 위험하다.",
+      "sceneFrame": "{npc:NPC_GUARD_CAPTAIN}가 비밀리에 확보한 {npc:NPC_KANG_CHAERIN}의 개인 집무실 열쇠를 건넨다. 집무실 금고 안에 횡령의 결정적 증거인 원본 장부가 있을 것이다. 그러나 {npc:NPC_KANG_CHAERIN}의 충성 부하가 야간에도 집무실을 순찰하고 있어 위험하다.",
       "primaryNpcId": "NPC_GUARD_CAPTAIN",
       "choices": [
         {
@@ -2927,13 +2927,13 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "서도윤이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 안색이 어둡고, 차를 마시는 손이 미세하게 떨린다. 그가 고개를 들어 당신을 발견하면 잠시 망설이다가 건너편 자리를 가리킨다.",
+      "sceneFrame": "{npc:NPC_SEO_DOYUN}이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 안색이 어둡고, 차를 마시는 손이 미세하게 떨린다. 그가 고개를 들어 당신을 발견하면 잠시 망설이다가 건너편 자리를 가리킨다.",
       "primaryNpcId": "NPC_SEO_DOYUN",
       "choices": [
         {
           "id": "mkt_int1_talk",
           "label": "맞은편에 앉아 안부를 묻는다",
-          "hint": "서도윤의 고민을 들을 수 있다",
+          "hint": "그의 고민을 들을 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
         },
