@@ -1,6 +1,6 @@
 # RunState 구조 & 핵심 상수
 
-> 최종 갱신: 2026-03-22
+> 최종 갱신: 2026-03-25
 
 ## RunState Structure (서버 JSONB)
 
@@ -20,7 +20,7 @@ RunState {
   actionHistory: ActionHistoryEntry[]  // 고집 에스컬레이션 + NPC 만남 추적 (Fixplanv2 PR-A: primaryNpcId 추가)
 
   // NPC 시스템
-  npcStates: Record<string, NPCState>  // introduced, encounterCount, NpcEmotionalState 포함
+  npcStates: Record<string, NPCState>  // introduced, encounterCount, NpcEmotionalState, personalMemory 포함
   relationships: Record<string, Relationship>
   pbp: PlayerBehaviorProfile
 
@@ -49,6 +49,11 @@ RunState {
   npcLocations?: Record<string, string>                       // NPC별 현재 위치
   locationDynamicStates?: Record<string, LocationDynamicState> // 장소별 동적 상태 (7개 장소)
   playerGoals?: PlayerGoal[]                                  // 플레이어 목표 (최대 5개)
+
+  // 선별 주입 메모리 (Memory v3)
+  locationMemories?: Record<string, LocationMemoryEntry[]>    // 장소별 기록 축적 (현재 장소만 LLM 주입)
+  incidentMemories?: Record<string, IncidentMemoryEntry[]>    // 사건별 기록 축적 (관련 사건만 LLM 주입)
+  itemMemories?: Record<string, ItemMemoryEntry[]>            // 아이템별 기록 (RARE 이상, 장착/획득만 LLM 주입)
 }
 ```
 
