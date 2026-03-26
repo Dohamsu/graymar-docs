@@ -115,17 +115,17 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | engine/input | 3 | RuleParser → Policy → ActionPlan |
 | engine/nodes | 7 | 노드별 리졸버 + 전이 |
 | engine/rewards | 5 | 보상, 인벤토리, 장비, 접미사, Legendary |
-| engine/hub | 36 | HUB 엔진 6 서브시스템 (아래 참조) |
+| engine/hub | 37 | HUB 엔진 6 서브시스템 + 퀘스트 (아래 참조) |
 | runs/ | 1 | RUN 생성/조회 |
 | turns/ | 1 | 턴 제출/조회 |
 | llm/ | 8 | LLM Worker, Context Builder, Token Budget, Prompt |
 | bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
 
-### HUB 엔진 6 서브시스템 (36 services)
+### HUB 엔진 6 서브시스템 + 퀘스트 (37 services)
 
 | 서브시스템 | 수 | 핵심 서비스 |
 |-----------|---|------------|
-| Base HUB | 9 | WorldState, Heat, EventMatcher, Resolve, IntentParserV2 |
+| Base HUB | 10 | WorldState, Heat, EventMatcher, Resolve, IntentParserV2, QuestProgression |
 | Narrative Engine v1 | 8 | Incident, WorldTick, Signal, NpcEmotional, Mark, Ending |
 | Structured Memory v2 | 2 | MemoryCollector, MemoryIntegration |
 | User-Driven Bridge | 6 | IntentV3Builder, IncidentRouter, WorldDelta, PlayerThread, Notification |
@@ -198,6 +198,9 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 23. **NPC 3계층** — CORE(5) 우선 상황 생성, BACKGROUND(25) 배경만, SUB(12) 일반.
 24. **선별 주입(Selective Injection)** — LLM 컨텍스트에 메모리를 주입할 때, 전체가 아닌 현재 턴에 관련된 것만 선별: NpcPersonalMemory는 등장 NPC만, LocationMemory는 현재 장소만, IncidentMemory는 관련 사건만, ItemMemory는 장착/획득(RARE 이상) 아이템만.
 25. **프리셋 배경 참조** — 프리셋별 npcPostureOverrides(NPC 초기 태도 오버라이드), actionBonuses(행동 보너스), LLM 배경 텍스트가 게임 메카닉과 서술 모두에 반영.
+26. **대화 잠금(Conversation Lock)** — 대화 계열 행동(TALK/PERSUADE/BRIBE/THREATEN/HELP) 시 같은 이벤트/NPC 최대 4턴 연속 유지. 비대화 행동(SNEAK/STEAL/FIGHT) 시 NPC 연속성 해제.
+27. **NPC knownFacts 점진 공개** — SUCCESS 판정 시 NPC의 knownFacts 중 미공개 단서를 순서대로 공개. PARTIAL은 힌트만. FAIL은 미공개.
+28. **퀘스트 자동 전환** — discoveredQuestFacts 누적 → quest.json stateTransitions 조건 충족 시 questState 자동 전환 (S0→S1→...→S5).
 
 ## Canonical Enums (정본)
 
@@ -299,6 +302,11 @@ LLM_FALLBACK_PROVIDER=mock
 | **Bug Report** | 인게임 버그 리포트 시스템 (bug_reports 테이블, API 4개) | ✅ 완료 |
 | **Assets** | 캐릭터 초상화 8장 + 장소 이미지 24장 (Gemini 생성) | ✅ 완료 |
 | **Mobile UX** | 헤더 자동 숨김 + 하단 네비 햄버거 + 대화창 최대화 + OG 메타데이터 | ✅ 완료 |
+| **LLM Multi-Provider** | Claude provider 구현 (@anthropic-ai/sdk) + cacheCreationTokens 추적 | ✅ 완료 |
+| **프롬프트 최적화** | 시스템 프롬프트 압축 21% + HUB 턴 경량화 37% + posture baseline 재설계 | ✅ 완료 |
+| **NPC 대화 개선** | 대화 잠금 4턴 + 턴카운터 + 행동반응매핑 + 직전대사추출 + speechStyle 예시 제거 | ✅ 완료 |
+| **NPC 콘텐츠 강화** | 42명 gender + role 다채화 + 17명 knownFacts/linkedIncidents | ✅ 완료 |
+| **퀘스트 시스템** | QuestProgressionService + 6단계 전환 + 3 Arc 루트 + FACT 점진 공개 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
