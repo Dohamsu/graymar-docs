@@ -15,6 +15,8 @@ RunState {
   worldState: WorldState       // Heat, Safety, TimePhaseV2, Reputation, globalClock, day
   agenda: PlayerAgenda         // 성향 추적
   arcState: ArcState           // 아크 루트/커밋먼트
+  questState: string           // "S0_ARRIVE" ~ "S5_RESOLVE" (퀘스트 단계)
+  discoveredQuestFacts: string[]  // 발견된 FACT ID 목록 (3경로: 이벤트/NPC/PARTIAL확률)
   npcRelations: Record<string, number>
   eventCooldowns: Record<string, number>
   actionHistory: ActionHistoryEntry[]  // 고집 에스컬레이션 + NPC 만남 추적 (Fixplanv2 PR-A: primaryNpcId 추가)
