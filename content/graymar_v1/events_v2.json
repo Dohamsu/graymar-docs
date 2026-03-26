@@ -51,7 +51,8 @@
         "TAX",
         "GUARD_CORRUPTION"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
   },
   {
     "eventId": "EVT_MARKET_FACTION",
@@ -188,7 +189,8 @@
         "CONSUMABLES",
         "GENERAL_STORE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_WAGE_FRAUD_PATTERN"
   },
   {
     "eventId": "EVT_MARKET_CHECKPOINT",
@@ -668,7 +670,8 @@
         "SMUGGLING",
         "EAST_DOCK"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
   },
   {
     "eventId": "EVT_HARBOR_AMBUSH",
@@ -803,7 +806,8 @@
         "TOBREN",
         "EVIDENCE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_ROUTE_TO_EAST_DOCK"
   },
   {
     "eventId": "EVT_HARBOR_SHOP",
@@ -971,7 +975,8 @@
         "SHADOW",
         "INTEL_TRADE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SHADOW_INTEL"
   },
   {
     "eventId": "EVT_SLUMS_FACTION",
@@ -1402,7 +1407,8 @@
         "TESTIMONY",
         "MAIREL_CORRUPTION"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SHADOW_INTEL"
   },
   {
     "eventId": "EVT_GUARD_ARC_HINT_ALLY",
@@ -1527,7 +1533,8 @@
         "EXOTIC_GOODS",
         "DAILY_LIFE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
   },
   {
     "eventId": "EVT_MARKET_ENC_BUSKER",
@@ -1582,7 +1589,8 @@
         "SATIRE",
         "DAILY_LIFE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_LEDGER_EXISTS"
   },
   {
     "eventId": "EVT_MARKET_ENC_DISPUTE",
@@ -1638,7 +1646,8 @@
         "DAILY_LIFE",
         "TERRITORY"
       ]
-    }
+    },
+    "discoverableFact": "FACT_WAGE_FRAUD_PATTERN"
   },
   {
     "eventId": "EVT_MARKET_OPP_LOST_CARGO",
@@ -1804,7 +1813,8 @@
         "TRAINING",
         "DAILY_LIFE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
   },
   {
     "eventId": "EVT_GUARD_ENC_NOTICE",
@@ -1859,7 +1869,8 @@
         "CURFEW",
         "DAILY_LIFE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
   },
   {
     "eventId": "EVT_GUARD_ENC_PATROL",
@@ -1915,7 +1926,8 @@
         "DAILY_LIFE",
         "GUARD_MORALE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
   },
   {
     "eventId": "EVT_GUARD_OPP_REWARD",
@@ -1970,7 +1982,8 @@
         "PICKPOCKET",
         "OPPORTUNITY"
       ]
-    }
+    },
+    "discoverableFact": "FACT_INSIDE_JOB"
   },
   {
     "eventId": "EVT_GUARD_OPP_SUPPLY",
@@ -2628,7 +2641,8 @@
         "SPICE",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_WAGE_FRAUD_PATTERN"
   },
   {
     "eventId": "EVT_MARKET_ATM_2",
@@ -2675,7 +2689,8 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_LEDGER_EXISTS"
   },
   {
     "eventId": "EVT_MARKET_ATM_3",
@@ -2722,7 +2737,8 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_WAGE_FRAUD_PATTERN"
   },
   {
     "eventId": "EVT_MARKET_DSC_1",
@@ -2782,7 +2798,8 @@
         "MERCHANT_GUILD",
         "EVIDENCE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_TAMPERED_LOGS"
   },
   {
     "eventId": "EVT_MARKET_DSC_2",
@@ -2958,7 +2975,8 @@
         "MERCHANT_GUILD",
         "CONVERSATION"
       ]
-    }
+    },
+    "discoverableFact": "FACT_LEDGER_EXISTS"
   },
   {
     "eventId": "EVT_MARKET_INT_2",
@@ -3014,7 +3032,8 @@
         "INTEL",
         "CONVERSATION"
       ]
-    }
+    },
+    "discoverableFact": "FACT_LEDGER_EXISTS"
   },
   {
     "eventId": "EVT_MARKET_INT_3",
@@ -3234,7 +3253,8 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_MAIREL_GUARD_EVIDENCE"
   },
   {
     "eventId": "EVT_GUARD_ATM_2",
@@ -3281,7 +3301,8 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
   },
   {
     "eventId": "EVT_GUARD_ATM_3",
@@ -3328,7 +3349,8 @@
         "DRILL",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_INSIDE_JOB"
   },
   {
     "eventId": "EVT_GUARD_DSC_1",
@@ -3388,7 +3410,8 @@
         "COVER_UP",
         "EVIDENCE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_MAIREL_GUARD_EVIDENCE"
   },
   {
     "eventId": "EVT_GUARD_DSC_2",
@@ -3448,7 +3471,8 @@
         "CONSPIRACY",
         "INTERNAL"
       ]
-    }
+    },
+    "discoverableFact": "FACT_INSIDE_JOB"
   },
   {
     "eventId": "EVT_GUARD_DSC_3",
@@ -3508,7 +3532,8 @@
         "BREAK_IN",
         "EVIDENCE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_MAIREL_GUARD_EVIDENCE"
   },
   {
     "eventId": "EVT_GUARD_INT_1",
@@ -3843,7 +3868,8 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_ROUTE_TO_EAST_DOCK"
   },
   {
     "eventId": "EVT_HARBOR_ATM_2",
@@ -4044,7 +4070,8 @@
         "SMUGGLING",
         "EVIDENCE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_ROUTE_TO_EAST_DOCK"
   },
   {
     "eventId": "EVT_HARBOR_DSC_2",
@@ -4104,7 +4131,8 @@
         "SECRET_USE",
         "TRAIL"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
   },
   {
     "eventId": "EVT_HARBOR_DSC_3",
@@ -4439,7 +4467,8 @@
         "SLUM_LIFE",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SHADOW_INTEL"
   },
   {
     "eventId": "EVT_SLUMS_ATM_2",
@@ -4486,7 +4515,8 @@
         "COMMUNITY",
         "ATMOSPHERE"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SHADOW_INTEL"
   },
   {
     "eventId": "EVT_SLUMS_ATM_3",
@@ -4593,7 +4623,8 @@
         "SMUGGLING",
         "HIDEOUT"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SHADOW_INTEL"
   },
   {
     "eventId": "EVT_SLUMS_DSC_2",
@@ -4769,7 +4800,8 @@
         "ORPHANAGE",
         "CONVERSATION"
       ]
-    }
+    },
+    "discoverableFact": "FACT_SHADOW_INTEL"
   },
   {
     "eventId": "EVT_SLUMS_INT_2",
@@ -5003,7 +5035,6 @@
       ]
     }
   },
-
   {
     "eventId": "EVT_NOBLE_ENC_SERVANT",
     "locationId": "LOC_NOBLE",
@@ -5438,7 +5469,6 @@
       ]
     }
   },
-
   {
     "eventId": "EVT_TAVERN_ENC_BARD",
     "locationId": "LOC_TAVERN",
@@ -5867,7 +5897,6 @@
       ]
     }
   },
-
   {
     "eventId": "EVT_DOCKS_ENC_SMUGGLER",
     "locationId": "LOC_DOCKS_WAREHOUSE",
