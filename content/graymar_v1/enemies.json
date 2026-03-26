@@ -17,7 +17,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "5-15" }
+    "loot": {
+      "gold": "5-15"
+    }
   },
   {
     "enemyId": "ENEMY_HARBOR_WATCHMAN",
@@ -37,7 +39,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "10-20" }
+    "loot": {
+      "gold": "10-20"
+    }
   },
   {
     "enemyId": "ENEMY_SMUGGLER",
@@ -57,7 +61,12 @@
     "defaultDistance": "FAR",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "15-30", "items": ["ITEM_SMOKE_BOMB"] }
+    "loot": {
+      "gold": "15-30",
+      "items": [
+        "ITEM_SMOKE_BOMB"
+      ]
+    }
   },
   {
     "enemyId": "ENEMY_CORRUPT_GUARD",
@@ -76,8 +85,12 @@
     "personality": "TACTICAL",
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
-    "statusImmunities": ["SLOW"],
-    "loot": { "gold": "20-35" }
+    "statusImmunities": [
+      "SLOW"
+    ],
+    "loot": {
+      "gold": "20-35"
+    }
   },
   {
     "enemyId": "ENEMY_WAREHOUSE_GUARD",
@@ -97,7 +110,9 @@
     "defaultDistance": "MID",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "3-8" }
+    "loot": {
+      "gold": "3-8"
+    }
   },
   {
     "enemyId": "ENEMY_HIRED_MUSCLE",
@@ -117,7 +132,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "10-20" }
+    "loot": {
+      "gold": "10-20"
+    }
   },
   {
     "enemyId": "ENEMY_CORRUPT_GUARD_LOYAL",
@@ -137,7 +154,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "15-25" }
+    "loot": {
+      "gold": "15-25"
+    }
   },
   {
     "enemyId": "ENEMY_GUILD_THUG_ELITE",
@@ -157,7 +176,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "15-30" }
+    "loot": {
+      "gold": "15-30"
+    }
   },
   {
     "enemyId": "ENEMY_SLUM_THUG",
@@ -177,7 +198,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "3-10" }
+    "loot": {
+      "gold": "3-10"
+    }
   },
   {
     "enemyId": "ENEMY_SLUM_KNIFE",
@@ -197,7 +220,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "SIDE",
     "statusImmunities": [],
-    "loot": { "gold": "8-18" }
+    "loot": {
+      "gold": "8-18"
+    }
   },
   {
     "enemyId": "ENEMY_MARKET_ENFORCER",
@@ -217,7 +242,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "5-15" }
+    "loot": {
+      "gold": "5-15"
+    }
   },
   {
     "enemyId": "ENEMY_HARBOR_PIRATE",
@@ -237,7 +264,9 @@
     "defaultDistance": "CLOSE",
     "defaultAngle": "FRONT",
     "statusImmunities": [],
-    "loot": { "gold": "10-25" }
+    "loot": {
+      "gold": "10-25"
+    }
   },
   {
     "enemyId": "ENEMY_TOBREN_COMBAT",
@@ -257,6 +286,48 @@
     "defaultDistance": "MID",
     "defaultAngle": "SIDE",
     "statusImmunities": [],
-    "loot": { "gold": "10-20" }
+    "loot": {
+      "gold": "10-20"
+    }
+  },
+  {
+    "enemyId": "ENEMY_GUILD_ENFORCER",
+    "name": "길드 집행관",
+    "description": "상인 길드의 비밀 집행자. 냉정하고 치밀하며, 길드의 어두운 일을 처리한다.",
+    "hp": 45,
+    "stats": {
+      "str": 18,
+      "dex": 8,
+      "con": 14
+    },
+    "aiPersonality": "TACTICAL",
+    "lootTable": [],
+    "tags": [
+      "GUILD",
+      "ELITE",
+      "BOSS"
+    ],
+    "distance": "CLOSE",
+    "angle": "FRONT"
+  },
+  {
+    "enemyId": "ENEMY_SHADOW_ASSASSIN",
+    "name": "그림자 암살자",
+    "description": "빈민가 지하에서 활동하는 프로 암살자. 독과 단검을 사용하며 빠르게 사라진다.",
+    "hp": 35,
+    "stats": {
+      "str": 14,
+      "dex": 16,
+      "con": 8
+    },
+    "aiPersonality": "SNIPER",
+    "lootTable": [],
+    "tags": [
+      "SLUMS",
+      "ELITE",
+      "ASSASSIN"
+    ],
+    "distance": "MID",
+    "angle": "BACK"
   }
 ]

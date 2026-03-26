@@ -20,7 +20,6 @@
     "factKey": "FACT_ROUTE_TO_EAST_DOCK",
     "presentable": true
   },
-
   {
     "itemId": "ITEM_MINOR_HEALING",
     "type": "CONSUMABLE",
@@ -46,7 +45,7 @@
       "value": 2,
       "targetSelf": true
     },
-    "buyPrice": 20,
+    "buyPrice": 14,
     "maxStack": 2
   },
   {
@@ -78,7 +77,6 @@
     "buyPrice": 30,
     "maxStack": 2
   },
-
   {
     "itemId": "ITEM_GUILD_BADGE",
     "type": "KEY_ITEM",
@@ -114,10 +112,9 @@
       "value": 50,
       "targetSelf": true
     },
-    "buyPrice": 45,
+    "buyPrice": 30,
     "maxStack": 2
   },
-
   {
     "itemId": "EQ_DOCK_CUTLASS",
     "type": "EQUIPMENT",
@@ -125,9 +122,15 @@
     "description": "항만 전사들이 사용하는 짧은 곡검. 빠른 근접전에 적합하다.",
     "rarity": "RARE",
     "slot": "WEAPON",
-    "statBonus": { "atk": 3, "speed": 1 },
+    "statBonus": {
+      "atk": 3,
+      "speed": 1
+    },
     "setId": "SET_HARBOR_WARRIOR",
-    "narrativeTags": ["heavy_weapon", "dock_fighter"],
+    "narrativeTags": [
+      "heavy_weapon",
+      "dock_fighter"
+    ],
     "buyPrice": 40,
     "sellPrice": 20,
     "maxStack": 1
@@ -139,9 +142,15 @@
     "description": "부두 노동자들의 작업복. 칼날을 약간 막아준다.",
     "rarity": "RARE",
     "slot": "ARMOR",
-    "statBonus": { "def": 3, "maxHP": 10 },
+    "statBonus": {
+      "def": 3,
+      "maxHP": 10
+    },
     "setId": "SET_HARBOR_WARRIOR",
-    "narrativeTags": ["rugged_armor", "dock_worker"],
+    "narrativeTags": [
+      "rugged_armor",
+      "dock_worker"
+    ],
     "buyPrice": 35,
     "sellPrice": 18,
     "maxStack": 1
@@ -153,9 +162,15 @@
     "description": "미끄러운 갑판에서도 안정적인 발놀림을 보장하는 가죽 장화.",
     "rarity": "RARE",
     "slot": "TACTICAL",
-    "statBonus": { "eva": 2, "speed": 2 },
+    "statBonus": {
+      "eva": 2,
+      "speed": 2
+    },
     "setId": "SET_HARBOR_WARRIOR",
-    "narrativeTags": ["agile_footwork", "dock_fighter"],
+    "narrativeTags": [
+      "agile_footwork",
+      "dock_fighter"
+    ],
     "buyPrice": 30,
     "sellPrice": 15,
     "maxStack": 1
@@ -167,9 +182,14 @@
     "description": "길드 공인 거래 장부. 상인들의 신뢰를 얻는 데 유용하다.",
     "rarity": "RARE",
     "slot": "POLITICAL",
-    "statBonus": { "acc": 2 },
+    "statBonus": {
+      "acc": 2
+    },
     "setId": "SET_GUILD_DIPLOMAT",
-    "narrativeTags": ["guild_badge", "merchant_trust"],
+    "narrativeTags": [
+      "guild_badge",
+      "merchant_trust"
+    ],
     "buyPrice": 50,
     "sellPrice": 25,
     "maxStack": 1
@@ -181,9 +201,15 @@
     "description": "상인 조합의 인장이 새겨진 반지. 교섭 시 설득력이 높아진다.",
     "rarity": "RARE",
     "slot": "POLITICAL",
-    "statBonus": { "acc": 1, "speed": 1 },
+    "statBonus": {
+      "acc": 1,
+      "speed": 1
+    },
     "setId": "SET_GUILD_DIPLOMAT",
-    "narrativeTags": ["noble_signet", "merchant_trust"],
+    "narrativeTags": [
+      "noble_signet",
+      "merchant_trust"
+    ],
     "buyPrice": 45,
     "sellPrice": 22,
     "maxStack": 1
@@ -195,14 +221,19 @@
     "description": "상인 길드 외교관이 입는 품격 있는 망토. 위엄을 더해준다.",
     "rarity": "UNIQUE",
     "slot": "ARMOR",
-    "statBonus": { "def": 2, "resist": 3 },
+    "statBonus": {
+      "def": 2,
+      "resist": 3
+    },
     "setId": "SET_GUILD_DIPLOMAT",
-    "narrativeTags": ["scholarly", "political_influence"],
+    "narrativeTags": [
+      "scholarly",
+      "political_influence"
+    ],
     "buyPrice": 80,
     "sellPrice": 40,
     "maxStack": 1
   },
-
   {
     "itemId": "EQ_RUSTY_BLADE",
     "type": "EQUIPMENT",
@@ -210,10 +241,15 @@
     "description": "빈민가에서 흔히 볼 수 있는 허름한 단검. 그래도 없는 것보단 낫다.",
     "rarity": "RARE",
     "slot": "WEAPON",
-    "statBonus": { "atk": 2 },
-    "narrativeTags": ["light_weapon", "street_fighter"],
-    "buyPrice": 15,
-    "sellPrice": 7,
+    "statBonus": {
+      "atk": 2
+    },
+    "narrativeTags": [
+      "light_weapon",
+      "street_fighter"
+    ],
+    "buyPrice": 10,
+    "sellPrice": 5,
     "maxStack": 1
   },
   {
@@ -223,10 +259,18 @@
     "description": "어둠 속에서 빛나는 예리한 칼날. 치명적 일격에 특화되어 있다.",
     "rarity": "UNIQUE",
     "slot": "WEAPON",
-    "statBonus": { "atk": 4, "crit": 5, "critDmg": 20 },
-    "narrativeTags": ["assassin_blade", "intimidating", "shadow_weapon"],
-    "buyPrice": 120,
-    "sellPrice": 60,
+    "statBonus": {
+      "atk": 4,
+      "crit": 5,
+      "critDmg": 20
+    },
+    "narrativeTags": [
+      "assassin_blade",
+      "intimidating",
+      "shadow_weapon"
+    ],
+    "buyPrice": 160,
+    "sellPrice": 80,
     "maxStack": 1
   },
   {
@@ -236,8 +280,14 @@
     "description": "경비대 순찰병에게 지급되는 표준 경갑. 안정적인 방어력을 제공한다.",
     "rarity": "RARE",
     "slot": "ARMOR",
-    "statBonus": { "def": 4, "maxHP": 15 },
-    "narrativeTags": ["guard_armor", "disciplined"],
+    "statBonus": {
+      "def": 4,
+      "maxHP": 15
+    },
+    "narrativeTags": [
+      "guard_armor",
+      "disciplined"
+    ],
     "buyPrice": 55,
     "sellPrice": 28,
     "maxStack": 1
@@ -249,8 +299,14 @@
     "description": "원거리 관측과 어두운 환경에서의 시야 확보에 유리한 특수 렌즈.",
     "rarity": "RARE",
     "slot": "TACTICAL",
-    "statBonus": { "acc": 3, "eva": 1 },
-    "narrativeTags": ["observer", "tactical_gear"],
+    "statBonus": {
+      "acc": 3,
+      "eva": 1
+    },
+    "narrativeTags": [
+      "observer",
+      "tactical_gear"
+    ],
     "buyPrice": 40,
     "sellPrice": 20,
     "maxStack": 1
@@ -262,13 +318,19 @@
     "description": "그레이마르 항만 관리국의 공식 봉인. 소지자에게 일정한 권위를 부여한다.",
     "rarity": "UNIQUE",
     "slot": "POLITICAL",
-    "statBonus": { "acc": 3, "resist": 2 },
-    "narrativeTags": ["official_seal", "political_influence", "harbor_authority"],
+    "statBonus": {
+      "acc": 3,
+      "resist": 2
+    },
+    "narrativeTags": [
+      "official_seal",
+      "political_influence",
+      "harbor_authority"
+    ],
     "buyPrice": 100,
     "sellPrice": 50,
     "maxStack": 1
   },
-
   {
     "itemId": "EQ_RELIC_TIDE_COMPASS",
     "type": "EQUIPMENT",
@@ -276,11 +338,18 @@
     "description": "그레이마르 항구의 전설적 유물. 조류를 읽는 자에게 운명의 흐름이 보인다고 전해진다.",
     "rarity": "LEGENDARY",
     "slot": "RELIC",
-    "statBonus": { "acc": 5, "speed": 3, "resist": 3 },
-    "narrativeTags": ["ancient_relic", "tide_reader", "world_impact"],
+    "statBonus": {
+      "acc": 5,
+      "speed": 3,
+      "resist": 3
+    },
+    "narrativeTags": [
+      "ancient_relic",
+      "tide_reader",
+      "world_impact"
+    ],
     "maxStack": 1
   },
-
   {
     "itemId": "EQ_SMUGGLER_DAGGER",
     "type": "EQUIPMENT",
@@ -288,9 +357,15 @@
     "description": "항만 밀수업자들이 사용하는 날렵한 단검. 은밀한 작전에 최적화되어 있다.",
     "rarity": "RARE",
     "slot": "WEAPON",
-    "statBonus": { "atk": 4, "eva": 1 },
+    "statBonus": {
+      "atk": 4,
+      "eva": 1
+    },
     "setId": "SET_HARBOR_SHADOW",
-    "narrativeTags": ["stealth_weapon", "harbor_shadow"],
+    "narrativeTags": [
+      "stealth_weapon",
+      "harbor_shadow"
+    ],
     "allowRegionAffix": true,
     "regionAffixProfileId": "PROFILE_LIGHT_WEAPON",
     "buyPrice": 55,
@@ -304,9 +379,15 @@
     "description": "밤의 항구에서 그림자처럼 움직일 수 있게 해주는 검은 망토.",
     "rarity": "UNIQUE",
     "slot": "ARMOR",
-    "statBonus": { "eva": 3, "speed": 2 },
+    "statBonus": {
+      "eva": 3,
+      "speed": 2
+    },
     "setId": "SET_HARBOR_SHADOW",
-    "narrativeTags": ["stealth", "shadow_cloak"],
+    "narrativeTags": [
+      "stealth",
+      "shadow_cloak"
+    ],
     "allowRegionAffix": false,
     "buyPrice": 90,
     "sellPrice": 45,
@@ -319,9 +400,15 @@
     "description": "빈민가 도둑들이 즐겨 신는 가죽 장화. 발소리를 완전히 죽여준다.",
     "rarity": "RARE",
     "slot": "TACTICAL",
-    "statBonus": { "eva": 2, "speed": 1 },
+    "statBonus": {
+      "eva": 2,
+      "speed": 1
+    },
     "setId": "SET_HARBOR_SHADOW",
-    "narrativeTags": ["silent_movement", "harbor_shadow"],
+    "narrativeTags": [
+      "silent_movement",
+      "harbor_shadow"
+    ],
     "allowRegionAffix": true,
     "regionAffixProfileId": "PROFILE_LIGHT_ARMOR",
     "buyPrice": 35,
