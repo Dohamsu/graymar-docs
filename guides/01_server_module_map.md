@@ -48,7 +48,7 @@ main.ts → AppModule
 │   │   └── legendary-reward.service ← 전설 장비 보상 처리
 │   ├── planner/         ← RUN 계획 (1 service)
 │   │   └── run-planner.service ← RUN 구조 생성
-│   └── hub/             ← HUB 엔진 (36 services, 6 서브시스템, 아래 상세)
+│   └── hub/             ← HUB 엔진 (37 services, 6 서브시스템 + 퀘스트, 아래 상세)
 ├── runs/                ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 ├── llm/                 ← Async LLM narrative (아래 상세)
@@ -73,6 +73,7 @@ main.ts → AppModule
 | ResolveService | resolve.service.ts | 행동 판정 (1d6 + stat보너스 + baseMod) |
 | AgendaService | agenda.service.ts | 플레이어 성향 추적 |
 | ArcService | arc.service.ts | 아크 루트/커밋먼트 관리 |
+| QuestProgressionService | quest-progression.service.ts | 퀘스트 단계 자동 전환 (FACT 발견 → stateTransitions 조건 체크) |
 | SceneShellService | scene-shell.service.ts | 장면 분위기 + 선택지 생성 |
 | IntentParserV2Service | intent-parser-v2.service.ts | 자연어 → ActionType 파싱 + 고집 에스컬레이션 |
 | TurnOrchestrationService | turn-orchestration.service.ts | NPC 주입 (displayName) + 긴장도 관리 |
