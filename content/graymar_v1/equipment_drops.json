@@ -4,8 +4,14 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.06 },
-      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.04 }
+      {
+        "baseItemId": "EQ_RUSTY_BLADE",
+        "chance": 0.06
+      },
+      {
+        "baseItemId": "EQ_DOCK_CUTLASS",
+        "chance": 0.04
+      }
     ]
   },
   {
@@ -13,8 +19,14 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.06 },
-      { "baseItemId": "EQ_DOCK_BOOTS", "chance": 0.05 }
+      {
+        "baseItemId": "EQ_DOCK_VEST",
+        "chance": 0.06
+      },
+      {
+        "baseItemId": "EQ_DOCK_BOOTS",
+        "chance": 0.05
+      }
     ]
   },
   {
@@ -22,8 +34,14 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_SMUGGLER_DAGGER", "chance": 0.07 },
-      { "baseItemId": "EQ_SILENT_BOOTS", "chance": 0.05 }
+      {
+        "baseItemId": "EQ_SMUGGLER_DAGGER",
+        "chance": 0.07
+      },
+      {
+        "baseItemId": "EQ_SILENT_BOOTS",
+        "chance": 0.05
+      }
     ]
   },
   {
@@ -31,8 +49,14 @@
     "isBoss": false,
     "locationId": "LOC_GUARD",
     "drops": [
-      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.07 },
-      { "baseItemId": "EQ_SCOUTS_GOGGLES", "chance": 0.05 }
+      {
+        "baseItemId": "EQ_PATROL_ARMOR",
+        "chance": 0.07
+      },
+      {
+        "baseItemId": "EQ_SCOUTS_GOGGLES",
+        "chance": 0.05
+      }
     ]
   },
   {
@@ -40,7 +64,10 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.08 }
+      {
+        "baseItemId": "EQ_RUSTY_BLADE",
+        "chance": 0.08
+      }
     ]
   },
   {
@@ -48,8 +75,14 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.06 },
-      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.05 }
+      {
+        "baseItemId": "EQ_DOCK_CUTLASS",
+        "chance": 0.06
+      },
+      {
+        "baseItemId": "EQ_DOCK_VEST",
+        "chance": 0.05
+      }
     ]
   },
   {
@@ -57,8 +90,14 @@
     "isBoss": false,
     "locationId": "LOC_GUARD",
     "drops": [
-      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.08 },
-      { "baseItemId": "EQ_SCOUTS_GOGGLES", "chance": 0.06 }
+      {
+        "baseItemId": "EQ_PATROL_ARMOR",
+        "chance": 0.08
+      },
+      {
+        "baseItemId": "EQ_SCOUTS_GOGGLES",
+        "chance": 0.06
+      }
     ]
   },
   {
@@ -66,8 +105,14 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.08 },
-      { "baseItemId": "EQ_DOCK_BOOTS", "chance": 0.06 }
+      {
+        "baseItemId": "EQ_DOCK_CUTLASS",
+        "chance": 0.08
+      },
+      {
+        "baseItemId": "EQ_DOCK_BOOTS",
+        "chance": 0.06
+      }
     ]
   },
   {
@@ -75,7 +120,10 @@
     "isBoss": false,
     "locationId": "LOC_SLUMS",
     "drops": [
-      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.06 }
+      {
+        "baseItemId": "EQ_RUSTY_BLADE",
+        "chance": 0.06
+      }
     ]
   },
   {
@@ -83,8 +131,14 @@
     "isBoss": false,
     "locationId": "LOC_SLUMS",
     "drops": [
-      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.08 },
-      { "baseItemId": "EQ_SILENT_BOOTS", "chance": 0.05 }
+      {
+        "baseItemId": "EQ_RUSTY_BLADE",
+        "chance": 0.08
+      },
+      {
+        "baseItemId": "EQ_SILENT_BOOTS",
+        "chance": 0.05
+      }
     ]
   },
   {
@@ -92,8 +146,14 @@
     "isBoss": false,
     "locationId": "LOC_MARKET",
     "drops": [
-      { "baseItemId": "EQ_MERCHANT_RING", "chance": 0.05 },
-      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.06 }
+      {
+        "baseItemId": "EQ_MERCHANT_RING",
+        "chance": 0.05
+      },
+      {
+        "baseItemId": "EQ_DOCK_VEST",
+        "chance": 0.06
+      }
     ]
   },
   {
@@ -101,8 +161,14 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_SMUGGLER_DAGGER", "chance": 0.08 },
-      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.06 }
+      {
+        "baseItemId": "EQ_SMUGGLER_DAGGER",
+        "chance": 0.08
+      },
+      {
+        "baseItemId": "EQ_DOCK_CUTLASS",
+        "chance": 0.06
+      }
     ]
   },
   {
@@ -110,17 +176,25 @@
     "isBoss": false,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_MERCHANT_LEDGER", "chance": 0.10 }
+      {
+        "baseItemId": "EQ_MERCHANT_LEDGER",
+        "chance": 0.1
+      }
     ]
   },
-
   {
     "encounterId": "ENC_GUARD_CONFRONTATION",
     "isBoss": true,
     "locationId": "LOC_GUARD",
     "drops": [
-      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.25 },
-      { "baseItemId": "EQ_HARBOR_SEAL", "chance": 0.20 }
+      {
+        "baseItemId": "EQ_PATROL_ARMOR",
+        "chance": 0.25
+      },
+      {
+        "baseItemId": "EQ_HARBOR_SEAL",
+        "chance": 0.2
+      }
     ]
   },
   {
@@ -128,8 +202,14 @@
     "isBoss": true,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.25 },
-      { "baseItemId": "EQ_SHADOW_DAGGER", "chance": 0.20 }
+      {
+        "baseItemId": "EQ_DOCK_CUTLASS",
+        "chance": 0.25
+      },
+      {
+        "baseItemId": "EQ_SHADOW_DAGGER",
+        "chance": 0.2
+      }
     ]
   },
   {
@@ -137,8 +217,14 @@
     "isBoss": true,
     "locationId": "LOC_GUARD",
     "drops": [
-      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.25 },
-      { "baseItemId": "EQ_HARBOR_SEAL", "chance": 0.22 }
+      {
+        "baseItemId": "EQ_PATROL_ARMOR",
+        "chance": 0.25
+      },
+      {
+        "baseItemId": "EQ_HARBOR_SEAL",
+        "chance": 0.22
+      }
     ]
   },
   {
@@ -146,42 +232,93 @@
     "isBoss": true,
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_SHADOW_DAGGER", "chance": 0.30 },
-      { "baseItemId": "EQ_SHADOW_CLOAK", "chance": 0.25 },
-      { "baseItemId": "EQ_HARBOR_SEAL", "chance": 0.20 }
+      {
+        "baseItemId": "EQ_SHADOW_DAGGER",
+        "chance": 0.3
+      },
+      {
+        "baseItemId": "EQ_SHADOW_CLOAK",
+        "chance": 0.25
+      },
+      {
+        "baseItemId": "EQ_HARBOR_SEAL",
+        "chance": 0.2
+      }
+    ],
+    "items": [
+      {
+        "itemId": "EQ_RELIC_TIDE_COMPASS",
+        "weight": 5,
+        "minStage": 3
+      }
     ]
   },
-
   {
     "locationId": "LOC_HARBOR",
     "drops": [
-      { "baseItemId": "EQ_DOCK_CUTLASS", "chance": 0.04 },
-      { "baseItemId": "EQ_DOCK_VEST", "chance": 0.04 },
-      { "baseItemId": "EQ_DOCK_BOOTS", "chance": 0.03 },
-      { "baseItemId": "EQ_SMUGGLER_DAGGER", "chance": 0.03 }
+      {
+        "baseItemId": "EQ_DOCK_CUTLASS",
+        "chance": 0.04
+      },
+      {
+        "baseItemId": "EQ_DOCK_VEST",
+        "chance": 0.04
+      },
+      {
+        "baseItemId": "EQ_DOCK_BOOTS",
+        "chance": 0.03
+      },
+      {
+        "baseItemId": "EQ_SMUGGLER_DAGGER",
+        "chance": 0.03
+      }
     ]
   },
   {
     "locationId": "LOC_GUARD",
     "drops": [
-      { "baseItemId": "EQ_PATROL_ARMOR", "chance": 0.04 },
-      { "baseItemId": "EQ_SCOUTS_GOGGLES", "chance": 0.03 }
+      {
+        "baseItemId": "EQ_PATROL_ARMOR",
+        "chance": 0.04
+      },
+      {
+        "baseItemId": "EQ_SCOUTS_GOGGLES",
+        "chance": 0.03
+      }
     ]
   },
   {
     "locationId": "LOC_MARKET",
     "drops": [
-      { "baseItemId": "EQ_MERCHANT_LEDGER", "chance": 0.03 },
-      { "baseItemId": "EQ_MERCHANT_RING", "chance": 0.03 },
-      { "baseItemId": "EQ_MERCHANT_CLOAK", "chance": 0.02 }
+      {
+        "baseItemId": "EQ_MERCHANT_LEDGER",
+        "chance": 0.03
+      },
+      {
+        "baseItemId": "EQ_MERCHANT_RING",
+        "chance": 0.03
+      },
+      {
+        "baseItemId": "EQ_MERCHANT_CLOAK",
+        "chance": 0.02
+      }
     ]
   },
   {
     "locationId": "LOC_SLUMS",
     "drops": [
-      { "baseItemId": "EQ_RUSTY_BLADE", "chance": 0.05 },
-      { "baseItemId": "EQ_SILENT_BOOTS", "chance": 0.04 },
-      { "baseItemId": "EQ_SHADOW_CLOAK", "chance": 0.02 }
+      {
+        "baseItemId": "EQ_RUSTY_BLADE",
+        "chance": 0.05
+      },
+      {
+        "baseItemId": "EQ_SILENT_BOOTS",
+        "chance": 0.04
+      },
+      {
+        "baseItemId": "EQ_SHADOW_CLOAK",
+        "chance": 0.02
+      }
     ]
   }
 ]

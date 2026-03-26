@@ -10,7 +10,7 @@
     "stats": {
       "MaxHP": 130,
       "MaxStamina": 5,
-      "str": 16,
+      "str": 14,
       "dex": 4,
       "wit": 4,
       "con": 14,
@@ -25,15 +25,28 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_OWEN_KEEPER": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_BG_DOCKER": { "posture": "FRIENDLY", "trustDelta": 5 },
-      "NPC_BG_ROPE_MAKER": { "posture": "FRIENDLY", "trustDelta": 5 },
-      "NPC_BG_CARGO_INSPECTOR": { "posture": "FRIENDLY", "trustDelta": 5 }
+      "NPC_OWEN_KEEPER": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_BG_DOCKER": {
+        "posture": "FRIENDLY",
+        "trustDelta": 5
+      },
+      "NPC_BG_ROPE_MAKER": {
+        "posture": "FRIENDLY",
+        "trustDelta": 5
+      },
+      "NPC_BG_CARGO_INSPECTOR": {
+        "posture": "FRIENDLY",
+        "trustDelta": 5
+      }
     },
     "actionBonuses": {
       "FIGHT": 1,
       "THREATEN": 1
-    }
+    },
+    "hp": 115
   },
   {
     "presetId": "DESERTER",
@@ -65,9 +78,18 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_GUARD_FELIX": { "posture": "HOSTILE", "trustDelta": -15 },
-      "NPC_CAPTAIN_BREN": { "posture": "HOSTILE", "trustDelta": -15 },
-      "NPC_BAEK_SEUNGHO": { "posture": "FRIENDLY", "trustDelta": 10 }
+      "NPC_GUARD_FELIX": {
+        "posture": "HOSTILE",
+        "trustDelta": -15
+      },
+      "NPC_CAPTAIN_BREN": {
+        "posture": "HOSTILE",
+        "trustDelta": -15
+      },
+      "NPC_BAEK_SEUNGHO": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      }
     },
     "actionBonuses": {
       "FIGHT": 1,
@@ -106,9 +128,18 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_SERA_DOCKS": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_MOON_SEA": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_KANG_CHAERIN": { "posture": "FRIENDLY", "trustDelta": 5 }
+      "NPC_SERA_DOCKS": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_MOON_SEA": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_KANG_CHAERIN": {
+        "posture": "FRIENDLY",
+        "trustDelta": 5
+      }
     },
     "actionBonuses": {
       "SNEAK": 1,
@@ -128,7 +159,7 @@
       "MaxStamina": 7,
       "str": 6,
       "dex": 6,
-      "wit": 13,
+      "wit": 15,
       "con": 10,
       "per": 12,
       "cha": 5
@@ -149,13 +180,23 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_INFO_BROKER": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_MIRELA": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_BG_HERB_CRONE": { "posture": "FRIENDLY", "trustDelta": 5 }
+      "NPC_INFO_BROKER": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_MIRELA": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_BG_HERB_CRONE": {
+        "posture": "FRIENDLY",
+        "trustDelta": 5
+      }
     },
     "actionBonuses": {
       "INVESTIGATE": 1,
       "HELP": 1
-    }
+    },
+    "hp": 105
   }
 ]
