@@ -10,3 +10,4 @@ client/
 
 # Content seed data is in server repo
 # content/ is symlinked or copied — keep here for reference
+.env
