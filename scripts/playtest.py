@@ -11,7 +11,7 @@
 /playtest 커맨드에서 호출됨.
 """
 
-import json, time, uuid, random, sys, argparse, os
+import json, time, uuid, random, sys, argparse, os, subprocess, re
 
 # --- CLI 인자 ---
 parser = argparse.ArgumentParser(description="Playtest runner")
@@ -326,7 +326,94 @@ for k, v in all_checks.items():
     print(f"  {'✅' if v else '❌'} {k}", flush=True)
 
 # ═══════════════════════════════════════
-# 5. Save Output
+# 5. Git Version Tagging
+# ═══════════════════════════════════════
+def git_info(repo_dir):
+    """서버 레포의 git 정보 수집"""
+    try:
+        git_hash = subprocess.check_output(
+            ["git", "-C", repo_dir, "rev-parse", "--short", "HEAD"],
+            stderr=subprocess.DEVNULL,
+        ).decode().strip()
+        git_branch = subprocess.check_output(
+            ["git", "-C", repo_dir, "rev-parse", "--abbrev-ref", "HEAD"],
+            stderr=subprocess.DEVNULL,
+        ).decode().strip()
+        git_message = subprocess.check_output(
+            ["git", "-C", repo_dir, "log", "-1", "--format=%s"],
+            stderr=subprocess.DEVNULL,
+        ).decode().strip()
+        return {"hash": git_hash, "branch": git_branch, "message": git_message}
+    except Exception:
+        return {"hash": None, "branch": None, "message": None}
+
+server_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "server")
+git = git_info(server_dir)
+
+# 서술 분석 메트릭 계산
+all_narratives = [t.get("narrative", "") for t in turn_logs if t.get("narrative")]
+all_dialogues = []
+meta_phrases = ["아시다시피", "이전에 말씀", "말한 바와 같이", "앞서 말씀"]
+exit_kw = ["멀어지", "떠나려", "사라지", "등을 돌", "가려는", "자리를 뜨"]
+reapproach_kw = ["다시 다가", "다시 찾아", "다시 접근"]
+
+meta_count = 0
+exit_count = 0
+reapproach_count = 0
+halmi_contamination = 0
+
+for narr in all_narratives:
+    dialogues = re.findall(r'"([^"]+)"', narr)
+    all_dialogues.extend(dialogues)
+    for d in dialogues:
+        for mp in meta_phrases:
+            if mp in d:
+                meta_count += 1
+    for kw in exit_kw:
+        if kw in narr:
+            exit_count += 1
+    for kw in reapproach_kw:
+        if kw in narr:
+            reapproach_count += 1
+    if "이 할미" in narr and "미렐라" not in narr and "약초" not in narr:
+        halmi_contamination += 1
+
+hao_count = sum(1 for d in all_dialogues if any(x in d for x in ["하오", "겠소", "이오", "않소", "있소"]))
+narr_lens = [len(n) for n in all_narratives] if all_narratives else [0]
+
+narrative_metrics = {
+    "totalNarratives": len(all_narratives),
+    "totalChars": sum(narr_lens),
+    "avgCharsPerTurn": sum(narr_lens) / len(narr_lens) if narr_lens else 0,
+    "minChars": min(narr_lens) if narr_lens else 0,
+    "maxChars": max(narr_lens) if narr_lens else 0,
+    "totalDialogues": len(all_dialogues),
+    "haoSoRatio": hao_count / len(all_dialogues) if all_dialogues else 0,
+    "metaExpressionCount": meta_count,
+    "speechContamination": halmi_contamination,
+    "exitKeywordCount": exit_count,
+    "reapproachCount": reapproach_count,
+}
+
+# 판정 분포
+outcomes = [t["resolveOutcome"] for t in turn_logs if t.get("resolveOutcome")]
+from collections import Counter
+oc = Counter(outcomes)
+outcome_distribution = {
+    "success": oc.get("SUCCESS", 0),
+    "partial": oc.get("PARTIAL", 0),
+    "fail": oc.get("FAIL", 0),
+    "total": len(outcomes),
+}
+
+# discoveredQuestFacts
+discovered_facts = run_state.get("discoveredQuestFacts", [])
+
+# NPC 만남 수
+npc_met = sum(1 for n in npc_states.values() if n.get("encounterCount", 0) > 0)
+
+# ═══════════════════════════════════════
+# 6. Save Output (JSON + DB)
 # ═══════════════════════════════════════
 output = {
     "meta": {
@@ -335,6 +422,7 @@ output = {
         "maxTurns": MAX_TURNS,
         "actualTurns": len(turn_logs),
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "git": git,
     },
     "runId": run_id,
     "turns": turn_logs,
@@ -349,8 +437,11 @@ output = {
             "globalClock": world_state.get("globalClock"),
         },
         "memory": memory,
+        "discoveredQuestFacts": discovered_facts,
     },
     "verification": all_checks,
+    "narrativeMetrics": narrative_metrics,
+    "outcomeDistribution": outcome_distribution,
 }
 
 output_path = args.output
@@ -362,4 +453,54 @@ os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
 with open(output_path, "w") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 print(f"\n로그 저장: {output_path}", flush=True)
+
+# DB 저장 (PostgreSQL 직접 연결)
+try:
+    import psycopg2
+    db_url = os.environ.get("DATABASE_URL")
+    if not db_url:
+        # .env에서 읽기
+        env_path = os.path.join(server_dir, ".env")
+        if os.path.exists(env_path):
+            with open(env_path) as ef:
+                for line in ef:
+                    if line.startswith("DATABASE_URL="):
+                        db_url = line.strip().split("=", 1)[1]
+                        break
+
+    if db_url:
+        conn = psycopg2.connect(db_url)
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO playtest_results (
+                run_id, git_hash, git_branch, git_message, server_version,
+                preset, gender, max_turns, actual_turns, loc_turns,
+                verification, pass_count,
+                final_hp, final_gold, npc_met_count, incident_count, discovered_fact_count,
+                outcome_distribution, narrative_metrics, raw_data, note
+            ) VALUES (
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s,
+                %s, %s,
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s
+            )
+        """, (
+            run_id, git.get("hash"), git.get("branch"), git.get("message"), "0.0.1",
+            args.preset, args.gender, MAX_TURNS, len(turn_logs), args.loc_turns,
+            json.dumps(all_checks), passed,
+            run_state.get("hp"), run_state.get("gold"), npc_met, len(incidents), len(discovered_facts),
+            json.dumps(outcome_distribution), json.dumps(narrative_metrics), json.dumps(output), None,
+        ))
+        conn.commit()
+        cur.close()
+        conn.close()
+        print(f"DB 저장 완료 (playtest_results)", flush=True)
+    else:
+        print(f"DB 저장 스킵 (DATABASE_URL 없음)", flush=True)
+except ImportError:
+    print(f"DB 저장 스킵 (psycopg2 미설치 — pip install psycopg2-binary)", flush=True)
+except Exception as e:
+    print(f"DB 저장 실패: {e}", flush=True)
+
 print(f"=== 플레이테스트 완료 ===", flush=True)
