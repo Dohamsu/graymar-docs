@@ -245,8 +245,17 @@ Narrative Engine v1의 사건 시스템과 시그널 피드 분석:
 
 ### 9단계: 서버 재시작
 
+기존 NestJS 프로세스 트리를 **전체 정리**한 뒤 재시작한다.
+`lsof`로 포트만 죽이면 부모/자식 프로세스가 좀비로 남으므로, 프로세스 이름 기반으로 정리한다.
+
 ```bash
+# 1) graymar 관련 nest/pnpm 프로세스 트리 전체 정리
+pkill -f 'graymar/server.*nest.js start --watch' 2>/dev/null
+pkill -f 'graymar/server.*pnpm start:dev' 2>/dev/null
+# 2) 혹시 남은 포트 점유 프로세스 정리
+sleep 1
 lsof -ti:3000 | xargs kill -9 2>/dev/null
+# 3) 재시작
 cd server && pnpm start:dev &
 ```
 
