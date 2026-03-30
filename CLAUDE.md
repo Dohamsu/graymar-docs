@@ -26,6 +26,26 @@ curl -s -X POST -H 'Content-type: application/json' \
 - 완료 시 `✅`, 중간 보고 시 `🔄` 이모지 사용
 - 중간 보고 예시: `🔄 플레이테스트 진행 중 — 3/10 런 완료, 현재 이슈 없음`
 
+## 서버 프로세스 관리 (필수)
+
+`pnpm start:dev &` 등 백그라운드로 서버를 시작하면, Claude Code 세션 종료 후에도 프로세스가 좀비로 남는다.
+**서버를 시작하기 전에 반드시 기존 좀비 프로세스를 정리하라.**
+
+### 서버 시작 전 정리 절차
+```bash
+# 1) 기존 graymar NestJS/pnpm 좀비 전체 정리
+pkill -f 'graymar/server.*nest.js start --watch' 2>/dev/null
+pkill -f 'graymar/server.*pnpm start:dev' 2>/dev/null
+sleep 1
+# 2) 포트 점유 프로세스 최종 확인
+lsof -ti:3000 | xargs kill -9 2>/dev/null
+```
+
+### 규칙
+- **서버 시작 전**: 위 정리 절차를 반드시 먼저 실행한다. `pnpm start:dev &`를 바로 실행하지 않는다.
+- **클라이언트도 동일**: Next.js 시작 전에 `lsof -ti:3001 | xargs kill -9 2>/dev/null`로 기존 프로세스 정리.
+- **다른 프로젝트 주의**: `mdfile` 등 다른 워크스페이스의 좀비도 남아있을 수 있으므로, 포트 충돌 발생 시 `ps aux | grep 'nest.js start'`로 전체 확인.
+
 ## 워크플로우 규칙
 
 - **디버깅**: 버그 수정 시, 표면적 수정 전에 반드시 근본 원인을 조사하라. 사용자가 파악한 원인이 초기 분석과 다르면 확인 질문을 하라.
