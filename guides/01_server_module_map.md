@@ -1,7 +1,7 @@
 # 서버 모듈/서비스 맵
 
 > 정본 위치: `server/src/`
-> 최종 갱신: 2026-03-25
+> 최종 갱신: 2026-03-31
 
 ## 모듈 구조 (10 modules, 65+ services, 6 controllers)
 
@@ -52,9 +52,11 @@ main.ts → AppModule
 ├── runs/                ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 ├── llm/                 ← Async LLM narrative (아래 상세)
-└── bug-report/          ← 인게임 버그 리포트
-    ├── bug-report.controller  ← POST/GET/PATCH /v1/bug-reports
-    └── bug-report.service     ← 버그 리포트 CRUD
+├── bug-report/          ← 인게임 버그 리포트
+│   ├── bug-report.controller  ← POST/GET/PATCH /v1/bug-reports
+│   └── bug-report.service     ← 버그 리포트 CRUD
+└── scene-image/         ← NPC 초상화 이미지 생성
+    └── scene-image.service    ← gemini-3.1-flash-image-preview 이미지 생성, NPC 초상화
 ```
 
 ---
@@ -176,13 +178,13 @@ main.ts → AppModule
 | hub_states | HUB 상태 |
 | run_sessions | 런 세션 (runState JSONB) |
 | node_instances | 노드 인스턴스 |
-| turns | 턴 기록 |
+| turns | 턴 기록 (llm_prompt JSONB 컬럼 — 프롬프트 저장) |
 | battle_states | 전투 상태 |
 | run_memories | 런 메모리 (theme, storySummary, structuredMemory) |
 | node_memories | 노드 메모리 (narrativeThread) |
 | recent_summaries | 최근 요약 |
 | ai_turn_logs | LLM 호출 로그 |
-| bug_reports | 인게임 버그 리포트 (runId, turnNo, category, description, resolved) |
+| bug_reports | 인게임 버그 리포트 (runId, turnNo, category, description, resolved, server_version TEXT) |
 
 ---
 

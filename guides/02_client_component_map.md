@@ -1,20 +1,26 @@
 # 클라이언트 컴포넌트 맵
 
 > 정본 위치: `client/src/`
-> 최종 갱신: 2026-03-25
+> 최종 갱신: 2026-03-31
 
-## 컴포넌트 구조 (37 components, 3 stores)
+## 컴포넌트 구조 (40+ components, 3 stores)
 
 ```
 app/
 ├── layout.tsx       ← 루트 레이아웃 (글꼴: A2G, IBM Plex Sans KR, Noto Serif KR)
-├── page.tsx         ← GamePage (메인 라우터, phase 기반 렌더링)
-└── globals.css      ← CSS 변수, 애니메이션 정의
+├── page.tsx         ← 랜딩 페이지 (SEO, / 경로)
+├── error.tsx        ← React 에러 바운더리 (렌더 에러 복구)
+├── global-error.tsx ← 루트 에러 바운더리
+├── globals.css      ← CSS 변수, 애니메이션 정의
+├── play/
+│   └── page.tsx     ← 게임 클라이언트 (/play)
+└── landing/
+    └── AuthRedirect.tsx ← 로그인 시 /play 리다이렉트
 
 components/ (31개)
 ├── narrative/       ← 메시지 표시
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
-│   └── StoryBlock.tsx        ← 메시지 렌더러 (타이핑 애니메이션)
+│   └── StoryBlock.tsx        ← 메시지 렌더러 (타이핑 애니메이션, NPC 초상화 카드, 선택지 보정치 뱃지)
 ├── input/           ← 입력 처리
 │   ├── InputSection.tsx      ← 텍스트 입력 + 퀵 액션 (LOCATION 전용)
 │   └── QuickActionButton.tsx ← 빠른 행동 버튼
@@ -34,7 +40,8 @@ components/ (31개)
 │   ├── NpcRelationshipCard.tsx    ← NPC 5축 감정 요약
 │   ├── HubNotificationList.tsx    ← 피드형 알림 목록
 │   ├── PinnedAlertStack.tsx       ← 긴급 알림 고정 표시 (최대 3개)
-│   └── WorldDeltaSummaryCard.tsx  ← 턴 간 세계 변화 요약
+│   ├── WorldDeltaSummaryCard.tsx  ← 턴 간 세계 변화 요약
+│   └── CollapsibleSection.tsx    ← 접기/펼치기 섹션 (HubScreen 내부 컴포넌트)
 ├── location/        ← LOCATION 알림 레이어
 │   ├── TurnResultBanner.tsx       ← 판정 결과 배너 (5초 자동 해제)
 │   └── LocationToastLayer.tsx     ← 플로팅 토스트 (3초 페이드)

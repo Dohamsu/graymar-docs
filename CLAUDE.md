@@ -283,6 +283,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | GET | `/v1/bug-reports` | 버그 리포트 목록 조회 (페이징) |
 | GET | `/v1/bug-reports/:id` | 버그 리포트 상세 조회 |
 | PATCH | `/v1/bug-reports/:id` | 버그 리포트 상태 변경 (resolved 등) |
+| GET | `/v1/version` | 서버 버전 조회 (git hash, startedAt, uptime) |
 
 ## Environment Variables (`server/.env`)
 
@@ -327,6 +328,10 @@ LLM_FALLBACK_PROVIDER=mock
 | **NPC 대화 개선** | 대화 잠금 4턴 + 턴카운터 + 행동반응매핑 + 직전대사추출 + speechStyle 예시 제거 | ✅ 완료 |
 | **NPC 콘텐츠 강화** | 42명 gender + role 다채화 + 17명 knownFacts/linkedIncidents | ✅ 완료 |
 | **퀘스트 시스템** | QuestProgressionService + 6단계 전환 + 3 Arc 루트 + FACT 점진 공개 | ✅ 완료 |
+| **프론트엔드 디자인 점검** | error boundary + PWA + 색상 토큰 통일 + HUB 접기/펼치기 + 핀치줌 차단 | ✅ 완료 |
+| **NPC 초상화** | CORE 5명 초상화 생성 + 첫 등장 시 표시 시스템 | ✅ 완료 |
+| **프롬프트 최적화 v2** | NPC 감정 블록 선별 주입 + 장소 블록 보완 + dry-run 프롬프트 추출 | ✅ 완료 |
+| **라우트 재구성** | / → 랜딩(SEO), /play → 게임(SPA), api.dimtale.com 고정 터널 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
