@@ -21,6 +21,7 @@ parser.add_argument("--gender", default="male", help="성별 (default: male)")
 parser.add_argument("--base", default="http://localhost:3000/v1", help="서버 URL")
 parser.add_argument("--output", default=None, help="결과 JSON 파일 경로")
 parser.add_argument("--loc-turns", type=int, default=4, help="장소당 체류 턴 수 (default: 4)")
+parser.add_argument("--dry-run", action="store_true", help="LLM mock 모드 + 프롬프트 추출 (비용 0원)")
 args = parser.parse_args()
 
 BASE = args.base
@@ -70,6 +71,34 @@ def poll_llm(run_id, turn_no, max_wait=90):
     return "[LLM_TIMEOUT]"
 
 # ═══════════════════════════════════════
+# 0. Dry-run: LLM provider를 mock으로 전환
+# ═══════════════════════════════════════
+if args.dry_run:
+    print("=== DRY-RUN 모드: LLM mock + 프롬프트 추출 ===", flush=True)
+    # 시작 시 mock 전환, 종료 시 원래 provider 복원
+    _orig_provider = None
+
+def dry_run_setup():
+    """LLM provider를 mock으로 전환"""
+    global _orig_provider
+    status, resp = api("GET", "/settings/llm")
+    _orig_provider = resp.get("provider", "openai")
+    api("PATCH", "/settings/llm", {"provider": "mock"})
+    print(f"  LLM provider: {_orig_provider} → mock", flush=True)
+
+def dry_run_teardown():
+    """원래 LLM provider로 복원"""
+    if _orig_provider:
+        api("PATCH", "/settings/llm", {"provider": _orig_provider})
+        print(f"  LLM provider 복원: mock → {_orig_provider}", flush=True)
+
+def get_prompt(run_id, turn_no):
+    """턴의 LLM 프롬프트 추출 (includeDebug)"""
+    _, data = api("GET", f"/runs/{run_id}/turns/{turn_no}?includeDebug=true")
+    debug = data.get("debug", {}) or {}
+    return debug.get("llmPrompt")
+
+# ═══════════════════════════════════════
 # 1. Auth
 # ═══════════════════════════════════════
 print(f"=== 플레이테스트 시작 ({MAX_TURNS}턴, {args.preset}, {args.gender}) ===", flush=True)
@@ -83,6 +112,9 @@ if not token:
     sys.exit(1)
 session.headers["Authorization"] = f"Bearer {token}"
 print(f"Auth: {EMAIL}", flush=True)
+
+if args.dry_run:
+    dry_run_setup()
 
 # ═══════════════════════════════════════
 # 2. Create Run
@@ -502,5 +534,35 @@ except ImportError:
     print(f"DB 저장 스킵 (psycopg2 미설치 — pip install psycopg2-binary)", flush=True)
 except Exception as e:
     print(f"DB 저장 실패: {e}", flush=True)
+
+# ═══════════════════════════════════════
+# Dry-run: 프롬프트 추출 + 복원
+# ═══════════════════════════════════════
+if args.dry_run:
+    print("\n" + "=" * 60, flush=True)
+    print("DRY-RUN: LLM 프롬프트 추출", flush=True)
+    print("=" * 60, flush=True)
+
+    prompts = {}
+    for log in turn_logs:
+        tn = log.get("turn", 0)
+        prompt = get_prompt(run_id, tn)
+        if prompt:
+            prompts[tn] = prompt
+            # system 메시지의 길이만 요약
+            for i, msg in enumerate(prompt):
+                role = msg.get("role", "?") if isinstance(msg, dict) else "?"
+                content = msg.get("content", "") if isinstance(msg, dict) else str(msg)
+                content_len = len(content) if isinstance(content, str) else len(json.dumps(content))
+                print(f"  T{tn:02d} [{role:9s}] {content_len:5d}자", flush=True)
+            print(flush=True)
+
+    # 프롬프트 전문 저장
+    prompt_file = (args.output or "playtest_dryrun.json").replace(".json", "_prompts.json")
+    with open(prompt_file, "w", encoding="utf-8") as f:
+        json.dump(prompts, f, ensure_ascii=False, indent=2)
+    print(f"\n프롬프트 저장: {prompt_file}", flush=True)
+
+    dry_run_teardown()
 
 print(f"=== 플레이테스트 완료 ===", flush=True)
