@@ -459,7 +459,7 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 
 ### 9.8 콘텐츠 데이터 (`content/graymar_v1/`)
 
-- `events_v2.json` --- 112개 이벤트 (7개 LOCATION, eventCategory 포함)
+- `events_v2.json` --- 123개 이벤트 (7개 LOCATION, eventCategory 포함, discoverableFact 43개)
 - `scene_shells.json` / `scene_shells_v2.json` --- LOCATION x TimePhase x Safety 분위기 텍스트
 - `suggested_choices.json` --- eventType별 선택지 템플릿
 - `arc_events.json` --- Arc route별 이벤트
