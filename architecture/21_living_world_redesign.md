@@ -422,7 +422,7 @@ type SituationTrigger =
 
 **상태:**
 - 장소: LOC_HARBOR, 시간: DUSK
-- presentNpcs: ['NPC_MARCO', 'NPC_KANG_CHAERIN']
+- presentNpcs: ['NPC_MARCO', 'NPC_MAIREL']
 - fact 존재: "플레이어가 마르코의 밀수를 도왔다" (3턴 전)
 - LocationCondition: 없음
 - Incident: INC_SMUGGLING stage 1
@@ -430,7 +430,7 @@ type SituationTrigger =
 **Layer 2 (Incident-Driven) 발동:**
 ```
 trigger: NPC_CONFLICT
-primaryNpc: NPC_KANG_CHAERIN (항만 관리인 - 밀수 단속 중)
+primaryNpc: NPC_MAIREL (항만 관리인 - 밀수 단속 중)
 secondaryNpc: NPC_MARCO (밀수업자 - 플레이어가 도운 적 있음)
 cause: INC_SMUGGLING stage 1 + fact "플레이어가 마르코를 도왔다"
 sceneFrame: "강채린이 해질녘 부두에서 마르코를 추궁하고 있다.

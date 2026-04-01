@@ -189,8 +189,8 @@
         "mutuallyExclusive": []
       },
       "relatedNpcIds": [
-        "NPC_SEO_DOYUN",
-        "NPC_YOON_HAMIN"
+        "NPC_EDRIC_VEIL",
+        "NPC_HARLUN"
       ],
       "tags": [
         "HARBOR",
@@ -373,7 +373,7 @@
         "mutuallyExclusive": []
       },
       "relatedNpcIds": [
-        "NPC_KANG_CHAERIN",
+        "NPC_MAIREL",
         "NPC_GUARD_CAPTAIN"
       ],
       "tags": [
@@ -583,8 +583,8 @@
         ]
       },
       "relatedNpcIds": [
-        "NPC_YOON_HAMIN",
-        "NPC_KANG_CHAERIN"
+        "NPC_HARLUN",
+        "NPC_MAIREL"
       ],
       "tags": [
         "HARBOR",
@@ -720,7 +720,7 @@
         "mutuallyExclusive": []
       },
       "relatedNpcIds": [
-        "NPC_SEO_DOYUN",
+        "NPC_EDRIC_VEIL",
         "NPC_MOON_SEA"
       ],
       "tags": [
@@ -861,7 +861,7 @@
         "mutuallyExclusive": []
       },
       "relatedNpcIds": [
-        "NPC_BAEK_SEUNGHO"
+        "NPC_TOBREN"
       ],
       "tags": [
         "SLUMS",
@@ -973,7 +973,7 @@
             "ASSASSINATION_PREVENTED"
           ],
           "npcEmotionalChanges": {
-            "NPC_KANG_CHAERIN": {
+            "NPC_MAIREL": {
               "trust": 20,
               "respect": 15
             }
@@ -1007,7 +1007,7 @@
       },
       "relatedNpcIds": [
         "NPC_INFO_BROKER",
-        "NPC_KANG_CHAERIN"
+        "NPC_MAIREL"
       ],
       "tags": [
         "SLUMS",
@@ -1260,7 +1260,7 @@
             "RAID_AVERTED"
           ],
           "npcEmotionalChanges": {
-            "NPC_YOON_HAMIN": {
+            "NPC_HARLUN": {
               "trust": 15,
               "attachment": 10
             }
@@ -1295,7 +1295,7 @@
       },
       "relatedNpcIds": [
         "NPC_GUARD_CAPTAIN",
-        "NPC_YOON_HAMIN"
+        "NPC_HARLUN"
       ],
       "tags": [
         "GUARD",
@@ -1496,7 +1496,7 @@
         "mutuallyExclusive": []
       },
       "relatedNpcIds": [
-        "NPC_SEO_DOYUN",
+        "NPC_EDRIC_VEIL",
         "NPC_MOON_SEA"
       ],
       "tags": [

@@ -86,7 +86,7 @@
         "posture": "HOSTILE",
         "trustDelta": -15
       },
-      "NPC_BAEK_SEUNGHO": {
+      "NPC_TOBREN": {
         "posture": "FRIENDLY",
         "trustDelta": 10
       }
@@ -136,7 +136,7 @@
         "posture": "FRIENDLY",
         "trustDelta": 10
       },
-      "NPC_KANG_CHAERIN": {
+      "NPC_MAIREL": {
         "posture": "FRIENDLY",
         "trustDelta": 5
       }
