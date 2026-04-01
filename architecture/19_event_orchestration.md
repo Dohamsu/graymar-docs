@@ -81,6 +81,24 @@ LOCATION별 이벤트 관리
 - atmosphere
 - story
 
-### 권장 수량
+### 현황 (2026-04-01)
 
-LOCATION당 20~30 events
+총 123개 이벤트, 7개 LOCATION. discoverableFact가 있는 이벤트 43개.
+
+| LOCATION | 이벤트 수 | Fact 이벤트 수 |
+|----------|----------|--------------|
+| LOC_MARKET | 22 | 13 |
+| LOC_GUARD | 22 | 11 |
+| LOC_HARBOR | 22 | 7 |
+| LOC_SLUMS | 22 | 6 |
+| LOC_TAVERN | 11 | 3 |
+| LOC_DOCKS_WAREHOUSE | 10 | 2 |
+| LOC_NOBLE | 9 | 1 |
+
+### 이벤트 매칭 밸런싱 (P0~P5)
+
+- **shouldMatchEvent 게이트**: 첫 턴 + 사건 압력 + 강한 라우팅 + questFactTrigger(미발견 fact 이벤트 존재 시 매 턴)
+- **questFactTrigger 시 SitGen 바이패스**: fact 이벤트 매칭을 보장하기 위해 SituationGenerator 스킵
+- **미발견 fact weight 부스트**: EventMatcher에서 +35 weight (quest-balance.config.ts)
+- **PARTIAL 발견 확률**: 50% (quest-balance.config.ts)
+- **SitGen template fact 우선**: SitGen이 실행될 때도 미발견 discoverableFact 이벤트를 template으로 우선 선택

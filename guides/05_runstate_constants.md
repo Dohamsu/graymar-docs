@@ -129,8 +129,8 @@ RunState {
 | npcs.json | 11 NPC (name, unknownAlias, role, faction, basePosture) — PR1에서 4명 추가 |
 | factions.json | 세력 정의 |
 | quest.json | 퀘스트 정의 |
-| locations.json | 4 LOCATION (시장/경비대/항만/빈민가) |
-| events_v2.json | 88개 이벤트 (22개/LOCATION) |
+| locations.json | 7 LOCATION (시장/경비대/항만/빈민가/선술집/귀족구/창고) |
+| events_v2.json | 123개 이벤트 (7개 LOCATION, discoverableFact 43개) |
 | scene_shells.json | LOCATION×TimePhase×Safety 분위기 |
 | scene_shells_v2.json | 4상 시간 분위기 |
 | suggested_choices.json | 이벤트 타입별 선택지 |
