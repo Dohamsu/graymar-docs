@@ -219,8 +219,10 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 24. **선별 주입(Selective Injection)** — LLM 컨텍스트에 메모리를 주입할 때, 전체가 아닌 현재 턴에 관련된 것만 선별: NpcPersonalMemory는 등장 NPC만, LocationMemory는 현재 장소만, IncidentMemory는 관련 사건만, ItemMemory는 장착/획득(RARE 이상) 아이템만.
 25. **프리셋 배경 참조** — 프리셋별 npcPostureOverrides(NPC 초기 태도 오버라이드), actionBonuses(행동 보너스), LLM 배경 텍스트가 게임 메카닉과 서술 모두에 반영.
 26. **대화 잠금(Conversation Lock)** — 대화 계열 행동(TALK/PERSUADE/BRIBE/THREATEN/HELP) 시 같은 이벤트/NPC 최대 4턴 연속 유지. 비대화 행동(SNEAK/STEAL/FIGHT) 시 NPC 연속성 해제.
-27. **NPC knownFacts 점진 공개** — SUCCESS 판정 시 NPC의 knownFacts 중 미공개 단서를 순서대로 공개. PARTIAL은 힌트만. FAIL은 미공개.
+27. **NPC knownFacts 점진 공개** — SUCCESS/PARTIAL 판정 + 정보행동 시 NPC의 knownFacts 중 미공개 단서를 순서대로 공개. 이벤트 discoverableFact는 SUCCESS=100%, PARTIAL=50%. FAIL은 미공개.
 28. **퀘스트 자동 전환** — discoveredQuestFacts 누적 → quest.json stateTransitions 조건 충족 시 questState 자동 전환 (S0→S1→...→S5).
+29. **questFactTrigger SitGen 바이패스** — 미발견 fact 이벤트가 있는 장소에서 매 턴 이벤트 매칭 허용. 이때 SituationGenerator를 건너뛰고 EventDirector로 직행하여 fact 이벤트 매칭을 보장.
+30. **밸런스 상수 외부화** — SitGen 확률, PARTIAL 발견률, weight 부스트 등 핵심 밸런스 상수는 `quest-balance.config.ts`에서 관리. 코드 내 하드코딩 금지.
 
 ## Canonical Enums (정본)
 
@@ -312,7 +314,7 @@ LLM_FALLBACK_PROVIDER=mock
 | **Narrative v1** | Incident + 4상시간 + Signal + NpcEmotional + Mark + Ending + Operation | ✅ 완료 |
 | **Memory v2** | StructuredMemory + [MEMORY]/[THREAD] 태그 + Scene Continuity | ✅ 완료 |
 | **Narrative v2** | Token Budget + Mid Summary + Intent Memory + Active Clues | ✅ 완료 |
-| **Event v2** | Event Director + Event Library(88개) + Procedural Event | ✅ 완료 |
+| **Event v2** | Event Director + Event Library(123개) + Procedural Event | ✅ 완료 |
 | **Bridge** | IntentV3 + IncidentRouter + WorldDelta + PlayerThread + Notification | ✅ 완료 |
 | **Client** | Notification UI + 엔딩 행동 성향 | ✅ 완료 |
 | **Fixplan3** | P1 메모리통합 + P2 NPC소개 + P4 이동 + P5 씬연속 + P7 엔딩가드 + P10 조사 | ✅ 완료 |
@@ -332,6 +334,7 @@ LLM_FALLBACK_PROVIDER=mock
 | **NPC 초상화** | CORE 5명 초상화 생성 + 첫 등장 시 표시 시스템 | ✅ 완료 |
 | **프롬프트 최적화 v2** | NPC 감정 블록 선별 주입 + 장소 블록 보완 + dry-run 프롬프트 추출 | ✅ 완료 |
 | **라우트 재구성** | / → 랜딩(SEO), /play → 게임(SPA), api.dimtale.com 고정 터널 | ✅ 완료 |
+| **퀘스트 밸런싱** | Fact 이벤트 11개 추가 + NPC ID 정규화 + P0~P5 매칭 개선 (SitGen 바이패스, weight 부스트, PARTIAL 50%, 밸런스 config 외부화, FREE 힌트) | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
