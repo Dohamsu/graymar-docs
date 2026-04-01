@@ -1,0 +1,65 @@
+[
+  {
+    "traitId": "BATTLE_MEMORY",
+    "name": "전장의 기억",
+    "icon": "🗡️",
+    "description": "오래된 상처가 기억을 되살린다. 위기 앞에서 몸이 먼저 반응한다.",
+    "effects": {
+      "actionBonuses": { "FIGHT": 1, "THREATEN": 1 },
+      "maxHpBonus": 10
+    }
+  },
+  {
+    "traitId": "STREET_SENSE",
+    "name": "거리의 촉",
+    "icon": "🕵️",
+    "description": "뒷골목에서 배운 감각. 위험과 기회를 코로 맡는다.",
+    "effects": {
+      "actionBonuses": { "SNEAK": 1, "STEAL": 1, "OBSERVE": 1 },
+      "goldBonus": 20
+    }
+  },
+  {
+    "traitId": "SILVER_TONGUE",
+    "name": "타고난 언변",
+    "icon": "🗣️",
+    "description": "말 한마디로 적을 친구로, 친구를 도구로 만든다.",
+    "effects": {
+      "actionBonuses": { "PERSUADE": 1, "BRIBE": 1 },
+      "globalTrustBonus": 5
+    }
+  },
+  {
+    "traitId": "GAMBLER_LUCK",
+    "name": "도박꾼의 운",
+    "icon": "🎲",
+    "description": "질 때까지는 이기고 있다. 최악의 결과를 피하지만, 최고의 순간도 없다.",
+    "effects": {
+      "failToPartialChance": 50,
+      "criticalDisabled": true,
+      "goldBonus": 30
+    }
+  },
+  {
+    "traitId": "BLOOD_OATH",
+    "name": "피의 맹세",
+    "icon": "🩸",
+    "description": "고통이 힘이 된다. 피를 흘릴수록 강해진다.",
+    "effects": {
+      "lowHpBonus": { "threshold50": 2, "threshold25": 1 },
+      "maxHpPenalty": -20,
+      "healingReduction": 0.5
+    }
+  },
+  {
+    "traitId": "NIGHT_CHILD",
+    "name": "밤의 아이",
+    "icon": "🌙",
+    "description": "어둠이 내려앉으면 세상이 달라 보인다.",
+    "effects": {
+      "nightBonus": 2,
+      "dayPenalty": -1,
+      "actionBonuses": { "SNEAK": 1 }
+    }
+  }
+]

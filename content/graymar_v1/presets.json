@@ -198,5 +198,73 @@
       "HELP": 1
     },
     "hp": 105
+  },
+  {
+    "presetId": "FALLEN_NOBLE",
+    "name": "몰락 귀족",
+    "subtitle": "잃어버린 가문의 후예",
+    "description": "한때 그레이마르에서 손꼽히던 가문의 마지막 후예. 가문이 정치적 모략에 휘말려 몰락한 뒤, 이름과 재산을 잃었지만 귀족 사회의 인맥과 사교술은 여전하다.",
+    "playstyleHint": "최고 카리스마와 초기 자금. 설득과 정치로 모든 것을 해결하는 사교가.",
+    "protagonistTheme": "몰락 귀족 가문의 후예 — 한때 그레이마르에서 손꼽히던 가문이 정치적 모략에 휘말려 멸문당했다. 이름과 재산은 잃었지만, 귀족 사회의 예절과 인맥, 그리고 사람의 마음을 읽는 눈은 여전하다. 가문 인장 반지만이 과거의 유일한 증거다.",
+    "prologueHook": "당신의 가문 문장을 본 적이 있소. 한때 제법 이름값을 했지... 그 연줄이 아직 살아있다면 내게 필요한 것을 찾을 수 있을지 모르오.",
+    "stats": {
+      "MaxHP": 85,
+      "MaxStamina": 6,
+      "str": 5,
+      "dex": 5,
+      "wit": 10,
+      "con": 7,
+      "per": 8,
+      "cha": 16
+    },
+    "startingGold": 80,
+    "startingItems": [
+      { "itemId": "ITEM_MINOR_HEALING", "qty": 1 },
+      { "itemId": "ITEM_STAMINA_TONIC", "qty": 1 }
+    ],
+    "npcPostureOverrides": {
+      "NPC_LORD_VANCE": { "posture": "FRIENDLY", "trustDelta": 15 },
+      "NPC_DAME_ISOLDE": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_BG_NOBLE_MAID": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_BG_BUTLER": { "posture": "FRIENDLY", "trustDelta": 5 },
+      "NPC_RAT_KING": { "posture": "HOSTILE", "trustDelta": -10 }
+    },
+    "actionBonuses": {
+      "PERSUADE": 1,
+      "TRADE": 1
+    }
+  },
+  {
+    "presetId": "GLADIATOR",
+    "name": "떠돌이 검투사",
+    "subtitle": "투기장의 생존자",
+    "description": "이름 없는 투기장에서 피로 이름을 새긴 전사. 관중의 환호가 사라진 뒤에도 싸우는 것만이 삶의 방식이다. 생각보다 주먹이 먼저 나간다.",
+    "playstyleHint": "최고 전투력(힘+민첩). 조사와 관찰은 약하지만 싸움에서는 무적.",
+    "protagonistTheme": "투기장 출신 검투사 — 변경의 불법 투기장에서 수십 번의 생사를 넘겼다. 관중의 환호가 사라진 뒤, 그레이마르에 흘러들어와 용역으로 생계를 잇고 있다. 몸에 새겨진 무수한 상처가 경력 증명서다.",
+    "prologueHook": "투기장에서 당신이 싸우는 걸 봤소. 죽을 뻔한 놈이 웃으며 일어서더군... 그런 배짱이 필요하오. 장부를 찾아야 하는데, 방해하는 자들이 만만치 않소.",
+    "stats": {
+      "MaxHP": 110,
+      "MaxStamina": 6,
+      "str": 14,
+      "dex": 12,
+      "wit": 4,
+      "con": 10,
+      "per": 4,
+      "cha": 6
+    },
+    "startingGold": 20,
+    "startingItems": [
+      { "itemId": "ITEM_MINOR_HEALING", "qty": 3 }
+    ],
+    "npcPostureOverrides": {
+      "NPC_HARLUN": { "posture": "FRIENDLY", "trustDelta": 15 },
+      "NPC_GUARD_FELIX": { "posture": "FRIENDLY", "trustDelta": 10 },
+      "NPC_MAIREL": { "posture": "HOSTILE", "trustDelta": -5 },
+      "NPC_BG_ARMORER": { "posture": "FRIENDLY", "trustDelta": 5 }
+    },
+    "actionBonuses": {
+      "FIGHT": 1,
+      "OBSERVE": 1
+    }
   }
 ]
