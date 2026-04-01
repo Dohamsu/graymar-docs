@@ -129,7 +129,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | common/ | - | Guards, Filters, Pipes, Decorators |
 | auth/ | 1 | JWT 인증 (register/login) |
 | db/ | - | Drizzle ORM (11 tables, 35 타입 파일) |
-| content/ | 1 | 게임 콘텐츠 로더 (graymar_v1 JSON 22개) |
+| content/ | 1 | 게임 콘텐츠 로더 (graymar_v1 JSON 23개, traits.json 포함) |
 | engine/rng,stats,status | 3 | RNG, 스탯 계산, 상태효과 |
 | engine/combat | 4 | Hit, Damage, EnemyAI, CombatService |
 | engine/input | 3 | RuleParser → Policy → ActionPlan |
@@ -139,6 +139,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | runs/ | 1 | RUN 생성/조회 |
 | turns/ | 1 | 턴 제출/조회 |
 | llm/ | 8 | LLM Worker, Context Builder, Token Budget, Prompt |
+| portrait/ | 1 | AI 초상화 생성 (Gemini, rate limit) |
 | bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
 
 ### HUB 엔진 6 서브시스템 + 퀘스트 (37 services)
@@ -223,6 +224,8 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 28. **퀘스트 자동 전환** — discoveredQuestFacts 누적 → quest.json stateTransitions 조건 충족 시 questState 자동 전환 (S0→S1→...→S5).
 29. **questFactTrigger SitGen 바이패스** — 미발견 fact 이벤트가 있는 장소에서 매 턴 이벤트 매칭 허용. 이때 SituationGenerator를 건너뛰고 EventDirector로 직행하여 fact 이벤트 매칭을 보장.
 30. **밸런스 상수 외부화** — SitGen 확률, PARTIAL 발견률, weight 부스트 등 핵심 밸런스 상수는 `quest-balance.config.ts`에서 관리. 코드 내 하드코딩 금지.
+31. **보너스 스탯 합계 = 6** — 캐릭터 생성 시 bonusStats 각 값 0~6, 합계 정확히 6. 서버에서 검증.
+32. **특성 런타임 효과** — GAMBLER_LUCK(FAIL→50%PARTIAL, 크리티컬 비활성), BLOOD_OATH(저HP 보너스 +2/+3, 치료 50%↓), NIGHT_CHILD(밤+2, 낮-1). traitEffects는 runState에 저장, resolve/combat에서 참조.
 
 ## Canonical Enums (정본)
 
@@ -262,7 +265,8 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | ResolveOutcome | `resolve-result.ts` | SUCCESS, PARTIAL, FAIL |
 | Client Phase | `game-store.ts` | TITLE, LOADING, HUB, LOCATION, COMBAT, NODE_TRANSITION, RUN_ENDED, ERROR |
 | StoryMessageType | `game.ts` | SYSTEM, NARRATOR, PLAYER, CHOICE, RESOLVE |
-| CharacterPreset | `presets.json` | DOCKWORKER, DESERTER, SMUGGLER, HERBALIST |
+| CharacterPreset | `presets.json` | DOCKWORKER, DESERTER, SMUGGLER, HERBALIST, FALLEN_NOBLE, GLADIATOR |
+| CharacterTrait | `traits.json` | BATTLE_MEMORY, STREET_SENSE, SILVER_TONGUE, GAMBLER_LUCK, BLOOD_OATH, NIGHT_CHILD |
 | NpcTier | `content.types.ts` | CORE, SUB, BACKGROUND |
 | FactCategory | `world-fact.ts` | PLAYER_ACTION, NPC_ACTION, WORLD_CHANGE, DISCOVERY, RELATIONSHIP |
 | SituationTrigger | `situation-generator.service.ts` | LANDMARK, INCIDENT_DRIVEN, NPC_ACTIVITY, NPC_CONFLICT, ENVIRONMENTAL, CONSEQUENCE, DISCOVERY, OPPORTUNITY, ROUTINE |
@@ -285,6 +289,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | GET | `/v1/bug-reports` | 버그 리포트 목록 조회 (페이징) |
 | GET | `/v1/bug-reports/:id` | 버그 리포트 상세 조회 |
 | PATCH | `/v1/bug-reports/:id` | 버그 리포트 상태 변경 (resolved 등) |
+| POST | `/v1/portrait/generate` | AI 초상화 생성 (presetId, gender, appearanceDescription) |
 | GET | `/v1/version` | 서버 버전 조회 (git hash, startedAt, uptime) |
 
 ## Environment Variables (`server/.env`)
@@ -335,6 +340,7 @@ LLM_FALLBACK_PROVIDER=mock
 | **프롬프트 최적화 v2** | NPC 감정 블록 선별 주입 + 장소 블록 보완 + dry-run 프롬프트 추출 | ✅ 완료 |
 | **라우트 재구성** | / → 랜딩(SEO), /play → 게임(SPA), api.dimtale.com 고정 터널 | ✅ 완료 |
 | **퀘스트 밸런싱** | Fact 이벤트 11개 추가 + NPC ID 정규화 + P0~P5 매칭 개선 (SitGen 바이패스, weight 부스트, PARTIAL 50%, 밸런스 config 외부화, FREE 힌트) | ✅ 완료 |
+| **캐릭터 생성** | 프리셋 6종(+몰락귀족/검투사) + 특성 6종 + 이름 입력 + AI 초상화 생성 + 보너스 스탯 +6 배분 + 6단계 UI + 특성 런타임 효과 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
