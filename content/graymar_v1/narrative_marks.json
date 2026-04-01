@@ -57,7 +57,7 @@
       "description": "평화를 이끈 중재자",
       "conditions": {
         "incidentOutcome": { "incidentId": "INC_LABOR_STRIKE", "outcome": "CONTAINED" },
-        "npcEmotional": { "npcId": "NPC_YOON_HAMIN", "axis": "respect", "op": "gt", "value": 30 }
+        "npcEmotional": { "npcId": "NPC_HARLUN", "axis": "respect", "op": "gt", "value": 30 }
       },
       "contextTemplate": "갈등을 중재하여 평화를 이끌어냈다"
     },

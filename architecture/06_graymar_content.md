@@ -261,9 +261,9 @@ NPC는 **CORE / SUB / BACKGROUND** 3계층으로 구분된다.
 
 | npcId | 이름 | unknownAlias | 역할 | 세력 | basePosture |
 |-------|------|-------------|------|------|------------|
-| NPC_YOON_HAMIN | 하를런 보스 | 투박한 노동자 | 부두 노동 형제단 연락책 | LABOR_GUILD | FRIENDLY |
-| NPC_KANG_CHAERIN | 마이렐 단 경 | 권위적인 야간 경비 책임자 | 수비대 야간 책임자 (핵심 악역) | CITY_GUARD | CALCULATING |
-| NPC_SEO_DOYUN | 에드릭 베일 | 날카로운 눈매의 회계사 | 은장부 상단 회계 담당 | MERCHANT_CONSORTIUM | CAUTIOUS |
+| NPC_HARLUN | 하를런 보스 | 투박한 노동자 | 부두 노동 형제단 연락책 | LABOR_GUILD | FRIENDLY |
+| NPC_MAIREL | 마이렐 단 경 | 권위적인 야간 경비 책임자 | 수비대 야간 책임자 (핵심 악역) | CITY_GUARD | CALCULATING |
+| NPC_EDRIC_VEIL | 에드릭 베일 | 날카로운 눈매의 회계사 | 은장부 상단 회계 담당 | MERCHANT_CONSORTIUM | CAUTIOUS |
 | NPC_INFO_BROKER | 쉐도우 | 후드를 깊이 쓴 정보상 | 뒷골목 정보 브로커 | 무소속 | CALCULATING |
 | NPC_GUARD_CAPTAIN | 벨론 대위 | 위풍당당한 수비대 장교 | 수비대 대위, 내부 부패 진압 의지 | CITY_GUARD | CAUTIOUS |
 
@@ -271,7 +271,7 @@ NPC는 **CORE / SUB / BACKGROUND** 3계층으로 구분된다.
 
 | npcId | 이름 | unknownAlias | 역할 | 세력 | basePosture |
 |-------|------|-------------|------|------|------------|
-| NPC_BAEK_SEUNGHO | 토브렌 하위크 | 수상한 창고 관리인 | 동부 부두 창고 관리자 | 무소속 | CAUTIOUS |
+| NPC_TOBREN | 토브렌 하위크 | 수상한 창고 관리인 | 동부 부두 창고 관리자 | 무소속 | CAUTIOUS |
 | NPC_MOON_SEA | 라이라 케스텔 | 조용한 문서 실무자 | 상단 문서실 암호 메모 실무자 | MERCHANT_CONSORTIUM | FEARFUL |
 | NPC_MIRELA | 미렐라 | 약초 향이 나는 노점상 | 시장 약초 노점상 | MERCHANT_CONSORTIUM | FRIENDLY |
 | NPC_RENNICK | 레닉 | 그림자 속 얼굴 | 정보 브로커, 경비대 연줄 보유 | 무소속 | CAUTIOUS |

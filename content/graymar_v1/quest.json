@@ -55,37 +55,37 @@
     "FACT_LEDGER_EXISTS": {
       "description": "공물 장부가 존재하며 도난당했다는 사실",
       "discoveryLocations": ["LOC_MARKET", "LOC_HARBOR"],
-      "primarySources": ["NPC_SEO_DOYUN"],
+      "primarySources": ["NPC_EDRIC_VEIL"],
       "stage": "S0→S1"
     },
     "FACT_WAGE_FRAUD_PATTERN": {
       "description": "장부의 임금 지급 내역과 실제 출납이 맞지 않는 패턴",
       "discoveryLocations": ["LOC_MARKET", "LOC_HARBOR"],
-      "primarySources": ["NPC_SEO_DOYUN", "NPC_YOON_HAMIN", "NPC_MIRELA"],
+      "primarySources": ["NPC_EDRIC_VEIL", "NPC_HARLUN", "NPC_MIRELA"],
       "stage": "S1→S2"
     },
     "FACT_TAMPERED_LOGS": {
       "description": "장부의 특정 구간(셋째 칸 넷째 줄)에 조작 흔적 — 다른 필체, 잉크 차이",
       "discoveryLocations": ["LOC_MARKET", "LOC_GUARD"],
-      "primarySources": ["NPC_SEO_DOYUN", "NPC_MOON_SEA"],
+      "primarySources": ["NPC_EDRIC_VEIL", "NPC_MOON_SEA"],
       "stage": "S1→S2"
     },
     "FACT_INSIDE_JOB": {
       "description": "장부 도난이 외부가 아닌 내부자 소행 — 문서 접근 권한자 3명 중 하나",
       "discoveryLocations": ["LOC_GUARD", "LOC_MARKET", "LOC_UPPER"],
-      "primarySources": ["NPC_SEO_DOYUN", "NPC_KANG_CHAERIN", "NPC_MOON_SEA", "NPC_LORD_VANCE", "NPC_DAME_ISOLDE"],
+      "primarySources": ["NPC_EDRIC_VEIL", "NPC_MAIREL", "NPC_MOON_SEA", "NPC_LORD_VANCE", "NPC_DAME_ISOLDE"],
       "stage": "S2→S3"
     },
     "FACT_ROUTE_TO_EAST_DOCK": {
       "description": "동쪽 부두 3번 창고에서 야간 비밀 하역이 이루어진다",
       "discoveryLocations": ["LOC_HARBOR", "LOC_WAREHOUSE"],
-      "primarySources": ["NPC_YOON_HAMIN", "NPC_BAEK_SEUNGHO", "NPC_SERA_DOCKS", "NPC_RAT_KING"],
+      "primarySources": ["NPC_HARLUN", "NPC_TOBREN", "NPC_SERA_DOCKS", "NPC_RAT_KING"],
       "stage": "S3→S4"
     },
     "FACT_SMUGGLE_ROUTE_GUILD": {
       "description": "밀수품이 길드 공식 화물에 섞여 반입되며, 시장으로 유통되는 경로",
       "discoveryLocations": ["LOC_HARBOR", "LOC_MARKET", "LOC_WAREHOUSE"],
-      "primarySources": ["NPC_YOON_HAMIN", "NPC_BAEK_SEUNGHO", "NPC_SERA_DOCKS", "NPC_RAT_KING"],
+      "primarySources": ["NPC_HARLUN", "NPC_TOBREN", "NPC_SERA_DOCKS", "NPC_RAT_KING"],
       "stage": "S3→S4"
     },
     "FACT_MAIREL_GUILD_EVIDENCE": {
@@ -97,13 +97,13 @@
     "FACT_OFFICIAL_INQUIRY": {
       "description": "상부/왕실에서 비공식 조사가 시작되었다는 정보",
       "discoveryLocations": ["LOC_GUARD", "LOC_UPPER"],
-      "primarySources": ["NPC_KANG_CHAERIN", "NPC_CAPTAIN_BREN", "NPC_GUARD_CAPTAIN", "NPC_LORD_VANCE"],
+      "primarySources": ["NPC_MAIREL", "NPC_CAPTAIN_BREN", "NPC_GUARD_CAPTAIN", "NPC_LORD_VANCE"],
       "stage": "S4→S5"
     },
     "FACT_MAIREL_GUARD_EVIDENCE": {
       "description": "마이렐의 야간 순찰 보고서 누락, 무기고 자물쇠 무단 교체 등 경비대 내부 증거",
       "discoveryLocations": ["LOC_GUARD"],
-      "primarySources": ["NPC_KANG_CHAERIN", "NPC_CAPTAIN_BREN", "NPC_GUARD_CAPTAIN", "NPC_GUARD_FELIX"],
+      "primarySources": ["NPC_MAIREL", "NPC_CAPTAIN_BREN", "NPC_GUARD_CAPTAIN", "NPC_GUARD_FELIX"],
       "stage": "S4→S5"
     },
     "FACT_SHADOW_INTEL": {
@@ -125,8 +125,8 @@
       "routeId": "EXPOSE_CORRUPTION",
       "label": "부패 폭로",
       "description": "진실을 밝혀 정의를 구현한다. 부패한 자들이 심판받지만, 도시의 기존 질서가 흔들리고 당신도 적을 만든다.",
-      "keyAllies": ["NPC_CAPTAIN_BREN", "NPC_GUARD_FELIX", "NPC_YOON_HAMIN"],
-      "keyEnemies": ["NPC_LORD_VANCE", "NPC_KANG_CHAERIN"],
+      "keyAllies": ["NPC_CAPTAIN_BREN", "NPC_GUARD_FELIX", "NPC_HARLUN"],
+      "keyEnemies": ["NPC_LORD_VANCE", "NPC_MAIREL"],
       "steps": [
         {
           "step": 1,
@@ -191,8 +191,8 @@
       "routeId": "ALLY_GUARD",
       "label": "경비대 동맹",
       "description": "경비대와 협력하여 밀수 조직을 소탕하고 질서를 회복한다. 안정되지만 근본적 부패는 남고, 경비대에 빚을 진다.",
-      "keyAllies": ["NPC_KANG_CHAERIN", "NPC_GUARD_CAPTAIN", "NPC_GUARD_FELIX"],
-      "keyEnemies": ["NPC_RAT_KING", "NPC_YOON_HAMIN"],
+      "keyAllies": ["NPC_MAIREL", "NPC_GUARD_CAPTAIN", "NPC_GUARD_FELIX"],
+      "keyEnemies": ["NPC_RAT_KING", "NPC_HARLUN"],
       "steps": [
         {
           "step": 1,

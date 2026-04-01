@@ -934,7 +934,7 @@ node_instances INSERT (nodeIndex=4, graphNodeId="guild_rest", type=REST)
 | 항목 | 길드 루트 | 경비대 루트 | 독자 루트 |
 |------|----------|-----------|----------|
 | **톤** | 거칠고 의리있는 | 공식적, 절차적 | 고독, 위험, 잠행 |
-| **핵심 NPC** | 하를런 (NPC_YOON_HAMIN) | 라이라 (NPC_MOON_SEA) + 벨론 대위 (NPC_GUARD_CAPTAIN) | 쉐도우 (NPC_INFO_BROKER) |
+| **핵심 NPC** | 하를런 (NPC_HARLUN) | 라이라 (NPC_MOON_SEA) + 벨론 대위 (NPC_GUARD_CAPTAIN) | 쉐도우 (NPC_INFO_BROKER) |
 | **보스** | 마이렐 경 + 수비대원 (HP 200) | 마이렐 경 + 충성 부하 (HP 180) | 토브렌 + 마이렐 연합 (HP 175) |
 | **난이도** | 중간 (3적 일반전 + 2적 보스전) | 낮음~중간 (2적 일반전 + 2적 보스전) | 높음 (2적 고스탯 일반전 + 2적 보스전) |
 | **보상** | 보통 골드, 길드 인장 | 저렴한 보급소, 허가증 | 높은 골드, 밀수 지도, 고가 상점 |

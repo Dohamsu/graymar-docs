@@ -21,7 +21,7 @@
     "matchPolicy": "SUPPORT",
     "payload": {
       "sceneFrame": "시장 한구석에서 과일 장수와 생선 장수가 머리를 맞대고 속삭이고 있다. 경비대 야간 책임자가 항만 세금을 두 번 징수하고 있다는 이야기가 흘러나온다. 장수들의 목소리에는 분노와 두려움이 뒤섞여 있다.",
-      "primaryNpcId": "NPC_KANG_CHAERIN",
+      "primaryNpcId": "NPC_MAIREL",
       "choices": [
         {
           "id": "mkt_rumor_investigate",
@@ -86,13 +86,13 @@
     "arcRouteTag": "EXPOSE_CORRUPTION",
     "commitmentDeltaOnSuccess": 10,
     "payload": {
-      "sceneFrame": "상인 길드 연합의 회계 담당 {npc:NPC_SEO_DOYUN}이 좌판 뒤편 창고에서 장부를 검토하고 있다. 그는 긴장한 기색으로 주변을 살피다가 당신의 시선을 의식한다. 그의 탁자 위에는 두 종류의 장부가 나란히 놓여 있다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "sceneFrame": "상인 길드 연합의 회계 담당 {npc:NPC_EDRIC_VEIL}이 좌판 뒤편 창고에서 장부를 검토하고 있다. 그는 긴장한 기색으로 주변을 살피다가 당신의 시선을 의식한다. 그의 탁자 위에는 두 종류의 장부가 나란히 놓여 있다.",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "mkt_faction_persuade",
           "label": "정직한 장부 관리가 길드에도 이롭다고 설득한다",
-          "hint": "{npc:NPC_SEO_DOYUN}의 신뢰를 얻을 수 있다",
+          "hint": "{npc:NPC_EDRIC_VEIL}의 신뢰를 얻을 수 있다",
           "affordance": "PERSUADE",
           "riskLevel": 2
         },
@@ -112,7 +112,7 @@
         },
         {
           "id": "mkt_faction_observe",
-          "label": "{npc:NPC_SEO_DOYUN}의 행동 패턴을 관찰한다",
+          "label": "{npc:NPC_EDRIC_VEIL}의 행동 패턴을 관찰한다",
           "hint": "장부 접근 시간대를 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -464,7 +464,7 @@
     "commitmentDeltaOnSuccess": 20,
     "payload": {
       "sceneFrame": "병영 문서고의 문이 열려 있다. 안에서 촛불이 흔들리고, 누군가 서둘러 서류를 정리하는 소리가 들린다. 잉크 냄새가 강하게 풍기는 것으로 보아, 문서가 급히 수정되고 있는 것 같다. 이 기회를 놓치면 증거가 영영 사라질 수 있다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "grd_arc_investigate",
@@ -531,8 +531,8 @@
     "friction": 3,
     "matchPolicy": "BLOCK",
     "payload": {
-      "sceneFrame": "경비대 지구를 빠져나가려는 순간, 골목 양쪽에서 매수된 수비대원들이 길을 막는다. {npc:NPC_KANG_CHAERIN}의 명을 받은 자들이다. 선두의 병사가 검을 뽑으며 말한다. '여기서 조용히 끝내자. 대위에게 보고할 일은 없을 거다.'",
-      "primaryNpcId": "NPC_KANG_CHAERIN",
+      "sceneFrame": "경비대 지구를 빠져나가려는 순간, 골목 양쪽에서 매수된 수비대원들이 길을 막는다. {npc:NPC_MAIREL}의 명을 받은 자들이다. 선두의 병사가 검을 뽑으며 말한다. '여기서 조용히 끝내자. 대위에게 보고할 일은 없을 거다.'",
+      "primaryNpcId": "NPC_MAIREL",
       "choices": [
         {
           "id": "grd_amb_fight",
@@ -699,7 +699,7 @@
     "matchPolicy": "BLOCK",
     "payload": {
       "sceneFrame": "부두의 좁은 골목을 지나는데, 화물 상자 뒤에서 그림자들이 움직인다. 부두 깡패 셋이 길을 막아선다. 선두의 사내가 곤봉을 손바닥에 탁탁 치며 말한다. '누가 우리 구역에서 코를 들이미는지 알아보라고 했거든.'",
-      "primaryNpcId": "NPC_YOON_HAMIN",
+      "primaryNpcId": "NPC_HARLUN",
       "choices": [
         {
           "id": "hbr_amb_fight",
@@ -717,7 +717,7 @@
         },
         {
           "id": "hbr_amb_threaten",
-          "label": "{npc:NPC_YOON_HAMIN}의 이름을 들먹인다",
+          "label": "{npc:NPC_HARLUN}의 이름을 들먹인다",
           "hint": "노동 길드 평판이 충분하면 물러선다",
           "affordance": "THREATEN",
           "riskLevel": 2
@@ -768,8 +768,8 @@
     "arcRouteTag": "PROFIT_FROM_CHAOS",
     "commitmentDeltaOnSuccess": 20,
     "payload": {
-      "sceneFrame": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이 지워진 상자를 서둘러 내리고, {npc:NPC_BAEK_SEUNGHO}가 직접 검수하고 있다. 그의 장부에 밀수품 목록이 적혀 있을 것이다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "sceneFrame": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이 지워진 상자를 서둘러 내리고, {npc:NPC_TOBREN}가 직접 검수하고 있다. 그의 장부에 밀수품 목록이 적혀 있을 것이다.",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "hbr_arc_investigate",
@@ -780,7 +780,7 @@
         },
         {
           "id": "hbr_arc_sneak",
-          "label": "어둠을 이용해 {npc:NPC_BAEK_SEUNGHO}의 장부를 훔쳐본다",
+          "label": "어둠을 이용해 {npc:NPC_TOBREN}의 장부를 훔쳐본다",
           "hint": "밀수품 목록이라는 결정적 증거를 확보한다",
           "affordance": "SNEAK",
           "riskLevel": 3
@@ -1008,8 +1008,8 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "빈민가 안쪽의 폐건물. {npc:NPC_YOON_HAMIN}가 노동 길드의 비공식 모임을 이끌고 있다. 억울하게 임금을 떼인 인부들이 분노에 찬 목소리로 상황을 토로한다. {npc:NPC_YOON_HAMIN}이 당신을 보더니 고개를 끄덕이며 자리를 권한다.",
-      "primaryNpcId": "NPC_YOON_HAMIN",
+      "sceneFrame": "빈민가 안쪽의 폐건물. {npc:NPC_HARLUN}가 노동 길드의 비공식 모임을 이끌고 있다. 억울하게 임금을 떼인 인부들이 분노에 찬 목소리로 상황을 토로한다. {npc:NPC_HARLUN}이 당신을 보더니 고개를 끄덕이며 자리를 권한다.",
+      "primaryNpcId": "NPC_HARLUN",
       "choices": [
         {
           "id": "slm_fac_persuade",
@@ -1256,7 +1256,7 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "야시장 한쪽의 비밀 경매장. 등불이 어둡게 켜진 천막 안에서 속삭이는 목소리가 들린다. 경비대 내부 문서의 사본이 경매에 올랐다는 소문이다. 이 문서가 있으면 {npc:NPC_KANG_CHAERIN}의 비리를 입증할 수 있을지 모른다.",
+      "sceneFrame": "야시장 한쪽의 비밀 경매장. 등불이 어둡게 켜진 천막 안에서 속삭이는 목소리가 들린다. 경비대 내부 문서의 사본이 경매에 올랐다는 소문이다. 이 문서가 있으면 {npc:NPC_MAIREL}의 비리를 입증할 수 있을지 모른다.",
       "primaryNpcId": null,
       "choices": [
         {
@@ -1318,8 +1318,8 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "부두의 하역 현장. 노동 길드 인부들이 쉬는 시간에 모여 수군거린다. 최근 동쪽 부두의 하역량이 급증했는데, 공식 기록에는 반영되지 않았다는 것이다. 한 인부가 창고 관리자 {npc:NPC_BAEK_SEUNGHO}을 언급하며 고개를 젓는다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "sceneFrame": "부두의 하역 현장. 노동 길드 인부들이 쉬는 시간에 모여 수군거린다. 최근 동쪽 부두의 하역량이 급증했는데, 공식 기록에는 반영되지 않았다는 것이다. 한 인부가 창고 관리자 {npc:NPC_TOBREN}을 언급하며 고개를 젓는다.",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "hbr_rumor_g_investigate",
@@ -1338,7 +1338,7 @@
         {
           "id": "hbr_rumor_g_observe",
           "label": "하역 현장을 직접 관찰한다",
-          "hint": "{npc:NPC_BAEK_SEUNGHO}의 행동 패턴을 파악한다",
+          "hint": "{npc:NPC_TOBREN}의 행동 패턴을 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
         }
@@ -1376,8 +1376,8 @@
     "friction": 1,
     "matchPolicy": "SUPPORT",
     "payload": {
-      "sceneFrame": "빈민가의 어둠 속에서 한 거지가 다가온다. 자세히 보니 전직 수비대원이다. {npc:NPC_KANG_CHAERIN}의 비리를 알고 쫓겨났다며, 빵 한 조각만 주면 아는 것을 말해주겠다고 한다. 그의 눈에는 복수심과 절박함이 교차한다.",
-      "primaryNpcId": "NPC_KANG_CHAERIN",
+      "sceneFrame": "빈민가의 어둠 속에서 한 거지가 다가온다. 자세히 보니 전직 수비대원이다. {npc:NPC_MAIREL}의 비리를 알고 쫓겨났다며, 빵 한 조각만 주면 아는 것을 말해주겠다고 한다. 그의 눈에는 복수심과 절박함이 교차한다.",
+      "primaryNpcId": "NPC_MAIREL",
       "choices": [
         {
           "id": "slm_rumor_n_investigate",
@@ -1441,7 +1441,7 @@
     "arcRouteTag": "ALLY_GUARD",
     "commitmentDeltaOnSuccess": 25,
     "payload": {
-      "sceneFrame": "{npc:NPC_GUARD_CAPTAIN}가 비밀리에 확보한 {npc:NPC_KANG_CHAERIN}의 개인 집무실 열쇠를 건넨다. 집무실 금고 안에 횡령의 결정적 증거인 원본 장부가 있을 것이다. 그러나 {npc:NPC_KANG_CHAERIN}의 충성 부하가 야간에도 집무실을 순찰하고 있어 위험하다.",
+      "sceneFrame": "{npc:NPC_GUARD_CAPTAIN}가 비밀리에 확보한 {npc:NPC_MAIREL}의 개인 집무실 열쇠를 건넨다. 집무실 금고 안에 횡령의 결정적 증거인 원본 장부가 있을 것이다. 그러나 {npc:NPC_MAIREL}의 충성 부하가 야간에도 집무실을 순찰하고 있어 위험하다.",
       "primaryNpcId": "NPC_GUARD_CAPTAIN",
       "choices": [
         {
@@ -1672,7 +1672,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "시장 뒷골목에 표식 없는 나무 상자가 방치되어 있다. 상자 한쪽에 항만 하역 인부의 분필 번호가 적혀 있고, 잠금장치가 반쯤 풀려 있다. 누군가 급히 내려놓고 간 듯하다. 주변에 사람은 없다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "mkt_opp_cargo_check",
@@ -2177,7 +2177,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "대형 화물선의 하역 작업이 한창이다. 인부들이 줄지어 상자를 나르는 가운데, 유독 조심스럽게 다루는 상자 하나가 눈에 띈다. 빨간 인장이 찍혀 있고, 감독관이 직접 지시하며 별도 구역으로 옮기게 한다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "hbr_enc_load_watch",
@@ -2563,7 +2563,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "골목 구석에 얼굴이 부은 남자가 벽에 기대어 있다. 노동 길드 완장이 찢어져 있고, 부두 깡패에게 맞은 것이 분명하다. 그는 고통스러운 표정으로 도움을 요청하는 눈빛을 보낸다.",
-      "primaryNpcId": "NPC_YOON_HAMIN",
+      "primaryNpcId": "NPC_HARLUN",
       "choices": [
         {
           "id": "slm_opp_fav_help",
@@ -2761,13 +2761,15 @@
     "affordances": [
       "INVESTIGATE",
       "SEARCH",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK",
+      "PERSUADE"
     ],
     "friction": 1,
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "시장 뒷골목 배수구 근처에서 반쯤 젖은 양피지 조각이 발견된다. 잉크가 번져 읽기 어렵지만, 날짜와 금액이 적힌 표가 보인다. 상인 길드의 내부 문서처럼 보이는데, 누군가 급히 버린 것 같다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "mkt_dsc1_read",
@@ -2888,7 +2890,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "시장 뒤편 골목에서 깨진 유리병 조각 사이에 작은 열쇠가 떨어져 있다. 열쇠에 상인 길드의 문양이 각인되어 있고, 최근에 떨어진 것인지 먼지가 거의 없다. 근처 건물의 쪽문이 눈에 들어온다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "mkt_dsc3_try",
@@ -2944,8 +2946,8 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "{npc:NPC_SEO_DOYUN}이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 안색이 어둡고, 차를 마시는 손이 미세하게 떨린다. 그가 고개를 들어 당신을 발견하면 잠시 망설이다가 건너편 자리를 가리킨다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "sceneFrame": "{npc:NPC_EDRIC_VEIL}이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 안색이 어둡고, 차를 마시는 손이 미세하게 떨린다. 그가 고개를 들어 당신을 발견하면 잠시 망설이다가 건너편 자리를 가리킨다.",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "mkt_int1_talk",
@@ -2971,7 +2973,7 @@
       ],
       "effectsOnEnter": [],
       "tags": [
-        "NPC_SEO_DOYUN",
+        "NPC_EDRIC_VEIL",
         "MERCHANT_GUILD",
         "CONVERSATION"
       ]
@@ -3115,7 +3117,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "시장 뒷골목에서 건달 둘이 노점상을 위협하고 있다. '보호비'를 내라는 거친 요구에 상인이 벌벌 떨고 있다. 건달 중 하나가 좌판의 물건을 바닥에 쓸어버리며 으름장을 놓는다.",
-      "primaryNpcId": "NPC_YOON_HAMIN",
+      "primaryNpcId": "NPC_HARLUN",
       "choices": [
         {
           "id": "mkt_cft1_fight",
@@ -3614,12 +3616,12 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "{npc:NPC_SEO_DOYUN}이 경비대 지구 입구에서 상인 길드 물자 납품을 감독하고 있다. 장부를 확인하며 이따금 경비병과 짧은 대화를 나눈다. 길드와 경비대 사이의 미묘한 관계가 그의 표정에서 읽힌다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "sceneFrame": "{npc:NPC_EDRIC_VEIL}이 경비대 지구 입구에서 상인 길드 물자 납품을 감독하고 있다. 장부를 확인하며 이따금 경비병과 짧은 대화를 나눈다. 길드와 경비대 사이의 미묘한 관계가 그의 표정에서 읽힌다.",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "grd_int2_approach",
-          "label": "{npc:NPC_SEO_DOYUN}에게 다가가 말을 건다",
+          "label": "{npc:NPC_EDRIC_VEIL}에게 다가가 말을 건다",
           "hint": "길드의 경비대 납품 사정을 들을 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
@@ -3633,7 +3635,7 @@
         },
         {
           "id": "grd_int2_watch",
-          "label": "{npc:NPC_SEO_DOYUN}과 경비병의 대화를 관찰한다",
+          "label": "{npc:NPC_EDRIC_VEIL}과 경비병의 대화를 관찰한다",
           "hint": "길드-경비대 관계의 실체를 파악한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -3790,7 +3792,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "경비대 지구를 빠져나가려는데 좁은 통로에서 매복이 기다리고 있다. 사복 차림의 경비병 셋이 길을 막는다. '너무 많은 걸 알게 됐어. 여기서 조용히 처리하지.' 이들의 움직임에서 정규 훈련의 흔적이 보인다.",
-      "primaryNpcId": "NPC_KANG_CHAERIN",
+      "primaryNpcId": "NPC_MAIREL",
       "choices": [
         {
           "id": "grd_cft2_fight",
@@ -4039,7 +4041,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "창고 구역 뒤편에서 이중 바닥이 있는 화물 상자가 발견된다. 윗칸에는 평범한 곡물이 담겨 있지만, 바닥판 아래 공간에 무언가 더 있었던 흔적이 뚜렷하다. 상자에 찍힌 밀랍 인장이 일부 긁혀 있다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "hbr_dsc1_examine",
@@ -4100,7 +4102,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "부두 근처 버려진 어선의 선실에서 희미한 등불이 새어 나온다. 밤에 누군가 이 배를 사용하고 있는 것이 분명하다. 갑판 위에 신선한 밧줄 자국이 나 있고, 배 주변에 최근 발자국이 찍혀 있다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "hbr_dsc2_board",
@@ -4161,7 +4163,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "부두 등대 아래 바위틈에 방수 가죽으로 감싼 꾸러미가 숨겨져 있다. 꾸러미 위에 분필로 표식이 그려져 있고, 밀물 때 잠기는 위치에 의도적으로 놓여 있다. 밀수 중간 거점으로 보인다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "hbr_dsc3_open",
@@ -4217,12 +4219,12 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "{npc:NPC_YOON_HAMIN}이 하역 작업을 감독하며 인부들에게 지시를 내리고 있다. 커다란 체구에서 나오는 우렁찬 목소리가 부두에 울린다. 잠시 짬이 나자 물통을 집어 들고 땀을 닦는다. 그가 당신을 알아본다.",
-      "primaryNpcId": "NPC_YOON_HAMIN",
+      "sceneFrame": "{npc:NPC_HARLUN}이 하역 작업을 감독하며 인부들에게 지시를 내리고 있다. 커다란 체구에서 나오는 우렁찬 목소리가 부두에 울린다. 잠시 짬이 나자 물통을 집어 들고 땀을 닦는다. 그가 당신을 알아본다.",
+      "primaryNpcId": "NPC_HARLUN",
       "choices": [
         {
           "id": "hbr_int1_greet",
-          "label": "{npc:NPC_YOON_HAMIN}에게 다가가 인사한다",
+          "label": "{npc:NPC_HARLUN}에게 다가가 인사한다",
           "hint": "노동 길드의 최근 상황을 들을 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
@@ -4236,7 +4238,7 @@
         },
         {
           "id": "hbr_int1_watch",
-          "label": "{npc:NPC_YOON_HAMIN}의 작업 방식을 관찰한다",
+          "label": "{npc:NPC_HARLUN}의 작업 방식을 관찰한다",
           "hint": "그의 영향력을 가늠한다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -4274,26 +4276,26 @@
     "friction": 0,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "{npc:NPC_SEO_DOYUN}이 부두 창고 앞에서 화물 목록을 대조하고 있다. 평소의 침착한 모습이지만, 특정 상자들을 확인할 때 미묘하게 긴장하는 것이 보인다. 그는 당신의 접근을 눈치채고 장부를 재빨리 덮는다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "sceneFrame": "{npc:NPC_EDRIC_VEIL}이 부두 창고 앞에서 화물 목록을 대조하고 있다. 평소의 침착한 모습이지만, 특정 상자들을 확인할 때 미묘하게 긴장하는 것이 보인다. 그는 당신의 접근을 눈치채고 장부를 재빨리 덮는다.",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "hbr_int2_ask",
           "label": "무슨 화물인지 물어본다",
-          "hint": "{npc:NPC_SEO_DOYUN}의 반응에서 단서를 얻는다",
+          "hint": "{npc:NPC_EDRIC_VEIL}의 반응에서 단서를 얻는다",
           "affordance": "PERSUADE",
           "riskLevel": 2
         },
         {
           "id": "hbr_int2_chat",
           "label": "가벼운 대화를 나눈다",
-          "hint": "{npc:NPC_SEO_DOYUN}의 경계를 풀 수 있다",
+          "hint": "{npc:NPC_EDRIC_VEIL}의 경계를 풀 수 있다",
           "affordance": "TALK",
           "riskLevel": 1
         },
         {
           "id": "hbr_int2_note",
-          "label": "{npc:NPC_SEO_DOYUN}이 긴장한 상자를 기억해둔다",
+          "label": "{npc:NPC_EDRIC_VEIL}이 긴장한 상자를 기억해둔다",
           "hint": "나중에 추적할 수 있다",
           "affordance": "OBSERVE",
           "riskLevel": 1
@@ -4390,7 +4392,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "부두 구석에서 밀수꾼 둘이 인부 한 명을 벽에 몰아세우고 있다. '입 다물지 않으면 다음엔 바다에 빠지게 될 거야.' 인부의 얼굴이 공포로 하얗게 질려 있다. 밀수꾼 중 하나가 주먹을 쥐었다 폈다 한다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "hbr_cft1_intervene",
@@ -4592,7 +4594,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "폐건물 지하로 내려가는 계단이 발견된다. 계단 입구에 최근 발자국이 찍혀 있고, 벽에 밀수조직의 표식이 분필로 그려져 있다. 지하에서 희미한 불빛이 새어 나오지만, 소리는 들리지 않는다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "slm_dsc1_descend",
@@ -4653,7 +4655,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "빈민가 뒷골목 하수구 격자 아래에서 이상한 소리가 난다. 귀를 기울이면 규칙적인 금속 소리와 물소리가 섞여 들린다. 격자 한쪽이 최근에 열린 흔적이 있고, 주변에 진흙 발자국이 남아 있다.",
-      "primaryNpcId": "NPC_YOON_HAMIN",
+      "primaryNpcId": "NPC_HARLUN",
       "choices": [
         {
           "id": "slm_dsc2_open",
@@ -4713,7 +4715,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "빈민가 한쪽에 버려진 것처럼 보이는 수레 아래서 가죽 서류 가방이 발견된다. 가방 안에는 날짜와 금액이 적힌 쪽지 여러 장이 있다. 내용은 부두 하역비와 '특별 수수료'라고 적힌 항목이다.",
-      "primaryNpcId": "NPC_SEO_DOYUN",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
       "choices": [
         {
           "id": "slm_dsc3_read",
@@ -4952,7 +4954,7 @@
         },
         {
           "id": "slm_cft1_threaten",
-          "label": "{npc:NPC_YOON_HAMIN}의 이름을 대며 위협한다",
+          "label": "{npc:NPC_HARLUN}의 이름을 대며 위협한다",
           "hint": "노동 길드의 영향력을 활용한다",
           "affordance": "THREATEN",
           "riskLevel": 2
@@ -5002,7 +5004,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "빈민가 깊숙한 곳을 지나는데 양쪽 지붕에서 그림자가 움직인다. 위에서 돌멩이가 떨어지며 길이 막히고, 앞뒤에서 칼을 든 자들이 나타난다. '여기까지 들어오다니 배짱도 좋군. 가진 거 다 내놓아.'",
-      "primaryNpcId": "NPC_YOON_HAMIN",
+      "primaryNpcId": "NPC_HARLUN",
       "choices": [
         {
           "id": "slm_cft2_fight",
@@ -5919,7 +5921,7 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "sceneFrame": "창고와 창고 사이 좁은 통로에서 횃불 빛이 깜빡인다. 살짝 엿보니 다섯 명의 남자가 배에서 내린 상자를 서둘러 옮기고 있다. 상자에는 아무런 표식이 없고, 한 남자가 낮은 목소리로 '날이 밝기 전에 끝내'라고 재촉한다.",
-      "primaryNpcId": "NPC_BAEK_SEUNGHO",
+      "primaryNpcId": "NPC_TOBREN",
       "choices": [
         {
           "id": "dck_enc_smg_observe",
@@ -6333,5 +6335,740 @@
         "EXPLORATION"
       ]
     }
+  },
+  {
+    "eventId": "EVT_MARKET_DSC_4",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "TALK",
+      "PERSUADE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 좌판 뒤편에서 상단 문서 실무자가 원본 장부와 사본을 나란히 놓고 비교하다 얼굴이 하얗게 질린다. 숫자가 맞지 않는 것이 분명하다. 그는 급히 사본을 접으려 하지만 손이 떨리고 있다.",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
+      "choices": [
+        {
+          "id": "mkt_dsc4_talk",
+          "label": "실무자에게 다가가 무슨 일인지 묻는다",
+          "hint": "장부 조작의 단서를 직접 들을 수 있다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        },
+        {
+          "id": "mkt_dsc4_persuade",
+          "label": "도움을 줄 수 있다며 신뢰를 얻으려 한다",
+          "hint": "실무자가 장부 불일치의 상세를 털어놓을 수 있다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "mkt_dsc4_investigate",
+          "label": "실무자가 비교하던 장부를 슬쩍 살펴본다",
+          "hint": "이중 장부의 구체적 차이를 확인한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "mkt_dsc4_observe",
+          "label": "멀찍이서 실무자의 반응을 지켜본다",
+          "hint": "누구에게 보고하러 가는지 파악한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "LEDGER",
+        "TAMPERED",
+        "MERCHANT_GUILD"
+      ]
+    },
+    "discoverableFact": "FACT_TAMPERED_LOGS"
+  },
+  {
+    "eventId": "EVT_GUARD_DSC_4",
+    "locationId": "LOC_GUARD",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "TALK",
+      "SEARCH",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "경비대 기록실 앞에서 문서 관리인이 두꺼운 장부를 펼쳐놓고 고개를 갸웃거리고 있다. 지난달 세금 징수 기록과 실제 금고 잔액이 맞지 않는 모양이다. 그는 '이건 누가 고친 거지...'라고 혼잣말을 중얼거린다.",
+      "primaryNpcId": "NPC_CAPTAIN_BREN",
+      "choices": [
+        {
+          "id": "grd_dsc4_talk",
+          "label": "관리인에게 무슨 문제인지 물어본다",
+          "hint": "장부 불일치의 내용을 들을 수 있다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        },
+        {
+          "id": "grd_dsc4_investigate",
+          "label": "펼쳐진 장부의 수정 흔적을 살펴본다",
+          "hint": "누가 기록을 조작했는지 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "grd_dsc4_search",
+          "label": "기록실 주변에 다른 수정된 문서가 있는지 찾는다",
+          "hint": "조직적 조작의 범위를 파악한다",
+          "affordance": "SEARCH",
+          "riskLevel": 2
+        },
+        {
+          "id": "grd_dsc4_observe",
+          "label": "관리인의 반응과 이후 행동을 지켜본다",
+          "hint": "이 사실을 누구에게 보고하는지 파악한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "LEDGER",
+        "TAMPERED",
+        "GUARD_RECORDS"
+      ]
+    },
+    "discoverableFact": "FACT_TAMPERED_LOGS"
+  },
+  {
+    "eventId": "EVT_TAVERN_DSC_1",
+    "locationId": "LOC_TAVERN",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "TALK",
+      "SEARCH"
+    ],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "선술집 구석 어두운 칸막이 뒤에서 야간 경비 책임자와 길드 휘장을 단 인물이 목소리를 낮추고 대화하고 있다. 탁자 위에 봉투 하나가 놓여 있고, 경비 책임자가 주변을 경계하며 봉투를 집어넣는다.",
+      "primaryNpcId": "NPC_INFO_BROKER",
+      "choices": [
+        {
+          "id": "tav_dsc1_observe",
+          "label": "술잔을 기울이며 대화 내용을 엿듣는다",
+          "hint": "경비대와 길드 간 거래의 내용을 파악한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "tav_dsc1_talk",
+          "label": "둘 중 한 명이 자리를 뜬 뒤 나머지에게 말을 건다",
+          "hint": "대화 상대방의 정체와 목적을 직접 탐문한다",
+          "affordance": "TALK",
+          "riskLevel": 2
+        },
+        {
+          "id": "tav_dsc1_investigate",
+          "label": "둘이 떠난 뒤 자리를 조사한다",
+          "hint": "남겨진 흔적에서 증거를 찾을 수 있다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "tav_dsc1_search",
+          "label": "주점 주인에게 저 손님들에 대해 물어본다",
+          "hint": "단골인지, 자주 만나는지 정보를 얻는다",
+          "affordance": "SEARCH",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "GUILD_GUARD_LINK",
+        "SECRET_MEETING",
+        "EVIDENCE"
+      ]
+    },
+    "discoverableFact": "FACT_MAIREL_GUILD_EVIDENCE"
+  },
+  {
+    "eventId": "EVT_MARKET_DSC_5",
+    "locationId": "LOC_MARKET",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "SEARCH"
+    ],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "시장 뒷골목에서 경비대 휘장이 압인된 봉투가 길드 상인의 손으로 건네지는 장면이 목격된다. 상인은 봉투를 받자마자 앞치마 안주머니에 넣고, 경비병은 아무 일도 없었다는 듯 순찰 대열로 돌아간다.",
+      "primaryNpcId": "NPC_EDRIC_VEIL",
+      "choices": [
+        {
+          "id": "mkt_dsc5_investigate",
+          "label": "상인에게 다가가 방금 일을 은근히 언급한다",
+          "hint": "봉투의 내용물에 대한 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "mkt_dsc5_observe",
+          "label": "경비병의 동선을 따라가 본다",
+          "hint": "경비대 내 관련 인물을 특정할 수 있다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "mkt_dsc5_search",
+          "label": "상인의 좌판 주변에서 다른 증거를 찾는다",
+          "hint": "거래가 반복적인지 확인할 수 있다",
+          "affordance": "SEARCH",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "GUILD_GUARD_LINK",
+        "BRIBERY",
+        "EVIDENCE"
+      ]
+    },
+    "discoverableFact": "FACT_MAIREL_GUILD_EVIDENCE"
+  },
+  {
+    "eventId": "EVT_TAVERN_DSC_2",
+    "locationId": "LOC_TAVERN",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 5,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "SEARCH",
+      "STEAL",
+      "OBSERVE"
+    ],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "귀족 시종으로 보이는 젊은이가 술에 곯아떨어져 있다. 그의 옆자리에 봉인된 서류 꾸러미가 아무렇게나 놓여 있다. 봉인 위에 귀족 가문과 상인 길드의 문양이 나란히 찍혀 있어, 양쪽이 관여된 문서임을 시사한다.",
+      "primaryNpcId": null,
+      "choices": [
+        {
+          "id": "tav_dsc2_investigate",
+          "label": "서류 꾸러미의 봉인을 조심스럽게 살펴본다",
+          "hint": "문서의 성격과 발신처를 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "tav_dsc2_steal",
+          "label": "시종이 깨기 전에 서류를 슬쩍 가져간다",
+          "hint": "직접 증거를 확보하지만 위험하다",
+          "affordance": "STEAL",
+          "riskLevel": 3
+        },
+        {
+          "id": "tav_dsc2_search",
+          "label": "시종의 소지품을 살펴 다른 단서를 찾는다",
+          "hint": "출신 가문과 임무를 파악할 수 있다",
+          "affordance": "SEARCH",
+          "riskLevel": 2
+        },
+        {
+          "id": "tav_dsc2_observe",
+          "label": "시종이 깨어날 때까지 기다리며 지켜본다",
+          "hint": "서류를 누구에게 전달하는지 확인한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "BOTH_SIDES",
+        "NOBLE_GUILD_LINK",
+        "EVIDENCE"
+      ]
+    },
+    "discoverableFact": "FACT_BOTH_SIDES_EVIDENCE"
+  },
+  {
+    "eventId": "EVT_NOBLE_DSC_1",
+    "locationId": "LOC_NOBLE",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 5,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "SNEAK",
+      "SEARCH",
+      "OBSERVE"
+    ],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "귀족 구역의 한 저택 서재 창문이 열려 있다. 안을 들여다보니 탁자 위에 서류들이 펼쳐져 있고, '길드-경비대 협력 초안'이라는 제목이 보인다. 양측의 서명란이 마련되어 있어 공식적인 비밀 계약서로 보인다.",
+      "primaryNpcId": "NPC_LORD_VANCE",
+      "choices": [
+        {
+          "id": "nob_dsc1_sneak",
+          "label": "창문으로 몰래 들어가 서류를 확인한다",
+          "hint": "계약서의 구체적 내용을 읽을 수 있다",
+          "affordance": "SNEAK",
+          "riskLevel": 3
+        },
+        {
+          "id": "nob_dsc1_investigate",
+          "label": "창밖에서 서류의 내용을 최대한 읽는다",
+          "hint": "일부 내용이라도 파악할 수 있다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "nob_dsc1_search",
+          "label": "저택 주변을 돌며 다른 접근 경로를 찾는다",
+          "hint": "서재에 안전하게 접근할 수 있는 길을 파악한다",
+          "affordance": "SEARCH",
+          "riskLevel": 2
+        },
+        {
+          "id": "nob_dsc1_observe",
+          "label": "서재의 주인이 돌아올 때까지 숨어서 기다린다",
+          "hint": "서류의 소유자가 누구인지 확인한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "BOTH_SIDES",
+        "SECRET_CONTRACT",
+        "NOBLE_DISTRICT"
+      ]
+    },
+    "discoverableFact": "FACT_BOTH_SIDES_EVIDENCE"
+  },
+  {
+    "eventId": "EVT_HARBOR_DSC_4",
+    "locationId": "LOC_HARBOR",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "TALK",
+      "OBSERVE",
+      "SEARCH"
+    ],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "부두 화물 적재 구역에서 늙은 검수원이 장부를 넘기다 고개를 절레절레 흔든다. '이 장부는 내부자 아니면 접근 불가능한 건데...' 하고 중얼거리며 주변을 두리번거린다. 그의 표정에 불안과 의심이 뒤섞여 있다.",
+      "primaryNpcId": "NPC_HARLUN",
+      "choices": [
+        {
+          "id": "hbr_dsc4_talk",
+          "label": "검수원에게 다가가 무슨 문제인지 물어본다",
+          "hint": "내부자 관여에 대한 정보를 얻을 수 있다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        },
+        {
+          "id": "hbr_dsc4_investigate",
+          "label": "검수원이 보던 장부를 함께 살펴본다",
+          "hint": "장부 조작의 구체적 흔적을 확인한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "hbr_dsc4_observe",
+          "label": "검수원의 이후 행동을 멀리서 지켜본다",
+          "hint": "누구에게 보고하는지 파악한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "hbr_dsc4_search",
+          "label": "검수원이 자리를 비운 사이 장부를 확인한다",
+          "hint": "장부의 문제 부분을 직접 확인한다",
+          "affordance": "SEARCH",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "INSIDE_JOB",
+        "HARBOR_RECORDS",
+        "EVIDENCE"
+      ]
+    },
+    "discoverableFact": "FACT_INSIDE_JOB"
+  },
+  {
+    "eventId": "EVT_TAVERN_DSC_3",
+    "locationId": "LOC_TAVERN",
+    "eventType": "RUMOR",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "TALK",
+      "OBSERVE",
+      "INVESTIGATE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "선술집이 평소보다 술렁인다. 여러 탁자에서 '왕실 감찰관이 그레이마르에 온다'는 소문이 돌고 있다. 상인들은 걱정스런 표정으로 머리를 맞대고, 한 노인은 '마지막으로 감찰관이 왔을 때 세 명이 처형됐지'라고 낮은 목소리로 말한다.",
+      "primaryNpcId": "NPC_OWEN_KEEPER",
+      "choices": [
+        {
+          "id": "tav_dsc3_talk",
+          "label": "주점 주인에게 소문의 출처를 물어본다",
+          "hint": "감찰관 파견의 배경을 알 수 있다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        },
+        {
+          "id": "tav_dsc3_observe",
+          "label": "여러 탁자의 대화를 귀 기울여 듣는다",
+          "hint": "소문의 다양한 버전을 비교할 수 있다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "tav_dsc3_investigate",
+          "label": "가장 자세히 아는 것 같은 사람에게 다가간다",
+          "hint": "감찰관의 구체적 임무와 도착 시기를 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "OFFICIAL_INQUIRY",
+        "RUMOR",
+        "ROYAL_INSPECTOR"
+      ]
+    },
+    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
+  },
+  {
+    "eventId": "EVT_HARBOR_DSC_5",
+    "locationId": "LOC_HARBOR",
+    "eventType": "RUMOR",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "TALK",
+      "OBSERVE",
+      "INVESTIGATE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "부두 휴게소에서 노동자 셋이 어깨를 모으고 수군거린다. '상부에서 조사관이 내려온다더라' '항만 장부 전부 조사한다는데' '우리 같은 놈들이야 상관없지만, 위에선 난리겠지.' 그들의 목소리에 긴장과 기대가 뒤섞여 있다.",
+      "primaryNpcId": "NPC_HARLUN",
+      "choices": [
+        {
+          "id": "hbr_dsc5_talk",
+          "label": "노동자들에게 자연스럽게 합류해 이야기를 듣는다",
+          "hint": "조사의 구체적 범위와 시기를 파악한다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        },
+        {
+          "id": "hbr_dsc5_observe",
+          "label": "가까운 자리에서 대화 내용을 엿듣는다",
+          "hint": "안전하게 핵심 정보를 수집한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "hbr_dsc5_investigate",
+          "label": "조사관 이야기를 꺼내며 더 자세한 정보를 캐낸다",
+          "hint": "누가 조사 대상인지 구체적 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "OFFICIAL_INQUIRY",
+        "RUMOR",
+        "HARBOR_GOSSIP"
+      ]
+    },
+    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
+  },
+  {
+    "eventId": "EVT_WAREHOUSE_DSC_1",
+    "locationId": "LOC_DOCKS_WAREHOUSE",
+    "eventType": "OPPORTUNITY",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "SEARCH",
+      "SNEAK",
+      "OBSERVE"
+    ],
+    "friction": 1,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "창고 안쪽 적재함 틈에서 기름때 묻은 가죽 수첩이 발견된다. 펼쳐보니 날짜별 하역 일지인데, 공식 기록에는 없는 야간 하역 내역이 빼곡하다. '동쪽 부두 3번 선착장, 자정' 같은 구체적인 장소와 시간이 적혀 있다.",
+      "primaryNpcId": "NPC_TOBREN",
+      "choices": [
+        {
+          "id": "wh_dsc1_investigate",
+          "label": "수첩의 하역 일지를 꼼꼼히 읽는다",
+          "hint": "비밀 하역 루트와 일정을 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "wh_dsc1_search",
+          "label": "적재함 주변에서 다른 기록물을 더 찾는다",
+          "hint": "관련 화물의 종류와 규모를 파악한다",
+          "affordance": "SEARCH",
+          "riskLevel": 2
+        },
+        {
+          "id": "wh_dsc1_sneak",
+          "label": "수첩을 슬쩍 가져가 나중에 분석한다",
+          "hint": "확실한 증거를 확보하지만 발각 위험이 있다",
+          "affordance": "SNEAK",
+          "riskLevel": 3
+        },
+        {
+          "id": "wh_dsc1_observe",
+          "label": "수첩을 둔 채 누가 가져가는지 지켜본다",
+          "hint": "수첩 주인의 정체를 파악한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "SECRET_MANIFEST",
+        "EAST_DOCK",
+        "SMUGGLING"
+      ]
+    },
+    "discoverableFact": "FACT_ROUTE_TO_EAST_DOCK"
+  },
+  {
+    "eventId": "EVT_WAREHOUSE_DSC_2",
+    "locationId": "LOC_DOCKS_WAREHOUSE",
+    "eventType": "ENCOUNTER",
+    "eventCategory": "discovery",
+    "cooldownTurns": 2,
+    "effects": {
+      "progress": 0.05
+    },
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 2
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "TALK",
+      "OBSERVE",
+      "THREATEN"
+    ],
+    "friction": 0,
+    "matchPolicy": "NEUTRAL",
+    "payload": {
+      "sceneFrame": "창고 인부 하나가 동료에게 '다음 배는 화요일 밤이라더라, 이번엔 양이 두 배야'라고 말하다 당신의 존재를 의식하고 입을 다문다. 그는 어색하게 웃으며 빈 상자를 옮기는 척한다.",
+      "primaryNpcId": "NPC_TOBREN",
+      "choices": [
+        {
+          "id": "wh_dsc2_talk",
+          "label": "자연스럽게 다가가 무슨 화물인지 물어본다",
+          "hint": "밀수품 운송 일정의 단서를 얻는다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        },
+        {
+          "id": "wh_dsc2_investigate",
+          "label": "인부가 옮기던 상자의 내용물을 확인한다",
+          "hint": "화물의 종류와 출처를 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "wh_dsc2_threaten",
+          "label": "들은 내용을 언급하며 정보를 요구한다",
+          "hint": "밀수 루트의 상세를 직접 캐낸다",
+          "affordance": "THREATEN",
+          "riskLevel": 3
+        },
+        {
+          "id": "wh_dsc2_observe",
+          "label": "인부의 행동을 계속 지켜보며 패턴을 파악한다",
+          "hint": "밀수 작업의 시간대와 관계자를 확인한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DISCOVERY",
+        "SMUGGLE_ROUTE",
+        "GUILD_OPERATION",
+        "WAREHOUSE"
+      ]
+    },
+    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
   }
 ]
