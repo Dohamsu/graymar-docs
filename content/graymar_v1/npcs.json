@@ -123,6 +123,10 @@
     "gender": "male",
     "knownFacts": [
       {
+        "factId": "FACT_LEDGER_EXISTS",
+        "detail": "부두 노동자들 사이에서 장부가 사라졌다는 소문을 들었다."
+      },
+      {
         "factId": "FACT_WAGE_FRAUD_PATTERN",
         "detail": "부두 노동자 임금이 장부와 실제 지급액이 다르다는 걸 알고 있다. 구체적 수치는 모르지만 패턴을 느끼고 있다."
       },
@@ -426,14 +430,6 @@
       {
         "factId": "FACT_INSIDE_JOB",
         "detail": "경비대 내부에 밀수 조직과 연결된 자가 있다고 의심한다. 야간 순찰 보고서에 빈 시간대가 있다."
-      },
-      {
-        "factId": "FACT_MAIREL_GUARD_EVIDENCE",
-        "detail": "무기고 자물쇠가 무단 교체된 사실을 알고 있다. 교체 기록이 없다."
-      },
-      {
-        "factId": "FACT_OFFICIAL_INQUIRY",
-        "detail": "상부에서 비공식 조사를 시작했다는 소문을 들었다. 자신이 조사 대상인지 불안하다."
       }
     ],
     "linkedIncidents": [
@@ -514,12 +510,8 @@
     "gender": "male",
     "knownFacts": [
       {
-        "factId": "FACT_ROUTE_TO_EAST_DOCK",
-        "detail": "동쪽 창고 3번의 이중 바닥을 알고 있다. 자신이 직접 관리하기 때문이다."
-      },
-      {
-        "factId": "FACT_SMUGGLE_ROUTE_GUILD",
-        "detail": "밀수품 반입 일정을 알고 있다. 매주 수요일과 토요일 야간."
+        "factId": "FACT_INSIDE_JOB",
+        "detail": "창고에서 야간에 허가 없는 작업이 이루어지는 걸 안다. 누군가 내부에서 지시하고 있다."
       }
     ],
     "linkedIncidents": [
@@ -590,6 +582,10 @@
     },
     "gender": "female",
     "knownFacts": [
+      {
+        "factId": "FACT_LEDGER_EXISTS",
+        "detail": "문서 보관함에서 중요 장부가 빠진 것을 확인했다."
+      },
       {
         "factId": "FACT_TAMPERED_LOGS",
         "detail": "문서 보관함에서 원본과 다른 사본이 발견됐다. 암호화된 메모로 기록해두었다."
@@ -668,6 +664,10 @@
     "gender": "female",
     "knownFacts": [
       {
+        "factId": "FACT_LEDGER_EXISTS",
+        "detail": "시장 상인들이 장부 도난 이후 불안해하는 걸 느꼈다."
+      },
+      {
         "factId": "FACT_WAGE_FRAUD_PATTERN",
         "detail": "시장 상인들이 갑자기 값을 올리는 이유가 상단의 부당한 수수료 인상 때문이라는 걸 안다."
       }
@@ -742,8 +742,8 @@
     "gender": "male",
     "knownFacts": [
       {
-        "factId": "FACT_SHADOW_INTEL",
-        "detail": "장부를 훔친 자가 빈민가 서쪽 폐건물에 숨었다가 배로 도주했다는 소문을 들었다."
+        "factId": "FACT_LEDGER_EXISTS",
+        "detail": "선술집에서 장부에 대한 이야기를 여러 번 들었다."
       },
       {
         "factId": "FACT_MAIREL_GUILD_EVIDENCE",
@@ -822,10 +822,6 @@
       {
         "factId": "FACT_MAIREL_GUARD_EVIDENCE",
         "detail": "야간 순찰 보고서에 누락된 시간대가 있다. 마이렐의 관할 구역에서만 발생한다."
-      },
-      {
-        "factId": "FACT_OFFICIAL_INQUIRY",
-        "detail": "상부에 부패 보고서를 올렸지만 묵살당했다. 누군가 막고 있다."
       }
     ],
     "linkedIncidents": [
@@ -897,8 +893,8 @@
     "gender": "female",
     "knownFacts": [
       {
-        "factId": "FACT_SHADOW_INTEL",
-        "detail": "빈민가 서쪽 폐건물에서 밤마다 낯선 사람들이 드나든다. 아이들이 목격했다."
+        "factId": "FACT_LEDGER_EXISTS",
+        "detail": "빈민가에서도 장부 도난 소문이 돌고 있다."
       }
     ],
     "linkedIncidents": [
@@ -1052,10 +1048,6 @@
       {
         "factId": "FACT_OFFICIAL_INQUIRY",
         "detail": "비공식 내사를 직접 진행 중이다. 의심 대상 명단을 갖고 있다."
-      },
-      {
-        "factId": "FACT_MAIREL_GUARD_EVIDENCE",
-        "detail": "마이렐이 야간 근무 중 무단 이탈한 기록을 확보했다."
       }
     ],
     "linkedIncidents": [
@@ -1180,10 +1172,6 @@
     "gender": "male",
     "knownFacts": [
       {
-        "factId": "FACT_BOTH_SIDES_EVIDENCE",
-        "detail": "길드와 경비대 양쪽의 부패 증거를 수집하고 있다. 어느 쪽이든 자신에게 유리한 쪽으로 사용할 계획이다."
-      },
-      {
         "factId": "FACT_OFFICIAL_INQUIRY",
         "detail": "왕실에서 파견한 조사관이 곧 도착한다는 정보를 갖고 있다."
       },
@@ -1264,6 +1252,10 @@
     "gender": "male",
     "knownFacts": [
       {
+        "factId": "FACT_LEDGER_EXISTS",
+        "detail": "선술집 손님들이 장부 도난에 대해 수군거린다."
+      },
+      {
         "factId": "FACT_MAIREL_GUILD_EVIDENCE",
         "detail": "선술집에서 마이렐과 길드 관계자의 밀회를 직접 목격했다. 대화 내용 일부를 들었다."
       }
@@ -1338,12 +1330,8 @@
     "gender": "female",
     "knownFacts": [
       {
-        "factId": "FACT_ROUTE_TO_EAST_DOCK",
-        "detail": "동쪽 부두 비밀 하역의 화물 목록을 갖고 있다. 자신이 검수했기 때문이다."
-      },
-      {
-        "factId": "FACT_SMUGGLE_ROUTE_GUILD",
-        "detail": "밀수품이 어떤 경로로 시장에 풀리는지 알고 있다. 중간 유통책의 얼굴을 안다."
+        "factId": "FACT_WAGE_FRAUD_PATTERN",
+        "detail": "창고 노동자들의 임금이 장부와 맞지 않는다. 물류 기록을 대조해보면 차이가 명확하다."
       }
     ],
     "linkedIncidents": [
@@ -1416,10 +1404,6 @@
     },
     "gender": "female",
     "knownFacts": [
-      {
-        "factId": "FACT_BOTH_SIDES_EVIDENCE",
-        "detail": "남편의 유품에서 길드와 귀족 간 비밀 계약서를 발견했다."
-      },
       {
         "factId": "FACT_INSIDE_JOB",
         "detail": "장부 도난을 사주한 자가 귀족 중 한 명이라는 정황 증거를 갖고 있다."
