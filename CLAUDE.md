@@ -135,35 +135,35 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | engine/input | 3 | RuleParser → Policy → ActionPlan |
 | engine/nodes | 7 | 노드별 리졸버 + 전이 |
 | engine/rewards | 5 | 보상, 인벤토리, 장비, 접미사, Legendary |
-| engine/hub | 37 | HUB 엔진 6 서브시스템 + 퀘스트 (아래 참조) |
+| engine/hub | 36 | HUB 엔진 6 서브시스템 + 퀘스트 (아래 참조) |
 | runs/ | 1 | RUN 생성/조회 |
 | turns/ | 1 | 턴 제출/조회 |
 | llm/ | 8 | LLM Worker, Context Builder, Token Budget, Prompt |
 | portrait/ | 1 | AI 초상화 생성 (Gemini, rate limit) |
 | bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
 
-### HUB 엔진 6 서브시스템 + 퀘스트 (37 services)
+### HUB 엔진 6 서브시스템 (36 services)
 
 | 서브시스템 | 수 | 핵심 서비스 |
 |-----------|---|------------|
-| Base HUB | 10 | WorldState, Heat, EventMatcher, Resolve, IntentParserV2, QuestProgression |
-| Narrative Engine v1 | 8 | Incident, WorldTick, Signal, NpcEmotional, Mark, Ending |
+| Base HUB | 9 | WorldState, Heat, EventMatcher, Resolve, IntentParserV2, QuestProgression, SceneShell, Agenda, Arc |
+| Narrative Engine v1 | 8 | Incident, WorldTick, Signal, NpcEmotional, Mark, Ending, Operation, Shop |
 | Structured Memory v2 | 2 | MemoryCollector, MemoryIntegration |
 | User-Driven Bridge | 6 | IntentV3Builder, IncidentRouter, WorldDelta, PlayerThread, Notification |
-| Narrative v2 & Event v2 | 4 | IntentMemory, EventDirector, ProceduralEvent |
+| Narrative v2 & Event v2 | 4 | IntentMemory, EventDirector, ProceduralEvent, LlmIntentParser |
 | Living World v2 | 7 | LocationState, WorldFact, NpcSchedule, NpcAgenda, ConsequenceProcessor, SituationGenerator, PlayerGoal |
 
 > 상세: `guides/03_hub_engine_guide.md`
 
-### Client — 37 components, 3 stores
+### Client — 40+ components, 3 stores
 
 | 영역 | 수 | 핵심 |
 |------|---|------|
 | narrative/ | 2 | NarrativePanel, StoryBlock |
 | input/ | 2 | InputSection, QuickActionButton |
-| hub/ | 11 | HubScreen, SignalFeed, Incident, NPC, Notifications |
+| hub/ | 12 | HubScreen, SignalFeed, Incident, NPC, Notifications, CollapsibleSection |
 | location/ | 2 | TurnResultBanner, LocationToastLayer |
-| screens/ | 4 | StartScreen, EndingScreen |
+| screens/ | 4 | StartScreen, EndingScreen, RunEndScreen, NodeTransitionScreen |
 | side-panel/ | 5 | SidePanel, CharacterTab, InventoryTab, EquipmentTab, SetBonusDisplay |
 | ui/ | 6 | ErrorBanner, LlmFailureModal, BugReportButton, BugReportModal |
 | layout/ | 2 | Header (자동 숨김), MobileBottomNav (햄버거 메뉴) |
@@ -214,7 +214,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 18. **Procedural Plot Protection** — 동적 이벤트에서 arcRouteTag/commitmentDelta 절대 금지.
 19. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns ≥ 15 이상이어야 발동.
 20. **RUN_ENDED 시 메모리 통합** — go_hub/MOVE_LOCATION 없이 런 종료 시에도 finalizeVisit() 호출.
-21. **MOVE_LOCATION fallback** — 목표 장소 불명확 시 HUB 복귀 처리 (이동 의도 무시 방지).
+21. **MOVE_LOCATION fallback** — 목표 장소 불명확 시 HUB 복귀 처리 (이동 의도 무시 방지). KW MOVE_LOCATION은 장소명+이동접미사 복합감지 시에만 LLM보다 우선. 단순 키워드 1-hit은 LLM 신뢰.
 22. **Living World 초기화** — createRun 시 locationDynamicStates(7개 장소), worldFacts(빈 배열), npcLocations, playerGoals 초기화 필수.
 23. **NPC 3계층** — CORE(5) 우선 상황 생성, BACKGROUND(25) 배경만, SUB(12) 일반.
 24. **선별 주입(Selective Injection)** — LLM 컨텍스트에 메모리를 주입할 때, 전체가 아닌 현재 턴에 관련된 것만 선별: NpcPersonalMemory는 등장 NPC만, LocationMemory는 현재 장소만, IncidentMemory는 관련 사건만, ItemMemory는 장착/획득(RARE 이상) 아이템만.
@@ -341,6 +341,9 @@ LLM_FALLBACK_PROVIDER=mock
 | **라우트 재구성** | / → 랜딩(SEO), /play → 게임(SPA), api.dimtale.com 고정 터널 | ✅ 완료 |
 | **퀘스트 밸런싱** | Fact 이벤트 11개 추가 + NPC ID 정규화 + P0~P5 매칭 개선 (SitGen 바이패스, weight 부스트, PARTIAL 50%, 밸런스 config 외부화, FREE 힌트) | ✅ 완료 |
 | **캐릭터 생성** | 프리셋 6종(+몰락귀족/검투사) + 특성 6종 + 이름 입력 + AI 초상화 생성 + 보너스 스탯 +6 배분 + 6단계 UI + 특성 런타임 효과 | ✅ 완료 |
+| **Intent Parser 강화** | MOVE_LOCATION KW_OVERRIDE 오탐 방지 + LLM 판정 신뢰 강화 (장소명 복합감지) | ✅ 완료 |
+| **타이틀 UX 개선** | 로딩 애니메이션 (dotPulse) + 버튼 stagger fade-in + ads.txt | ✅ 완료 |
+| **아이템 이미지 수정** | items/ 26개 중 10개 초상화 오류 → Gemini 2.5 Flash로 아이콘 재생성 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 

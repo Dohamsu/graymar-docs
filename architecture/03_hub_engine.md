@@ -2,7 +2,7 @@
 
 > 통합 정본. 원본: `HUB_Exploration_RPG_Architecture_v1.md`, `Action_First_Architecture_v2.md`, `HUB_RPG_Engine_Spec_v2.md`
 > 구현 코드: `server/src/engine/hub/*.service.ts`
-> 마지막 갱신: 2026-03-22 (서비스 목록 36개, 6 서브시스템 반영 — Living World v2 추가)
+> 마지막 갱신: 2026-04-03 (이벤트 123개, 프리셋 6종, KW-LLM 병합 규칙 추가)
 
 ---
 
@@ -135,6 +135,12 @@ LOCATION 진입 → Scene Shell(분위기) → 플레이어 입력
 **파싱 방식**: 한국어 키워드 매칭 (예: `조사/살펴/탐색` → INVESTIGATE, `몰래/잠입` → SNEAK)
 - 입력에서 모든 매칭 actionType 수집, 첫 번째가 primary
 - CHOICE 입력 시 payload.affordance에서 직접 매핑
+
+**KW-LLM 병합 규칙** (`IntentParserV2` + `LlmIntentParserService`):
+- KW 파싱과 LLM 파싱을 병행 실행한 뒤 결과를 병합한다.
+- **KW MOVE_LOCATION 무조건 우선**: `detectLocationBasedMove()`가 장소명 + 이동 접미사(으로/에/로 + 가/이동/향하)를 모두 감지한 경우에만 KW 결과가 LLM보다 우선한다.
+- **단순 키워드 1-hit은 LLM 신뢰**: KW가 단일 키워드 매칭만 한 경우(confidence=1), LLM이 다른 actionType을 반환하면 LLM 결과를 채택한다.
+- **LLM 실패/타임아웃 시**: KW 결과를 그대로 사용 (Safe Degradation).
 
 ### 3-2. 고집(Insistence) 에스컬레이션
 
@@ -371,6 +377,8 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 | DESERTER (탈영병) | 100 | 14 | 8 | 8 | 10 | 7 | 6 | 밸런스 근접, 정석 전투 |
 | SMUGGLER (밀수업자) | 85 | 11 | 12 | 6 | 7 | 8 | 10 | 스텔스, 높은 회피/치명타 |
 | HERBALIST (약초상) | 90 | 8 | 7 | 10 | 10 | 10 | 6 | 유틸, 아이템 활용 |
+| FALLEN_NOBLE (몰락 귀족) | 85 | 6 | 5 | 12 | 6 | 8 | 14 | 외교/정치, NPC 태도 우호적 |
+| GLADIATOR (검투사) | 110 | 16 | 10 | 5 | 12 | 6 | 4 | 공격 특화, 최고 ATK |
 
 **Resolve 적용 예시** (score = 1d6 + floor(stat/3) + baseMod):
 - DOCKWORKER가 FIGHT(str 14) → statBonus = floor(14/3) = 4
@@ -459,11 +467,11 @@ LOCATION 진입 시 분위기 텍스트 생성: `getSceneShell(locationId, timeP
 
 ### 9.8 콘텐츠 데이터 (`content/graymar_v1/`)
 
-- `events_v2.json` --- 123개 이벤트 (7개 LOCATION, eventCategory 포함, discoverableFact 43개)
+- `events_v2.json` --- 123개 이벤트 (7개 LOCATION, eventCategory 포함, discoverableFact 43개, Fact 이벤트 11개 포함)
 - `scene_shells.json` / `scene_shells_v2.json` --- LOCATION x TimePhase x Safety 분위기 텍스트
 - `suggested_choices.json` --- eventType별 선택지 템플릿
 - `arc_events.json` --- Arc route별 이벤트
 - `incidents.json` --- Incident 정의
 - `endings.json` --- 엔딩 조건/결과
 - `narrative_marks.json` --- 12개 불가역 표식 정의
-- `presets.json` --- 4개 캐릭터 프리셋
+- `presets.json` --- 6개 캐릭터 프리셋 (DOCKWORKER, DESERTER, SMUGGLER, HERBALIST, FALLEN_NOBLE, GLADIATOR)
