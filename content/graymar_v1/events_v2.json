@@ -51,8 +51,7 @@
         "TAX",
         "GUARD_CORRUPTION"
       ]
-    },
-    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
+    }
   },
   {
     "eventId": "EVT_MARKET_FACTION",
@@ -1407,8 +1406,7 @@
         "TESTIMONY",
         "MAIREL_CORRUPTION"
       ]
-    },
-    "discoverableFact": "FACT_SHADOW_INTEL"
+    }
   },
   {
     "eventId": "EVT_GUARD_ARC_HINT_ALLY",
@@ -1533,8 +1531,7 @@
         "EXOTIC_GOODS",
         "DAILY_LIFE"
       ]
-    },
-    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
+    }
   },
   {
     "eventId": "EVT_MARKET_ENC_BUSKER",
@@ -1869,8 +1866,7 @@
         "CURFEW",
         "DAILY_LIFE"
       ]
-    },
-    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
+    }
   },
   {
     "eventId": "EVT_GUARD_ENC_PATROL",
@@ -1926,8 +1922,7 @@
         "DAILY_LIFE",
         "GUARD_MORALE"
       ]
-    },
-    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
+    }
   },
   {
     "eventId": "EVT_GUARD_OPP_REWARD",
@@ -3255,8 +3250,7 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    },
-    "discoverableFact": "FACT_MAIREL_GUARD_EVIDENCE"
+    }
   },
   {
     "eventId": "EVT_GUARD_ATM_2",
@@ -3303,8 +3297,7 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    },
-    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
+    }
   },
   {
     "eventId": "EVT_GUARD_ATM_3",
@@ -3412,8 +3405,7 @@
         "COVER_UP",
         "EVIDENCE"
       ]
-    },
-    "discoverableFact": "FACT_MAIREL_GUARD_EVIDENCE"
+    }
   },
   {
     "eventId": "EVT_GUARD_DSC_2",
@@ -3534,8 +3526,7 @@
         "BREAK_IN",
         "EVIDENCE"
       ]
-    },
-    "discoverableFact": "FACT_MAIREL_GUARD_EVIDENCE"
+    }
   },
   {
     "eventId": "EVT_GUARD_INT_1",
@@ -3870,8 +3861,7 @@
         "DAILY_LIFE",
         "ATMOSPHERE"
       ]
-    },
-    "discoverableFact": "FACT_ROUTE_TO_EAST_DOCK"
+    }
   },
   {
     "eventId": "EVT_HARBOR_ATM_2",
@@ -4072,8 +4062,7 @@
         "SMUGGLING",
         "EVIDENCE"
       ]
-    },
-    "discoverableFact": "FACT_ROUTE_TO_EAST_DOCK"
+    }
   },
   {
     "eventId": "EVT_HARBOR_DSC_2",
@@ -4133,8 +4122,7 @@
         "SECRET_USE",
         "TRAIL"
       ]
-    },
-    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
+    }
   },
   {
     "eventId": "EVT_HARBOR_DSC_3",
@@ -4251,7 +4239,8 @@
         "LABOR_GUILD",
         "CONVERSATION"
       ]
-    }
+    },
+    "discoverableFact": "FACT_LEDGER_EXISTS"
   },
   {
     "eventId": "EVT_HARBOR_INT_2",
@@ -4469,8 +4458,7 @@
         "SLUM_LIFE",
         "ATMOSPHERE"
       ]
-    },
-    "discoverableFact": "FACT_SHADOW_INTEL"
+    }
   },
   {
     "eventId": "EVT_SLUMS_ATM_2",
@@ -4517,8 +4505,7 @@
         "COMMUNITY",
         "ATMOSPHERE"
       ]
-    },
-    "discoverableFact": "FACT_SHADOW_INTEL"
+    }
   },
   {
     "eventId": "EVT_SLUMS_ATM_3",
@@ -4625,8 +4612,7 @@
         "SMUGGLING",
         "HIDEOUT"
       ]
-    },
-    "discoverableFact": "FACT_SHADOW_INTEL"
+    }
   },
   {
     "eventId": "EVT_SLUMS_DSC_2",
@@ -4686,7 +4672,8 @@
         "SECRET_PASSAGE",
         "UNDERGROUND"
       ]
-    }
+    },
+    "discoverableFact": "FACT_LEDGER_EXISTS"
   },
   {
     "eventId": "EVT_SLUMS_DSC_3",
@@ -4802,8 +4789,7 @@
         "ORPHANAGE",
         "CONVERSATION"
       ]
-    },
-    "discoverableFact": "FACT_SHADOW_INTEL"
+    }
   },
   {
     "eventId": "EVT_SLUMS_INT_2",
@@ -5795,7 +5781,8 @@
         "SMUGGLING",
         "MYSTERY_SHIP"
       ]
-    }
+    },
+    "discoverableFact": "FACT_LEDGER_EXISTS"
   },
   {
     "eventId": "EVT_TAVERN_FACTION_MEETING",
@@ -6540,8 +6527,7 @@
         "SECRET_MEETING",
         "EVIDENCE"
       ]
-    },
-    "discoverableFact": "FACT_MAIREL_GUILD_EVIDENCE"
+    }
   },
   {
     "eventId": "EVT_MARKET_DSC_5",
@@ -6601,8 +6587,7 @@
         "BRIBERY",
         "EVIDENCE"
       ]
-    },
-    "discoverableFact": "FACT_MAIREL_GUILD_EVIDENCE"
+    }
   },
   {
     "eventId": "EVT_TAVERN_DSC_2",
@@ -6670,8 +6655,7 @@
         "NOBLE_GUILD_LINK",
         "EVIDENCE"
       ]
-    },
-    "discoverableFact": "FACT_BOTH_SIDES_EVIDENCE"
+    }
   },
   {
     "eventId": "EVT_NOBLE_DSC_1",
@@ -6869,8 +6853,7 @@
         "RUMOR",
         "ROYAL_INSPECTOR"
       ]
-    },
-    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
+    }
   },
   {
     "eventId": "EVT_HARBOR_DSC_5",
@@ -6930,8 +6913,7 @@
         "RUMOR",
         "HARBOR_GOSSIP"
       ]
-    },
-    "discoverableFact": "FACT_OFFICIAL_INQUIRY"
+    }
   },
   {
     "eventId": "EVT_WAREHOUSE_DSC_1",
@@ -6999,8 +6981,7 @@
         "EAST_DOCK",
         "SMUGGLING"
       ]
-    },
-    "discoverableFact": "FACT_ROUTE_TO_EAST_DOCK"
+    }
   },
   {
     "eventId": "EVT_WAREHOUSE_DSC_2",
@@ -7068,7 +7049,6 @@
         "GUILD_OPERATION",
         "WAREHOUSE"
       ]
-    },
-    "discoverableFact": "FACT_SMUGGLE_ROUTE_GUILD"
+    }
   }
 ]

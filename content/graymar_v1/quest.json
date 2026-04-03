@@ -3,7 +3,6 @@
   "title": "사라진 공물 장부",
   "scale": "왕국 정치 연계",
   "synopsis": "항만 노동 길드가 해관청에 바친 공물 내역이 담긴 장부가 도난당했다. 장부에는 뒷거래 기록도 포함되어 있어, 공개되면 길드 간부 다수가 처형당할 수 있다. 이름 없는 용병인 당신은 의뢰인 로넨의 부탁으로 장부를 추적하게 된다.",
-
   "states": [
     "S0_ARRIVE",
     "S1_GET_ANGLE",
@@ -12,7 +11,6 @@
     "S4_CONFRONT",
     "S5_RESOLVE"
   ],
-
   "stateDescriptions": {
     "S0_ARRIVE": "그레이마르 도착. 로넨의 의뢰를 받고 도시를 탐색하기 시작한다.",
     "S1_GET_ANGLE": "장부의 존재와 기본 상황을 파악. 누가 관련되어 있고, 어디서 단서를 찾을 수 있는지 시각을 확보한다.",
@@ -21,129 +19,236 @@
     "S4_CONFRONT": "흑막을 특정하고 대면한다. 누구의 편에 설 것인지 결정해야 하는 순간.",
     "S5_RESOLVE": "최종 선택. 장부를 어디에 넘길 것인가 — 진실을 밝힐 것인가, 이익을 취할 것인가, 질서를 지킬 것인가."
   },
-
   "stateTransitions": {
     "S0_ARRIVE→S1_GET_ANGLE": {
-      "requiredFacts": ["FACT_LEDGER_EXISTS"],
+      "requiredFacts": [
+        "FACT_LEDGER_EXISTS"
+      ],
       "description": "공물 장부의 존재를 인지하면 본격 조사 시작."
     },
     "S1_GET_ANGLE→S2_PROVE_TAMPER": {
-      "requiredFacts": ["FACT_WAGE_FRAUD_PATTERN", "FACT_TAMPERED_LOGS"],
+      "requiredFacts": [
+        "FACT_WAGE_FRAUD_PATTERN",
+        "FACT_TAMPERED_LOGS"
+      ],
       "description": "임금 사기 패턴과 기록 조작 흔적을 모두 발견하면 조작 증명 단계로."
     },
     "S2_PROVE_TAMPER→S3_TRACE_ROUTE": {
-      "requiredFacts": ["FACT_INSIDE_JOB"],
+      "requiredFacts": [
+        "FACT_INSIDE_JOB"
+      ],
       "description": "내부자 소행임을 확인하면 밀수 경로 추적 단계로."
     },
     "S3_TRACE_ROUTE→S4_CONFRONT": {
-      "requiredFacts": ["FACT_ROUTE_TO_EAST_DOCK", "FACT_SMUGGLE_ROUTE_GUILD"],
-      "alternativeFacts": ["FACT_SHADOW_INTEL"],
+      "requiredFacts": [
+        "FACT_ROUTE_TO_EAST_DOCK",
+        "FACT_SMUGGLE_ROUTE_GUILD"
+      ],
+      "alternativeFacts": [
+        "FACT_SHADOW_INTEL"
+      ],
       "description": "밀수 경로를 파악하거나 그림자 정보를 얻으면 대면 단계로. 두 경로 중 하나."
     },
     "S4_CONFRONT→S5_RESOLVE": {
       "requiredFacts": [],
       "requiredAnyOf": [
-        ["FACT_MAIREL_GUILD_EVIDENCE", "FACT_MAIREL_GUARD_EVIDENCE"],
-        ["FACT_BOTH_SIDES_EVIDENCE"],
-        ["FACT_OFFICIAL_INQUIRY"]
+        [
+          "FACT_MAIREL_GUILD_EVIDENCE",
+          "FACT_MAIREL_GUARD_EVIDENCE"
+        ],
+        [
+          "FACT_BOTH_SIDES_EVIDENCE"
+        ],
+        [
+          "FACT_OFFICIAL_INQUIRY"
+        ]
       ],
       "description": "핵심 증거(마이렐-길드 or 마이렐-경비대 or 양측 증거 or 공식 조사)를 하나라도 확보하면 최종 결정."
     }
   },
-
   "facts": {
     "FACT_LEDGER_EXISTS": {
       "description": "공물 장부가 존재하며 도난당했다는 사실",
-      "discoveryLocations": ["LOC_MARKET", "LOC_HARBOR"],
-      "primarySources": ["NPC_EDRIC_VEIL"],
+      "discoveryLocations": [
+        "LOC_MARKET",
+        "LOC_HARBOR"
+      ],
+      "primarySources": [
+        "NPC_EDRIC_VEIL",
+        "NPC_HARLUN",
+        "NPC_MIRELA",
+        "NPC_MOON_SEA",
+        "NPC_OWEN_KEEPER",
+        "NPC_RENNICK",
+        "NPC_ROSA"
+      ],
       "stage": "S0→S1"
     },
     "FACT_WAGE_FRAUD_PATTERN": {
       "description": "장부의 임금 지급 내역과 실제 출납이 맞지 않는 패턴",
-      "discoveryLocations": ["LOC_MARKET", "LOC_HARBOR"],
-      "primarySources": ["NPC_EDRIC_VEIL", "NPC_HARLUN", "NPC_MIRELA"],
+      "discoveryLocations": [
+        "LOC_MARKET",
+        "LOC_HARBOR"
+      ],
+      "primarySources": [
+        "NPC_EDRIC_VEIL",
+        "NPC_HARLUN",
+        "NPC_MIRELA",
+        "NPC_SERA_DOCKS"
+      ],
       "stage": "S1→S2"
     },
     "FACT_TAMPERED_LOGS": {
       "description": "장부의 특정 구간(셋째 칸 넷째 줄)에 조작 흔적 — 다른 필체, 잉크 차이",
-      "discoveryLocations": ["LOC_MARKET", "LOC_GUARD"],
-      "primarySources": ["NPC_EDRIC_VEIL", "NPC_MOON_SEA"],
+      "discoveryLocations": [
+        "LOC_MARKET",
+        "LOC_GUARD"
+      ],
+      "primarySources": [
+        "NPC_EDRIC_VEIL",
+        "NPC_MOON_SEA"
+      ],
       "stage": "S1→S2"
     },
     "FACT_INSIDE_JOB": {
       "description": "장부 도난이 외부가 아닌 내부자 소행 — 문서 접근 권한자 3명 중 하나",
-      "discoveryLocations": ["LOC_GUARD", "LOC_MARKET", "LOC_UPPER"],
-      "primarySources": ["NPC_EDRIC_VEIL", "NPC_MAIREL", "NPC_MOON_SEA", "NPC_LORD_VANCE", "NPC_DAME_ISOLDE"],
+      "discoveryLocations": [
+        "LOC_GUARD",
+        "LOC_MARKET",
+        "LOC_UPPER"
+      ],
+      "primarySources": [
+        "NPC_DAME_ISOLDE",
+        "NPC_EDRIC_VEIL",
+        "NPC_LORD_VANCE",
+        "NPC_MAIREL",
+        "NPC_MOON_SEA",
+        "NPC_TOBREN"
+      ],
       "stage": "S2→S3"
     },
     "FACT_ROUTE_TO_EAST_DOCK": {
       "description": "동쪽 부두 3번 창고에서 야간 비밀 하역이 이루어진다",
-      "discoveryLocations": ["LOC_HARBOR", "LOC_WAREHOUSE"],
-      "primarySources": ["NPC_HARLUN", "NPC_TOBREN", "NPC_SERA_DOCKS", "NPC_RAT_KING"],
+      "discoveryLocations": [
+        "LOC_HARBOR",
+        "LOC_WAREHOUSE"
+      ],
+      "primarySources": [
+        "NPC_HARLUN",
+        "NPC_RAT_KING"
+      ],
       "stage": "S3→S4"
     },
     "FACT_SMUGGLE_ROUTE_GUILD": {
       "description": "밀수품이 길드 공식 화물에 섞여 반입되며, 시장으로 유통되는 경로",
-      "discoveryLocations": ["LOC_HARBOR", "LOC_MARKET", "LOC_WAREHOUSE"],
-      "primarySources": ["NPC_HARLUN", "NPC_TOBREN", "NPC_SERA_DOCKS", "NPC_RAT_KING"],
+      "discoveryLocations": [
+        "LOC_HARBOR",
+        "LOC_MARKET",
+        "LOC_WAREHOUSE"
+      ],
+      "primarySources": [
+        "NPC_HARLUN",
+        "NPC_RAT_KING"
+      ],
       "stage": "S3→S4"
     },
     "FACT_MAIREL_GUILD_EVIDENCE": {
       "description": "마이렐 단 경이 길드 관계자와 밀회하는 현장 — 선술집에서 목격",
-      "discoveryLocations": ["LOC_TAVERN", "LOC_MARKET"],
-      "primarySources": ["NPC_RENNICK", "NPC_OWEN_KEEPER"],
+      "discoveryLocations": [
+        "LOC_TAVERN",
+        "LOC_MARKET"
+      ],
+      "primarySources": [
+        "NPC_OWEN_KEEPER",
+        "NPC_RENNICK"
+      ],
       "stage": "S4→S5"
     },
     "FACT_OFFICIAL_INQUIRY": {
       "description": "상부/왕실에서 비공식 조사가 시작되었다는 정보",
-      "discoveryLocations": ["LOC_GUARD", "LOC_UPPER"],
-      "primarySources": ["NPC_MAIREL", "NPC_CAPTAIN_BREN", "NPC_GUARD_CAPTAIN", "NPC_LORD_VANCE"],
+      "discoveryLocations": [
+        "LOC_GUARD",
+        "LOC_UPPER"
+      ],
+      "primarySources": [
+        "NPC_GUARD_CAPTAIN",
+        "NPC_LORD_VANCE"
+      ],
       "stage": "S4→S5"
     },
     "FACT_MAIREL_GUARD_EVIDENCE": {
       "description": "마이렐의 야간 순찰 보고서 누락, 무기고 자물쇠 무단 교체 등 경비대 내부 증거",
-      "discoveryLocations": ["LOC_GUARD"],
-      "primarySources": ["NPC_MAIREL", "NPC_CAPTAIN_BREN", "NPC_GUARD_CAPTAIN", "NPC_GUARD_FELIX"],
+      "discoveryLocations": [
+        "LOC_GUARD"
+      ],
+      "primarySources": [
+        "NPC_CAPTAIN_BREN",
+        "NPC_GUARD_FELIX"
+      ],
       "stage": "S4→S5"
     },
     "FACT_SHADOW_INTEL": {
       "description": "장부를 훔친 실행범의 정체, 도주 경로, 의뢰인 — 그림자 세계의 정보",
-      "discoveryLocations": ["LOC_SLUMS", "LOC_TAVERN"],
-      "primarySources": ["NPC_RAT_KING", "NPC_INFO_BROKER", "NPC_RENNICK", "NPC_ROSA"],
+      "discoveryLocations": [
+        "LOC_SLUMS",
+        "LOC_TAVERN"
+      ],
+      "primarySources": [
+        "NPC_INFO_BROKER",
+        "NPC_RAT_KING"
+      ],
       "stage": "S3→S4 (바로가기)"
     },
     "FACT_BOTH_SIDES_EVIDENCE": {
       "description": "길드 내부 장부 사본 + 경비대 뇌물 수수 기록 — 양쪽 모두의 부패 증거",
-      "discoveryLocations": ["LOC_UPPER", "LOC_TAVERN"],
-      "primarySources": ["NPC_INFO_BROKER", "NPC_LORD_VANCE", "NPC_DAME_ISOLDE"],
+      "discoveryLocations": [
+        "LOC_UPPER",
+        "LOC_TAVERN"
+      ],
+      "primarySources": [
+        "NPC_INFO_BROKER"
+      ],
       "stage": "S4→S5"
     }
   },
-
   "arcRoutes": [
     {
       "routeId": "EXPOSE_CORRUPTION",
       "label": "부패 폭로",
       "description": "진실을 밝혀 정의를 구현한다. 부패한 자들이 심판받지만, 도시의 기존 질서가 흔들리고 당신도 적을 만든다.",
-      "keyAllies": ["NPC_CAPTAIN_BREN", "NPC_GUARD_FELIX", "NPC_HARLUN"],
-      "keyEnemies": ["NPC_LORD_VANCE", "NPC_MAIREL"],
+      "keyAllies": [
+        "NPC_CAPTAIN_BREN",
+        "NPC_GUARD_FELIX",
+        "NPC_HARLUN"
+      ],
+      "keyEnemies": [
+        "NPC_LORD_VANCE",
+        "NPC_MAIREL"
+      ],
       "steps": [
         {
           "step": 1,
           "description": "장부 조작 증거 확보",
-          "requiredFacts": ["FACT_TAMPERED_LOGS"],
+          "requiredFacts": [
+            "FACT_TAMPERED_LOGS"
+          ],
           "questState": "S2_PROVE_TAMPER"
         },
         {
           "step": 2,
           "description": "내부 공모자 특정 — 경비대 또는 길드 내부의 배신자를 밝힌다",
-          "requiredFacts": ["FACT_INSIDE_JOB", "FACT_MAIREL_GUARD_EVIDENCE"],
+          "requiredFacts": [
+            "FACT_INSIDE_JOB",
+            "FACT_MAIREL_GUARD_EVIDENCE"
+          ],
           "questState": "S3_TRACE_ROUTE"
         },
         {
           "step": 3,
           "description": "공식 조사 개시 또는 증거 공개 — 브렌 대위/벨론 대위에게 증거 전달",
-          "requiredFacts": ["FACT_OFFICIAL_INQUIRY"],
+          "requiredFacts": [
+            "FACT_OFFICIAL_INQUIRY"
+          ],
           "questState": "S4_CONFRONT"
         },
         {
@@ -158,25 +263,38 @@
       "routeId": "PROFIT_FROM_CHAOS",
       "label": "혼란에서 이익",
       "description": "양쪽 모두에게 정보를 팔아 최대 이익을 취한다. 부유해지지만 아무도 믿지 못하고, 도시의 혼란은 계속된다.",
-      "keyAllies": ["NPC_INFO_BROKER", "NPC_RAT_KING"],
-      "keyEnemies": ["NPC_CAPTAIN_BREN", "NPC_ROSA"],
+      "keyAllies": [
+        "NPC_INFO_BROKER",
+        "NPC_RAT_KING"
+      ],
+      "keyEnemies": [
+        "NPC_CAPTAIN_BREN",
+        "NPC_ROSA"
+      ],
       "steps": [
         {
           "step": 1,
           "description": "양측 정보 수집 — 길드와 경비대 모두의 비밀을 파악한다",
-          "requiredFacts": ["FACT_SMUGGLE_ROUTE_GUILD", "FACT_MAIREL_GUILD_EVIDENCE"],
+          "requiredFacts": [
+            "FACT_SMUGGLE_ROUTE_GUILD",
+            "FACT_MAIREL_GUILD_EVIDENCE"
+          ],
           "questState": "S2_PROVE_TAMPER"
         },
         {
           "step": 2,
           "description": "정보 브로커 연결 — 쉐도우 또는 쥐왕과 거래하여 그림자 정보 확보",
-          "requiredFacts": ["FACT_SHADOW_INTEL"],
+          "requiredFacts": [
+            "FACT_SHADOW_INTEL"
+          ],
           "questState": "S3_TRACE_ROUTE"
         },
         {
           "step": 3,
           "description": "양측 증거 확보 — 최고가 입찰을 위한 결정적 카드 마련",
-          "requiredFacts": ["FACT_BOTH_SIDES_EVIDENCE"],
+          "requiredFacts": [
+            "FACT_BOTH_SIDES_EVIDENCE"
+          ],
           "questState": "S4_CONFRONT"
         },
         {
@@ -191,25 +309,38 @@
       "routeId": "ALLY_GUARD",
       "label": "경비대 동맹",
       "description": "경비대와 협력하여 밀수 조직을 소탕하고 질서를 회복한다. 안정되지만 근본적 부패는 남고, 경비대에 빚을 진다.",
-      "keyAllies": ["NPC_MAIREL", "NPC_GUARD_CAPTAIN", "NPC_GUARD_FELIX"],
-      "keyEnemies": ["NPC_RAT_KING", "NPC_HARLUN"],
+      "keyAllies": [
+        "NPC_MAIREL",
+        "NPC_GUARD_CAPTAIN",
+        "NPC_GUARD_FELIX"
+      ],
+      "keyEnemies": [
+        "NPC_RAT_KING",
+        "NPC_HARLUN"
+      ],
       "steps": [
         {
           "step": 1,
           "description": "경비대 신뢰 확보 — 마이렐 단 경 또는 벨론 대위의 협력을 얻는다",
-          "requiredFacts": ["FACT_MAIREL_GUARD_EVIDENCE"],
+          "requiredFacts": [
+            "FACT_MAIREL_GUARD_EVIDENCE"
+          ],
           "questState": "S2_PROVE_TAMPER"
         },
         {
           "step": 2,
           "description": "밀수 경로 파악 — 경비대에 동쪽 부두 정보를 제공한다",
-          "requiredFacts": ["FACT_ROUTE_TO_EAST_DOCK"],
+          "requiredFacts": [
+            "FACT_ROUTE_TO_EAST_DOCK"
+          ],
           "questState": "S3_TRACE_ROUTE"
         },
         {
           "step": 3,
           "description": "합동 작전 — 경비대와 함께 밀수 거점을 급습할 계획을 세운다",
-          "requiredFacts": ["FACT_SMUGGLE_ROUTE_GUILD"],
+          "requiredFacts": [
+            "FACT_SMUGGLE_ROUTE_GUILD"
+          ],
           "questState": "S4_CONFRONT"
         },
         {
