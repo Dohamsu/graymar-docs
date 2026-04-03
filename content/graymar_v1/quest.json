@@ -69,6 +69,7 @@
   "facts": {
     "FACT_LEDGER_EXISTS": {
       "description": "공물 장부가 존재하며 도난당했다는 사실",
+      "nextHint": "장부가 사라졌다는 것만으로는 부족하다. 장부의 내용이 조작됐는지 확인해야 한다. 숫자를 다루는 사람, 회계나 문서 관련 인물을 찾아봐라.",
       "discoveryLocations": [
         "LOC_MARKET",
         "LOC_HARBOR"
@@ -86,6 +87,7 @@
     },
     "FACT_WAGE_FRAUD_PATTERN": {
       "description": "장부의 임금 지급 내역과 실제 출납이 맞지 않는 패턴",
+      "nextHint": "임금 수치가 맞지 않는다는 건 누군가 장부를 손봤다는 뜻이다. 조작의 물리적 흔적 — 필체나 잉크의 차이를 찾아야 한다.",
       "discoveryLocations": [
         "LOC_MARKET",
         "LOC_HARBOR"
@@ -100,6 +102,7 @@
     },
     "FACT_TAMPERED_LOGS": {
       "description": "장부의 특정 구간(셋째 칸 넷째 줄)에 조작 흔적 — 다른 필체, 잉크 차이",
+      "nextHint": "조작 흔적이 확인됐다. 이건 단순 도난이 아니라 내부 공모다. 문서에 접근할 수 있는 사람이 누군지 알아내야 한다. 경비대나 상위 권력자 쪽을 파헤쳐봐라.",
       "discoveryLocations": [
         "LOC_MARKET",
         "LOC_GUARD"
@@ -112,6 +115,7 @@
     },
     "FACT_INSIDE_JOB": {
       "description": "장부 도난이 외부가 아닌 내부자 소행 — 문서 접근 권한자 3명 중 하나",
+      "nextHint": "내부자의 소행이라면 물건이 어디로 갔는지 추적할 수 있다. 밀수 경로나 비밀 하역 장소를 찾아라. 부두와 창고 쪽을 살펴봐라.",
       "discoveryLocations": [
         "LOC_GUARD",
         "LOC_MARKET",
@@ -129,6 +133,7 @@
     },
     "FACT_ROUTE_TO_EAST_DOCK": {
       "description": "동쪽 부두 3번 창고에서 야간 비밀 하역이 이루어진다",
+      "nextHint": "하역 장소를 알았다. 이제 물건이 어떤 경로로 시장에 풀리는지, 그리고 이 배후에 누가 있는지 밝혀야 한다. 흑막을 대면할 증거가 필요하다.",
       "discoveryLocations": [
         "LOC_HARBOR",
         "LOC_WAREHOUSE"
@@ -141,6 +146,7 @@
     },
     "FACT_SMUGGLE_ROUTE_GUILD": {
       "description": "밀수품이 길드 공식 화물에 섞여 반입되며, 시장으로 유통되는 경로",
+      "nextHint": "밀수 경로의 전체 그림이 보이기 시작한다. 이제 이 네트워크를 운영하는 자의 정체를 밝힐 결정적 증거가 필요하다.",
       "discoveryLocations": [
         "LOC_HARBOR",
         "LOC_MARKET",
@@ -154,6 +160,7 @@
     },
     "FACT_MAIREL_GUILD_EVIDENCE": {
       "description": "마이렐 단 경이 길드 관계자와 밀회하는 현장 — 선술집에서 목격",
+      "nextHint": "길드와의 연결 증거를 확보했다. 이제 최종 결정을 내릴 때가 다가온다. 진실을 폭로할 것인가, 이익을 취할 것인가.",
       "discoveryLocations": [
         "LOC_TAVERN",
         "LOC_MARKET"
@@ -166,6 +173,7 @@
     },
     "FACT_OFFICIAL_INQUIRY": {
       "description": "상부/왕실에서 비공식 조사가 시작되었다는 정보",
+      "nextHint": "상부가 움직이기 시작했다. 시간이 얼마 남지 않았다. 증거를 정리하고 최종 선택을 준비해야 한다.",
       "discoveryLocations": [
         "LOC_GUARD",
         "LOC_UPPER"
@@ -178,6 +186,7 @@
     },
     "FACT_MAIREL_GUARD_EVIDENCE": {
       "description": "마이렐의 야간 순찰 보고서 누락, 무기고 자물쇠 무단 교체 등 경비대 내부 증거",
+      "nextHint": "경비대 내부의 부패 증거를 손에 넣었다. 이 증거를 어떻게 사용할지가 모든 것을 결정한다.",
       "discoveryLocations": [
         "LOC_GUARD"
       ],
@@ -189,6 +198,7 @@
     },
     "FACT_SHADOW_INTEL": {
       "description": "장부를 훔친 실행범의 정체, 도주 경로, 의뢰인 — 그림자 세계의 정보",
+      "nextHint": "그림자 세계의 정보를 얻었다. 이제 흑막을 직접 대면하거나, 이 정보를 무기로 활용할 수 있다.",
       "discoveryLocations": [
         "LOC_SLUMS",
         "LOC_TAVERN"
@@ -201,6 +211,7 @@
     },
     "FACT_BOTH_SIDES_EVIDENCE": {
       "description": "길드 내부 장부 사본 + 경비대 뇌물 수수 기록 — 양쪽 모두의 부패 증거",
+      "nextHint": "양쪽의 부패 증거를 모두 손에 넣었다. 이 카드를 어떻게 쓸 것인가 — 최종 선택의 시간이다.",
       "discoveryLocations": [
         "LOC_UPPER",
         "LOC_TAVERN"
