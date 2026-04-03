@@ -2,7 +2,7 @@
 
 > 정본 위치: `server/src/llm/`
 > 설계 문서: `architecture/05_llm_narrative.md`, `18_narrative_runtime_patch.md`
-> 최종 갱신: 2026-03-25
+> 최종 갱신: 2026-04-03 (NPC 대사 품질/후처리 필터/퀘스트 힌트 추가)
 
 ## LLM Narrative Pipeline
 
@@ -259,3 +259,130 @@ ItemMemoryEntry {
 - 축적: RARE 이상 등급 아이템의 획득/사용/장착 시 기록
 - 선별: 현재 장착 중 + 이번 턴에 획득한 아이템만 주입
 - 용도: "이 아이템의 내력" LLM에 전달하여 서사적 일관성 유지
+
+---
+
+## NPC 대사 품질 개선 시스템
+
+### 2-Stage NPC Reaction (NPC 반응 2단계 판정)
+
+`server/src/turns/turns.service.ts` — Quest FACT 발견 경로 2
+
+NPC knownFacts 공개 시 서버에서 2단계 판정을 수행한다.
+
+**1단계: willReveal (공개 여부)**
+- posture, emotional(5축), trust 값에 따라 NPC가 정보를 공개할지 결정
+- trust 기준:
+  - trust > 20: 공개 (직접 전달)
+  - trust 0~20: SUCCESS만 공개 (간접 전달)
+  - trust -20~0: SUCCESS만 공개 (관찰 힌트)
+  - trust < -20: 거부 (fact 미발견 -- 다른 NPC나 이벤트로 우회 필요)
+
+**2단계: revealMode (전달 방식)**
+
+| revealMode | 조건 | LLM 프롬프트 효과 |
+|-----------|------|-----------------|
+| direct | FRIENDLY / trust > 20 | NPC가 직접 대사로 정보 전달 |
+| indirect | CAUTIOUS / trust 0~20 | NPC가 돌려 말하기, 힌트로 전달 |
+| observe | 비대화 행동 (OBSERVE, INVESTIGATE 등) | NPC 대사 없이 관찰로 정보 획득 |
+| refuse | HOSTILE / trust < -20 | 서버에서 fact 미발견 처리 (프롬프트 미전달) |
+
+- 비대화 행동(OBSERVE, INVESTIGATE, SEARCH, SNEAK, STEAL)은 revealMode를 강제로 `observe`로 설정
+- revealMode는 `ctx.npcRevealableFact`에 저장되어 prompt-builder에서 전달 방식 분기에 활용
+
+### NpcLlmSummary (NPC별 요약)
+
+`server/src/db/types/npc-state.ts` — `buildNpcLlmSummary()`
+
+NPC 재등장 시 간소 프롬프트 블록을 위한 규칙 기반 요약이다. LLM 호출 없이 서버에서 생성한다.
+
+```
+NpcLlmSummary {
+  moodLine: string           // "경계를 풀기 시작했지만 여전히 신중" (~30자)
+  behaviorGuide: string      // "투박한 ~하오 체, 짧은 문장" (~40자)
+  lastDialogueTopic: string  // "장부 조작 흔적에 대해 이야기함" (~30자)
+  lastDialogueSnippet: string// "숫자가 맞지 않는 대목이 있소..." (~40자)
+  currentConcern: string     // "상단 비리 고발 여부 고민 중" (~20자)
+  updatedAtTurn: number
+}
+```
+
+- **첫 만남**: full emotional block (5축 감정, speechStyle, personality) 전달
+- **재만남**: condensed llmSummary만 전달 (토큰 ~70% 절감)
+- `moodLine`: trust + fear + posture에서 규칙 기반 생성
+- `behaviorGuide`: speechStyle을 압축 + signature 첫 번째 항목
+- `recentTopics`: `addRecentTopic()`으로 별도 관리 (buildNpcLlmSummary에서 생성하지 않음)
+
+### 대화 잠금 (Conversation Lock)
+
+`server/src/turns/turns.service.ts`
+
+대화 계열 행동(TALK, PERSUADE, BRIBE, THREATEN, HELP, INVESTIGATE, OBSERVE, TRADE) 시 이전 턴의 대화 NPC를 자동 유지한다.
+
+- CHOICE 선택지로 같은 이벤트가 연속되면 **최대 4턴**까지 허용
+- 비대화 행동(SNEAK, STEAL, FIGHT 등) 수행 시 잠금 해제
+- NPC 결정 우선순위: (1) 텍스트 매칭 NPC > (2) IntentParser targetNpcId > (3) conversationLockedNpcId > (4) event.payload.primaryNpcId
+
+---
+
+## LLM 후처리 필터 (P1-P5)
+
+`server/src/llm/llm-worker.service.ts`
+
+LLM 서술 출력에 대해 5단계 자동 후처리 필터를 적용한다.
+
+### P1: NPC 다가오기 패턴 치환
+- "조심스레 다가왔다" -> "멀찍이 서서 당신을 지켜보고 있었다" 등
+- NPC가 비현실적으로 플레이어에게 다가오는 서술 패턴을 자연스러운 관찰형으로 교체
+
+### P2: 말투 위반 감지 (Speech Violation Detection)
+- 미소개 NPC가 실명으로 불리는 케이스 감지
+- 금지 패턴: `자네`, `이보게`, `~일세`, `해요/세요/합니다` (경어), `~야/~해/~잖아` (반말)
+- 위반 횟수를 로깅하여 프롬프트 개선에 활용
+
+### P3: 빈번 위반 직접 치환
+- "자네" -> "그대"
+- "이보게" -> "듣고 계시오"
+- 가장 자주 발생하는 말투 위반을 즉시 교정
+
+### P4: NPC 이름 sanitize
+- **서술**: 미소개 NPC의 실명을 `unknownAlias`("수상한 남자", "누군가" 등)로 치환
+- **선택지 label**: 선택지 텍스트에서도 동일하게 미소개 NPC 실명을 별칭으로 치환
+- ContentLoaderService에서 NPC 정의(이름, unknownAlias)를 참조
+
+### P5: 서술 경어체 -> 해라체 변환
+- 큰따옴표 바깥(서술부)에서만 적용, 큰따옴표 안(NPC 대사)은 유지
+- 서술과 대사를 분리한 뒤 서술부의 경어체 어미를 해라체로 자동 치환
+- 예: "~했습니다" -> "~했다", "~보였습니다" -> "~보였다"
+
+---
+
+## 퀘스트 방향 힌트 (pendingQuestHint)
+
+`server/src/turns/turns.service.ts` — FACT 발견 후 힌트 생성
+`server/src/llm/prompts/prompt-builder.service.ts` — HINT_DIRECTIVES 프롬프트 삽입
+
+### 동작 흐름
+
+```
+FACT 발견 (이번 턴)
+  → quest.json에서 해당 fact의 nextHint 조회
+  → RNG로 5가지 hintMode 중 하나 선택
+  → pendingQuestHint = { hint, setAtTurn, mode } 저장 (RunState)
+  → 다음 턴 LLM 프롬프트에서 HINT_DIRECTIVES로 전달
+  → setAtTurn < turnNo-1 이면 만료 삭제 (1턴 소비)
+```
+
+### 5가지 hintMode
+
+| hintMode | 전달 방식 |
+|----------|----------|
+| OVERHEARD | 지나가는 사람들의 대화 일부가 귀에 스쳐 들어오는 장면 |
+| DOCUMENT | 바닥에 떨어진 낡은 쪽지/찢긴 영수증/반쯤 지워진 메모 발견 |
+| SCENE_CLUE | 환경에서 이상한 점(발자국, 긁힌 자국, 열린 문) 포착 |
+| NPC_BEHAVIOR | 근처 인물이 수상한 행동(서류 급히 숨기기, 골목으로 사라지기) 목격 |
+| RUMOR_ECHO | 이전에 들었던 소문/정보가 현재 상황과 연결되는 순간 |
+
+- 서버 RNG(`rng.range`)로 모드를 무작위 선택하여 매번 다른 전달 방식 사용
+- LLM 프롬프트에서 `[단서 방향]` 블록으로 삽입 (HINT_DIRECTIVES 매핑)
+- 힌트 내용(hint) 자체는 quest.json의 `nextHint` 필드에서 가져옴

@@ -3,7 +3,7 @@
 > 원본 참조: `State_Storage_Spec_v1.md`, `specs/political_narrative_system_v1.md`, `specs/llm_context_memory_v1_1.md`
 > 상태: **구현 완료** — NPC 감정 모델, 소개 시스템, TurnOrchestration NPC 주입, posture 계산, PBP, Off-screen Tick, Schedule/Agenda, knownFacts 점진 공개, 퀘스트 Fact 연동 구현됨. Leverage(타입만 정의) 미사용. LocationRuntimeState는 Living World v2(21번)로 대체.
 > 의존: WorldState (구현됨), Reputation (구현됨), TurnOrchestration (구현됨), QuestProgression (구현됨)
-> 마지막 갱신: 2026-04-01 (NPC ID 정규화, knownFacts-Quest 연동, P0~P5 밸런싱)
+> 마지막 갱신: 2026-04-03 (NPC 대사 품질 개선, 대화 잠금, 프리셋 6종 반영)
 
 ---
 
@@ -155,6 +155,52 @@ interface NpcAgenda {
 - **상호작용 유형**: 협력(같은 세력), 갈등(대립 세력), 정보 교환
 - **결과**: WorldFact 생성, NPC 감정 상태 변동, Signal Feed 시그널 발생
 - **플레이어 관찰 가능**: 해당 장소에 플레이어가 있으면 상호작용이 이벤트/서술에 반영
+
+### 1.9 NPC 대사 품질 개선 시스템
+
+NPC 대화의 일관성과 품질을 높이기 위한 다층 시스템이 구현되었다.
+
+#### 2-Stage Reaction (판정 연동 반응)
+
+NPC 반응은 2단계로 구성된다:
+1. **Dice Roll 반응**: ResolveService 판정 결과(SUCCESS/PARTIAL/FAIL)에 따른 즉각 반응
+2. **Trust-based Reveal**: 현재 trust 수준에 따른 정보 공개 수준 결정. trust가 높을수록 더 깊은 정보(knownFacts)를 공개한다.
+
+#### NpcLlmSummary (LLM 컨텍스트 주입)
+
+NPC별 LLM 컨텍스트에 다음 요약 정보가 주입된다:
+- **moodLine**: NPC의 현재 감정 상태 한줄 요약 (5축 감정 기반 자동 생성)
+- **behaviorGuide**: 현재 posture에 따른 행동 지침 (예: CAUTIOUS → "경계하며 짧게 대답")
+- **recentTopics**: 최근 대화에서 언급된 주제 목록 (대화 연속성 보장)
+
+#### 대화 잠금 (Conversation Lock, 최대 4턴)
+
+대화 계열 행동(TALK/PERSUADE/BRIBE/THREATEN/HELP) 시 같은 이벤트/NPC와 최대 4턴 연속 유지된다.
+- 대화 잠금 중에는 동일 NPC 이벤트가 우선 매칭됨
+- 비대화 행동(SNEAK/STEAL/FIGHT) 시 NPC 연속성이 즉시 해제됨
+- 턴 카운터가 잠금 턴 수를 추적
+
+#### LLM 후처리 필터 (P1-P5)
+
+LLM 생성 서술에 대해 5단계 후처리 검증을 수행한다:
+- **P1**: NPC 이름 일관성 -- 미소개 NPC의 실명이 노출되지 않았는지 검증
+- **P2**: posture 일관성 -- NPC의 현재 posture와 대사 톤이 일치하는지 검증
+- **P3**: 정보 누출 방지 -- 미공개 knownFacts가 서술에 노출되지 않았는지 검증
+- **P4**: 장면 연속성 -- 이전 턴 서술과의 시공간 일관성 검증
+- **P5**: 감정 톤 일관성 -- NPC 감정 상태와 대사의 감정 톤 일치 검증
+
+### 1.10 프리셋별 NPC 태도 오버라이드
+
+6종 캐릭터 프리셋(DOCKWORKER, DESERTER, SMUGGLER, HERBALIST, FALLEN_NOBLE, GLADIATOR)은 각각 `npcPostureOverrides` 필드를 가진다. 이를 통해 프리셋 배경에 따라 특정 NPC의 초기 posture가 달라진다.
+
+| 프리셋 | 주요 오버라이드 |
+|--------|---------------|
+| DOCKWORKER | 하를런 FRIENDLY, 노동 길드 NPC 우호적 |
+| DESERTER | 벨론 대위 CAUTIOUS (수배 인지), 경비대 경계 |
+| SMUGGLER | 쉐도우 FRIENDLY, 밀수 관련 NPC 우호적 |
+| HERBALIST | 미렐라 FRIENDLY, 세력 무관하게 중립적 |
+| FALLEN_NOBLE | 귀족 구역 NPC FRIENDLY, 하층민 NPC CAUTIOUS |
+| GLADIATOR | 빈민가/부두 NPC FRIENDLY, 귀족 NPC HOSTILE |
 
 ---
 

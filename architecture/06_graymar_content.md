@@ -51,7 +51,7 @@ HUB (7개 LOCATION 선택)
 | # | 파일명 | 용도 | 주요 키 |
 |---|--------|------|---------|
 | 1 | `player_defaults.json` | 기본 플레이어 스탯/장비 (미사용, presets로 대체) | -- |
-| 2 | `presets.json` | 4종 캐릭터 프리셋 | presetId |
+| 2 | `presets.json` | 6종 캐릭터 프리셋 | presetId |
 | 3 | `enemies.json` | 적 9종 정의 | enemyId |
 | 4 | `encounters.json` | 전투 조합 9종 + 보상 | encounterId |
 | 5 | `items.json` | 아이템 카탈로그 (단서 3 + 소모품 + 키 아이템) | itemId |
@@ -59,7 +59,7 @@ HUB (7개 LOCATION 선택)
 | 7 | `factions.json` | 세력 4개 + 초기 평판 | factionId |
 | 8 | `quest.json` | 메인 퀘스트 상태/Fact 정의 | questId |
 | 9 | `locations.json` | 7개 LOCATION 정의 | locationId |
-| 10 | `events_v2.json` | HUB 이벤트 112개 (7개 LOCATION, eventCategory 포함) | eventId |
+| 10 | `events_v2.json` | HUB 이벤트 123개 (7개 LOCATION, eventCategory 포함, discoverableFact 43개) | eventId |
 | 11 | `scene_shells.json` | LOCATION x TimePhase x Safety 분위기 텍스트 (v1) | locationId.timePhase.safety |
 | 12 | `scene_shells_v2.json` | 확장 분위기 텍스트 (v2) | locationId.timePhase.safety |
 | 13 | `suggested_choices.json` | eventType별 선택지 템플릿 | eventType |
@@ -118,11 +118,11 @@ scene_shells[locationId][timePhase][safety] → 분위기 텍스트 (1~2문단)
 
 ---
 
-## 4. 이벤트 시스템 (112개)
+## 4. 이벤트 시스템 (123개)
 
 ### 4.1 이벤트 분포
 
-`events_v2.json`에 112개 이벤트가 정의되어 있다 (7개 LOCATION).
+`events_v2.json`에 123개 이벤트가 정의되어 있다 (7개 LOCATION). 기본 112개 + 퀘스트 Fact 이벤트 11개가 추가되었다. Fact 이벤트는 `discoverableFact` 필드를 가지며, NPC 대화/조사를 통해 퀘스트 Fact를 점진적으로 공개한다.
 
 | LOCATION | 이벤트 수 | eventType 구성 |
 |----------|----------|----------------|
@@ -145,6 +145,8 @@ scene_shells[locationId][timePhase][safety] → 분위기 텍스트 (1~2문단)
 | CHECKPOINT | 경비대 검문. 통과/회피 판정 | 1~2 |
 | AMBUSH | 적대적 조우. 전투 전환 가능 | 2 |
 | ARC_HINT | 아크 진행 힌트. Fact/Arc 조건 필요 | 2 |
+| ENCOUNTER | 일반 조우. NPC/상황 기반 | 0~1 |
+| OPPORTUNITY | 기회 이벤트. 행동 보상 가능 | 0~1 |
 | FALLBACK | 기본 탐색. 조건 없음, weight 최고 | 0 |
 
 ### 4.3 이벤트 매칭 흐름
@@ -195,9 +197,9 @@ EventMatcherService의 6단계 필터링:
 
 ---
 
-## 5. 캐릭터 프리셋 (4종)
+## 5. 캐릭터 프리셋 (6종)
 
-`presets.json`에 4종 프리셋이 정의된다. 런 생성 시 플레이어가 하나를 선택한다.
+`presets.json`에 6종 프리셋이 정의된다. 런 생성 시 플레이어가 하나를 선택한다.
 
 ### 5.1 프리셋 비교
 
@@ -207,6 +209,8 @@ EventMatcherService의 6단계 필터링:
 | DESERTER | 탈영병 | 추적받는 검 | 균형 근접 | 100 | 5 | 17 | 11 | 7 | 3 | 5 | 5 | 45 |
 | SMUGGLER | 밀수업자 | 어둠의 운반책 | 회피/치명타 | 80 | 6 | 14 | 7 | 5 | 7 | 8 | 7 | 60 |
 | HERBALIST | 약초상 | 뒷골목 약사 | 아이템 활용 | 90 | 7 | 11 | 9 | 6 | 4 | 4 | 4 | 40 |
+| FALLEN_NOBLE | 몰락 귀족 | 잃어버린 왕관 | 외교/정치 | 85 | 5 | 10 | 8 | 4 | 3 | 3 | 4 | 80 |
+| GLADIATOR | 검투사 | 투기장의 사자 | 공격 특화 | 110 | 6 | 19 | 10 | 8 | 5 | 7 | 6 | 25 |
 
 ### 5.2 프리셋 상세
 
@@ -233,6 +237,18 @@ EventMatcherService의 6단계 필터링:
 - 초기 아이템: 하급 치료제 x2, 독침 x2, 체력 강장제 x1
 - 강점: 최고 STA(7) + 최고 RESIST(9) + 풍부한 초기 아이템. 아이템 전술 전투.
 - 약점: 최저 ATK(11). 직접 공격력이 낮다.
+
+**몰락 귀족 (FALLEN_NOBLE)**
+- 배경: 왕실 변방 귀족 가문 출신. 궁정 음모에 휘말려 작위와 영지를 잃고 도시로 흘러들어왔다.
+- 초기 아이템: 고급 치료제 x1, 봉인된 서신 x1
+- 강점: 최고 초기 골드(80). 높은 cha/wit 기반 외교/탐색에 유리. npcPostureOverrides로 귀족 구역 NPC 태도 우호적.
+- 약점: 낮은 전투 스탯. 직접 전투 회피가 필수.
+
+**검투사 (GLADIATOR)**
+- 배경: 왕국 남부 투기장에서 전승 기록을 세운 전사. 흥행주의 착취에 반발해 탈출, 항만 도시로 도주했다.
+- 초기 아이템: 하급 치료제 x1
+- 강점: 최고 ATK(19) + 높은 CRIT(7). 공격 특화 전투.
+- 약점: 초기 골드 최저(25). 외교/은밀 스탯이 낮다.
 
 ---
 
@@ -282,6 +298,10 @@ NPC는 **CORE / SUB / BACKGROUND** 3계층으로 구분된다.
 #### BACKGROUND NPC (25명)
 
 장소별 배경 NPC로, 스케줄 시스템에 따라 시간대별 위치가 결정된다. 플레이어와 직접 대화 가능하나, 개별 감정 모델 없이 간단한 반응만 제공한다.
+
+#### NPC 콘텐츠 다채화
+
+42명 NPC 전원에 `gender` 필드가 추가되었고, `role` 서술이 다양화되었다. CORE/SUB NPC 중 17명에게 `knownFacts`(점진 공개 단서)와 `linkedIncidents`(연관 사건)가 설정되어 퀘스트 Fact 시스템과 연동된다.
 
 #### NPC Schedule 필드
 
@@ -361,7 +381,26 @@ NPC는 **CORE / SUB / BACKGROUND** 3계층으로 구분된다.
 | 2 | arc_guard_2 | LOC_GUARD | 야간 순찰 기록 조사. 병영 수색 | FACT_OFFICIAL_INQUIRY, 단서, 40G |
 | 3 | arc_guard_3 | LOC_GUARD | 체포 영장 집행. 마이렐 제압 | FACT_INSIDE_JOB, 80G, 경비대 평판 +25 |
 
-### 7.5 아크 커밋먼트
+### 7.5 퀘스트 시스템 (`quest.json`)
+
+메인 퀘스트 `MAIN_Q1_LEDGER`의 전체 진행을 관리한다.
+
+**Fact 키** (11개): `FACT_LEDGER_EXISTS`, `FACT_WAGE_FRAUD_PATTERN`, `FACT_TAMPERED_LOGS`, `FACT_ROUTE_TO_EAST_DOCK`, `FACT_INSIDE_JOB`, `FACT_SMUGGLE_ROUTE_GUILD`, `FACT_MAIREL_GUILD_EVIDENCE`, `FACT_OFFICIAL_INQUIRY`, `FACT_MAIREL_GUARD_EVIDENCE`, `FACT_SHADOW_INTEL`, `FACT_BOTH_SIDES_EVIDENCE`
+
+**상태 전환** (6단계):
+
+| 상태 | 이름 | 전환 조건 (requiredFacts) |
+|------|------|--------------------------|
+| S0_ARRIVE | 도착 | 초기 상태 |
+| S1_GET_ANGLE | 단서 포착 | FACT_LEDGER_EXISTS |
+| S2_PROVE_TAMPER | 조작 증명 | FACT_WAGE_FRAUD_PATTERN + FACT_TAMPERED_LOGS |
+| S3_TRACE_ROUTE | 경로 추적 | FACT_ROUTE_TO_EAST_DOCK |
+| S4_CONFRONT | 대면 | FACT_INSIDE_JOB |
+| S5_RESOLVE | 해결 | Arc Route별 최종 증거 |
+
+**QuestProgressionService**: 매 턴 `discoveredQuestFacts` 누적 → `quest.json`의 `stateTransitions` 조건 충족 시 `questState` 자동 전환. SituationGenerator 바이패스로 미발견 Fact 이벤트 매칭을 보장한다.
+
+### 7.6 아크 커밋먼트
 
 - ArcService가 commitment 값을 관리한다.
 - 이벤트의 `commitmentDeltaOnSuccess` 필드로 해당 아크 commitment가 누적된다.
