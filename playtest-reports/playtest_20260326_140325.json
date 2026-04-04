@@ -1,0 +1,2647 @@
+{
+  "meta": {
+    "preset": "DESERTER",
+    "gender": "male",
+    "maxTurns": 20,
+    "actualTurns": 20,
+    "timestamp": "2026-03-26 14:03:25"
+  },
+  "runId": "09e293ba-cf13-4ad3-bff0-d65aaae4338e",
+  "turns": [
+    {
+      "turn": 1,
+      "turnNo": 0,
+      "nodeType": "HUB",
+      "input": "CHOICE:accept_quest",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "[SKIPPED_PROLOGUE]"
+    },
+    {
+      "turn": 2,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_market",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "[SKIPPED_PROLOGUE]"
+    },
+    {
+      "turn": 3,
+      "turnNo": 3,
+      "nodeType": "LOCATION",
+      "input": "ACTION:사람들에게 말을 건다",
+      "hp": 100,
+      "eventId": "EVT_MARKET_ENC_DISPUTE",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 주변의 상인들에게 말을 걸려 하자, 그 틈에 날카로운 눈매의 회계사가 멀찍이 서서 당신을 지켜보고 있었다. 그의 입술이 가늘게 일그러져 긴장한 기색이 역력하고, 손가락으로 허리춤에 걸린 장부를 가볍게 톡톡 건드렸다. 고개를 살짝 갸웃하며 조용히 말했다.\n\n\"그대, 이 상황에 깊이 관여하는 것이 현명한지 모르겠소. 이 시장의 질서는... 숫자로만 말할 수 없소만, 서로가 지키려는 선이 있음을 기억하시오.\"\n\n그의 눈빛이 잠시 흔들렸으나 곧 다시 예리하게 초점을 맞추며 말을 이었다.\n\n\"내가 아는 바에 따르면, 이 자리의 경계는 단순한 선이 아니오. 허가증이란 것도 때로는 여러 해석이 가능하오. 다만, 그대가 어디 편인지 분명히 해야 할 것이오. 시끄럽게 굴면 모두가 손해를 보니까 말이오.\"\n\n그는 주위를 슬쩍 둘러보며 목소리를 낮췄다. 한숨을 내쉬고는 수치를 나열하는 듯한 말투로 덧붙였다.\n\n\"장부를 꼼꼼히 검토해 보았소. 셋째 줄, 네 번째 칸의 수치는 의심스럽소만, 누가 감히 그 숫자를 건드렸는지는 아직 확실치 않소. 그대가 그런 점에 관심이 있다면, 신중히 움직이시오.\"\n\n그는 말끝을 흐리며 당신을 살짝 쳐다봤다. 그의 태도에서 불안과 경계가 교차하는 모습이 엿보였다. 뒤따르는 시선들 속에서 그는 조용히 몸을 돌려 인파 속으로 사라지지 않고 머뭇거렸다. 주변 상인들의 눈길은 여전히 두 상인의 거친 말다툼에 머물러 있었지만, 그 회계사의 의심스러운 행동이 당신과 이 상황에 묘한 긴장감을 더한다."
+    },
+    {
+      "turn": 4,
+      "turnNo": 4,
+      "nodeType": "LOCATION",
+      "input": "ACTION:설득한다",
+      "hp": 100,
+      "eventId": "EVT_MARKET_ENC_DISPUTE",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 다시 한 번 차분한 어조로 날카로운 눈매의 회계사에게 다가서자, 그는 살짝 몸을 굽혀 눈을 가늘게 떴다. 당신의 설득 시도에 대한 반응인지 그의 손가락이 미세하게 장부 가장자리를 쓸었다. \n\n\"그대는 이 장부를 다르게 보려는 모양이오. 수치가 잘못된 게 아니라, 그 숫자들의 배치가 이상하다는 말일 수도 있겠소.\" 회계사의 목소리는 조심스러웠으나, 이내 말을 이었다. \"내가 보기에, 특정 페이지의 서명란 아래쪽에 이런 자국이 있소.\" 그는 손끝으로 장부 한쪽 구석을 가리켰다. 잉크가 번진 듯한 얼룩이 희미하게 남아 있었다.\n\n그는 잠시 숨을 고르며 주변을 흘낏 살폈다. \"하지만 이걸 입증할 증거는 아직 없소. 더 깊이 파고들려면, 누군가의 협조가 필요하오.\" 그의 미세하게 떨리는 음성 속에는 불안이 배어 있었다. \"이런 일에 감히 뛰어들려는 그대라면, 위험을 각오해야 할 것이오.\"\n\n회계사는 당신을 향해 손을 뻗어 장부를 살짝 밀어 놓았다. 그의 눈빛에는 무언가를 간절히 호소하는 듯한 기색이 섞여 있었다. 그러나 말은 더 이상 나오지 않았다. 그가 몸을 살짝 뒤로 빼며 인파 속으로 물러나려는 순간, 그의 주위 다른 상인들의 시선이 다시 두 상인의 거친 말다툼 쪽으로 쏠렸다.\n\n당신의 시선과 회계사의 눈빛이 짧게 교차했다."
+    },
+    {
+      "turn": 5,
+      "turnNo": 5,
+      "nodeType": "LOCATION",
+      "input": "ACTION:경비병의 동태를 살핀다",
+      "hp": 100,
+      "eventId": "SIT_CONSEQUENCE_fact_player_action_t5_9822",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 두 상인의 다툼 현장에서 경계심을 늦추지 않은 채 주위를 훑었다. 근처를 맴도는 경비병들의 움직임이 눈에 들어왔다. 그중 한 명이 걸음걸이는 느렸으나 예의 주시하는 태도로 좌판 주변을 살핀다. 그의 눈빛은 날카로워 군기가 서려 있었다.\n\n그 순간, 권위적인 야간 경비 책임자가 당신 옆으로 서 있었다. 그의 군복 단추는 반짝이고, 손에는 확고한 권위를 드러내는 가죽 장갑이 끼워져 있었다. 무심한 표정으로 당신을 바라보며 낮고 단호한 목소리로 말했다.\n\n\"그대, 이 시각에 무슨 용무요?\"\n\n그의 눈빛은 계산적이었다. 주변 경비병들의 안위를 우려하는 듯했으나, 동시에 이 상황에서 어떤 이득을 취할까 고심하는 낌새도 감지되었다. 당신이 경비병들의 동태를 살핀다는 사실을 그는 이미 알아챈 듯, 말을 잇지 않고 당신의 반응을 기다린다.\n\n바람이 불어 주변의 좌판 천막이 살짝 펄럭였고, 먼 한쪽에서는 두 상인이 여전히 자리 싸움을 이어가고 있다. 책임자의 시선은 그들에게서 잠시 떼어졌다가 다시 당신에게로 돌아왔다.\n\n\"명령을 어기는 자에게 관용은 없소. 그대도 경계는 늦추지 말게.\" 그의 목소리에 긴장이 담겨 있었다.\n\n책임자의 말투와 태도는 확실히 이 자리를 장악하는 존재임을 분명히 했다. 그는 주변 경비들의 신뢰와 충성을 바탕으로 이곳의 질서를 유지하려 애쓰는 듯했다.\n\n당신의 행동을 묵묵히 지켜보는 그의 눈빛 속에서, 앞으로 어떻게 움직일지에 대한 판단이 엿보였다."
+    },
+    {
+      "turn": 6,
+      "turnNo": 6,
+      "nodeType": "LOCATION",
+      "input": "ACTION:골목길 벽에 기대어 주변을 관찰한다",
+      "hp": 100,
+      "eventId": "EVT_MARKET_ENC_BUSKER",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 골목길 벽에 몸을 기대어 주변을 살폈다. 낮은 자세와 그림자 덕에 시야를 확보한 채, 시장 골목의 소음과 움직임을 면밀히 파악했다. 먼발치에서 권위적인 태도의 야간 경비 책임자가 무겁고 단호한 걸음걸이로 골목 입구 쪽을 응시하고 있다. 그의 눈길이 당신을 스치자, 그는 무표정하게 고개를 약간 갸웃하며 입을 열었다.\n\n\"그대, 이 시각에 무슨 용무요?\" \n\n그의 목소리는 짧고 단호했다. 팔짱을 끼고 서 있는 그의 자세에서 경계가 묻어났다. 주변을 한 번 훑으며 그는 낮게 덧붙였다.\n\n\"명령을 어긴 자에겐 관용이 없소. 이 골목에서 수상한 행동을 보인다면, 그대 역시 예외가 아니오.\"\n\n그의 시선이 당신의 동작을 면밀히 훑었다가, 잠시 말없이 골목 안쪽을 바라본다. 그러고는 조용히 한숨을 내쉬며 말했다.\n\n\"이 동네는 말이오, 눈에 띄는 일이 잦소. 그대도 그 일을 뒤쫓는가? 아니면 단지 호기심뿐이오?\" \n\n그의 목소리에 피곤이 밴 듯했으나 여전히 계산적인 냉정함이 느껴졌다. 당신의 움직임 하나하나를 주시하는 그의 태도에서, 이곳에서 영향력을 행사하는 권력이 실감났다.\n\n그가 손가락으로 골목 끝쪽을 가리키며 말했다.\n\n\"길을 잘못 들면, 그대가 감당하기 어려운 걸음걸이로 빠질 수 있소. 좋은 조언일세.\"\n\n당신을 둘러싼 공기가 순간 긴장으로 무거워졌다. 그의 차가운 시선이 여전히 당신에게 머물렀다."
+    },
+    {
+      "turn": 7,
+      "turnNo": 7,
+      "nodeType": "LOCATION",
+      "input": "ACTION:move_location",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 시장 거리를 뒤로하고 발걸음을 돌렸다. 주변 상인들의 분주한 움직임과 뒤섞인 소음이 점차 멀어지면서, 골목길 어귀가 가까워졌다. 발밑에 군데군데 떨어진 낡은 나뭇조각과 자갈이 소리 없이 밟혔다.\n\n바람결에 먼지 냄새가 살짝 흩날렸고, 길모퉁이에서는 멀리 선술집 간판의 낡은 철제 닻 모양이 희미하게 보였다. 당신의 등 뒤에서는 상인들의 말다툼 소리가 여전히 요란했다. 그러나 그 소리는 당신의 발걸음을 방해하지 못했다. 조용한 밤이 다가옴을 알리는 하늘빛이 점점 어두워졌다.\n\n당신이 잠긴 닻 선술집 쪽으로 향하는 동안, 골목 끝에서 한 사내가 무심히 담배연기를 내뿜으며 어둠 속에 섞여 있었다. 그는 당신의 움직임을 흘낏 바라보다 이내 고개를 돌렸다. 주변에는 경계가 서려 있었다.\n\n곧 선술집 문 앞에 도착했다. 낡은 나무 문짝에 걸린 닻 모양의 문패가 바람에 가볍게 흔들렸다. 안에서는 누군가 낮게 웃는 소리와 잔 부딪히는 소리가 흘러나왔다. 거리의 소란과는 달리 이곳은 상대적으로 안정된 공간임을 알렸다.\n\n당신의 손이 문고리를 감싸자, 내부의 따뜻한 공기가 바깥의 차가운 공기와 교차했다. 문 너머에서 들려오는 불빛과 사람들의 음성이 잠시 당신을 맞이했다."
+    },
+    {
+      "turn": 8,
+      "turnNo": 9,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_guard",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 시장 거리를 뒤로하고 경비대 지구 쪽으로 걸음을 옮겼다. 좁은 골목을 지나며 주변의 소란스러운 상인들의 목소리와 발걸음 소리가 점차 잦아들었다. 발밑의 자갈들이 단단한 돌바닥으로 바뀌고, 군복을 입은 인물들의 무거운 걸음 소리가 어깨 너머로 들려왔다.\n\n경비대 지구 입구에 다다르자, 중무장한 경비병들이 움직임을 조심스레 주시하는 모습이 눈에 들어왔다. 그들은 무겁고 단단한 갑옷을 입고, 손에 든 창끝이 햇살을 반사했다. 주변 벽에는 경계심을 불러일으키는 경계 표지판과 함께 낡은 금속으로 된 문과 창살이 자리 잡고 있었다.\n\n당신이 발걸음을 멈추자, 멀리서 권위적인 야간 경비 책임자가 무거운 발걸음으로 걸어오는 모습이 보였다. 그의 시선이 당신을 스치고, 굳은 표정으로 주변을 살폈다. 그가 손짓으로 가까운 부하들에게 무언가 지시하는 듯했다.\n\n바람이 불면서 먼지와 잔잔한 금속성 냄새가 섞여 코끝을 스쳤다. 주변의 중무장한 경비병들은 긴장된 분위기 속에서 경계 태세를 유지했다. 당신의 눈앞에는 경비대 지구의 차가운 기운이 흐르고 있었다."
+    },
+    {
+      "turn": 9,
+      "turnNo": 11,
+      "nodeType": "LOCATION",
+      "input": "ACTION:골목길 벽에 기대어 주변을 관찰한다",
+      "hp": 100,
+      "eventId": "PROC_12",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 골목길의 벽에 등을 기대고 어둠 속 주변을 면밀히 살폈다. 촉촉한 밤공기와 함께 멀리서 들려오는 발걸음 소리가 점차 가까워지자, 그 자리에 자연스레 긴장이 감돌았다. 권위적인 야간 경비 책임자가 무심한 듯한 표정으로 서서 당신과 시선을 맞추었다. 그의 눈빛은 계산적이고 냉철했다.\n\n그는 짧게 숨을 내쉬며 말했다. \"그대, 이 시각에 무슨 용무요?\" 그의 목소리에는 단호함이 묻어났다. 주변 골목을 스캔하는 그의 눈길이 어느 순간 멈추며, 벽 너머 어딘가를 짧게 가리켰다. \"밤은 길고, 눈 여겨야 할 곳은 많소. 방심은 금물이라 하오.\" 그의 말투에는 경계와 함께 감춰진 무언가를 암시하는 냉기가 섞여 있었다.\n\n그는 긴장을 늦추지 않은 채 고개를 살짝 기울이며 당신의 반응을 살폈다. 그의 자세는 여전히 엄중했으나, 당신의 관찰에 어떤 이해를 표하려는 듯했다. 그러나 말은 더 이상 이어지지 않았다. 골목 끝에서 희미한 발소리가 멀어져 가는 가운데, 그의 눈빛은 다시 주변을 훑으며 경계심을 더했다."
+    },
+    {
+      "turn": 10,
+      "turnNo": 12,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:encounter_help",
+      "hp": 100,
+      "eventId": "EVT_GUARD_ENC_NOTICE",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 골목 모퉁이에 몸을 기댄 채 눈을 가늘게 뜨자, 어둠 속에서 권위적인 자태의 야간 경비 책임자가 천천히 걸음을 멈추었다. 그의 제복 어깨마다 붙은 견장은 불빛을 받아 은은하게 반짝였으며, 짧게 깎은 머리카락 사이로 피곤함과 계산적인 눈빛이 교차했다. 주변 소음이 잠시 잦아드는 가운데, 그의 시선이 당신에게 닿았다. 무표정한 얼굴에 얇게 굳은 주름이 스치고, 고요한 목소리가 골목에 울렸다.\n\n\"그대, 이 시각에 무슨 용무요?\"\n\n그대란 호칭에 그의 권위가 묻어났다. 당신이 고개를 끄덕이며 도움을 제안하자, 그는 잠시 말없이 당신을 평가하는 듯한 눈길을 보냈다. 그리고 천천히 입을 열었다.\n\n\"상황이 복잡하오. 이번 야간 통행 규제 강화가 불필요한 혼란을 낳고 있다 해도, 명령은 명령이오. 부하들의 안전이 걸린 문제이니, 그대의 도움이 무엇인지 명확히 하시오.\"\n\n그의 음성에는 무게와 신중함이 서려 있었다. 당신이 경비대의 순찰 경로와 주변 이상 징후에 관한 정보를 제공하려는 듯 몸짓을 취하자, 그는 고개를 살짝 끄덕이며 대답했다.\n\n\"그렇소, 정보를 얻는 일이야 언제나 중요하오. 그러나 그대가 속한 세계가 어떤지 알고 있소. 대가 없는 도움은 없음을 기억하시오.\"\n\n그가 허리를 곧게 펴고 단호한 표정을 지었다. 골목 끝에서 새어 들어오는 희미한 등불빛이 그의 얼굴 윤곽을 더욱 선명하게 드러냈다. 차가운 밤공기 속에 그의 말은 단호한 결의처럼 울렸다. 주변에서 희미하게 들려오는 발자국 소리와 우측 멀리서 끓는 거리의 소음이 순간 조용해졌다. 그의 말투와 태도에는 경계가 분명했다. 하지만 동시에 부하들을 살피는 책임자로서의 무거운 짐도 엿보였다.\n\n그는 주머니에서 낡은 문서 하나를 꺼내어 살짝 펼친 후, 눈길만으로 당신을 응시했다.\n\n\"장부의 행방부터, 최근 움직임까지... 그대가 거둔 성과를 본다면, 진실로 그대의 협력이 반드시 필요할 수 있겠소.\"\n\n그가 한숨 섞인 숨을 내쉬며 말을 이었다.\n\n\"하지만 경계는 늦추지 마시오. 명령을 어긴 자에겐 관용이 없소. 그대가 그 사실을 명심하는지 묻고 싶을 따름이오.\"\n\n그의 시선이 당신을 뚫어지게 응시하며 골목 끝을 향했다. 그곳에는 어둠 속에서 무언가가 잠시 흔들리는 그림자가 스쳐 지나갔다. 긴장이 적막을 가르고, 당신은 그의 눈빛에서 계획과 판단의 무게를 느꼈다. 한참 동안 침묵이 흘렀다.\n\n마침내 그는 문서를 접고 무겁게 고개를 끄덕였다.\n\n\"그대가 진실을 찾고자 한다면, 그 대가 역시 준비하시오. 이곳에서 얻을 수 있는 것과 잃을 수 있는 것 모두를.\"\n\n그의 말이 끝나자, 차가운 밤바람이 골목을 가로질러 작은 자갈을 굴렀다. 그의 단호한 태도와 결연한 목소리가 아직도 당신 곁에 울려 퍼진다."
+    },
+    {
+      "turn": 11,
+      "turnNo": 13,
+      "nodeType": "LOCATION",
+      "input": "ACTION:설득한다",
+      "hp": 100,
+      "eventId": "EVT_GUARD_ENC_NOTICE",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 다시 말을 건네자, 권위적인 야간 경비 책임자가 무표정한 얼굴로 주위를 살폈다. 그가 한숨을 섞어 숨을 내쉬며 눈길을 돌렸다. \"그대, 이 시각에 무슨 용무요?\" 짧게 끊은 뒤, 그가 고개를 갸웃하며 덧붙였다. \"이 일에 관해선 신중을 기해야 하오. 부하들의 안전이 걸려 있소.\"\n\n그의 손이 벨트에 걸린 검자루를 슬쩍 만지작거렸다. \"내가 제공할 수 있는 정보는 대가가 필요하오. 그대 역시 내 입장을 이해하리라 믿소. 단순한 호의로 움직이지 않으니, 그 점 양해해 주시오.\" 그의 눈이 잠시 당신의 행동을 가늠하듯 날카롭게 스쳤다. 뒤편에서 경비병들이 경계를 늦추지 않는 듯 주위를 경계했다.\n\n한숨을 내쉬며 그는 고개를 살짝 숙였다. \"그대가 이 일을 어떻게 해결할지는 결국 그대 손에 달렸소. 하지만 명심하시오. 그대와 나 모두가 이 도시의 어둠 속에서 살아남으려 한다는 점을.\" 그의 목소리는 무겁고도 분명했다. \"부디 이 점을 간과하지 말고, 신중을 기해 주기를 바라오.\""
+    },
+    {
+      "turn": 12,
+      "turnNo": 14,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:grd_enc_not_read",
+      "hp": 100,
+      "eventId": "EVT_GUARD_ENC_NOTICE",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 공고문이 붙은 나무 게시판 앞으로 다가갔다. 잔뜩 구겨진 종이 위에 글자가 빼곡하다. 촛불이 바람에 흔들리며 글자들이 흔들리자, 당신의 눈은 신경 쓰이는 부분을 찾으려 빠르게 훑었다. 대로변에서 바람이 불어와 종이 가장자리가 살짝 말렸고, 몇몇 단어들이 쓸려나간 듯하다. 그런 와중에도 “야간 통행 통제 강화”와 “위반 시 엄중 처벌”이라는 문구가 눈에 들어왔다. 그러나 구체적인 시행 시점이나 예외 조항은 흐릿했다. 글자 사이로 여러 겹의 낙서와 지워진 흔적이 보였다.\n\n그때 권위적인 기운이 느껴져 시선을 돌리니, 마이렐 단 경이 나무 게시판 옆에 서 있었다. 그는 피곤한 기색을 감추지 못한 채 무표정하게 당신을 바라보았다. 그의 눈동자는 날카롭게 빛났지만, 곧 한숨을 섞어 말했다.\n\n“그대, 이 시각에 이곳에서 무엇을 찾으시오? 이런 공식 문서가 그대의 목적일 리 없을 텐데.”\n\n그는 한 손으로 공고문을 가볍게 가리켰다. 목소리에는 냉철함이 깃들었으나, 어딘가 계산적인 냄새가 섞여 있었다. “이런 문서에 의존하는 자는 아둔한 자일세. 그러나, 그대가 이 정보를 어떻게 활용할지 듣고 싶소.”\n\n그대의 시선이 공고문 옆 낙서 무리와 얼룩진 흔적을 가리키자, 마이렐 단 경가 잠시 생각에 잠긴 듯 고개를 끄덕였다. “문서에 남은 흔적이 의미심장하오. 하지만, 아무도 대가 없이 이런 정보를 내놓지 않소. 그대가 보여줄 대가가 무엇인지 말해보시오.”\n\n그가 주먹을 살짝 쥐며 조용히 덧붙였다. “그리고 경비대 내부에서도 이런 공고문이 불편한 자가 있소. 그 점도 기억하길 바라오.”\n\n그의 시선은 공고문과 주변을 한 번 더 훑고, 경계심 어린 표정을 지으며 당신을 멀리서 관찰하는 듯했다. 잔뜩 피곤한 기색에도 단호한 그의 태도는 이 일의 심각성을 알리고 있었다.\n\n마이렐 단 경가 고개를 약간 숙였다가, 다시 고개를 들어 당신을 응시했다. “그대가 이곳에 머무르는 이유가 무엇인지 분명히 하시오. 시간을 허비할 여유는 없소.”\n\n공고문에 남은 흔적과 낙서, 그리고 그가 내비친 대가의 요구가 머릿속을 맴돈다. 저택의 명예를 지키려는 그의 결단과 피곤한 모습이 뒤섞인 채 당신의 다음 움직임을 기다리고 있었다."
+    },
+    {
+      "turn": 13,
+      "turnNo": 15,
+      "nodeType": "LOCATION",
+      "input": "ACTION:move_location",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 경비대 지구의 골목을 벗어나 잠긴 닻 선술집 쪽으로 발걸음을 옮겼다. 밤공기가 차갑게 피부를 스치고, 등 뒤에 남아 있던 경비 책임자의 시선이 무겁게 느껴진다. 거리의 가로등 불빛이 바닥에 길게 늘어진 그림자를 드리우고, 당신의 발자국 소리가 좁은 골목을 메웠다.\n\n선술집 입구가 가까워지자, 가게 앞에 모여 있던 몇몇 사람들이 소곤거림을 멈추고 눈길을 돌렸다. 그중 한 가르마가 진한 노점상은 대화를 마치고 몸을 돌려 각자의 일로 흩어졌다. 당신이 문턱을 넘자, 잠긴 닻의 내부는 낮보다 조용했다. 바의 나무 껍질이 오래된 듯 삐걱거렸고, 주인장의 등 뒤로는 익숙한 망토와 칼자루가 보였다. 주인장은 당신을 향해 고개만 살짝 끄덕였고, 주변 손님들의 시선이 잠시 머물렀다 빠르게 흩어졌다. 분위기는 무겁지 않으나, 어딘가 긴장감이 배어 있었다.\n\n그 순간, 문 밖에서 바람이 한 차례 훑고 지나갔고, 멀리서 누군가의 발소리가 점점 잦아드는 듯했다. 선술집 안의 조명이 조금 더 환해졌고, 주인장은 당신의 움직임을 눈여겨보며 조용히 술잔을 닦았다."
+    },
+    {
+      "turn": 14,
+      "turnNo": 17,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_harbor",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 좁은 골목을 빠져나와 다시 항만 부두 쪽으로 방향을 틀었다. 밤바람이 짙은 염분 냄새를 실어 나르자, 바다에 가까워졌음을 알렸다. 주먹만 한 물방울들이 어깨를 차갑게 적시고, 부둣가의 삭은 나무들 사이로 선박들이 묵묵히 정박해 있다.\n\n바닥에는 젖은 밧줄과 땟자국이 선명했다. 발걸음을 재촉할수록 멀리서 들려오는 물결과 쇠사슬이 부딪히는 소리가 점점 커졌다. 검은 실루엣들은 간간이 움직였고, 저 멀리의 한창 떠들썩한 선술집은 아직 불을 밝히고 있었다.\n\n당신이 부두 끝자락에 다다르자, 출입을 통제하는 경비병들의 표정이 변하지 않은 채 어둠 속을 응시했다. 그들의 눈동자에 불빛이 반사되어 은은하게 빛난다. 부두의 공기는 이따금씩 짠내 섞인 바람 속에 긴장감이 배어 있는 듯했다.\n\n그 순간, 부두 한쪽 구석에 쌓인 상자 더미 위로 누군가가 빠르게 움직이는 그림자가 스쳤다. 선박 한 척 옆에서는 두 인부가 낮은 목소리로 무언가를 주고받는 듯했다. 당신의 시선이 그쪽으로 향하자, 그들은 순간적으로 몸을 낮추었다.\n\n밤의 항만 부두가 거대한 숨소리처럼 고요히 당신을 맞이했다."
+    },
+    {
+      "turn": 15,
+      "turnNo": 19,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:harbor_observe",
+      "hp": 100,
+      "eventId": "EVT_HARBOR_ARC_HINT",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "부두의 밤바람이 차가웠다. 어스름한 등불이 길게 드리운 부두 하역장에는 투박한 노동자 몇 명이 힘겹게 화물을 옮기고 있었다. 나무 상자들의 거친 바닥 소리와 쇠사슬이 끼익거리는 소리가 어우러진 가운데, 당신의 눈은 선착장 서쪽 구석에 몰려드는 그림자와 분주한 움직임을 좇았다. 이곳 저곳에 쌓인 배달 물품 사이로 덩치 큰 한 남자가 어깨를 짓누르는 해묵은 작업복을 입고 멀찍이 서 있었다.\n\n\"손님, 이런 밤에 부두에 나타난 거 보니 별일이 있나 보구먼.\" 그의 목소리는 굵고 거칠었으나, 눈가에 스며든 온화함이 묻어났다. 그의 손이 잠시 주먹을 풀고 고개를 끄덕이며 말을 이었다. \"여기서 일하는 자들 모두 이 무거운 짐처럼 신경이 곤두서 있소. 하지만 그대, 눈빛이 달라 보여서 그런가… 뭔가 알고 싶다는 뜻인가.\"\n\n그는 주변을 두리번거리며 낮게 속삭였다. \"요즘 부두엔 수상한 물건들이 자꾸 들어온다오. 특히 밤에 조용히 움직이는 배들 말이오. 하지만 누구도 직접 발을 들이밀지 못하는지라, 정보가 꽉 막혔소.\" 그의 목소리에는 짙은 피로가 배어 있었지만, 동시에 굳은 의지가 느껴졌다. \"내가 아는 한, 그 중 하나가 동쪽 부두 3번 선착장 근처에서 자주 머무르는데, 그곳 화물은 꼭꼭 숨기는 편이라오.\"\n\n투박한 노동자는 잠시 숨을 고르더니, 손으로 허리춤의 벨트를 만지작거렸다. \"그대 같은 이가 조용히 눈을 부려서 이곳 분위기를 살피는 건 좋다오. 부디, 무리하지 말고 몸 조심하시오. 이 부두도 더러는 거친 놈들이 눈에 띄니까.\"\n\n그의 한숨 뒤로 멀리서 갑판 위 목소리와 발걸음 소리가 들려왔다. 부두의 밤은 여전히 긴장과 불안을 밀어내며 흘러가고 있었다."
+    },
+    {
+      "turn": 16,
+      "turnNo": 20,
+      "nodeType": "LOCATION",
+      "input": "ACTION:골목길 벽에 기대어 주변을 관찰한다",
+      "hp": 100,
+      "eventId": "EVT_HARBOR_ARC_HINT",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "골목길 벽에 몸을 가볍게 기대자 거친 돌담의 차가운 감촉이 손끝에 전해졌다. 주변은 낮은 음영 속에 잠겨 있었으나, 먼 발치 부두 쪽으로선 목재 끄트머리들이 어슴푸레 빛났다. 바람이 약간 불어와 흙먼지를 실어 날렸고, 멀리서 하역하는 나무판자의 삐걱거림과 노동자들의 중얼거림이 들려왔다. 시선이 좁은 골목의 끝자락까지 미치자, 어스름 속에 덩치 큰 노동자가 천천히 걸어오는 모습이 보였다. 그의 발걸음은 무겁지만 느긋했고, 쉴 새 없이 긴 하루를 지낸 듯 어깨가 약간 처져 있었다.\n\n그가 벽 앞에 다다라 당신을 향해 거친 숨을 내쉬며 말을 건넸다. \"요새 이 바닥은 소란이 잦소. 그대도 느끼는 모양이군.\" 그의 목소리는 투박했지만, 섣부른 경계 대신 동료를 대하는 듯한 친근함이 묻어났다. 노동자의 눈은 짙은 그림자 속에서도 빛을 잃지 않았으며, 가끔 고개를 돌려 골목 안쪽을 조용히 살폈다. \"일 마치면 알아서 돌아가시오. 이 동네에선 눈을 크게 뜨고 다니는 게 상책이라오.\"\n\n당신의 시선이 골목 안쪽에서 움직이는 작은 그림자들에 머무르자, 노동자가 말을 이었다. \"아무래도... 누군가가 숨은 손을 쓰는 모양이요. 이 바닥에선 그런 일들이 끊이지 않지.\" 그의 말투에는 조심스러운 무게가 깃들었고, 동시에 자신이 겪은 고단한 시간들이 섞여 있었다. 한숨을 삼키는 듯한 그의 어깨가 잠시 떨렸다가 곧 굳어졌다. \"그 따위 소문은 흘려듣지 마시오... 알겠소? 그래도 진실은 알아야 하니까, 그대가 보는 대로 눈을 떼지 않는 게 좋겠소.\"\n\n노동자의 말이 끝나자 골목 너머에서 바람에 흔들리는 낡은 나무문이 삐걱거렸다. 작은 소리가 두 사람 사이의 긴장을 잠시 끊었다. 그는 땀에 젖은 이마를 닦으며 다정한 미소를 지었고, 거친 손으로 당신의 어깨를 가볍게 두드렸다. \"이 바다는 언제나 조용한 듯하지만, 물밑은 소용돌이치고 있으니 말이오. 함께 힘을 합치면 그 소용돌이를 이겨낼 수도 있겠지.\"\n\n당신의 시선은 다시 골목 안쪽으로 향했고, 노동자가 살짝 몸을 돌려 주변을 한 번 더 경계했다. 그가 낮게 덧붙였다. \"여기서 지낼 작정이라면, 몸조심하시오. 골목마다 눈과 귀가 있으니.\" 그의 말이 끝난 뒤, 잠시 침묵이 흘렀다. 바람결에 먼 바다에서 들려오는 파도 소리가 조용히 골목을 감싸며, 두 사람 사이에 묘한 이해와 긴장감이 공존했다."
+    },
+    {
+      "turn": 17,
+      "turnNo": 21,
+      "nodeType": "LOCATION",
+      "input": "ACTION:도움을 준다",
+      "hp": 100,
+      "eventId": "EVT_HARBOR_ARC_HINT",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "GOLD",
+        "NPC"
+      ],
+      "narrative": "당신이 부두 한켠에서 무거운 짐을 나르는 노동자에게 다가가자, 그의 얼굴에 잠시 미소가 스쳤다. 당신의 동작이 자연스러워 보였는지, 그는 멈추어 손에 들린 밧줄을 조용히 내려놓았다. 투박한 노동자의 목소리는 거칠었으나 온화함이 배어 있었다.\n\n\"그대, 이런 밤에 여기서 뭐 하오? 일 마치고 집에 가는 길이오, 아마.\" 그가 굵은 손을 턱 밑에 댄 채 낮은 톤으로 말을 이었다. \"이 부두는 요즘 말이 많지. 소문은 들었소. 하지만 진짜 문제는 소문보다 깊소.\"\n\n노동자는 주변을 살피며 한숨을 내쉬었다. \"밤마다 몰래 움직이는 배들이 있고, 우리 눈에는 안 보이는 손들이 움직이오. 그대 같은 이가 아니면 알기 힘든 일이지.\" 그의 눈가에 불신의 그림자가 어렸다.\n\n당신이 조심스레 자신이 도울 수 있음을 몸짓으로 표시하자, 노동자의 표정이 조금 누그러졌다. \"고맙소, 손님. 이런 일은 혼자 감당하기 힘든 법이오. 그대가 좀 더 지켜봐주면, 무거운 짐도 덜어주고 쓸모있는 정보도 얻을 수 있을 것이오.\"\n\n그가 주머니에서 낡은 조각 종이를 꺼내 당신에게 내밀었다. 종이에는 얼핏 보기에도 부두 작업 일정과 화물 목록으로 추정되는 낱말들이 적혀 있었다. 그러나 일부 글자는 검게 번져 읽기 어려웠다. \"이게 전부는 아니오. 하지만 시작은 될 것이오.\"\n\n주변으로는 밤바람에 실려오는 짐의 쇠사슬 소리와 멀리서 들려오는 바다의 파도 소리가 섞여 들렸다. 노동자는 당신의 반응을 살피며 이내 고개를 끄덕였다. \"일단 그 정도면 됐소. 더 깊은 이야기는 조용한 데서 해야 하오.\"\n\n그의 말투에선 부두에서의 긴장감과 동시에 동료애가 묻어났다. 그는 짧은 침묵 후에 덧붙였다. \"일 마치면 알아서 돌아가시오. 이 부두가 그대에게 부담이 되지 않길 바라오.\"\n\n그의 거친 손길이 당신의 어깨를 툭 친 뒤, 다시 무거운 짐을 들어 올리는 모습을 보았다. 주변 노동자 몇 명도 그의 행동을 조용히 지켜보았다."
+    },
+    {
+      "turn": 18,
+      "turnNo": 22,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:hbr_arc_investigate",
+      "hp": 100,
+      "eventId": "EVT_HARBOR_ARC_HINT",
+      "resolveOutcome": "PARTIAL",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 부두 하역장의 분주한 광경 속에서 노동자들의 동선을 면밀히 관찰한다. 끈질긴 반복 작업의 리듬이 일정한 패턴을 그리며, 무거운 나무 상자들이 사람들의 손길을 거쳐 적재된다. 상자마다 낡은 인장이 희미하게 남아있고, 몇몇 상자는 새것처럼 보였다가도 곧바로 다른 쪽 구석으로 옮겨졌다. 하역 과정 중 큰 소음 속에서도 특정 구역에서만 은밀한 움직임이 포착되었다. 평소와 다른 경계 심리가 어렴풋이 배어나는 기운이 감돌았다.\n\n그때, 투박한 노동자가 느릿하게 걸음을 옮기며 당신 옆에 섰다. 거친 손바닥으로 땀을 훔치며 낮은 목소리로 말을 건넸다.\n\n\"이 부두, 눈치 빠른 이가 알아차리겠소. 같은 일인데도 뭔가 달라졌거든. 물건이 제때 오지 않으면, 뒤가 복잡해지니 말이오. 일 마치면 어서 돌아가시오, 도움이 필요하면 말하시오.\"\n\n그의 표정은 피곤하지만, 동료로서의 의리와 신뢰가 묻어났다. 당신이 하역 동선을 가리키자, 그는 잠시 주위를 둘러보다가 말을 이었다.\n\n\"이런 반복 작업 속에도... 손길이 닿지 않는 부분이 있소. 아마도 그 일은 우리밖에 모르는 사람이 하겠지. 그대처럼 눈 여겨보는 이가 또 있다는 걸 알면, 상황이 조금은 달라질지도 모르겠소.\"\n\n그의 말투에는 쓸쓸함과 약간의 경계가 섞여 있었다. 주변에서 들려오는 쇠사슬 끼익거리는 소리, 그리고 먼 바다를 향한 갈매기 울음소리가 섞여 부두의 긴장감을 더했다.\n\n당신이 고개를 끄덕이자, 노동자는 다시 한숨을 내쉬며 등을 돌렸다. 그의 발걸음이 점차 멀어지며 하역장 한쪽 구석에선 누군가가 서둘러 상자를 숨기는 듯한 그림자가 스쳤다."
+    },
+    {
+      "turn": 19,
+      "turnNo": 23,
+      "nodeType": "LOCATION",
+      "input": "ACTION:move_location",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 항만 부두의 어둠이 깔린 골목을 뒤로하고 발걸음을 돌렸다. 밤공기에 섞인 짠내와 나무판자의 삐걱거림이 뒤편으로 멀어졌다. 부두 하역장의 소란스러운 움직임과 은밀한 화물 운반의 긴장감이 점점 사라지며, 당신의 시선은 이제 잠긴 닻 선술집이 자리한 항만가 쪽으로 향한다. 길가에 놓인 오래된 나무 상자들이 발목을 스치고, 가끔 곁을 지나는 행인들의 낮은 목소리가 희미하게 들렸다. 선술집이 머지않아 모습을 드러내자, 거리의 불빛이 어슴푸레한 실루엣을 비추었다. 선술집 입구 너머로는 사람들이 모여드는 소리와 잔잔한 웃음소리가 퍼져 나온다. 주변에 크게 달라진 흔적은 없었다."
+    },
+    {
+      "turn": 20,
+      "turnNo": 25,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_slums",
+      "hp": 100,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 부두의 소음과 짠내가 서서히 멀어지는 골목을 따라 발걸음을 옮겼다. 낡은 돌바닥이 아래서 삐걱거리며, 가로등 불빛은 오래된 건물들 사이로 희미하게 비쳤다. 찢어진 커튼이 달린 창문 너머로 거친 숨소리와 낮은 중얼거림이 섞여 들려왔다. 거리에 널린 쓰레기 더미 사이로는 작은 쥐들이 재빠르게 달아났다. 한쪽 벽에 덧칠된 그래피티가 빛바래 무심한 세월을 말해주었다.\n\n좁은 골목은 점점 더 어두워지고, 곳곳에 걸린 헐렁한 빨래가 바람에 흔들리며 삐걱거렸다. 멀리서 아이들의 희미한 웃음소리가 들리고, 금방이라도 누군가 뒤돌아볼 듯한 긴장된 공기가 감돌았다. 간간이 들리는 무거운 발걸음과 함께, 생계에 지친 이들의 숨소리가 주변을 채웠다. 거리는 부산했지만, 그 속에 묘한 고요함이 스며들어 있었다.\n\n당신의 시선이 골목 안쪽으로 깊게 파고들자, 낡은 목재문 앞에 초라한 구걸 여인이 몸을 웅크리고 앉아 있는 모습이 보였다. 그녀의 두 손은 구멍 난 숄을 꽉 쥐고 있었고, 눈은 어둠 속을 맴돌았다."
+    }
+  ],
+  "finalState": {
+    "hp": 100,
+    "gold": 47,
+    "npcStates": {
+      "NPC_ROSA": {
+        "funds": 50,
+        "npcId": "NPC_ROSA",
+        "agenda": "고아원 유지, 아이들 보호, 빈민가 안전",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_MIRELA": {
+        "funds": 50,
+        "npcId": "NPC_MIRELA",
+        "agenda": "약초 장사와 단골 관리, 시장 소문 수집",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_BG_BARD": {
+        "funds": 50,
+        "npcId": "NPC_BG_BARD",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_COOK": {
+        "funds": 50,
+        "npcId": "NPC_BG_COOK",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_RENNICK": {
+        "funds": 50,
+        "npcId": "NPC_RENNICK",
+        "agenda": "인맥 유지, 생존을 위한 줄타기",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_CLERK": {
+        "funds": 50,
+        "npcId": "NPC_BG_CLERK",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_DRUNK": {
+        "funds": 50,
+        "npcId": "NPC_BG_DRUNK",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_MOON_SEA": {
+        "funds": 50,
+        "npcId": "NPC_MOON_SEA",
+        "agenda": "상단 내부 정보 관리, 자기 안전 확보",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_RAT_KING": {
+        "funds": 50,
+        "npcId": "NPC_RAT_KING",
+        "agenda": "빈민가 지하 조직 유지, 정보 독점, 경비대의 접근 차단",
+        "network": 50,
+        "posture": "HOSTILE",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -10,
+        "encounterCount": 0
+      },
+      "NPC_BG_BEGGAR": {
+        "funds": 50,
+        "npcId": "NPC_BG_BEGGAR",
+        "agenda": "",
+        "network": 50,
+        "posture": "FEARFUL",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_BUTLER": {
+        "funds": 50,
+        "npcId": "NPC_BG_BUTLER",
+        "agenda": "",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_DOCKER": {
+        "funds": 50,
+        "npcId": "NPC_BG_DOCKER",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_SEO_DOYUN": {
+        "funds": 50,
+        "npcId": "NPC_SEO_DOYUN",
+        "agenda": "상단 장부 은폐, 개인 이익 추구",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 1,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 1,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 3,
+        "personalMemory": {
+          "encounters": [
+            {
+              "turnNo": 4,
+              "outcome": "PARTIAL",
+              "briefNote": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리라 주장하고, 다른",
+              "locationId": "LOC_MARKET",
+              "playerAction": "대화"
+            },
+            {
+              "turnNo": 5,
+              "outcome": "PARTIAL",
+              "briefNote": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리라 주장하고, 다른",
+              "locationId": "LOC_MARKET",
+              "playerAction": "설득"
+            },
+            {
+              "turnNo": 6,
+              "outcome": "SUCCESS",
+              "briefNote": "에드릭 베일이(가) 근처에 있다. 그의 태도에서 무언가 달라진 기색이 감지된다.",
+              "locationId": "LOC_MARKET",
+              "playerAction": "관찰"
+            }
+          ],
+          "knownFacts": [
+            "에드릭 베일이(가) 근처에 있다. 그의 태도에서 무언가 달라진 기색이 감지된다."
+          ],
+          "lastSeenTurn": 6,
+          "relationSummary": "경계, 중립",
+          "lastSeenLocation": "LOC_MARKET"
+        }
+      },
+      "NPC_BG_ARMORER": {
+        "funds": 50,
+        "npcId": "NPC_BG_ARMORER",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_BARMAID": {
+        "funds": 50,
+        "npcId": "NPC_BG_BARMAID",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_CUSTOMS": {
+        "funds": 50,
+        "npcId": "NPC_BG_CUSTOMS",
+        "agenda": "",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_VAGRANT": {
+        "funds": 50,
+        "npcId": "NPC_BG_VAGRANT",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_LORD_VANCE": {
+        "funds": 50,
+        "npcId": "NPC_LORD_VANCE",
+        "agenda": "도시 의회에서의 영향력 확대, 비밀 결사와의 유대 강화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -5,
+        "encounterCount": 0
+      },
+      "NPC_SERA_DOCKS": {
+        "funds": 50,
+        "npcId": "NPC_SERA_DOCKS",
+        "agenda": "창고구 이권 유지, 밀수품 중개료 확보, 자기 안전",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_YOON_HAMIN": {
+        "funds": 50,
+        "npcId": "NPC_YOON_HAMIN",
+        "agenda": "노동자 권리 보호, 부두 이권 사수",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_BG_GARDENER": {
+        "funds": 50,
+        "npcId": "NPC_BG_GARDENER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_DAME_ISOLDE": {
+        "funds": 50,
+        "npcId": "NPC_DAME_ISOLDE",
+        "agenda": "사교계 영향력 유지, 귀족들의 약점 수집, 남편의 죽음에 얽힌 진실 추적",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_GUARD_FELIX": {
+        "funds": 50,
+        "npcId": "NPC_GUARD_FELIX",
+        "agenda": "정의로운 경비병이 되기, 상관들의 부패를 이해하고 대처하기",
+        "network": 50,
+        "posture": "HOSTILE",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -10,
+        "encounterCount": 0
+      },
+      "NPC_INFO_BROKER": {
+        "funds": 50,
+        "npcId": "NPC_INFO_BROKER",
+        "agenda": "정보 거래로 이익 극대화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_OWEN_KEEPER": {
+        "funds": 50,
+        "npcId": "NPC_OWEN_KEEPER",
+        "agenda": "선술집의 중립 지대 유지, 단골 보호, 평화로운 장사",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 15,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 15,
+        "encounterCount": 0
+      },
+      "NPC_BAEK_SEUNGHO": {
+        "funds": 50,
+        "npcId": "NPC_BAEK_SEUNGHO",
+        "agenda": "밀수 루트 은폐, 생존",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 19,
+          "respect": 10,
+          "suspicion": 15,
+          "attachment": 10.399999999999999
+        },
+        "influence": 50,
+        "suspicion": 15,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 19,
+        "encounterCount": 1,
+        "personalMemory": {
+          "encounters": [
+            {
+              "turnNo": 20,
+              "outcome": "SUCCESS",
+              "briefNote": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이",
+              "locationId": "LOC_HARBOR",
+              "playerAction": "관찰"
+            },
+            {
+              "turnNo": 21,
+              "outcome": "SUCCESS",
+              "briefNote": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이",
+              "locationId": "LOC_HARBOR",
+              "playerAction": "관찰"
+            },
+            {
+              "turnNo": 22,
+              "outcome": "PARTIAL",
+              "briefNote": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이",
+              "locationId": "LOC_HARBOR",
+              "playerAction": "도움"
+            },
+            {
+              "turnNo": 23,
+              "outcome": "PARTIAL",
+              "briefNote": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이",
+              "locationId": "LOC_HARBOR",
+              "playerAction": "조사"
+            }
+          ],
+          "knownFacts": [
+            "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다. 선원들이 표식이 지워진 상자를 서"
+          ],
+          "lastSeenTurn": 23,
+          "relationSummary": "우호적, 약간의 신뢰",
+          "lastSeenLocation": "LOC_HARBOR"
+        }
+      },
+      "NPC_BG_MESSENGER": {
+        "funds": 50,
+        "npcId": "NPC_BG_MESSENGER",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_CAPTAIN_BREN": {
+        "funds": 50,
+        "npcId": "NPC_CAPTAIN_BREN",
+        "agenda": "치안 유지, 내부 부패 조사에 관심",
+        "network": 50,
+        "posture": "HOSTILE",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -15,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -15,
+        "encounterCount": 0
+      },
+      "NPC_KANG_CHAERIN": {
+        "funds": 50,
+        "npcId": "NPC_KANG_CHAERIN",
+        "agenda": "도시 치안 유지, 권력 기반 강화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -10,
+        "encounterCount": 5,
+        "personalMemory": {
+          "encounters": [
+            {
+              "turnNo": 7,
+              "outcome": "SUCCESS",
+              "briefNote": "시장 광장 분수대 앞에서 거리 악사가 류트를 켜며 풍자 노래를 부르고 있다. 가사 속에 항",
+              "locationId": "LOC_MARKET",
+              "playerAction": "관찰"
+            },
+            {
+              "turnNo": 12,
+              "outcome": "PARTIAL",
+              "briefNote": "경비대 순찰이 지나간다 노인이(가) 물건을 떨어뜨렸다 의문이 깊어진다",
+              "locationId": "LOC_GUARD",
+              "playerAction": "관찰"
+            },
+            {
+              "turnNo": 13,
+              "outcome": "PARTIAL",
+              "briefNote": "경비대 지구 입구 게시판에 새 공고문이 붙었다. 야간 통행 규제가 강화되었다는 내용이다. ",
+              "locationId": "LOC_GUARD",
+              "playerAction": "도움"
+            },
+            {
+              "turnNo": 14,
+              "outcome": "PARTIAL",
+              "briefNote": "경비대 지구 입구 게시판에 새 공고문이 붙었다. 야간 통행 규제가 강화되었다는 내용이다. ",
+              "locationId": "LOC_GUARD",
+              "playerAction": "설득"
+            },
+            {
+              "turnNo": 15,
+              "outcome": "PARTIAL",
+              "briefNote": "경비대 지구 입구 게시판에 새 공고문이 붙었다. 야간 통행 규제가 강화되었다는 내용이다. ",
+              "locationId": "LOC_GUARD",
+              "playerAction": "관찰"
+            }
+          ],
+          "knownFacts": [],
+          "lastSeenTurn": 15,
+          "relationSummary": "계산적, 경계하지만 대화 가능",
+          "lastSeenLocation": "LOC_GUARD"
+        }
+      },
+      "NPC_BG_FISHMONGER": {
+        "funds": 50,
+        "npcId": "NPC_BG_FISHMONGER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_HERB_CRONE": {
+        "funds": 50,
+        "npcId": "NPC_BG_HERB_CRONE",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_NOBLE_MAID": {
+        "funds": 50,
+        "npcId": "NPC_BG_NOBLE_MAID",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_ROPE_MAKER": {
+        "funds": 50,
+        "npcId": "NPC_BG_ROPE_MAKER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_SHOE_SHINE": {
+        "funds": 50,
+        "npcId": "NPC_BG_SHOE_SHINE",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_STREET_KID": {
+        "funds": 50,
+        "npcId": "NPC_BG_STREET_KID",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_GUARD_CAPTAIN": {
+        "funds": 50,
+        "npcId": "NPC_GUARD_CAPTAIN",
+        "agenda": "내부 부패 척결, 수비대 기강 확립",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_CAPTAIN_OLD": {
+        "funds": 50,
+        "npcId": "NPC_BG_CAPTAIN_OLD",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_DOG_HANDLER": {
+        "funds": 50,
+        "npcId": "NPC_BG_DOG_HANDLER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_FRUIT_VENDOR": {
+        "funds": 50,
+        "npcId": "NPC_BG_FRUIT_VENDOR",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_ANTIQUE_DEALER": {
+        "funds": 50,
+        "npcId": "NPC_BG_ANTIQUE_DEALER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_CARGO_INSPECTOR": {
+        "funds": 50,
+        "npcId": "NPC_BG_CARGO_INSPECTOR",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_WAREHOUSE_GUARD": {
+        "funds": 50,
+        "npcId": "NPC_BG_WAREHOUSE_GUARD",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      }
+    },
+    "worldState": {
+      "hubHeat": 4,
+      "activeIncidents": [
+        {
+          "kind": "CRIMINAL",
+          "stage": 0,
+          "control": 44,
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 36,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 10,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 항만 밀수 조직"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 7,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 8,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 9,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 9,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +15",
+              "controlDelta": 15
+            },
+            {
+              "clock": 10,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 10,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +15",
+              "controlDelta": 15
+            },
+            {
+              "clock": 11,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 11,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +7",
+              "controlDelta": 7
+            },
+            {
+              "clock": 12,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 12,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +7",
+              "controlDelta": 7
+            }
+          ],
+          "incidentId": "INC_SMUGGLING_RING",
+          "deadlineClock": 48,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 26,
+          "spawnedAtClock": 0
+        },
+        {
+          "kind": "CRIMINAL",
+          "stage": 0,
+          "control": 30,
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 24,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 6,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 시장 연쇄 절도"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 1,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +5",
+              "controlDelta": 5
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 2,
+              "action": "CONTROL_CHANGE",
+              "detail": "PARTIAL: control +5",
+              "controlDelta": 5
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 3,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 4,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 7,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 8,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 9,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 10,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 11,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 12,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            }
+          ],
+          "incidentId": "INC_MARKET_THEFT",
+          "deadlineClock": 36,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 26,
+          "spawnedAtClock": 0
+        },
+        {
+          "kind": "ECONOMIC",
+          "stage": 0,
+          "control": 0,
+          "vectors": [
+            {
+              "vector": "ECONOMIC",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "RIVAL_PROGRESS",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 0,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 0,
+          "historyLog": [
+            {
+              "clock": 12,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 상인 길드 내전"
+            }
+          ],
+          "incidentId": "INC_MERCHANT_WAR",
+          "deadlineClock": 60,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 0,
+          "spawnedAtClock": 12
+        }
+      ],
+      "day": 2,
+      "globalClock": 12
+    },
+    "memory": {
+      "theme": [
+        {
+          "key": "location",
+          "tags": [
+            "LOCATION",
+            "THEME"
+          ],
+          "value": "그레이마르 항만 — 왕국 남서부 최대 무역항. 세 세력(항만 노동 길드, 해관청, 밀수 조직)이 이권을 다툰다.",
+          "importance": 1
+        },
+        {
+          "key": "quest",
+          "tags": [
+            "QUEST",
+            "THEME"
+          ],
+          "value": "사라진 공물 장부 — 길드가 해관청에 바친 공물 내역이 담긴 장부가 도난당했다. 장부에는 뒷거래 기록도 포함되어 있어, 공개되면 길드 간부 다수가 처형당할 수 있다.",
+          "importance": 1
+        },
+        {
+          "key": "npc_client",
+          "tags": [
+            "NPC",
+            "THEME"
+          ],
+          "value": "의뢰인 로넨 — 항만 노동 길드의 말단 서기관. 장부 관리 책임자였으나 도난 사실을 상부에 보고하지 못해 쫓기는 처지.",
+          "importance": 0.9
+        },
+        {
+          "key": "hub_system",
+          "tags": [
+            "HUB",
+            "THEME"
+          ],
+          "value": "HUB 거점 — '잠긴 닻' 선술집. 항만 한구석의 허름하지만 안전한 선술집. 이곳에서 시장/경비대/항만/빈민가로 이동하며 임무를 수행한다.",
+          "importance": 0.8
+        },
+        {
+          "key": "protagonist",
+          "tags": [
+            "PROTAGONIST",
+            "THEME"
+          ],
+          "value": "이름 없는 용병 — 전직 왕국 수비대 병사 — 남부 수비대에서 복무했으나 상관의 민간인 약탈 명령에 항명하여 탈영했다. 군에서 익힌 검술과 전투 경험이 있으나 수배 중이라 신분을 숨기고 있다. 그레이마르에는 일거리를 찾아 며칠 전 도착했다.",
+          "importance": 0.8
+        }
+      ],
+      "storySummary": "[시장 거리 방문] 대화(부분성공), 설득(부분성공), 관찰(성공). 에드릭 베일, 마이렐 단 경 만남\n[경비대 지구 방문] 관찰(부분성공), 도움(부분성공), 설득(부분성공). 마이렐 단 경 만남\n[항만 부두 방문] 관찰(성공), 관찰(성공), 도움(부분성공). 토브렌 하위크 만남",
+      "structuredMemory": {
+        "version": 2,
+        "visitLog": [
+          {
+            "day": 1,
+            "phase": "DAY",
+            "actions": [
+              {
+                "brief": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리",
+                "eventId": "EVT_MARKET_ENC_DISPUTE",
+                "outcome": "PARTIAL",
+                "rawInput": "사람들에게 말을 건다",
+                "actionType": "TALK",
+                "relatedNpcId": "NPC_SEO_DOYUN",
+                "summaryShort": "플레이어가 \"사람들에게 말을 건다\"를 시도하여 부분 성공했다."
+              },
+              {
+                "brief": "두 상인이 좌판 경계를 두고 언성을 높이고 있다. 한쪽은 원래 자기 자리",
+                "eventId": "EVT_MARKET_ENC_DISPUTE",
+                "outcome": "PARTIAL",
+                "rawInput": "설득한다",
+                "actionType": "PERSUADE",
+                "relatedNpcId": "NPC_SEO_DOYUN",
+                "summaryShort": "플레이어가 \"설득한다\"를 시도하여 부분 성공했다."
+              },
+              {
+                "brief": "에드릭 베일이(가) 근처에 있다. 그의 태도에서 무언가 달라진 기색이 감",
+                "eventId": "SIT_CONSEQUENCE_fact_player_action_t5_9822",
+                "outcome": "SUCCESS",
+                "rawInput": "경비병의 동태를 살핀다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_SEO_DOYUN",
+                "summaryShort": "플레이어가 \"경비병의 동태를 살핀다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "시장 광장 분수대 앞에서 거리 악사가 류트를 켜며 풍자 노래를 부르고 있",
+                "eventId": "EVT_MARKET_ENC_BUSKER",
+                "outcome": "SUCCESS",
+                "rawInput": "골목길 벽에 기대어 주변을 관찰한다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_KANG_CHAERIN",
+                "summaryShort": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다."
+              }
+            ],
+            "outcomes": {
+              "fail": 0,
+              "partial": 2,
+              "success": 2
+            },
+            "goldDelta": 0,
+            "turnRange": [
+              4,
+              8
+            ],
+            "importance": 0.5,
+            "locationId": "LOC_MARKET",
+            "summaryText": "대화(부분성공), 설득(부분성공), 관찰(성공). 에드릭 베일, 마이렐 단 경 만남",
+            "locationName": "시장 거리",
+            "npcsEncountered": [
+              "NPC_SEO_DOYUN",
+              "NPC_KANG_CHAERIN"
+            ],
+            "reputationChanges": {
+              "MERCHANT_CONSORTIUM": 2
+            }
+          },
+          {
+            "day": 1,
+            "phase": "NIGHT",
+            "actions": [
+              {
+                "brief": "경비대 순찰이 지나간다 노인이(가) 물건을 떨어뜨렸다 의문이 깊어진다",
+                "eventId": "PROC_12",
+                "outcome": "PARTIAL",
+                "rawInput": "골목길 벽에 기대어 주변을 관찰한다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_KANG_CHAERIN",
+                "summaryShort": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 부분 성공했다."
+              },
+              {
+                "brief": "경비대 지구 입구 게시판에 새 공고문이 붙었다. 야간 통행 규제가 강화되",
+                "eventId": "EVT_GUARD_ENC_NOTICE",
+                "outcome": "PARTIAL",
+                "rawInput": "도움을 제안한다",
+                "actionType": "HELP",
+                "relatedNpcId": "NPC_KANG_CHAERIN",
+                "summaryShort": "플레이어가 \"도움을 제안한다\"를 시도하여 부분 성공했다."
+              },
+              {
+                "brief": "경비대 지구 입구 게시판에 새 공고문이 붙었다. 야간 통행 규제가 강화되",
+                "eventId": "EVT_GUARD_ENC_NOTICE",
+                "outcome": "PARTIAL",
+                "rawInput": "설득한다",
+                "actionType": "PERSUADE",
+                "relatedNpcId": "NPC_KANG_CHAERIN",
+                "summaryShort": "플레이어가 \"설득한다\"를 시도하여 부분 성공했다."
+              },
+              {
+                "brief": "경비대 지구 입구 게시판에 새 공고문이 붙었다. 야간 통행 규제가 강화되",
+                "eventId": "EVT_GUARD_ENC_NOTICE",
+                "outcome": "PARTIAL",
+                "rawInput": "공고문을 자세히 읽는다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_KANG_CHAERIN",
+                "summaryShort": "플레이어가 \"공고문을 자세히 읽는다\"를 시도하여 부분 성공했다."
+              }
+            ],
+            "outcomes": {
+              "fail": 0,
+              "partial": 4,
+              "success": 0
+            },
+            "goldDelta": 0,
+            "turnRange": [
+              12,
+              16
+            ],
+            "importance": 0.3,
+            "locationId": "LOC_GUARD",
+            "summaryText": "관찰(부분성공), 도움(부분성공), 설득(부분성공). 마이렐 단 경 만남",
+            "locationName": "경비대 지구",
+            "npcsEncountered": [
+              "NPC_KANG_CHAERIN"
+            ],
+            "reputationChanges": {}
+          },
+          {
+            "day": 2,
+            "phase": "DAWN",
+            "actions": [
+              {
+                "brief": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다",
+                "eventId": "EVT_HARBOR_ARC_HINT",
+                "outcome": "SUCCESS",
+                "rawInput": "부두 하역장을 살핀다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_BAEK_SEUNGHO",
+                "summaryShort": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다",
+                "eventId": "EVT_HARBOR_ARC_HINT",
+                "outcome": "SUCCESS",
+                "rawInput": "골목길 벽에 기대어 주변을 관찰한다",
+                "actionType": "OBSERVE",
+                "relatedNpcId": "NPC_BAEK_SEUNGHO",
+                "summaryShort": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다",
+                "eventId": "EVT_HARBOR_ARC_HINT",
+                "outcome": "PARTIAL",
+                "rawInput": "도움을 준다",
+                "actionType": "HELP",
+                "relatedNpcId": "NPC_BAEK_SEUNGHO",
+                "summaryShort": "플레이어가 \"도움을 준다\"를 시도하여 부분 성공했다."
+              },
+              {
+                "brief": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다",
+                "eventId": "EVT_HARBOR_ARC_HINT",
+                "outcome": "PARTIAL",
+                "rawInput": "하역 과정을 관찰하며 패턴을 기록한다",
+                "actionType": "INVESTIGATE",
+                "relatedNpcId": "NPC_BAEK_SEUNGHO",
+                "summaryShort": "플레이어가 \"하역 과정을 관찰하며 패턴을 기록한다\"를 시도하여 부분 성공했다."
+              }
+            ],
+            "outcomes": {
+              "fail": 0,
+              "partial": 2,
+              "success": 2
+            },
+            "goldDelta": 2,
+            "turnRange": [
+              20,
+              24
+            ],
+            "importance": 0.5,
+            "locationId": "LOC_HARBOR",
+            "summaryText": "관찰(성공), 관찰(성공), 도움(부분성공). 토브렌 하위크 만남",
+            "locationName": "항만 부두",
+            "npcsEncountered": [
+              "NPC_BAEK_SEUNGHO"
+            ],
+            "reputationChanges": {}
+          }
+        ],
+        "milestones": [
+          {
+            "day": 1,
+            "type": "FIRST_VISIT",
+            "detail": "시장 거리 첫 방문",
+            "turnNo": 8,
+            "importance": 0.4
+          },
+          {
+            "day": 1,
+            "type": "FIRST_VISIT",
+            "detail": "경비대 지구 첫 방문",
+            "turnNo": 16,
+            "importance": 0.4
+          },
+          {
+            "day": 2,
+            "type": "FIRST_VISIT",
+            "detail": "항만 부두 첫 방문",
+            "turnNo": 24,
+            "importance": 0.4
+          },
+          {
+            "day": 2,
+            "type": "ARC_COMMITTED",
+            "detail": "PROFIT_FROM_CHAOS 루트 확정",
+            "turnNo": 24,
+            "importance": 0.8
+          }
+        ],
+        "npcJournal": [
+          {
+            "marks": [],
+            "npcId": "NPC_SEO_DOYUN",
+            "npcName": "에드릭 베일",
+            "summaryText": "에드릭 베일: 초기 태도CAUTIOUS. 최근 설득(부분성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "PARTIAL",
+                "snippet": "플레이어가 \"사람들에게 말을 건다\"를 시도하여 부분 성공했다.",
+                "actionType": "TALK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "PARTIAL",
+                "snippet": "플레이어가 \"설득한다\"를 시도하여 부분 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 0,
+              "posture": "CAUTIOUS",
+              "respect": 0,
+              "suspicion": 5,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_KANG_CHAERIN",
+            "npcName": "마이렐 단 경",
+            "summaryText": "마이렐 단 경: 중립(-10) 태도CALCULATING. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -10,
+              "posture": "CALCULATING",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_ROSA",
+            "npcName": "로자",
+            "summaryText": "로자: 중립(5) 태도FRIENDLY. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_MIRELA",
+            "npcName": "미렐라",
+            "summaryText": "미렐라: 중립(10) 태도FRIENDLY. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_MOON_SEA",
+            "npcName": "라이라 케스텔",
+            "summaryText": "라이라 케스텔: 중립(5) 태도CAUTIOUS. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "CAUTIOUS",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_RAT_KING",
+            "npcName": "쥐왕",
+            "summaryText": "쥐왕: 중립(-10) 태도HOSTILE. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -10,
+              "posture": "HOSTILE",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_LORD_VANCE",
+            "npcName": "밴스 경",
+            "summaryText": "밴스 경: 중립(-5) 태도CALCULATING. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -5,
+              "posture": "CALCULATING",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_YOON_HAMIN",
+            "npcName": "하를런 보스",
+            "summaryText": "하를런 보스: 중립(10) 태도FRIENDLY. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_GUARD_FELIX",
+            "npcName": "펠릭스",
+            "summaryText": "펠릭스: 중립(-10) 태도HOSTILE. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -10,
+              "posture": "HOSTILE",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_OWEN_KEEPER",
+            "npcName": "오웬",
+            "summaryText": "오웬: 중립(15) 태도FRIENDLY. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 15,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_BAEK_SEUNGHO",
+            "npcName": "토브렌 하위크",
+            "summaryText": "토브렌 하위크: 신뢰19 태도FRIENDLY. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 19,
+              "posture": "FRIENDLY",
+              "respect": 10,
+              "suspicion": 15,
+              "attachment": 10.399999999999999
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_CAPTAIN_BREN",
+            "npcName": "브렌 대위",
+            "summaryText": "브렌 대위: 중립(-15) 태도HOSTILE. 최근 관찰(성공)",
+            "interactions": [
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"부두 하역장을 살핀다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 24,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"골목길 벽에 기대어 주변을 관찰한다\"를 시도하여 성공했다.",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_HARBOR",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -15,
+              "posture": "HOSTILE",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          }
+        ],
+        "llmExtracted": [
+          {
+            "text": "항만 밀수 조직 — 관찰",
+            "turnNo": 24,
+            "category": "PLOT_HINT",
+            "importance": 0.8
+          },
+          {
+            "text": "시장 연쇄 절도 — 관찰",
+            "turnNo": 8,
+            "category": "PLOT_HINT",
+            "importance": 0.8
+          },
+          {
+            "text": "토브렌 하위크: 동부 부두 창고 관리자",
+            "turnNo": 24,
+            "category": "NPC_DETAIL",
+            "importance": 0.7,
+            "relatedNpcId": "NPC_BAEK_SEUNGHO"
+          },
+          {
+            "text": "부두 하역장에선 반복 작업 속 은밀한 움직임과 경계가 감지된다",
+            "turnNo": 23,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "투박한 노동자는 부두 상황에 정통하며 동료애와 경계심이 공존한다",
+            "turnNo": 23,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "하역 과정 일부는 외부인이 알지 못하는 비밀스러운 움직임으로 이루어진다",
+            "turnNo": 23,
+            "category": "PLOT_HINT",
+            "importance": 0.7
+          },
+          {
+            "text": "부두 하역장에는 밤마다 은밀한 화물 이동과 수상한 배의 흔적이 남아 있다",
+            "turnNo": 22,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "투박한 노동자의 목소리는 거칠지만 온화하며 동료애가 느껴진다",
+            "turnNo": 22,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "낡은 조각 종이에 부두 작업 일정과 화물 목록 일부가 적혀 있다",
+            "turnNo": 22,
+            "category": "PLOT_HINT",
+            "importance": 0.7
+          },
+          {
+            "text": "투박한 노동자가 부두의 몰래 움직이는 배와 눈에 보이지 않는 손들을 언급했다",
+            "turnNo": 22,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "투박한 노동자가 부두 내 긴장과 수상한 배들의 존재를 암시했다",
+            "turnNo": 21,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "골목길 벽은 거칠고 차가운 돌로 되어 있으며, 주변은 바람과 먼지가 섞인 냄새가 난다",
+            "turnNo": 21,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "골목 안쪽은 어둡고 조용하지만 먼 곳에서 하역 소리와 사람들의 중얼거림이 들린다",
+            "turnNo": 21,
+            "category": "ATMOSPHERE",
+            "importance": 0.7
+          },
+          {
+            "text": "투박한 노동자의 목소리는 거칠지만 온화하며, 그의 눈빛에는 의리가 느껴진다",
+            "turnNo": 21,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "부두 하역장에는 야간에 조용히 움직이는 소형 화물선과 은밀한 거래 흔적이 있다",
+            "turnNo": 20,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "투박한 노동자의 목소리는 거칠지만 눈빛은 온화하며 의리를 중시한다",
+            "turnNo": 20,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "동쪽 부두 3번 선착장에서 비밀스러운 화물이 은폐되고 있다는 정황이 포착되었다",
+            "turnNo": 20,
+            "category": "PLOT_HINT",
+            "importance": 0.7
+          },
+          {
+            "text": "투박한 노동자가 부두 내 긴장과 수상한 배들의 존재를 암시했다",
+            "turnNo": 20,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "경비대 지구 공고문에 야간 통행 강화와 처벌 문구가 적혀 있다",
+            "turnNo": 15,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "마이렐 단 경은 대가를 요구하며 경계심과 피곤함이 뒤섞인 표정을 보인다",
+            "turnNo": 15,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          }
+        ],
+        "npcKnowledge": {
+          "NPC_SEO_DOYUN": [
+            {
+              "text": "TALK → PARTIAL: 사람들에게 말을 건다",
+              "factId": "nk_4_NPC_SEO_DOYUN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 4,
+              "importance": 0.5,
+              "locationId": "LOC_MARKET"
+            },
+            {
+              "text": "날카로운 눈매의 회계사가 셋째 줄, 네 번째 칸의 수치를 의심하고 있음",
+              "factId": "nk_llm_4_NPC_SEO_DOYUN",
+              "source": "WITNESSED",
+              "turnNo": 4,
+              "importance": 0.7,
+              "locationId": ""
+            },
+            {
+              "text": "PERSUADE → PARTIAL: 설득한다",
+              "factId": "nk_5_NPC_SEO_DOYUN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 5,
+              "importance": 0.5,
+              "locationId": "LOC_MARKET"
+            },
+            {
+              "text": "OBSERVE → SUCCESS: 경비병의 동태를 살핀다",
+              "factId": "nk_6_NPC_SEO_DOYUN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 6,
+              "importance": 0.8,
+              "locationId": "LOC_MARKET"
+            }
+          ],
+          "NPC_BAEK_SEUNGHO": [
+            {
+              "text": "OBSERVE → SUCCESS: 골목길 벽에 기대어 주변을 관찰한다",
+              "factId": "nk_21_NPC_BAEK_SEUNGHO_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 21,
+              "importance": 0.8,
+              "locationId": "LOC_HARBOR"
+            },
+            {
+              "text": "OBSERVE → SUCCESS: [SMUGGLING,EVIDENCE] 골목길 벽에 기대어 주변을 관찰한다",
+              "factId": "nk_21_NPC_BAEK_SEUNGHO_AUTO_COLLECT",
+              "source": "AUTO_COLLECT",
+              "turnNo": 21,
+              "importance": 0.8,
+              "locationId": "LOC_HARBOR"
+            },
+            {
+              "text": "OBSERVE → SUCCESS: 부두 하역장을 살핀다",
+              "factId": "nk_20_NPC_BAEK_SEUNGHO_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 20,
+              "importance": 0.8,
+              "locationId": "LOC_HARBOR"
+            },
+            {
+              "text": "OBSERVE → SUCCESS: [SMUGGLING,EVIDENCE] 부두 하역장을 살핀다",
+              "factId": "nk_20_NPC_BAEK_SEUNGHO_AUTO_COLLECT",
+              "source": "AUTO_COLLECT",
+              "turnNo": 20,
+              "importance": 0.8,
+              "locationId": "LOC_HARBOR"
+            },
+            {
+              "text": "INVESTIGATE → PARTIAL: 하역 과정을 관찰하며 패턴을 기록한다",
+              "factId": "nk_23_NPC_BAEK_SEUNGHO_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 23,
+              "importance": 0.5,
+              "locationId": "LOC_HARBOR"
+            }
+          ],
+          "NPC_KANG_CHAERIN": [
+            {
+              "text": "OBSERVE → SUCCESS: 골목길 벽에 기대어 주변을 관찰한다",
+              "factId": "nk_7_NPC_KANG_CHAERIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 7,
+              "importance": 0.8,
+              "locationId": "LOC_MARKET"
+            },
+            {
+              "text": "야간 경비 책임자가 경계심과 피곤함이 뒤섞인 태도로 플레이어를 관찰",
+              "factId": "nk_llm_7_NPC_KANG_CHAERIN",
+              "source": "WITNESSED",
+              "turnNo": 7,
+              "importance": 0.7,
+              "locationId": ""
+            },
+            {
+              "text": "OBSERVE → PARTIAL: 공고문을 자세히 읽는다",
+              "factId": "nk_15_NPC_KANG_CHAERIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 15,
+              "importance": 0.5,
+              "locationId": "LOC_GUARD"
+            },
+            {
+              "text": "PERSUADE → PARTIAL: 설득한다",
+              "factId": "nk_14_NPC_KANG_CHAERIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 14,
+              "importance": 0.5,
+              "locationId": "LOC_GUARD"
+            },
+            {
+              "text": "HELP → PARTIAL: 도움을 제안한다",
+              "factId": "nk_13_NPC_KANG_CHAERIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 13,
+              "importance": 0.5,
+              "locationId": "LOC_GUARD"
+            }
+          ]
+        },
+        "worldSnapshot": {
+          "day": 2,
+          "hubHeat": 9,
+          "arcRoute": "PROFIT_FROM_CHAOS",
+          "hubSafety": "SAFE",
+          "timePhase": "DAWN",
+          "reputation": {
+            "CITY_GUARD": 0,
+            "LABOR_GUILD": 0,
+            "MERCHANT_CONSORTIUM": 2
+          },
+          "arcCommitment": 3,
+          "updatedAtTurnNo": 24,
+          "activeIncidentCount": 3,
+          "resolvedIncidentCount": 0
+        },
+        "lastExitSummary": {
+          "turnCount": 4,
+          "keyActions": [
+            "관찰(성공): 동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다",
+            "도움(부분성공): 동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다",
+            "조사(부분성공): 동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다"
+          ],
+          "locationId": "LOC_HARBOR",
+          "keyDialogues": [],
+          "locationName": "항만 부두",
+          "unresolvedLeads": []
+        },
+        "incidentChronicle": [
+          {
+            "kind": "CRIMINAL",
+            "title": "시장 연쇄 절도",
+            "resolved": false,
+            "incidentId": "INC_MARKET_THEFT",
+            "playerInvolvements": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "시장 광장 분수대 앞에서 거리 악사가 류트를 켜며 풍자 노래를 부르고 있",
+                "actionType": "OBSERVE",
+                "locationId": "LOC_MARKET",
+                "controlDelta": 0,
+                "pressureDelta": 8
+              }
+            ]
+          },
+          {
+            "kind": "CRIMINAL",
+            "title": "항만 밀수 조직",
+            "resolved": false,
+            "incidentId": "INC_SMUGGLING_RING",
+            "playerInvolvements": [
+              {
+                "turnNo": 24,
+                "outcome": "PARTIAL",
+                "snippet": "동쪽 부두 3번 선착장. 밤의 어둠 속에서 소형 화물선이 조용히 접안한다",
+                "actionType": "INVESTIGATE",
+                "locationId": "LOC_HARBOR",
+                "controlDelta": 0,
+                "pressureDelta": 12
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "verification": {
+    "V1_incidents": true,
+    "V2_encounter": true,
+    "V3_posture": true,
+    "V4_emotion": true,
+    "V5_memory": true,
+    "V6_resolve": true
+  }
+}

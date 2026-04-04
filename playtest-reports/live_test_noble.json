@@ -1,0 +1,2159 @@
+{
+  "meta": {
+    "preset": "FALLEN_NOBLE",
+    "gender": "male",
+    "maxTurns": 10,
+    "actualTurns": 10,
+    "timestamp": "2026-04-01 19:01:46",
+    "git": {
+      "hash": "f408991",
+      "branch": "main",
+      "message": "fix: 초상화 에러 메시지 한글화 + rate limit 임시 해제 (100회)"
+    }
+  },
+  "runId": "015f26fc-c506-42f4-ac07-ef3b28aafc91",
+  "turns": [
+    {
+      "turn": 1,
+      "turnNo": 0,
+      "nodeType": "HUB",
+      "input": "CHOICE:accept_quest",
+      "hp": 85,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "당신은 로넨의 말을 곱씹으며 고개를 천천히 끄덕인다. 손에 들고 있던 잔을 조심스레 내려놓고, 몸을 곧게 펴며 의뢰 수락의 의사를 분명히 드러낸다. 그 모습을 바라보던 로넨의 눈빛이 한결 부드러워지고, 그는 숨을 깊이 내쉬며 짧게 감사의 말을 건넨다.\n\n\"고맙소, 그대. 은혜를 잊지 않겠소.\"\n\n로넨의 목소리에 담긴 안도의 기운이 느껴진다. 그는 더는 말없이 당신을 바라보며 손짓으로 선술집 안의 시계를 가리킨다. 당신은 자리에서 일어나 선술집 문을 밀고 나선다. 문 바깥으로 쏟아지는 서늘한 공기가 피부에 와닿는다. 밤의 그레이마르 거리가 어둠 속에서 희미한 등불 빛으로 흔들리며 펼쳐져 있다. 어떤 길을 선택할지는 아직 결정되지 않았다."
+    },
+    {
+      "turn": 2,
+      "turnNo": 1,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_market",
+      "hp": 85,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "바람결에 섞인 빵 굽는 냄새가 시장 거리로 퍼진다. 노점 천막들이 줄지어 늘어서고, 상인들의 부지런한 발걸음 소리가 고르게 울린다. 객쩍은 말소리와 나무수레 바퀴가 자갈길을 굴러가는 소리가 뒤섞이며 시장의 일상이 펼쳐진다.\n\n걸음을 옮길수록 사람들의 눈길이 스쳐 지나가고, 두런거림 사이로 가끔 거래를 제안하는 목소리가 들린다. 주변에서 팔려 나가는 과일과 채소가 싱싱한 색을 뽐내며, 장사꾼들은 손님을 끌기 위해 손짓과 미소를 섞어가며 분주히 움직인다.\n\n시장은 평소와 다름없이 활기를 띠지만, 곳곳에서 어깨를 움츠린 이들이 빠르게 지나가고, 일부 노점상은 눈치를 보듯 주변을 살핀다. 저편에서 한 노점 주인이 큰 소리로 물건 값을 부르며 상인들 사이에 긴장감이 미묘하게 스며든다."
+    },
+    {
+      "turn": 3,
+      "turnNo": 3,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:market_talk",
+      "hp": 85,
+      "eventId": "EVT_MARKET_INT_1",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 시장 한복판에서 상인들의 소문을 조심스레 탐문해 나가자, 날카로운 눈매의 회계사가 고개를 들어 당신을 똑바로 바라본다. 그의 손가락이 안경테를 신경질적으로 밀어 올리며, 몸을 앞으로 조금 숙여 맞은편 자리를 가리킨다. 당신이 자리로 다가가 앉자, 그는 잠시 눈을 깜빡이며 말을 꺼낸다.\n\n\"장부에 관한 것, 제가 일부 담당한 기록이 있소. 정확히는 공물 내역의 일부이지만, 그 중요성은 결코 작지 않소. 수치가 맞지 않는 대목이 몇 군데 있긴 하오만, 그 이상한 점들 때문에... 음, 여러 상황들이 복잡해지고 있소.\" 그의 말투는 긴장과 조심스러움으로 떨리다가도, 숫자를 정확히 짚으며 냉철한 태도를 유지한다. 손에 든 펜을 돌리며 그는 잠시 말을 끊었다가 다시 입을 뗀다.\n\n\"이런 상황에서 무턱대고 움직이는 것은 위험하오. 그러나, 그대가 확신이 있다면, 제가 아는 범위 내에서 가능한 조언을 드릴 수 있소. 다만, 정보가 곧바로 널리 퍼지면, 예상치 못한 파장이 일어날 수 있음을 감안해야 하오.\" 그가 입술을 깨물며 눈을 내리깔았다. 그의 눈빛에 겁 많은 지식인의 불안이 배어나온다. 주변 시장의 소음 속에서도, 그의 속삭임은 날카롭게 들린다.\n\n당신의 시선이 그의 손에 쥔 펜 위에서 떠나지 않는다. 그의 입에서 흘러나오는 조심스러운 경고와 주변 사태에 대한 불안이 시장의 혼잡한 분위기와 묘하게 어우러졌다. 그의 말이 끝나자, 그는 당신을 다시 한번 똑바로 바라보며, 다음 행동을 기다린다."
+    },
+    {
+      "turn": 4,
+      "turnNo": 4,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:mkt_int1_persuade",
+      "hp": 85,
+      "eventId": "EVT_MARKET_INT_1",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신의 눈길이 그의 손에 쥔 무거운 펜과 펼쳐진 종이뭉치 위를 서성인다. 회계사의 손가락이 신경질적으로 안경테를 밀어 올리더니, 잠시 머뭇이며 낮게 입을 열었다. \"공물 장부의 일부 기록은 이 자가 직접 맡았던 부분이오. 수치가 맞지 않는 구간이 존재하는데, 그 이면에선... 음, 여러 변수들이 얽혀 있소.\" 그의 시선이 잠시 흔들리며 주변을 살핀다. \"이상한 점은, 그 공물 장부가 단순한 출납 기록 이상의 의미를 지닌다는 사실이오.\"\n\n그는 펜을 돌리다 잠시 말을 끊고, 한숨처럼 휘파람 소리를 내며 손끝으로 책상 가장자리를 두드린다. \"지금 이 상황이 얼마나 위험한지 그대도 알 것이오. 그 장부는 누군가의 목숨을 좌우할 만큼 중대한 서류일 수 있소. 그러니 조심스럽게 움직여야 하오.\" 그의 목소리에는 미묘한 긴장감이 배어나오면서도, 당신과의 대화에 조금씩 신뢰가 스며드는 듯하다. 그가 다시 한 번 당신을 똑바로 바라보며 말을 이었다.\n\n\"그렇다면, 그대는 이 복잡한 사태에서 어떤 입장을 취할 생각이오? 함께 움직일 준비가 되어 있소, 아니면 다른 방도를 모색하고 있소?\" 그의 말끝이 잠시 더듬이듯 흔들리면서도, 묵직한 긴장감이 묻어난다. 주변의 번잡한 시장 소음 속에서도 그의 목소리는 선명하게 울린다. 당신의 반응을 기다리는 그의 시선이, 한층 더 날카롭게 변해간다."
+    },
+    {
+      "turn": 5,
+      "turnNo": 5,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:mkt_int1_talk",
+      "hp": 85,
+      "eventId": "EVT_MARKET_INT_1",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신이 맞은편 자리에 앉자, 에드릭 베일의 눈길이 잠시 흔들린다. 그는 안경테를 밀어 올리며 주변을 한번 훑고는, 손에 든 문서 묶음을 조금 더 꼭 쥔다. 그의 목소리에는 긴장과 동시에 다소 안도하는 기색이 섞여 있었다.\n\n\"공물 장부에 관한 일, 그 장부 일부 기록은 제가 직접 다루었소. 숫자와 항목이 맞지 않는 부분이 있어, 계속 검토하고 있었지만… 상황이 이렇게 꼬일 줄은 몰랐소.\" 그는 말을 더듬듯 잠시 머뭇거리더니, 이내 천천히 이어간다. \"이 장부는 단순한 기록 이상의 의미를 담고 있소. 잘못 다루면, 소문이 퍼져 여러 이익집단에 불필요한 혼란을 초래할 수 있소.\"\n\n에드릭의 손가락이 문서 가장자리를 가볍게 쓸며, 눈동자는 불안함과 결의 사이를 오간다. \"그대와 이렇게 대화할 수 있어서 다행이오. 하지만 앞으로 더 신중히 움직여야 할 것이오. 몇몇 사람들은 이미 주시하고 있고, 누군가는… 서둘러 움직일지도 모르오.\" 그의 말끝에 무거운 중압감이 스며든다. 긴장한 듯 펜을 손에 쥐고 돌리던 손이 잠시 멈추었다가 다시 움직인다.\n\n당신을 향한 그의 시선이 한층 굳어지면서, 다음 행동을 묵묵히 기다린다."
+    },
+    {
+      "turn": 6,
+      "turnNo": 6,
+      "nodeType": "LOCATION",
+      "input": "ACTION:조심스럽게 잠입한다",
+      "hp": 85,
+      "eventId": "EVT_MARKET_ATM_1",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 사람들의 발걸음과 상인들의 목소리가 뒤섞인 시장 거리를 조심스레 지나간다. 바닥에 떨어진 과일 껍질과 흩어진 헝겊 틈을 피해 몸을 낮추고, 사람들의 시선이 닿지 않는 그림자 사이로 몸을 숨긴다. 숨을 가다듬으며 천천히 한 걸음씩 나아갔다.\n\n그때, 길 한복판에서 고개를 살짝 돌리자 조용한 문서 실무자가 멀리서 서성이는 모습이 눈에 들어온다. 그는 주변을 경계하는 듯 눈을 자주 깜빡이며, 손에는 작은 수첩을 꼭 쥐고 있었다. 당신의 움직임을 감지한 듯 천천히 서서 멈추더니, 낮은 목소리로 말했다.\n\n\"이런 곳에서 예상치 못한 움직임이 있사온데, 주의가 필요하오. 불필요한 주목은 피하는 편이 좋지 않겠소.\" 그가 말끝을 흐리며 눈을 피하고, 수첩에 무언가를 적는 손길이 잠시 멈춘다. 그의 신중한 태도가 주변 소음 속에서도 뚜렷이 느껴졌다."
+    },
+    {
+      "turn": 7,
+      "turnNo": 7,
+      "nodeType": "LOCATION",
+      "input": "ACTION:move_location",
+      "hp": 85,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "골목 끝에서 불빛이 희미하게 흔들린다. 발걸음을 재촉하며 당신은 시장 거리를 빠져나와 ‘잠긴 닻’ 선술집 쪽으로 향한다. 주변 상인들의 수군거림과 멀리서 부딪히는 쇠붙이 소리가 바람을 타고 섞여 들려온다.\n\n선술집 문 앞에 다다르자, 낡은 나무문이 삐걱이며 열리고, 내부의 어둠 속에서 익숙한 술 냄새와 곰팡이 기운이 밀려온다. 안으로 들어서자, 낮은 목소리와 술잔 부딪히는 소리가 소곤거림처럼 귓가에 닿는다. 한 사내가 구석에 앉아 머리를 숙인 채 무언가를 끄적이고 있으며, 그의 옆자리는 비어 있다.\n\n그의 고개가 천천히 올라와 당신을 향해 시선을 던진다. \"돌아오셨소, 그대.\" 짧지만 묵직한 인사가 선술집의 퇴근길 어둠 속에서 울린다. 당신의 움직임을 눈으로 좇는 그의 시선이 한층 진지해진다."
+    },
+    {
+      "turn": 8,
+      "turnNo": 9,
+      "nodeType": "HUB",
+      "input": "CHOICE:go_guard",
+      "hp": 85,
+      "eventId": "",
+      "resolveOutcome": null,
+      "nodeOutcome": "NODE_ENDED",
+      "events": [
+        "SYSTEM"
+      ],
+      "narrative": "낡은 선술집 문을 나서자 습한 공기가 피부에 닿는다. 당신은 좁은 골목길을 따라 걸음을 옮긴다. 바닥에는 오래된 돌포장 틈새로 자란 이끼가 반짝이고, 멀리서 경비대의 조용한 발소리가 들려온다.\n\n길을 따라 천천히 나아가니, 경비대 지구의 높은 회색 성벽이 시야에 들어온다. 성벽 앞에는 무거운 갑옷을 입은 경비병들이 서서 주변을 살피고 있다. 그들의 표정은 단호하고 경계심이 느껴진다. 바람에 휘날리는 깃발이 성벽 위에서 힘차게 펄럭인다.\n\n당신이 성문 가까이 다가서자, 한 중년 경비병이 거칠게 숨을 내쉬며 몸을 돌린다. 그의 눈이 당신을 스치며 잠시 머문다. 그가 굳은 목소리로 묻는다. \"이쪽이오, 그대. 무엇이 필요하시오?\""
+    },
+    {
+      "turn": 9,
+      "turnNo": 11,
+      "nodeType": "LOCATION",
+      "input": "ACTION:상인에게 뇌물을 건넨다",
+      "hp": 85,
+      "eventId": "EVT_GUARD_OPP_REWARD",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "GOLD",
+        "NPC"
+      ],
+      "narrative": "당신이 조심스럽게 3골드를 상인에게 건넨다. 은밀한 손놀림이 지나가자, 상인은 눈을 가늘게 뜨고 조용히 고개를 끄덕인다. 그의 얼굴에는 표면적인 감정 대신 계산된 이익만이 남아 있다.\n\n그 순간, 권위적인 야간 경비 책임자가 다가온다. 그의 시선이 당신과 상인의 교환을 무표정하게 훑는다. 숨을 고르며 입을 연 그는 짧고 명료하게 말한다. \"그대, 이 일에 곁눈질하지 말기를 권하오. 비공식 내사를 진행 중이며, 의심 대상 명단을 손에 쥐고 있소.\" 그의 목소리에는 단호함과 계산이 깃들어 있다.\n\n그는 잠시 당신의 눈을 응시하다가 한숨을 섞어 내쉬고는, 무심코 어깨끈을 만지작거린다. 그 동작은 오래된 피로와 무거운 책임감을 대변하는 듯하다. \"그대 행동 하나하나가 큰 파장을 일으킬 수도 있소. 신중하시오.\" 그는 그 말만 던진 채, 다시 주변을 살피며 자리를 지킨다."
+    },
+    {
+      "turn": 10,
+      "turnNo": 12,
+      "nodeType": "LOCATION",
+      "input": "CHOICE:grd_opp_rwd_investigate",
+      "hp": 85,
+      "eventId": "EVT_GUARD_OPP_REWARD",
+      "resolveOutcome": "SUCCESS",
+      "nodeOutcome": "ONGOING",
+      "events": [
+        "NPC"
+      ],
+      "narrative": "당신은 시장을 벗어나 경비대 지구의 한적한 골목으로 발걸음을 옮긴다. 소매치기 일당의 흔적을 좇으며 발밑에 흩어진 작은 조각들과 때때로 남겨진 발자국을 꼼꼼히 살핀다. 골목 벽 한쪽에 바스러진 담배꽁초와 누군가 급히 버린 헝겊 조각이 섞여 있다. 그들이 지나간 길임을 확신시키는 미세한 단서들이 당신의 손끝에 닿는다.\n\n어둠 속에서 누군가의 무표정한 시선이 느껴진다. 고개를 돌리자 권위적인 야간 경비 책임자가 침착하게 걸어와 당신을 살피는 모습이 보인다. 그는 숨김 없는 계산적인 눈빛으로 주변을 훑으며, 잠시 머뭇거리다가 짧게 말했다. \"그대, 이내사에 관련된 의심 대상 명단을 손에 쥐고 있소. 모든 움직임이 기록되고 있으니 신중히 행동하시오.\" 그의 목소리에는 피로가 배어 있지만, 경계심은 여전하다.\n\n그가 어깨끈을 만지작거리며 한숨을 내쉬는 사이, 당신의 시선과 그의 눈빛이 잠시 교차한다. 그가 더는 말을 잇지 않고 무심한 듯 시선을 돌린다. 주변의 어둠과 골목길의 적막함이 다시금 조여들며, 당신은 손에 쥔 단서들을 곱씹는다."
+    }
+  ],
+  "finalState": {
+    "hp": 85,
+    "gold": 77,
+    "npcStates": {
+      "NPC_ROSA": {
+        "funds": 50,
+        "npcId": "NPC_ROSA",
+        "agenda": "고아원 유지, 아이들 보호, 빈민가 안전",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_HARLUN": {
+        "funds": 50,
+        "npcId": "NPC_HARLUN",
+        "agenda": "노동자 권리 보호, 부두 이권 사수",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_MAIREL": {
+        "funds": 50,
+        "npcId": "NPC_MAIREL",
+        "agenda": "도시 치안 유지, 권력 기반 강화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -10,
+        "encounterCount": 0
+      },
+      "NPC_MIRELA": {
+        "funds": 50,
+        "npcId": "NPC_MIRELA",
+        "agenda": "약초 장사와 단골 관리, 시장 소문 수집",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_TOBREN": {
+        "funds": 50,
+        "npcId": "NPC_TOBREN",
+        "agenda": "밀수 루트 은폐, 생존",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -5,
+        "encounterCount": 0
+      },
+      "NPC_BG_BARD": {
+        "funds": 50,
+        "npcId": "NPC_BG_BARD",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_COOK": {
+        "funds": 50,
+        "npcId": "NPC_BG_COOK",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_RENNICK": {
+        "funds": 50,
+        "npcId": "NPC_RENNICK",
+        "agenda": "인맥 유지, 생존을 위한 줄타기",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_CLERK": {
+        "funds": 50,
+        "npcId": "NPC_BG_CLERK",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_DRUNK": {
+        "funds": 50,
+        "npcId": "NPC_BG_DRUNK",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_MOON_SEA": {
+        "funds": 50,
+        "npcId": "NPC_MOON_SEA",
+        "agenda": "상단 내부 정보 관리, 자기 안전 확보",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 1,
+        "personalMemory": {
+          "encounters": [
+            {
+              "turnNo": 7,
+              "outcome": "SUCCESS",
+              "briefNote": "시장 입구에서 향신료 상인이 가루를 볶는 냄새가 거리 전체에 퍼진다. 열기와 함께 피어오르",
+              "locationId": "LOC_MARKET",
+              "playerAction": "잠입"
+            }
+          ],
+          "knownFacts": [],
+          "lastSeenTurn": 7,
+          "relationSummary": "경계, 중립",
+          "lastSeenLocation": "LOC_MARKET"
+        }
+      },
+      "NPC_RAT_KING": {
+        "funds": 50,
+        "npcId": "NPC_RAT_KING",
+        "agenda": "빈민가 지하 조직 유지, 정보 독점, 경비대의 접근 차단",
+        "network": 50,
+        "posture": "HOSTILE",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -20,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -20,
+        "encounterCount": 0
+      },
+      "NPC_BG_BEGGAR": {
+        "funds": 50,
+        "npcId": "NPC_BG_BEGGAR",
+        "agenda": "",
+        "network": 50,
+        "posture": "FEARFUL",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_BUTLER": {
+        "funds": 50,
+        "npcId": "NPC_BG_BUTLER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_BG_DOCKER": {
+        "funds": 50,
+        "npcId": "NPC_BG_DOCKER",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_ARMORER": {
+        "funds": 50,
+        "npcId": "NPC_BG_ARMORER",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_BARMAID": {
+        "funds": 50,
+        "npcId": "NPC_BG_BARMAID",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_CUSTOMS": {
+        "funds": 50,
+        "npcId": "NPC_BG_CUSTOMS",
+        "agenda": "",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_VAGRANT": {
+        "funds": 50,
+        "npcId": "NPC_BG_VAGRANT",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_EDRIC_VEIL": {
+        "funds": 50,
+        "npcId": "NPC_EDRIC_VEIL",
+        "agenda": "상단 장부 은폐, 개인 이익 추구",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 32,
+          "respect": 16,
+          "suspicion": 0,
+          "attachment": 3.8000000000000007
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": true,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 32,
+        "encounterCount": 1,
+        "personalMemory": {
+          "encounters": [
+            {
+              "turnNo": 4,
+              "outcome": "SUCCESS",
+              "briefNote": "{npc:NPC_EDRIC_VEIL}이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. ",
+              "locationId": "LOC_MARKET",
+              "playerAction": "설득"
+            },
+            {
+              "turnNo": 5,
+              "outcome": "SUCCESS",
+              "briefNote": "{npc:NPC_EDRIC_VEIL}이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. ",
+              "locationId": "LOC_MARKET",
+              "playerAction": "설득"
+            },
+            {
+              "turnNo": 6,
+              "outcome": "SUCCESS",
+              "briefNote": "{npc:NPC_EDRIC_VEIL}이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. ",
+              "locationId": "LOC_MARKET",
+              "playerAction": "대화"
+            }
+          ],
+          "knownFacts": [
+            "{npc:NPC_EDRIC_VEIL}이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 달리 안색이"
+          ],
+          "lastSeenTurn": 6,
+          "relationSummary": "우호적, 신뢰하기 시작함",
+          "lastSeenLocation": "LOC_MARKET"
+        }
+      },
+      "NPC_LORD_VANCE": {
+        "funds": 50,
+        "npcId": "NPC_LORD_VANCE",
+        "agenda": "도시 의회에서의 영향력 확대, 비밀 결사와의 유대 강화",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_SERA_DOCKS": {
+        "funds": 50,
+        "npcId": "NPC_SERA_DOCKS",
+        "agenda": "창고구 이권 유지, 밀수품 중개료 확보, 자기 안전",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_GARDENER": {
+        "funds": 50,
+        "npcId": "NPC_BG_GARDENER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_DAME_ISOLDE": {
+        "funds": 50,
+        "npcId": "NPC_DAME_ISOLDE",
+        "agenda": "사교계 영향력 유지, 귀족들의 약점 수집, 남편의 죽음에 얽힌 진실 추적",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_GUARD_FELIX": {
+        "funds": 50,
+        "npcId": "NPC_GUARD_FELIX",
+        "agenda": "정의로운 경비병이 되기, 상관들의 부패를 이해하고 대처하기",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 5,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 5,
+        "encounterCount": 0
+      },
+      "NPC_INFO_BROKER": {
+        "funds": 50,
+        "npcId": "NPC_INFO_BROKER",
+        "agenda": "정보 거래로 이익 극대화",
+        "network": 50,
+        "posture": "CALCULATING",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_OWEN_KEEPER": {
+        "funds": 50,
+        "npcId": "NPC_OWEN_KEEPER",
+        "agenda": "선술집의 중립 지대 유지, 단골 보호, 평화로운 장사",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 15,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 15,
+        "encounterCount": 0
+      },
+      "NPC_BG_MESSENGER": {
+        "funds": 50,
+        "npcId": "NPC_BG_MESSENGER",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_CAPTAIN_BREN": {
+        "funds": 50,
+        "npcId": "NPC_CAPTAIN_BREN",
+        "agenda": "치안 유지, 내부 부패 조사에 관심",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_FISHMONGER": {
+        "funds": 50,
+        "npcId": "NPC_BG_FISHMONGER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_HERB_CRONE": {
+        "funds": 50,
+        "npcId": "NPC_BG_HERB_CRONE",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_NOBLE_MAID": {
+        "funds": 50,
+        "npcId": "NPC_BG_NOBLE_MAID",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 10,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 10,
+        "encounterCount": 0
+      },
+      "NPC_BG_ROPE_MAKER": {
+        "funds": 50,
+        "npcId": "NPC_BG_ROPE_MAKER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_SHOE_SHINE": {
+        "funds": 50,
+        "npcId": "NPC_BG_SHOE_SHINE",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_STREET_KID": {
+        "funds": 50,
+        "npcId": "NPC_BG_STREET_KID",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_GUARD_CAPTAIN": {
+        "funds": 50,
+        "npcId": "NPC_GUARD_CAPTAIN",
+        "agenda": "내부 부패 척결, 수비대 기강 확립",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": -7,
+          "respect": 5,
+          "suspicion": 23,
+          "attachment": 4.4
+        },
+        "influence": 50,
+        "suspicion": 23,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": -7,
+        "encounterCount": 1,
+        "personalMemory": {
+          "encounters": [
+            {
+              "turnNo": 12,
+              "outcome": "SUCCESS",
+              "briefNote": "경비대 게시판에 현상금 전단이 붙어 있다. 시장에서 활동하는 소매치기 일당의 수배 안내다.",
+              "locationId": "LOC_GUARD",
+              "playerAction": "뇌물"
+            },
+            {
+              "turnNo": 13,
+              "outcome": "SUCCESS",
+              "briefNote": "경비대 게시판에 현상금 전단이 붙어 있다. 시장에서 활동하는 소매치기 일당의 수배 안내다.",
+              "locationId": "LOC_GUARD",
+              "playerAction": "조사"
+            }
+          ],
+          "knownFacts": [
+            "경비대 게시판에 현상금 전단이 붙어 있다. 시장에서 활동하는 소매치기 일당의 수배 안내다. 현상금은 소액이지"
+          ],
+          "lastSeenTurn": 13,
+          "relationSummary": "경계, 경계하지만 대화 가능",
+          "lastSeenLocation": "LOC_GUARD"
+        }
+      },
+      "NPC_BG_CAPTAIN_OLD": {
+        "funds": 50,
+        "npcId": "NPC_BG_CAPTAIN_OLD",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_DOG_HANDLER": {
+        "funds": 50,
+        "npcId": "NPC_BG_DOG_HANDLER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_FRUIT_VENDOR": {
+        "funds": 50,
+        "npcId": "NPC_BG_FRUIT_VENDOR",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_ANTIQUE_DEALER": {
+        "funds": 50,
+        "npcId": "NPC_BG_ANTIQUE_DEALER",
+        "agenda": "",
+        "network": 50,
+        "posture": "FRIENDLY",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_CARGO_INSPECTOR": {
+        "funds": 50,
+        "npcId": "NPC_BG_CARGO_INSPECTOR",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      },
+      "NPC_BG_WAREHOUSE_GUARD": {
+        "funds": 50,
+        "npcId": "NPC_BG_WAREHOUSE_GUARD",
+        "agenda": "",
+        "network": 50,
+        "posture": "CAUTIOUS",
+        "exposure": 0,
+        "emotional": {
+          "fear": 0,
+          "trust": 0,
+          "respect": 0,
+          "suspicion": 0,
+          "attachment": 0
+        },
+        "influence": 50,
+        "suspicion": 0,
+        "introduced": false,
+        "currentGoal": "",
+        "currentStage": "INITIAL",
+        "trustToPlayer": 0,
+        "encounterCount": 0
+      }
+    },
+    "worldState": {
+      "hubHeat": 16,
+      "activeIncidents": [
+        {
+          "kind": "CRIMINAL",
+          "stage": 0,
+          "control": 40,
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 0,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 12,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 0,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 시장 연쇄 절도"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 1,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 2,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 3,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 4,
+              "action": "CONTROL_CHANGE",
+              "detail": "SUCCESS: control +10",
+              "controlDelta": 10
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +2",
+              "pressureDelta": 2
+            }
+          ],
+          "incidentId": "INC_MARKET_THEFT",
+          "deadlineClock": 36,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 40,
+          "spawnedAtClock": 0
+        },
+        {
+          "kind": "CRIMINAL",
+          "stage": 0,
+          "control": 0,
+          "vectors": [
+            {
+              "vector": "STEALTH",
+              "enabled": true,
+              "friction": 0,
+              "preferred": true,
+              "failForwardMode": "SUSPICION",
+              "effectivenessBase": 0.8
+            },
+            {
+              "vector": "SOCIAL",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "HEAT",
+              "effectivenessBase": 0.5
+            },
+            {
+              "vector": "VIOLENT",
+              "enabled": true,
+              "friction": 1,
+              "preferred": false,
+              "failForwardMode": "ESCALATION",
+              "effectivenessBase": 0.5
+            }
+          ],
+          "pressure": 18,
+          "resolved": false,
+          "security": 20,
+          "suspicion": 0,
+          "historyLog": [
+            {
+              "clock": 0,
+              "action": "SPAWN",
+              "detail": "Incident spawned: 항만 밀수 조직"
+            },
+            {
+              "clock": 1,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 2,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 3,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 4,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 5,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            },
+            {
+              "clock": 6,
+              "action": "PRESSURE_CHANGE",
+              "detail": "pressure +3",
+              "pressureDelta": 3
+            }
+          ],
+          "incidentId": "INC_SMUGGLING_RING",
+          "deadlineClock": 48,
+          "mutationFlags": [],
+          "rivalProgress": 0,
+          "playerProgress": 0,
+          "spawnedAtClock": 0
+        }
+      ],
+      "day": 1,
+      "globalClock": 6
+    },
+    "memory": {
+      "theme": [
+        {
+          "key": "location",
+          "tags": [
+            "LOCATION",
+            "THEME"
+          ],
+          "value": "그레이마르 항만 — 왕국 남서부 최대 무역항. 세 세력(항만 노동 길드, 해관청, 밀수 조직)이 이권을 다툰다.",
+          "importance": 1
+        },
+        {
+          "key": "quest",
+          "tags": [
+            "QUEST",
+            "THEME"
+          ],
+          "value": "사라진 공물 장부 — 길드가 해관청에 바친 공물 내역이 담긴 장부가 도난당했다. 장부에는 뒷거래 기록도 포함되어 있어, 공개되면 길드 간부 다수가 처형당할 수 있다.",
+          "importance": 1
+        },
+        {
+          "key": "npc_client",
+          "tags": [
+            "NPC",
+            "THEME"
+          ],
+          "value": "의뢰인 로넨 — 항만 노동 길드의 말단 서기관. 장부 관리 책임자였으나 도난 사실을 상부에 보고하지 못해 쫓기는 처지.",
+          "importance": 0.9
+        },
+        {
+          "key": "hub_system",
+          "tags": [
+            "HUB",
+            "THEME"
+          ],
+          "value": "HUB 거점 — '잠긴 닻' 선술집. 항만 한구석의 허름하지만 안전한 선술집. 이곳에서 시장/경비대/항만/빈민가로 이동하며 임무를 수행한다.",
+          "importance": 0.8
+        },
+        {
+          "key": "protagonist",
+          "tags": [
+            "PROTAGONIST",
+            "THEME"
+          ],
+          "value": "이름 없는 용병 — 몰락 귀족 가문의 후예 — 한때 그레이마르에서 손꼽히던 가문이 정치적 모략에 휘말려 멸문당했다. 이름과 재산은 잃었지만, 귀족 사회의 예절과 인맥, 그리고 사람의 마음을 읽는 눈은 여전하다. 가문 인장 반지만이 과거의 유일한 증거다. 그레이마르에는 일거리를 찾아 며칠 전 도착했다.",
+          "importance": 0.8
+        }
+      ],
+      "storySummary": "[시장 거리 방문] 설득(성공), 설득(성공), 대화(성공). 에드릭 베일, 라이라 케스텔 만남",
+      "structuredMemory": {
+        "version": 2,
+        "visitLog": [
+          {
+            "day": 1,
+            "phase": "DAY",
+            "actions": [
+              {
+                "brief": "날카로운 눈매의 회계사이 시장 구석의 작은 찻집에서 장부를 검토하고 있다",
+                "eventId": "EVT_MARKET_INT_1",
+                "outcome": "SUCCESS",
+                "rawInput": "상인에게 소문을 묻는다",
+                "actionType": "PERSUADE",
+                "relatedNpcId": "NPC_EDRIC_VEIL",
+                "summaryShort": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "날카로운 눈매의 회계사이 시장 구석의 작은 찻집에서 장부를 검토하고 있다",
+                "eventId": "EVT_MARKET_INT_1",
+                "outcome": "SUCCESS",
+                "rawInput": "무슨 일인지 조심스럽게 캐묻는다",
+                "actionType": "PERSUADE",
+                "relatedNpcId": "NPC_EDRIC_VEIL",
+                "summaryShort": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "에드릭 베일이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 ",
+                "eventId": "EVT_MARKET_INT_1",
+                "outcome": "SUCCESS",
+                "rawInput": "맞은편에 앉아 안부를 묻는다",
+                "actionType": "TALK",
+                "relatedNpcId": "NPC_EDRIC_VEIL",
+                "summaryShort": "플레이어가 \"맞은편에 앉아 안부를 묻는다\"를 시도하여 성공했다."
+              },
+              {
+                "brief": "시장 입구에서 향신료 상인이 가루를 볶는 냄새가 거리 전체에 퍼진다. 열",
+                "eventId": "EVT_MARKET_ATM_1",
+                "outcome": "SUCCESS",
+                "rawInput": "조심스럽게 잠입한다",
+                "actionType": "SNEAK",
+                "relatedNpcId": "NPC_MOON_SEA",
+                "summaryShort": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다."
+              }
+            ],
+            "outcomes": {
+              "fail": 0,
+              "partial": 0,
+              "success": 4
+            },
+            "goldDelta": 0,
+            "turnRange": [
+              4,
+              8
+            ],
+            "importance": 0.5,
+            "locationId": "LOC_MARKET",
+            "summaryText": "설득(성공), 설득(성공), 대화(성공). 에드릭 베일, 라이라 케스텔 만남",
+            "locationName": "시장 거리",
+            "npcsEncountered": [
+              "NPC_EDRIC_VEIL",
+              "NPC_MOON_SEA"
+            ],
+            "reputationChanges": {
+              "MERCHANT_CONSORTIUM": 9
+            }
+          }
+        ],
+        "milestones": [
+          {
+            "day": 1,
+            "type": "FIRST_VISIT",
+            "detail": "시장 거리 첫 방문",
+            "turnNo": 8,
+            "importance": 0.4
+          },
+          {
+            "day": 1,
+            "type": "REPUTATION_SHIFT",
+            "detail": "상인 길드 평판 +9 (총 9)",
+            "turnNo": 8,
+            "importance": 0.5
+          }
+        ],
+        "npcJournal": [
+          {
+            "marks": [],
+            "npcId": "NPC_EDRIC_VEIL",
+            "npcName": "에드릭 베일",
+            "summaryText": "에드릭 베일: 신뢰32/존경16 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 32,
+              "posture": "FRIENDLY",
+              "respect": 16,
+              "suspicion": 0,
+              "attachment": 4.4
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_MOON_SEA",
+            "npcName": "라이라 케스텔",
+            "summaryText": "라이라 케스텔: 중립(5) 태도CAUTIOUS. 최근 잠입(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"조심스럽게 잠입한다\"를 시도하여 성공했다.",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "CAUTIOUS",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_ROSA",
+            "npcName": "로자",
+            "summaryText": "로자: 중립(5) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_HARLUN",
+            "npcName": "하를런 보스",
+            "summaryText": "하를런 보스: 중립(10) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_MAIREL",
+            "npcName": "마이렐 단 경",
+            "summaryText": "마이렐 단 경: 중립(-10) 태도CALCULATING. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -10,
+              "posture": "CALCULATING",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_MIRELA",
+            "npcName": "미렐라",
+            "summaryText": "미렐라: 중립(10) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_TOBREN",
+            "npcName": "토브렌 하위크",
+            "summaryText": "토브렌 하위크: 중립(-5) 태도CAUTIOUS. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -5,
+              "posture": "CAUTIOUS",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_RAT_KING",
+            "npcName": "쥐왕",
+            "summaryText": "쥐왕: 적대-20 태도HOSTILE. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": -20,
+              "posture": "HOSTILE",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_BG_BUTLER",
+            "npcName": "올드릭",
+            "summaryText": "올드릭: 중립(5) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_LORD_VANCE",
+            "npcName": "밴스 경",
+            "summaryText": "밴스 경: 중립(10) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_DAME_ISOLDE",
+            "npcName": "이졸데 여사",
+            "summaryText": "이졸데 여사: 중립(10) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_GUARD_FELIX",
+            "npcName": "펠릭스",
+            "summaryText": "펠릭스: 중립(5) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 5,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_OWEN_KEEPER",
+            "npcName": "오웬",
+            "summaryText": "오웬: 중립(15) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 15,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          },
+          {
+            "marks": [],
+            "npcId": "NPC_BG_NOBLE_MAID",
+            "npcName": "클라라",
+            "summaryText": "클라라: 중립(10) 태도FRIENDLY. 최근 설득(성공)",
+            "interactions": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"상인에게 소문을 묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              },
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "플레이어가 \"무슨 일인지 조심스럽게 캐묻는다\"를 시도하여 성공했다.",
+                "actionType": "PERSUADE",
+                "locationId": "LOC_MARKET",
+                "emotionalDelta": {}
+              }
+            ],
+            "latestEmotional": {
+              "fear": 0,
+              "trust": 10,
+              "posture": "FRIENDLY",
+              "respect": 0,
+              "suspicion": 0,
+              "attachment": 0
+            }
+          }
+        ],
+        "llmExtracted": [
+          {
+            "text": "‘잠긴 닻’ 선술집은 낡고 어두운 내부에 안개 낀 밤 바람이 스며듦",
+            "turnNo": 0,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "조용한 문서 실무자는 항상 작은 수첩을 들고 다니며 신중하게 기록한다",
+            "turnNo": 7,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "조용한 문서 실무자가 시장 내 예상치 못한 움직임에 대해 경고함",
+            "turnNo": 7,
+            "category": "NPC_DIALOGUE",
+            "importance": 0.7
+          },
+          {
+            "text": "날카로운 눈매의 회계사이 시장 구석의 작은 찻집에서 장부를 검토하고 있다",
+            "turnNo": 8,
+            "category": "PLACE_DETAIL",
+            "importance": 0.6,
+            "relatedLocationId": "LOC_MARKET"
+          },
+          {
+            "text": "에드릭 베일: 은장부 상단 회계 담당. 숫자에 밝지만 도박 빚에 쫓기는 처지.",
+            "turnNo": 8,
+            "category": "NPC_DETAIL",
+            "importance": 0.7,
+            "relatedNpcId": "NPC_EDRIC_VEIL"
+          },
+          {
+            "text": "라이라 케스텔: 상단 문서실 암호 메모 실무자. 고양이를 키우며 조용한 일상을 좋아하지만,",
+            "turnNo": 8,
+            "category": "NPC_DETAIL",
+            "importance": 0.7,
+            "relatedNpcId": "NPC_MOON_SEA"
+          },
+          {
+            "text": "시장 연쇄 절도 — 관찰",
+            "turnNo": 8,
+            "category": "PLOT_HINT",
+            "importance": 0.8
+          },
+          {
+            "text": "잠긴 닻 선술집 구석에 앉은 사내가 무언가 기록 중이다",
+            "turnNo": 8,
+            "category": "NPC_DETAIL",
+            "importance": 0.7
+          },
+          {
+            "text": "경비대 지구 골목에 소매치기 일당의 흔적인 헝겊 조각과 담배꽁초가 남아 있음",
+            "turnNo": 13,
+            "category": "PLACE_DETAIL",
+            "importance": 0.7
+          }
+        ],
+        "npcKnowledge": {
+          "NPC_LOREN": [
+            {
+              "text": "로넨은 항만 노동 길드 서기관이며, 사라진 장부에 뒷거래 기록이 포함되어 있음을 알림",
+              "factId": "nk_llm_0_NPC_LOREN",
+              "source": "WITNESSED",
+              "turnNo": 0,
+              "importance": 0.7,
+              "locationId": ""
+            }
+          ],
+          "NPC_MAIREL": [
+            {
+              "text": "권위적인 야간 경비 책임자가 비공식 내사 중이며 의심 대상 명단을 갖고 있음",
+              "factId": "nk_llm_13_NPC_MAIREL",
+              "source": "WITNESSED",
+              "turnNo": 13,
+              "importance": 0.7,
+              "locationId": ""
+            }
+          ],
+          "NPC_EDRIC_VEIL": [
+            {
+              "text": "TALK → SUCCESS: 맞은편에 앉아 안부를 묻는다",
+              "factId": "nk_6_NPC_EDRIC_VEIL_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 6,
+              "importance": 0.8,
+              "locationId": "LOC_MARKET"
+            },
+            {
+              "text": "PERSUADE → SUCCESS: 무슨 일인지 조심스럽게 캐묻는다",
+              "factId": "nk_5_NPC_EDRIC_VEIL_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 5,
+              "importance": 0.8,
+              "locationId": "LOC_MARKET"
+            },
+            {
+              "text": "PERSUADE → SUCCESS: 상인에게 소문을 묻는다",
+              "factId": "nk_4_NPC_EDRIC_VEIL_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 4,
+              "importance": 0.8,
+              "locationId": "LOC_MARKET"
+            },
+            {
+              "text": "에드릭 베일이 공물 장부 일부 기록을 직접 검토하고, 장부가 단순 기록 이상임을 암시함",
+              "factId": "nk_llm_6_NPC_EDRIC_VEIL",
+              "source": "WITNESSED",
+              "turnNo": 6,
+              "importance": 0.7,
+              "locationId": ""
+            },
+            {
+              "text": "회계사는 공물 장부 일부 기록을 직접 담당했으며, 그 장부가 단순 기록 이상 중요한 서류임을 암시했다",
+              "factId": "nk_llm_5_NPC_EDRIC_VEIL",
+              "source": "WITNESSED",
+              "turnNo": 5,
+              "importance": 0.7,
+              "locationId": ""
+            }
+          ],
+          "NPC_GUARD_CAPTAIN": [
+            {
+              "text": "BRIBE → SUCCESS: 상인에게 뇌물을 건넨다",
+              "factId": "nk_12_NPC_GUARD_CAPTAIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 12,
+              "importance": 0.8,
+              "locationId": "LOC_GUARD"
+            },
+            {
+              "text": "INVESTIGATE → SUCCESS: 소매치기 일당의 행적을 추적한다",
+              "factId": "nk_13_NPC_GUARD_CAPTAIN_PLAYER_TOLD",
+              "source": "PLAYER_TOLD",
+              "turnNo": 13,
+              "importance": 0.8,
+              "locationId": "LOC_GUARD"
+            }
+          ]
+        },
+        "worldSnapshot": {
+          "day": 1,
+          "hubHeat": 19,
+          "hubSafety": "SAFE",
+          "timePhase": "DAY",
+          "reputation": {
+            "CITY_GUARD": 0,
+            "LABOR_GUILD": 0,
+            "MERCHANT_CONSORTIUM": 9
+          },
+          "arcCommitment": 0,
+          "updatedAtTurnNo": 8,
+          "activeIncidentCount": 2,
+          "resolvedIncidentCount": 0
+        },
+        "lastExitSummary": {
+          "turnCount": 4,
+          "keyActions": [
+            "설득(성공): 날카로운 눈매의 회계사이 시장 구석의 작은 찻집에서 장부를 검토하고 있다",
+            "대화(성공): 에드릭 베일이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 ",
+            "잠입(성공): 시장 입구에서 향신료 상인이 가루를 볶는 냄새가 거리 전체에 퍼진다. 열"
+          ],
+          "locationId": "LOC_MARKET",
+          "keyDialogues": [
+            "날카로운 눈매의 회계사이 시장 구석의 작은 찻집에서 장부를 검토하고 있다",
+            "날카로운 눈매의 회계사이 시장 구석의 작은 찻집에서 장부를 검토하고 있다",
+            "에드릭 베일이 시장 구석의 작은 찻집에서 장부를 검토하고 있다. 평소와 "
+          ],
+          "locationName": "시장 거리",
+          "unresolvedLeads": []
+        },
+        "incidentChronicle": [
+          {
+            "kind": "CRIMINAL",
+            "title": "시장 연쇄 절도",
+            "resolved": false,
+            "incidentId": "INC_MARKET_THEFT",
+            "playerInvolvements": [
+              {
+                "turnNo": 8,
+                "outcome": "SUCCESS",
+                "snippet": "시장 입구에서 향신료 상인이 가루를 볶는 냄새가 거리 전체에 퍼진다. 열",
+                "actionType": "SNEAK",
+                "locationId": "LOC_MARKET",
+                "controlDelta": 0,
+                "pressureDelta": 8
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "discoveredQuestFacts": [
+      "FACT_LEDGER_EXISTS",
+      "FACT_TAMPERED_LOGS",
+      "FACT_WAGE_FRAUD_PATTERN",
+      "FACT_INSIDE_JOB",
+      "FACT_OFFICIAL_INQUIRY",
+      "FACT_MAIREL_GUARD_EVIDENCE"
+    ]
+  },
+  "verification": {
+    "V1_incidents": true,
+    "V2_encounter": true,
+    "V3_posture": true,
+    "V4_emotion": true,
+    "V5_memory": true,
+    "V6_resolve": true
+  },
+  "narrativeMetrics": {
+    "totalNarratives": 10,
+    "totalChars": 4832,
+    "avgCharsPerTurn": 483.2,
+    "minChars": 353,
+    "maxChars": 733,
+    "totalDialogues": 16,
+    "haoSoRatio": 0.875,
+    "metaExpressionCount": 0,
+    "speechContamination": 0,
+    "exitKeywordCount": 0,
+    "reapproachCount": 0
+  },
+  "outcomeDistribution": {
+    "success": 6,
+    "partial": 0,
+    "fail": 0,
+    "total": 6
+  }
+}
