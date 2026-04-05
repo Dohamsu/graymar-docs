@@ -1417,7 +1417,7 @@
   {
     "npcId": "NPC_RAT_KING",
     "name": "쥐왕",
-    "unknownAlias": "어둠 속의 쉰 목소리",
+    "unknownAlias": "두건 쓴 사내",
     "role": "빈민가 지하 조직의 두목. 한때 성공한 상인이었으나 몰락하여 하층부의 정보를 독점하게 되었다.",
     "faction": null,
     "hostile": true,
