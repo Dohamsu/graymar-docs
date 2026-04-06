@@ -1,0 +1,170 @@
+{
+  "passed": 41,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "유저 A 등록 성공",
+      "status": "PASS"
+    },
+    {
+      "name": "유저 B 등록 성공",
+      "status": "PASS"
+    },
+    {
+      "name": "파티 생성 201",
+      "status": "PASS"
+    },
+    {
+      "name": "내 파티 조회 200",
+      "status": "PASS"
+    },
+    {
+      "name": "파티 이름 일치",
+      "status": "PASS"
+    },
+    {
+      "name": "파티 가입 200",
+      "status": "PASS"
+    },
+    {
+      "name": "멤버 2명",
+      "status": "PASS"
+    },
+    {
+      "name": "로비 조회 200",
+      "status": "PASS"
+    },
+    {
+      "name": "초기 allReady=false",
+      "status": "PASS"
+    },
+    {
+      "name": "초기 canStart=false",
+      "status": "PASS"
+    },
+    {
+      "name": "A 준비 200",
+      "status": "PASS"
+    },
+    {
+      "name": "A 준비 후 allReady=false (B 미준비)",
+      "status": "PASS"
+    },
+    {
+      "name": "B 준비 200",
+      "status": "PASS"
+    },
+    {
+      "name": "전원 준비 후 allReady=true",
+      "status": "PASS"
+    },
+    {
+      "name": "canStart=true",
+      "status": "PASS"
+    },
+    {
+      "name": "준비 해제 200",
+      "status": "PASS"
+    },
+    {
+      "name": "해제 후 allReady=false",
+      "status": "PASS"
+    },
+    {
+      "name": "재준비 후 allReady=true",
+      "status": "PASS"
+    },
+    {
+      "name": "비리더 시작 거부",
+      "status": "PASS"
+    },
+    {
+      "name": "던전 시작 200",
+      "status": "PASS"
+    },
+    {
+      "name": "runId 존재",
+      "status": "PASS"
+    },
+    {
+      "name": "멤버 2명 포함",
+      "status": "PASS"
+    },
+    {
+      "name": "파티 상태 IN_DUNGEON",
+      "status": "PASS"
+    },
+    {
+      "name": "A 행동 제출 200",
+      "status": "PASS"
+    },
+    {
+      "name": "A 제출 accepted",
+      "status": "PASS"
+    },
+    {
+      "name": "중복 제출도 200 (멱등)",
+      "status": "PASS"
+    },
+    {
+      "name": "B 행동 제출 200",
+      "status": "PASS"
+    },
+    {
+      "name": "투표 생성 201",
+      "status": "PASS"
+    },
+    {
+      "name": "voteId 존재",
+      "status": "PASS"
+    },
+    {
+      "name": "yesVotes=1 (제안자 자동 찬성)",
+      "status": "PASS"
+    },
+    {
+      "name": "status=PENDING",
+      "status": "PASS"
+    },
+    {
+      "name": "중복 투표 거부 400",
+      "status": "PASS"
+    },
+    {
+      "name": "투표 참여 200",
+      "status": "PASS"
+    },
+    {
+      "name": "과반수 도달 → APPROVED",
+      "status": "PASS"
+    },
+    {
+      "name": "채팅 전송 201",
+      "status": "PASS"
+    },
+    {
+      "name": "히스토리 조회 200",
+      "status": "PASS"
+    },
+    {
+      "name": "메시지 1개 이상",
+      "status": "PASS"
+    },
+    {
+      "name": "B 탈퇴 200",
+      "status": "PASS"
+    },
+    {
+      "name": "멤버 1명 (A만)",
+      "status": "PASS"
+    },
+    {
+      "name": "파티 해산 200",
+      "status": "PASS"
+    },
+    {
+      "name": "파티 없음",
+      "status": "PASS"
+    }
+  ]
+}

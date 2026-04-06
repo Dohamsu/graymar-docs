@@ -141,6 +141,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | llm/ | 8 | LLM Worker, Context Builder, Token Budget, Prompt |
 | portrait/ | 1 | AI 초상화 생성 (Gemini, rate limit) |
 | bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
+| party/ | 7 | 파티 시스템 (Party, Chat, Stream, Lobby, PartyTurn, Vote, Reward) |
 
 ### HUB 엔진 6 서브시스템 (36 services)
 
@@ -291,6 +292,22 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | PATCH | `/v1/bug-reports/:id` | 버그 리포트 상태 변경 (resolved 등) |
 | POST | `/v1/portrait/generate` | AI 초상화 생성 (presetId, gender, appearanceDescription) |
 | GET | `/v1/version` | 서버 버전 조회 (git hash, startedAt, uptime) |
+| POST | `/v1/parties` | 파티 생성 (name) |
+| GET | `/v1/parties/my` | 내 파티 조회 |
+| GET | `/v1/parties/search` | 파티 검색 (?q=) |
+| POST | `/v1/parties/join` | 초대코드로 가입 (inviteCode) |
+| POST | `/v1/parties/:partyId/leave` | 파티 탈퇴 |
+| POST | `/v1/parties/:partyId/kick` | 멤버 추방 (userId) |
+| DELETE | `/v1/parties/:partyId` | 파티 해산 |
+| POST | `/v1/parties/:partyId/messages` | 채팅 전송 (content) |
+| GET | `/v1/parties/:partyId/messages` | 채팅 히스토리 (cursor, limit) |
+| GET | `/v1/parties/:partyId/stream` | SSE 실시간 스트림 (?token=JWT) |
+| GET | `/v1/parties/:partyId/lobby` | 로비 상태 조회 |
+| POST | `/v1/parties/:partyId/lobby/ready` | 준비 완료 토글 (ready) |
+| POST | `/v1/parties/:partyId/lobby/start` | 던전 시작 (리더 전용) |
+| POST | `/v1/parties/:partyId/runs/:runId/turns` | 파티 행동 제출 (inputType, rawInput, idempotencyKey) |
+| POST | `/v1/parties/:partyId/votes` | 이동 투표 제안 (targetLocationId) |
+| POST | `/v1/parties/:partyId/votes/:voteId/cast` | 투표 참여 (choice: yes/no) |
 
 ## Environment Variables (`server/.env`)
 
@@ -350,6 +367,8 @@ LLM_FALLBACK_PROVIDER=mock
 | **speakingNpc 버그 수정** | PROC_/SIT_ 이벤트 injectedNpc 분리 + 무명 인물 실루엣 아이콘 | ✅ 완료 |
 | **린트 0/0** | 서버 unused-vars 62건 + unsafe 404건 수정, 클라이언트 린트 0/0, TS2871 빌드 에러 수정 | ✅ 완료 |
 | **NPC 초상화 확장** | CORE + SUB NPC 초상화 12개 클라이언트 배치 | ✅ 완료 |
+| **파티 Phase 1** | 파티 CRUD + 초대코드 + 실시간 채팅(SSE) + 로비 UI + PartyHUD | ✅ 완료 |
+| **파티 Phase 2** | 파티 던전: 로비 준비→시작→4인 동시 턴→통합 판정→LLM 3인칭 서술→이동 투표→보상 분배→던전 종료 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
@@ -408,6 +427,7 @@ LLM_FALLBACK_PROVIDER=mock
 | fixplan4.md | ✅ 구현됨 | 플레이테스트 이슈 수정 (fixplan4) |
 | fixplan5.md | ✅ 구현됨 | 플레이테스트 이슈 수정 (fixplan5) |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
+| 24_multiplayer_party_system.md | ✅ 구현됨 | 멀티플레이어 파티 시스템 Phase 1+2 |
 
 ### guides/ — 코드 구현 지침 (6 md)
 
