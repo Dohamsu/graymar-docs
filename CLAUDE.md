@@ -190,7 +190,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | OpenAI / Claude / Gemini | Multi-provider |
+| LLM | OpenAI / Claude / Gemini / Gemma 4 (OpenRouter) | Multi-provider |
 
 ## Critical Design Invariants
 
@@ -298,7 +298,8 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 LLM_PROVIDER=openai          # openai | claude | gemini | mock
 OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4o
+OPENAI_MODEL=google/gemma-4-26b-a4b-it   # OpenRouter 모델명 (기존: gpt-4o)
+OPENAI_BASE_URL=https://openrouter.ai/api/v1  # optional, OpenAI-compatible endpoint
 CLAUDE_API_KEY=               # optional
 GEMINI_API_KEY=               # optional
 LLM_MAX_RETRIES=2
@@ -344,6 +345,11 @@ LLM_FALLBACK_PROVIDER=mock
 | **Intent Parser 강화** | MOVE_LOCATION KW_OVERRIDE 오탐 방지 + LLM 판정 신뢰 강화 (장소명 복합감지) | ✅ 완료 |
 | **타이틀 UX 개선** | 로딩 애니메이션 (dotPulse) + 버튼 stagger fade-in + ads.txt | ✅ 완료 |
 | **아이템 이미지 수정** | items/ 26개 중 10개 초상화 오류 → Gemini 2.5 Flash로 아이콘 재생성 | ✅ 완료 |
+| **LLM Gemma 4 전환** | gpt-4.1-mini → Gemma 4 26B MoE (OpenRouter), openai provider baseURL 지원, 이미지 생성 비활성화 (과금 방지) | ✅ 완료 |
+| **서술 품질 개선** | unknownAlias 매칭 강화 + encounterCount 4단계 NPC 관계 깊이 + PRESET_MANNERISMS 6종 + NPC 팩트 반복 버그 수정 | ✅ 완료 |
+| **speakingNpc 버그 수정** | PROC_/SIT_ 이벤트 injectedNpc 분리 + 무명 인물 실루엣 아이콘 | ✅ 완료 |
+| **린트 0/0** | 서버 unused-vars 62건 + unsafe 404건 수정, 클라이언트 린트 0/0, TS2871 빌드 에러 수정 | ✅ 완료 |
+| **NPC 초상화 확장** | CORE + SUB NPC 초상화 12개 클라이언트 배치 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
