@@ -17,6 +17,7 @@
 2. **솔로/파티 완전 분리** --- 솔로 런은 그대로, 파티 런은 별도 메뉴로 진입
 3. **단일 서버 최적화** --- Phase 1에서 Redis 불필요 (동시 접속 10명 이하)
 4. **점진적 도입** --- Phase별로 독립 배포 가능
+5. **SSE+REST 구조** --- 다운스트림은 SSE, 업스트림은 REST POST (WebSocket 미사용)
 
 ### 1.3 Phase 로드맵
 
@@ -45,11 +46,13 @@ Client (Next.js 16)  ──REST──>  Server (NestJS 11)  ──>  PostgreSQL
 
 ```
 Client (Next.js 16)
-  ├── REST API (기존 유지 + 파티 엔드포인트)
-  └── WebSocket (/party) ─────>  Server (NestJS 11)
+  ├── REST API (기존 유지 + 파티 엔드포인트 + 업스트림 POST)
+  └── SSE (GET /v1/parties/:partyId/stream)
+       |                              Server (NestJS 11)
        |                              ├── 기존 모듈 (auth, runs, turns, engine, llm, ...)
        |                              ├── PartyModule (NEW)
-       |                              │   ├── PartyGateway (WebSocket)
+       |                              │   ├── PartyController (REST + SSE 엔드포인트)
+       |                              │   ├── PartyStreamService (SSE 연결 관리 + 브로드캐스트)
        |                              │   ├── PartyService (파티 CRUD)
        |                              │   ├── ChatService (채팅)
        |                              │   ├── LobbyService (로비/준비)
@@ -57,19 +60,22 @@ Client (Next.js 16)
        |                              │   └── PartyTurnService (통합 턴 처리)
        |                              └── PostgreSQL (기존 + 파티/채팅 테이블)
        |
-       └── 실시간 이벤트 (채팅, 턴 상태, 투표, 로비)
+       └── 실시간 다운스트림 이벤트 (채팅, 턴 상태, 투표, 로비)
 ```
+
+**통신 모델**: Client→Server는 전부 REST POST, Server→Client는 SSE 스트림.
+NestJS 내장 SSE 지원(`@Sse()` 데코레이터 또는 `Observable<MessageEvent>` 반환)을 사용하며, 외부 의존성 없음.
 
 ### 2.3 핵심 변경 요약
 
 | 영역 | 변경 |
 |------|------|
-| 의존성 (서버) | `@nestjs/websockets`, `@nestjs/platform-socket.io`, `socket.io` |
-| 의존성 (클라이언트) | `socket.io-client` |
-| 새 모듈 | `server/src/party/` (6 services, 1 gateway, 1 controller) |
+| 의존성 (서버) | 없음 (NestJS 내장 SSE 사용) |
+| 의존성 (클라이언트) | 없음 (브라우저 내장 `EventSource` API) |
+| 새 모듈 | `server/src/party/` (7 services, 1 controller) |
 | 새 DB 테이블 | `parties`, `party_members`, `chat_messages`, `party_turn_actions`, `party_votes` |
 | 기존 테이블 변경 | `run_sessions`에 `partyId`, `runMode` 컬럼 추가 |
-| 클라이언트 | `party-store.ts`, `socket-client.ts`, 파티/로비/채팅 컴포넌트 |
+| 클라이언트 | `party-store.ts`, `sse-client.ts`, 파티/로비/채팅 컴포넌트 |
 
 ---
 
@@ -153,7 +159,7 @@ export const partyMembers = pgTable(
     role: text('role', { enum: PARTY_ROLE })
       .notNull()
       .default('MEMBER'),
-    isOnline: text('is_online').notNull().default('false'), // WebSocket 연결 상태
+    isOnline: text('is_online').notNull().default('false'), // SSE 연결 상태
     joinedAt: timestamp('joined_at').defaultNow().notNull(),
   },
   (table) => [
@@ -380,26 +386,17 @@ cd server && npx drizzle-kit push
 | POST | `/v1/parties/:partyId/lobby/ready` | 준비 완료 토글 | `{ ready: boolean }` | `LobbyStateDTO` |
 | GET | `/v1/parties/:partyId/lobby` | 로비 상태 | - | `LobbyStateDTO` |
 
-### 4.2 WebSocket (namespace: `/party`)
+### 4.2 SSE 다운스트림 (Server -> Client)
 
-인증: handshake `auth: { token }` -> JWT 검증 -> `socket.data.userId`, `socket.data.nickname`
+SSE 엔드포인트: `GET /v1/parties/:partyId/stream`
+인증: `Authorization: Bearer <JWT>` 헤더 (EventSource는 커스텀 헤더 미지원이므로, 쿼리 파라미터 `?token=<JWT>` 폴백 허용)
+재연결: 브라우저 EventSource 내장 자동 재연결 + `Last-Event-ID` 헤더로 놓친 이벤트 복구
 
-#### Client -> Server 이벤트
+서버 구현: NestJS `@Sse()` 데코레이터 또는 컨트롤러에서 `Observable<MessageEvent>` 반환
 
-| Event | Payload | Phase | Description |
-|-------|---------|-------|-------------|
-| `party:join_room` | `{ partyId }` | 1 | 소켓을 파티 room에 참가 |
-| `party:leave_room` | `{ partyId }` | 1 | 소켓을 room에서 퇴장 |
-| `chat:send` | `{ partyId, content }` | 1 | 채팅 메시지 전송 (최대 500자) |
-| `lobby:ready` | `{ partyId, ready }` | 2 | 준비 상태 토글 |
-| `lobby:start` | `{ partyId }` | 2 | 던전 시작 (리더, 전원 준비 필요) |
-| `dungeon:submit_action` | `{ partyId, runId, turnNo, inputType, rawInput }` | 2 | 개별 행동 제출 |
-| `vote:propose` | `{ partyId, voteType, targetLocationId }` | 2 | 이동 투표 제안 |
-| `vote:cast` | `{ partyId, voteId, choice: 'yes' \| 'no' }` | 2 | 투표 참여 |
+#### SSE 이벤트 타입
 
-#### Server -> Client 이벤트
-
-| Event | Payload | Phase | Description |
+| event (type) | data (JSON) | Phase | Description |
 |-------|---------|-------|-------------|
 | `chat:new_message` | `ChatMessageDTO` | 1 | 새 메시지 (TEXT/SYSTEM/GAME_EVENT) |
 | `party:member_joined` | `{ userId, nickname, memberCount }` | 1 | 멤버 가입 |
@@ -408,6 +405,7 @@ cd server && npx drizzle-kit push
 | `party:disbanded` | `{ partyId }` | 1 | 파티 해산 |
 | `party:leader_changed` | `{ newLeaderId, nickname }` | 1 | 리더 위임 |
 | `party:error` | `{ code, message }` | 1 | 에러 |
+| `party:heartbeat` | `{ ts }` | 1 | 30초 간격 연결 유지 (프록시 타임아웃 방지) |
 | `lobby:state_updated` | `LobbyStateDTO` | 2 | 로비 상태 (준비 현황) |
 | `lobby:dungeon_starting` | `{ runId, countdown }` | 2 | 던전 시작 카운트다운 |
 | `dungeon:action_received` | `{ userId, nickname }` | 2 | "X가 행동을 제출했습니다" |
@@ -419,7 +417,52 @@ cd server && npx drizzle-kit push
 | `vote:updated` | `PartyVoteDTO` | 2 | 투표 현황 갱신 |
 | `vote:resolved` | `{ voteId, status, targetLocationId? }` | 2 | 투표 결과 |
 
-### 4.3 DTO 정의
+#### SSE 메시지 포맷 예시
+
+```
+id: 1712345678901
+event: chat:new_message
+data: {"id":"abc-123","senderId":"user-1","senderNickname":"홍길동","type":"TEXT","content":"안녕!","createdAt":"2026-04-04T12:00:00Z"}
+
+id: 1712345678902
+event: party:member_online
+data: {"userId":"user-2","isOnline":true}
+
+event: party:heartbeat
+data: {"ts":"2026-04-04T12:00:30Z"}
+```
+
+### 4.3 REST 업스트림 (Client -> Server)
+
+기존 WebSocket C->S 이벤트를 REST POST 엔드포인트로 전환한다.
+
+#### 채팅
+
+| Method | Path | Phase | Request Body | Description |
+|--------|------|-------|-------------|-------------|
+| POST | `/v1/parties/:partyId/messages` | 1 | `{ content: string }` | 채팅 전송 (최대 500자). 성공 시 SSE `chat:new_message`로 전파 |
+
+#### 로비 (Phase 2)
+
+| Method | Path | Phase | Request Body | Description |
+|--------|------|-------|-------------|-------------|
+| POST | `/v1/parties/:partyId/lobby/ready` | 2 | `{ ready: boolean }` | 준비 토글. SSE `lobby:state_updated` 전파 |
+| POST | `/v1/parties/:partyId/lobby/start` | 2 | - | 던전 시작 (리더). SSE `lobby:dungeon_starting` 전파 |
+
+#### 던전 행동 (Phase 2)
+
+| Method | Path | Phase | Request Body | Description |
+|--------|------|-------|-------------|-------------|
+| POST | `/v1/parties/:partyId/runs/:runId/turns` | 2 | `{ inputType, rawInput, idempotencyKey }` | 개별 행동 제출. SSE `dungeon:action_received` 전파 |
+
+#### 이동 투표 (Phase 2)
+
+| Method | Path | Phase | Request Body | Description |
+|--------|------|-------|-------------|-------------|
+| POST | `/v1/parties/:partyId/votes` | 2 | `{ voteType, targetLocationId }` | 투표 제안. SSE `vote:proposed` 전파 |
+| POST | `/v1/parties/:partyId/votes/:voteId/cast` | 2 | `{ choice: 'yes' \| 'no' }` | 투표 참여. SSE `vote:updated`/`vote:resolved` 전파 |
+
+### 4.4 DTO 정의
 
 ```typescript
 // PartyDTO
@@ -512,11 +555,10 @@ interface PartyVoteDTO {
 ```
 server/src/party/
   ├── party.module.ts              # PartyModule (imports: AuthModule)
-  ├── party.controller.ts          # REST 엔드포인트 (파티 CRUD, 채팅 조회)
+  ├── party.controller.ts          # REST + SSE 엔드포인트 (파티 CRUD, 채팅, SSE 스트림)
   ├── party.service.ts             # 파티 생성/가입/탈퇴/해산/검색
+  ├── party-stream.service.ts      # SSE 연결 관리 + 이벤트 브로드캐스트
   ├── chat.service.ts              # 채팅 메시지 저장/조회, 시스템 메시지 생성
-  ├── party.gateway.ts             # WebSocket Gateway (/party namespace)
-  ├── ws-auth.guard.ts             # WebSocket JWT 인증 가드
   ├── lobby.service.ts             # [Phase 2] 로비 상태 관리, 준비 체크
   ├── vote.service.ts              # [Phase 2] 이동 투표 생성/참여/집계
   ├── party-turn.service.ts        # [Phase 2] 개별 행동 수집 → 통합 처리 → 브로드캐스트
@@ -525,6 +567,7 @@ server/src/party/
       ├── create-party.dto.ts      # Zod: { name: z.string().min(1).max(30) }
       ├── join-party.dto.ts        # Zod: { inviteCode: z.string().length(6) }
       ├── kick-member.dto.ts       # Zod: { userId: z.string().uuid() }
+      ├── send-message.dto.ts      # Zod: { content: z.string().min(1).max(500) }
       ├── submit-action.dto.ts     # [Phase 2] Zod: { inputType, rawInput, idempotencyKey }
       └── cast-vote.dto.ts         # [Phase 2] Zod: { voteId, choice }
 ```
@@ -539,8 +582,8 @@ server/src/party/
   controllers: [PartyController],
   providers: [
     PartyService,
+    PartyStreamService,
     ChatService,
-    PartyGateway,
     // Phase 2:
     // LobbyService,
     // VoteService,
@@ -552,34 +595,101 @@ server/src/party/
 export class PartyModule {}
 ```
 
-#### `party.gateway.ts`
+#### `party-stream.service.ts`
+
+SSE 연결을 관리하고 파티원에게 이벤트를 브로드캐스트하는 서비스.
 
 ```typescript
-@WebSocketGateway({
-  namespace: '/party',
-  cors: { origin: '*' },  // 프로덕션에서 도메인 제한
-})
-export class PartyGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  @WebSocketServer() server: Server;
+@Injectable()
+export class PartyStreamService implements OnModuleDestroy {
+  // partyId -> Map<userId, { subject: Subject<MessageEvent>, res: Response }>
+  private connections = new Map<string, Map<string, SseConnection>>();
+  private eventIdCounter = 0;
 
-  // 연결 시: JWT 검증 → socket.data에 userId/nickname 저장
-  async handleConnection(socket: Socket): Promise<void> { ... }
-
-  // 연결 해제 시: 온라인 상태 업데이트 → 파티원에게 브로드캐스트
-  // 리더 이탈 시 자동 위임 (joinedAt 기준 다음 멤버)
-  async handleDisconnect(socket: Socket): Promise<void> { ... }
-
-  @SubscribeMessage('party:join_room')
-  async handleJoinRoom(socket, payload): Promise<void> {
-    // 멤버십 확인 → socket.join(partyId) → 온라인 상태 업데이트
+  /**
+   * SSE 연결 등록. PartyController의 @Sse() 엔드포인트에서 호출.
+   * 반환된 Observable을 컨트롤러가 클라이언트에 스트림으로 전송.
+   */
+  connect(partyId: string, userId: string): Observable<MessageEvent> {
+    const subject = new Subject<MessageEvent>();
+    // Map에 등록, 온라인 상태 갱신, 연결 알림 브로드캐스트
+    // 30초 heartbeat interval 시작 (프록시 타임아웃 방지)
+    return subject.asObservable();
   }
 
-  @SubscribeMessage('chat:send')
-  async handleChatSend(socket, payload): Promise<void> {
-    // 검증 → chatService.save() → room에 브로드캐스트
+  /**
+   * SSE 연결 해제. 클라이언트 연결 종료 시 호출.
+   * 리더 이탈 시 30초 유예 후 자동 위임 (joinedAt 기준 다음 멤버).
+   */
+  disconnect(partyId: string, userId: string): void { ... }
+
+  /**
+   * 파티의 모든 연결된 멤버에게 SSE 이벤트 브로드캐스트.
+   */
+  broadcast(partyId: string, event: string, data: unknown): void {
+    const partyConns = this.connections.get(partyId);
+    if (!partyConns) return;
+    const id = String(++this.eventIdCounter);
+    for (const conn of partyConns.values()) {
+      conn.subject.next({ id, type: event, data: JSON.stringify(data) } as MessageEvent);
+    }
   }
 
-  // Phase 2: lobby:ready, lobby:start, dungeon:submit_action, vote:*
+  /**
+   * 특정 유저에게만 SSE 이벤트 전송.
+   */
+  sendToUser(partyId: string, userId: string, event: string, data: unknown): void { ... }
+
+  /**
+   * 파티의 현재 연결된 유저 ID 목록.
+   */
+  getOnlineUserIds(partyId: string): string[] { ... }
+
+  onModuleDestroy(): void {
+    // 모든 subject complete, heartbeat interval 정리
+  }
+}
+```
+
+#### `party.controller.ts` (SSE 엔드포인트 포함)
+
+```typescript
+@Controller('v1/parties')
+@UseGuards(AuthGuard)
+export class PartyController {
+  constructor(
+    private partyService: PartyService,
+    private partyStreamService: PartyStreamService,
+    private chatService: ChatService,
+  ) {}
+
+  // --- 기존 REST 엔드포인트 (파티 CRUD) ---
+
+  // --- SSE 스트림 ---
+  @Sse(':partyId/stream')
+  stream(
+    @Param('partyId') partyId: string,
+    @Req() req: Request,
+  ): Observable<MessageEvent> {
+    const userId = req.user.id;
+    // 멤버십 확인 → partyStreamService.connect()
+    // req.on('close') → partyStreamService.disconnect()
+    return this.partyStreamService.connect(partyId, userId);
+  }
+
+  // --- 채팅 (REST 업스트림) ---
+  @Post(':partyId/messages')
+  async sendMessage(
+    @Param('partyId') partyId: string,
+    @Body() body: SendMessageDto,
+    @Req() req: Request,
+  ): Promise<ChatMessageDTO> {
+    const msg = await this.chatService.saveMessage(partyId, req.user.id, 'TEXT', body.content);
+    this.partyStreamService.broadcast(partyId, 'chat:new_message', msg);
+    return msg;
+  }
+
+  // Phase 2: lobby/ready, lobby/start, runs/:runId/turns, votes, votes/:voteId/cast
 }
 ```
 
@@ -634,7 +744,7 @@ export class PartyGateway implements OnGatewayConnection, OnGatewayDisconnect {
 ```
 client/src/
   ├── lib/
-  │   └── socket-client.ts              # socket.io-client 싱글턴 관리
+  │   └── sse-client.ts                 # EventSource 래퍼 (연결/해제/이벤트 바인딩)
   ├── store/
   │   └── party-store.ts                # Zustand 파티+채팅+로비 스토어
   └── components/
@@ -657,35 +767,66 @@ client/src/
           └── LootDistribution.tsx       # [Phase 2] 주사위 굴림 보상 분배 UI
 ```
 
-### 6.2 소켓 클라이언트 싱글턴
+### 6.2 SSE 클라이언트 래퍼
 
 ```typescript
-// client/src/lib/socket-client.ts
+// client/src/lib/sse-client.ts
 
-import { io, Socket } from 'socket.io-client';
+type SseEventHandler = (data: unknown) => void;
 
-let socket: Socket | null = null;
+let eventSource: EventSource | null = null;
+const handlers = new Map<string, SseEventHandler>();
 
-export function getPartySocket(token: string): Socket {
-  if (socket?.connected) return socket;
+/**
+ * SSE 스트림 연결.
+ * EventSource는 커스텀 헤더를 지원하지 않으므로 token을 쿼리 파라미터로 전달.
+ * 브라우저 내장 자동 재연결 + Last-Event-ID 복구를 그대로 활용.
+ */
+export function connectPartyStream(
+  partyId: string,
+  token: string,
+): EventSource {
+  if (eventSource) disconnectPartyStream();
 
-  const baseUrl = getBaseUrl(); // auth-store.ts와 동일 패턴
-  socket = io(`${baseUrl}/party`, {
-    auth: { token },
-    transports: ['websocket'],
-    reconnection: true,
-    reconnectionAttempts: 10,
-    reconnectionDelay: 1000,
-  });
+  const baseUrl = getBaseUrl();
+  eventSource = new EventSource(
+    `${baseUrl}/v1/parties/${partyId}/stream?token=${encodeURIComponent(token)}`,
+  );
 
-  return socket;
+  // 등록된 핸들러를 EventSource에 바인딩
+  for (const [eventType, handler] of handlers) {
+    eventSource.addEventListener(eventType, (e: MessageEvent) => {
+      handler(JSON.parse(e.data));
+    });
+  }
+
+  eventSource.onerror = () => {
+    // 브라우저가 자동 재연결 시도.
+    // readyState === CLOSED면 수동 재연결 로직 (exponential backoff).
+    console.warn('[SSE] connection error, browser will retry');
+  };
+
+  return eventSource;
 }
 
-export function disconnectPartySocket(): void {
-  if (socket) {
-    socket.disconnect();
-    socket = null;
+/**
+ * 이벤트 핸들러 등록. connectPartyStream 이전/이후 모두 호출 가능.
+ */
+export function onPartyEvent(eventType: string, handler: SseEventHandler): void {
+  handlers.set(eventType, handler);
+  if (eventSource) {
+    eventSource.addEventListener(eventType, (e: MessageEvent) => {
+      handler(JSON.parse(e.data));
+    });
   }
+}
+
+export function disconnectPartyStream(): void {
+  if (eventSource) {
+    eventSource.close();
+    eventSource = null;
+  }
+  handlers.clear();
 }
 ```
 
@@ -744,16 +885,16 @@ interface PartyState {
   joinParty(inviteCode: string): Promise<void>;
   leaveParty(): Promise<void>;
   fetchMyParty(): Promise<void>;
-  sendMessage(content: string): void;      // WebSocket
-  connectSocket(token: string): void;
-  disconnectSocket(): void;
+  sendMessage(content: string): Promise<void>;  // REST POST
+  connectStream(token: string): void;           // SSE EventSource
+  disconnectStream(): void;
 
   // Phase 2 액션
-  toggleReady(): void;
-  startDungeon(): void;
-  submitAction(input: string): void;
-  proposeMove(locationId: string): void;
-  castVote(voteId: string, choice: 'yes' | 'no'): void;
+  toggleReady(): Promise<void>;                 // REST POST
+  startDungeon(): Promise<void>;                // REST POST
+  submitAction(input: string): Promise<void>;   // REST POST
+  proposeMove(locationId: string): Promise<void>; // REST POST
+  castVote(voteId: string, choice: 'yes' | 'no'): Promise<void>; // REST POST
 }
 ```
 
@@ -796,11 +937,9 @@ interface PartyState {
                                 insert party_members (LEADER) →  party_members
                             ←  { id, name, inviteCode: "X3K9M2" }
   
-  WebSocket connect         →  PartyGateway.handleConnection()
-  auth: { token }              JWT 검증 → socket.data.userId = A
-  
-  emit party:join_room      →  멤버십 확인 → socket.join(partyId)
-  { partyId }                   isOnline = true
+  GET /v1/parties/:id/stream → PartyStreamService.connect(partyId, A)
+  ?token=<JWT>                  JWT 검증 → SSE 연결 등록 → isOnline = true
+                            ←  SSE 스트림 시작 (Content-Type: text/event-stream)
 
 [유저 B: 초대코드 가입]
   B.Client                    Server                        DB
@@ -809,17 +948,19 @@ interface PartyState {
   { inviteCode: "X3K9M2" }     파티 조회 → 인원 체크 (< 4)
                                 insert party_members (MEMBER) →  party_members
                                 ChatService.sendSystemMessage("B 가입")
-                                gateway.to(partyId).emit('party:member_joined')
+                                PartyStreamService.broadcast('party:member_joined')
                             ←  PartyDTO
 
-  B: WebSocket connect + join_room → (위와 동일)
+  B: GET /v1/parties/:id/stream?token=<JWT> → SSE 연결 (위와 동일)
 
 [채팅]
   A.Client                    Server                        DB
   ──────                    ──────                        ──
-  emit chat:send            →  ChatService.saveMessage()    →  chat_messages
-  { partyId, content }         gateway.to(partyId).emit('chat:new_message')
-                            →  B.Client: chat:new_message { senderNickname: "A", ... }
+  POST /v1/parties/:id/     →  ChatService.saveMessage()    →  chat_messages
+    messages                    PartyStreamService.broadcast('chat:new_message')
+  { content: "안녕!" }      ←  ChatMessageDTO (REST 응답)
+                             →  A,B SSE: event: chat:new_message
+                                data: { senderNickname: "A", content: "안녕!", ... }
 ```
 
 ### 7.2 던전 로비 -> 진입 -> 턴 처리 -> 보상 (Phase 2)
@@ -830,29 +971,30 @@ interface PartyState {
   ──────────                ──────                        ──
   /play/party/lobby 진입
   
-  B: emit lobby:ready       →  LobbyService.toggleReady(B, true)
-  C: emit lobby:ready       →  LobbyService.toggleReady(C, true)
-  A: emit lobby:ready       →  LobbyService.toggleReady(A, true)
+  B: POST .../lobby/ready   →  LobbyService.toggleReady(B, true)
+     { ready: true }
+  C: POST .../lobby/ready   →  LobbyService.toggleReady(C, true)
+  A: POST .../lobby/ready   →  LobbyService.toggleReady(A, true)
                                 allReady = true
-                                → all: lobby:state_updated { allReady: true }
+                                → SSE all: lobby:state_updated { allReady: true }
 
-  A: emit lobby:start       →  LobbyService.canStart() 확인
+  A: POST .../lobby/start   →  LobbyService.canStart() 확인
                                 PartyService.setStatus('IN_DUNGEON')
                                 RunsService.createPartyRun(partyId, members)
                                   → run_sessions (runMode=PARTY, partyId)
-                                → all: lobby:dungeon_starting { runId, countdown: 3 }
+                                → SSE all: lobby:dungeon_starting { runId, countdown: 3 }
 
 [턴 처리]
   Server                        각 Client
   ──────                        ──────────
   턴 시작 → 30초 타이머 시작
   
-  A: emit dungeon:submit_action →  PartyTurnService.submitAction(A)
+  A: POST .../runs/:runId/turns →  PartyTurnService.submitAction(A)
   { rawInput: "도적을 공격" }       → party_turn_actions INSERT
-                                    → all: dungeon:action_received { userId: A }
-                                    → all: dungeon:waiting { submitted: [A], pending: [B,C] }
+                                    → SSE all: dungeon:action_received { userId: A }
+                                    → SSE all: dungeon:waiting { submitted: [A], pending: [B,C] }
   
-  B: emit dungeon:submit_action →  PartyTurnService.submitAction(B)
+  B: POST .../runs/:runId/turns →  PartyTurnService.submitAction(B)
   { rawInput: "방어 자세" }         checkAllSubmitted() → 아직 C 미제출
   
   ... 30초 경과, C 미제출 ...
@@ -866,9 +1008,9 @@ interface PartyState {
     3. 통합 ResolveService 호출 (각자 독립 판정)
     4. ServerResultV1 생성 (events에 각자 결과 포함)
     5. turns INSERT (통합 결과)
-    6. → all: dungeon:turn_resolved { actions[], serverResult }
+    6. → SSE all: dungeon:turn_resolved { actions[], serverResult }
     7. [async] LLM Worker: 4인분 행동 → 통합 서사 생성
-    8. → all: dungeon:turn_narrative { narrative }
+    8. → SSE all: dungeon:turn_narrative { narrative }
 
 [보상 분배]
   전투 종료 시:
@@ -877,7 +1019,7 @@ interface PartyState {
       동점 시 재굴림
     PartyRewardService.distributeGold():
       totalGold / memberCount (나머지 → 리더)
-    → all: dungeon:loot_distributed { results[] }
+    → SSE all: dungeon:loot_distributed { results[] }
 ```
 
 ### 7.3 이동 투표 (Phase 2)
@@ -885,44 +1027,44 @@ interface PartyState {
 ```
   A.Client                    Server                        DB
   ──────                    ──────                        ──
-  emit vote:propose          →  VoteService.createVote()
+  POST .../votes             →  VoteService.createVote()
   { targetLocationId:            insert party_votes          →  party_votes
     "market_district" }          (proposerId=A, yesVotes=1, expiresAt=now+30s)
-                                → all: vote:proposed { ... }
+                                → SSE all: vote:proposed { ... }
 
-  B: emit vote:cast          →  VoteService.castVote(B, 'yes')
-  { voteId, choice: 'yes' }     yesVotes++ → 2/3 = 과반수!
+  B: POST .../votes/:id/cast →  VoteService.castVote(B, 'yes')
+  { choice: 'yes' }             yesVotes++ → 2/3 = 과반수!
                                 VoteService.resolveVote('APPROVED')
                                 PartyTurnService.executeMove(targetLocationId)
                                 ChatService.sendGameEvent("시장 구역으로 이동합니다")
-                                → all: vote:resolved { status: 'APPROVED' }
-                                → all: dungeon:location_changed { locationId }
+                                → SSE all: vote:resolved { status: 'APPROVED' }
+                                → SSE all: dungeon:location_changed { locationId }
 
   [과반수 미달 + 30초 경과]
   Server: VoteService.expireVote()
-                                → all: vote:resolved { status: 'EXPIRED' }
+                                → SSE all: vote:resolved { status: 'EXPIRED' }
 ```
 
 ### 7.4 멤버 이탈/합류 (Phase 1 + Phase 2)
 
 ```
 [접속 종료 → 리더 자동 위임]
-  A(Leader) 연결 끊김       →  PartyGateway.handleDisconnect()
+  A(Leader) SSE 연결 끊김   →  PartyStreamService.disconnect(partyId, A)
                                 isOnline = false
-                                30초 대기 (재연결 유예)
+                                30초 대기 (재연결 유예 - setTimeout)
                                 ... 재연결 없음 ...
                                 PartyService.transferLeadership(partyId, B)
                                   B.role = LEADER
-                                → all: party:leader_changed { newLeaderId: B }
-                                → all: party:member_online { userId: A, isOnline: false }
+                                → SSE all: party:leader_changed { newLeaderId: B }
+                                → SSE all: party:member_online { userId: A, isOnline: false }
 
 [던전 중 멤버 이탈 (Phase 2)]
-  C 연결 끊김               →  PartyGateway.handleDisconnect()
+  C SSE 연결 끊김           →  PartyStreamService.disconnect(partyId, C)
                                 30초 대기 → 재연결 없음
                                 PartyTurnService.setAiControlled(runId, C)
                                   이후 C의 행동 = 자동 (getAutoAction)
                                 ChatService.sendSystemMessage("C가 이탈. AI가 대신 행동합니다")
-                                → all: party:member_ai_controlled { userId: C }
+                                → SSE all: party:member_ai_controlled { userId: C }
 
 [중간 합류 (Phase 2)]
   D: POST /v1/parties/join   →  PartyService.joinByInviteCode()
@@ -930,7 +1072,8 @@ interface PartyState {
                                  PartyTurnService.addMidJoinMember(runId, D)
                                    현재 턴 이후부터 행동 가능
                                  ChatService.sendSystemMessage("D가 합류했습니다")
-                                 → all: party:member_joined { userId: D, midJoin: true }
+                                 → SSE all: party:member_joined { userId: D, midJoin: true }
+  D: GET .../stream?token=   →  SSE 연결 시작 (이후 실시간 이벤트 수신)
 ```
 
 ---
@@ -941,10 +1084,10 @@ interface PartyState {
 
 | 작업 | 상세 |
 |------|------|
-| 의존성 설치 | `pnpm add @nestjs/websockets @nestjs/platform-socket.io socket.io` |
+| 의존성 설치 | 없음 (NestJS 내장 SSE, 외부 패키지 불필요) |
 | DB 스키마 | `parties.ts`, `party-members.ts`, `chat-messages.ts` 생성 |
 | schema/index.ts | 3개 테이블 export 추가 |
-| WsAuthGuard | `ws-auth.guard.ts` — JWT 검증, socket.data 할당 |
+| PartyStreamService | SSE 연결 관리 (`Map<partyId, Map<userId, Subject>>`) + 브로드캐스트 + heartbeat |
 | Drizzle push | `npx drizzle-kit push` |
 
 ### Step 2: 파티 모듈 REST API (2일)
@@ -958,25 +1101,27 @@ interface PartyState {
 | 초대코드 생성 | 6자리 영숫자, unique 충돌 시 재시도 (최대 5회) |
 | 1인 1파티 제한 | 이미 파티 소속 시 가입 거부 (409 Conflict) |
 
-### Step 3: WebSocket Gateway (2일)
+### Step 3: SSE 스트림 + 채팅 REST (2일)
 
 | 작업 | 상세 |
 |------|------|
-| PartyGateway | handleConnection, handleDisconnect |
-| Room 관리 | join_room, leave_room (socket.io room = partyId) |
-| 채팅 핸들러 | chat:send → DB 저장 → room 브로드캐스트 |
-| 온라인 상태 | 연결/해제 시 isOnline 갱신 + 브로드캐스트 |
+| SSE 엔드포인트 | `GET /v1/parties/:partyId/stream` — `@Sse()` 데코레이터, Observable 반환 |
+| SSE 인증 | 쿼리 파라미터 `?token=<JWT>` 검증 (EventSource 커스텀 헤더 미지원 대응) |
+| 채팅 REST | `POST /v1/parties/:partyId/messages` → DB 저장 → SSE 브로드캐스트 |
+| 온라인 상태 | SSE 연결/해제 시 isOnline 갱신 + 브로드캐스트 |
 | 리더 위임 | disconnect 30초 후 자동 위임 (setTimeout, 재연결 시 취소) |
+| Heartbeat | 30초 간격 `party:heartbeat` 이벤트 (Vercel/Nginx 프록시 타임아웃 방지) |
 | 에러 처리 | 비멤버 접근 차단, 메시지 길이 검증 (500자) |
 
 ### Step 4: 클라이언트 연결 계층 (1일)
 
 | 작업 | 상세 |
 |------|------|
-| socket.io-client 설치 | `pnpm add socket.io-client` |
-| socket-client.ts | 싱글턴 관리, 자동 재연결, 토큰 갱신 |
-| party-store.ts | Zustand 스토어 (파티 상태, 메시지, 소켓 액션) |
-| 이벤트 바인딩 | connectSocket() 내에서 모든 서버 이벤트 리스너 등록 |
+| 의존성 설치 | 없음 (브라우저 내장 `EventSource` API 사용) |
+| sse-client.ts | EventSource 래퍼 (연결/해제/이벤트 핸들러 등록) |
+| party-store.ts | Zustand 스토어 (파티 상태, 메시지, REST+SSE 액션) |
+| SSE 이벤트 바인딩 | connectStream() 내에서 모든 SSE 이벤트 리스너 등록 |
+| 업스트림 | 기존 `api-client.ts`의 REST 함수 패턴 재사용 (POST) |
 
 ### Step 5: 클라이언트 UI 컴포넌트 (3일)
 
@@ -1002,7 +1147,7 @@ interface PartyState {
 | 멀티 탭 테스트 | 같은 유저 2탭 접속 시 동작 확인 |
 | 리더 이탈 | 위임 + 해산 (1인 잔류 시) |
 | 만석 처리 | 4명 가입 → FULL → 추가 가입 거부 |
-| 재연결 | 네트워크 끊김 → 자동 재연결 → 메시지 정합성 |
+| 재연결 | 네트워크 끊김 → EventSource 자동 재연결 → Last-Event-ID 복구 → 메시지 정합성 |
 | 빌드 검증 | `cd server && pnpm build` + `cd client && pnpm build` |
 
 **Phase 1 합계: 약 11일 (3주, 여유 포함)**
@@ -1037,9 +1182,9 @@ interface PartyState {
 
 | 작업 | 상세 |
 |------|------|
-| vote:propose 핸들러 | VoteService.createVote → 브로드캐스트 |
-| vote:cast 핸들러 | 집계 → 과반수 도달 시 이동 실행 |
-| 만료 처리 | 30초 타이머 → EXPIRED |
+| POST .../votes | VoteService.createVote → SSE 브로드캐스트 |
+| POST .../votes/:id/cast | 집계 → 과반수 도달 시 이동 실행 → SSE 브로드캐스트 |
+| 만료 처리 | 30초 타이머 → EXPIRED → SSE 브로드캐스트 |
 | UI 투표 모달 | 팝업 + 찬성/반대 버튼 + 타이머 |
 
 ### Step 4: 로비 화면 (3일)
@@ -1120,7 +1265,7 @@ Phase 2까지는 "파티 전용 런"으로 솔로와 완전 분리된다. Phase 
 | 영역 | Phase 2 | Phase 3 |
 |------|---------|---------|
 | 동시접속 | 10명 이하 | 50명+ |
-| WebSocket | 단일 서버 메모리 | `@socket.io/redis-adapter` |
+| SSE | 단일 서버 메모리 (`Map<partyId, Map<userId, Subject>>`) | Redis Pub/Sub 기반 크로스-인스턴스 브로드캐스트 |
 | 타이머 | setTimeout | BullMQ delayed job |
 | 세션 | PostgreSQL | PostgreSQL + Redis 캐시 |
 | 배포 | 단일 인스턴스 | 수평 확장 (PM2 cluster or K8s) |
@@ -1136,28 +1281,36 @@ Phase 2까지는 "파티 전용 런"으로 솔로와 완전 분리된다. Phase 
 
 ## 부록 A: 기술 선택 근거
 
-### WebSocket 라이브러리
+### 실시간 통신 방식
 
 | 옵션 | 장점 | 단점 | 판정 |
 |------|------|------|------|
-| socket.io | NestJS 공식 지원, room/namespace, 자동 재연결, 폴백 | 번들 ~45KB | **채택** |
-| ws (raw) | 경량 ~3KB | room/reconnect 직접 구현 필요 | 제외 |
-| SSE | 단방향 충분할 수 있음 | 양방향 채팅 부적합 | 제외 |
+| **SSE + REST** | 의존성 0개, NestJS 내장, 브라우저 내장 EventSource, 자동 재연결, HTTP/2 멀티플렉싱, 프록시 친화적 | 서버→클라이언트 단방향 (업스트림은 REST) | **채택** |
+| socket.io | room/namespace, 양방향 | 서버+클라이언트 의존성 추가 (~45KB 번들), CORS 이슈, 프록시 설정 필요 | 제외 |
+| ws (raw) | 경량 | room/reconnect 직접 구현, 프로토콜 업그레이드 필요 | 제외 |
+
+**SSE 채택 근거**: 이 프로젝트의 실시간 통신 패턴은 "서버가 클라이언트에 이벤트 푸시 + 클라이언트가 REST로 액션 제출"이다. 기존 싱글플레이어에서도 REST + LLM 폴링으로 동작하므로, SSE는 이 패턴의 자연스러운 확장이다. 채팅 전송도 REST POST로 충분하며 (Slack, Discord 초기 등 동일 패턴), 양방향 WebSocket의 복잡성이 불필요하다.
 
 ### 서버 의존성 추가
 
 ```bash
-# 서버
-cd server && pnpm add @nestjs/websockets @nestjs/platform-socket.io socket.io
-
-# 클라이언트
-cd client && pnpm add socket.io-client
+# 서버: 없음 (NestJS 내장 SSE 사용)
+# 클라이언트: 없음 (브라우저 내장 EventSource API)
 ```
+
+### SSE 제약사항 및 대응
+
+| 제약 | 대응 |
+|------|------|
+| EventSource는 커스텀 헤더 미지원 | 쿼리 파라미터 `?token=<JWT>` 폴백 (HTTPS 필수) |
+| 프록시 유휴 타임아웃 (60초 등) | 30초 간격 heartbeat 이벤트 전송 |
+| 브라우저 탭당 동시 SSE 6개 제한 (HTTP/1.1) | 파티당 SSE 1개 + HTTP/2 환경에서 무제한 |
+| 놓친 이벤트 복구 | `Last-Event-ID` 헤더 + 서버 이벤트 ID 순번 관리 |
 
 ### Redis 도입 시점
 
-- Phase 1~2: **불필요** (단일 서버, 동시접속 10명 이하)
-- Phase 3: `@socket.io/redis-adapter` 도입 (수평 확장 필요 시)
+- Phase 1~2: **불필요** (단일 서버, 동시접속 10명 이하, 메모리 Map으로 충분)
+- Phase 3: Redis Pub/Sub 도입 (수평 확장 시 크로스-인스턴스 SSE 브로드캐스트)
 - BullMQ: Phase 3에서 타이머/큐 관리용으로 검토
 
 ---
