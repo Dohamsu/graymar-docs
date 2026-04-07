@@ -308,6 +308,9 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | POST | `/v1/parties/:partyId/runs/:runId/turns` | 파티 행동 제출 (inputType, rawInput, idempotencyKey) |
 | POST | `/v1/parties/:partyId/votes` | 이동 투표 제안 (targetLocationId) |
 | POST | `/v1/parties/:partyId/votes/:voteId/cast` | 투표 참여 (choice: yes/no) |
+| POST | `/v1/parties/:partyId/lobby/invite-run` | 내 세계에 초대 — 리더 솔로 런에 합류 (Phase 3) |
+| GET | `/v1/parties/:partyId/runs/:runId/turns/:turnNo` | 파티 턴 상세 조회 (partyActions + serverResult + llm) |
+| POST | `/v1/parties/:partyId/runs/:runId/leave` | 던전 이탈 (보상 정산 + AI 전환) |
 
 ## Environment Variables (`server/.env`)
 
@@ -369,6 +372,8 @@ LLM_FALLBACK_PROVIDER=mock
 | **NPC 초상화 확장** | CORE + SUB NPC 초상화 12개 클라이언트 배치 | ✅ 완료 |
 | **파티 Phase 1** | 파티 CRUD + 초대코드 + 실시간 채팅(SSE) + 로비 UI + PartyHUD | ✅ 완료 |
 | **파티 Phase 2** | 파티 던전: 로비 준비→시작→4인 동시 턴→통합 판정→LLM 3인칭 서술→이동 투표→보상 분배→던전 종료 | ✅ 완료 |
+| **파티 Phase 2 보강** | 이탈자 자동행동 + 재접속 AI해제 + HUB 투표이동 + 솔로동기화 + 개별HP + 턴상세API + 주사위 애니메이션 + 카운트다운 UI + party:error SSE + 멀티탭 방어 | ✅ 완료 |
+| **파티 Phase 3** | 런 통합(내 세계에 초대) + run_participants 테이블 + 던전 중간 합류/이탈 + 보상 정산 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
