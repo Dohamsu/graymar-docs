@@ -2947,5 +2947,54 @@
       }
     },
     "gender": "female"
+  },
+  {
+    "npcId": "NPC_RONEN",
+    "name": "로넨",
+    "unknownAlias": "초조한 서기관",
+    "role": "항만 노동 길드의 말단 서기관. 장부 관리 책임자였으나 도난 사실을 상부에 보고하지 못해 쫓기는 처지. 플레이어에게 장부 추적을 의뢰한 인물.",
+    "faction": "LABOR_GUILD",
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "로넨",
+      "서기관"
+    ],
+    "nameStyle": "WESTERN_MEDIEVAL_KR",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 30,
+    "tier": "CORE",
+    "agenda": "도난당한 장부를 되찾아 자신의 목숨을 보전하고 싶다",
+    "personality": {
+      "core": "겁이 많고 소심하지만 절박한 상황에 몰린 서기관. 숫자와 서류에는 빈틈없이 꼼꼼하나, 위험 앞에서는 금방 흔들린다.",
+      "traits": [
+        "숫자 기억력이 뛰어나다",
+        "긴장하면 손을 비비는 버릇이 있다",
+        "은혜를 갚으려는 성실함이 있다"
+      ],
+      "speechStyle": "공손하고 조심스러운 경어. 말끝을 흐리거나 주변을 살피며 목소리를 낮추오 체. 절박할 때 말이 빨라지고 더듬는다. 금지: 반말, ~해, ~야.",
+      "innerConflict": "장부를 되찾아야 하지만, 진실이 드러나면 자신도 처벌받을 수 있다는 공포.",
+      "softSpot": "가족(어머니) 이야기가 나오면 눈가가 붉어진다."
+    },
+    "schedule": {
+      "DAY": "선술집 구석에서 초조하게 대기",
+      "NIGHT": "항구 부두 근처를 서성이며 정보를 수집"
+    },
+    "longTermAgenda": "장부를 되찾아 길드 상부에 보고하고 해고를 면한다",
+    "gender": "male",
+    "knownFacts": [
+      {
+        "factId": "FACT_LEDGER_EXISTS",
+        "detail": "장부가 도난당했다는 사실을 직접 알고 있다. 자신이 관리하던 장부였기 때문."
+      },
+      {
+        "factId": "FACT_LEDGER_CONTENTS",
+        "detail": "장부에 뒷거래 기록이 포함되어 있어, 공개되면 길드 간부 다수가 위험하다는 것을 안다."
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SMUGGLING_RING"
+    ]
   }
 ]
