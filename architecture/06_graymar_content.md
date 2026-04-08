@@ -1,6 +1,6 @@
 # 06 --- Graymar 콘텐츠 설계
 
-> **정본 데이터**: `content/graymar_v1/` (23 JSON + 1 README)
+> **정본 데이터**: `content/graymar_v1/` (24 JSON + 1 README)
 > **의존 문서**: `HUB_RPG_Engine_Spec_v2.md` (HUB 엔진), `03_combat_rules.md` (전투 수치)
 > **이전 문서**: `08_graymar_scenario.md` (DAG 라우팅 포함, 본 문서로 대체)
 
@@ -46,7 +46,7 @@ HUB (7개 LOCATION 선택)
 
 ## 2. 콘텐츠 파일 목록
 
-`content/graymar_v1/` 디렉토리에 23개 JSON 파일이 존재한다.
+`content/graymar_v1/` 디렉토리에 24개 JSON 파일이 존재한다.
 
 | # | 파일명 | 용도 | 주요 키 |
 |---|--------|------|---------|
@@ -55,7 +55,7 @@ HUB (7개 LOCATION 선택)
 | 3 | `enemies.json` | 적 9종 정의 | enemyId |
 | 4 | `encounters.json` | 전투 조합 9종 + 보상 | encounterId |
 | 5 | `items.json` | 아이템 카탈로그 (단서 3 + 소모품 + 키 아이템) | itemId |
-| 6 | `npcs.json` | NPC 42명 (CORE 5 + SUB 12 + BACKGROUND 25) + unknownAlias + schedule | npcId |
+| 6 | `npcs.json` | NPC 43명 (CORE 6 + SUB 12 + BACKGROUND 25) + unknownAlias + schedule | npcId |
 | 7 | `factions.json` | 세력 4개 + 초기 평판 | factionId |
 | 8 | `quest.json` | 메인 퀘스트 상태/Fact 정의 | questId |
 | 9 | `locations.json` | 7개 LOCATION 정의 | locationId |
@@ -68,11 +68,12 @@ HUB (7개 LOCATION 선택)
 | 16 | `shops.json` | 상점 정의 (아이템/가격) | shopId |
 | 17 | `sets.json` | 장비 세트 정의 | setId |
 | 18 | `region_affixes.json` | 리전 접미사 정의 | affixId |
-| 19 | `incidents.json` | Incident 8개 + 사건 간 인과관계(dependencies) | incidentId |
+| 19 | `incidents.json` | Incident 13개 + 사건 간 인과관계(dependencies) | incidentId |
 | 20 | `endings.json` | 엔딩 조건/결과 정의 | endingId |
 | 21 | `narrative_marks.json` | 12개 불가역 표식 정의 | markId |
 | 22 | `equipment_drops.json` | 장비 드랍 정의 | -- |
 | 23 | `scenario.json` | 시나리오 정의 | scenarioId |
+| 24 | `traits.json` | 캐릭터 특성 6종 정의 (런타임 효과 포함) | traitId |
 
 ---
 

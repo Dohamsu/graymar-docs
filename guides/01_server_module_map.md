@@ -19,10 +19,10 @@ main.ts → AppModule
 │   ├── auth.service     ← JWT 세션 관리
 │   └── auth.dto         ← 인증 DTO
 ├── db/                  ← Drizzle ORM
-│   ├── schema/          ← 10 tables (아래 참조)
+│   ├── schema/          ← 18 tables (아래 참조)
 │   └── types/           ← TypeScript types (35개 파일, 아래 참조)
 ├── content/             ← 게임 콘텐츠 로더
-│   ├── content-loader.service  ← graymar_v1 JSON 22개 로드
+│   ├── content-loader.service  ← graymar_v1 JSON 24개 로드
 │   ├── content-types            ← NpcDefinition.unknownAlias 포함
 │   ├── content.module
 │   └── event-content.provider   ← 이벤트 콘텐츠 프로바이더
@@ -48,24 +48,33 @@ main.ts → AppModule
 │   │   └── legendary-reward.service ← 전설 장비 보상 처리
 │   ├── planner/         ← RUN 계획 (1 service)
 │   │   └── run-planner.service ← RUN 구조 생성
-│   └── hub/             ← HUB 엔진 (37 services, 6 서브시스템 + 퀘스트, 아래 상세)
+│   └── hub/             ← HUB 엔진 (37 services, 6 서브시스템 + 퀘스트 + TurnOrchestration, 아래 상세)
 ├── runs/                ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 ├── llm/                 ← Async LLM narrative (아래 상세)
 ├── bug-report/          ← 인게임 버그 리포트
 │   ├── bug-report.controller  ← POST/GET/PATCH /v1/bug-reports
 │   └── bug-report.service     ← 버그 리포트 CRUD
-└── scene-image/         ← NPC 초상화 이미지 생성
-    └── scene-image.service    ← gemini-3.1-flash-image-preview 이미지 생성, NPC 초상화
+├── scene-image/         ← NPC 초상화 이미지 생성
+│   └── scene-image.service    ← gemini-3.1-flash-image-preview 이미지 생성, NPC 초상화
+└── party/               ← 멀티플레이어 파티 시스템 (7 services, 1 controller)
+    ├── party.controller       ← REST + SSE 엔드포인트
+    ├── party.service          ← 파티 CRUD + 초대코드
+    ├── chat.service           ← 파티 채팅
+    ├── party-stream.service   ← SSE 연결 관리 + 브로드캐스트
+    ├── lobby.service          ← 로비/준비 관리
+    ├── party-turn.service     ← 통합 턴 처리
+    ├── vote.service           ← 이동 투표
+    └── party-reward.service   ← 보상 분배
 ```
 
 ---
 
-## HUB 엔진 서비스 (36 services, 6 서브시스템)
+## HUB 엔진 서비스 (37 services, 6 서브시스템)
 
 `server/src/engine/hub/`
 
-### 1. Base HUB (9 services)
+### 1. Base HUB (10 services)
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
@@ -167,7 +176,7 @@ main.ts → AppModule
 
 ---
 
-## DB 스키마 (11 tables)
+## DB 스키마 (18 tables)
 
 `server/src/db/schema/`
 
@@ -185,6 +194,12 @@ main.ts → AppModule
 | recent_summaries | 최근 요약 |
 | ai_turn_logs | LLM 호출 로그 |
 | bug_reports | 인게임 버그 리포트 (runId, turnNo, category, description, resolved, server_version TEXT) |
+| parties | 파티 (name, inviteCode, leaderId, status) |
+| party_members | 파티 멤버 (partyId, userId, role, joinedAt) |
+| chat_messages | 파티 채팅 메시지 (partyId, userId, content, createdAt) |
+| party_turn_actions | 파티 턴 행동 (partyId, runId, turnNo, userId, inputType, rawInput) |
+| party_votes | 이동 투표 (partyId, proposerId, targetLocationId, status) |
+| run_participants | 런 참여자 (runId, userId, joinedAt, leftAt, isAi) |
 
 ---
 
