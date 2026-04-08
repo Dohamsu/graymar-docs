@@ -17,7 +17,7 @@ app/
 └── landing/
     └── AuthRedirect.tsx ← 로그인 시 /play 리다이렉트
 
-components/ (31개)
+components/ (36개)
 ├── narrative/       ← 메시지 표시
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
 │   └── StoryBlock.tsx        ← 메시지 렌더러 (타이핑 애니메이션, NPC 초상화 카드, 선택지 보정치 뱃지)
@@ -29,7 +29,7 @@ components/ (31개)
 ├── layout/          ← 레이아웃
 │   ├── Header.tsx            ← 데스크톱 HUD (HP/Stamina 바)
 │   └── MobileBottomNav.tsx   ← 모바일 하단 네비게이션
-├── hub/             ← HUB 화면 (11 components)
+├── hub/             ← HUB 화면 (12 components)
 │   ├── HubScreen.tsx              ← HUB 메인 화면 (4 지역 카드)
 │   ├── HeatGauge.tsx              ← 도시 열기 (0~100) 시각화
 │   ├── TimePhaseIndicator.tsx     ← DAWN/DAY/DUSK/NIGHT 표시
@@ -114,7 +114,7 @@ selectFeedNotifications()      // FEED_ITEM presentation
 
 ---
 
-## 라이브러리 (4 files)
+## 라이브러리 (5 files)
 
 ```
 lib/
@@ -131,7 +131,7 @@ lib/
 
 ```
 data/
-├── presets.ts             ← 4 캐릭터 프리셋 정의 (클라이언트용)
+├── presets.ts             ← 6 캐릭터 프리셋 정의 (클라이언트용)
 ├── items.ts               ← 아이템 카탈로그 (40+, ITEM_CATALOG)
 └── stat-descriptions.ts   ← 스탯 설명 텍스트
 ```

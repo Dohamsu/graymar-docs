@@ -13,6 +13,7 @@ run_memories
 node_memories
 recent_summaries
 ai_turn_logs
+bug_reports
 
 ---
 
@@ -35,6 +36,8 @@ UNIQUE (run_id, node_index)
 - current_node_index
 - current_turn_no
 - seed (RNG 시드)
+- party_id (FK, nullable — 파티 런인 경우)
+- run_mode (SOLO / PARTY — 기본값 SOLO)
 - started_at
 - updated_at
 
@@ -118,3 +121,74 @@ UNIQUE (run_id, node_index)
 - created_at
 - updated_at
 
+---
+
+## bug_reports 필수 필드
+
+- id (PK)
+- run_id (FK, nullable)
+- turn_no (int, nullable)
+- category (text)
+- description (text)
+- resolved (boolean, default false)
+- server_version (text)
+- created_at
+- updated_at
+
+---
+
+## 파티 테이블 (멀티플레이어)
+
+### parties
+
+- id (PK)
+- name (text)
+- invite_code (text, UNIQUE)
+- leader_id (FK → users)
+- status (ACTIVE / DISBANDED)
+- created_at
+
+### party_members
+
+- id (PK)
+- party_id (FK → parties)
+- user_id (FK → users)
+- role (LEADER / MEMBER)
+- joined_at
+
+### chat_messages
+
+- id (PK)
+- party_id (FK → parties)
+- user_id (FK → users)
+- content (text)
+- created_at
+
+### party_turn_actions
+
+- id (PK)
+- party_id (FK → parties)
+- run_id (FK → run_sessions)
+- turn_no (int)
+- user_id (FK → users)
+- input_type (ACTION / CHOICE)
+- raw_input (text)
+- created_at
+
+### party_votes
+
+- id (PK)
+- party_id (FK → parties)
+- proposer_id (FK → users)
+- target_location_id (text)
+- status (OPEN / PASSED / REJECTED / EXPIRED)
+- created_at
+
+### run_participants
+
+- id (PK)
+- run_id (FK → run_sessions)
+- user_id (FK → users)
+- joined_at
+- left_at (nullable)
+- is_ai (boolean, default false)
