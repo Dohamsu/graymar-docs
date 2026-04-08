@@ -157,6 +157,8 @@ main.ts → AppModule
 | AiTurnLogService | ai-turn-log.service.ts | LLM 호출 로그 기록 |
 | TokenBudgetService | token-budget.service.ts | 토큰 예산 관리 (2500 토큰) |
 | MidSummaryService | mid-summary.service.ts | 4턴 초과 시 중간 요약 생성 |
+| NpcDialogueMarkerService | npc-dialogue-marker.service.ts | 서버 regex 6단계 NPC 발화자 매칭 (@마커 삽입) |
+| NanoDirectorService | nano-director.service.ts | nano 전처리: 연출 지시서 생성 (첫 문장, NPC 행동, 반복 회피) |
 
 **하위 모듈:**
 - `providers/` — OpenAI, Claude, Gemini, Mock (4 providers)

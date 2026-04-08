@@ -139,7 +139,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | engine/planner | 1 | RUN 구조 생성 (RunPlannerService) |
 | runs/ | 1 | RUN 생성/조회 |
 | turns/ | 1 | 턴 제출/조회 |
-| llm/ | 8 | LLM Worker, Context Builder, Token Budget, Prompt |
+| llm/ | 10 | LLM Worker, Context Builder, Token Budget, Prompt, NpcDialogueMarker, NanoDirector |
 | scene-image/ | 1 | AI 초상화/이미지 생성 (Gemini, rate limit) |
 | bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
 | party/ | 7 | 파티 시스템 (Party, Chat, Stream, Lobby, PartyTurn, Vote, Reward) |
@@ -375,6 +375,8 @@ LLM_FALLBACK_PROVIDER=mock
 | **파티 Phase 2** | 파티 던전: 로비 준비→시작→4인 동시 턴→통합 판정→LLM 3인칭 서술→이동 투표→보상 분배→던전 종료 | ✅ 완료 |
 | **파티 Phase 2 보강** | 이탈자 자동행동 + 재접속 AI해제 + HUB 투표이동 + 솔로동기화 + 개별HP + 턴상세API + 주사위 애니메이션 + 카운트다운 UI + party:error SSE + 멀티탭 방어 | ✅ 완료 |
 | **파티 Phase 3** | 런 통합(내 세계에 초대) + run_participants 테이블 + 던전 중간 합류/이탈 + 보상 정산 | ✅ 완료 |
+| **NPC 대사 마커 v2** | 하이브리드 @마커 시스템 (서버 regex 6단계 + nano 개별 판단), 정확도 30%→100%, 프롬프트 따옴표 규칙, 홑따옴표 강조 UI | ✅ 완료 |
+| **서술 파이프라인 v2** | 3-Stage Pipeline (NanoDirector→Gemma4→NanoProcessor), 서술 다양성 개선, @마커 규칙 Gemma4에서 분리 | 🔧 구현중 |
 
 ## Document Status (설계 문서 현황)
 
@@ -437,6 +439,7 @@ LLM_FALLBACK_PROVIDER=mock
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
 | 24_multiplayer_party_system.md | ✅ 구현됨 | 멀티플레이어 파티 시스템 Phase 1+2 |
 | 25_llm_model_evaluation.md | 📎 참고 | LLM 모델 비교 평가 (GPT-4.1-mini vs Gemma 4) |
+| 26_narrative_pipeline_v2.md | 🔧 구현중 | 3-Stage LLM Pipeline (NanoDirector→Gemma4→NanoProcessor) |
 
 ### guides/ — 코드 구현 지침 (6 md)
 
