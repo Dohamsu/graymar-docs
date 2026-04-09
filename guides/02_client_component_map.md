@@ -33,8 +33,9 @@ components/ (36개)
 │   ├── HubScreen.tsx              ← HUB 메인 화면 (4 지역 카드)
 │   ├── HeatGauge.tsx              ← 도시 열기 (0~100) 시각화
 │   ├── TimePhaseIndicator.tsx     ← DAWN/DAY/DUSK/NIGHT 표시
+│   ├── TimePhaseTransition.tsx   ← DAY↔NIGHT 전환 알림 (🌙/☀️ + 텍스트)
 │   ├── LocationHeader.tsx         ← 지역 헤더
-│   ├── ResolveOutcomeBanner.tsx   ← 판정 결과 배너
+│   ├── ResolveOutcomeBanner.tsx   ← 판정 결과 배너 (순차 fade-in 공식)
 │   ├── SignalFeedPanel.tsx        ← 5채널 시그널 피드
 │   ├── IncidentTracker.tsx        ← 활성 사건 control/pressure 게이지
 │   ├── NpcRelationshipCard.tsx    ← NPC 5축 감정 요약
@@ -58,6 +59,8 @@ components/ (36개)
 │   └── SetBonusDisplay.tsx        ← 장비 세트 보너스 시각화
 └── ui/              ← 공통 UI
     ├── ErrorBanner.tsx            ← 에러 표시
+    ├── NetworkStatus.tsx          ← 오프라인 감지 + 재연결 UI
+    ├── PageTransition.tsx         ← 페이지 전환 애니메이션 (7종)
     ├── LlmSettingsModal.tsx       ← LLM 설정 모달
     ├── LlmFailureModal.tsx        ← LLM 실패 모달 (재시도/건너뛰기/닫기)
     ├── StatTooltip.tsx            ← 스탯 툴팁
