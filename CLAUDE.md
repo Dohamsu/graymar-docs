@@ -376,7 +376,10 @@ LLM_FALLBACK_PROVIDER=mock
 | **파티 Phase 2 보강** | 이탈자 자동행동 + 재접속 AI해제 + HUB 투표이동 + 솔로동기화 + 개별HP + 턴상세API + 주사위 애니메이션 + 카운트다운 UI + party:error SSE + 멀티탭 방어 | ✅ 완료 |
 | **파티 Phase 3** | 런 통합(내 세계에 초대) + run_participants 테이블 + 던전 중간 합류/이탈 + 보상 정산 | ✅ 완료 |
 | **NPC 대사 마커 v2** | 하이브리드 @마커 시스템 (서버 regex 6단계 + nano 개별 판단), 정확도 30%→100%, 프롬프트 따옴표 규칙, 홑따옴표 강조 UI | ✅ 완료 |
-| **서술 파이프라인 v2** | 3-Stage Pipeline (NanoDirector→Gemma4→NanoProcessor), 서술 다양성 개선, @마커 규칙 Gemma4에서 분리 | 🔧 구현중 |
+| **서술 파이프라인 v2** | 3-Stage Pipeline (NanoDirector→Gemma4→NanoProcessor), 서술 다양성 개선, @마커 규칙 Gemma4에서 분리 | ✅ 완료 |
+| **NPC 주도 행동** | trust 기반 dialogueSeed 5단계 + 비대화 행동 NPC 끼어들기 + 대화 잠금 LLM 전달 | ✅ 완료 |
+| **OpenRouter 최적화** | provider sort:latency 적용 (평균 33초→7초, 79% 감소) | ✅ 완료 |
+| **클라이언트 UX 개선** | 세그먼트 기반 타이핑 + 페이지 전환 7종 + 장소 이미지 켄 번스 + NPC 카드 연출 + 시간대 알림 + 판정 순차 공식 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
@@ -439,7 +442,8 @@ LLM_FALLBACK_PROVIDER=mock
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
 | 24_multiplayer_party_system.md | ✅ 구현됨 | 멀티플레이어 파티 시스템 Phase 1+2 |
 | 25_llm_model_evaluation.md | 📎 참고 | LLM 모델 비교 평가 (GPT-4.1-mini vs Gemma 4) |
-| 26_narrative_pipeline_v2.md | 🔧 구현중 | 3-Stage LLM Pipeline (NanoDirector→Gemma4→NanoProcessor) |
+| 26_narrative_pipeline_v2.md | ✅ 구현됨 | 3-Stage LLM Pipeline (NanoDirector→Gemma4→NanoProcessor) |
+| 27_image_asset_plan.md | 📎 계획 | 추가 이미지 에셋 (선술집, BG NPC 초상화, 이벤트 씬) |
 
 ### guides/ — 코드 구현 지침 (6 md)
 

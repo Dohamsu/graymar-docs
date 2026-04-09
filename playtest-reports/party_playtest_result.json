@@ -3,29 +3,29 @@
     {
       "name": "용병대장",
       "preset": "DESERTER",
-      "userId": "8d09fbad-cba5-4fdb-8311-135df0ae7bc9"
+      "userId": "0ec9caae-5f14-481d-91ab-bb57956e86d5"
     },
     {
       "name": "약초사",
       "preset": "HERBALIST",
-      "userId": "cba15c94-6f94-4cf2-9bab-5e1bead6ca79"
+      "userId": "728515d4-7728-4a40-89ff-a863beadde5b"
     }
   ],
-  "partyId": "cb821997-983a-4bdc-8be2-1ef969bc2138",
-  "runId": "afe92b53-7161-4e3f-9036-36654fba8d28",
+  "partyId": "37dba486-b1d8-44fa-9ead-8453eb270866",
+  "runId": "577a3c2d-7a49-4ae3-a14e-58e13e277786",
   "turnsPlayed": 5,
   "turnLog": [
     {
       "turn": 1,
       "node": "HUB",
-      "action_a": "CHOICE:go_market",
+      "action_a": "CHOICE:go_harbor",
       "action_b": "-",
-      "narrative": "당신은 무거운 발걸음을 옮겨 시장 거리로 들어선다. 10년 동안 부두에서 거친 짐짝을 나르며 단련된 어깨가 좁은 골목을 지날 때마다 묵직한 존재감을 드러낸다. 사람들의 웅성거림과 물건을 사고파는 소음이 뒤섞여 귀를 때리지만, 당신은 습관적으로 주변의 움직임을 살피며 길을 터준다.\n\n사방에서 에일 냄새와 갓 구운 빵의 향기가 풍겨온다. 노점상들이 늘어선 길목"
+      "narrative": "당신은 익숙한 무게감이 느껴지는 어깨를 한 번 들썩이며 항만 부두로 발을 옮긴다. 십 년간 짐짝을 나르며 단련된 투박한 걸음걸이는 거친 돌바닥 위에서도 흔들림이 없다. 부두로 향하는 길목마다 비릿한 바다 내음과 썩은 생선 냄새가 코끝을 찌른다.\n\n항구에 들어서자 거대한 목재 선박들이 정박해 있고, 노동자들이 밧줄과 짐짝을 다루느라 분주히 움직인다. 당신은 "
     },
     {
       "turn": 3,
       "node": "LOCATION",
-      "action_a": "경비병의 동태를 살핀다",
+      "action_a": "상인에게 뇌물을 건넨다",
       "action_b": "소문의 진위를 확인한다",
       "narrative": "[LLM_TIMEOUT]",
       "events": []
@@ -33,7 +33,15 @@
     {
       "turn": 3,
       "node": "LOCATION",
-      "action_a": "위협한다",
+      "action_a": "상인에게 뇌물을 건넨다",
+      "action_b": "조심스럽게 잠입한다",
+      "narrative": "[LLM_TIMEOUT]",
+      "events": []
+    },
+    {
+      "turn": 3,
+      "node": "LOCATION",
+      "action_a": "도움을 준다",
       "action_b": "거래를 시도한다",
       "narrative": "[LLM_TIMEOUT]",
       "events": []
@@ -41,16 +49,8 @@
     {
       "turn": 3,
       "node": "LOCATION",
-      "action_a": "거래를 시도한다",
-      "action_b": "위협한다",
-      "narrative": "[LLM_TIMEOUT]",
-      "events": []
-    },
-    {
-      "turn": 3,
-      "node": "LOCATION",
-      "action_a": "위협한다",
-      "action_b": "거래를 시도한다",
+      "action_a": "조심스럽게 잠입한다",
+      "action_b": "사람들에게 말을 건다",
       "narrative": "[LLM_TIMEOUT]",
       "events": []
     }
