@@ -192,7 +192,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | OpenAI / Claude / Gemini / Gemma 4 (OpenRouter) | Multi-provider |
+| LLM | Gemini 2.5 Flash Lite (메인) / Claude Haiku 4.5 (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter |
 
 ## Critical Design Invariants
 
@@ -319,7 +319,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 LLM_PROVIDER=openai          # openai | claude | gemini | mock
 OPENAI_API_KEY=sk-...
-OPENAI_MODEL=google/gemma-4-26b-a4b-it   # OpenRouter 모델명 (기존: gpt-4o)
+OPENAI_MODEL=google/gemini-2.5-flash-lite   # OpenRouter 메인 모델 (이전: gemma-4-26b-a4b-it)
 OPENAI_BASE_URL=https://openrouter.ai/api/v1  # optional, OpenAI-compatible endpoint
 CLAUDE_API_KEY=               # optional
 GEMINI_API_KEY=               # optional
@@ -327,7 +327,7 @@ LLM_MAX_RETRIES=2
 LLM_TIMEOUT_MS=8000
 LLM_MAX_TOKENS=1024
 LLM_TEMPERATURE=0.8
-LLM_FALLBACK_PROVIDER=mock
+LLM_FALLBACK_PROVIDER=claude          # fallback: Claude Haiku 4.5 (이전: mock)
 ```
 
 ## Implementation Phase Status (구현 단계)
@@ -378,8 +378,10 @@ LLM_FALLBACK_PROVIDER=mock
 | **NPC 대사 마커 v2** | 하이브리드 @마커 시스템 (서버 regex 6단계 + nano 개별 판단), 정확도 30%→100%, 프롬프트 따옴표 규칙, 홑따옴표 강조 UI | ✅ 완료 |
 | **서술 파이프라인 v2** | 3-Stage Pipeline (NanoDirector→Gemma4→NanoProcessor), 서술 다양성 개선, @마커 규칙 Gemma4에서 분리 | ✅ 완료 |
 | **NPC 주도 행동** | trust 기반 dialogueSeed 5단계 + 비대화 행동 NPC 끼어들기 + 대화 잠금 LLM 전달 | ✅ 완료 |
-| **OpenRouter 최적화** | provider sort:latency 적용 (평균 33초→7초, 79% 감소) | ✅ 완료 |
-| **클라이언트 UX 개선** | 세그먼트 기반 타이핑 + 페이지 전환 7종 + 장소 이미지 켄 번스 + NPC 카드 연출 + 시간대 알림 + 판정 순차 공식 | ✅ 완료 |
+| **OpenRouter 최적화** | provider sort:latency 적용 (평균 33초→7초) | ✅ 완료 |
+| **클라이언트 UX 개선** | 세그먼트 기반 타이핑 + 페이지 전환 7종 + 장소 이미지 켄 번스 + NPC 카드 연출 + 시간대 알림 + 판정 순차 공식 + 네트워크 상태 | ✅ 완료 |
+| **LLM Gemini Flash Lite 전환** | Gemma4 → Gemini 2.5 Flash Lite (속도 2.7배, 비용 17% 절감), Claude Haiku fallback | ✅ 완료 |
+| **대사 오인 방지** | rawInput 유사도 필터 + 인용 조사 필터 + 불완전 마커 자동 정리 + role 매칭 강화 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
