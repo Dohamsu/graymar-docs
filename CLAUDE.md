@@ -192,7 +192,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | Gemini 2.5 Flash Lite (메인) / Claude Haiku 4.5 (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter |
+| LLM | Qwen3 Next 80B (홀수턴) + Flash Lite (짝수턴) 교차 / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter |
 
 ## Critical Design Invariants
 
@@ -319,7 +319,8 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 LLM_PROVIDER=openai          # openai | claude | gemini | mock
 OPENAI_API_KEY=sk-...
-OPENAI_MODEL=google/gemini-2.5-flash-lite   # OpenRouter 메인 모델 (이전: gemma-4-26b-a4b-it)
+OPENAI_MODEL=qwen/qwen3-next-80b-a3b-instruct   # OpenRouter 메인 모델 (홀수 턴)
+LLM_ALTERNATE_MODEL=google/gemini-2.5-flash-lite  # 짝수 턴 교차 모델 (어휘 편향 상쇄)
 OPENAI_BASE_URL=https://openrouter.ai/api/v1  # optional, OpenAI-compatible endpoint
 CLAUDE_API_KEY=               # optional
 GEMINI_API_KEY=               # optional
@@ -387,6 +388,7 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | **LLM 모델 평가 v2** | 9개 모델 비교 평가 (Qwen3 235B 1위), Fallback GPT-4.1 Mini 전환, cost_usd DB 추적 | ✅ 완료 |
 | **서술 파이프라인 v3** | 반복 패턴 해결(2중주입 제거), 판정 리마인더, 메타 서술 금지, 태그 누출 방어 | ✅ 완료 |
 | **NPC 마커 nano 전환** | 발화자 판단 주 파이프라인: regex→nano LLM, regex는 fallback 격하. 호칭 강화 프롬프트 | ✅ 완료 |
+| **서술 파이프라인 v4** | sessionTurns THREAD 하이브리드 + 톤 가이드 동적화 + 감각 순환 폐기 + 모델 교차(Next80B/FlashLite) | ✅ 완료 |
 | **NanoEventDirector** | nano LLM 기반 동적 이벤트 엔진: 매 턴 이벤트 컨셉/NPC/fact/선택지 생성, NPC 선택 행동별 전환 규칙, sourceNpcId 연속성, 기존 EventDirector fallback | ✅ 완료 |
 | **연쇄 반응 시스템** | Layer 2: 치안/불안 임계값 → LOCKDOWN/RIOT 조건 자동 발동, 판정 보정(blockedActions -2), 시그널 피드 알림 | ✅ 완료 |
 | **IntentParser 강화 v2** | 고위험 키워드(FIGHT/STEAL/THREATEN/BRIBE) LLM보다 KW 우선, targetNpcId KW 우선 (플레이어 NPC 지목) | ✅ 완료 |
