@@ -120,14 +120,15 @@ main.ts → AppModule
 | PlayerThreadService | player-thread.service.ts | 행동 성향 패턴 추적 (playstyleSummary, dominantVectors) |
 | NotificationAssemblerService | notification-assembler.service.ts | Notification 조립 (scope×presentation) |
 
-### 5. Narrative v2 & Event v2 (4 services) — 설계문서 18~20
+### 5. Narrative v2 & Event v2 (5 services) — 설계문서 18~20, 28
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
 | IntentMemoryService | intent-memory.service.ts | actionHistory 분석 → 행동 패턴 감지 (6종) |
-| EventDirectorService | event-director.service.ts | 5단계 정책 파이프라인 (Stage→Condition→Cooldown→Priority→Weighted) |
+| EventDirectorService | event-director.service.ts | 5단계 정책 파이프라인 (Stage→Condition→Cooldown→Priority→Weighted) — NanoEventDirector fallback |
 | ProceduralEventService | procedural-event.service.ts | 동적 이벤트 생성 (Trigger+Subject+Action+Outcome) |
-| LlmIntentParserService | llm-intent-parser.service.ts | LLM 기반 의도 파싱 (폴백) |
+| LlmIntentParserService | llm-intent-parser.service.ts | LLM 기반 의도 파싱 (고위험 KW 우선) |
+| NanoEventDirectorService | nano-event-director.service.ts | nano LLM 기반 동적 이벤트 컨셉/NPC/fact/선택지 생성 (설계문서 28) |
 
 ### 6. Living World v2 (7 services) — 설계문서 21
 
@@ -158,7 +159,8 @@ main.ts → AppModule
 | TokenBudgetService | token-budget.service.ts | 토큰 예산 관리 (2500 토큰) |
 | MidSummaryService | mid-summary.service.ts | 4턴 초과 시 중간 요약 생성 |
 | NpcDialogueMarkerService | npc-dialogue-marker.service.ts | 서버 regex 6단계 NPC 발화자 매칭 (@마커 삽입) |
-| NanoDirectorService | nano-director.service.ts | nano 전처리: 연출 지시서 생성 (첫 문장, NPC 행동, 반복 회피) |
+| NanoDirectorService | nano-director.service.ts | nano 전처리: 연출 지시서 생성 (첫 문장, NPC 행동, 반복 회피) — NanoEventDirector fallback |
+| NanoEventDirectorService | nano-event-director.service.ts | nano 동적 이벤트: 컨셉/NPC/fact/선택지 생성 + NPC 선택 규칙 + 조건 전달 |
 
 **하위 모듈:**
 - `providers/` — OpenAI, Claude, Gemini, Mock (4 providers)

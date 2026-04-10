@@ -379,3 +379,56 @@ EVENT_ENGINE=legacy   # 기존 EventDirector 사용
 ```
 
 A/B 테스트, 점진적 전환, 즉시 롤백 가능.
+
+---
+
+## 12. 구현 현황 (2026-04-10)
+
+### 12.1 완료
+
+| 항목 | 상태 | 비고 |
+|------|------|------|
+| NanoEventDirectorService | ✅ | nano-event-director.service.ts 신규 |
+| turns.service 통합 | ✅ | resolve 후 NanoEventContext 조립 → nano 호출 |
+| LLM 프롬프트 주입 | ✅ | [이벤트 컨셉] 블록 → Flash Lite |
+| 선택지 sourceNpcId | ✅ | NPC 연속성 보장 |
+| fact RNG 확정 | ✅ | nano 추천 → 서버 RNG → discoveredQuestFacts |
+| NPC 선택 개선 | ✅ | 행동별 전환 규칙 + 5턴 강제 전환 + targetNpc/wantNewNpc |
+| activeConditions 전달 | ✅ | 장소 조건 → nano/LLM에 반영 |
+| 모델 확정 | ✅ | gpt-4.1-nano (1.69s, 100% JSON 준수) |
+
+### 12.2 연쇄 반응 (Layer 2)
+
+치안/불안 임계값 → 조건 자동 발동:
+- security < 30 → INCREASED_PATROLS (SNEAK/STEAL -2 판정 패널티)
+- security < 15 → LOCKDOWN (봉쇄, -2 패널티)
+- unrest > 60 → UNREST_RUMORS (INVESTIGATE/PERSUADE +1 보너스)
+- unrest > 80 → RIOT (FIGHT/STEAL +1, TRADE -2)
+- 회복 시 자동 해제 (security≥35 순찰 해제 등)
+- 시그널 피드에 세계 변화 알림 생성
+
+### 12.3 NPC 능동 반응 (Layer 3)
+
+WITNESSED NPC trust 기반 반응:
+- trust ≥ 20: 경고 ("조심하시오")
+- trust -10~20: 회피 (거리를 둔다)
+- trust -30~-10: 밀고 → Heat +5
+- trust < -30: 경비대 호출 → Heat +8
+- LLM [NPC 반응] 블록으로 서술에 자연스럽게 포함
+
+### 12.4 IntentParser 연동
+
+- FIGHT/STEAL/THREATEN/BRIBE 키워드 → LLM보다 KW 우선 (KW_OVERRIDE)
+- targetNpcId: KW 매칭 성공 시 LLM보다 우선 (플레이어 명시적 NPC 지목)
+
+### 12.5 10턴 테스트 결과
+
+| 항목 | 수정 전 | 수정 후 |
+|------|---------|---------|
+| NPC 고착 | 7턴 연속 같은 NPC | 최대 2턴 연속 |
+| NPC 다양성 | 1종 | 3종 |
+| NPC 전환 | 1회 | 5회 |
+| Fact 발견 | 2개 | 2개 |
+| Opening 고유 | 10/10 | 10/10 |
+| "당신은" | 0건 | 0건 |
+| 조건 발동 (Layer 2) | 미구현 | LOCKDOWN+UNREST 발동 확인 |

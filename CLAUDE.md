@@ -139,7 +139,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | engine/planner | 1 | RUN 구조 생성 (RunPlannerService) |
 | runs/ | 1 | RUN 생성/조회 |
 | turns/ | 1 | 턴 제출/조회 |
-| llm/ | 10 | LLM Worker, Context Builder, Token Budget, Prompt, NpcDialogueMarker, NanoDirector |
+| llm/ | 11 | LLM Worker, Context Builder, Token Budget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector |
 | scene-image/ | 1 | AI 초상화/이미지 생성 (Gemini, rate limit) |
 | bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
 | party/ | 7 | 파티 시스템 (Party, Chat, Stream, Lobby, PartyTurn, Vote, Reward) |
@@ -382,6 +382,10 @@ LLM_FALLBACK_PROVIDER=claude          # fallback: Claude Haiku 4.5 (이전: mock
 | **클라이언트 UX 개선** | 세그먼트 기반 타이핑 + 페이지 전환 7종 + 장소 이미지 켄 번스 + NPC 카드 연출 + 시간대 알림 + 판정 순차 공식 + 네트워크 상태 | ✅ 완료 |
 | **LLM Gemini Flash Lite 전환** | Gemma4 → Gemini 2.5 Flash Lite (속도 2.7배, 비용 17% 절감), Claude Haiku fallback | ✅ 완료 |
 | **대사 오인 방지** | rawInput 유사도 필터 + 인용 조사 필터 + 불완전 마커 자동 정리 + role 매칭 강화 | ✅ 완료 |
+| **NanoEventDirector** | nano LLM 기반 동적 이벤트 엔진: 매 턴 이벤트 컨셉/NPC/fact/선택지 생성, NPC 선택 행동별 전환 규칙, sourceNpcId 연속성, 기존 EventDirector fallback | ✅ 완료 |
+| **연쇄 반응 시스템** | Layer 2: 치안/불안 임계값 → LOCKDOWN/RIOT 조건 자동 발동, 판정 보정(blockedActions -2), 시그널 피드 알림 | ✅ 완료 |
+| **IntentParser 강화 v2** | 고위험 키워드(FIGHT/STEAL/THREATEN/BRIBE) LLM보다 KW 우선, targetNpcId KW 우선 (플레이어 NPC 지목) | ✅ 완료 |
+| **NPC 능동 반응** | Layer 3: WITNESSED NPC trust 기반 경고/회피/밀고(Heat+5)/적대(Heat+8), LLM [NPC 반응] 블록 주입 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
@@ -446,6 +450,7 @@ LLM_FALLBACK_PROVIDER=claude          # fallback: Claude Haiku 4.5 (이전: mock
 | 25_llm_model_evaluation.md | 📎 참고 | LLM 모델 비교 평가 (GPT-4.1-mini vs Gemma 4) |
 | 26_narrative_pipeline_v2.md | ✅ 구현됨 | 3-Stage LLM Pipeline (NanoDirector→Gemma4→NanoProcessor) |
 | 27_image_asset_plan.md | 📎 계획 | 추가 이미지 에셋 (선술집, BG NPC 초상화, 이벤트 씬) |
+| 28_nano_event_director.md | ✅ 구현됨 | NanoEventDirector 동적 이벤트 엔진 설계 (4단계 파이프라인) |
 
 ### guides/ — 코드 구현 지침 (6 md)
 
