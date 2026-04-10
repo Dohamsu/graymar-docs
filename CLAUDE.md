@@ -386,6 +386,7 @@ LLM_FALLBACK_PROVIDER=claude          # fallback: Claude Haiku 4.5 (이전: mock
 | **연쇄 반응 시스템** | Layer 2: 치안/불안 임계값 → LOCKDOWN/RIOT 조건 자동 발동, 판정 보정(blockedActions -2), 시그널 피드 알림 | ✅ 완료 |
 | **IntentParser 강화 v2** | 고위험 키워드(FIGHT/STEAL/THREATEN/BRIBE) LLM보다 KW 우선, targetNpcId KW 우선 (플레이어 NPC 지목) | ✅ 완료 |
 | **NPC 능동 반응** | Layer 3: WITNESSED NPC trust 기반 경고/회피/밀고(Heat+5)/적대(Heat+8), LLM [NPC 반응] 블록 주입 | ✅ 완료 |
+| **동시접속 최적화** | LLM Worker 5턴 병렬(Promise.allSettled) + DB 풀 max30 + 폴링 1초 + DB 쿼리 병렬 + 레이트 리미터 + Throttle 완화 + PM2 클러스터 설정 → 10명 동시접속 10/10 성공 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
