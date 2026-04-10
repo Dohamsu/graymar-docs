@@ -327,7 +327,9 @@ LLM_MAX_RETRIES=2
 LLM_TIMEOUT_MS=8000
 LLM_MAX_TOKENS=1024
 LLM_TEMPERATURE=0.8
-LLM_FALLBACK_PROVIDER=claude          # fallback: Claude Haiku 4.5 (이전: mock)
+LLM_FALLBACK_PROVIDER=openai          # fallback: 같은 OpenRouter 경유
+LLM_FALLBACK_MODEL=openai/gpt-4.1-mini  # fallback 모델 (이전: Claude Haiku 4.5)
+GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off)
 ```
 
 ## Implementation Phase Status (구현 단계)
@@ -382,6 +384,9 @@ LLM_FALLBACK_PROVIDER=claude          # fallback: Claude Haiku 4.5 (이전: mock
 | **클라이언트 UX 개선** | 세그먼트 기반 타이핑 + 페이지 전환 7종 + 장소 이미지 켄 번스 + NPC 카드 연출 + 시간대 알림 + 판정 순차 공식 + 네트워크 상태 | ✅ 완료 |
 | **LLM Gemini Flash Lite 전환** | Gemma4 → Gemini 2.5 Flash Lite (속도 2.7배, 비용 17% 절감), Claude Haiku fallback | ✅ 완료 |
 | **대사 오인 방지** | rawInput 유사도 필터 + 인용 조사 필터 + 불완전 마커 자동 정리 + role 매칭 강화 | ✅ 완료 |
+| **LLM 모델 평가 v2** | 9개 모델 비교 평가 (Qwen3 235B 1위), Fallback GPT-4.1 Mini 전환, cost_usd DB 추적 | ✅ 완료 |
+| **서술 파이프라인 v3** | 반복 패턴 해결(2중주입 제거), 판정 리마인더, 메타 서술 금지, 태그 누출 방어 | ✅ 완료 |
+| **NPC 마커 nano 전환** | 발화자 판단 주 파이프라인: regex→nano LLM, regex는 fallback 격하. 호칭 강화 프롬프트 | ✅ 완료 |
 | **NanoEventDirector** | nano LLM 기반 동적 이벤트 엔진: 매 턴 이벤트 컨셉/NPC/fact/선택지 생성, NPC 선택 행동별 전환 규칙, sourceNpcId 연속성, 기존 EventDirector fallback | ✅ 완료 |
 | **연쇄 반응 시스템** | Layer 2: 치안/불안 임계값 → LOCKDOWN/RIOT 조건 자동 발동, 판정 보정(blockedActions -2), 시그널 피드 알림 | ✅ 완료 |
 | **IntentParser 강화 v2** | 고위험 키워드(FIGHT/STEAL/THREATEN/BRIBE) LLM보다 KW 우선, targetNpcId KW 우선 (플레이어 NPC 지목) | ✅ 완료 |
