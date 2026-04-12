@@ -389,6 +389,9 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | **서술 파이프라인 v3** | 반복 패턴 해결(2중주입 제거), 판정 리마인더, 메타 서술 금지, 태그 누출 방어 | ✅ 완료 |
 | **NPC 마커 nano 전환** | 발화자 판단 주 파이프라인: regex→nano LLM, regex는 fallback 격하. 호칭 강화 프롬프트 | ✅ 완료 |
 | **서술 파이프라인 v4** | sessionTurns THREAD 하이브리드 + 톤 가이드 동적화 + 감각 순환 폐기 + 모델 교차(Next80B/FlashLite) | ✅ 완료 |
+| **마커 안정화** | distance 60→100 + 대사 최소 8자 + 위치 검증 + 클라이언트 재배치 방어 + NPC 목록 확장 + 호칭 정확 매칭 | ✅ 완료 |
+| **E2E 테스트** | Playwright 기반 자동 테스트: 회원가입→캐릭터생성→게임진입→20턴 플레이→렌더링 검증 | ✅ 완료 |
+| **과금 모델 추가** | Qwen3/Llama4/Flash Lite 가격표 + PWA 캐시 초기화 버튼 + 플레이어 대사 방어 | ✅ 완료 |
 | **NanoEventDirector** | nano LLM 기반 동적 이벤트 엔진: 매 턴 이벤트 컨셉/NPC/fact/선택지 생성, NPC 선택 행동별 전환 규칙, sourceNpcId 연속성, 기존 EventDirector fallback | ✅ 완료 |
 | **연쇄 반응 시스템** | Layer 2: 치안/불안 임계값 → LOCKDOWN/RIOT 조건 자동 발동, 판정 보정(blockedActions -2), 시그널 피드 알림 | ✅ 완료 |
 | **IntentParser 강화 v2** | 고위험 키워드(FIGHT/STEAL/THREATEN/BRIBE) LLM보다 KW 우선, targetNpcId KW 우선 (플레이어 NPC 지목) | ✅ 완료 |
