@@ -423,7 +423,7 @@ for i in range(2, len(turn_logs)):
     from collections import Counter
     word_counts = Counter(words)
     # 일반 조사/어미 제외
-    COMMON_WORDS = {"당신", "그는", "있다", "없다", "있었", "하고", "에서", "으로", "이다", "했다", "하는", "것이", "그의", "있는", "위에", "앞에", "속에"}
+    COMMON_WORDS = {"당신", "당신은", "당신의", "당신이", "당신을", "그는", "그의", "있다", "없다", "있었", "하고", "에서", "으로", "이다", "했다", "하는", "것이", "있는", "위에", "앞에", "속에", "조용한", "낡은", "어두운"}
     for word, cnt in word_counts.most_common(3):
         if cnt >= 5 and word not in COMMON_WORDS and len(word) >= 2:
             v9_issues.append(f"T{turn_logs[i]['turn']}: '{word}' {cnt}회 반복 (3턴 내)")
