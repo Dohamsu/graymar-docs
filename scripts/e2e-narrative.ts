@@ -128,30 +128,79 @@ async function run() {
   console.log(`  RunID: ${runId}, 현재 턴: ${currentTurn}`);
 
   // === 4. 5턴 플레이 (API 제출 + UI 확인) ===
-  const TURNS = [
-    { type: 'CHOICE', choiceId: 'accept_quest', desc: '퀘스트 수락' },
-    { type: 'CHOICE', choiceId: 'go_market', desc: '시장 이동' },
-    { type: 'ACTION', text: '주변을 살펴본다', desc: '관찰' },
-    { type: 'ACTION', text: '사람들에게 말을 건다', desc: '대화' },
-    { type: 'ACTION', text: '수상한 곳을 조사한다', desc: '조사' },
-    { type: 'ACTION', text: '조심스럽게 잠입한다', desc: '잠입' },
-    { type: 'ACTION', text: '거래를 시도한다', desc: '거래' },
-    { type: 'ACTION', text: '다른 장소로 이동한다', desc: '이동' },
-    { type: 'CHOICE', choiceId: 'go_guard', desc: '경비대 이동' },
-    { type: 'ACTION', text: '경비병의 동태를 살핀다', desc: '경비 관찰' },
+  // 30턴 스피드런 — HUB/LOCATION 자동 판단, LLM 선택지 활용
+  const LOCATION_ACTIONS = [
+    '주변을 살펴본다', '사람들에게 말을 건다', '수상한 곳을 조사한다',
+    '조심스럽게 잠입한다', '거래를 시도한다', '도움을 준다', '소문의 진위를 확인한다',
   ];
+  const LOCATIONS = ['go_market', 'go_guard', 'go_harbor', 'go_slums'];
+  const MAX_TURNS = 30;
 
   const issues: string[] = [];
+  let locIdx = 0;
+  let locTurns = 0;
 
-  for (let i = 0; i < TURNS.length; i++) {
-    const turn = TURNS[i];
+  for (let i = 0; i < MAX_TURNS; i++) {
+    // 런 상태 조회
+    const stateRes = await apiCall('GET', `/runs/${runId}`, token) as {
+      run?: { currentTurnNo: number; status: string };
+      currentNode?: { nodeType: string };
+      lastResult?: { choices?: { id: string }[] };
+      runState?: { questState?: string; discoveredQuestFacts?: string[] };
+    };
+    currentTurn = stateRes.run?.currentTurnNo ?? currentTurn;
+    const nodeType = stateRes.currentNode?.nodeType ?? 'HUB';
+    const choices = stateRes.lastResult?.choices ?? [];
+    const questState = stateRes.runState?.questState ?? '?';
+
+    if (stateRes.run?.status === 'RUN_ENDED') { console.log('  🏁 [RUN_ENDED]'); break; }
+
     const turnNo = currentTurn + 1;
-    console.log(`\n[턴 ${i + 1}/${TURNS.length}] ${turn.desc}...`);
+    let input: Record<string, unknown>;
+    let desc: string;
 
-    // API로 턴 제출
-    const input = turn.type === 'CHOICE'
-      ? { type: 'CHOICE', choiceId: turn.choiceId }
-      : { type: 'ACTION', text: turn.text };
+    if (nodeType === 'HUB') {
+      const questChoice = choices.find(c => c.id === 'accept_quest');
+      const goChoices = choices.filter(c => c.id.startsWith('go_'));
+      if (questChoice && locIdx === 0) {
+        input = { type: 'CHOICE', choiceId: questChoice.id };
+        desc = `HUB:${questChoice.id}`;
+      } else if (goChoices.length > 0) {
+        const pick = goChoices[locIdx % goChoices.length];
+        input = { type: 'CHOICE', choiceId: pick.id };
+        desc = `HUB:${pick.id}`;
+        locIdx++;
+      } else if (choices.length > 0) {
+        input = { type: 'CHOICE', choiceId: choices[0].id };
+        desc = `HUB:${choices[0].id}`;
+      } else {
+        input = { type: 'CHOICE', choiceId: LOCATIONS[locIdx % LOCATIONS.length] };
+        desc = `HUB:fallback`;
+        locIdx++;
+      }
+      locTurns = 0;
+    } else {
+      locTurns++;
+      if (locTurns > 5) {
+        input = { type: 'ACTION', text: '다른 장소로 이동한다' };
+        desc = 'LOC:이동';
+        locTurns = 0;
+        locIdx++;
+      } else if (choices.length > 0) {
+        const filtered = choices.filter(c => c.id !== 'go_hub');
+        const pick = filtered.length > 0
+          ? filtered[Math.floor(Math.random() * filtered.length)]
+          : choices[0];
+        input = { type: 'CHOICE', choiceId: pick.id };
+        desc = `LOC:${pick.id.slice(0, 12)}`;
+      } else {
+        const action = LOCATION_ACTIONS[(i + locTurns) % LOCATION_ACTIONS.length];
+        input = { type: 'ACTION', text: action };
+        desc = `LOC:${action.slice(0, 6)}`;
+      }
+    }
+
+    console.log(`\n[턴 ${i + 1}/${MAX_TURNS}] ${desc} (T${turnNo}, ${nodeType}, ${questState})...`);
 
     const submitRes = await apiCall('POST', `/runs/${runId}/turns`, token, {
       input,
@@ -160,16 +209,15 @@ async function run() {
     });
 
     if ((submitRes as { statusCode?: number }).statusCode === 409) {
-      console.log('  ⚠️ 409 충돌 — 턴 번호 재조회');
-      const stateRes = await apiCall('GET', `/runs/${runId}`, token);
-      currentTurn = (stateRes as { run?: { currentTurnNo: number } })?.run?.currentTurnNo ?? currentTurn;
+      console.log('  ⚠️ 409');
+      const st = await apiCall('GET', `/runs/${runId}`, token) as { run?: { currentTurnNo: number } };
+      currentTurn = st.run?.currentTurnNo ?? currentTurn;
       continue;
     }
 
     const submittedTurn = (submitRes as { turnNo?: number }).turnNo ?? turnNo;
-    console.log(`  제출 완료 (turnNo=${submittedTurn})`);
+    console.log(`  제출 (turnNo=${submittedTurn})`);
 
-    // LLM 폴링
     console.log('  LLM 대기...');
     const llmStatus = await pollLlm(runId, submittedTurn, token);
     console.log(`  LLM: ${llmStatus}`);
@@ -183,7 +231,7 @@ async function run() {
     await page.waitForTimeout(8000); // 타이핑 애니메이션 대기
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(2000);
-    await ss(page, `turn_${i + 1}_${turn.desc}`);
+    await ss(page, `turn_${i + 1}_${desc}`);
 
     // 검증
     const pageText = await page.textContent('body') ?? '';

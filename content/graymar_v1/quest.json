@@ -362,5 +362,18 @@
       ],
       "endingOutcome": "밀수 조직 소탕, 표면적 질서 회복. 하지만 경비대 내부 부패는 미해결. 플레이어는 경비대의 협력자로 남는다."
     }
-  ]
+  ],
+  "factToIncident": {
+    "FACT_LEDGER_EXISTS": { "incidents": ["INC_MARKET_THEFT"], "controlBonus": 15 },
+    "FACT_WAGE_FRAUD_PATTERN": { "incidents": ["INC_MARKET_THEFT"], "controlBonus": 15 },
+    "FACT_TAMPERED_LOGS": { "incidents": ["INC_GUARD_CORRUPTION"], "controlBonus": 15 },
+    "FACT_INSIDE_JOB": { "incidents": ["INC_SMUGGLING_RING"], "controlBonus": 20 },
+    "FACT_ROUTE_TO_EAST_DOCK": { "incidents": ["INC_SMUGGLING_RING"], "controlBonus": 15 },
+    "FACT_SMUGGLE_ROUTE_GUILD": { "incidents": ["INC_MERCHANT_WAR"], "controlBonus": 15 },
+    "FACT_MAIREL_GUARD_EVIDENCE": { "incidents": ["INC_GUARD_CORRUPTION"], "controlBonus": 20 },
+    "FACT_MAIREL_GUILD_EVIDENCE": { "incidents": ["INC_MERCHANT_WAR"], "controlBonus": 20 },
+    "FACT_OFFICIAL_INQUIRY": { "incidents": ["INC_MARKET_THEFT", "INC_GUARD_CORRUPTION", "INC_SMUGGLING_RING", "INC_MERCHANT_WAR"], "controlBonus": 10 },
+    "FACT_SHADOW_INTEL": { "incidents": ["INC_SMUGGLING_RING"], "controlBonus": 15 },
+    "FACT_BOTH_SIDES_EVIDENCE": { "incidents": ["INC_MARKET_THEFT", "INC_GUARD_CORRUPTION", "INC_SMUGGLING_RING", "INC_MERCHANT_WAR"], "controlBonus": 15 }
+  }
 }
