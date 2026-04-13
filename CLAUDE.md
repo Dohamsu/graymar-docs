@@ -407,6 +407,7 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | **NPC 소개 카드 정합성** | LLM 서술 기반 npcPortrait 갱신, 서술에 없는 NPC 카드 제거, 소개 턴 초상화 표시 | ✅ 완료 |
 | **품질 검증 V7~V9** | V7 프롬프트 누출 9패턴, V8 NPC 정합성(카드↔마커↔화자), V9 서술 품질(반복/하오체) | ✅ 완료 |
 | **UI 개선** | 타이핑 전 서식 정제, 행동 입력 시 선택지 즉시 제거, 페이지 전환 페이드 통일, 고립 @마커 제거 | ✅ 완료 |
+| **@마커 오류율 개선** | 3전략: 프롬프트 강화(호칭 패턴/교차 대화/금지 규칙) + 서브 LLM 2차 검증(미할당 대사 GPT-4.1-mini 재판단) + JSON 구조화 출력 모드(LLM_JSON_MODE) | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
@@ -435,7 +436,7 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | node_routing_v2.md | ✅ 구현됨 | DAG 24노드 + 조건부 분기 |
 | llm_context_memory_v1_1.md | 📎 참고 | v1.md 확장판 |
 
-### architecture/ — 통합 아키텍처 (26 md)
+### architecture/ — 통합 아키텍처 (30 md)
 
 | 파일 | 상태 | 비고 |
 |------|------|------|
@@ -472,6 +473,8 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | 26_narrative_pipeline_v2.md | ✅ 구현됨 | 3-Stage LLM Pipeline (NanoDirector→Gemma4→NanoProcessor) |
 | 27_image_asset_plan.md | 📎 계획 | 추가 이미지 에셋 (선술집, BG NPC 초상화, 이벤트 씬) |
 | 28_nano_event_director.md | ✅ 구현됨 | NanoEventDirector 동적 이벤트 엔진 설계 (4단계 파이프라인) |
+| 29_llm_model_evaluation_v2.md | 📎 참고 | LLM 모델 평가 v2 |
+| 30_marker_accuracy_improvement.md | ✅ 구현됨 | @마커 오류율 개선 3전략 (프롬프트 강화 + 서브 LLM 2차 검증 + JSON 모드) |
 
 ### guides/ — 코드 구현 지침 (6 md)
 

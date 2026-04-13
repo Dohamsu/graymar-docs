@@ -27,7 +27,7 @@
 
 | 항목 | 결과 |
 |------|------|
-| @마커 정확도 | 30% → 100% (하이브리드 서버 regex + nano) |
+| @마커 정확도 | 30% → 100% (하이브리드 서버 regex + nano + 서브 LLM 2차 검증, see `30_marker_accuracy_improvement.md`) |
 | 잔여 태그 노출 | 0건 |
 | NPC 실명 누출 | 0건 (정상 사용 제외) |
 | 힌트 반복 | 0회 (pendingQuestHint 1회 전달) |
