@@ -394,7 +394,7 @@ for t in turn_logs:
         if not found and narr and not narr.startswith("[LLM_"):
             v8_issues.append(f"T{t['turn']}: 카드={portrait_name}({portrait_id}) 서술에 없음")
     # @마커 NPC가 서술 문맥과 불일치 (화자 이름 ≠ 마커 이름)
-    marker_matches = list(re.finditer(r"@\[([^\]|]+)(?:\|[^\]]+)?\]\s*[\""\u201C]", narr))
+    marker_matches = list(re.finditer(r'@\[([^\]|]+)(?:\|[^\]]+)?\]\s*["\u201C\u201D]', narr))
     for mm in marker_matches:
         marker_name = mm.group(1).strip()
         before = narr[max(0, mm.start() - 80):mm.start()]
