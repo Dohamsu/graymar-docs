@@ -397,6 +397,16 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | **IntentParser 강화 v2** | 고위험 키워드(FIGHT/STEAL/THREATEN/BRIBE) LLM보다 KW 우선, targetNpcId KW 우선 (플레이어 NPC 지목) | ✅ 완료 |
 | **NPC 능동 반응** | Layer 3: WITNESSED NPC trust 기반 경고/회피/밀고(Heat+5)/적대(Heat+8), LLM [NPC 반응] 블록 주입 | ✅ 완료 |
 | **동시접속 최적화** | LLM Worker 5턴 병렬(Promise.allSettled) + DB 풀 max30 + 폴링 1초 + DB 쿼리 병렬 + 레이트 리미터 + Throttle 완화 + PM2 클러스터 설정 → 10명 동시접속 10/10 성공 | ✅ 완료 |
+| **Quest→Ending** | S5+5턴 auto-ending (Incident resolved=CONTAINED), factToIncident 매핑, questEndingApproach LLM 톤 주입 | ✅ 완료 |
+| **NPC 마커 오귀속 방지** | 매칭 실패 시 마커 미삽입, nano 결과 후보 별칭 검증, 하오체 보조 감지 | ✅ 완료 |
+| **초상화 크롭** | react-easy-crop 카카오톡 스타일 드래그+줌, 4:5 비율 고정 | ✅ 완료 |
+| **NPC 태도 변화 알림** | posture 전환 시 골드색 이벤트 표시, POSTURE_CHANGE 태그 | ✅ 완료 |
+| **그레이마르 호외** | 양피지 모달 + nano 기사 변환 (장소/시간/사건 컨텍스트), 세계 변화 시그널 확장 (퀘스트/장소/NPC 아젠다) | ✅ 완료 |
+| **NPC 아젠다 목격** | 같은 장소에서 NPC 행동을 [목격 장면] LLM 프롬프트로 자연 삽입 | ✅ 완료 |
+| **메타 서술 방어** | 턴 번호/플레이어 3인칭/행동 복붙/활성 단서 후처리 제거, 프롬프트 행동 지시 개선 | ✅ 완료 |
+| **NPC 소개 카드 정합성** | LLM 서술 기반 npcPortrait 갱신, 서술에 없는 NPC 카드 제거, 소개 턴 초상화 표시 | ✅ 완료 |
+| **품질 검증 V7~V9** | V7 프롬프트 누출 9패턴, V8 NPC 정합성(카드↔마커↔화자), V9 서술 품질(반복/하오체) | ✅ 완료 |
+| **UI 개선** | 타이핑 전 서식 정제, 행동 입력 시 선택지 즉시 제거, 페이지 전환 페이드 통일, 고립 @마커 제거 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
