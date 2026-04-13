@@ -53,9 +53,9 @@ async function run() {
     if (f.endsWith('.png')) fs.unlinkSync(`${SCREENSHOT_DIR}/${f}`);
   }
 
-  const email = 'e2e_1775922678872@test.com';
+  const email = 'e2e_1775993715673@test.com';
   const password = 'Test1234!!';
-  const runId = 'c43eef93-0747-4c01-88bc-bff82b6bb4c3';
+  const runId = '084eeaa6-1aec-4242-8d15-1b1cf18627a0';
 
   // 로그인
   const loginRes = await apiCall('POST', '/auth/login', '', { email, password }) as { token?: string };
@@ -96,18 +96,21 @@ async function run() {
 
   const issues: string[] = [];
 
-  for (let i = 0; i < 10; i++) {
+  const MAX_TURNS = 10;
+  for (let i = 0; i < MAX_TURNS; i++) {
     // 런 상태 조회 — HUB vs LOCATION 판단
     const stateRes = await apiCall('GET', `/runs/${runId}`, token) as {
       run?: { currentTurnNo: number; status: string };
       currentNode?: { nodeType: string };
       lastResult?: { choices?: { id: string }[] };
+      runState?: { questState?: string };
     };
     currentTurn = stateRes.run?.currentTurnNo ?? currentTurn;
     const nodeType = stateRes.currentNode?.nodeType ?? 'HUB';
     const choices = stateRes.lastResult?.choices ?? [];
+    const questState = stateRes.runState?.questState ?? '?';
 
-    if (stateRes.run?.status === 'RUN_ENDED') { console.log('  [RUN_ENDED]'); break; }
+    if (stateRes.run?.status === 'RUN_ENDED') { console.log('  🏁 [RUN_ENDED] — 엔딩 도달!'); break; }
 
     const turnNo = currentTurn + 1;
     let input: Record<string, unknown>;
@@ -115,10 +118,17 @@ async function run() {
 
     if (nodeType === 'HUB') {
       // HUB: CHOICE로 장소 이동
-      const locChoice = choices.find(c => c.id.startsWith('go_')) ?? choices.find(c => c.id === 'accept_quest');
-      if (locChoice) {
-        input = { type: 'CHOICE', choiceId: locChoice.id };
-        desc = `HUB:${locChoice.id}`;
+      // 장소 순환: 퀘스트 수락 → 다양한 장소 순환
+      const questChoice = choices.find(c => c.id === 'accept_quest');
+      const goChoices = choices.filter(c => c.id.startsWith('go_'));
+      if (questChoice && locIdx === 0) {
+        input = { type: 'CHOICE', choiceId: questChoice.id };
+        desc = `HUB:${questChoice.id}`;
+      } else if (goChoices.length > 0) {
+        const pick = goChoices[locIdx % goChoices.length];
+        input = { type: 'CHOICE', choiceId: pick.id };
+        desc = `HUB:${pick.id}`;
+        locIdx++;
       } else if (choices.length > 0) {
         input = { type: 'CHOICE', choiceId: choices[0].id };
         desc = `HUB:${choices[0].id}`;
@@ -129,12 +139,21 @@ async function run() {
       }
       locTurns = 0;
     } else {
-      // LOCATION: ACTION 입력, 5턴마다 이동
+      // LOCATION: LLM 생성 선택지 우선 사용 (스피드런)
       locTurns++;
       if (locTurns > 5) {
         input = { type: 'ACTION', text: '다른 장소로 이동한다' };
         desc = 'LOC:이동';
         locTurns = 0;
+        locIdx++;
+      } else if (choices.length > 0) {
+        // LLM 선택지 중 go_hub 제외하고 랜덤 선택
+        const filtered = choices.filter(c => c.id !== 'go_hub');
+        const pick = filtered.length > 0
+          ? filtered[Math.floor(Math.random() * filtered.length)]
+          : choices[0];
+        input = { type: 'CHOICE', choiceId: pick.id };
+        desc = `LOC:${pick.id.slice(0, 12)}`;
       } else {
         const action = LOCATION_ACTIONS[(i + locTurns) % LOCATION_ACTIONS.length];
         input = { type: 'ACTION', text: action };
@@ -142,7 +161,7 @@ async function run() {
       }
     }
 
-    console.log(`\n[턴 ${i + 1}/10] ${desc} (T${turnNo}, ${nodeType})...`);
+    console.log(`\n[턴 ${i + 1}/${MAX_TURNS}] ${desc} (T${turnNo}, ${nodeType}, ${questState})...`);
 
     const submitRes = await apiCall('POST', `/runs/${runId}/turns`, token, {
       input,
