@@ -57,18 +57,24 @@ def api(method, path, body=None):
         return 0, {}
 
 def poll_llm(run_id, turn_no, max_wait=90):
-    """LLM 폴링: GET /turns/:turnNo → llm.status / llm.output"""
+    """LLM 폴링: GET /turns/:turnNo → llm.status / llm.output + UI 데이터"""
     start = time.time()
     while time.time() - start < max_wait:
         _, data = api("GET", f"/runs/{run_id}/turns/{turn_no}")
         llm = data.get("llm", {}) or {}
         status = llm.get("status", "")
         if status == "DONE":
-            return llm.get("output") or ""
+            ui = data.get("serverResult", {}).get("ui", {})
+            return {
+                "output": llm.get("output") or "",
+                "npcPortrait": ui.get("npcPortrait"),
+                "speakingNpc": ui.get("speakingNpc"),
+                "newsHeadlines": ui.get("newsHeadlines"),
+            }
         if status in ("FAILED", "SKIPPED"):
-            return f"[LLM_{status}]"
+            return {"output": f"[LLM_{status}]"}
         time.sleep(3)
-    return "[LLM_TIMEOUT]"
+    return {"output": "[LLM_TIMEOUT]"}
 
 # ═══════════════════════════════════════
 # 0. Dry-run: LLM provider를 mock으로 전환
@@ -247,7 +253,8 @@ for turn_i in range(MAX_TURNS):
 
     # Poll LLM
     submitted_turn = resp.get("turnNo", current_turn + 1)
-    narrative = poll_llm(run_id, submitted_turn)
+    llm_result = poll_llm(run_id, submitted_turn)
+    narrative = llm_result.get("output", "") if isinstance(llm_result, dict) else llm_result
 
     log_entry = {
         "turn": turn_i + 1,
@@ -260,6 +267,8 @@ for turn_i in range(MAX_TURNS):
         "nodeOutcome": node_outcome,
         "events": [e.get("kind", "") for e in events],
         "narrative": narrative if narrative else "",
+        "npcPortrait": llm_result.get("npcPortrait") if isinstance(llm_result, dict) else None,
+        "rawInput": body.get("input", {}).get("text", ""),
     }
     turn_logs.append(log_entry)
 
@@ -342,6 +351,98 @@ print(f"  storySummary: {'있음' if story_summary else '없음'}", flush=True)
 resolve_count = sum(1 for t in turn_logs if t.get("resolveOutcome"))
 print(f"\n[V6] resolveOutcome 포함 턴: {resolve_count}/{len(turn_logs)}", flush=True)
 
+# V7: 프롬프트 누출 검증 (서술에 시스템 정보 노출)
+print(f"\n[V7] 프롬프트 누출:", flush=True)
+v7_issues = []
+LEAK_PATTERNS = [
+    (r"시도하여\s?(?:성공|실패)", "행동 결과 복붙"),
+    (r"활성 단서:", "활성 단서 태그 노출"),
+    (r"턴\s?\d+에서", "턴 번호 노출"),
+    (r"플레이어가\s", "플레이어 3인칭"),
+    (r"\[이번 턴", "프롬프트 블록 노출"),
+    (r"\[판정:", "판정 블록 노출"),
+    (r"\[상황 요약\]", "상황 요약 태그 노출"),
+    (r"\[서술 규칙\]", "서술 규칙 태그 노출"),
+    (r"엔진 해석:", "엔진 해석 노출"),
+]
+for t in turn_logs:
+    narr = t.get("narrative", "")
+    for pat, label in LEAK_PATTERNS:
+        if re.search(pat, narr):
+            v7_issues.append(f"T{t['turn']}: {label}")
+if v7_issues:
+    for issue in v7_issues:
+        print(f"  ❌ {issue}", flush=True)
+else:
+    print(f"  ✅ 누출 없음", flush=True)
+
+# V8: NPC 정합성 (소개 카드 ↔ 서술 @마커 일치)
+print(f"\n[V8] NPC 정합성:", flush=True)
+v8_issues = []
+for t in turn_logs:
+    narr = t.get("narrative", "")
+    portrait = t.get("npcPortrait")
+    if portrait and portrait.get("npcId"):
+        portrait_id = portrait["npcId"]
+        # 서술에 이 NPC의 @마커가 있는지
+        markers = re.findall(r"@([A-Z][A-Z_0-9]+)\s", narr)
+        bracket_markers = re.findall(r"@\[([^\]|]+)", narr)
+        all_marker_names = markers + bracket_markers
+        portrait_name = portrait.get("npcName", "")
+        # NPC ID 또는 이름이 서술에 있는지
+        found = portrait_id in markers or any(portrait_name in m for m in bracket_markers)
+        if not found and narr and not narr.startswith("[LLM_"):
+            v8_issues.append(f"T{t['turn']}: 카드={portrait_name}({portrait_id}) 서술에 없음")
+    # @마커 NPC가 서술 문맥과 불일치 (화자 이름 ≠ 마커 이름)
+    marker_matches = list(re.finditer(r"@\[([^\]|]+)(?:\|[^\]]+)?\]\s*[\""\u201C]", narr))
+    for mm in marker_matches:
+        marker_name = mm.group(1).strip()
+        before = narr[max(0, mm.start() - 80):mm.start()]
+        # "XX가 말했다" 패턴에서 XX ≠ marker_name이면 불일치
+        speaker_match = re.search(r"([가-힣]{2,10})[이가은는]\s*(?:말|물|외|중얼|속삭|답|대답|되물)", before)
+        if speaker_match:
+            speaker = speaker_match.group(1)
+            if speaker not in marker_name and marker_name not in speaker:
+                v8_issues.append(f"T{t['turn']}: 화자={speaker} ≠ 마커={marker_name}")
+if v8_issues:
+    for issue in v8_issues[:5]:
+        print(f"  ❌ {issue}", flush=True)
+    if len(v8_issues) > 5:
+        print(f"  ... 외 {len(v8_issues)-5}건", flush=True)
+else:
+    print(f"  ✅ 정합성 양호", flush=True)
+
+# V9: 서술 품질 (반복/하오체 미마킹)
+print(f"\n[V9] 서술 품질:", flush=True)
+v9_issues = []
+# 단어 반복 검출 (3턴 윈도우에서 같은 2글자+ 단어가 5회+)
+for i in range(2, len(turn_logs)):
+    window_narrs = [turn_logs[j].get("narrative", "") for j in range(max(0, i-2), i+1)]
+    combined = " ".join(window_narrs)
+    words = re.findall(r"[가-힣]{2,4}", combined)
+    from collections import Counter
+    word_counts = Counter(words)
+    # 일반 조사/어미 제외
+    COMMON_WORDS = {"당신", "그는", "있다", "없다", "있었", "하고", "에서", "으로", "이다", "했다", "하는", "것이", "그의", "있는", "위에", "앞에", "속에"}
+    for word, cnt in word_counts.most_common(3):
+        if cnt >= 5 and word not in COMMON_WORDS and len(word) >= 2:
+            v9_issues.append(f"T{turn_logs[i]['turn']}: '{word}' {cnt}회 반복 (3턴 내)")
+            break
+# 하오체 미마킹 (따옴표 없는 ~소/~오 문장에 @마커 없음)
+for t in turn_logs:
+    narr = t.get("narrative", "")
+    for line in narr.split("\n"):
+        s = line.strip()
+        if len(s) >= 10 and re.search(r"[소오]\.$", s) and "@[" not in line and not re.match(r"^(?:당신|그는|그녀)", s):
+            v9_issues.append(f"T{t['turn']}: 하오체 미마킹 — {s[:30]}")
+if v9_issues:
+    for issue in v9_issues[:5]:
+        print(f"  ⚠️ {issue}", flush=True)
+    if len(v9_issues) > 5:
+        print(f"  ... 외 {len(v9_issues)-5}건", flush=True)
+else:
+    print(f"  ✅ 품질 양호", flush=True)
+
 # Summary
 print("\n" + "=" * 60, flush=True)
 all_checks = {
@@ -351,6 +452,9 @@ all_checks = {
     "V4_emotion": emo_active > 0,
     "V5_memory": structured is not None and len((structured or {}).get("visitLog", [])) > 0,
     "V6_resolve": resolve_count > 0,
+    "V7_no_leak": len(v7_issues) == 0,
+    "V8_npc_match": len(v8_issues) == 0,
+    "V9_quality": len([i for i in v9_issues if "반복" in i]) <= 2,
 }
 passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
