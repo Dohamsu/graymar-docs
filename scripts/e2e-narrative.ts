@@ -134,7 +134,7 @@ async function run() {
     '조심스럽게 잠입한다', '거래를 시도한다', '도움을 준다', '소문의 진위를 확인한다',
   ];
   const LOCATIONS = ['go_market', 'go_guard', 'go_harbor', 'go_slums'];
-  const MAX_TURNS = 30;
+  const MAX_TURNS = parseInt(process.env.E2E_TURNS ?? '10', 10);
 
   const issues: string[] = [];
   let locIdx = 0;

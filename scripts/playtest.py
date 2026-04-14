@@ -402,6 +402,10 @@ for t in turn_logs:
         speaker_match = re.search(r"([가-힣]{2,10})[이가은는]\s*(?:말|물|외|중얼|속삭|답|대답|되물)", before)
         if speaker_match:
             speaker = speaker_match.group(1)
+            # 플레이어 지칭은 화자 후보에서 제외 (NPC 대사 앞에 "당신이 말을 걸자" 등)
+            player_refs = {"당신", "그대", "용병", "자네", "이방인", "나그네", "손님", "낯선"}
+            if speaker in player_refs:
+                continue
             if speaker not in marker_name and marker_name not in speaker:
                 v8_issues.append(f"T{t['turn']}: 화자={speaker} ≠ 마커={marker_name}")
 if v8_issues:
