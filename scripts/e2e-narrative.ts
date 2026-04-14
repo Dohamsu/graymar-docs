@@ -129,7 +129,14 @@ async function run() {
 
   // === 4. 5턴 플레이 (API 제출 + UI 확인) ===
   // 30턴 스피드런 — HUB/LOCATION 자동 판단, LLM 선택지 활용
-  const LOCATION_ACTIONS = [
+  const CRAZY_MODE = !!process.env.E2E_CRAZY;
+  const LOCATION_ACTIONS = CRAZY_MODE ? [
+    '하늘을 날아서 달에 간다',
+    '시장 한가운데서 춤을 추며 노래를 부른다',
+    '옆에 있는 돌멩이에게 존경을 표한다',
+    '갑자기 벽을 머리로 부순다',
+    '공중에서 물고기를 낚는다',
+  ] : [
     '주변을 살펴본다', '사람들에게 말을 건다', '수상한 곳을 조사한다',
     '조심스럽게 잠입한다', '거래를 시도한다', '도움을 준다', '소문의 진위를 확인한다',
   ];
@@ -181,18 +188,16 @@ async function run() {
       locTurns = 0;
     } else {
       locTurns++;
-      if (locTurns > 5) {
+      if (locTurns > 5 && !CRAZY_MODE) {
         input = { type: 'ACTION', text: '다른 장소로 이동한다' };
         desc = 'LOC:이동';
         locTurns = 0;
         locIdx++;
-      } else if (choices.length > 0) {
-        const filtered = choices.filter(c => c.id !== 'go_hub');
-        const pick = filtered.length > 0
-          ? filtered[Math.floor(Math.random() * filtered.length)]
-          : choices[0];
-        input = { type: 'CHOICE', choiceId: pick.id };
-        desc = `LOC:${pick.id.slice(0, 12)}`;
+      } else if (CRAZY_MODE) {
+        // CRAZY 모드: 항상 말도 안 되는 ACTION 사용
+        const action = LOCATION_ACTIONS[(i + locTurns) % LOCATION_ACTIONS.length];
+        input = { type: 'ACTION', text: action };
+        desc = `CRAZY:${action.slice(0, 8)}`;
       } else {
         const action = LOCATION_ACTIONS[(i + locTurns) % LOCATION_ACTIONS.length];
         input = { type: 'ACTION', text: action };
