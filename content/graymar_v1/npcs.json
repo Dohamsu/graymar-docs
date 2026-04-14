@@ -142,7 +142,8 @@
     "linkedIncidents": [
       "INC_SMUGGLING_RING",
       "INC_LABOR_STRIKE"
-    ]
+    ],
+    "shortAlias": "노동자"
   },
   {
     "npcId": "NPC_EDRIC_VEIL",
@@ -280,7 +281,8 @@
     "linkedIncidents": [
       "INC_SMUGGLING_RING",
       "INC_MERCHANT_WAR"
-    ]
+    ],
+    "shortAlias": "회계사"
   },
   {
     "npcId": "NPC_MAIREL",
@@ -435,7 +437,8 @@
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION",
       "INC_SMUGGLING_RING"
-    ]
+    ],
+    "shortAlias": "경비 책임자"
   },
   {
     "npcId": "NPC_TOBREN",
@@ -516,7 +519,8 @@
     ],
     "linkedIncidents": [
       "INC_SMUGGLING_RING"
-    ]
+    ],
+    "shortAlias": "관리인"
   },
   {
     "npcId": "NPC_MOON_SEA",
@@ -597,7 +601,8 @@
     ],
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION"
-    ]
+    ],
+    "shortAlias": "실무자"
   },
   {
     "npcId": "NPC_MIRELA",
@@ -675,7 +680,8 @@
     "linkedIncidents": [
       "INC_MARKET_THEFT",
       "INC_MERCHANT_MONOPOLY"
-    ]
+    ],
+    "shortAlias": "노부인"
   },
   {
     "npcId": "NPC_RENNICK",
@@ -753,7 +759,8 @@
     "linkedIncidents": [
       "INC_SMUGGLING_RING",
       "INC_GUARD_CORRUPTION"
-    ]
+    ],
+    "shortAlias": "술꾼"
   },
   {
     "npcId": "NPC_CAPTAIN_BREN",
@@ -827,7 +834,8 @@
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION",
       "INC_GUARD_SLUM_RAID"
-    ]
+    ],
+    "shortAlias": "제복 장교"
   },
   {
     "npcId": "NPC_ROSA",
@@ -900,7 +908,8 @@
     "linkedIncidents": [
       "INC_SLUM_PLAGUE",
       "INC_GUARD_SLUM_RAID"
-    ]
+    ],
+    "shortAlias": "보육원 여인"
   },
   {
     "npcId": "NPC_INFO_BROKER",
@@ -979,7 +988,8 @@
       "INC_SMUGGLING_RING",
       "INC_NOBLE_CONSPIRACY",
       "INC_ASSASSINATION_PLOT"
-    ]
+    ],
+    "shortAlias": "정보상"
   },
   {
     "npcId": "NPC_GUARD_CAPTAIN",
@@ -1052,7 +1062,8 @@
     ],
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION"
-    ]
+    ],
+    "shortAlias": "수비대 장교"
   },
   {
     "npcId": "NPC_LORD_VANCE",
@@ -1184,7 +1195,8 @@
       "INC_NOBLE_CONSPIRACY",
       "INC_GUARD_CORRUPTION",
       "INC_MERCHANT_WAR"
-    ]
+    ],
+    "shortAlias": "귀족 신사"
   },
   {
     "npcId": "NPC_OWEN_KEEPER",
@@ -1262,7 +1274,8 @@
     ],
     "linkedIncidents": [
       "INC_SMUGGLING_RING"
-    ]
+    ],
+    "shortAlias": "주인"
   },
   {
     "npcId": "NPC_SERA_DOCKS",
@@ -1337,7 +1350,8 @@
     "linkedIncidents": [
       "INC_SMUGGLING_RING",
       "INC_MERCHANT_MONOPOLY"
-    ]
+    ],
+    "shortAlias": "창고 여인"
   },
   {
     "npcId": "NPC_DAME_ISOLDE",
@@ -1412,7 +1426,8 @@
     "linkedIncidents": [
       "INC_NOBLE_CONSPIRACY",
       "INC_ASSASSINATION_PLOT"
-    ]
+    ],
+    "shortAlias": "미망인"
   },
   {
     "npcId": "NPC_RAT_KING",
@@ -1573,7 +1588,8 @@
       "INC_SMUGGLING_RING",
       "INC_SLUM_PLAGUE",
       "INC_ASSASSINATION_PLOT"
-    ]
+    ],
+    "shortAlias": "사내"
   },
   {
     "npcId": "NPC_GUARD_FELIX",
@@ -1646,7 +1662,8 @@
     ],
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION"
-    ]
+    ],
+    "shortAlias": "경비병"
   },
   {
     "npcId": "NPC_BG_FISHMONGER",
@@ -2995,6 +3012,7 @@
     ],
     "linkedIncidents": [
       "INC_SMUGGLING_RING"
-    ]
+    ],
+    "shortAlias": "서기관"
   }
 ]
