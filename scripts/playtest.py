@@ -22,6 +22,8 @@ parser.add_argument("--base", default="http://localhost:3000/v1", help="서버 U
 parser.add_argument("--output", default=None, help="결과 JSON 파일 경로")
 parser.add_argument("--loc-turns", type=int, default=4, help="장소당 체류 턴 수 (default: 4)")
 parser.add_argument("--dry-run", action="store_true", help="LLM mock 모드 + 프롬프트 추출 (비용 0원)")
+parser.add_argument("--choice-rate", type=float, default=0.25, help="LOCATION에서 CHOICE 선택 확률 (default: 0.25)")
+parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
 args = parser.parse_args()
 
 BASE = args.base
@@ -107,7 +109,15 @@ def get_prompt(run_id, turn_no):
 # ═══════════════════════════════════════
 # 1. Auth
 # ═══════════════════════════════════════
-print(f"=== 플레이테스트 시작 ({MAX_TURNS}턴, {args.preset}, {args.gender}) ===", flush=True)
+print(f"=== 플레이테스트 시작 ({MAX_TURNS}턴, {args.preset}, {args.gender}, choice_rate={args.choice_rate}) ===", flush=True)
+
+# 모델 전환 (선택적)
+_orig_model = None
+if args.model:
+    _, settings = api("GET", "/settings/llm")
+    _orig_model = settings.get("openaiModel", "")
+    api("PATCH", "/settings/llm", {"openaiModel": args.model})
+    print(f"모델 전환: {_orig_model} → {args.model}", flush=True)
 
 status, resp = api("POST", "/auth/register", {"email": EMAIL, "password": PASSWORD, "nickname": NICKNAME})
 if status != 201:
@@ -210,7 +220,7 @@ for turn_i in range(MAX_TURNS):
             body = {"input": {"type": "ACTION", "text": "다른 장소로 이동한다"}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
             input_desc = "ACTION:move_location"
             loc_turns = 0
-        elif choices and random.random() < 0.25:
+        elif choices and random.random() < args.choice_rate:
             # go_hub은 제외 — 의도치 않은 조기 복귀 방지
             loc_choices = [c for c in choices if c.get("id", "") != "go_hub"]
             if loc_choices:
@@ -416,9 +426,39 @@ if v8_issues:
 else:
     print(f"  ✅ 정합성 양호", flush=True)
 
-# V9: 서술 품질 (반복/하오체 미마킹)
+# V9: 서술 품질 (반복/하오체 미마킹 + sanitize 오탐 + CHOICE 대화 맥락)
 print(f"\n[V9] 서술 품질:", flush=True)
 v9_issues = []
+
+# V9-a: sanitize 오탐 검출 — 비정상적 NPC 별칭 치환 감지
+for t in turn_logs:
+    narr = t.get("narrative", "")
+    # NPC unknownAlias가 일반 단어 속에 끼어있는 패턴 (예: "허덩치 큰 하역 인부지")
+    suspicious_patterns = [
+        (r"허.{5,15}지", "NPC alias 오삽입"),   # 허벅지 → 허+alias+지
+        (r"[가-힣]덩치 큰 하역", "BG_DOCKER alias 오삽입"),
+    ]
+    for pat, desc in suspicious_patterns:
+        if re.search(pat, narr):
+            v9_issues.append(f"T{t['turn']}: sanitize 오탐 — {desc}")
+
+# V9-b: CHOICE 턴에서 이전 대화 맥락 가정 감지
+for t in turn_logs:
+    narr = t.get("narrative", "")
+    inp = t.get("input", "")
+    if inp.startswith("CHOICE:") and t.get("nodeType") == "LOCATION":
+        # "그대의 말대로", "그대가 말한", "이전에 대화한" 등 대화 전제 표현
+        choice_dialog_refs = ["말대로라면", "말한 대로", "아까 말한", "이전에 대화한", "앞서 언급한"]
+        for ref in choice_dialog_refs:
+            if ref in narr:
+                v9_issues.append(f"T{t['turn']}: CHOICE 턴 대화 맥락 가정 — '{ref}'")
+
+# V9-c: dialogue_slot speaker_id 매칭 실패 감지 — @[무명 인물] fallback 사용
+for t in turn_logs:
+    narr = t.get("narrative", "")
+    if "@[무명 인물]" in narr:
+        v9_issues.append(f"T{t['turn']}: dialogue_slot fallback 대사 — @[무명 인물] (NPC_ID 매칭 실패)")
+
 # 단어 반복 검출 (3턴 윈도우에서 같은 2글자+ 단어가 5회+)
 for i in range(2, len(turn_logs)):
     window_narrs = [turn_logs[j].get("narrative", "") for j in range(max(0, i-2), i+1)]
@@ -432,13 +472,15 @@ for i in range(2, len(turn_logs)):
         if cnt >= 5 and word not in COMMON_WORDS and len(word) >= 2:
             v9_issues.append(f"T{turn_logs[i]['turn']}: '{word}' {cnt}회 반복 (3턴 내)")
             break
-# 하오체 미마킹 (따옴표 없는 ~소/~오 문장에 @마커 없음)
+# NPC 대사 미마킹 (따옴표 없는 NPC 어체 문장에 @마커 없음)
+# 다양한 어체 지원: 하오체(~소/~오), 해요체(~요), 합쇼체(~다/~까), 반말(~야/~해), 해체(~지/~거든)
 for t in turn_logs:
     narr = t.get("narrative", "")
     for line in narr.split("\n"):
         s = line.strip()
-        if len(s) >= 10 and re.search(r"[소오]\.$", s) and "@[" not in line and not re.match(r"^(?:당신|그는|그녀)", s):
-            v9_issues.append(f"T{t['turn']}: 하오체 미마킹 — {s[:30]}")
+        # 하오체 미마킹만 체크 (다른 어체는 서술과 구분 어려움)
+        if len(s) >= 10 and re.search(r"(?:하오|이오|시오|겠소|없소)[.!?]$", s) and "@[" not in line and not re.match(r"^(?:당신|그는|그녀)", s):
+            v9_issues.append(f"T{t['turn']}: 대사 미마킹 — {s[:30]}")
 if v9_issues:
     for issue in v9_issues[:5]:
         print(f"  ⚠️ {issue}", flush=True)
@@ -672,5 +714,10 @@ if args.dry_run:
     print(f"\n프롬프트 저장: {prompt_file}", flush=True)
 
     dry_run_teardown()
+
+# 모델 복원
+if _orig_model and args.model:
+    api("PATCH", "/settings/llm", {"openaiModel": _orig_model})
+    print(f"모델 복원: {args.model} → {_orig_model}", flush=True)
 
 print(f"=== 플레이테스트 완료 ===", flush=True)

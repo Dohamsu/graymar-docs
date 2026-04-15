@@ -412,6 +412,11 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | **별칭 반복 해소** | shortAlias 18명 추가 + 서버 후처리(deduplicateAliases) + NPC lookup에 shortAlias/name includes 매칭 | ✅ 완료 |
 | **행동별 프리셋 묘사** | PRESET_MANNERISMS 6종 × 4~5행동 = 26개 세부 묘사, actionType 기반 동적 주입 | ✅ 완료 |
 | **LLM Flash 전환** | Gemini Flash Lite → Flash (영어 누출/메타 서술 해소, 비용 +81%, 속도 +17%) | ✅ 완료 |
+| **대사 분리 파이프라인** | 2-Stage LLM (서술+대사 분리), DialogueGeneratorService, dialogue_slot JSON, 서버 마커 자동 삽입, 하오체 검증+재시도 | ✅ 완료 |
+| **로어북 시스템** | 키워드 트리거 기반 세계 지식 동적 주입 (NPC knownFacts 34개 + 장소 비밀 13개 + 사건 단서 19개 + entity_facts 키워드 검색) | ✅ 완료 |
+| **다중 어체 시스템** | NPC별 speechRegister 5종 (HAOCHE/HAEYO/BANMAL/HAPSYO/HAECHE), 어체별 검증+fallback, 43명 배정 | ✅ 완료 |
+| **NPC_ID 정확도 강화** | NPC 목록 [ID:NPC_XXX] 병기, resolveNpcId 퍼지매칭(레벤슈타인 거리 2), 서술 본문 한글 fallback, name 2글자 가드 | ✅ 완료 |
+| **테스트 검증 강화** | V9-a sanitize 오탐, V9-b CHOICE 대화 맥락, V9-c fallback 감지, --choice-rate/--model 옵션 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
@@ -480,6 +485,8 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 | 29_llm_model_evaluation_v2.md | 📎 참고 | LLM 모델 평가 v2 |
 | 30_marker_accuracy_improvement.md | ✅ 구현됨 | @마커 오류율 개선 3전략 (프롬프트 강화 + 서브 LLM 2차 검증 + JSON 모드) |
 | 31_memory_system_v4.md | ✅ 구현됨 | Memory v4: nano 구조화 추출 + entity_facts UPSERT + nano 요약 주입 |
+| 32_dialogue_split_pipeline.md | ✅ 구현됨 | 2-Stage 대사 분리 파이프라인 (서술+대사 분리, dialogue_slot, 서버 마커 삽입) |
+| 33_lorebook_system.md | ✅ 구현됨 | 키워드 트리거 기반 로어북 시스템 (NPC/장소/사건/entity_facts) |
 
 ### guides/ — 코드 구현 지침 (6 md)
 

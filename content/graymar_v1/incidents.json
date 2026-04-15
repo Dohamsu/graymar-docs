@@ -46,7 +46,16 @@
               "hint": "정보를 얻을 수 있다",
               "affordance": "INVESTIGATE"
             }
-          ]
+          ],
+          "keywords": [
+            "화물",
+            "밀수",
+            "창고",
+            "부두",
+            "수상한",
+            "상자"
+          ],
+          "hintOnMatch": "부두에 표식 없는 화물이 야간에 쌓이고 있다는 소문이 있다"
         },
         {
           "stage": 1,
@@ -75,7 +84,15 @@
               "hint": "직접적이지만 적을 만들 수 있다",
               "affordance": "THREATEN"
             }
-          ]
+          ],
+          "keywords": [
+            "유통",
+            "출처",
+            "물건",
+            "시장",
+            "거래"
+          ],
+          "hintOnMatch": "출처 불명의 물건이 시장에 유통되기 시작했다"
         },
         {
           "stage": 2,
@@ -90,7 +107,15 @@
           "pressurePerTick": 7,
           "controlReward": 25,
           "controlPenalty": 10,
-          "sceneFrame": "밀수 조직의 거점을 찾아냈다. 무장한 인부들이 경계하고 있다."
+          "sceneFrame": "밀수 조직의 거점을 찾아냈다. 무장한 인부들이 경계하고 있다.",
+          "keywords": [
+            "경로",
+            "루트",
+            "해관",
+            "세관",
+            "허가"
+          ],
+          "hintOnMatch": "밀수 경로가 길드 공식 화물에 섞여 들어온다는 정보가 있다"
         },
         {
           "stage": 1,
@@ -103,7 +128,15 @@
           ],
           "matchPolicy": "SUPPORT",
           "pressurePerTick": 5,
-          "controlThresholdForNext": 50
+          "controlThresholdForNext": 50,
+          "keywords": [
+            "유통",
+            "출처",
+            "물건",
+            "시장",
+            "거래"
+          ],
+          "hintOnMatch": "출처 불명의 물건이 시장에 유통되기 시작했다"
         },
         {
           "stage": 2,
@@ -116,7 +149,15 @@
           ],
           "matchPolicy": "SUPPORT",
           "pressurePerTick": 8,
-          "controlThresholdForNext": 80
+          "controlThresholdForNext": 80,
+          "keywords": [
+            "경로",
+            "루트",
+            "해관",
+            "세관",
+            "허가"
+          ],
+          "hintOnMatch": "밀수 경로가 길드 공식 화물에 섞여 들어온다는 정보가 있다"
         }
       ],
       "signalTemplates": [
@@ -238,7 +279,15 @@
               "hint": "동맹을 얻을 수 있다",
               "affordance": "PERSUADE"
             }
-          ]
+          ],
+          "keywords": [
+            "경비",
+            "불만",
+            "부패",
+            "부정",
+            "급료"
+          ],
+          "hintOnMatch": "경비대원들 사이에서 급료 미지급에 대한 불만이 커지고 있다"
         },
         {
           "stage": 1,
@@ -253,7 +302,15 @@
           "pressurePerTick": 4,
           "controlReward": 18,
           "controlPenalty": 7,
-          "sceneFrame": "경비대 사무실에서 수상한 장부가 발견되었다는 소문이 돌고 있다."
+          "sceneFrame": "경비대 사무실에서 수상한 장부가 발견되었다는 소문이 돌고 있다.",
+          "keywords": [
+            "증거",
+            "장부",
+            "사무실",
+            "서류",
+            "기록"
+          ],
+          "hintOnMatch": "경비대 사무실에서 수상한 장부가 발견되었다는 소문이 있다"
         },
         {
           "stage": 2,
@@ -281,7 +338,15 @@
           ],
           "matchPolicy": "SUPPORT",
           "pressurePerTick": 4,
-          "controlThresholdForNext": 50
+          "controlThresholdForNext": 50,
+          "keywords": [
+            "증거",
+            "장부",
+            "사무실",
+            "서류",
+            "기록"
+          ],
+          "hintOnMatch": "경비대 사무실에서 수상한 장부가 발견되었다는 소문이 있다"
         },
         {
           "stage": 2,
@@ -429,7 +494,15 @@
               "hint": "평화적 해결 시도",
               "affordance": "PERSUADE"
             }
-          ]
+          ],
+          "keywords": [
+            "노동",
+            "파업",
+            "불만",
+            "임금",
+            "인부"
+          ],
+          "hintOnMatch": "부두 노동자들 사이에서 파업 움직임이 감지된다"
         },
         {
           "stage": 1,
@@ -458,7 +531,14 @@
               "hint": "양쪽 모두의 신뢰 필요",
               "affordance": "PERSUADE"
             }
-          ]
+          ],
+          "keywords": [
+            "지도부",
+            "조직",
+            "모임",
+            "지도자"
+          ],
+          "hintOnMatch": "파업 지도부가 은밀히 조직되고 있다"
         },
         {
           "stage": 2,
@@ -486,7 +566,14 @@
           ],
           "matchPolicy": "SUPPORT",
           "pressurePerTick": 5,
-          "controlThresholdForNext": 50
+          "controlThresholdForNext": 50,
+          "keywords": [
+            "지도부",
+            "조직",
+            "모임",
+            "지도자"
+          ],
+          "hintOnMatch": "파업 지도부가 은밀히 조직되고 있다"
         },
         {
           "stage": 2,
@@ -898,7 +985,15 @@
           "pressurePerTick": 5,
           "controlReward": 18,
           "controlPenalty": 6,
-          "sceneFrame": "빈민가 뒷골목에서 복면을 쓴 인물들이 밀담을 나누고 있다."
+          "sceneFrame": "빈민가 뒷골목에서 복면을 쓴 인물들이 밀담을 나누고 있다.",
+          "keywords": [
+            "암살",
+            "독",
+            "위험",
+            "목숨",
+            "표적"
+          ],
+          "hintOnMatch": "누군가가 그레이마르의 주요 인물을 노리고 있다는 풍문이 있다"
         },
         {
           "stage": 1,
@@ -1041,7 +1136,14 @@
           "pressurePerTick": 2,
           "controlReward": 10,
           "controlPenalty": 3,
-          "sceneFrame": "상인이 도둑을 쫓으며 소리를 지르고 있다. 시장 통이 어수선하다."
+          "sceneFrame": "상인이 도둑을 쫓으며 소리를 지르고 있다. 시장 통이 어수선하다.",
+          "keywords": [
+            "절도",
+            "도둑",
+            "소매치기",
+            "훔친"
+          ],
+          "hintOnMatch": "시장에서 연쇄 절도 사건이 이어지고 있다"
         },
         {
           "stage": 1,
@@ -1055,7 +1157,14 @@
           "pressurePerTick": 3,
           "controlReward": 15,
           "controlPenalty": 5,
-          "sceneFrame": "좁은 골목 끝에 절도단의 은신처가 있다."
+          "sceneFrame": "좁은 골목 끝에 절도단의 은신처가 있다.",
+          "keywords": [
+            "범인",
+            "조직",
+            "배후",
+            "연쇄"
+          ],
+          "hintOnMatch": "절도 사건의 배후에 조직적인 움직임이 있다는 소문이 있다"
         },
         {
           "stage": 1,
@@ -1068,7 +1177,14 @@
           ],
           "matchPolicy": "SUPPORT",
           "pressurePerTick": 3,
-          "controlThresholdForNext": 50
+          "controlThresholdForNext": 50,
+          "keywords": [
+            "범인",
+            "조직",
+            "배후",
+            "연쇄"
+          ],
+          "hintOnMatch": "절도 사건의 배후에 조직적인 움직임이 있다는 소문이 있다"
         },
         {
           "stage": 2,
@@ -1552,7 +1668,15 @@
               "hint": "참석자 명단 파악",
               "affordance": "OBSERVE"
             }
-          ]
+          ],
+          "keywords": [
+            "귀족",
+            "음모",
+            "밀회",
+            "비밀",
+            "서신"
+          ],
+          "hintOnMatch": "상류 거리에서 수상한 밀회가 이루어지고 있다"
         },
         {
           "stage": 1,
@@ -1581,7 +1705,14 @@
               "hint": "경비대 내부 동맹",
               "affordance": "PERSUADE"
             }
-          ]
+          ],
+          "keywords": [
+            "증거",
+            "문서",
+            "계획",
+            "동맹"
+          ],
+          "hintOnMatch": "귀족들 사이의 비밀 동맹에 대한 증거가 나타나기 시작했다"
         },
         {
           "stage": 2,
@@ -1609,7 +1740,14 @@
           ],
           "matchPolicy": "SUPPORT",
           "pressurePerTick": 5,
-          "controlThresholdForNext": 50
+          "controlThresholdForNext": 50,
+          "keywords": [
+            "증거",
+            "문서",
+            "계획",
+            "동맹"
+          ],
+          "hintOnMatch": "귀족들 사이의 비밀 동맹에 대한 증거가 나타나기 시작했다"
         },
         {
           "stage": 2,
@@ -2176,7 +2314,15 @@
               "hint": "접선 상대 파악",
               "affordance": "SNEAK"
             }
-          ]
+          ],
+          "keywords": [
+            "정보",
+            "소문",
+            "첩자",
+            "밀정",
+            "도청"
+          ],
+          "hintOnMatch": "선술집에서 각 세력의 정보원들이 활동하고 있다"
         },
         {
           "stage": 1,
