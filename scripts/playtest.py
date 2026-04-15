@@ -399,8 +399,25 @@ for t in turn_logs:
         bracket_markers = re.findall(r"@\[([^\]|]+)", narr)
         all_marker_names = markers + bracket_markers
         portrait_name = portrait.get("npcName", "")
-        # NPC ID 또는 이름이 서술에 있는지
+        # NPC ID, 별칭(npcName), 또는 서술 본문에서 해당 NPC가 언급되었는지 확인
+        # isNewlyIntroduced=true인 턴에서는 별칭→실명 전환이 일어남 → 실명도 매칭
         found = portrait_id in markers or any(portrait_name in m for m in bracket_markers)
+        # 실명 매칭: 마커에 있는 이름이 portrait_name과 다르더라도 같은 NPC면 OK
+        # 마커 이미지 경로에서 NPC 판별 (예: /npc-portraits/edric_veil.png → NPC_EDRIC_VEIL)
+        if not found:
+            portrait_img = portrait.get("imageUrl", "")
+            for bm in bracket_markers:
+                # @[이름|이미지] 형태에서 같은 이미지면 같은 NPC
+                marker_full = re.findall(r"@\[([^\]|]+)\|([^\]]+)\]", narr)
+                for mname, mimg in marker_full:
+                    if portrait_img and portrait_img in mimg:
+                        found = True
+                        break
+                if found:
+                    break
+        # 서술 본문에서 NPC 이름/별칭이 직접 언급되었는지도 확인
+        if not found and portrait_name:
+            found = portrait_name in narr
         if not found and narr and not narr.startswith("[LLM_"):
             v8_issues.append(f"T{t['turn']}: 카드={portrait_name}({portrait_id}) 서술에 없음")
     # @마커 NPC가 서술 문맥과 불일치 (화자 이름 ≠ 마커 이름)
@@ -463,6 +480,8 @@ for t in turn_logs:
 for i in range(2, len(turn_logs)):
     window_narrs = [turn_logs[j].get("narrative", "") for j in range(max(0, i-2), i+1)]
     combined = " ".join(window_narrs)
+    # @마커 내부 텍스트 제거 (NPC 별칭이 마커로 반복 카운트되는 것 방지)
+    combined = re.sub(r"@\[[^\]]+\]", "", combined)
     words = re.findall(r"[가-힣]{2,4}", combined)
     from collections import Counter
     word_counts = Counter(words)
