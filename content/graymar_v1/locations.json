@@ -3,112 +3,411 @@
     "locationId": "LOC_MARKET",
     "name": "시장 거리",
     "description": "번화한 상인들의 거리. 온갖 소문과 거래가 오간다.",
-    "tags": ["TRADE", "SOCIAL", "CROWDED"],
+    "tags": [
+      "TRADE",
+      "SOCIAL",
+      "CROWDED"
+    ],
     "dangerLevel": 1,
     "availableAtNight": true,
     "nightDescription": "등불 아래 야시장이 열린다. 낮보다 은밀한 거래가 이뤄진다.",
-    "adjacentLocations": ["LOC_TAVERN", "LOC_NOBLE", "LOC_HARBOR", "LOC_GUARD"],
+    "adjacentLocations": [
+      "LOC_TAVERN",
+      "LOC_NOBLE",
+      "LOC_HARBOR",
+      "LOC_GUARD"
+    ],
     "baseState": {
       "controllingFaction": "MERCHANT_CONSORTIUM",
       "security": 60,
       "prosperity": 80,
       "unrest": 20
-    }
+    },
+    "secrets": [
+      {
+        "secretId": "SECRET_FAKE_LEDGER_COPY",
+        "detail": "3번째 노점 뒤 가죽 포대 안에 위조된 장부 사본이 숨겨져 있다",
+        "keywords": [
+          "노점",
+          "뒤",
+          "가죽",
+          "포대",
+          "장부",
+          "사본",
+          "위조"
+        ],
+        "importance": 0.9,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SEARCH",
+          "SNEAK"
+        ]
+      },
+      {
+        "secretId": "SECRET_INK_STAIN_TRAIL",
+        "detail": "시장 골목 바닥에 잉크 자국이 이어져 있다. 약초 노점에서 시작하여 동쪽으로 향한다",
+        "keywords": [
+          "잉크",
+          "자국",
+          "바닥",
+          "골목",
+          "흔적",
+          "따라"
+        ],
+        "importance": 0.7,
+        "requiresAction": [
+          "INVESTIGATE",
+          "OBSERVE",
+          "SEARCH"
+        ]
+      },
+      {
+        "secretId": "SECRET_MERCHANT_MEETING",
+        "detail": "매일 새벽, 특정 상인들이 시장 구석에서 비밀 회합을 가진다",
+        "keywords": [
+          "새벽",
+          "회합",
+          "모임",
+          "상인",
+          "비밀",
+          "구석"
+        ],
+        "importance": 0.6,
+        "requiresAction": [
+          "OBSERVE",
+          "SNEAK",
+          "INVESTIGATE"
+        ]
+      }
+    ]
   },
   {
     "locationId": "LOC_GUARD",
     "name": "경비대 지구",
     "description": "경비대 본부와 병영이 밀집한 구역. 질서가 유지되지만 감시가 삼엄하다.",
-    "tags": ["AUTHORITY", "MILITARY", "STRICT"],
+    "tags": [
+      "AUTHORITY",
+      "MILITARY",
+      "STRICT"
+    ],
     "dangerLevel": 2,
     "availableAtNight": true,
     "nightDescription": "야간 순찰이 강화된다. 허가 없이 돌아다니면 의심받는다.",
-    "adjacentLocations": ["LOC_MARKET", "LOC_NOBLE", "LOC_TAVERN"],
+    "adjacentLocations": [
+      "LOC_MARKET",
+      "LOC_NOBLE",
+      "LOC_TAVERN"
+    ],
     "baseState": {
       "controllingFaction": "CITY_GUARD",
       "security": 90,
       "prosperity": 50,
       "unrest": 10
-    }
+    },
+    "secrets": [
+      {
+        "secretId": "SECRET_PATROL_GAP",
+        "detail": "야간 순찰에 03시~04시 사이 30분간 경비 공백이 있다. 의도적 누락으로 보인다",
+        "keywords": [
+          "순찰",
+          "야간",
+          "공백",
+          "시간",
+          "누락",
+          "경비"
+        ],
+        "importance": 0.9,
+        "requiresAction": [
+          "INVESTIGATE",
+          "OBSERVE",
+          "SNEAK"
+        ]
+      },
+      {
+        "secretId": "SECRET_EVIDENCE_ROOM",
+        "detail": "경비대 본부 지하에 압수물 보관실이 있다. 열쇠는 야간 경비 책임자만 가지고 있다",
+        "keywords": [
+          "지하",
+          "보관실",
+          "압수",
+          "열쇠",
+          "증거"
+        ],
+        "importance": 0.8,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SNEAK",
+          "SEARCH"
+        ]
+      }
+    ]
   },
   {
     "locationId": "LOC_HARBOR",
     "name": "항만 부두",
     "description": "크고 작은 배들이 정박한 부두. 선원들과 하역 인부들이 분주하다.",
-    "tags": ["MARITIME", "DANGEROUS", "NIGHT"],
+    "tags": [
+      "MARITIME",
+      "DANGEROUS",
+      "NIGHT"
+    ],
     "dangerLevel": 3,
     "availableAtNight": true,
     "nightDescription": "밤이면 밀수선이 드나들고, 부두 깡패들이 활개친다.",
-    "adjacentLocations": ["LOC_MARKET", "LOC_DOCKS_WAREHOUSE", "LOC_TAVERN"],
+    "adjacentLocations": [
+      "LOC_MARKET",
+      "LOC_DOCKS_WAREHOUSE",
+      "LOC_TAVERN"
+    ],
     "baseState": {
       "controllingFaction": "LABOR_GUILD",
       "security": 40,
       "prosperity": 60,
       "unrest": 40
-    }
+    },
+    "secrets": [
+      {
+        "secretId": "SECRET_NIGHT_CARGO",
+        "detail": "동쪽 부두 3번 창고에서 야간에 허가 없는 하역이 이루어진다",
+        "keywords": [
+          "창고",
+          "야간",
+          "하역",
+          "동쪽",
+          "부두",
+          "화물"
+        ],
+        "importance": 0.9,
+        "requiresAction": [
+          "OBSERVE",
+          "SNEAK",
+          "INVESTIGATE"
+        ]
+      },
+      {
+        "secretId": "SECRET_SMUGGLE_MARK",
+        "detail": "밀수 화물에는 상자 밑면에 붉은 삼각형 표식이 새겨져 있다",
+        "keywords": [
+          "표식",
+          "삼각형",
+          "밑면",
+          "상자",
+          "밀수",
+          "붉은"
+        ],
+        "importance": 0.7,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SEARCH",
+          "OBSERVE"
+        ]
+      },
+      {
+        "secretId": "SECRET_DOCK_TUNNEL",
+        "detail": "3번 창고 바닥에 지하 통로 입구가 숨겨져 있다. 밀수품 이동 경로로 추정된다",
+        "keywords": [
+          "지하",
+          "통로",
+          "바닥",
+          "입구",
+          "숨겨진"
+        ],
+        "importance": 0.8,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SEARCH",
+          "SNEAK"
+        ]
+      }
+    ]
   },
   {
     "locationId": "LOC_SLUMS",
     "name": "빈민가",
     "description": "좁은 골목과 무너진 건물들. 법의 손길이 닿지 않는 곳.",
-    "tags": ["UNDERGROUND", "DANGER", "HIDDEN"],
+    "tags": [
+      "UNDERGROUND",
+      "DANGER",
+      "HIDDEN"
+    ],
     "dangerLevel": 4,
     "availableAtNight": true,
     "nightDescription": "어둠 속에서 암흑가의 진짜 얼굴이 드러난다.",
-    "adjacentLocations": ["LOC_DOCKS_WAREHOUSE", "LOC_TAVERN"],
+    "adjacentLocations": [
+      "LOC_DOCKS_WAREHOUSE",
+      "LOC_TAVERN"
+    ],
     "baseState": {
       "controllingFaction": null,
       "security": 15,
       "prosperity": 15,
       "unrest": 70
-    }
+    },
+    "secrets": [
+      {
+        "secretId": "SECRET_RAT_KING_LAIR",
+        "detail": "빈민가 깊숙한 곳에 쥐왕의 은신처 입구가 있다. 특정 벽면 낙서가 표식이다",
+        "keywords": [
+          "은신처",
+          "벽면",
+          "낙서",
+          "표식",
+          "쥐왕",
+          "깊숙"
+        ],
+        "importance": 0.8,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SNEAK",
+          "SEARCH"
+        ]
+      },
+      {
+        "secretId": "SECRET_ORPHANAGE_CELLAR",
+        "detail": "보육원 지하실에 도난당한 물건들이 보관되어 있다. 로자가 아이들을 위해 숨기고 있다",
+        "keywords": [
+          "보육원",
+          "지하실",
+          "도난",
+          "물건",
+          "숨긴"
+        ],
+        "importance": 0.7,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SEARCH"
+        ]
+      }
+    ]
   },
   {
     "locationId": "LOC_NOBLE",
     "name": "상류 거리",
     "description": "귀족들의 저택과 정원이 늘어선 조용한 거리. 화려하지만 음모가 도사린다.",
-    "tags": ["NOBLE", "POLITICAL", "INTRIGUE"],
+    "tags": [
+      "NOBLE",
+      "POLITICAL",
+      "INTRIGUE"
+    ],
     "dangerLevel": 2,
     "availableAtNight": true,
     "nightDescription": "저택의 불빛 뒤에서 비밀스러운 모임이 열린다.",
-    "adjacentLocations": ["LOC_MARKET", "LOC_GUARD"],
+    "adjacentLocations": [
+      "LOC_MARKET",
+      "LOC_GUARD"
+    ],
     "baseState": {
       "controllingFaction": "ARCANE_SOCIETY",
       "security": 80,
       "prosperity": 90,
       "unrest": 10
-    }
+    },
+    "secrets": [
+      {
+        "secretId": "SECRET_VANCE_STUDY",
+        "detail": "밴스 경의 서재에 길드와의 비밀 서신이 보관되어 있다",
+        "keywords": [
+          "서재",
+          "서신",
+          "비밀",
+          "밴스",
+          "길드"
+        ],
+        "importance": 0.9,
+        "requiresAction": [
+          "SNEAK",
+          "INVESTIGATE",
+          "SEARCH"
+        ]
+      }
+    ]
   },
   {
     "locationId": "LOC_TAVERN",
     "name": "잠긴 닻 선술집",
     "description": "항구 도시의 오래된 선술집. 여행자와 현지인 모두가 모이는 정보의 교차점.",
-    "tags": ["SOCIAL", "REST", "INFORMATION"],
+    "tags": [
+      "SOCIAL",
+      "REST",
+      "INFORMATION"
+    ],
     "dangerLevel": 1,
     "availableAtNight": true,
     "nightDescription": "밤이 깊어질수록 목소리가 낮아지고, 진짜 이야기가 시작된다.",
-    "adjacentLocations": ["LOC_MARKET", "LOC_GUARD", "LOC_HARBOR", "LOC_SLUMS", "LOC_DOCKS_WAREHOUSE"],
+    "adjacentLocations": [
+      "LOC_MARKET",
+      "LOC_GUARD",
+      "LOC_HARBOR",
+      "LOC_SLUMS",
+      "LOC_DOCKS_WAREHOUSE"
+    ],
     "baseState": {
       "controllingFaction": null,
       "security": 50,
       "prosperity": 60,
       "unrest": 20
-    }
+    },
+    "secrets": [
+      {
+        "secretId": "SECRET_TAVERN_CELLAR",
+        "detail": "선술집 지하 저장고에 밀수품이 임시 보관되는 적이 있다. 오웬이 묵인하고 있다",
+        "keywords": [
+          "지하",
+          "저장고",
+          "밀수",
+          "보관",
+          "오웬"
+        ],
+        "importance": 0.6,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SEARCH",
+          "SNEAK"
+        ]
+      }
+    ]
   },
   {
     "locationId": "LOC_DOCKS_WAREHOUSE",
     "name": "항만 창고구",
     "description": "거대한 창고들이 늘어선 구역. 합법적인 화물과 불법 물건이 뒤섞인다.",
-    "tags": ["MARITIME", "HIDDEN", "TRADE"],
+    "tags": [
+      "MARITIME",
+      "HIDDEN",
+      "TRADE"
+    ],
     "dangerLevel": 3,
     "availableAtNight": true,
     "nightDescription": "창고 사이 어둠 속에서 비밀 거래가 이뤄진다.",
-    "adjacentLocations": ["LOC_HARBOR", "LOC_SLUMS", "LOC_TAVERN"],
+    "adjacentLocations": [
+      "LOC_HARBOR",
+      "LOC_SLUMS",
+      "LOC_TAVERN"
+    ],
     "baseState": {
       "controllingFaction": null,
       "security": 25,
       "prosperity": 45,
       "unrest": 50
-    }
+    },
+    "secrets": [
+      {
+        "secretId": "SECRET_DOUBLE_BOOKS",
+        "detail": "창고 사무실에 이중 장부가 보관되어 있다. 하나는 공식 기록, 하나는 실제 거래 내역이다",
+        "keywords": [
+          "이중",
+          "장부",
+          "사무실",
+          "기록",
+          "거래"
+        ],
+        "importance": 0.9,
+        "requiresAction": [
+          "INVESTIGATE",
+          "SEARCH",
+          "SNEAK"
+        ]
+      }
+    ]
   }
 ]
