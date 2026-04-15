@@ -6,7 +6,7 @@
     "description": "그레이마르 항만에서 10년간 화물을 나른 노동자. 길드 간부의 횡령을 목격한 뒤 '사고'로 위장된 습격을 당해 쫓겨났다.",
     "playstyleHint": "높은 체력과 방어력. 맞으면서 싸우는 근접 탱커.",
     "protagonistTheme": "전직 항만 노동자 — 그레이마르 항만 노동 길드에서 10년간 일했다. 간부의 횡령을 목격한 뒤 '사고'로 위장된 습격을 당해 길드에서 쫓겨났다. 거친 부두에서 단련된 육체와 주먹만이 남은 재산이다.",
-    "prologueHook": "부두에서 당신이 일하는 것을 봤소. 길드 안 사람은 아무도 믿을 수가 없어서… 외부 사람이 필요했소.",
+    "prologueHook": "부두에서 당신이 일하는 것을 봤습니다. 길드 안 사람은 아무도 믿을 수가 없어서… 외부 사람이 필요했습니다.",
     "stats": {
       "MaxHP": 130,
       "MaxStamina": 5,
@@ -55,7 +55,7 @@
     "description": "왕국 남부 수비대 출신. 상관의 민간인 약탈 명령에 항명하여 탈영했다. 현재 수배 중.",
     "playstyleHint": "균형 잡힌 공격과 방어. 정석적인 근접 전투.",
     "protagonistTheme": "전직 왕국 수비대 병사 — 남부 수비대에서 복무했으나 상관의 민간인 약탈 명령에 항명하여 탈영했다. 군에서 익힌 검술과 전투 경험이 있으나 수배 중이라 신분을 숨기고 있다.",
-    "prologueHook": "당신이 군적에서 이름을 지웠다는 소문을 들었소. 신분을 숨기고 있는 자라면… 오히려 입단속이 될 것이오.",
+    "prologueHook": "당신이 군적에서 이름을 지웠다는 소문을 들었습니다. 신분을 숨기고 있는 분이라면… 오히려 입단속이 될 것입니다.",
     "stats": {
       "MaxHP": 100,
       "MaxStamina": 5,
@@ -103,7 +103,7 @@
     "description": "밀수 조직 '검은 조류'의 하급 운반책이었다. 조직 와해 후 증거 인멸을 위해 제거 대상이 되었다.",
     "playstyleHint": "높은 회피와 치명타. 빠르게 움직이며 급소를 노린다.",
     "protagonistTheme": "전직 밀수 운반책 — 밀수 조직 '검은 조류'에서 하급 운반책으로 일했다. 조직이 와해된 후 증거 인멸을 위해 제거 대상이 되어 도주 중이다. 어둠 속에서 움직이는 데 익숙하고 급소를 노리는 싸움에 능하다.",
-    "prologueHook": "당신이 세관을 교묘히 빠져나간다는 걸 알고 있소. 사람을 찾아야 하는데… 그런 재주가 필요하오.",
+    "prologueHook": "당신이 세관을 교묘히 빠져나간다는 걸 알고 있습니다. 사람을 찾아야 하는데… 그런 재주가 필요합니다.",
     "stats": {
       "MaxHP": 80,
       "MaxStamina": 6,
@@ -153,7 +153,7 @@
     "description": "항만 뒷골목에서 합법 약재와 밀수 독초를 함께 취급하는 약사. 세 세력 모두와 거래해왔다.",
     "playstyleHint": "낮은 공격력이지만 높은 저항과 기력. 아이템 활용 전투.",
     "protagonistTheme": "항만 뒷골목 약사 — 합법 약재와 밀수 독초를 함께 취급하며 세 세력 모두와 거래해왔다. 직접 싸우는 것보다 약물과 도구를 활용하는 데 능하며, 독과 해독에 관한 깊은 지식을 가지고 있다.",
-    "prologueHook": "당신의 약초 솜씨가 이 도시에서 꽤 알려졌다더군요. 세 세력 모두와 거래하는 사람이라면… 어디든 자연스럽게 드나들 수 있을 것이오.",
+    "prologueHook": "당신의 약초 솜씨가 이 도시에서 꽤 알려졌다고 들었습니다. 세 세력 모두와 거래하는 분이라면… 어디든 자연스럽게 드나들 수 있을 것입니다.",
     "stats": {
       "MaxHP": 95,
       "MaxStamina": 7,
@@ -206,7 +206,7 @@
     "description": "한때 그레이마르에서 손꼽히던 가문의 마지막 후예. 가문이 정치적 모략에 휘말려 몰락한 뒤, 이름과 재산을 잃었지만 귀족 사회의 인맥과 사교술은 여전하다.",
     "playstyleHint": "최고 카리스마와 초기 자금. 설득과 정치로 모든 것을 해결하는 사교가.",
     "protagonistTheme": "몰락 귀족 가문의 후예 — 한때 그레이마르에서 손꼽히던 가문이 정치적 모략에 휘말려 멸문당했다. 이름과 재산은 잃었지만, 귀족 사회의 예절과 인맥, 그리고 사람의 마음을 읽는 눈은 여전하다. 가문 인장 반지만이 과거의 유일한 증거다.",
-    "prologueHook": "당신의 가문 문장을 본 적이 있소. 한때 제법 이름값을 했지... 그 연줄이 아직 살아있다면 내게 필요한 것을 찾을 수 있을지 모르오.",
+    "prologueHook": "당신의 가문 문장을 본 적이 있습니다. 한때 제법 이름값을 했지요… 그 연줄이 아직 살아있다면 제게 필요한 것을 찾을 수 있을지 모릅니다.",
     "stats": {
       "MaxHP": 85,
       "MaxStamina": 6,
@@ -219,15 +219,36 @@
     },
     "startingGold": 80,
     "startingItems": [
-      { "itemId": "ITEM_MINOR_HEALING", "qty": 1 },
-      { "itemId": "ITEM_STAMINA_TONIC", "qty": 1 }
+      {
+        "itemId": "ITEM_MINOR_HEALING",
+        "qty": 1
+      },
+      {
+        "itemId": "ITEM_STAMINA_TONIC",
+        "qty": 1
+      }
     ],
     "npcPostureOverrides": {
-      "NPC_LORD_VANCE": { "posture": "FRIENDLY", "trustDelta": 15 },
-      "NPC_DAME_ISOLDE": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_BG_NOBLE_MAID": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_BG_BUTLER": { "posture": "FRIENDLY", "trustDelta": 5 },
-      "NPC_RAT_KING": { "posture": "HOSTILE", "trustDelta": -10 }
+      "NPC_LORD_VANCE": {
+        "posture": "FRIENDLY",
+        "trustDelta": 15
+      },
+      "NPC_DAME_ISOLDE": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_BG_NOBLE_MAID": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_BG_BUTLER": {
+        "posture": "FRIENDLY",
+        "trustDelta": 5
+      },
+      "NPC_RAT_KING": {
+        "posture": "HOSTILE",
+        "trustDelta": -10
+      }
     },
     "actionBonuses": {
       "PERSUADE": 1,
@@ -241,7 +262,7 @@
     "description": "이름 없는 투기장에서 피로 이름을 새긴 전사. 관중의 환호가 사라진 뒤에도 싸우는 것만이 삶의 방식이다. 생각보다 주먹이 먼저 나간다.",
     "playstyleHint": "최고 전투력(힘+민첩). 조사와 관찰은 약하지만 싸움에서는 무적.",
     "protagonistTheme": "투기장 출신 검투사 — 변경의 불법 투기장에서 수십 번의 생사를 넘겼다. 관중의 환호가 사라진 뒤, 그레이마르에 흘러들어와 용역으로 생계를 잇고 있다. 몸에 새겨진 무수한 상처가 경력 증명서다.",
-    "prologueHook": "투기장에서 당신이 싸우는 걸 봤소. 죽을 뻔한 놈이 웃으며 일어서더군... 그런 배짱이 필요하오. 장부를 찾아야 하는데, 방해하는 자들이 만만치 않소.",
+    "prologueHook": "투기장에서 당신이 싸우는 걸 봤습니다. 죽을 뻔한 사람이 웃으며 일어서더군요… 그런 배짱이 필요합니다. 장부를 찾아야 하는데, 방해하는 자들이 만만치 않습니다.",
     "stats": {
       "MaxHP": 110,
       "MaxStamina": 6,
@@ -254,13 +275,28 @@
     },
     "startingGold": 20,
     "startingItems": [
-      { "itemId": "ITEM_MINOR_HEALING", "qty": 3 }
+      {
+        "itemId": "ITEM_MINOR_HEALING",
+        "qty": 3
+      }
     ],
     "npcPostureOverrides": {
-      "NPC_HARLUN": { "posture": "FRIENDLY", "trustDelta": 15 },
-      "NPC_GUARD_FELIX": { "posture": "FRIENDLY", "trustDelta": 10 },
-      "NPC_MAIREL": { "posture": "HOSTILE", "trustDelta": -5 },
-      "NPC_BG_ARMORER": { "posture": "FRIENDLY", "trustDelta": 5 }
+      "NPC_HARLUN": {
+        "posture": "FRIENDLY",
+        "trustDelta": 15
+      },
+      "NPC_GUARD_FELIX": {
+        "posture": "FRIENDLY",
+        "trustDelta": 10
+      },
+      "NPC_MAIREL": {
+        "posture": "HOSTILE",
+        "trustDelta": -5
+      },
+      "NPC_BG_ARMORER": {
+        "posture": "FRIENDLY",
+        "trustDelta": 5
+      }
     },
     "actionBonuses": {
       "FIGHT": 1,
