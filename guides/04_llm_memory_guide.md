@@ -357,6 +357,14 @@ LLM 서술 출력에 대해 5단계 자동 후처리 필터를 적용한다.
 
 ---
 
+## LLM 출력 후처리 추가 단계 (2026-04-15)
+
+기존 Step A~D(P1~P5 필터)에 추가:
+- **Step E**: 대사 내부 "NPC이름:" 프리픽스 제거 — LLM이 대사 텍스트에 화자 이름을 넣는 경우 제거
+- **Step F**: NPC 불일치 교정 — primaryNpcId와 LLM 출력의 첫 @마커 NPC가 다르면 마커+본문을 강제 교체
+
+---
+
 ## 퀘스트 방향 힌트 (pendingQuestHint)
 
 `server/src/turns/turns.service.ts` — FACT 발견 후 힌트 생성

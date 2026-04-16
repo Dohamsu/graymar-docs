@@ -2,7 +2,7 @@
 
 > **목표**: "이벤트가 유저를 끌고가는" 현재 구조를 "유저가 게임을 끌고가는" 구조로 전환
 > **작성일**: 2026-04-15
-> **상태**: 설계 중
+> **상태**: ✅ 구현됨
 
 ---
 
@@ -586,3 +586,19 @@ WORLD_EVENT 모드에서도 targetNpcId가 있으면:
 | 플레이어 지목 NPC 정확 응답률 | ~60% | ≥95% |
 | 이벤트 강제 턴 비율 | ~60% | ~25% |
 | 퀘스트 팩트 발견 속도 | 기준선 | 기준선 ±10% (유지) |
+
+---
+
+## 10. 구현 현황
+
+| Phase | 내용 | 상태 |
+|-------|------|------|
+| Phase 1 | TurnMode enum + determineTurnMode() + extractTargetNpcFromInput() + NPC 우선순위 변경 + NanoEventDirector npcLocked | ✅ 완료 |
+| Phase 2 | PLAYER_DIRECTED/CONVERSATION_CONT 프롬프트 블록 + BG NPC 서술 가이드 + turnMode를 actionContext에 전달 | ✅ 완료 |
+| Phase 3 | incidentPressure 50→70 상향 + routingHasStrongIncident 제거 + EventMatcher targetNpcId 가중치 (+50/-50) | ✅ 완료 |
+| 추가 | 맥락 NPC 연결 (contextNpcId) — FIGHT 후 TALK 시 직전 NPC 유지 | ✅ 완료 |
+
+### 테스트
+
+- player-first.spec.ts: 51개 (determineTurnMode 35개 + extractTargetNpcFromInput 16개)
+- 10턴 플레이테스트 3회 (SMUGGLER/HERBALIST/GLADIATOR) — 전부 8/9 PASS

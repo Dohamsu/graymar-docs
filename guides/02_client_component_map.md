@@ -20,7 +20,8 @@ app/
 components/ (36개)
 ├── narrative/       ← 메시지 표시
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
-│   └── StoryBlock.tsx        ← 메시지 렌더러 (타이핑 애니메이션, NPC 초상화 카드, 선택지 보정치 뱃지)
+│   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑 애니메이션, NPC 초상화 카드, 선택지 보정치 뱃지)
+│   └── StreamingBlock.tsx    ← 스트리밍 중 실시간 렌더링 (SSE 토큰 수신 → 점진적 텍스트 표시)
 ├── input/           ← 입력 처리
 │   ├── InputSection.tsx      ← 텍스트 입력 + 퀵 액션 (LOCATION 전용)
 │   └── QuickActionButton.tsx ← 빠른 행동 버튼
@@ -125,7 +126,9 @@ lib/
 ├── result-mapper.ts    ← ServerResultV1 → StoryMessage[] (RESOLVE 포함)
 ├── hud-mapper.ts       ← Diff → PlayerHud/Inventory/Enemy update
 ├── api-errors.ts       ← ApiError 클래스
-└── notification-utils.ts ← 알림 중복 제거, 정렬, 만료 필터링
+├── notification-utils.ts ← 알림 중복 제거, 정렬, 만료 필터링
+├── stream-parser.ts    ← 문장 단위 버퍼링 상태 머신 (SSE 토큰 → 문장 경계 감지 → 청크 방출)
+└── llm-stream.ts       ← SSE 연결 유틸리티 (EventSource 래퍼, 재연결, 토큰 인증)
 ```
 
 ---
