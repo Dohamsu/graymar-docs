@@ -79,6 +79,17 @@ MOVE_LOCATION이 1위 AND 키워드 hit=1 AND detectLocationBasedMove=false
 
 ---
 
+## Player-First 턴 모드 (2026-04-15)
+
+이벤트 매칭 전 `determineTurnMode()`로 턴 모드를 결정:
+- **PLAYER_DIRECTED**: 플레이어가 NPC를 명시적으로 지목 → 이벤트 매칭 스킵
+- **CONVERSATION_CONT**: 대화 연속 (SOCIAL_ACTION + lastNpcId/contextNpcId) → 이벤트 매칭 스킵
+- **WORLD_EVENT**: 첫 진입 / pressure>=70 / questFactTrigger → 기존 매칭 파이프라인
+
+기본값은 PLAYER_DIRECTED (이벤트 강제 없음).
+
+---
+
 ## LOCATION 판정 시스템
 
 `server/src/engine/hub/resolve.service.ts`

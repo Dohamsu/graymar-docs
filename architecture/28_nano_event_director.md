@@ -432,3 +432,13 @@ WITNESSED NPC trust 기반 반응:
 | Opening 고유 | 10/10 | 10/10 |
 | "당신은" | 0건 | 0건 |
 | 조건 발동 (Layer 2) | 미구현 | LOCKDOWN+UNREST 발동 확인 |
+
+### 12.6 비동기 분리 (2026-04-15)
+
+NanoEventDirector를 turns.service에서 llm-worker.service로 이동:
+- turns.service: nanoCtx만 빌드하여 serverResult.ui.nanoEventCtx에 저장
+- llm-worker: nanoEventCtx가 있으면 generate() 비동기 호출
+- nano 선택지는 LLM 완료 시 llmChoices에 저장
+- nano fact 발견은 경로 1~3(이벤트/NPC/PARTIAL)으로 충분
+
+효과: 턴 응답에서 nano LLM 호출(300~1000ms) 제거

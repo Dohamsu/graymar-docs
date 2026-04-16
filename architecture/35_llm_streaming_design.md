@@ -2,7 +2,7 @@
 
 > **목표**: OpenRouter stream: true 활성화 → 체감 응답 속도 개선 + 실시간 타이핑
 > **작성일**: 2026-04-16
-> **상태**: 설계 중
+> **상태**: ✅ 서버+클라이언트 구현됨
 
 ---
 
@@ -476,3 +476,28 @@ try {
 | 스트리밍 중 NPC 이름 노출 | 몰입 깨짐 | @마커 패턴 실시간 감지 + 숨김 |
 | PM2 클러스터 환경 | SSE가 다른 인스턴스로 | sticky session 또는 Redis pub/sub |
 | OpenRouter 스트리밍 미지원 모델 | stream 실패 | fallback to non-stream |
+
+---
+
+## 11. 구현 현황
+
+| 단계 | 내용 | 상태 |
+|------|------|------|
+| Phase 1-1 | OpenAI Provider generateStream() | ✅ 완료 |
+| Phase 1-2 | LlmStreamBrokerService (인메모리 SSE 채널) | ✅ 완료 |
+| Phase 1-3 | LLM Worker 스트리밍 모드 (토큰 브로드캐스트 + done 이벤트) | ✅ 완료 |
+| Phase 1-4 | Turns Controller SSE 엔드포인트 | ✅ 완료 |
+| Phase 2-1 | StreamParser 문장 단위 버퍼링 | ✅ 완료 |
+| Phase 2-2 | game-store SSE 연결 + 폴링 fallback | ✅ 완료 |
+| Phase 2-3 | StreamingBlock 실시간 렌더링 | ✅ 완료 |
+| Phase 2-4 | SKIPPED/DONE 턴 즉시 폴링 처리 | ✅ 완료 |
+
+### 현재 제약사항
+
+- LLM_JSON_MODE=true일 때 스트리밍 중 표시 차단 (JSON 원문 노출 방지)
+- JSON 모드와 스트리밍의 공존을 위해서는 서버 측 Partial JSON 파싱 또는 JSON 모드 비활성화 필요
+- 현재 권장: LLM_JSON_MODE=false + 스트리밍 활성화
+
+### TTFB 측정 결과
+
+Gemma 4 26B MoE + stream:true: TTFB 2.2초

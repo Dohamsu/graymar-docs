@@ -161,6 +161,7 @@ main.ts → AppModule
 | NpcDialogueMarkerService | npc-dialogue-marker.service.ts | 서버 regex 6단계 NPC 발화자 매칭 (@마커 삽입) |
 | NanoDirectorService | nano-director.service.ts | nano 전처리: 연출 지시서 생성 (첫 문장, NPC 행동, 반복 회피) — NanoEventDirector fallback |
 | NanoEventDirectorService | nano-event-director.service.ts | nano 동적 이벤트: 컨셉/NPC/fact/선택지 생성 + NPC 선택 규칙 + 조건 전달 |
+| LlmStreamBrokerService | llm-stream-broker.service.ts | 턴별 SSE 채널 관리 (스트리밍 토큰 브로드캐스트) |
 
 **하위 모듈:**
 - `providers/` — OpenAI, Claude, Gemini, Mock (4 providers)
