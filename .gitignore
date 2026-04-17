@@ -4,10 +4,23 @@ client/
 
 # System files
 .DS_Store
-.claude/
+
+# Claude Code state — ignore everything except agents/commands/skills definitions
+.claude/*
 !.claude/agents/
 !.claude/commands/
+!.claude/skills/
 
 # Content seed data is in server repo
 # content/ is symlinked or copied — keep here for reference
 .env
+
+# Build/tooling artifacts
+node_modules/
+*.log
+*.backup
+
+# Playtest outputs — keep the folder via .gitkeep, drop individual reports from tracking
+playtest-reports/*.json
+playtest-reports/*.txt
+!playtest-reports/.gitkeep
