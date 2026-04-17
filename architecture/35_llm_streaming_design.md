@@ -501,3 +501,59 @@ try {
 ### TTFB 측정 결과
 
 Gemma 4 26B MoE + stream:true: TTFB 2.2초
+
+---
+
+## 후속 수정 (2026-04-17)
+
+초기 구현 이후 플레이테스트·버그 리포트로 확인된 세 가지 렌더 이슈를 잡고 수집 데이터를 확장함.
+
+### A. StreamTyper onComplete 2회 호출로 내레이터 텍스트 사라짐 (버그 d8b9de24 / 8d469994)
+
+**증상**: 타이핑이 끝나는 순간 내레이터 박스의 본문이 통째로 빈 문자열로 교체됨.
+
+**원인**: `client/src/components/narrative/StoryBlock.tsx`의 `StreamTyper` useEffect 가 `typedLength >= buffer.length && isDone` 조건을 재평가될 때마다 `onComplete()` 를 호출할 수 있었음. 1회차가 `streamTextBuffer=''` 로 초기화한 뒤 같은 tick에 2회차가 실행되면, 2회차는 store에서 빈 버퍼를 읽어 `messages[msg].text = ''` 로 덮어씀.
+
+**수정**: 양방향 멱등성 가드.
+- 트리거: `completedRef` once-guard 로 `onComplete` 1회만 호출.
+- 핸들러: 진입 시 `!store.isStreaming || finalText.length === 0` 이면 early return.
+
+### B. 타이핑 중 / 완료 후 스타일 점프 (버그 c3f880f3)
+
+**증상**: 타이핑 중에는 기본 폰트/line-height/크기로 보이다 완료 순간 `font-narrative` 로 급전환.
+
+**원인**: 완료 경로는 `<div className="font-narrative leading-[1.75]" style={fontSize}>` 래퍼를 씌우는 반면, `loading && isStreaming` 경로의 `StreamTyper` 는 래퍼 없이 직계 자식이었음. 또한 `StreamTyper`/`TypewriterText` 내부의 narration 렌더는 인라인 `<span>` + `leading-relaxed` 인 반면 `NarratorContent` 는 `\n` split + `block` 래핑 + 빈 줄 `h-3` 간격을 사용.
+
+**수정**:
+- `renderNarrationLines()` 헬퍼로 `NarratorContent` 와 동일한 block 기반 줄 렌더 통일.
+- `StreamTyper` 호출부를 완료 경로와 같은 `<div font-narrative leading-[1.75]` + `fontSize>` 로 감쌈.
+
+### C. 문장별 줄바꿈 (버그 c3f880f3)
+
+**증상**: 스트리밍 경로의 서술이 모든 문장마다 한 줄씩 끊겨서 렌더됨.
+
+**원인**: `client/src/store/game-store.ts` 의 스트림 버퍼 축적이 매 flush마다 `analyzedBuffer + '\n' + analyzed` 로 이어붙임. 서버 `stream-classifier` 가 문장 단위로 이벤트를 emit 하므로 최종 버퍼가 문장별 개행 덩어리가 됨.
+
+**수정**:
+- `analyzeText()` 재작성: 입력을 빈 줄 기준 문단으로 분할, 각 문단 내 narration 라인은 공백으로 병합해 하나의 덩어리로 합치고 대사(`@[...] "..."`) 라인만 독립 줄 유지.
+- `appendAnalyzed()` 헬퍼: 이전 버퍼 끝이 개행이면 그대로, 아니면 공백으로 연결 — extract 경계에서 끊긴 narration이 다음 조각과 자연스럽게 이어짐.
+
+### D. 대사 내부 raw 마커 잔해 (버그 fc14ed2b)
+
+**증상**: DialogueBubble 안에 `[로넨|/npc-portraits/ronen.webp] 정말 감사합니다...` 가 그대로 노출.
+
+**원인**: LLM 이 `@[로넨|URL] "@[로넨|URL] 대사"` 형태 이중 마커를 생성 → 외부 마커는 서버 B-2.5 regex 가 치환하지만 큰따옴표 내부 잔해는 뒤에 `"` 가 없어 어느 regex에도 매칭되지 않고, 이후 어느 단계에서 `@` 프리픽스만 떨어져 raw 대괄호 마커가 대사 텍스트의 일부로 살아남음.
+
+**수정**:
+- 서버 `llm-worker.service.ts` 에 5.10.5 단계 추가: `deduplicateAliases` 직후 큰따옴표 쌍 내부에서 `@?[이름|URL]` / `@[이름]` 잔해 제거.
+- 클라 `cleanResidualMarkers` 에 `(^|[^@])\[[^\]|]+\|\/npc-portraits\/[^\]]+\]` 방어 정규식 추가 (정상 `@` 마커 보호, `npc-portraits` 경로 포함 잔해만 제거).
+
+### E. 버그 리포트 수집 데이터 확장
+
+분석 시 추측해야 했던 맥락을 데이터로 남기기 위해 `bug_reports` 컬럼 3개 추가.
+
+- `client_snapshot` (jsonb): phase, currentNodeType/Index, currentTurnNo, locationId, HUD, worldState 요약, 스트리밍 상태, pending 카운트, lastMessages 요약, characterInfo, llmStats, llmFailure, DOM 요약(choice-btn / dialogue-bubble 카운트, viewport, scrollY)
+- `network_log` (jsonb): 최근 100개 API 호출 타임라인 — method/path/status/latencyMs/ok/errorCode. `api-client.ts request()` 래퍼가 자동 기록.
+- `client_version` (text): `NEXT_PUBLIC_CLIENT_VERSION` 을 같이 저장해 서버/클라 배포 불일치 여부를 즉시 판별.
+
+클라 `BugReportModal.tsx` 는 `serializeMessage`(메시지 전체 필드 직렬화), `collectClientSnapshot`, `collectDomSummary`, `getNetworkLog`, `clientVersion` 을 한 번에 전송한다. `DialogueBubble` 에는 `data-dialogue-bubble` 속성을 추가해 DOM 스캔이 가능하도록 했다.
