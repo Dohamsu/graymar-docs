@@ -150,6 +150,12 @@ server/src/llm/
 9. **NanoEventDirector 비동기** — 턴 응답에서 nano LLM 대기 없음
 10. **스트리밍 ↔ JSON 모드 비호환** — 동시 활성화 금지
 
+## 진입 순서
+
+1. `CLAUDE.md` — 전체 개요 + Document Status + Canonical Enums + Critical Design Invariants
+2. `architecture/INDEX.md` — 도메인별 1문단 요약 + 상호 참조 맵 (LLM 도메인: 5/11/25/26/28/30~35)
+3. 상세 설계 문서 (아래 표)
+
 ## 상세 참조
 
 | 참조 | 경로 |
@@ -160,9 +166,10 @@ server/src/llm/
 | 로어북 시스템 | `architecture/33_lorebook_system.md` |
 | @마커 개선 | `architecture/30_marker_accuracy_improvement.md` |
 | Memory v4 | `architecture/31_memory_system_v4.md` |
-| 스트리밍 설계 | `architecture/35_llm_streaming_design.md` |
+| 스트리밍 설계 + 후속 수정 | `architecture/35_llm_streaming.md` |
 | NanoEventDirector | `architecture/28_nano_event_director.md` |
 | Player-First 엔진 | `architecture/34_player_first_event_engine.md` |
+| 모델 평가 | `architecture/25_llm_model_evaluation.md` |
 | 시스템 프롬프트 | `server/src/llm/prompts/system-prompts.ts` |
 | 프롬프트 빌더 | `server/src/llm/prompts/prompt-builder.service.ts` |
 | 컨텍스트 빌더 | `server/src/llm/context-builder.service.ts` |
