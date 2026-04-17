@@ -122,27 +122,28 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 > 상세 서비스 맵: `guides/01_server_module_map.md`
 > 상세 컴포넌트 맵: `guides/02_client_component_map.md`
 
-### Server — 10 modules, 65+ services, 6 controllers
+### Server — 12 modules, 95 services, 10 controllers
 
 | 모듈 | 서비스 수 | 역할 |
 |------|----------|------|
 | common/ | - | Guards, Filters, Pipes, Decorators |
 | auth/ | 1 | JWT 인증 (register/login) |
-| db/ | - | Drizzle ORM (18 tables, 35 타입 파일) |
+| db/ | - | Drizzle ORM (22 tables / 20 schema files, 42 타입 파일) |
 | content/ | 1 | 게임 콘텐츠 로더 (graymar_v1 JSON 24개, traits.json 포함) |
 | engine/rng,stats,status | 3 | RNG, 스탯 계산, 상태효과 |
 | engine/combat | 4 | Hit, Damage, EnemyAI, CombatService |
 | engine/input | 3 | RuleParser → Policy → ActionPlan |
 | engine/nodes | 7 | 노드별 리졸버 + 전이 |
 | engine/rewards | 5 | 보상, 인벤토리, 장비, 접미사, Legendary |
-| engine/hub | 37 | HUB 엔진 6 서브시스템 + 퀘스트 (아래 참조) |
+| engine/hub | 37 | HUB 엔진 6 서브시스템 (아래 참조) |
 | engine/planner | 1 | RUN 구조 생성 (RunPlannerService) |
-| runs/ | 1 | RUN 생성/조회 |
+| runs/ | 2 | RUN 생성/조회 + BugReportService |
 | turns/ | 1 | 턴 제출/조회 |
-| llm/ | 11 | LLM Worker, Context Builder, Token Budget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector |
-| scene-image/ | 1 | AI 초상화/이미지 생성 (Gemini, rate limit) |
-| bug-report/ | 1 | 인게임 버그 리포트 (BugReportService + BugReportController) |
-| party/ | 7 | 파티 시스템 (Party, Chat, Stream, Lobby, PartyTurn, Vote, Reward) |
+| llm/ | 17 | Worker, ContextBuilder, TokenBudget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector, DialogueGenerator, LlmStreamBroker, StreamClassifier, FactExtractor, Lorebook, MemoryRenderer 외 |
+| scene-image/ | 1 | AI 장면 이미지 (Gemini, rate limit) |
+| portrait/ | 1 | 초상화 업로드/생성 (독립 모듈) |
+| campaigns/ | 1 | 캠페인 구조 (독립 모듈) |
+| party/ | 8 | 파티 시스템 (Party, Chat, Stream, Lobby, PartyTurn, Vote, Reward, RunParticipants) |
 
 ### HUB 엔진 6 서브시스템 (37 services)
 
@@ -157,19 +158,22 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 
 > 상세: `guides/03_hub_engine_guide.md`
 
-### Client — 40+ components, 3 stores
+### Client — 60 components, 5 stores
 
 | 영역 | 수 | 핵심 |
 |------|---|------|
-| narrative/ | 2 | NarrativePanel, StoryBlock |
+| narrative/ | 4 | NarrativePanel, StoryBlock, StreamingBlock, DialogueBubble |
 | input/ | 2 | InputSection, QuickActionButton |
-| hub/ | 12 | HubScreen, SignalFeed, Incident, NPC, Notifications, CollapsibleSection |
-| location/ | 2 | TurnResultBanner, LocationToastLayer |
+| hub/ | 14 | HubScreen, SignalFeed, Incident, NPC, Notifications, CollapsibleSection, DiceFace |
+| location/ | 3 | TurnResultBanner, LocationToastLayer, LocationImage |
 | screens/ | 4 | StartScreen, EndingScreen, RunEndScreen, NodeTransitionScreen |
-| side-panel/ | 5 | SidePanel, CharacterTab, InventoryTab, EquipmentTab, SetBonusDisplay |
-| ui/ | 6 | ErrorBanner, LlmFailureModal, BugReportButton, BugReportModal |
+| side-panel/ | 7 | SidePanel, CharacterTab, InventoryTab, EquipmentTab, SetBonusDisplay, NpcDossierTab, QuestTab |
+| ui/ | 12 | ErrorBanner, LlmFailureModal, BugReportButton, BugReportModal, NetworkStatus, PageTransition, SplashScreen, InstallPrompt, NewsModal, PortraitCropModal |
 | layout/ | 2 | Header (자동 숨김), MobileBottomNav (햄버거 메뉴) |
 | battle/ | 1 | BattlePanel |
+| party/ | 11 | PartyHUD, PartyLobby, PartyChatWindow, PartyChatInput, PartyTurnStatus, VoteModal, LootDistribution 외 |
+
+Stores: game-store, game-selectors, settings-store, auth-store, party-store.
 
 ### Key Data Flow
 
