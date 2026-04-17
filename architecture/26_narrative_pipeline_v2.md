@@ -302,3 +302,125 @@ v1 대비 추가 지연: ~500ms (사용자 체감 불가)
 | nano opening이 부자연스러움 | 중간 | 중간 | Gemma4가 opening을 자연스럽게 확장/변형 가능하도록 "참고" 수준으로 지시 |
 | Gemma4가 발화자 명시 안 함 | 중간 | 중간 | Stage 3의 nano 개별 판단이 백업, fallback NPC 귀속 |
 | nano 비용 증가 | 낮음 | 낮음 | 턴당 +$0.00003 (월 1000턴 = $0.03) |
+
+---
+
+## 부록 A. AI 구현 가이드라인 (ai_implementation_guidelines_for_narrative_patch 통합)
+
+Narrative 패치 구현 시 적용되는 원칙.
+
+### 기본 원칙
+1. 서버가 상태의 단일 진실 소스 (SoT)
+2. LLM은 서술만 담당
+3. 이벤트 결정은 서버 로직에서 수행
+
+### 구현 위치
+- **Intent Parser**: ParsedIntentV3 생성
+- **Event System**: EventMatcher + Event Director 정책
+- **Narrative Generator**: 서버 결과 기반 장면 서술
+
+### 금지 사항
+- LLM이 게임 상태 직접 변경
+- Procedural Event가 메인 플롯 변경
+- Incident 시스템 우회
+
+### 권장 구현 순서
+1. Narrative Context Patch 적용
+2. Event Director 정책 추가
+3. Event Library 정비
+4. Procedural Event Extension 적용
+
+---
+
+## 부록 B. Narrative v2 / Event 구현 요약 (기존 18/19/20 통합)
+
+Narrative Engine v1의 맥락 유지·토큰 효율·이벤트 선택·동적 이벤트 생성 축을 구현한 세 문서(18/19/20)를 압축 통합한다. 구현 세부는 `engine/hub/narrative/`, `engine/hub/event/`, `engine/hub/procedural/` 참조.
+
+### 18 — Narrative Runtime Patch v1.1
+
+**목적**: Narrative Engine v1의 맥락 유지 성능을 강화하고 LLM 토큰 효율을 개선한다.
+
+**Context Layers**: Scene Context / Player Intent Memory / Active Clues / Recent Story / Structured Memory.
+
+**Token Budget (≈2500 tokens)**
+
+| Layer | Tokens |
+|-------|--------|
+| System | 300 |
+| Scene Context | 150 |
+| Intent Memory | 200 |
+| Active Clues | 150 |
+| Recent Story | 700 |
+| Previous Visit | 150 |
+| Structured Memory | 450 |
+| User Input | 200 |
+| Buffer | 250 |
+
+**Recent Story 정책**: 최대 4턴 유지, 이후 Mid Summary 생성. Mid Summary 요약 대상은 resolved incidents / new clues / npc state change / location state change.
+
+**Previous Visit Context (Fixplanv1 PR3)**
+- `VisitExitSummary`: locationId, locationName, turnCount, keyActions(max 3), keyDialogues(max 3), unresolvedLeads(max 2)
+- `StructuredMemory.lastExitSummary`에 저장, LlmContext에 `previousVisitContext: string | null` 추가
+- `[이야기 요약]` 뒤, `[NPC 관계]` 앞에 `[직전 장소 정보]` 블록 삽입
+- 토큰 예산: PREVIOUS_VISIT 150 (priority=57, minTokens=0)
+
+**Cross-Location Facts (Fixplanv1 PR3)**
+- `renderLlmFacts()`: 타 장소 사실도 importance≥0.7이면 포함 (max 3). 타 장소 사실은 `[장소명]` 접두사 부여.
+
+**Intent Memory**: 플레이어 행동 패턴 기록 (예: aggressive interrogation, stealth exploration, evidence focused investigation).
+
+### 19 — Event Orchestration System v1.2
+
+**목적**: 현재 LOCATION과 상태에 맞는 이벤트 선택. SituationGenerator가 우선, 실패 시 EventMatcher fallback.
+
+**SituationGenerator 3계층 (Living World v2)**
+
+| Layer | 이름 | 입력 | 설명 |
+|-------|------|------|------|
+| Layer 1 | Landmark | LocationDynamicState | 장소 고유 상태(security, crime, unrest) 기반 랜드마크 이벤트 |
+| Layer 2 | Incident-Driven | ActiveIncidents + WorldFact | 활성 사건과 누적 사실에서 파생되는 상황 |
+| Layer 3 | World-State | NpcAgenda + NpcSchedule + WorldFact | NPC 자율 행동과 월드 사실 조합으로 창발적 상황 생성 |
+
+**실행 흐름**: Layer 1→2→3 순차 시도 → 유효 상황 생성 시 SituationEvent 반환, 모두 실패 시 null → EventMatcher fallback. SituationGenerator 이벤트도 반복 페널티 추적 포함. Procedural Plot Protection 불변식 유지(arcRouteTag/commitmentDelta 생성 금지).
+
+**Event Director 선택 알고리즘**: Stage Filter → Condition Filter → Cooldown Filter → Priority Sort → Weighted Random. Priority weight: critical=10, high=6, medium=3, low=1.
+
+**Event Library 현황 (2026-04-01)**: 총 123개 이벤트, 7개 LOCATION, discoverableFact 43개 이벤트.
+
+| LOCATION | 이벤트 | Fact |
+|----------|--------|------|
+| LOC_MARKET | 22 | 13 |
+| LOC_GUARD | 22 | 11 |
+| LOC_HARBOR | 22 | 7 |
+| LOC_SLUMS | 22 | 6 |
+| LOC_TAVERN | 11 | 3 |
+| LOC_DOCKS_WAREHOUSE | 10 | 2 |
+| LOC_NOBLE | 9 | 1 |
+
+**이벤트 매칭 밸런싱 (P0~P5)**
+- shouldMatchEvent 게이트: 첫 턴 + 사건 압력 + 강한 라우팅 + questFactTrigger(미발견 fact 이벤트 존재 시 매 턴)
+- questFactTrigger 시 SitGen 바이패스 (fact 이벤트 매칭 보장)
+- 미발견 fact weight 부스트: EventMatcher +35 (`quest-balance.config.ts`)
+- PARTIAL 발견 확률: 50%
+- SitGen template fact 우선: SitGen 실행 시에도 미발견 discoverableFact 이벤트를 template으로 우선 선택
+
+### 20 — Procedural Event Extension v1.1
+
+**목적**: 고정 이벤트가 부족한 구간에서 동적 이벤트 생성.
+
+**Procedural Event 구조**: Trigger + Subject + Action + Outcome. 예: `npc_nervous_reaction + dock_guard + denies + suspicion_up`.
+
+**Seed Types**: Trigger / Subject / Action / Outcome.
+
+**Context Filter 입력 요소**: location, stage, time, npc, active clues, player intent.
+
+**Anti-Repetition Rules**
+
+| rule | value |
+|------|-------|
+| trigger cooldown | 3 turns |
+| subject-action cooldown | 5 turns |
+| same outcome repeat | max 2 |
+| same npc focus | max 3 |
+
+**Fallback 순서**: atmosphere event → low priority fixed event → narrative reaction only.

@@ -1,4 +1,4 @@
-# LLM Context System v1
+# LLM Context System
 
 > 목적: 서버 결과(server_result)로부터 **Fact를 추출**하고, **LLM 입력 컨텍스트(`llm_ctx_v1`)를 구성**하며, **Context Bundle을 안정적으로 빌드**하는 전체 파이프라인을 표준화한다.
 >
@@ -48,56 +48,17 @@
 
 ## 3. 이벤트 타입별 매핑 규칙
 
-### BATTLE
-
-- **FactEvent**: START/TURN/END를 문장화
-- **Memory**: 보스/특수전(BOSS) 또는 노드 결과(WIN/LOSE/FLEE)는 NODE scope로 저장
-
-### DAMAGE
-
-- **FactEvent**: crit/miss/normal 문장화 (kind: DAMAGE)
-- **data**: `{ source, target, isCrit, isMiss? }`
-- **Memory**: 기본 STEP(0.2~0.4), crit면 tags `CRIT` +0.05~0.1
-
-### STATUS
-
-- **FactEvent**: 상태이상 적용/해제/틱 문장화
-- **data**: `{ statusId, op }`
-- **Memory**: 장기 영향만 NODE(0.6~0.8)
-
-### LOOT
-
-- **FactEvent**: 전리품 획득 문장화 (희귀 강조)
-- **data**: `{ items, hasRare }`
-- **Memory**: KEY_ITEM/RARE/QUEST_ITEM은 THEME 또는 NODE(0.85~0.95)
-
-### GOLD
-
-- **FactEvent**: "약간의 돈" 등 정성 표현
-- **data**: `{ delta }`
-- **Memory**: 기본 저장하지 않음, 큰 변화만 NODE(0.6)
-
-### QUEST
-
-- **FactEvent**: 수락/갱신/완료 문장화
-- **data**: `{ questId, op }`
-- **Memory**: THEME 우선(0.9~1.0), tags `MAIN_ARC|QUEST|CLUE`
-
-### NPC
-
-- **FactEvent**: 대화 결론/약속/관계 변화 문장화
-- **data**: `{ npcId, relationDelta? }`
-- **Memory**: 주요 NPC는 NODE 또는 THEME(0.7~0.95)
-
-### MOVE
-
-- **FactEvent**: 지역 이동 문장화
-- **data**: `{ from, to }`
-- **Memory**: 기본 STEP(0.3), 메인 지점 진입은 NODE(0.7)
-
-### SYSTEM
-
-- 운영 이벤트. 과장 연출 금지.
+| Kind | FactEvent | data | Memory scope |
+|------|-----------|------|--------------|
+| BATTLE | START/TURN/END 문장화 | - | 보스/특수전/노드 결과는 NODE |
+| DAMAGE | crit/miss/normal 문장화 | `{ source, target, isCrit, isMiss? }` | 기본 STEP(0.2~0.4), CRIT 태그 +0.05~0.1 |
+| STATUS | 상태이상 적용/해제/틱 문장화 | `{ statusId, op }` | 장기 영향만 NODE(0.6~0.8) |
+| LOOT | 전리품 획득 문장화(희귀 강조) | `{ items, hasRare }` | KEY_ITEM/RARE/QUEST_ITEM은 THEME 또는 NODE(0.85~0.95) |
+| GOLD | "약간의 돈" 등 정성 표현 | `{ delta }` | 기본 저장 안 함, 큰 변화만 NODE(0.6) |
+| QUEST | 수락/갱신/완료 문장화 | `{ questId, op }` | THEME 우선(0.9~1.0), tags `MAIN_ARC|QUEST|CLUE` |
+| NPC | 대화 결론/약속/관계 변화 문장화 | `{ npcId, relationDelta? }` | 주요 NPC는 NODE 또는 THEME(0.7~0.95) |
+| MOVE | 지역 이동 문장화 | `{ from, to }` | 기본 STEP(0.3), 메인 지점 진입은 NODE(0.7) |
+| SYSTEM | 운영 이벤트. 과장 연출 금지 | - | - |
 
 ---
 
@@ -109,16 +70,7 @@
 | NODE  | 0.6 ~ 0.85 | 보스, 중요한 선택, 관계 변화, 희귀 드랍 |
 | STEP  | 0.2 ~ 0.6 | 일반 공격, 회복, 이동 |
 
-**가중치 보정**:
-
-| 태그 | 가중치 | 비고 |
-|------|--------|------|
-| MAIN_ARC | +0.2 | 메인 스토리 관련 |
-| KEY_ITEM | +0.2 | 핵심 아이템 획득 |
-| BOSS | +0.15 | 보스 전투 |
-| CRIT | +0.05 | 크리티컬 히트 |
-
-> 상한: 1.0
+**가중치 보정** (상한 1.0): MAIN_ARC +0.2 / KEY_ITEM +0.2 / BOSS +0.15 / CRIT +0.05
 
 ---
 
@@ -178,8 +130,7 @@
     "version": { "type": "string", "const": "llm_ctx_v1" },
     "turnNo": { "type": "integer", "minimum": 0 },
     "node": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["id", "type", "index"],
       "properties": {
         "id": { "type": "string", "minLength": 1, "maxLength": 80 },
@@ -191,40 +142,23 @@
     "memory": { "$ref": "#/$defs/MemoryBundle" },
     "recent": { "$ref": "#/$defs/RecentBundle" },
     "ui": { "$ref": "#/$defs/UIBundle" },
-    "choices": {
-      "type": "array",
-      "maxItems": 6,
-      "items": { "$ref": "#/$defs/ChoiceItem" }
-    }
+    "choices": { "type": "array", "maxItems": 6, "items": { "$ref": "#/$defs/ChoiceItem" } }
   },
   "$defs": {
     "ServerFacts": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["summary", "events"],
       "properties": {
         "summary": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["short"],
-          "properties": {
-            "short": { "type": "string", "minLength": 1, "maxLength": 180 }
-          }
+          "type": "object", "additionalProperties": false, "required": ["short"],
+          "properties": { "short": { "type": "string", "minLength": 1, "maxLength": 180 } }
         },
-        "events": {
-          "type": "array",
-          "maxItems": 20,
-          "items": { "$ref": "#/$defs/FactEvent" }
-        },
-        "flags": {
-          "type": "object",
-          "additionalProperties": { "type": ["boolean", "string", "number"] }
-        }
+        "events": { "type": "array", "maxItems": 20, "items": { "$ref": "#/$defs/FactEvent" } },
+        "flags": { "type": "object", "additionalProperties": { "type": ["boolean", "string", "number"] } }
       }
     },
     "FactEvent": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["kind", "text"],
       "properties": {
         "kind": {
@@ -237,93 +171,59 @@
       }
     },
     "MemoryBundle": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["theme", "storySummary", "nodeFacts"],
       "properties": {
-        "theme": {
-          "type": "array",
-          "maxItems": 12,
-          "items": { "$ref": "#/$defs/ThemeItem" }
-        },
+        "theme": { "type": "array", "maxItems": 12, "items": { "$ref": "#/$defs/ThemeItem" } },
         "storySummary": { "type": "string", "minLength": 0, "maxLength": 2000 },
-        "nodeFacts": {
-          "type": "array",
-          "maxItems": 20,
-          "items": { "$ref": "#/$defs/NodeFact" }
-        }
+        "nodeFacts": { "type": "array", "maxItems": 20, "items": { "$ref": "#/$defs/NodeFact" } }
       }
     },
     "ThemeItem": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["id", "text", "priority", "tags"],
       "properties": {
         "id": { "type": "string", "minLength": 1, "maxLength": 80 },
         "text": { "type": "string", "minLength": 1, "maxLength": 220 },
         "priority": { "type": "integer", "minimum": 0, "maximum": 1000 },
-        "tags": {
-          "type": "array",
-          "maxItems": 6,
-          "items": { "type": "string", "minLength": 1, "maxLength": 24 }
-        },
+        "tags": { "type": "array", "maxItems": 6, "items": { "type": "string", "minLength": 1, "maxLength": 24 } },
         "expiresAt": { "type": ["string", "null"], "format": "date-time" }
       }
     },
     "NodeFact": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["key", "value", "importance", "tags"],
       "properties": {
         "key": { "type": "string", "minLength": 1, "maxLength": 80 },
         "value": { "type": "string", "minLength": 1, "maxLength": 220 },
         "importance": { "type": "number", "minimum": 0, "maximum": 1 },
-        "tags": {
-          "type": "array",
-          "maxItems": 6,
-          "items": { "type": "string", "minLength": 1, "maxLength": 24 }
-        }
+        "tags": { "type": "array", "maxItems": 6, "items": { "type": "string", "minLength": 1, "maxLength": 24 } }
       }
     },
     "RecentBundle": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["shortSummaries"],
       "properties": {
-        "shortSummaries": {
-          "type": "array",
-          "maxItems": 8,
-          "items": { "type": "string", "minLength": 1, "maxLength": 180 }
-        }
+        "shortSummaries": { "type": "array", "maxItems": 8, "items": { "type": "string", "minLength": 1, "maxLength": 180 } }
       }
     },
     "UIBundle": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["availableActions"],
       "properties": {
-        "availableActions": {
-          "type": "array",
-          "maxItems": 10,
-          "items": { "type": "string", "minLength": 1, "maxLength": 30 }
-        },
-        "toneHint": {
-          "type": "string",
-          "enum": ["neutral", "tense", "calm", "mysterious", "triumph", "danger"]
-        }
+        "availableActions": { "type": "array", "maxItems": 10, "items": { "type": "string", "minLength": 1, "maxLength": 30 } },
+        "toneHint": { "type": "string", "enum": ["neutral", "tense", "calm", "mysterious", "triumph", "danger"] }
       }
     },
     "ChoiceItem": {
-      "type": "object",
-      "additionalProperties": false,
+      "type": "object", "additionalProperties": false,
       "required": ["id", "label", "action"],
       "properties": {
         "id": { "type": "string", "minLength": 1, "maxLength": 32 },
         "label": { "type": "string", "minLength": 1, "maxLength": 40 },
         "hint": { "type": "string", "minLength": 0, "maxLength": 80 },
         "action": {
-          "type": "object",
-          "additionalProperties": false,
+          "type": "object", "additionalProperties": false,
           "required": ["type", "payload"],
           "properties": {
             "type": { "type": "string", "enum": ["ACTION", "CHOICE", "SYSTEM"] },
@@ -390,8 +290,6 @@ Context Bundle을 조립할 때 아래 순서를 반드시 따른다. 상위 레
 
 ### 예산 한도 (JSON Schema 정본 기준)
 
-아래 수치는 섹션 8의 JSON Schema에 정의된 `maxItems`/`maxLength` 제약과 일치한다.
-
 | 항목 | 최대 개수 | 항목당 최대 길이 |
 |------|-----------|-----------------|
 | theme | 12개 | 220자 |
@@ -400,17 +298,13 @@ Context Bundle을 조립할 때 아래 순서를 반드시 따른다. 상위 레
 | recent (shortSummaries) | 8개 | 180자 |
 | events | 20개 | 200자 |
 
-> storySummary는 스키마상 최대 2000자이나, 운용 시 1500자 이내로 유지하는 것을 권장한다.
-
 ### 축소 규칙 (예산 초과 시 우선순위)
-
-예산 초과 시 아래 순서대로 축소한다. 번호가 낮을수록 먼저 축소 대상이 된다.
 
 1. **recent** 축소: 8 -> 5 -> 3개
 2. **nodeFacts** 제거: importance가 낮은 것부터 제거
 3. **storySummary** 재압축: 서버 요약기를 통해 재압축
 4. **events** 축소: 중요도 기반으로 20 -> 12 -> 8개
-5. **theme는 절대 제거 금지**: 필요하면 문장 자체를 더 짧게 정제할 수는 있으나 항목을 삭제하지 않는다
+5. **theme는 절대 제거 금지**: 문장을 더 짧게 정제할 수는 있으나 항목은 삭제하지 않는다
 
 ---
 
@@ -455,5 +349,90 @@ buildContextBundle(runId, turnNo, node, serverResult):
   cacheSet("ctx:{runId}:{turnNo}", ctx)  // 섹션 12의 캐시 전략 적용
   return ctx
 ```
+
+---
+
+# Part 4. 서사 성향 반영 확장 (Tone & Memory Bias)
+
+> 📎 이 파트는 v1.1 성향 반영 확장판을 통합한 내용이다. 성향 시스템 추가 시 참조용.
+
+## 14. 서사 성향 기본값
+
+| 항목 | 설정 |
+|------|------|
+| 메인 퀘스트 기억 강도 | 자연스럽게 유지 (요약 중심) |
+| NPC 관계 기억 깊이 | 모든 관계 변화 기억 |
+| 전투 기억 | 전술 성향 누적 반영 |
+| Tone State 영향 | 중간 강도 |
+| 세계관 고정도 | 자유도 높음 (LLM 창의성 허용) |
+| Memory 압축 강도 | 균형 |
+| 장기 결과 영향 | 후반부에 강하게 재등장 |
+
+---
+
+## 15. Run Memory 전략 (성향 반영)
+
+**메인 퀘스트 유지**: 항상 RunMemory에 포함하되 과도한 강조는 하지 않고, 서술에 자연스럽게 스며들도록 구성한다.
+
+**NPC 관계 기억**: 모든 관계 변화를 기록한다. `keyNPCs` 배열은 메인/서브 구분 없이 저장하며, "호감도 수치"가 아닌 "서술 요약" 중심이다.
+- 예: "상인 라비는 당신을 신뢰하기 시작했다." / "경비대장은 여전히 당신을 의심하고 있다."
+
+---
+
+## 16. 전투 스타일 기억
+
+전투는 단순 승패가 아니라 플레이어의 **전술 성향**을 누적한다.
+
+- 회피 위주 → 민첩한 전사 이미지 / 정면 돌파 → 돌격형 / 보조·버프 → 전략가
+
+이 성향은 이후 이벤트 서술, NPC 평가, 일부 분기 조건에 영향을 줄 수 있다.
+
+---
+
+## 17. Tone State (중간 강도)
+
+`toneState`는 장면 묘사 긴장도, 음악/환경 묘사, 보스 등장 전 분위기 강화에 영향을 준다. 단, **게임 규칙을 변경하지 않으며 서술 강도에만 영향을 준다.**
+
+---
+
+## 18. 세계관 고정도 정책
+
+- LLM 창의성 허용 범위 높음 (새로운 인물/상황 창조 가능)
+- 단, 서버 SoT와 직접 충돌하는 설정은 허용하지 않음
+- 세계관은 "확장 가능 구조"
+
+---
+
+## 19. Memory 압축 정책 (균형)
+
+- NodeMemory 5개 이상 누적 시 요약 병합
+- RunMemory는 핵심 사건 위주 유지
+- 토큰 초과 시: 세부 전투 묘사 삭제 → 감정 표현 축약 → 사건 중심 구조 유지
+
+---
+
+## 20. 장기 결과 재등장 정책
+
+중요 선택은 후반에 재등장한다 (Phase 3에서 확률 상승).
+
+- 초반에 도운 NPC → 후반 보스전 지원
+- 적으로 만든 세력 → 후반 난이도 상승
+- 특정 아이템 거래 → 결말 분기
+
+---
+
+## 21. 프롬프트 구성 반영 (성향 포함 순서)
+
+LLM 호출 시: (1) 세계관/스타일 시스템 프롬프트 → (2) RunMemory 핵심 요약 → (3) NPC 관계 요약 → (4) 전술 성향 요약 → (5) 최근 NodeMemory → (6) 현재 입력. **전투 수치는 제외한다.**
+
+---
+
+## 22. 성향 반영 테스트 체크리스트
+
+- NPC 관계 변화가 후반 이벤트에 반영되는지
+- 전투 스타일이 서술 톤에 반영되는지
+- 메인 퀘스트가 자연스럽게 재언급되는지
+- 장기 선택이 후반 분기에 반영되는지
+- 토큰 길이가 제한 내 유지되는지
 
 ---
