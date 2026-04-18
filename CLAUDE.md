@@ -60,6 +60,30 @@ lsof -ti:3000 | xargs kill -9 2>/dev/null
 - **커맨드**: `/playtest` (`.claude/commands/playtest.md`)
 - **API 필드 확인**: 플레이테스트 스크립트 수정 시, 파싱 로직 작성 전에 API 응답 필드명을 정확히 확인하라 (예: `id` vs `choiceId`). 실제 API 응답 구조를 샘플 호출로 먼저 확인하라.
 
+## 품질 검사 워크플로우 (필수)
+
+품질 검사를 수행할 때 반드시 **정본 스크립트 `scripts/audit_quality.py`** 만 사용한다 (v4). 임시 스크립트(`/tmp/audit_*.py`)를 새로 작성하지 말고, 개선이 필요하면 정본에 반영한다.
+
+### 심층 검사 3단계 (audit_quality.py에 내장)
+1. **1차 regex 탐지** — 예외/서술체/대사체/금지어/세계관 전범주
+2. **각 감지 이슈마다 자동 심층 검사**:
+   - 원문 50자 context 추출
+   - `server/src/llm/prompts/system-prompts.ts` grep — 명시 금지어 여부 확인
+   - 대사 내부(`"..."` 내) / 외부(서술) 문맥 판정
+   - `/npc-portraits/xxx.webp` URL 내부 여부 확인
+3. **자동 분류**: `real`(실제 위반) / `gray`(회색지대) / `fp`(false positive)
+
+### 금지 사항
+- 감지 결과를 **원문 대조 없이** 사용자에게 그대로 보고하지 않는다.
+- regex 매칭 성공 = 위반 ❌ (항상 심층 검사 통과 후 판정)
+- word boundary 없이 키워드 매칭하지 않는다 (예: "한복" 이 "한복판"에 오매칭).
+- 사용자가 "이전 검증이 맞는지 재검토"를 요청하기 전에 **1차 보고 단계에서 FP 자동 필터링이 완료되어야 한다**.
+
+### 새 감지 패턴 추가 시
+1. `system-prompts.ts` 에서 실제 금지어 명시 여부 확인
+2. `audit_quality.py` 의 `META_NARR_FORBID` / `EASTERN_FORBID` / `CURRENCY_FORBID` 딕셔너리에 word boundary 포함한 regex로 추가
+3. `check_prompt_explicit()` 로 프롬프트 대조 가능한지 검증
+
 ## Repository Overview
 
 LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 용병이 왕국의 권력 투쟁을 거쳐 성장한다. 서버가 모든 게임 로직을 결정론적으로 처리하고, LLM은 내러티브 텍스트만 생성한다.
