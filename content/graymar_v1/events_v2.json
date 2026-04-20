@@ -365,6 +365,12 @@
         "GUARD_ALLIANCE",
         "CAPTAIN_BELLON",
         "INTERNAL_AFFAIRS"
+      ],
+      "itemRewards": [
+        {
+          "itemId": "ITEM_GUARD_PERMIT",
+          "condition": "SUCCESS"
+        }
       ]
     }
   },
@@ -1050,6 +1056,12 @@
         "LABOR_GUILD",
         "HARLUN",
         "WORKER_RIGHTS"
+      ],
+      "itemRewards": [
+        {
+          "itemId": "ITEM_GUILD_BADGE",
+          "condition": "SUCCESS"
+        }
       ]
     }
   },
@@ -6980,6 +6992,12 @@
         "SECRET_MANIFEST",
         "EAST_DOCK",
         "SMUGGLING"
+      ],
+      "itemRewards": [
+        {
+          "itemId": "ITEM_SMUGGLE_MAP",
+          "condition": "SUCCESS"
+        }
       ]
     }
   },
