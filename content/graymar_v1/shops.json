@@ -43,7 +43,8 @@
       "EQ_MERCHANT_RING",
       "EQ_HARBOR_SEAL",
       "ITEM_SUPERIOR_HEALING",
-      "ITEM_POISON_NEEDLE"
+      "ITEM_POISON_NEEDLE",
+      "EQ_MERCHANT_CLOAK"
     ],
     "stockSize": 3,
     "uniqueChance": 0.2
@@ -60,7 +61,8 @@
       "ITEM_SUPERIOR_HEALING",
       "EQ_RUSTY_BLADE",
       "EQ_SHADOW_DAGGER",
-      "EQ_SMUGGLER_DAGGER"
+      "EQ_SMUGGLER_DAGGER",
+      "EQ_SHADOW_CLOAK"
     ],
     "stockSize": 4,
     "uniqueChance": 0.25
