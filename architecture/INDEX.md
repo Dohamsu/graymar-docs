@@ -66,7 +66,15 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - `24_multiplayer_party_system.md` — 파티 Phase 1+2+3 통합 설계(CRUD/초대/SSE 채팅/로비/동시 턴/통합 판정/3인칭 서술/이동 투표/보상 분배/런 통합). 구현 API는 CLAUDE.md Endpoint 표와 server `party/` 모듈 참조.
 
-### 8. 기타
+### 8. 엔딩·아카이브
+
+- `39_ending_journey_archive.md` — 엔딩 직전/직후 연출 강화(Part B MIN_TURNS 가드, commitTurnRecord 순서 수정, arcRoute 12분기 에필로그, personalClosing 템플릿, SoftDeadline Signal + DeadlineBanner + LLM deadlineContext) + 여정 아카이브 Phase 1(`ending_summary` jsonb, SummaryBuilderService, EndingsController, EndingsListScreen/JourneySummaryScreen, lazy fallback).
+
+### 9. 소지품·아이템
+
+- `40_inventory_item_integrity.md` — 소지품 UX 개선(교체 확인 모달, USABLE_ITEMS 동적화 via `usableInHub`, EquipmentDropToast, 에러 한국어화 10종) + LLM-실획득 아이템 정합성(시스템 프롬프트 구체 증여 금지 규칙 + `[이번 턴 획득 아이템]` 블록 + `EventItemReward` payload 경로) + 콘텐츠 매핑(KEY_ITEM 3종 + 희귀 장비 2종).
+
+### 10. 기타
 
 - `Context Coherence Reinforcement.md` — 컨텍스트 일관성 강화 원칙(씬 연속성 7규칙, sceneFrame 3단계 억제, 씬 이벤트 1턴 유지). 모든 서술 파이프라인 문서의 공통 제약.
 - `fixplan_history.md` — 완료된 플레이테스트 패치 내역(기존 `fixplan3/4/5` 통합). 히스토리 참조용이며, 신규 이슈는 본 히스토리와 중복되지 않도록 확인 필요.
@@ -111,7 +119,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-04-17)
+## 도메인별 최신 업데이트 기준 (2026-04-20)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
@@ -129,6 +137,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 | 파티         | 24                                 | 구현됨 (Phase 1~3)  |
 | 주사위/UX    | 22                                 | 구현됨              |
 | 에셋         | 27                                 | 부분                |
+| 엔딩/아카이브 | **39** (신규)                     | 구현됨 (Phase 1)    |
+| 소지품/아이템 | **40** (신규)                     | 구현됨 (UX 개선 + LLM 정합성) |
 | 컨텍스트 일관성 | Context Coherence Reinforcement | 적용됨              |
 | 플레이테스트 | fixplan_history.md                 | 히스토리            |
 
