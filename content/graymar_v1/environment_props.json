@@ -1,0 +1,95 @@
+[
+  {
+    "id": "chair_wooden",
+    "name": "나무 의자",
+    "keywords": ["의자", "나무 의자", "스툴"],
+    "locationTags": ["tavern", "indoor"],
+    "effects": {
+      "damageBonus": 1.2,
+      "stunChance": 25
+    },
+    "oneTimeUse": true,
+    "rarity": "common"
+  },
+  {
+    "id": "bottle_glass",
+    "name": "유리병",
+    "keywords": ["병", "유리병", "술병"],
+    "locationTags": ["tavern", "market"],
+    "effects": {
+      "damageBonus": 1.1,
+      "bleedStacks": 1
+    },
+    "oneTimeUse": true,
+    "rarity": "common"
+  },
+  {
+    "id": "torch",
+    "name": "횃불",
+    "keywords": ["횃불", "등불", "등잔"],
+    "locationTags": ["guard", "indoor", "night"],
+    "effects": {
+      "blindTurns": 1,
+      "damageBonus": 1.05
+    },
+    "oneTimeUse": false,
+    "rarity": "common"
+  },
+  {
+    "id": "table_wooden",
+    "name": "나무 탁자",
+    "keywords": ["탁자", "테이블", "식탁"],
+    "locationTags": ["tavern", "indoor", "noble"],
+    "effects": {
+      "defBuffNextTurn": 2
+    },
+    "oneTimeUse": false,
+    "rarity": "common"
+  },
+  {
+    "id": "rope",
+    "name": "밧줄",
+    "keywords": ["밧줄", "로프", "줄"],
+    "locationTags": ["harbor", "warehouse"],
+    "effects": {
+      "restrainTurns": 1
+    },
+    "oneTimeUse": true,
+    "rarity": "common"
+  },
+  {
+    "id": "sand_bucket",
+    "name": "모래 바구니",
+    "keywords": ["모래", "먼지", "흙"],
+    "locationTags": ["market", "outdoor"],
+    "effects": {
+      "accReduceTarget": -3
+    },
+    "oneTimeUse": true,
+    "rarity": "common"
+  },
+  {
+    "id": "crate_wooden",
+    "name": "나무 상자",
+    "keywords": ["상자", "화물 상자", "목상자"],
+    "locationTags": ["market", "harbor", "warehouse"],
+    "effects": {
+      "damageBonus": 1.1,
+      "stunChance": 15
+    },
+    "oneTimeUse": false,
+    "rarity": "common"
+  },
+  {
+    "id": "chain",
+    "name": "사슬",
+    "keywords": ["사슬", "쇠사슬", "쇠줄"],
+    "locationTags": ["guard", "warehouse"],
+    "effects": {
+      "restrainTurns": 1,
+      "damageBonus": 1.1
+    },
+    "oneTimeUse": false,
+    "rarity": "rare"
+  }
+]
