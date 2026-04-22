@@ -1,7 +1,10 @@
 # 10 — 리전 · 장비 · 세트 · 경제 시스템
 
 > 원본 참조: `Region_Item_Economy_Spec_v1.md`, `specs/character_growth_v1.md`, `specs/rewards_and_progression_v1.md`
-> 상태: **부분 구현** — RegionState 타입+초기값 정의됨, Shop 서비스 구현됨. 동적 경제(수급/물가 변동) 미구현. Phase 4.
+> 상태 (2026-04-22): **부분 구현**
+> - ✅ 장비 드랍/착용/세트 효과/Legendary: `12_equipment_system.md` 정본, Phase 4 완료
+> - ✅ Shop 서비스·RegionState 타입: 구현됨
+> - 📎 동적 경제(수급/물가 변동, 리전별 공급 차이): **미구현 — 향후 Phase**
 > 의존: WorldState (구현됨), 보상 시스템 (부분 구현), Modifier Stack (전투 엔진, 구현됨)
 
 ---

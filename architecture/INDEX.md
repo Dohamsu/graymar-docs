@@ -8,6 +8,7 @@
 - 세계관/배경: `01_world_narrative.md`
 - 전체 아키텍처: `04_server_architecture.md`
 - 최근 파이프라인: `26_narrative_pipeline_v2.md`, `35_llm_streaming.md`
+- 최신 전투: `41_creative_combat_actions.md`(창의 입력), `42_combat_ui_buttonform.md`(버튼형 UI)
 - 최신 구현 가이드: `guides/01~06_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지)
 
 CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX는 "어느 설계 문서를 봐야 하는가" 의 선택 기준이다. specs/ 는 원본 스펙(정본), architecture/ 는 통합/연동 관점, guides/ 는 실제 코드 위치 매핑이다.
@@ -29,6 +30,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - `03_hub_engine.md` — HUB Action-First 파이프라인(플레이어 ACTION → 이벤트 매칭 → ResolveService 1d6+stat), Heat ±8 clamp, 대화 잠금 4턴, questFact 바이패스 규칙.
 - `08_node_routing.md` — 24 노드 DAG + 3 루트 분기. HUB/LOCATION/COMBAT 전이 그래프와 조건부 분기.
 - `22_dice_roll_animation.md` — 1d6 판정 주사위 애니메이션과 순차 공식 노출 UX. 현재는 클라이언트 ResolveDisplay에 연동.
+- `41_creative_combat_actions.md` — 창의 전투 5-Tier 분류 시스템(등록 프롭/즉흥 카테고리/서술 커버/환상 재해석/허공 응시) + PropMatcher + CombatService effects 통합 + LLM 조건부 재해석 블록. 서버 결정론 유지, LLM은 합리적 치환만.
+- `42_combat_ui_buttonform.md` — 전투 UI 버튼 폼(적 카드 클릭 타겟 + 주요 5 버튼 + 특수 펼침 + 아이템 모달). 기존 17개 숫자 리스트 → 5~8 visible (-60%). 서버 로직 불변, 하위 호환 choiceId 유지.
 
 ### 3. 서버·데이터
 
@@ -90,7 +93,9 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 09 ◄── Narrative_Engine_v1 (Incident/Mark/Ending)
 
 [엔진]
-02 (전투) ─► 08 (노드 라우팅)
+02 (전투) ─┬─► 08 (노드 라우팅)
+           ├─► 41 (창의 전투 — 5-Tier 분류 + PropMatcher + 재해석)
+           └─► 42 (전투 UI 버튼 폼 — 적 카드 타겟 + 5 주요 버튼)
 03 (HUB)  ─┬─► 07 (게임 진행)
            └─► 14 (유저 드리븐 브릿지)
 03 ◄── 21 (Living World v2: SitGen/WorldFact)
@@ -119,12 +124,12 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-04-20)
+## 도메인별 최신 업데이트 기준 (2026-04-22)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
 | 세계/NPC     | 01, 06, 09                         | 구현됨              |
-| 전투         | 02, 08                             | 구현됨              |
+| 전투         | 02, 08, **41, 42**                 | 구현됨 (창의 Tier + 버튼 UI) |
 | HUB/진행     | 03, 07, 14                         | 구현됨 (07 부분 업데이트 필요) |
 | Living World | 21                                 | 구현됨              |
 | 서버/데이터  | 04, 10, 12                         | 구현됨 (10 리전 경제 부분) |
@@ -133,12 +138,13 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 | 메모리       | 31                                 | 구현됨 (v4)         |
 | 대사/마커    | 30, 32, 33                         | 구현됨              |
 | 이벤트 엔진  | 34 (28은 배경)                     | 구현됨 (Player-First) |
-| UI/클라      | 15, 23                             | 구현됨              |
+| UI/클라      | 15, 23, **42**                     | 구현됨              |
 | 파티         | 24                                 | 구현됨 (Phase 1~3)  |
 | 주사위/UX    | 22                                 | 구현됨              |
 | 에셋         | 27                                 | 부분                |
-| 엔딩/아카이브 | **39** (신규)                     | 구현됨 (Phase 1)    |
-| 소지품/아이템 | **40** (신규)                     | 구현됨 (UX 개선 + LLM 정합성) |
+| 엔딩/아카이브 | 39                                 | 구현됨 (Phase 1)    |
+| 소지품/아이템 | 40                                 | 구현됨 (UX 개선 + LLM 정합성) |
+| 창의 전투    | **41, 42** (신규)                  | 구현됨 (MVP + 버튼 UI) |
 | 컨텍스트 일관성 | Context Coherence Reinforcement | 적용됨              |
 | 플레이테스트 | fixplan_history.md                 | 히스토리            |
 
@@ -152,8 +158,9 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - `10_region_economy.md` 의 리전 동적 경제 파트는 부분 구현. 장비/세트는 `12_equipment_system.md` 가 정본.
 - `15_notification_system.md` 는 기존 `15/16/17` 3개 문서 통합본. 구 파일명 참조는 본 문서로 리다이렉트.
 - `fixplan_history.md` 는 완료 이슈 아카이브. 신규 플레이테스트 이슈 리포트는 `playtest-reports/` 와 별개.
+- 아카이브됨(2026-04-22): `archive/37_streaming_transition_issues.md`, `archive/38_stream_vs_nonstream_comparison.md` — `35_llm_streaming.md` + `36_llm_pipeline_changelog_20260417.md` 와 중복. 현행 정본은 35(설계) + 36(구현 패치 이력).
 - 폐기됨(이미 파일 없음): `specs/combat_resolve_engine_v1.md` — floor 미적용 오류 버전. 정본은 `specs/combat_system.md` + `architecture/02_combat_system.md`.
-- 번호 공백(13, 29 등)은 초기 합쳐진 문서의 흔적 — 신규 문서는 다음 빈 번호 대신 마지막 번호 이후를 사용 권장.
+- 번호 공백(13, 29, 37, 38 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(43~)를 사용.
 
 ---
 
@@ -168,6 +175,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 | 메모리/컨텍스트 블록     | `31_memory_system_v4.md` → `guides/04_llm_memory_guide.md`                 |
 | @마커/대사 분리          | `30_marker_accuracy_improvement.md` + `32_dialogue_split_pipeline.md`      |
 | 전투 밸런스/판정         | `02_combat_system.md` → `specs/combat_system.md`                           |
+| 창의 전투(자유 입력)     | `41_creative_combat_actions.md` → `server/src/engine/combat/prop-matcher.service.ts` |
+| 전투 UI 변경             | `42_combat_ui_buttonform.md` → `client/src/components/battle/*`            |
 | HUB 엔진 이슈            | `03_hub_engine.md` → `21_living_world_redesign.md` → `guides/03_hub_engine_guide.md` |
 | 콘텐츠(시드 데이터) 수정 | `06_graymar_content.md` → `content/graymar_v1/`                            |
 | 클라이언트 UI 변경       | `guides/02_client_component_map.md` (+ `15`, `23`)                         |

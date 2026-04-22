@@ -1,5 +1,11 @@
 # 07 --- 게임 진행 & 성장 시스템
 
+> ⚠️ **부분 구식 (2026-04-22)**: HUB 순환 모드 도입 이전 서술 일부 포함.
+> 실제 현행 흐름은 아래 조합이 정본:
+> - HUB 구조: `03_hub_engine.md`
+> - 유저 드리븐 진행: `14_user_driven_code_bridge.md`
+> - 동적 세계: `21_living_world_redesign.md`
+>
 > 원본: `02_game_systems.md` (622 lines) 압축본
 > 원본 정본: `run_node_system.md`, `run_planner_v1_1.md`, `character_growth_v1.md`, `rewards_and_progression_v1.md`
 
