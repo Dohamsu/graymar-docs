@@ -38,7 +38,6 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - `04_server_architecture.md` — NestJS 10 모듈, 65+ 서비스, Drizzle ORM 18 테이블, Server-Is-Source-of-Truth 원칙, Idempotency, RNG 결정론 등 정본.
 - `10_region_economy.md` — 리전별 경제(골드 유동성, 상점 물가)와 장비/세트 연계. 장비 드랍은 완성, 리전별 동적 경제는 부분.
 - `12_equipment_system.md` — 장비 드랍/착용, 접미사, 세트 효과, Legendary. Phase 4에서 구현 완료.
-- `27_image_asset_plan.md` — 장소 24장/캐릭터 8장 이외 추가 에셋 계획(선술집, BG NPC 초상화, 이벤트 씬). 일부만 실제 생성.
 
 ### 4. 진행·라우팅
 
@@ -52,7 +51,6 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - `11_llm_prompt_caching.md` — 시스템/정적/동적 블록 분리와 프롬프트 캐싱 전략(OpenAI/Anthropic/OpenRouter).
 - `25_llm_model_evaluation.md` — 모델 평가(v1+v2 통합). 현 선택: 메인 Gemini Flash(이후 Gemma4↔Flash Lite 교차 이력 포함) + fallback GPT-4.1 Mini.
 - `26_narrative_pipeline_v2.md` — 3-Stage 파이프라인(NanoDirector → 메인 LLM → NanoProcessor)과 Narrative v2 / EventDirector / Procedural Event(`18/19/20` 통합) + AI 구현 가이드라인.
-- `28_nano_event_director.md` — 매 턴 nano LLM로 이벤트 컨셉/NPC/fact/선택지 생성. `34`의 Player-First 이벤트 엔진의 배경 설계.
 - `30_marker_accuracy_improvement.md` — @마커 오류율 개선 3전략(프롬프트 강화 + 서브 LLM 2차 검증 + JSON 모드).
 - `31_memory_system_v4.md` — nano 구조화 추출 + `entity_facts` UPSERT + 직전 턴 nano 요약 주입. 메모리 반복률 대폭 감소.
 - `32_dialogue_split_pipeline.md` — 2-Stage 대사 분리(서술/대사), `dialogue_slot` JSON, 서버 마커 자동 삽입, 하오체 검증+재시도.
@@ -112,7 +110,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
     ├─► 32 (대사 분리)
     ├─► 33 (로어북)
     └─► 34 (Player-First 이벤트)
-28 (Nano Event)   ─► 34 (Player-First)  # 34가 최신
+archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 
 [UI]
 15 (알림)   ─► guides/02 (client component map)
@@ -137,11 +135,10 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 | 모델 평가    | 25                                 | 참고                |
 | 메모리       | 31                                 | 구현됨 (v4)         |
 | 대사/마커    | 30, 32, 33                         | 구현됨              |
-| 이벤트 엔진  | 34 (28은 배경)                     | 구현됨 (Player-First) |
+| 이벤트 엔진  | 34                                 | 구현됨 (Player-First, 28은 archive 배경) |
 | UI/클라      | 15, 23, **42**                     | 구현됨              |
 | 파티         | 24                                 | 구현됨 (Phase 1~3)  |
 | 주사위/UX    | 22                                 | 구현됨              |
-| 에셋         | 27                                 | 부분                |
 | 엔딩/아카이브 | 39                                 | 구현됨 (Phase 1)    |
 | 소지품/아이템 | 40                                 | 구현됨 (UX 개선 + LLM 정합성) |
 | 창의 전투    | **41, 42** (신규)                  | 구현됨 (MVP + 버튼 UI) |
@@ -152,15 +149,18 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 ## 주의: 중복·구판 방지
 
-- `28_nano_event_director.md` 와 `34_player_first_event_engine.md` 는 관련된 두 이벤트 엔진 버전 — 최신은 `34`. `28` 은 배경 설계/nano LLM 도입 근거로만 참조.
 - `25_llm_model_evaluation.md` 는 v1+v2 통합. 구판(v1) 모델 선택은 과거 이력일 뿐, 실제 현행 선택은 v2 본문과 CLAUDE.md 환경변수 표 기준.
 - `07_game_progression.md` 는 HUB 모드 도입 이전 서술 일부 남아 있음 — 실제 구현은 `03_hub_engine.md` + `14_user_driven_code_bridge.md` + `21_living_world_redesign.md` 조합을 우선.
 - `10_region_economy.md` 의 리전 동적 경제 파트는 부분 구현. 장비/세트는 `12_equipment_system.md` 가 정본.
 - `15_notification_system.md` 는 기존 `15/16/17` 3개 문서 통합본. 구 파일명 참조는 본 문서로 리다이렉트.
 - `fixplan_history.md` 는 완료 이슈 아카이브. 신규 플레이테스트 이슈 리포트는 `playtest-reports/` 와 별개.
-- 아카이브됨(2026-04-22): `archive/37_streaming_transition_issues.md`, `archive/38_stream_vs_nonstream_comparison.md` — `35_llm_streaming.md` + `36_llm_pipeline_changelog_20260417.md` 와 중복. 현행 정본은 35(설계) + 36(구현 패치 이력).
+- 아카이브됨(2026-04-22):
+  · `archive/27_image_asset_plan.md` — 에셋 생성 계획 (부분 구현, 현행은 content/ 하위 실측)
+  · `archive/28_nano_event_director.md` — Player-First의 배경 설계, 현행은 `34_player_first_event_engine.md`
+  · `archive/37_streaming_transition_issues.md` — 36과 중복
+  · `archive/38_stream_vs_nonstream_comparison.md` — 35와 중복
 - 폐기됨(이미 파일 없음): `specs/combat_resolve_engine_v1.md` — floor 미적용 오류 버전. 정본은 `specs/combat_system.md` + `architecture/02_combat_system.md`.
-- 번호 공백(13, 29, 37, 38 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(43~)를 사용.
+- 번호 공백(13, 27, 28, 29, 37, 38 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(43~)를 사용.
 
 ---
 
