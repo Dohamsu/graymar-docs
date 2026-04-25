@@ -411,58 +411,58 @@
     "shortAlias": "회계사",
     "daily_topics": [
       {
-        "topicId": "TOPIC_EDRIC_NUMBERS",
-        "category": "WORK",
-        "text": "숫자란 거짓말을 못 한다 했지만... 사람이 숫자를 다루지 않소. 결국 사람이 거짓말이오.",
-        "keywords": [
-          "숫자",
-          "회계",
-          "장부",
-          "거짓"
-        ]
-      },
-      {
-        "topicId": "TOPIC_EDRIC_GAMBLING_DEBT",
+        "topicId": "TOPIC_EDRIC_DICE",
         "category": "WORRY",
-        "text": "지난주에 또 카드판에 앉았소. 안 앉으리라 다짐했건만, 손이 자꾸 그쪽으로 가더이다.",
+        "text": "어젯밤 또 카드판에 앉았소. 손가락이 펜보다 패에 더 익숙해지는 거 같아 끔찍하구려.",
         "keywords": [
-          "도박",
           "카드",
-          "빚",
-          "노름"
+          "도박",
+          "패",
+          "빚"
         ]
       },
       {
-        "topicId": "TOPIC_EDRIC_GUILD_PRESSURE",
+        "topicId": "TOPIC_EDRIC_INSOMNIA",
         "category": "PERSONAL",
-        "text": "상단 위에는 더 위가 있소. 위에는 또 그 위. 나 같은 회계는 그저 숫자에 도장 찍는 손이오.",
+        "text": "잠을 자도 잔 것 같지가 않소. 눈만 감으면 장부의 숫자들이... 일렬로 행진을 시작하지요.",
         "keywords": [
-          "상단",
-          "길드",
-          "회계",
-          "압박"
+          "잠",
+          "불면",
+          "숫자",
+          "피로"
         ]
       },
       {
-        "topicId": "TOPIC_EDRIC_INK_QUALITY",
+        "topicId": "TOPIC_EDRIC_STEW",
+        "category": "PERSONAL",
+        "text": "이 시간엔 묽은 스튜 한 그릇이라도 따뜻하게 들이키는 게... 위안이오. 회계 일은 추운 자리니까.",
+        "keywords": [
+          "스튜",
+          "음식",
+          "따뜻",
+          "외로움"
+        ]
+      },
+      {
+        "topicId": "TOPIC_EDRIC_LONELY_DESK",
         "category": "OPINION",
-        "text": "요즘 잉크 품질이 형편없소. 한 달도 못 가서 번지오. 누가 좋은 잉크 파는지 아시오?",
+        "text": "사람들은 회계를 책상물림이라 부르오. 그러나 책상 앞에서도 사람은 외로울 수 있는 법이지요... 흠흠.",
         "keywords": [
-          "잉크",
-          "잉크병",
-          "필기",
-          "품질"
+          "책상",
+          "회계",
+          "외로움",
+          "사람"
         ]
       },
       {
-        "topicId": "TOPIC_EDRIC_DOCK_TENSION",
+        "topicId": "TOPIC_EDRIC_SMALL_MERCY",
         "category": "GOSSIP",
-        "text": "항만 쪽이 시끄럽다 들었소. 노동자들 임금 문제로... 아니, 이 얘기는 그만 둡시다.",
+        "text": "가끔 시장 모퉁이의 빵 굽는 냄새가 사무실까지 들어오오. 그 잠깐이 하루의 가장 좋은 시간이지요.",
         "keywords": [
-          "항만",
-          "노동자",
-          "분쟁",
-          "임금"
+          "빵",
+          "시장",
+          "냄새",
+          "사무실"
         ]
       }
     ]
@@ -853,7 +853,7 @@
         "기록과 정리를 통해 세상을 통제하려 한다",
         "신뢰를 한번 주면 예상 외로 헌신적이다"
       ],
-      "speechStyle": "조용하고 정확한 경어. 불필요한 수식 없이 사실만 ~이오/~하오 체로 말한다. 신뢰하는 상대에게는 작은 농담을 건넨다. 금지: 반말, ~해, ~야, ~합니다, ~에요.",
+      "speechStyle": "조용하고 정확한 경어. 사실 위주로 ~이오/~하오 체. 가끔 말끝을 살짝 부드럽게 닫으며 ~지요 가벼운 종결을 쓴다. 고양이/책/거리 풍경 같은 일상 비유를 즐겨 쓰며, 신뢰하는 상대에게는 짧은 농담을 건넨다. 금지: 반말, ~해, ~야, ~합니다, ~에요, '위험하오/곤란하오' 같은 회피 어휘 단조 반복.",
       "innerConflict": "상단의 비밀을 너무 많이 알아버렸다. 지식이 자신을 지켜주는 동시에 족쇄가 되었다.",
       "softSpot": "자신의 기록이 누군가를 돕는 데 쓰인다는 걸 알면, 위험을 감수하고 정보를 건넨다.",
       "signature": [
@@ -948,36 +948,47 @@
         ]
       },
       {
-        "topicId": "TOPIC_MOONSEA_CIPHER",
-        "category": "WORK",
-        "text": "암호란 게... 풀고 나면 별것 아닌데, 풀기 전엔 사람을 미치게 만들어요.",
+        "topicId": "TOPIC_MOONSEA_POETRY",
+        "category": "PERSONAL",
+        "text": "어젯밤 시집 한 권을 마저 넘겼소. 활자가 잠을 데려오는 게 늘 신기하더이다.",
         "keywords": [
-          "암호",
-          "문서",
-          "해독",
-          "코드"
+          "시집",
+          "책",
+          "독서",
+          "밤"
         ]
       },
       {
-        "topicId": "TOPIC_MOONSEA_QUIET",
+        "topicId": "TOPIC_MOONSEA_HANDS",
         "category": "OPINION",
-        "text": "저는 조용한 거리가 좋아요. 시장은 너무 시끄럽거든요.",
+        "text": "사람을 오래 지켜보면 표정보다 손짓이 더 솔직하다는 걸 알게 되오.",
+        "keywords": [
+          "관찰",
+          "손짓",
+          "사람",
+          "표정"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MOONSEA_BAKERY",
+        "category": "GOSSIP",
+        "text": "오늘 시장 어귀에 새 빵집이 들어선 모양이오. 향기가 문서실 창틈까지 닿더이다, 잠깐 미소가 났소.",
+        "keywords": [
+          "빵집",
+          "향기",
+          "시장",
+          "골목"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MOONSEA_QUIET_WORK",
+        "category": "WORK",
+        "text": "조용히 앉아 있는 자가 가장 많이 보는 법이오. 그게 이 일의 작은 기쁨이라면 기쁨이지요.",
         "keywords": [
           "조용",
-          "시장",
-          "거리",
-          "소음"
-        ]
-      },
-      {
-        "topicId": "TOPIC_MOONSEA_PAPER_SMELL",
-        "category": "GOSSIP",
-        "text": "문서실에서 새 종이 냄새가 자주 나요. 상단이 무언가 많이 찍어내는 모양이에요.",
-        "keywords": [
-          "종이",
-          "문서",
-          "상단",
-          "인쇄"
+          "관찰",
+          "일",
+          "기쁨"
         ]
       }
     ]
