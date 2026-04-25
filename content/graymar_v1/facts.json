@@ -1,0 +1,419 @@
+{
+  "version": "facts_v1",
+  "description": "그레이마르 fact 일급 객체. NPC.knownFacts와 quest.facts를 통합.",
+  "facts": {
+    "FACT_BOTH_SIDES_EVIDENCE": {
+      "factId": "FACT_BOTH_SIDES_EVIDENCE",
+      "topic": "길드 내부 장부 사본 + 경비대 뇌물 수수 기록 — 양",
+      "description": "길드 내부 장부 사본 + 경비대 뇌물 수수 기록 — 양쪽 모두의 부패 증거",
+      "keywords": [
+        "사본",
+        "뇌물",
+        "기록",
+        "입찰",
+        "증거"
+      ],
+      "stage": "S4→S5",
+      "discoveryLocations": [
+        "LOC_UPPER",
+        "LOC_TAVERN"
+      ],
+      "nextHint": "양쪽의 부패 증거를 모두 손에 넣었다. 이 카드를 어떻게 쓸 것인가 — 최종 선택의 시간이다.",
+      "knownBy": [
+        "NPC_INFO_BROKER"
+      ],
+      "versions": {
+        "NPC_INFO_BROKER": "길드 내부 장부 사본과 경비대 뇌물 수수 기록을 모두 갖고 있다. 최고가 입찰자에게 팔 생각이다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_INFO_BROKER"
+      ]
+    },
+    "FACT_INSIDE_JOB": {
+      "factId": "FACT_INSIDE_JOB",
+      "topic": "내부자 의혹",
+      "description": "장부 도난이 외부가 아닌 내부자 소행 — 문서 접근 권한자 3명 중 하나",
+      "keywords": [
+        "내부",
+        "소행",
+        "접근",
+        "권한",
+        "도난",
+        "범인",
+        "의심"
+      ],
+      "stage": "S2→S3",
+      "discoveryLocations": [
+        "LOC_GUARD",
+        "LOC_MARKET",
+        "LOC_UPPER"
+      ],
+      "nextHint": "내부자의 소행이라면 물건이 어디로 갔는지 추적할 수 있다. 밀수 경로나 비밀 하역 장소를 찾아라. 부두와 창고 쪽을 살펴봐라.",
+      "knownBy": [
+        "NPC_DAME_ISOLDE",
+        "NPC_EDRIC_VEIL",
+        "NPC_LORD_VANCE",
+        "NPC_MAIREL",
+        "NPC_MOON_SEA",
+        "NPC_TOBREN"
+      ],
+      "versions": {
+        "NPC_EDRIC_VEIL": "장부 도난이 내부자 소행이라고 의심한다. 문서 접근 권한이 있는 사람은 3명뿐이다.",
+        "NPC_MAIREL": "경비대 내부에 밀수 조직과 연결된 자가 있다고 의심한다. 야간 순찰 보고서에 빈 시간대가 있다.",
+        "NPC_TOBREN": "창고에서 야간에 허가 없는 작업이 이루어지는 걸 안다. 누군가 내부에서 지시하고 있다.",
+        "NPC_MOON_SEA": "문서실 출입 기록에서 야간 무단 접근 흔적을 발견했다. 날짜와 시각을 기억하고 있다.",
+        "NPC_LORD_VANCE": "장부 도난의 배후를 알고 있지만, 그 정보를 공개하면 자신의 이권도 위험해진다.",
+        "NPC_DAME_ISOLDE": "장부 도난을 사주한 자가 귀족 중 한 명이라는 정황 증거를 갖고 있다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_DAME_ISOLDE",
+        "NPC_EDRIC_VEIL",
+        "NPC_LORD_VANCE",
+        "NPC_MAIREL",
+        "NPC_MOON_SEA",
+        "NPC_TOBREN"
+      ]
+    },
+    "FACT_LEDGER_CONTENTS": {
+      "factId": "FACT_LEDGER_CONTENTS",
+      "topic": "장부 뒷거래 내용",
+      "description": "공물 장부에 포함된 뒷거래 기록 — 공개 시 길드 간부 다수가 위험하다",
+      "keywords": [
+        "장부",
+        "뒷거래",
+        "내용",
+        "기록",
+        "간부"
+      ],
+      "stage": "S3→S4 (보조)",
+      "discoveryLocations": [
+        "LOC_TAVERN",
+        "LOC_DOCKS_WAREHOUSE"
+      ],
+      "nextHint": "이 내용을 어떻게 활용할지가 결정 분기점이다. 공개해 정의를 외칠지, 거래 카드로 쓸지, 묻어둘지.",
+      "knownBy": [
+        "NPC_RONEN"
+      ],
+      "versions": {
+        "NPC_RONEN": "장부에 뒷거래 기록이 포함되어 있어, 공개되면 길드 간부 다수가 위험하다는 것을 안다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_RONEN"
+      ]
+    },
+    "FACT_LEDGER_EXISTS": {
+      "factId": "FACT_LEDGER_EXISTS",
+      "topic": "장부 도난",
+      "description": "공물 장부가 존재하며 도난당했다는 사실",
+      "keywords": [
+        "장부",
+        "문서",
+        "도난",
+        "사라진",
+        "기록"
+      ],
+      "stage": "S0→S1",
+      "discoveryLocations": [
+        "LOC_MARKET",
+        "LOC_HARBOR"
+      ],
+      "nextHint": "장부가 사라졌다는 것만으로는 부족하다. 장부의 내용이 조작됐는지 확인해야 한다. 숫자를 다루는 사람, 회계나 문서 관련 인물을 찾아봐라.",
+      "knownBy": [
+        "NPC_EDRIC_VEIL",
+        "NPC_HARLUN",
+        "NPC_MIRELA",
+        "NPC_MOON_SEA",
+        "NPC_OWEN_KEEPER",
+        "NPC_RENNICK",
+        "NPC_RONEN",
+        "NPC_ROSA"
+      ],
+      "versions": {
+        "NPC_HARLUN": "부두 노동자들 사이에서 장부가 사라졌다는 소문을 들었다.",
+        "NPC_EDRIC_VEIL": "공물 장부의 존재를 알고 있다. 자신이 일부 기록을 담당했다.",
+        "NPC_MOON_SEA": "문서 보관함에서 중요 장부가 빠진 것을 확인했다.",
+        "NPC_MIRELA": "시장 상인들이 장부 도난 이후 불안해하는 걸 느꼈다.",
+        "NPC_RENNICK": "선술집에서 장부에 대한 이야기를 여러 번 들었다.",
+        "NPC_ROSA": "빈민가에서도 장부 도난 소문이 돌고 있다.",
+        "NPC_OWEN_KEEPER": "선술집 손님들이 장부 도난에 대해 수군거린다.",
+        "NPC_RONEN": "장부가 도난당했다는 사실을 직접 알고 있다. 자신이 관리하던 장부였기 때문."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_EDRIC_VEIL",
+        "NPC_HARLUN",
+        "NPC_MIRELA",
+        "NPC_MOON_SEA",
+        "NPC_OWEN_KEEPER",
+        "NPC_RENNICK",
+        "NPC_RONEN",
+        "NPC_ROSA"
+      ]
+    },
+    "FACT_MAIREL_GUARD_EVIDENCE": {
+      "factId": "FACT_MAIREL_GUARD_EVIDENCE",
+      "topic": "마이렐 경비대 증거",
+      "description": "마이렐의 야간 순찰 보고서 누락, 무기고 자물쇠 무단 교체 등 경비대 내부 증거",
+      "keywords": [
+        "순찰",
+        "보고서",
+        "누락",
+        "시간",
+        "야간",
+        "마이렐",
+        "경비"
+      ],
+      "stage": "S4→S5",
+      "discoveryLocations": [
+        "LOC_GUARD"
+      ],
+      "nextHint": "경비대 내부의 부패 증거를 손에 넣었다. 이 증거를 어떻게 사용할지가 모든 것을 결정한다.",
+      "knownBy": [
+        "NPC_CAPTAIN_BREN",
+        "NPC_GUARD_FELIX"
+      ],
+      "versions": {
+        "NPC_CAPTAIN_BREN": "야간 순찰 보고서에 누락된 시간대가 있다. 마이렐의 관할 구역에서만 발생한다.",
+        "NPC_GUARD_FELIX": "야간 순찰 중 마이렐이 동쪽 구역에서 민간인과 접촉하는 장면을 목격했다. 보고할지 망설이고 있다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_CAPTAIN_BREN",
+        "NPC_GUARD_FELIX"
+      ]
+    },
+    "FACT_MAIREL_GUILD_EVIDENCE": {
+      "factId": "FACT_MAIREL_GUILD_EVIDENCE",
+      "topic": "마이렐 길드 증거",
+      "description": "마이렐 단 경이 길드 관계자와 밀회하는 현장 — 선술집에서 목격",
+      "keywords": [
+        "마이렐",
+        "길드",
+        "밀회",
+        "선술집",
+        "목격"
+      ],
+      "stage": "S4→S5",
+      "discoveryLocations": [
+        "LOC_TAVERN",
+        "LOC_MARKET"
+      ],
+      "nextHint": "길드와의 연결 증거를 확보했다. 이제 최종 결정을 내릴 때가 다가온다. 진실을 폭로할 것인가, 이익을 취할 것인가.",
+      "knownBy": [
+        "NPC_OWEN_KEEPER",
+        "NPC_RENNICK"
+      ],
+      "versions": {
+        "NPC_RENNICK": "마이렐 단 경이 길드 관계자와 밀회하는 모습을 선술집에서 목격했다.",
+        "NPC_OWEN_KEEPER": "선술집에서 마이렐과 길드 관계자의 밀회를 직접 목격했다. 대화 내용 일부를 들었다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_OWEN_KEEPER",
+        "NPC_RENNICK"
+      ]
+    },
+    "FACT_OFFICIAL_INQUIRY": {
+      "factId": "FACT_OFFICIAL_INQUIRY",
+      "topic": "공식 조사 요청",
+      "description": "상부/왕실에서 비공식 조사가 시작되었다는 정보",
+      "keywords": [
+        "내사",
+        "조사",
+        "명단",
+        "의심",
+        "공식"
+      ],
+      "stage": "S4→S5",
+      "discoveryLocations": [
+        "LOC_GUARD",
+        "LOC_UPPER"
+      ],
+      "nextHint": "상부가 움직이기 시작했다. 시간이 얼마 남지 않았다. 증거를 정리하고 최종 선택을 준비해야 한다.",
+      "knownBy": [
+        "NPC_GUARD_CAPTAIN",
+        "NPC_LORD_VANCE"
+      ],
+      "versions": {
+        "NPC_GUARD_CAPTAIN": "비공식 내사를 직접 진행 중이다. 의심 대상 명단을 갖고 있다.",
+        "NPC_LORD_VANCE": "왕실에서 파견한 조사관이 곧 도착한다는 정보를 갖고 있다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_GUARD_CAPTAIN",
+        "NPC_LORD_VANCE"
+      ]
+    },
+    "FACT_ROUTE_TO_EAST_DOCK": {
+      "factId": "FACT_ROUTE_TO_EAST_DOCK",
+      "topic": "동부 부두 야간 하역",
+      "description": "동쪽 부두 3번 창고에서 야간 비밀 하역이 이루어진다",
+      "keywords": [
+        "동쪽",
+        "부두",
+        "창고",
+        "야간",
+        "하역",
+        "밀수"
+      ],
+      "stage": "S3→S4",
+      "discoveryLocations": [
+        "LOC_HARBOR",
+        "LOC_WAREHOUSE"
+      ],
+      "nextHint": "하역 장소를 알았다. 이제 물건이 어떤 경로로 시장에 풀리는지, 그리고 이 배후에 누가 있는지 밝혀야 한다. 흑막을 대면할 증거가 필요하다.",
+      "knownBy": [
+        "NPC_HARLUN",
+        "NPC_RAT_KING"
+      ],
+      "versions": {
+        "NPC_HARLUN": "동쪽 부두 3번 창고에서 야간에 허가 없는 하역이 이루어진다. 직접 목격했다.",
+        "NPC_RAT_KING": "동쪽 부두의 비밀 하역 일정을 정확히 알고 있다. 자신의 사람이 감시하고 있다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_HARLUN",
+        "NPC_RAT_KING"
+      ]
+    },
+    "FACT_SHADOW_INTEL": {
+      "factId": "FACT_SHADOW_INTEL",
+      "topic": "쉐도우 정보망",
+      "description": "장부를 훔친 실행범의 정체, 도주 경로, 의뢰인 — 그림자 세계의 정보",
+      "keywords": [
+        "실행범",
+        "의뢰인",
+        "도주",
+        "경로",
+        "범인",
+        "배후"
+      ],
+      "stage": "S3→S4 (바로가기)",
+      "discoveryLocations": [
+        "LOC_SLUMS",
+        "LOC_TAVERN"
+      ],
+      "nextHint": "그림자 세계의 정보를 얻었다. 이제 흑막을 직접 대면하거나, 이 정보를 무기로 활용할 수 있다.",
+      "knownBy": [
+        "NPC_INFO_BROKER",
+        "NPC_RAT_KING"
+      ],
+      "versions": {
+        "NPC_INFO_BROKER": "장부 도난의 실행범, 의뢰인, 도주 경로를 모두 파악하고 있다.",
+        "NPC_RAT_KING": "장부를 훔친 실행범의 정체를 알고 있다. 빈민가를 통해 도주했다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_INFO_BROKER",
+        "NPC_RAT_KING"
+      ]
+    },
+    "FACT_SMUGGLE_ROUTE_GUILD": {
+      "factId": "FACT_SMUGGLE_ROUTE_GUILD",
+      "topic": "길드 공식 화물 밀수",
+      "description": "밀수품이 길드 공식 화물에 섞여 반입되며, 시장으로 유통되는 경로",
+      "keywords": [
+        "밀수",
+        "화물",
+        "길드",
+        "공식",
+        "섞여"
+      ],
+      "stage": "S3→S4",
+      "discoveryLocations": [
+        "LOC_HARBOR",
+        "LOC_MARKET",
+        "LOC_WAREHOUSE"
+      ],
+      "nextHint": "밀수 경로의 전체 그림이 보이기 시작한다. 이제 이 네트워크를 운영하는 자의 정체를 밝힐 결정적 증거가 필요하다.",
+      "knownBy": [
+        "NPC_HARLUN",
+        "NPC_RAT_KING"
+      ],
+      "versions": {
+        "NPC_HARLUN": "밀수품이 길드 공식 화물에 섞여 들어온다는 소문을 들었다. 확신은 없다.",
+        "NPC_RAT_KING": "밀수 경로의 전체 지도를 머릿속에 갖고 있다. 자신의 조직도 일부 이용한다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_HARLUN",
+        "NPC_RAT_KING"
+      ]
+    },
+    "FACT_TAMPERED_LOGS": {
+      "factId": "FACT_TAMPERED_LOGS",
+      "topic": "장부 조작 흔적",
+      "description": "장부의 특정 구간(셋째 칸 넷째 줄)에 조작 흔적 — 다른 필체, 잉크 차이",
+      "keywords": [
+        "장부",
+        "조작",
+        "필체",
+        "서명",
+        "잉크",
+        "셋째",
+        "넷째"
+      ],
+      "stage": "S1→S2",
+      "discoveryLocations": [
+        "LOC_MARKET",
+        "LOC_GUARD"
+      ],
+      "nextHint": "조작 흔적이 확인됐다. 이건 단순 도난이 아니라 내부 공모다. 문서에 접근할 수 있는 사람이 누군지 알아내야 한다. 경비대나 상위 권력자 쪽을 파헤쳐봐라.",
+      "knownBy": [
+        "NPC_EDRIC_VEIL",
+        "NPC_MOON_SEA"
+      ],
+      "versions": {
+        "NPC_EDRIC_VEIL": "장부 셋째 칸 넷째 줄에 조작 흔적이 있다. 서명란 아래 다른 필체가 덧씌워져 있다.",
+        "NPC_MOON_SEA": "문서 보관함에서 원본과 다른 사본이 발견됐다. 암호화된 메모로 기록해두었다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_EDRIC_VEIL",
+        "NPC_MOON_SEA"
+      ]
+    },
+    "FACT_WAGE_FRAUD_PATTERN": {
+      "factId": "FACT_WAGE_FRAUD_PATTERN",
+      "topic": "임금 조작 패턴",
+      "description": "장부의 임금 지급 내역과 실제 출납이 맞지 않는 패턴",
+      "keywords": [
+        "임금",
+        "급여",
+        "지급",
+        "노동",
+        "장부",
+        "금액",
+        "차이"
+      ],
+      "stage": "S1→S2",
+      "discoveryLocations": [
+        "LOC_MARKET",
+        "LOC_HARBOR"
+      ],
+      "nextHint": "임금 수치가 맞지 않는다는 건 누군가 장부를 손봤다는 뜻이다. 조작의 물리적 흔적 — 필체나 잉크의 차이를 찾아야 한다.",
+      "knownBy": [
+        "NPC_EDRIC_VEIL",
+        "NPC_HARLUN",
+        "NPC_MIRELA",
+        "NPC_SERA_DOCKS"
+      ],
+      "versions": {
+        "NPC_HARLUN": "부두 노동자 임금이 장부와 실제 지급액이 다르다는 걸 알고 있다. 구체적 수치는 모르지만 패턴을 느끼고 있다.",
+        "NPC_EDRIC_VEIL": "임금 지급 내역과 실제 출납이 맞지 않는다. 셋째 구간의 금액 괴리를 직접 확인했다.",
+        "NPC_MIRELA": "시장 상인들이 갑자기 값을 올리는 이유가 상단의 부당한 수수료 인상 때문이라는 걸 안다.",
+        "NPC_SERA_DOCKS": "창고 노동자들의 임금이 장부와 맞지 않는다. 물류 기록을 대조해보면 차이가 명확하다."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_EDRIC_VEIL",
+        "NPC_HARLUN",
+        "NPC_MIRELA",
+        "NPC_SERA_DOCKS"
+      ]
+    }
+  }
+}
