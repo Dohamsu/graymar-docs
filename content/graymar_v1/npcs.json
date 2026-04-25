@@ -3304,25 +3304,25 @@
     "gender": "male",
     "daily_topics": [
       {
-        "topicId": "TOPIC_BG_CLERK_DESK",
+        "topicId": "TOPIC_BG_CLERK_PETITION",
         "category": "WORK",
-        "text": "책상 위에 서류가 쌓이는 속도가 사람 손보다 빠르오.",
+        "text": "오전 내내 시민 민원 줄을 받았소. 같은 사연 다섯 번이면 사람도 종이가 되는 기분이오.",
         "keywords": [
-          "서류",
-          "책상",
-          "사무",
-          "결재"
+          "민원",
+          "시민",
+          "줄",
+          "처리"
         ]
       },
       {
-        "topicId": "TOPIC_BG_CLERK_INKWELL",
+        "topicId": "TOPIC_BG_CLERK_SHOES",
         "category": "PERSONAL",
-        "text": "잉크병이 자꾸 마르오. 새 잉크를 사야 할 텐데 시간이 없소.",
+        "text": "새 신을 사고 싶지만 마음이 안 가오. 책상 앞 신발만 닳을 뿐이라.",
         "keywords": [
-          "잉크",
-          "필기",
-          "사무",
-          "서류"
+          "신발",
+          "검소",
+          "책상",
+          "일상"
         ]
       }
     ]
@@ -3612,25 +3612,25 @@
     "gender": "male",
     "daily_topics": [
       {
-        "topicId": "TOPIC_BG_CUSTOMS_BOOK",
+        "topicId": "TOPIC_BG_CUSTOMS_FOREIGN",
         "category": "WORK",
-        "text": "장부 페이지가 늘어나는 속도가 사람 손보다 빠르오. 새 잉크가 또 필요하오.",
+        "text": "오늘 들어온 배엔 향이 짙은 나무 상자가 셋이오. 어디 산지인지 따져볼 일이오.",
         "keywords": [
-          "장부",
-          "잉크",
-          "페이지",
-          "기록"
+          "배",
+          "화물",
+          "향",
+          "산지"
         ]
       },
       {
         "topicId": "TOPIC_BG_CUSTOMS_DUTY",
         "category": "OPINION",
-        "text": "세금 관세란 항구의 핏줄이오. 그것이 잘 흘러야 도시도 숨을 쉬오.",
+        "text": "세금이란 항구의 핏줄이오. 그것이 잘 흐르지 않으면 도시도 숨을 멈추지요.",
         "keywords": [
           "세금",
           "관세",
-          "항구",
-          "도시"
+          "핏줄",
+          "항구"
         ]
       }
     ]
