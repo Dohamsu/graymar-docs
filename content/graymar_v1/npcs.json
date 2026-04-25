@@ -175,7 +175,66 @@
       "INC_SMUGGLING_RING",
       "INC_LABOR_STRIKE"
     ],
-    "shortAlias": "노동자"
+    "shortAlias": "노동자",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_HARLUN_DOCK_LIFE",
+        "category": "WORK",
+        "text": "요즘 부두에 새 일꾼이 안 들어와서 형제단이 점점 늙어가오. 젊은 놈들은 다 시장으로 빠져버렸지.",
+        "keywords": [
+          "일꾼",
+          "노동",
+          "부두",
+          "형제단",
+          "젊은이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_HARLUN_OLD_GLORY",
+        "category": "PERSONAL",
+        "text": "복서 시절엔 한 손으로 술잔 쥐고, 다른 손으론 상대 코를 부수곤 했소. 이제 그 손이 다 굳어버렸지만.",
+        "keywords": [
+          "복서",
+          "옛날",
+          "주먹",
+          "술",
+          "젊었을"
+        ]
+      },
+      {
+        "topicId": "TOPIC_HARLUN_TAX_RUMOR",
+        "category": "GOSSIP",
+        "text": "북쪽에서 또 세금이 오를 거란 소문이 돌더이다. 빈민가는 또 한바탕 시끄럽겠소.",
+        "keywords": [
+          "세금",
+          "북쪽",
+          "소문",
+          "빈민가"
+        ]
+      },
+      {
+        "topicId": "TOPIC_HARLUN_BROTHERHOOD_VIEW",
+        "category": "OPINION",
+        "text": "사람들은 형제단을 깡패라 부르오. 허나 우리 없으면 부두 일꾼들 임금 떼이는 거 누가 막아주오?",
+        "keywords": [
+          "형제단",
+          "임금",
+          "권리",
+          "조합"
+        ]
+      },
+      {
+        "topicId": "TOPIC_HARLUN_KNEE_PAIN",
+        "category": "WORRY",
+        "text": "비 오는 날엔 무릎이 시리오. 옛날 시합 때 부러졌던 자리가 이렇게 오래 가는 줄 몰랐소.",
+        "keywords": [
+          "무릎",
+          "비",
+          "통증",
+          "건강"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_EDRIC_VEIL",
@@ -349,7 +408,64 @@
       "INC_SMUGGLING_RING",
       "INC_MERCHANT_WAR"
     ],
-    "shortAlias": "회계사"
+    "shortAlias": "회계사",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_EDRIC_NUMBERS",
+        "category": "WORK",
+        "text": "숫자란 거짓말을 못 한다 했지만... 사람이 숫자를 다루지 않소. 결국 사람이 거짓말이오.",
+        "keywords": [
+          "숫자",
+          "회계",
+          "장부",
+          "거짓"
+        ]
+      },
+      {
+        "topicId": "TOPIC_EDRIC_GAMBLING_DEBT",
+        "category": "WORRY",
+        "text": "지난주에 또 카드판에 앉았소. 안 앉으리라 다짐했건만, 손이 자꾸 그쪽으로 가더이다.",
+        "keywords": [
+          "도박",
+          "카드",
+          "빚",
+          "노름"
+        ]
+      },
+      {
+        "topicId": "TOPIC_EDRIC_GUILD_PRESSURE",
+        "category": "PERSONAL",
+        "text": "상단 위에는 더 위가 있소. 위에는 또 그 위. 나 같은 회계는 그저 숫자에 도장 찍는 손이오.",
+        "keywords": [
+          "상단",
+          "길드",
+          "회계",
+          "압박"
+        ]
+      },
+      {
+        "topicId": "TOPIC_EDRIC_INK_QUALITY",
+        "category": "OPINION",
+        "text": "요즘 잉크 품질이 형편없소. 한 달도 못 가서 번지오. 누가 좋은 잉크 파는지 아시오?",
+        "keywords": [
+          "잉크",
+          "잉크병",
+          "필기",
+          "품질"
+        ]
+      },
+      {
+        "topicId": "TOPIC_EDRIC_DOCK_TENSION",
+        "category": "GOSSIP",
+        "text": "항만 쪽이 시끄럽다 들었소. 노동자들 임금 문제로... 아니, 이 얘기는 그만 둡시다.",
+        "keywords": [
+          "항만",
+          "노동자",
+          "분쟁",
+          "임금"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_MAIREL",
@@ -515,7 +631,64 @@
       "INC_GUARD_CORRUPTION",
       "INC_SMUGGLING_RING"
     ],
-    "shortAlias": "경비 책임자"
+    "shortAlias": "경비 책임자",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_MAIREL_NIGHT_PATROL",
+        "category": "WORK",
+        "text": "야간 경비는 사람을 갉아먹소. 부하들이 잠 못 자고 다음 날 또 서있는 걸 보면 마음이 무겁소.",
+        "keywords": [
+          "야간",
+          "경비",
+          "순찰",
+          "부하"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MAIREL_WAR_MEMORY",
+        "category": "PERSONAL",
+        "text": "북부 전선에서 사흘을 굶으며 진군한 적이 있소. 그때에 비하면 이 도시는 천국이오.",
+        "keywords": [
+          "전쟁",
+          "북부",
+          "전선",
+          "참전"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MAIREL_NOBLE_BURDEN",
+        "category": "OPINION",
+        "text": "단 가문의 이름이 무겁다고 사람들이 말하오. 그러나 그 이름이 없으면 부하들 봉급도 못 받겠지.",
+        "keywords": [
+          "가문",
+          "귀족",
+          "이름",
+          "단"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MAIREL_OUTSIDER_VIEW",
+        "category": "GOSSIP",
+        "text": "외지에서 온 자들이 부쩍 늘었소. 누가 어디서 왔는지 다 알 수 없으니 골치오.",
+        "keywords": [
+          "외지",
+          "이방인",
+          "타지",
+          "이주"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MAIREL_BARRACKS_FOOD",
+        "category": "WORRY",
+        "text": "병영 식사가 또 부실하다는 보고가 올라왔소. 부하들 배가 등에 붙으면 내가 무슨 명령을 하겠소.",
+        "keywords": [
+          "병영",
+          "식사",
+          "부하",
+          "보급"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_TOBREN",
@@ -607,7 +780,53 @@
     "linkedIncidents": [
       "INC_SMUGGLING_RING"
     ],
-    "shortAlias": "관리인"
+    "shortAlias": "관리인",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_TOBREN_DAUGHTER",
+        "category": "PERSONAL",
+        "text": "우리 딸이 이제 글을 쓰기 시작했소. 짧은 손편지를 받으면 일이 다 잊혀지오.",
+        "keywords": [
+          "딸",
+          "가족",
+          "편지",
+          "아이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_TOBREN_WAREHOUSE",
+        "category": "WORK",
+        "text": "창고 일이 단순해 보여도 비 새는 날엔 화물이 몇 통이 망가지오. 늘 천장을 살피게 되오.",
+        "keywords": [
+          "창고",
+          "화물",
+          "비",
+          "관리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_TOBREN_RENT_RUMOR",
+        "category": "GOSSIP",
+        "text": "항만 임대료가 또 오를 거란 소문이 도오. 작은 가게는 다 짓밟히겠소.",
+        "keywords": [
+          "임대",
+          "항만",
+          "가격",
+          "상인"
+        ]
+      },
+      {
+        "topicId": "TOPIC_TOBREN_GUILT",
+        "category": "WORRY",
+        "text": "가족을 위해 한 일이라 해도... 밤이면 그게 변명같이 들리오.",
+        "keywords": [
+          "죄책",
+          "가족",
+          "밤",
+          "고민"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_MOON_SEA",
@@ -715,7 +934,53 @@
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION"
     ],
-    "shortAlias": "실무자"
+    "shortAlias": "실무자",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_MOONSEA_CAT",
+        "category": "PERSONAL",
+        "text": "우리집 고양이가 또 사라졌다 돌아왔소. 그 녀석은 자기만의 길이 있는 모양이오.",
+        "keywords": [
+          "고양이",
+          "집",
+          "사라",
+          "동물"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MOONSEA_CIPHER",
+        "category": "WORK",
+        "text": "암호란 게... 풀고 나면 별것 아닌데, 풀기 전엔 사람을 미치게 만들어요.",
+        "keywords": [
+          "암호",
+          "문서",
+          "해독",
+          "코드"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MOONSEA_QUIET",
+        "category": "OPINION",
+        "text": "저는 조용한 거리가 좋아요. 시장은 너무 시끄럽거든요.",
+        "keywords": [
+          "조용",
+          "시장",
+          "거리",
+          "소음"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MOONSEA_PAPER_SMELL",
+        "category": "GOSSIP",
+        "text": "문서실에서 새 종이 냄새가 자주 나요. 상단이 무언가 많이 찍어내는 모양이에요.",
+        "keywords": [
+          "종이",
+          "문서",
+          "상단",
+          "인쇄"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_MIRELA",
@@ -811,7 +1076,53 @@
       "INC_MARKET_THEFT",
       "INC_MERCHANT_MONOPOLY"
     ],
-    "shortAlias": "노부인"
+    "shortAlias": "노부인",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_MIRELA_HERBS",
+        "category": "WORK",
+        "text": "올해는 약쑥이 잘 안 자랐어. 비가 너무 늦게 와서 그런 게지.",
+        "keywords": [
+          "약초",
+          "약쑥",
+          "날씨",
+          "수확"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MIRELA_OLD_TIMES",
+        "category": "PERSONAL",
+        "text": "이 시장에 자리 잡은 게 마흔 해 전이야. 그때는 이 골목 끝에 큰 나무가 있었지.",
+        "keywords": [
+          "옛날",
+          "시장",
+          "골목",
+          "추억"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MIRELA_DISPUTE",
+        "category": "GOSSIP",
+        "text": "어제 또 상인 둘이 자릿세 때문에 다투더만. 결국 내가 끼어들어 정리했어.",
+        "keywords": [
+          "분쟁",
+          "상인",
+          "자리",
+          "중재"
+        ]
+      },
+      {
+        "topicId": "TOPIC_MIRELA_KIDS",
+        "category": "OPINION",
+        "text": "요즘 아이들은 왜 이리 빨리 어른이 되려는지 몰라. 좀 더 천천히 가도 좋을 텐데.",
+        "keywords": [
+          "아이",
+          "어른",
+          "세대",
+          "빈민가"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_RENNICK",
@@ -905,7 +1216,53 @@
       "INC_SMUGGLING_RING",
       "INC_GUARD_CORRUPTION"
     ],
-    "shortAlias": "술꾼"
+    "shortAlias": "술꾼",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_RENNICK_STAGE",
+        "category": "PERSONAL",
+        "text": "옛날 극단에서 왕 역을 두 번 했어. 가짜 왕관이 진짜보다 가벼웠지.",
+        "keywords": [
+          "극단",
+          "배우",
+          "연기",
+          "왕"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RENNICK_RUMOR_NET",
+        "category": "WORK",
+        "text": "술집 셋 중 한 곳에선 누군가가 비밀을 털어놓고 있어. 그게 내 일이지.",
+        "keywords": [
+          "술집",
+          "소문",
+          "정보",
+          "비밀"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RENNICK_DISGUISE",
+        "category": "GOSSIP",
+        "text": "어제는 늙은 학자로 변장해서 골목을 돌았어. 사람들 반응이 달라지더군.",
+        "keywords": [
+          "변장",
+          "학자",
+          "골목",
+          "변화"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RENNICK_LOYALTY",
+        "category": "OPINION",
+        "text": "충성심? 그건 가장 마지막에 팔리는 물건이야. 가장 비싸기도 하지.",
+        "keywords": [
+          "충성",
+          "가치",
+          "거래",
+          "사람"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_CAPTAIN_BREN",
@@ -990,7 +1347,53 @@
       "INC_GUARD_CORRUPTION",
       "INC_GUARD_SLUM_RAID"
     ],
-    "shortAlias": "제복 장교"
+    "shortAlias": "제복 장교",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BREN_MOTHER",
+        "category": "WORRY",
+        "text": "어머님 약값이 또 올랐소. 매달 봉급이 그대로 들어가는 곳이오.",
+        "keywords": [
+          "어머니",
+          "약",
+          "봉급",
+          "병"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BREN_DUTY",
+        "category": "WORK",
+        "text": "제복을 입은 자가 침묵해야 할 때가 있다는 게... 가장 견디기 어려운 일이오.",
+        "keywords": [
+          "제복",
+          "의무",
+          "경비",
+          "침묵"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BREN_JUSTICE",
+        "category": "OPINION",
+        "text": "정의가 무겁다는 말은 들었지만, 직접 들어보니 무게가 다르더이다.",
+        "keywords": [
+          "정의",
+          "법",
+          "정직",
+          "의무"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BREN_NEW_RECRUITS",
+        "category": "GOSSIP",
+        "text": "이번에 들어온 신참 두 명이 의외로 영민하오. 가르치는 보람이 있소.",
+        "keywords": [
+          "신참",
+          "훈련",
+          "경비",
+          "후배"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_ROSA",
@@ -1072,7 +1475,53 @@
       "INC_SLUM_PLAGUE",
       "INC_GUARD_SLUM_RAID"
     ],
-    "shortAlias": "보육원 여인"
+    "shortAlias": "보육원 여인",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_ROSA_CHILDREN",
+        "category": "WORK",
+        "text": "아이들 입에 들어가는 빵 한 조각이 가장 큰 정치라는 말, 매일 실감해요.",
+        "keywords": [
+          "아이",
+          "빵",
+          "고아",
+          "고아원"
+        ]
+      },
+      {
+        "topicId": "TOPIC_ROSA_TEACHING",
+        "category": "PERSONAL",
+        "text": "옛날에 학교에서 가르칠 때, 가장 똑똑한 아이가 항상 행복하진 않더군요.",
+        "keywords": [
+          "교사",
+          "학교",
+          "교육",
+          "과거"
+        ]
+      },
+      {
+        "topicId": "TOPIC_ROSA_PETITION",
+        "category": "OPINION",
+        "text": "빈민가 사람들도 시청에 청원할 권리가 있어요. 다만 들어주는 사람이 없을 뿐이지.",
+        "keywords": [
+          "청원",
+          "권리",
+          "빈민",
+          "의회"
+        ]
+      },
+      {
+        "topicId": "TOPIC_ROSA_WINTER",
+        "category": "WORRY",
+        "text": "올겨울이 걱정이에요. 작년보다 땔감이 비싸요. 아이들 손이 시리면 안 되는데.",
+        "keywords": [
+          "겨울",
+          "땔감",
+          "아이",
+          "추위"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_INFO_BROKER",
@@ -1168,7 +1617,53 @@
       "INC_NOBLE_CONSPIRACY",
       "INC_ASSASSINATION_PLOT"
     ],
-    "shortAlias": "정보상"
+    "shortAlias": "정보상",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BROKER_RECIPE",
+        "category": "PERSONAL",
+        "text": "이번에 새 양념을 시도해봤소. 거래 손님들 표정으로 양념 맛을 평가하지.",
+        "keywords": [
+          "요리",
+          "양념",
+          "음식",
+          "조리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BROKER_INFO_PRICE",
+        "category": "WORK",
+        "text": "정보의 값은 정해져 있지 않소. 듣는 자가 무엇을 두려워하느냐로 결정되지.",
+        "keywords": [
+          "정보",
+          "가격",
+          "거래",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BROKER_TWO_SIDES",
+        "category": "OPINION",
+        "text": "양쪽 모두에게 정보를 파오. 둘 다 이기는 게임은 그렇게 만드는 거지.",
+        "keywords": [
+          "양쪽",
+          "파벌",
+          "중립",
+          "거래"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BROKER_QUIET_DAY",
+        "category": "GOSSIP",
+        "text": "오늘 거리가 너무 조용하오. 조용한 날엔 늘 무언가 큰 게 일어나곤 하지.",
+        "keywords": [
+          "거리",
+          "조용",
+          "평온",
+          "불안"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_GUARD_CAPTAIN",
@@ -1250,7 +1745,53 @@
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION"
     ],
-    "shortAlias": "수비대 장교"
+    "shortAlias": "수비대 장교",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BELLON_CHESS",
+        "category": "PERSONAL",
+        "text": "체스에서 패한 자가 가장 먼저 분석을 시작하오. 이 도시도 마찬가지요.",
+        "keywords": [
+          "체스",
+          "수",
+          "전략",
+          "분석"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BELLON_REPORTS",
+        "category": "WORK",
+        "text": "매일 책상에 보고서가 쌓이오. 그 중 진짜 중요한 건 두세 장이지만, 그것을 가려내는 게 일이오.",
+        "keywords": [
+          "보고서",
+          "서류",
+          "경비대",
+          "결재"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BELLON_DISCIPLINE",
+        "category": "OPINION",
+        "text": "부하의 사기는 대장의 거울이오. 거울이 흐리면 군대가 흐려지지.",
+        "keywords": [
+          "사기",
+          "부하",
+          "규율",
+          "리더"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BELLON_OLD_PEER",
+        "category": "GOSSIP",
+        "text": "옛 동기가 북부에서 승진했다 들었소. 다행이지. 그 친구는 그럴 자격이 있었소.",
+        "keywords": [
+          "동기",
+          "북부",
+          "승진",
+          "친구"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_LORD_VANCE",
@@ -1400,7 +1941,64 @@
       "INC_GUARD_CORRUPTION",
       "INC_MERCHANT_WAR"
     ],
-    "shortAlias": "귀족 신사"
+    "shortAlias": "귀족 신사",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_VANCE_WINE",
+        "category": "PERSONAL",
+        "text": "남쪽 산지의 와인이 올해 작황이 좋다 하더이다. 어쩌면 한 통쯤 들여놓는 것도 나쁘지 않을 듯하오.",
+        "keywords": [
+          "와인",
+          "포도주",
+          "수집",
+          "산지"
+        ]
+      },
+      {
+        "topicId": "TOPIC_VANCE_COUNCIL",
+        "category": "WORK",
+        "text": "의회는 본디 합의하는 자리지만, 합의는 가장 시끄러운 자가 지치기 전에는 오지 않더이다.",
+        "keywords": [
+          "의회",
+          "정치",
+          "합의",
+          "도시"
+        ]
+      },
+      {
+        "topicId": "TOPIC_VANCE_FAVOR",
+        "category": "OPINION",
+        "text": "공짜로 받은 호의가 가장 비싼 빚이라 들었소. 당신은 어찌 생각하오?",
+        "keywords": [
+          "호의",
+          "빚",
+          "거래",
+          "대가"
+        ]
+      },
+      {
+        "topicId": "TOPIC_VANCE_OLD_FRIEND",
+        "category": "GOSSIP",
+        "text": "옛 친우 한 분이 북쪽으로 떠난 지 오래되었소. 가끔 그가 보내는 편지에서 도시의 옛 향기를 맡곤 하오.",
+        "keywords": [
+          "친우",
+          "편지",
+          "북쪽",
+          "추억"
+        ]
+      },
+      {
+        "topicId": "TOPIC_VANCE_ORDER_CONCERN",
+        "category": "WORRY",
+        "text": "이 도시에 작은 균열이 늘어가고 있소. 누군가 그것을 손보지 않으면, 결국 모두가 그 사이로 빠지오.",
+        "keywords": [
+          "질서",
+          "균열",
+          "도시",
+          "혼란"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_OWEN_KEEPER",
@@ -1494,7 +2092,53 @@
     "linkedIncidents": [
       "INC_SMUGGLING_RING"
     ],
-    "shortAlias": "주인"
+    "shortAlias": "주인",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_OWEN_SEA",
+        "category": "PERSONAL",
+        "text": "한때 항해사였소. 지금도 큰 폭풍이 오면 갑판이 그리워진다오.",
+        "keywords": [
+          "바다",
+          "항해",
+          "폭풍",
+          "뱃사람"
+        ]
+      },
+      {
+        "topicId": "TOPIC_OWEN_TAVERN",
+        "category": "WORK",
+        "text": "이 선술집에는 모든 파벌이 들르오. 나는 그저 잔을 닦을 뿐이지.",
+        "keywords": [
+          "선술집",
+          "술",
+          "손님",
+          "중립"
+        ]
+      },
+      {
+        "topicId": "TOPIC_OWEN_RUMOR_NIGHT",
+        "category": "GOSSIP",
+        "text": "어제 밤늦게 두 사람이 구석에서 오래 속닥였소. 무슨 일인지는 묻지 않았소.",
+        "keywords": [
+          "속닥",
+          "구석",
+          "밤",
+          "비밀"
+        ]
+      },
+      {
+        "topicId": "TOPIC_OWEN_OLD_RUM",
+        "category": "OPINION",
+        "text": "좋은 럼은 시간으로 만들어지오. 사람도 마찬가지지.",
+        "keywords": [
+          "럼",
+          "시간",
+          "숙성",
+          "사람"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SERA_DOCKS",
@@ -1580,7 +2224,53 @@
       "INC_SMUGGLING_RING",
       "INC_MERCHANT_MONOPOLY"
     ],
-    "shortAlias": "창고 여인"
+    "shortAlias": "창고 여인",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SERA_CARGO",
+        "category": "WORK",
+        "text": "화물에는 두 종류가 있소. 장부에 적힌 것과 적히지 않은 것.",
+        "keywords": [
+          "화물",
+          "장부",
+          "물류",
+          "항만"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SERA_ORPHAN",
+        "category": "PERSONAL",
+        "text": "고아였던 시절엔 이 부두가 가장 따뜻한 곳이었소. 지금도 그렇게 느낄 때가 있소.",
+        "keywords": [
+          "고아",
+          "어린",
+          "부두",
+          "과거"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SERA_REALISM",
+        "category": "OPINION",
+        "text": "이상은 굶주림 앞에서 가장 빨리 사라지오. 그걸 알면 사람이 보이지.",
+        "keywords": [
+          "이상",
+          "현실",
+          "굶주",
+          "사람"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SERA_NEW_SHIP",
+        "category": "GOSSIP",
+        "text": "낯선 깃발의 배가 내일 들어온다 들었소. 누가 보낸 건지가 궁금하오.",
+        "keywords": [
+          "배",
+          "선박",
+          "깃발",
+          "외국"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_DAME_ISOLDE",
@@ -1666,7 +2356,53 @@
       "INC_NOBLE_CONSPIRACY",
       "INC_ASSASSINATION_PLOT"
     ],
-    "shortAlias": "미망인"
+    "shortAlias": "미망인",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_ISOLDE_WIDOW",
+        "category": "PERSONAL",
+        "text": "남편이 떠난 뒤로 정원의 장미가 잘 자라오. 묘한 일이지.",
+        "keywords": [
+          "남편",
+          "정원",
+          "장미",
+          "과거"
+        ]
+      },
+      {
+        "topicId": "TOPIC_ISOLDE_SALON",
+        "category": "WORK",
+        "text": "이번 살롱에는 네 가문의 부인들이 모이오. 차 한 잔 사이에서도 가문의 명운이 갈리지요.",
+        "keywords": [
+          "살롱",
+          "사교계",
+          "귀족",
+          "차"
+        ]
+      },
+      {
+        "topicId": "TOPIC_ISOLDE_SECRETS",
+        "category": "OPINION",
+        "text": "비밀이란 가장 비싼 화폐요. 그러나 너무 많이 가지면 자기 무게에 깔리지요.",
+        "keywords": [
+          "비밀",
+          "화폐",
+          "권력",
+          "약점"
+        ]
+      },
+      {
+        "topicId": "TOPIC_ISOLDE_NORTH_CARGO",
+        "category": "GOSSIP",
+        "text": "북쪽 가문에서 온 짐이 이번 주에 두 번 들어왔소. 아무것도 아니라기엔 횟수가 많지요.",
+        "keywords": [
+          "북쪽",
+          "가문",
+          "화물",
+          "수상"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_RAT_KING",
@@ -1852,7 +2588,64 @@
       "INC_SLUM_PLAGUE",
       "INC_ASSASSINATION_PLOT"
     ],
-    "shortAlias": "사내"
+    "shortAlias": "사내",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_RATKING_OLD_TRADE",
+        "category": "PERSONAL",
+        "text": "한때... 이 손으로 비단도 만져봤소. 지금은 쥐 똥냄새나 만지지만... 별로 다르지 않더이다.",
+        "keywords": [
+          "옛날",
+          "상인",
+          "비단",
+          "몰락"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RATKING_GUARD_HATRED",
+        "category": "OPINION",
+        "text": "경비대... 그놈들이 빈민가에 발을 들이는 순간, 누군가는 이유 없이 사라지오. 늘 그래 왔소.",
+        "keywords": [
+          "경비대",
+          "빈민가",
+          "수비대",
+          "사라"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RATKING_PROTECTION",
+        "category": "WORRY",
+        "text": "여기 사람들은... 누군가 지켜주지 않으면... 그냥 사라지오. 외부 사람들 눈엔 그냥 쥐들이지만.",
+        "keywords": [
+          "주민",
+          "보호",
+          "빈민",
+          "약자"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RATKING_NEW_FACE",
+        "category": "GOSSIP",
+        "text": "요새 새 얼굴들이 빈민가를 들락거리오. 누가 보내는지... 알아내야 할 것이오.",
+        "keywords": [
+          "새얼굴",
+          "외부",
+          "빈민가",
+          "정탐"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RATKING_PRICE_OF_INFO",
+        "category": "WORK",
+        "text": "정보엔 값이 있소. 공짜로 얻은 정보는... 결국 제 발을 거는 덫이 되오. 늘 그래 왔소.",
+        "keywords": [
+          "정보",
+          "값",
+          "거래",
+          "대가"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_GUARD_FELIX",
@@ -1936,7 +2729,53 @@
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION"
     ],
-    "shortAlias": "경비병"
+    "shortAlias": "경비병",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_FELIX_VILLAGE",
+        "category": "PERSONAL",
+        "text": "고향 마을에선 별이 더 잘 보였습니다. 이 도시는 등불이 너무 많아서요.",
+        "keywords": [
+          "고향",
+          "마을",
+          "별",
+          "시골"
+        ]
+      },
+      {
+        "topicId": "TOPIC_FELIX_DUTY",
+        "category": "WORK",
+        "text": "순찰 중에 길 잃은 아이를 도와주었습니다. 그게 오늘 가장 보람된 일이었습니다.",
+        "keywords": [
+          "순찰",
+          "아이",
+          "도움",
+          "근무"
+        ]
+      },
+      {
+        "topicId": "TOPIC_FELIX_IDEAL",
+        "category": "OPINION",
+        "text": "제복을 입을 땐 내가 멋있어 보일 줄 알았는데, 입는 사람만 무거워지더군요.",
+        "keywords": [
+          "제복",
+          "이상",
+          "현실",
+          "무게"
+        ]
+      },
+      {
+        "topicId": "TOPIC_FELIX_FOOD",
+        "category": "GOSSIP",
+        "text": "병영 식사가 매일 같은 콩스튜라... 어제는 콩에서 콩 맛이 안 났습니다.",
+        "keywords": [
+          "병영",
+          "식사",
+          "스튜",
+          "불평"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_FISHMONGER",
@@ -1989,7 +2828,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_FISHMONGER_CATCH",
+        "category": "WORK",
+        "text": "오늘 잡힌 청어가 토실토실해서 자랑할 만하오. 한 번 보시겠소?",
+        "keywords": [
+          "청어",
+          "어획",
+          "생선",
+          "장사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_FISHMONGER_LOUD",
+        "category": "GOSSIP",
+        "text": "이 시장에선 큰 목소리가 좋은 가격을 만들지요. 하하하!",
+        "keywords": [
+          "목소리",
+          "호객",
+          "시장",
+          "상인"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_FRUIT_VENDOR",
@@ -2042,7 +2905,31 @@
         }
       }
     },
-    "gender": "female"
+    "gender": "female",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_FRUIT_APPLE",
+        "category": "WORK",
+        "text": "오늘 들어온 사과가 빛깔이 곱소. 한 알 드셔보시려오?",
+        "keywords": [
+          "사과",
+          "과일",
+          "빛깔",
+          "장사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_FRUIT_RAIN",
+        "category": "WORRY",
+        "text": "비가 내려서 손님이 적어지오. 과일이 상하기 전에 다 팔아야 할 텐데.",
+        "keywords": [
+          "비",
+          "손님",
+          "과일",
+          "상하"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_ANTIQUE_DEALER",
@@ -2095,7 +2982,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_ANTIQUE_RING",
+        "category": "WORK",
+        "text": "이 반지는 이백 년 전 물건이오. 진품인지 물어볼 거면 아무거나 사지 마시오.",
+        "keywords": [
+          "반지",
+          "골동품",
+          "진품",
+          "고대"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_ANTIQUE_NORTH",
+        "category": "GOSSIP",
+        "text": "북쪽 가문에서 오래된 그림을 팔았다는 소문이오. 사정이 어려운 모양이지요.",
+        "keywords": [
+          "북쪽",
+          "가문",
+          "그림",
+          "경매"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_SHOE_SHINE",
@@ -2148,7 +3059,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_SHOE_BOOTS",
+        "category": "WORK",
+        "text": "비 오는 날엔 부츠 손님이 더 많아요. 진흙을 닦아야 하니까요.",
+        "keywords": [
+          "부츠",
+          "진흙",
+          "비",
+          "손님"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_SHOE_NOBLES",
+        "category": "GOSSIP",
+        "text": "귀족 손님 구두에서 가끔 향수 냄새가 진하게 나요. 그 향이 누군지 알려줘요.",
+        "keywords": [
+          "귀족",
+          "구두",
+          "향수",
+          "냄새"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_MESSENGER",
@@ -2201,7 +3136,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_MESSENGER_FEET",
+        "category": "WORRY",
+        "text": "오늘만 시장에서 의회까지 세 번 뛰었소. 발이 화끈거리오.",
+        "keywords": [
+          "발",
+          "뛰",
+          "심부름",
+          "피로"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_MESSENGER_SECRET",
+        "category": "GOSSIP",
+        "text": "편지를 받는 사람의 표정이 가장 많은 걸 알려주오.",
+        "keywords": [
+          "편지",
+          "표정",
+          "전령",
+          "비밀"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_ARMORER",
@@ -2254,7 +3213,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_ARMORER_FORGE",
+        "category": "WORK",
+        "text": "불이 자꾸 꺼지오. 이 도시 석탄 품질이 예전 같지 않소.",
+        "keywords": [
+          "불",
+          "화로",
+          "석탄",
+          "제련"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_ARMORER_HELMET",
+        "category": "PERSONAL",
+        "text": "수비대 투구 주문이 한꺼번에 들어왔소. 손이 부족한데도 거절을 못 하겠더이다.",
+        "keywords": [
+          "투구",
+          "수비대",
+          "갑옷",
+          "주문"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_CLERK",
@@ -2307,7 +3290,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_CLERK_DESK",
+        "category": "WORK",
+        "text": "책상 위에 서류가 쌓이는 속도가 사람 손보다 빠르오.",
+        "keywords": [
+          "서류",
+          "책상",
+          "사무",
+          "결재"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_CLERK_INKWELL",
+        "category": "PERSONAL",
+        "text": "잉크병이 자꾸 마르오. 새 잉크를 사야 할 텐데 시간이 없소.",
+        "keywords": [
+          "잉크",
+          "필기",
+          "사무",
+          "서류"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_CAPTAIN_OLD",
@@ -2360,7 +3367,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_CAPTAIN_TIDE",
+        "category": "PERSONAL",
+        "text": "오십 해를 바다 위에서 보냈지. 지금 이 항만 의자에 앉아 파도 소리 듣는 게 일상이오.",
+        "keywords": [
+          "바다",
+          "항해",
+          "파도",
+          "은퇴"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_CAPTAIN_FLAG",
+        "category": "GOSSIP",
+        "text": "이번 주에 들어온 깃발 중 둘은 처음 보는 무늬요. 새 거래선이 트인 모양이오.",
+        "keywords": [
+          "깃발",
+          "항만",
+          "거래",
+          "외국"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_DOCKER",
@@ -2413,7 +3444,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_DOCKER_BACK",
+        "category": "WORRY",
+        "text": "허리가 또 결리는군. 짐이 점점 무거워지는 느낌이오.",
+        "keywords": [
+          "허리",
+          "통증",
+          "짐",
+          "노동"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_DOCKER_SHIFT",
+        "category": "WORK",
+        "text": "오늘 저녁 근무까지 두 번 더 짐을 옮겨야 하오.",
+        "keywords": [
+          "근무",
+          "짐",
+          "교대",
+          "부두"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_ROPE_MAKER",
@@ -2466,7 +3521,31 @@
         }
       }
     },
-    "gender": "female"
+    "gender": "female",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_ROPE_TWIST",
+        "category": "WORK",
+        "text": "좋은 밧줄은 손가락이 기억하오. 백 가닥을 꼬아도 같은 굵기여야 하오.",
+        "keywords": [
+          "밧줄",
+          "꼬",
+          "장인",
+          "손"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_ROPE_SHIP",
+        "category": "GOSSIP",
+        "text": "오늘 큰 화물선에 쓸 굵은 밧줄을 세 개 납품했소. 그 배가 어디로 가는지는 모르오.",
+        "keywords": [
+          "화물선",
+          "납품",
+          "항만",
+          "배"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_CUSTOMS",
@@ -2519,7 +3598,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_CUSTOMS_BOOK",
+        "category": "WORK",
+        "text": "장부 페이지가 늘어나는 속도가 사람 손보다 빠르오. 새 잉크가 또 필요하오.",
+        "keywords": [
+          "장부",
+          "잉크",
+          "페이지",
+          "기록"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_CUSTOMS_DUTY",
+        "category": "OPINION",
+        "text": "세금 관세란 항구의 핏줄이오. 그것이 잘 흘러야 도시도 숨을 쉬오.",
+        "keywords": [
+          "세금",
+          "관세",
+          "항구",
+          "도시"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_HERB_CRONE",
@@ -2572,7 +3675,31 @@
         }
       }
     },
-    "gender": "female"
+    "gender": "female",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_HERB_LAVENDER",
+        "category": "WORK",
+        "text": "이 라벤더는 산길 어귀에서 직접 따왔지. 향이 다르단다.",
+        "keywords": [
+          "라벤더",
+          "약초",
+          "향",
+          "채집"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_HERB_OLD_SLEEP",
+        "category": "PERSONAL",
+        "text": "늙으니 잠이 짧아져. 새벽 별을 자주 보게 되는구나.",
+        "keywords": [
+          "잠",
+          "새벽",
+          "나이",
+          "별"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_STREET_KID",
@@ -2625,7 +3752,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_KID_RUN",
+        "category": "PERSONAL",
+        "text": "오늘 시장에서 사과 두 개 받았어. 운이 좋은 날이야.",
+        "keywords": [
+          "사과",
+          "시장",
+          "운",
+          "아이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_KID_GUARD",
+        "category": "GOSSIP",
+        "text": "형이 봤어. 경비대가 빈민가 골목 앞에서 누구랑 한참 얘기했어.",
+        "keywords": [
+          "경비대",
+          "빈민가",
+          "골목",
+          "목격"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_VAGRANT",
@@ -2678,7 +3829,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_VAGRANT_HOOD",
+        "category": "PERSONAL",
+        "text": "이 후드는 오래도록 비를 막아줬소. 이젠 이게 내 집이오.",
+        "keywords": [
+          "후드",
+          "망토",
+          "비",
+          "처지"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_VAGRANT_ALLEY",
+        "category": "WORRY",
+        "text": "오늘 새 골목으로 잠자리 옮겼소. 익숙한 자리가 빼앗겨서.",
+        "keywords": [
+          "골목",
+          "잠자리",
+          "자리",
+          "불안"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_BEGGAR",
@@ -2731,7 +3906,31 @@
         }
       }
     },
-    "gender": "female"
+    "gender": "female",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_BEGGAR_BREAD",
+        "category": "WORRY",
+        "text": "어제 빵 한 조각 받았는데... 오늘은 아무도 안 주오.",
+        "keywords": [
+          "빵",
+          "구걸",
+          "배고픔",
+          "주민"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_BEGGAR_COLD",
+        "category": "PERSONAL",
+        "text": "새벽이 너무 춥소. 어디 처마 밑이라도 좋으니...",
+        "keywords": [
+          "추위",
+          "새벽",
+          "거리",
+          "처마"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_BUTLER",
@@ -2784,7 +3983,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_BUTLER_SCHEDULE",
+        "category": "WORK",
+        "text": "오늘 주인님 일정이 세 군데로 겹쳐 있소. 마차를 어찌 배차할지 머리 아프오.",
+        "keywords": [
+          "일정",
+          "주인",
+          "마차",
+          "스케줄"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_BUTLER_GUESTS",
+        "category": "GOSSIP",
+        "text": "이번 주 손님 명단에 처음 듣는 이름이 셋이오. 누가 이 댁과 연이 닿는지...",
+        "keywords": [
+          "손님",
+          "명단",
+          "사교",
+          "귀족"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_GARDENER",
@@ -2837,7 +4060,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_GARDENER_ROSE",
+        "category": "WORK",
+        "text": "올해 장미가 일찍 폈소. 봄이 빨리 온 모양이오.",
+        "keywords": [
+          "장미",
+          "꽃",
+          "봄",
+          "정원"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_GARDENER_WEED",
+        "category": "PERSONAL",
+        "text": "잡초란 뽑으면 또 자라오. 인생도 비슷한 면이 있지요.",
+        "keywords": [
+          "잡초",
+          "자라",
+          "인생",
+          "화단"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_NOBLE_MAID",
@@ -2890,7 +4137,31 @@
         }
       }
     },
-    "gender": "female"
+    "gender": "female",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_MAID_DRESS",
+        "category": "WORK",
+        "text": "오늘 마님 드레스를 다림질하다 손가락을 데였어요. 다행히 자국은 안 남았어요.",
+        "keywords": [
+          "드레스",
+          "다림질",
+          "마님",
+          "상처"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_MAID_GOSSIP",
+        "category": "GOSSIP",
+        "text": "옆 저택의 시녀가 이번 주에 그만뒀대요. 무슨 일이 있었는지 모르겠어요.",
+        "keywords": [
+          "시녀",
+          "저택",
+          "사직",
+          "사건"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_BARD",
@@ -2943,7 +4214,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_BARD_SONG",
+        "category": "PERSONAL",
+        "text": "오늘은 옛 항해사 노래를 불러보았소. 손님들 잔이 멈추더이다.",
+        "keywords": [
+          "노래",
+          "음악",
+          "항해",
+          "공연"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_BARD_TIPS",
+        "category": "WORK",
+        "text": "오늘 동전이 평소보다 잘 떨어졌소. 손님들 기분이 좋은 모양이오.",
+        "keywords": [
+          "동전",
+          "팁",
+          "손님",
+          "기분"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_COOK",
@@ -2996,7 +4291,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_COOK_SOUP",
+        "category": "WORK",
+        "text": "오늘 스튜에 후추를 좀 더 넣어봤어. 반응이 좋더군.",
+        "keywords": [
+          "스튜",
+          "후추",
+          "요리",
+          "주방"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_COOK_PRICE",
+        "category": "WORRY",
+        "text": "고기값이 또 올랐어. 같은 스튜를 만들기가 점점 어려워지는군.",
+        "keywords": [
+          "고기",
+          "가격",
+          "물가",
+          "장보기"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_BARMAID",
@@ -3049,7 +4368,31 @@
         }
       }
     },
-    "gender": "female"
+    "gender": "female",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_BARMAID_TIRED",
+        "category": "WORRY",
+        "text": "발이 너무 아파요. 하루 종일 쟁반을 들고 다녔거든요.",
+        "keywords": [
+          "발",
+          "피로",
+          "쟁반",
+          "서빙"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_BARMAID_DRUNK",
+        "category": "GOSSIP",
+        "text": "저쪽 구석 손님이 또 큰소리치고 있어요. 누가 좀 데려가줬으면.",
+        "keywords": [
+          "술꾼",
+          "손님",
+          "소란",
+          "술집"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_DRUNK",
@@ -3102,7 +4445,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_DRUNK_REFILL",
+        "category": "PERSONAL",
+        "text": "한 잔 더 어떻소? 이야기는 술이 데워야 잘 흐르더이다... 헤헤.",
+        "keywords": [
+          "술",
+          "잔",
+          "이야기",
+          "술꾼"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_DRUNK_SECRET",
+        "category": "GOSSIP",
+        "text": "내가 어제 들은 얘긴데... 아니, 술을 더 마셔야 기억이 날 거 같소.",
+        "keywords": [
+          "비밀",
+          "어제",
+          "기억",
+          "술기운"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_WAREHOUSE_GUARD",
@@ -3155,7 +4522,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_WHG_NIGHT",
+        "category": "WORRY",
+        "text": "창고 야간 근무는 밤마다 발소리가 들리는 듯하오. 늘 아무도 없는데 말이오.",
+        "keywords": [
+          "창고",
+          "야간",
+          "발소리",
+          "경비"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_WHG_LOCK",
+        "category": "WORK",
+        "text": "자물쇠가 또 헐거워졌소. 새 자물쇠 청구서를 올려야 하겠소.",
+        "keywords": [
+          "자물쇠",
+          "창고",
+          "경비",
+          "수리"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_DOG_HANDLER",
@@ -3208,7 +4599,31 @@
         }
       }
     },
-    "gender": "male"
+    "gender": "male",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_DOG_PUP",
+        "category": "PERSONAL",
+        "text": "새끼 한 마리가 어미를 따라다니지 않소. 자기 길을 가는 놈이오.",
+        "keywords": [
+          "강아지",
+          "어미",
+          "개",
+          "훈련"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_DOG_SCENT",
+        "category": "WORK",
+        "text": "이 녀석들 냄새 추적은 사람보다 정확하오. 어제도 도둑 한 명을 잡았소.",
+        "keywords": [
+          "냄새",
+          "추적",
+          "개",
+          "도둑"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_BG_CARGO_INSPECTOR",
@@ -3261,7 +4676,31 @@
         }
       }
     },
-    "gender": "female"
+    "gender": "female",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_BG_INSPECT_LIST",
+        "category": "WORK",
+        "text": "이 화물 명세서가 또 안 맞소. 누가 손을 댄 건지 표시가 없으면 좋으련만.",
+        "keywords": [
+          "화물",
+          "명세서",
+          "검사",
+          "불일치"
+        ]
+      },
+      {
+        "topicId": "TOPIC_BG_INSPECT_SAILOR",
+        "category": "GOSSIP",
+        "text": "선원들이 검사할 때 너무 협조적이면 의심해야 한다 들었소.",
+        "keywords": [
+          "선원",
+          "검사",
+          "수상",
+          "협조"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_RONEN",
@@ -3326,6 +4765,63 @@
     "linkedIncidents": [
       "INC_SMUGGLING_RING"
     ],
-    "shortAlias": "서기관"
+    "shortAlias": "서기관",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_RONEN_LEDGER_FEAR",
+        "category": "WORRY",
+        "text": "장부... 그게 사라진 뒤로 잠을 못 자오. 자다가도 발소리에 깨어나오.",
+        "keywords": [
+          "장부",
+          "두려움",
+          "잠",
+          "도난"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RONEN_FAMILY",
+        "category": "PERSONAL",
+        "text": "고향에 노모가 계시오. 매달 보내던 편지가 끊긴 지 오래되었소. 이 일이 끝나면 꼭...",
+        "keywords": [
+          "가족",
+          "어머니",
+          "고향",
+          "편지"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RONEN_GUILD_LIFE",
+        "category": "WORK",
+        "text": "길드 서기관이라 해봐야 종일 숫자만 옮겨 적는 일이오. 그래도 책상 앞에 앉아 있는 게 안전했었소.",
+        "keywords": [
+          "길드",
+          "서기관",
+          "숫자",
+          "사무"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RONEN_CITY_RUMOR",
+        "category": "GOSSIP",
+        "text": "이 도시는 겉보기와 다르오... 사람들이 웃으며 인사해도, 뒤에선 무엇을 꾸미는지 알 수 없소.",
+        "keywords": [
+          "도시",
+          "이중",
+          "수상",
+          "음모"
+        ]
+      },
+      {
+        "topicId": "TOPIC_RONEN_GRATITUDE",
+        "category": "OPINION",
+        "text": "그대 같은 분을 만난 게... 운이오. 도와주신 은혜는 잊지 않소. 정말이오.",
+        "keywords": [
+          "감사",
+          "은혜",
+          "도움",
+          "만남"
+        ]
+      }
+    ]
   }
 ]
