@@ -81,7 +81,8 @@
         "NPC_MOON_SEA",
         "NPC_OWEN_KEEPER",
         "NPC_RENNICK",
-        "NPC_ROSA"
+        "NPC_ROSA",
+        "NPC_RONEN"
       ],
       "stage": "S0→S1"
     },
@@ -220,6 +221,18 @@
         "NPC_INFO_BROKER"
       ],
       "stage": "S4→S5"
+    },
+    "FACT_LEDGER_CONTENTS": {
+      "description": "공물 장부에 포함된 뒷거래 기록 — 공개 시 길드 간부 다수가 위험하다",
+      "nextHint": "이 내용을 어떻게 활용할지가 결정 분기점이다. 공개해 정의를 외칠지, 거래 카드로 쓸지, 묻어둘지.",
+      "discoveryLocations": [
+        "LOC_TAVERN",
+        "LOC_DOCKS_WAREHOUSE"
+      ],
+      "primarySources": [
+        "NPC_RONEN"
+      ],
+      "stage": "S3→S4 (보조)"
     }
   },
   "arcRoutes": [
@@ -364,16 +377,77 @@
     }
   ],
   "factToIncident": {
-    "FACT_LEDGER_EXISTS": { "incidents": ["INC_MARKET_THEFT"], "controlBonus": 15 },
-    "FACT_WAGE_FRAUD_PATTERN": { "incidents": ["INC_MARKET_THEFT"], "controlBonus": 15 },
-    "FACT_TAMPERED_LOGS": { "incidents": ["INC_GUARD_CORRUPTION"], "controlBonus": 15 },
-    "FACT_INSIDE_JOB": { "incidents": ["INC_SMUGGLING_RING"], "controlBonus": 20 },
-    "FACT_ROUTE_TO_EAST_DOCK": { "incidents": ["INC_SMUGGLING_RING"], "controlBonus": 15 },
-    "FACT_SMUGGLE_ROUTE_GUILD": { "incidents": ["INC_MERCHANT_WAR"], "controlBonus": 15 },
-    "FACT_MAIREL_GUARD_EVIDENCE": { "incidents": ["INC_GUARD_CORRUPTION"], "controlBonus": 20 },
-    "FACT_MAIREL_GUILD_EVIDENCE": { "incidents": ["INC_MERCHANT_WAR"], "controlBonus": 20 },
-    "FACT_OFFICIAL_INQUIRY": { "incidents": ["INC_MARKET_THEFT", "INC_GUARD_CORRUPTION", "INC_SMUGGLING_RING", "INC_MERCHANT_WAR"], "controlBonus": 10 },
-    "FACT_SHADOW_INTEL": { "incidents": ["INC_SMUGGLING_RING"], "controlBonus": 15 },
-    "FACT_BOTH_SIDES_EVIDENCE": { "incidents": ["INC_MARKET_THEFT", "INC_GUARD_CORRUPTION", "INC_SMUGGLING_RING", "INC_MERCHANT_WAR"], "controlBonus": 15 }
+    "FACT_LEDGER_EXISTS": {
+      "incidents": [
+        "INC_MARKET_THEFT"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_WAGE_FRAUD_PATTERN": {
+      "incidents": [
+        "INC_MARKET_THEFT"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_TAMPERED_LOGS": {
+      "incidents": [
+        "INC_GUARD_CORRUPTION"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_INSIDE_JOB": {
+      "incidents": [
+        "INC_SMUGGLING_RING"
+      ],
+      "controlBonus": 20
+    },
+    "FACT_ROUTE_TO_EAST_DOCK": {
+      "incidents": [
+        "INC_SMUGGLING_RING"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SMUGGLE_ROUTE_GUILD": {
+      "incidents": [
+        "INC_MERCHANT_WAR"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_MAIREL_GUARD_EVIDENCE": {
+      "incidents": [
+        "INC_GUARD_CORRUPTION"
+      ],
+      "controlBonus": 20
+    },
+    "FACT_MAIREL_GUILD_EVIDENCE": {
+      "incidents": [
+        "INC_MERCHANT_WAR"
+      ],
+      "controlBonus": 20
+    },
+    "FACT_OFFICIAL_INQUIRY": {
+      "incidents": [
+        "INC_MARKET_THEFT",
+        "INC_GUARD_CORRUPTION",
+        "INC_SMUGGLING_RING",
+        "INC_MERCHANT_WAR"
+      ],
+      "controlBonus": 10
+    },
+    "FACT_SHADOW_INTEL": {
+      "incidents": [
+        "INC_SMUGGLING_RING"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_BOTH_SIDES_EVIDENCE": {
+      "incidents": [
+        "INC_MARKET_THEFT",
+        "INC_GUARD_CORRUPTION",
+        "INC_SMUGGLING_RING",
+        "INC_MERCHANT_WAR"
+      ],
+      "controlBonus": 15
+    }
   }
 }
