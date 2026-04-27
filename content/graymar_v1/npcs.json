@@ -1030,7 +1030,7 @@
         "NPC_ROSA": "오랜 친구. 고아원에 약초를 무료로 넣어준다",
         "NPC_RENNICK": "단골손님. 레닉의 허풍을 좋아한다"
       },
-      "speechRegister": "HAECHE"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
@@ -2967,7 +2967,7 @@
       "signature": [
         "골동품을 어루만지며 이야기를 꺼낸다"
       ],
-      "speechRegister": "HAECHE"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
@@ -3352,7 +3352,7 @@
       "signature": [
         "파이프를 물고 먼 바다를 바라보며 말한다"
       ],
-      "speechRegister": "HAECHE"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
@@ -3814,7 +3814,7 @@
       "signature": [
         "빈 술병을 굴리며 중얼거린다"
       ],
-      "speechRegister": "HAECHE"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
@@ -4430,7 +4430,7 @@
       "signature": [
         "술잔을 꼭 잡고 허공을 가리키며 중얼거린다"
       ],
-      "speechRegister": "HAECHE"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {

@@ -111,8 +111,9 @@ export class ApiClient {
     return this.request("POST", `/runs/${runId}/turns`, body);
   }
 
-  async getTurn(runId: string, turnNo: number) {
-    const r = await this.request("GET", `/runs/${runId}/turns/${turnNo}`);
+  async getTurn(runId: string, turnNo: number, opts: { includeDebug?: boolean } = {}) {
+    const qs = opts.includeDebug ? "?includeDebug=true" : "";
+    const r = await this.request("GET", `/runs/${runId}/turns/${turnNo}${qs}`);
     return r.body;
   }
 
