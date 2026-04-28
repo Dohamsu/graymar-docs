@@ -12,6 +12,7 @@
       "하를런",
       "보스"
     ],
+    "roleKeywords": ["두목", "형제단", "복서", "보스", "연락책", "중재자"],
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 10,
@@ -249,6 +250,7 @@
       "에드릭",
       "베일"
     ],
+    "roleKeywords": ["회계사", "회계", "상단", "은장부", "도박꾼", "도박"],
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CAUTIOUS",
     "initialTrust": 0,
@@ -500,6 +502,7 @@
       "마이렐 경",
       "단가(家)의 마이렐"
     ],
+    "roleKeywords": ["수비대장", "수비대", "단 경", "단경", "기사", "장교", "야간 책임자", "수비"],
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": -10,
@@ -1006,6 +1009,7 @@
       "미렐라",
       "약초상"
     ],
+    "roleKeywords": ["약초장수", "약초", "노파", "노점", "할미", "약초상", "약초 노점", "터줏대감"],
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 10,
@@ -1817,6 +1821,7 @@
       "밴스",
       "밴스 경"
     ],
+    "roleKeywords": ["의원", "귀족", "와인 수집가", "와인 수집", "의회", "의회 의원", "신사"],
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "CALCULATING",
     "initialTrust": -5,
@@ -2446,6 +2451,7 @@
       "쥐왕",
       "쥐"
     ],
+    "roleKeywords": ["두목", "지하 조직", "조직", "지하조직", "몰락한 상인", "암흑가", "빈민가 두목", "빈민가의 왕"],
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "HOSTILE",
     "initialTrust": -10,
@@ -4726,6 +4732,7 @@
       "로넨",
       "서기관"
     ],
+    "roleKeywords": ["서기관", "서기", "길드 서기", "의뢰인", "장부 관리자", "노동 길드", "초조한"],
     "nameStyle": "WESTERN_MEDIEVAL_KR",
     "basePosture": "FRIENDLY",
     "initialTrust": 30,
@@ -4741,7 +4748,7 @@
       "speechStyle": "공손하고 조심스러운 경어. 말끝을 흐리거나 주변을 살피며 목소리를 낮추오 체. 절박할 때 말이 빨라지고 더듬는다. 금지: 반말, ~해, ~야.",
       "innerConflict": "장부를 되찾아야 하지만, 진실이 드러나면 자신도 처벌받을 수 있다는 공포.",
       "softSpot": "가족(어머니) 이야기가 나오면 눈가가 붉어진다.",
-      "speechRegister": "HAPSYO"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "DAY": "선술집 구석에서 초조하게 대기",
