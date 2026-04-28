@@ -35,6 +35,7 @@ interface CliArgs {
   scenarioId: string;
   outputBase: string;
   pollMaxWaitMs: number;
+  maxTurns: number;
 }
 
 function parseArgs(): CliArgs {
@@ -42,11 +43,13 @@ function parseArgs(): CliArgs {
   let scenarioId = "dialog-handoff";
   let output = "";
   let pollMaxWaitMs = 90_000;
+  let maxTurns = 0; // 0 = 시나리오 turns 모두 사용
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--scenario") scenarioId = argv[++i];
     else if (a === "--output") output = argv[++i];
     else if (a === "--poll-timeout") pollMaxWaitMs = Number(argv[++i]);
+    else if (a === "--max-turns") maxTurns = Number(argv[++i]);
   }
   if (!output) {
     const ts = new Date()
@@ -56,7 +59,7 @@ function parseArgs(): CliArgs {
       .replace("T", "_");
     output = `playtest-reports/audit_${scenarioId}_${ts}.md`;
   }
-  return { scenarioId, outputBase: output, pollMaxWaitMs };
+  return { scenarioId, outputBase: output, pollMaxWaitMs, maxTurns };
 }
 
 async function loadScenario(id: string): Promise<AuditScenario> {
@@ -184,6 +187,10 @@ async function main() {
   console.log(`═══ NPA: ${args.scenarioId} ═══`);
 
   const scenario = await loadScenario(args.scenarioId);
+  if (args.maxTurns > 0 && scenario.turns.length > args.maxTurns) {
+    scenario.turns = scenario.turns.slice(0, args.maxTurns);
+    console.log(`(--max-turns ${args.maxTurns} 적용: 평가 턴 ${scenario.turns.length}개로 축소)`);
+  }
   console.log(`시나리오: ${scenario.name} (${scenario.preset}/${scenario.gender})`);
   console.log(`의도: ${scenario.intent}`);
   console.log("");
