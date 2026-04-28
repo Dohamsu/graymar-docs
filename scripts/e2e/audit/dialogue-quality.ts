@@ -39,6 +39,9 @@ const CONTENT_ROOT = path.resolve(
 interface NpcContentSnapshot {
   npcId: string;
   name: string;
+  /** architecture/55 — utterance.npcName으로 NPC 찾기 위한 매칭 정보 */
+  unknownAlias: string | null;
+  aliases: string[];
   signatureKeywords: Set<string>;
   /** architecture/51 — distinct 시그니처 풀 (signature + traits + roleKeywords + alias) */
   distinctPool: Set<string>;
@@ -58,6 +61,7 @@ function loadNpcs(): Map<string, NpcContentSnapshot> {
     npcId: string;
     name: string;
     unknownAlias?: string;
+    aliases?: string[];
     roleKeywords?: string[];
     personality?: {
       signature?: string[];
@@ -89,6 +93,8 @@ function loadNpcs(): Map<string, NpcContentSnapshot> {
     map.set(n.npcId, {
       npcId: n.npcId,
       name: n.name,
+      unknownAlias: n.unknownAlias ?? null,
+      aliases: n.aliases ?? [],
       signatureKeywords: keywords,
       distinctPool,
       speechRegister: n.personality?.speechRegister ?? "HAOCHE",
@@ -97,6 +103,32 @@ function loadNpcs(): Map<string, NpcContentSnapshot> {
   }
   _npcCache = map;
   return map;
+}
+
+/**
+ * architecture/55 — utterance.npcName으로 NPC 찾기.
+ * NpcDialogueMarkerService가 마커에 넣어주는 이름은 NPC의 name / unknownAlias /
+ * aliases 중 하나. 정확 매칭 우선, fallback 없음 (가짜 NPC면 null).
+ */
+function findNpcByDisplayName(
+  displayName: string,
+  npcs: Map<string, NpcContentSnapshot>,
+): NpcContentSnapshot | null {
+  if (!displayName) return null;
+  const trimmed = displayName.trim();
+  // 1. name 정확 매칭
+  for (const npc of npcs.values()) {
+    if (npc.name === trimmed) return npc;
+  }
+  // 2. unknownAlias 정확 매칭
+  for (const npc of npcs.values()) {
+    if (npc.unknownAlias === trimmed) return npc;
+  }
+  // 3. aliases 매칭
+  for (const npc of npcs.values()) {
+    if (npc.aliases.includes(trimmed)) return npc;
+  }
+  return null;
 }
 
 /** speechStyle + signature/traits에서 NPC baseline tone 추론. */
@@ -218,36 +250,65 @@ function continuityScore(pairs: DialoguePair[]): ContinuityScore {
   const keywordCarryOverRate =
     carryOverDen > 0 ? carryOverHits / carryOverDen : 0.5;
 
-  // 2) 호칭 일관성 — NPC 발화에서 가장 많이 쓴 호칭 외 다른 호칭 등장 비율
-  const pronounCounts = new Map<string, number>();
+  // 2) 호칭 일관성 — NPC별로 자기 utterance 안 호칭 일관성 측정
+  // architecture/55 — 한 응답에 여러 NPC 등장 시 NPC별로 분리 측정.
+  // 이전: 모든 utterance 합쳐서 dominant 호칭 카운트 → 다른 NPC 호칭 섞이면 mismatch.
+  // 변경: NPC별 dominant/total 비율을 평균.
+  const perNpcPronounCounts = new Map<string, Map<string, number>>();
   for (const p of evalPairs) {
-    const txt = utterancesText(p);
-    for (const m of txt.match(PRONOUN_RE) ?? []) {
-      pronounCounts.set(m, (pronounCounts.get(m) ?? 0) + 1);
+    for (const u of p.npcUtterances) {
+      const key = u.npcName?.trim() || "unknown";
+      let counts = perNpcPronounCounts.get(key);
+      if (!counts) {
+        counts = new Map<string, number>();
+        perNpcPronounCounts.set(key, counts);
+      }
+      for (const m of u.text.match(PRONOUN_RE) ?? []) {
+        counts.set(m, (counts.get(m) ?? 0) + 1);
+      }
     }
   }
-  const totalPronouns = [...pronounCounts.values()].reduce((a, b) => a + b, 0);
-  const dominant = Math.max(0, ...pronounCounts.values());
+  const npcPronounRatios: number[] = [];
+  // 합산 카운트 — notes 출력용
+  const pronounCounts = new Map<string, number>();
+  for (const counts of perNpcPronounCounts.values()) {
+    const total = [...counts.values()].reduce((a, b) => a + b, 0);
+    if (total === 0) continue;
+    const dominant = Math.max(...counts.values());
+    npcPronounRatios.push(dominant / total);
+    for (const [k, v] of counts) {
+      pronounCounts.set(k, (pronounCounts.get(k) ?? 0) + v);
+    }
+  }
   const pronounConsistency =
-    totalPronouns === 0 ? 1 : dominant / totalPronouns;
+    npcPronounRatios.length === 0
+      ? 1
+      : npcPronounRatios.reduce((a, b) => a + b, 0) / npcPronounRatios.length;
 
-  // 3) 어조 일관성 — 화자 NPC speechRegister 패턴 적중률
+  // 3) 어조 일관성 — utterance 단위로 자기 NPC speechRegister 패턴 적중률
+  // architecture/55 — 한 응답에 여러 NPC 등장 시 각자 자기 register로 평가.
+  // primary NPC의 register로 모든 utterance를 측정하던 버그 수정.
   let toneHit = 0;
   let toneDen = 0;
   for (const p of evalPairs) {
-    const txt = utterancesText(p);
-    if (!txt) continue;
-    const npc = p.speakerNpcId ? npcs.get(p.speakerNpcId) : null;
-    const patterns =
-      REGISTER_PATTERNS[npc?.speechRegister ?? "HAOCHE"] ??
-      REGISTER_PATTERNS.HAOCHE;
-    const sentences = txt
-      .split(/[.!?…]\s*/)
-      .map((s) => s.trim())
-      .filter(Boolean);
-    for (const s of sentences) {
-      toneDen++;
-      if (patterns.some((re) => re.test(s))) toneHit++;
+    for (const u of p.npcUtterances) {
+      if (!u.text) continue;
+      // u.npcName으로 NPC 찾기 (name → unknownAlias → aliases). 매칭 안 되면
+      // primary NPC로 fallback (가짜 NPC인 경우).
+      const npc =
+        findNpcByDisplayName(u.npcName, npcs) ??
+        (p.speakerNpcId ? npcs.get(p.speakerNpcId) : null);
+      const patterns =
+        REGISTER_PATTERNS[npc?.speechRegister ?? "HAOCHE"] ??
+        REGISTER_PATTERNS.HAOCHE;
+      const sentences = u.text
+        .split(/[.!?…]\s*/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+      for (const s of sentences) {
+        toneDen++;
+        if (patterns.some((re) => re.test(s))) toneHit++;
+      }
     }
   }
   const toneConsistency = toneDen > 0 ? toneHit / toneDen : 1;
