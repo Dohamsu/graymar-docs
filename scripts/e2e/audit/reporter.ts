@@ -42,6 +42,8 @@ export function renderMarkdown(report: AuditReport): string {
   lines.push(`- **연결성**:   ${stars(q.continuity.score)} (${q.continuity.score.toFixed(2)} / 5)`);
   lines.push(`- **자유도**:   ${stars(q.topicFreedom.score)} (${q.topicFreedom.score.toFixed(2)} / 5)`);
   lines.push(`- **사람다움**: ${stars(q.humanity.score)} (${q.humanity.score.toFixed(2)} / 5)`);
+  lines.push(`- **NPC 차별화**: ${stars(q.npcDistinctness.score)} (${q.npcDistinctness.score.toFixed(2)} / 5)`);
+  lines.push(`- **톤 일치도**: ${stars(q.toneMatch.score)} (${q.toneMatch.score.toFixed(2)} / 5)`);
   lines.push(`- **종합**:     ${stars(q.overall)} (${q.overall.toFixed(2)} / 5)`);
   lines.push("");
 
@@ -112,6 +114,23 @@ export function renderMarkdown(report: AuditReport): string {
   lines.push(`- 비유 사용: ${(q.humanity.metaphorUsageRate * 100).toFixed(0)}%`);
   lines.push(`- 반복 표현: ${(q.humanity.repetitionRate * 100).toFixed(0)}%`);
   if (q.humanity.notes.length) lines.push(`- 메모: ${q.humanity.notes.join(" · ")}`);
+  lines.push("");
+
+  // architecture/51 — NPC 차별화
+  lines.push(`### NPC 차별화 (${q.npcDistinctness.score.toFixed(2)} / 5)`);
+  for (const [npcId, rate] of Object.entries(q.npcDistinctness.perNpcDistinctness)) {
+    const pool = q.npcDistinctness.perNpcSignaturePoolSize[npcId] ?? 0;
+    lines.push(`- ${npcId}: ${(rate * 100).toFixed(0)}% (시그니처 풀 ${pool})`);
+  }
+  if (q.npcDistinctness.notes.length) lines.push(`- 메모: ${q.npcDistinctness.notes.join(" · ")}`);
+  lines.push("");
+
+  // architecture/51 — 톤 일치도
+  lines.push(`### 톤 일치도 (${q.toneMatch.score.toFixed(2)} / 5)`);
+  lines.push(`- 매칭률: ${(q.toneMatch.matchRate * 100).toFixed(0)}%`);
+  lines.push(`- 사용자 톤 분포: casual=${q.toneMatch.userToneDistribution.casual}, serious=${q.toneMatch.userToneDistribution.serious}, unknown=${q.toneMatch.userToneDistribution.unknown}`);
+  lines.push(`- NPC 톤 분포: casual=${q.toneMatch.npcToneDistribution.casual}, serious=${q.toneMatch.npcToneDistribution.serious}, unknown=${q.toneMatch.npcToneDistribution.unknown}`);
+  if (q.toneMatch.notes.length) lines.push(`- 메모: ${q.toneMatch.notes.join(" · ")}`);
   lines.push("");
 
   // ── Pipeline Trace (펼치기) ────────────────────
@@ -192,9 +211,11 @@ export function printConsoleSummary(report: AuditReport): void {
   console.log("═".repeat(60));
   console.log(`Dialogue Quality Audit — ${report.scenario.name}`);
   console.log("═".repeat(60));
-  console.log(`  연결성  ${stars(q.continuity.score)} ${q.continuity.score.toFixed(2)}`);
-  console.log(`  자유도  ${stars(q.topicFreedom.score)} ${q.topicFreedom.score.toFixed(2)}`);
+  console.log(`  연결성   ${stars(q.continuity.score)} ${q.continuity.score.toFixed(2)}`);
+  console.log(`  자유도   ${stars(q.topicFreedom.score)} ${q.topicFreedom.score.toFixed(2)}`);
   console.log(`  사람다움 ${stars(q.humanity.score)} ${q.humanity.score.toFixed(2)}`);
+  console.log(`  NPC차별화 ${stars(q.npcDistinctness.score)} ${q.npcDistinctness.score.toFixed(2)}`);
+  console.log(`  톤일치   ${stars(q.toneMatch.score)} ${q.toneMatch.score.toFixed(2)}`);
   console.log(`  ──────────────`);
   console.log(`  종합    ${stars(q.overall)} ${q.overall.toFixed(2)} / 5`);
   console.log("");

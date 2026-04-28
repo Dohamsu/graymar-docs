@@ -18,6 +18,9 @@ import type {
   DialoguePair,
   DialogueQuality,
   HumanityScore,
+  NpcDistinctnessScore,
+  ToneCategory,
+  ToneMatchScore,
   TopicFreedomScore,
 } from "./types.js";
 
@@ -37,7 +40,13 @@ interface NpcContentSnapshot {
   npcId: string;
   name: string;
   signatureKeywords: Set<string>;
+  /** architecture/51 — distinct 시그니처 풀 (signature + traits + roleKeywords + alias) */
+  distinctPool: Set<string>;
   speechRegister: "HAOCHE" | "HAEYO" | "BANMAL" | "HAPSYO" | "HAECHE";
+  /** architecture/51 §A — NPC baseline tone (personality에서 추론). 사용자 casual 입력에
+   *  NPC가 baseline보다 *더* 무겁게 응답하면 mismatch로 판정. dark NPC가 dark로 답하는
+   *  건 자연스러우니 mismatch 아님. */
+  baselineTone: "dark" | "warm" | "cold" | "neutral";
 }
 
 let _npcCache: Map<string, NpcContentSnapshot> | null = null;
@@ -48,9 +57,12 @@ function loadNpcs(): Map<string, NpcContentSnapshot> {
   const raw = JSON.parse(fs.readFileSync(npcsPath, "utf-8")) as Array<{
     npcId: string;
     name: string;
+    unknownAlias?: string;
+    roleKeywords?: string[];
     personality?: {
       signature?: string[];
       traits?: string[];
+      speechStyle?: string;
       speechRegister?: NpcContentSnapshot["speechRegister"];
     };
   }>;
@@ -64,15 +76,48 @@ function loadNpcs(): Map<string, NpcContentSnapshot> {
     for (const s of sigParts) {
       for (const kw of extractKoreanNouns(s)) keywords.add(kw);
     }
+    // architecture/51 — distinct pool: signature + traits + roleKeywords + alias 단어들
+    const distinctPool = new Set<string>(keywords);
+    for (const k of n.roleKeywords ?? []) {
+      if (k.length >= 2) distinctPool.add(k);
+    }
+    if (n.unknownAlias) {
+      for (const word of n.unknownAlias.split(/\s+/)) {
+        if (word.length >= 2) distinctPool.add(word);
+      }
+    }
     map.set(n.npcId, {
       npcId: n.npcId,
       name: n.name,
       signatureKeywords: keywords,
+      distinctPool,
       speechRegister: n.personality?.speechRegister ?? "HAOCHE",
+      baselineTone: inferBaselineTone(n.personality?.speechStyle, sigParts),
     });
   }
   _npcCache = map;
   return map;
+}
+
+/** speechStyle + signature/traits에서 NPC baseline tone 추론. */
+function inferBaselineTone(
+  speechStyle: string | undefined,
+  sigParts: string[],
+): "dark" | "warm" | "cold" | "neutral" {
+  const text = ((speechStyle ?? "") + " " + sigParts.join(" ")).toLowerCase();
+  // dark: 거친/위협/쉰/차가운/어둠
+  if (/험한|거친|위협|쉰\s?목소리|압도적|어둠|편집증|위태|독|골목|빈민가|두려|차갑/.test(text)) {
+    return "dark";
+  }
+  // warm: 친근/할미/공손/따뜻
+  if (/친근|할미|공손|조심스러운|따뜻|다정|온화|상냥|어머니|약초/.test(text)) {
+    return "warm";
+  }
+  // cold: 신경질/계산/정밀/우아/빈틈없는
+  if (/신경질|정밀|우아|빈틈없|냉정|계산|차분|딱딱|단호|권위적|군인/.test(text)) {
+    return "cold";
+  }
+  return "neutral";
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -499,6 +544,233 @@ function humanityScore(pairs: DialoguePair[]): HumanityScore {
 }
 
 // ──────────────────────────────────────────────────────────────
+// architecture/51 — NpcDistinctness 점수
+// ──────────────────────────────────────────────────────────────
+
+/**
+ * 화자 NPC별 distinct 시그니처(signature/traits/roleKeywords/alias 단어) 등장률.
+ * 높을수록 NPC가 자기다운 톤으로 말함.
+ */
+function npcDistinctnessScore(pairs: DialoguePair[]): NpcDistinctnessScore {
+  const evalPairs = pairs.filter((p) => !p.isSetup);
+  const npcs = loadNpcs();
+  const perNpcHits: Record<string, number> = {};
+  const perNpcTurns: Record<string, number> = {};
+  const perNpcSignaturePoolSize: Record<string, number> = {};
+
+  for (const p of evalPairs) {
+    if (!p.speakerNpcId) continue;
+    const npc = npcs.get(p.speakerNpcId);
+    if (!npc || npc.distinctPool.size === 0) continue;
+    perNpcSignaturePoolSize[p.speakerNpcId] = npc.distinctPool.size;
+    const txt = pairText(p);
+    if (!txt) continue;
+    perNpcTurns[p.speakerNpcId] = (perNpcTurns[p.speakerNpcId] ?? 0) + 1;
+    const hit = [...npc.distinctPool].some((kw) => txt.includes(kw));
+    if (hit) perNpcHits[p.speakerNpcId] = (perNpcHits[p.speakerNpcId] ?? 0) + 1;
+  }
+
+  const perNpcDistinctness: Record<string, number> = {};
+  for (const npcId of Object.keys(perNpcTurns)) {
+    const turns = perNpcTurns[npcId] || 0;
+    const hits = perNpcHits[npcId] ?? 0;
+    perNpcDistinctness[npcId] = turns > 0 ? hits / turns : 0;
+  }
+  const rates = Object.values(perNpcDistinctness).filter(
+    (n) => Number.isFinite(n),
+  );
+  const avg =
+    rates.length > 0 ? rates.reduce((a, b) => a + b, 0) / rates.length : 0.5;
+  const score = clamp(avg * 5, 0, 5);
+
+  const notes: string[] = [];
+  for (const [npcId, rate] of Object.entries(perNpcDistinctness)) {
+    if (rate < 0.4) {
+      notes.push(`${npcId} distinctness ${(rate * 100).toFixed(0)}%`);
+    }
+  }
+
+  return {
+    score,
+    perNpcDistinctness,
+    perNpcSignaturePoolSize,
+    notes,
+  };
+}
+
+// ──────────────────────────────────────────────────────────────
+// architecture/51 — ToneMatch 점수
+// ──────────────────────────────────────────────────────────────
+
+/** 사용자 입력 톤 분류. */
+function classifyUserTone(input: string): ToneCategory {
+  if (!input) return "unknown";
+  const text = input.trim();
+  // 가벼운 신호: 짧음 + 의문문 + 가벼운 명사
+  const hasQuestion = /[?？]/.test(text);
+  const isShort = text.length <= 25;
+  const CASUAL_WORDS = [
+    "안녕",
+    "오늘",
+    "어떻소",
+    "어떻",
+    "잘",
+    "고맙",
+    "기억",
+    "들었소",
+    "나왔",
+    "보러",
+    "스튜",
+    "빵",
+    "약초",
+    "가족",
+    "자식",
+    "잠은",
+    "주무",
+    "재밌",
+  ];
+  const SERIOUS_WORDS = [
+    "장부",
+    "사라진",
+    "도난",
+    "임금",
+    "횡령",
+    "밀수",
+    "음모",
+    "위협",
+    "비밀",
+    "조직",
+    "권력",
+    "처형",
+    "처벌",
+    "위태",
+    "위험",
+  ];
+  const hasCasual = CASUAL_WORDS.some((w) => text.includes(w));
+  const hasSerious = SERIOUS_WORDS.some((w) => text.includes(w));
+  if (hasSerious && !hasCasual) return "serious";
+  if (hasCasual || (isShort && hasQuestion)) return "casual";
+  if (text.length > 40) return "serious";
+  return "unknown";
+}
+
+/** NPC 응답 톤 분류 (회피 어휘 + 길이). */
+function classifyNpcTone(text: string): ToneCategory {
+  if (!text) return "unknown";
+  const HEAVY_WORDS = [
+    "위험",
+    "조심",
+    "곤란",
+    "위태",
+    "독",
+    "썩은",
+    "음모",
+    "잘못",
+    "비밀",
+    "함부로",
+    "멀쩡",
+    "독초",
+  ];
+  const heavyCount = HEAVY_WORDS.filter((w) => text.includes(w)).length;
+  if (heavyCount >= 2) return "serious";
+  if (text.length > 200 && heavyCount >= 1) return "serious";
+  if (text.length <= 80 && heavyCount === 0) return "casual";
+  return "unknown";
+}
+
+function toneMatchScore(pairs: DialoguePair[]): ToneMatchScore {
+  const evalPairs = pairs.filter((p) => !p.isSetup);
+  const npcs = loadNpcs();
+  const userToneDist: Record<ToneCategory, number> = {
+    casual: 0,
+    serious: 0,
+    unknown: 0,
+  };
+  const npcToneDist: Record<ToneCategory, number> = {
+    casual: 0,
+    serious: 0,
+    unknown: 0,
+  };
+  const perTurn: ToneMatchScore["perTurn"] = [];
+  let matched = 0;
+  let total = 0;
+
+  for (const p of evalPairs) {
+    const userTone = classifyUserTone(p.userInput);
+    const npcText = utterancesText(p);
+    if (!npcText) continue;
+    const npcTone = classifyNpcTone(npcText);
+    userToneDist[userTone]++;
+    npcToneDist[npcTone]++;
+    if (userTone === "unknown" || npcTone === "unknown") continue;
+    total++;
+    // architecture/51 §A — NPC baseline 고려 mismatch 판정.
+    // 사용자 casual인데 NPC가 baseline보다 *더* 무거우면 mismatch.
+    // 동일 톤은 항상 match. 사용자 serious는 baseline 무관 match (어떤 NPC도 serious 응답 자연스럽).
+    const npc = p.speakerNpcId ? npcs.get(p.speakerNpcId) : null;
+    const baseline = npc?.baselineTone ?? "neutral";
+    let match: boolean;
+    if (userTone === npcTone) {
+      // 동일 톤
+      match = true;
+    } else if (userTone === "serious") {
+      // serious 입력엔 NPC가 무엇이든 자연스럽게 응답
+      match = true;
+    } else {
+      // userTone=casual, npcTone=serious — baseline 차이로 보정
+      // dark NPC는 어두운 응답이 자연 — match (단, "회피 어휘 2회+"면 여전히 mismatch)
+      if (baseline === "dark" || baseline === "cold") {
+        // baseline이 dark/cold라도 회피 어휘가 과다하면 mismatch
+        const HEAVY_WORDS = [
+          "위험",
+          "조심",
+          "곤란",
+          "위태",
+          "독",
+          "썩은",
+          "음모",
+          "잘못",
+          "비밀",
+          "함부로",
+          "독초",
+        ];
+        const heavyCount = HEAVY_WORDS.filter((w) => npcText.includes(w)).length;
+        match = heavyCount <= 1;
+      } else {
+        // warm/neutral baseline이 serious 응답 → mismatch
+        match = false;
+      }
+    }
+    if (match) matched++;
+    perTurn.push({ turn: p.turn, userTone, npcTone, matched: match });
+  }
+
+  const matchRate = total > 0 ? matched / total : 0.5;
+  const score = clamp(matchRate * 5, 0, 5);
+  const notes: string[] = [];
+  const casualToSerious = perTurn.filter(
+    (t) => t.userTone === "casual" && t.npcTone === "serious" && !t.matched,
+  );
+  if (casualToSerious.length > 0) {
+    notes.push(
+      `casual→serious mismatch ${casualToSerious.length}회 (T${casualToSerious.map((t) => t.turn).join(",")})`,
+    );
+  }
+  if (matchRate < 0.5) {
+    notes.push(`톤 일치 ${(matchRate * 100).toFixed(0)}%`);
+  }
+
+  return {
+    score,
+    matchRate,
+    userToneDistribution: userToneDist,
+    npcToneDistribution: npcToneDist,
+    perTurn,
+    notes,
+  };
+}
+
+// ──────────────────────────────────────────────────────────────
 // 통합
 // ──────────────────────────────────────────────────────────────
 
@@ -506,11 +778,16 @@ export function computeDialogueQuality(pairs: DialoguePair[]): DialogueQuality {
   const c = continuityScore(pairs);
   const t = topicFreedomScore(pairs);
   const h = humanityScore(pairs);
+  const d = npcDistinctnessScore(pairs);
+  const tm = toneMatchScore(pairs);
   return {
     continuity: c,
     topicFreedom: t,
     humanity: h,
-    overall: (c.score + t.score + h.score) / 3,
+    npcDistinctness: d,
+    toneMatch: tm,
+    // architecture/51 — 5 score 평균
+    overall: (c.score + t.score + h.score + d.score + tm.score) / 5,
   };
 }
 

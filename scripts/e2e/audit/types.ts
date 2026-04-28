@@ -134,11 +134,47 @@ export interface HumanityScore {
   notes: string[];
 }
 
+// architecture/51 — NPC Distinctness 점수
+export interface NpcDistinctnessScore {
+  /** 0~5 */
+  score: number;
+  /** 화자 NPC별 distinct 시그니처 등장률 */
+  perNpcDistinctness: Record<string, number>;
+  /** 화자 NPC별 시그니처 풀 (signature + traits + roleKeywords) 단어 수 */
+  perNpcSignaturePoolSize: Record<string, number>;
+  notes: string[];
+}
+
+// architecture/51 — 톤 일치도 점수
+export type ToneCategory = 'casual' | 'serious' | 'unknown';
+
+export interface ToneMatchScore {
+  /** 0~5 */
+  score: number;
+  /** 일치 턴 수 / 총 턴 수 */
+  matchRate: number;
+  /** 사용자 톤 분포 */
+  userToneDistribution: Record<ToneCategory, number>;
+  /** NPC 응답 톤 분포 */
+  npcToneDistribution: Record<ToneCategory, number>;
+  /** 턴별 비교 — 디버깅 */
+  perTurn: Array<{
+    turn: number;
+    userTone: ToneCategory;
+    npcTone: ToneCategory;
+    matched: boolean;
+  }>;
+  notes: string[];
+}
+
 export interface DialogueQuality {
   continuity: ContinuityScore;
   topicFreedom: TopicFreedomScore;
   humanity: HumanityScore;
-  /** 종합 5점 만점 = (3 score 평균) */
+  /** architecture/51 — 신규 메트릭 */
+  npcDistinctness: NpcDistinctnessScore;
+  toneMatch: ToneMatchScore;
+  /** 종합 5점 만점 = (5 score 평균) */
   overall: number;
 }
 
