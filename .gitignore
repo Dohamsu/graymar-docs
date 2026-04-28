@@ -23,5 +23,7 @@ node_modules/
 # Playtest outputs — keep the folder via .gitkeep, drop individual reports from tracking
 playtest-reports/*.json
 playtest-reports/*.txt
+playtest-reports/*.md
+playtest-reports/**/
 playtest-reports/archive/
 !playtest-reports/.gitkeep
