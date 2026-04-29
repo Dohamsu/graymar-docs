@@ -76,7 +76,8 @@ async function main() {
       }
     }
     if (submit.status !== 200 && submit.status !== 201) {
-      console.log(`  T${i + 1} ERROR ${submit.status}`);
+      const errBody = JSON.stringify(submit.body ?? {}).slice(0, 200);
+      console.log(`  T${i + 1} ERROR ${submit.status} body=${errBody}`);
       continue;
     }
 
@@ -109,9 +110,8 @@ async function main() {
     const evtDisp = (matchedEvent || "-").slice(0, 25);
     console.log(`  T${String(i + 1).padStart(2, "0")} [${(state.currentNode?.nodeType ?? "").padEnd(8)}] ${description.padEnd(30).slice(0, 30)} evt=${evtDisp.padEnd(25)} resolve=${(resolve ?? "-").padEnd(8)} llm=${llm.elapsedMs}ms`);
 
-    if (body.input.type === "CHOICE") {
-      lastResult = serverResult;
-    }
+    // HUB 노드 진입 시 choices 매칭 위해 모든 입력 후 lastResult 업데이트
+    lastResult = serverResult;
     if (state.currentNode?.nodeType === "LOCATION") locTurns++;
     if (nodeOutcome === "RUN_ENDED") break;
     if (nodeOutcome === "NODE_ENDED") {
