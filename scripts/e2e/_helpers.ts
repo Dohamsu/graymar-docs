@@ -275,17 +275,18 @@ export function pickTurnInput(
   const choices = lastResult?.choices ?? [];
 
   if (nodeType === "HUB") {
+    // HUB는 CHOICE 입력만 받음 (서버 422 방어).
     const locName = HUB_LOCATIONS[opts.locIdx % HUB_LOCATIONS.length];
     let target = choices.find((c: any) => (c.id ?? "").toLowerCase().includes(locName))
       ?? choices.find((c: any) => /accept|quest/i.test(c.id ?? ""))
       ?? choices.find((c: any) => /go_|loc_/i.test(c.id ?? ""))
       ?? choices[0];
-    if (target) {
-      return {
-        body: { input: { type: "CHOICE", choiceId: target.id }, expectedNextTurnNo: currentTurn + 1, idempotencyKey: idem },
-        description: `CHOICE:${target.id}`,
-      };
-    }
+    // choices 비었으면 fallback go_market (서버가 인식하는 기본 choice)
+    const choiceId = target?.id ?? `go_${locName}`;
+    return {
+      body: { input: { type: "CHOICE", choiceId }, expectedNextTurnNo: currentTurn + 1, idempotencyKey: idem },
+      description: `CHOICE:${choiceId}${target ? "" : "(fallback)"}`,
+    };
   }
   if (nodeType === "COMBAT") {
     return {
