@@ -385,6 +385,7 @@ export function verifyRun(state: any, turnLogs: TurnLog[]): VerifyResult[] {
   results.push({ name: "V7_no_leak", passed: leaks.length === 0, detail: leaks.length ? leaks.slice(0, 5).join(" · ") : "누출 없음" });
 
   // V8: NPC 정합성 — npcPortrait.npcId가 서술 @마커와 일치
+  // imageUrl 매칭 추가 — NPC가 실명/별칭 어느 형태로 등장해도 portrait URL이 마커에 있으면 hit
   const mismatches: string[] = [];
   for (const t of turnLogs) {
     const portrait = t.npcPortrait;
@@ -393,7 +394,8 @@ export function verifyRun(state: any, turnLogs: TurnLog[]): VerifyResult[] {
     const brackets = Array.from(t.narrative.matchAll(/@\[([^\]|]+)/g), (m) => m[1]);
     const hit = markers.includes(portrait.npcId)
       || brackets.some((b) => portrait.npcName && b.includes(portrait.npcName))
-      || (portrait.npcName ? t.narrative.includes(portrait.npcName) : false);
+      || (portrait.npcName ? t.narrative.includes(portrait.npcName) : false)
+      || (portrait.imageUrl ? t.narrative.includes(portrait.imageUrl) : false);
     if (!hit && t.narrative && !t.narrative.startsWith("[LLM_")) {
       mismatches.push(`T${t.turn}: ${portrait.npcName}(${portrait.npcId}) 서술에 없음`);
     }
