@@ -26,6 +26,44 @@ HUB↔LOCATION 전환 시: 전환 화면 없이 즉시 전환, enter narrator만
 
 ---
 
+## 강화된 LLM 파이프라인 (A56, 2026-05-04)
+
+> 설계: `architecture/56_npc_reaction_director.md`
+
+ResolveService 호출 직전 + 메인 LLM 호출 직전에 nano LLM 사전 결정 단계 추가:
+
+1. **ChallengeClassifier** (`server/src/llm/challenge-classifier.service.ts`)
+   - 룰 1차 게이트: NON_CHALLENGE(MOVE/REST/SHOP/EQUIP) 즉시 FREE, ALWAYS_CHALLENGE(FIGHT/STEAL/SNEAK/THREATEN/BRIBE/PERSUADE) 즉시 CHECK
+   - 회색지대(TALK/OBSERVE/INVESTIGATE 등) → nano LLM 분류 → FREE/CHECK
+   - FREE → ResolveService.forceAutoSuccess() (주사위 스킵)
+
+2. **NpcReactionDirector** (`server/src/llm/npc-reaction-director.service.ts`)
+   - LOCATION + primaryNpcId 있을 때만 호출
+   - 출력: reactionType(7종) + refusalLevel + immediateGoal + openingStance + emotionalShiftHint + 추상 톤 3축
+   - 추상 톤 3축: voiceQuality(15~25자) / emotionalUndertone(15~25자) / bodyLanguageMood(10~20자)
+   - **예시 어구 절대 금지** — 추상 묘사만, LLM 자유 어휘 선택 보장
+
+3. **메인 LLM 호출** (PromptBuilder가 톤 가이드 블록을 추가 주입)
+   - `personality.signature` 노출 완전 제거 (무의식적 anchor 방지)
+   - `personality.speechStyle` 어구 예시 추상화 (콘텐츠 측 작업, `content/graymar_v1/npcs.json`)
+
+4. **5.5 마커 후처리 끝**: 마커 substring 합쳐짐 자동 복구
+   - `@[X|...]` 별칭에 동일 substring(8자+) 2회 등장 → 알려진 unknownAlias로 복원
+   - `[MarkerCollision]` 경고 로그
+
+**환경변수 토글**:
+```
+NPC_REACTION_DIRECTOR_ENABLED=true|false  # 기본 true
+CHALLENGE_CLASSIFIER_ENABLED=true|false   # 기본 true
+```
+
+**검증 효과** (5회 A/B 평균):
+- 시그니처 어구율: 39.7% → 6.2% (-84%)
+- TTR: 0.752 → 0.809 (+0.057)
+- 마커 합쳐짐: V8 정합성 100% PASS
+
+---
+
 ## 메모리 계층 (L0~L4+)
 
 `server/src/llm/context-builder.service.ts`
