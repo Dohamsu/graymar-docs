@@ -57,6 +57,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - `33_lorebook_system.md` — 키워드 트리거 기반 세계 지식 동적 주입(NPC knownFacts/장소 비밀/사건 단서/entity_facts 키워드 검색).
 - `34_player_first_event_engine.md` — Player-First 이벤트 엔진(TurnMode 3분류, NPC 5단계 우선순위, contextNpcId, EventMatcher targetNpcId 가중치). 현 최신.
 - `35_llm_streaming.md` — LLM 스트리밍 설계(OpenRouter `stream:true` + `LlmStreamBroker` SSE + `StreamParser` 문장 단위 버퍼 + 2-Phase 렌더링). 폴링 fallback 포함.
+- `56_npc_reaction_director.md` — NPC Reaction Director(추상 톤 3축 nano 사전결정) + ChallengeClassifier(자유 행동 주사위 스킵) + speechStyle 어구 예시 추상화(9 NPC) + 마커 substring 합쳐짐 자동 복구. 어휘 폭주 39.7% → 6.2% 해소(-84%). NpcSignatureGenerator/SIGFIX/MEMBOOST는 P0 검증으로 폐기.
 
 ### 6. UI·클라이언트
 

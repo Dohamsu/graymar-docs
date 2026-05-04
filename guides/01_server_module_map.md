@@ -57,7 +57,7 @@ main.ts → AppModule
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 │   ├── turns.controller
 │   └── turns.service    ← nanoCtx 빌드만 수행 (NanoEventDirector 호출은 LLM Worker로 이관)
-├── llm/                 ← Async LLM narrative (17 services, 1 controller, 아래 상세)
+├── llm/                 ← Async LLM narrative (19 services, 1 controller, 아래 상세)
 ├── campaigns/           ← 캠페인(시즌/이벤트) 관리
 │   ├── campaigns.controller   ← GET /v1/campaigns
 │   └── campaigns.service
@@ -171,6 +171,8 @@ main.ts → AppModule
 | NpcDialogueMarkerService | npc-dialogue-marker.service.ts | 서버 regex + nano LLM 하이브리드 @마커 삽입, 불일치 교정 (Step F) |
 | NanoDirectorService | nano-director.service.ts | nano 전처리: 연출 지시서 생성 (첫 문장, NPC 행동, 반복 회피) |
 | NanoEventDirectorService | nano-event-director.service.ts | nano 동적 이벤트: 컨셉/NPC/fact/선택지 생성 (LLM Worker 비동기) |
+| NpcReactionDirectorService | npc-reaction-director.service.ts | nano 사전결정: NPC 반응(7종)+즉시목표+추상톤 3축(voiceQuality/emotionalUndertone/bodyLanguageMood). 메인 LLM이 추측 대신 결정 표현 — A56 |
+| ChallengeClassifierService | challenge-classifier.service.ts | 자유 행동 주사위 스킵: 룰 게이트(NON_CHALLENGE/ALWAYS_CHALLENGE) + 회색지대 nano 분류 (FREE/CHECK) — A56 |
 | DialogueGeneratorService | dialogue-generator.service.ts | 2-Stage 대사 분리 파이프라인 (서술+대사 분리, dialogue_slot, 하오체 검증) |
 | FactExtractorService | fact-extractor.service.ts | Memory v4: nano 구조화 추출 (entity_facts UPSERT, 반복률 71% 감소) |
 | LorebookService | lorebook.service.ts | 키워드 트리거 기반 세계 지식 동적 주입 (NPC/장소/사건/entity_facts) |
