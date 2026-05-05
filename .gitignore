@@ -35,3 +35,9 @@ quartz/public/
 quartz/.quartz-cache/
 .gstack/
 quartz/docs/
+quartz/content/npcs/
+quartz/content/locations/
+quartz/content/factions/
+quartz/content/quest/
+quartz/content/incidents/
+quartz/content/items/

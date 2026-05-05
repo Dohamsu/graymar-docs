@@ -18,7 +18,7 @@
     "format": "npx prettier . --write",
     "test": "tsx --test",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
-    "sync-content": "rm -rf content/architecture content/specs content/guides content/CLAUDE.md content/README.md && cp -r ../architecture content/architecture && cp -r ../specs content/specs && cp -r ../guides content/guides && cp ../CLAUDE.md content/CLAUDE.md && cp ../README.md content/README.md",
+    "sync-content": "rm -rf content/architecture content/specs content/guides content/CLAUDE.md content/README.md && cp -r ../architecture content/architecture && cp -r ../specs content/specs && cp -r ../guides content/guides && cp ../CLAUDE.md content/CLAUDE.md && cp ../README.md content/README.md && python3 ../scripts/quartz_data_generator.py",
     "build": "npm run sync-content && npx quartz build",
     "serve": "npm run sync-content && npx quartz build --serve"
   },
