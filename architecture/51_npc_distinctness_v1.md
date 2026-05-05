@@ -299,11 +299,11 @@ export interface DialogueQualityV2 extends DialogueQuality {
 
 ## 10. 관련 문서
 
-- `architecture/26_narrative_pipeline_v2.md` — 3-Stage Pipeline (후처리 단계 통합)
-- `architecture/45_npc_free_dialogue.md` — daily_topics 잡담 시스템
-- `architecture/47_dialogue_quality_audit.md` — NPA 검증 도구 (v2 확장 대상)
-- `architecture/49_npc_resolver_authority.md` — NPC 결정 단일 권한자
-- `architecture/50_natural_dialogue_v1.md` — 시도 후 폐기 (본 문서의 직접 선행)
+- [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]] — 3-Stage Pipeline (후처리 단계 통합)
+- [[architecture/45_npc_free_dialogue|npc free dialogue]] — daily_topics 잡담 시스템
+- [[architecture/47_dialogue_quality_audit|dialogue quality audit]] — NPA 검증 도구 (v2 확장 대상)
+- [[architecture/49_npc_resolver_authority|npc resolver authority]] — NPC 결정 단일 권한자
+- [[architecture/50_natural_dialogue_v1|natural dialogue v1]] — 시도 후 폐기 (본 문서의 직접 선행)
 - `server/src/llm/prompts/prompt-builder.service.ts` — Step 2/3 콘텐츠 활용
 - `server/src/llm/dialogue-generator.service.ts` — Step 4/5 후처리 위치
 - `scripts/e2e/audit/dialogue-quality.ts` — Step 1 NPA v2 메트릭 추가 대상

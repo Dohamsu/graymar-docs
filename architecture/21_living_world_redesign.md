@@ -1,6 +1,6 @@
 # 21. Living World Redesign — 살아있는 세계 재설계
 
-> **구현 API는 `guides/07_living_world_guide.md` 참조. 이 문서는 설계 배경·대안 분석만 유지.**
+> **구현 API는 [[guides/07_living_world_guide|living world guide]] 참조. 이 문서는 설계 배경·대안 분석만 유지.**
 > **목표**: "사용자가 자유롭게 탐색하며 세계를 탐험하고 만들어나가는 게임"
 > **범위**: 이벤트/장소/NPC/시간/결과/목표 재설계 모티베이션
 > **원칙**: 기존 자산(29개 HUB 서비스, 전투, RNG, 메모리 v2) 최대 활용. 교체가 아닌 진화.
@@ -79,7 +79,7 @@
 
 ## Part 3. 7대 핵심 시스템 — 설계 배경
 
-각 시스템의 구체 API/스키마/메서드는 `guides/07_living_world_guide.md`에 정리되어 있다. 아래는 각 시스템이 **왜 필요한가**와 **어떤 문제를 푸는가**에 초점을 맞춘다.
+각 시스템의 구체 API/스키마/메서드는 [[guides/07_living_world_guide|living world guide]]에 정리되어 있다. 아래는 각 시스템이 **왜 필요한가**와 **어떤 문제를 푸는가**에 초점을 맞춘다.
 
 ### System 1: Living Location (살아있는 장소)
 

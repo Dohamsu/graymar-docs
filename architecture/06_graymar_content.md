@@ -324,7 +324,7 @@ NPC는 **CORE / SUB / BACKGROUND** 3계층으로 구분된다.
 - NpcScheduleService가 WorldTick 시간대 변경 시 NPC 위치를 자동 업데이트
 - 이벤트 매칭/SituationGenerator에서 현재 장소에 있는 NPC만 상호작용 대상
 
-> NPC 소개 시스템: 첫 만남에서 `unknownAlias`로 표시. posture에 따라 1~3회 만남 후 실명 공개. 상세: `09_npc_politics.md` §1.4
+> NPC 소개 시스템: 첫 만남에서 `unknownAlias`로 표시. posture에 따라 1~3회 만남 후 실명 공개. 상세: [[architecture/09_npc_politics|npc politics]] §1.4
 
 ### 6.3 핵심 NPC 관계도
 

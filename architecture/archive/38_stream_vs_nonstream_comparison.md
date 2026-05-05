@@ -309,8 +309,8 @@ es.addEventListener('done', (e) => {
 
 ## 8. 참조
 
-- `architecture/35_llm_streaming.md` — 스트리밍 설계 + Dual-Track 구현
-- `architecture/37_streaming_transition_issues.md` — 전환 이슈 9건 간략 리스트
+- [[architecture/35_llm_streaming|llm streaming]] — 스트리밍 설계 + Dual-Track 구현
+- [[architecture/37_streaming_transition_issues|streaming transition issues]] — 전환 이슈 9건 간략 리스트
 - `scripts/bench-models.py` — TTFT/TTLT 벤치마크
 - `scripts/inspect-streaming-leaks.py` — 스트림 토큰 누수 감지
 - OpenAI API 공식: https://platform.openai.com/docs/api-reference/streaming

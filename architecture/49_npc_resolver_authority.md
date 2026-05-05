@@ -503,10 +503,10 @@ resolution 알고리즘 단위 테스트 권장 50건+ (각 source별 8~10건). 
 
 ## 11. 관련 문서
 
-- `architecture/45_npc_free_dialogue.md` — daily_topics 기반 잡담 (resolveContext.signal 통합 가능)
-- `architecture/46_fact_pool_continuity.md` — Fact 분리 + lock + fact awareness (resolveContext 통합 대상)
-- `architecture/47_dialogue_quality_audit.md` — NPA (검증 도구)
-- `architecture/48_npc_discoverability_v1.md` — role 매칭 + 위치 lookup (Layer 1·2가 resolveContext의 MEDIUM/whereabouts에 통합)
+- [[architecture/45_npc_free_dialogue|npc free dialogue]] — daily_topics 기반 잡담 (resolveContext.signal 통합 가능)
+- [[architecture/46_fact_pool_continuity|fact pool continuity]] — Fact 분리 + lock + fact awareness (resolveContext 통합 대상)
+- [[architecture/47_dialogue_quality_audit|dialogue quality audit]] — NPA (검증 도구)
+- [[architecture/48_npc_discoverability_v1|npc discoverability v1]] — role 매칭 + 위치 lookup (Layer 1·2가 resolveContext의 MEDIUM/whereabouts에 통합)
 - `server/src/turns/turns.service.ts:2299` — 기존 textMatchedNpcId Pass 1~4 (마이그레이션 대상)
 - `server/src/engine/hub/intent-parser-v2.service.ts:1167` — matchTargetNpc (마이그레이션 대상)
 - `server/src/engine/hub/event-matcher.service.ts` — EventMatcher (signal 제공자로 격하)

@@ -508,7 +508,7 @@ engine/rewards/  rewards.service
 
 ## 부록 B: COMBAT 키워드→ActionType 매핑 (정본)
 
-> 원본 참조: `specs/input_processing_pipeline_v1.md` §4.1
+> 원본 참조: [[specs/input_processing_pipeline_v1|input processing pipeline v1]] §4.1
 
 Rule Parser가 자유 텍스트를 전투 ActionType으로 변환할 때 사용하는 전체 키워드 테이블.
 

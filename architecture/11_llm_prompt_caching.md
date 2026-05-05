@@ -1,7 +1,7 @@
 # 11. LLM Prompt Caching 설계
 
 정본: 이 문서
-관련: `architecture/05_llm_narrative.md`, `specs/llm_context_system_v1.md`
+관련: [[architecture/05_llm_narrative|llm narrative]], [[specs/llm_context_system_v1|llm context system v1]]
 
 ---
 
@@ -329,7 +329,7 @@ messages.push({ role: 'user', content: factsParts.join('\n\n') });
 
 1. **TTL 의존성**: OpenAI 캐시 TTL이 5~10분 → 플레이어가 10분 이상 멈추면 캐시 만료. 게임 특성상 턴 간격이 짧아(2~30초) 대부분 히트 예상.
 
-2. **L0 theme 불변 원칙 유지**: system 메시지로 이동해도 L0 theme은 런 생성 시 고정, 이후 절대 변경 없음 (기존 `CLAUDE.md` 불변 규칙 준수).
+2. **L0 theme 불변 원칙 유지**: system 메시지로 이동해도 L0 theme은 런 생성 시 고정, 이후 절대 변경 없음 (기존 [[CLAUDE]] 불변 규칙 준수).
 
 3. **assistant 메시지 연속 금지**: OpenAI API는 동일 role 연속 메시지를 허용하지만, Claude API는 user/assistant 교대가 필수. Tier 2와 Tier 3를 하나의 assistant 메시지로 합치되 내부 구분선으로 분리.
 

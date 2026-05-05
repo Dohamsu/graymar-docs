@@ -130,8 +130,8 @@ text = text.replace(/@마커/g, '');         // LLM이 출력한 리터럴
 
 ## 4. 참조
 
-- `architecture/35_llm_streaming.md` — 스트리밍 설계 + Dual-Track 구현 + 후속 수정 섹션(A~E)
-- `architecture/36_llm_pipeline_changelog_20260417.md` — 동일 이슈의 상세 기술 문서
+- [[architecture/35_llm_streaming|llm streaming]] — 스트리밍 설계 + Dual-Track 구현 + 후속 수정 섹션(A~E)
+- [[architecture/36_llm_pipeline_changelog_20260417|llm pipeline changelog 20260417]] — 동일 이슈의 상세 기술 문서
 - `scripts/bench-models.py` — TTFT/TTLT 벤치마크
 - `scripts/verify-bench-quality.py` — 품질 감사
 - 커밋: server `ec1018b` / `68d29a2` / `b49dee0` · client `64849be` / `03e938b` / `cb26b2c` / `8685c36` / `6a8a4dd`

@@ -379,11 +379,11 @@ NPC의 말투로 자연스럽게 대화에 녹이세요.
 
 ## 12. 관련 문서
 
-- `architecture/33_lorebook_system.md` — 키워드 트리거 인프라 (Phase 1이 이 위에 구축)
-- `architecture/31_memory_system_v4.md` — recentTopics / npcStates 구조
-- `architecture/26_narrative_pipeline_v2.md` — 3-Stage 파이프라인 (이 변경은 Stage 1 컨텍스트 빌드 단계)
-- `architecture/09_npc_politics.md` — NPC 감정/소개 (trust/posture 게이팅 컨텍스트)
-- `CLAUDE.md` §LLM 설계 원칙 — Stateless 보완 / Positive 풀 / 카테고리 통제 (이 설계 직접 적용)
+- [[architecture/33_lorebook_system|lorebook system]] — 키워드 트리거 인프라 (Phase 1이 이 위에 구축)
+- [[architecture/31_memory_system_v4|memory system v4]] — recentTopics / npcStates 구조
+- [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]] — 3-Stage 파이프라인 (이 변경은 Stage 1 컨텍스트 빌드 단계)
+- [[architecture/09_npc_politics|npc politics]] — NPC 감정/소개 (trust/posture 게이팅 컨텍스트)
+- [[CLAUDE]] §LLM 설계 원칙 — Stateless 보완 / Positive 풀 / 카테고리 통제 (이 설계 직접 적용)
 
 ---
 

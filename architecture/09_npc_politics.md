@@ -1,6 +1,6 @@
 # 09 — NPC 정치 · 관계 · 행동 상태 시스템
 
-> 원본 참조: `State_Storage_Spec_v1.md`, `specs/political_narrative_system_v1.md`, `specs/llm_context_memory_v1_1.md`
+> 원본 참조: `State_Storage_Spec_v1.md`, [[specs/political_narrative_system_v1|political narrative system v1]], [[specs/llm_context_memory_v1_1|llm context memory v1 1]]
 > 상태: **구현 완료** — NPC 감정 모델, 소개 시스템, TurnOrchestration NPC 주입, posture 계산, PBP, Off-screen Tick, Schedule/Agenda, knownFacts 점진 공개, 퀘스트 Fact 연동 구현됨. Leverage(타입만 정의) 미사용. LocationRuntimeState는 Living World v2(21번)로 대체.
 > 의존: WorldState (구현됨), Reputation (구현됨), TurnOrchestration (구현됨), QuestProgression (구현됨)
 > 마지막 갱신: 2026-04-03 (NPC 대사 품질 개선, 대화 잠금, 프리셋 6종 반영)
@@ -221,7 +221,7 @@ interface Relationship {
 
 ### 2.2 서술적 관계 요약 (LLM 전달)
 
-> 원본: `specs/llm_context_memory_v1_1.md` §1.2
+> 원본: [[specs/llm_context_memory_v1_1|llm context memory v1 1]] §1.2
 
 관계는 수치가 아닌 **서술 요약**으로 LLM에 전달:
 - "상인 라비는 당신을 신뢰하기 시작했다."
@@ -393,7 +393,7 @@ NPCState, PBP, Relationship을 L2/L4에 주입.
 
 ## 8. 정치 내러티브 시스템 참조
 
-> 원본: `specs/political_narrative_system_v1.md`
+> 원본: [[specs/political_narrative_system_v1|political narrative system v1]]
 
 ### 세력 관계 모델
 
@@ -430,7 +430,7 @@ NPCState, PBP, Relationship을 L2/L4에 주입.
 | LLM 컨텍스트 전달 | ✅ 구현 | `context-builder.service.ts` — npcRelationFacts, playerProfile, npcEmotionalContext |
 | NPC 정보 기억 | ✅ 구현 | `[이번 방문 대화]` 규칙 6~7: NPC 대화 기억 유지 (2026-03-16) |
 | Leverage (약점/정보) | ⚠️ 타입만 정의 | `db/types/npc-state.ts` — 런타임 로직 미구현 (퀘스트 Fact 시스템으로 대체) |
-| LocationRuntimeState | ✅ Living World v2로 대체 | `21_living_world_redesign.md` — locationDynamicStates로 구현됨 |
+| LocationRuntimeState | ✅ Living World v2로 대체 | [[architecture/21_living_world_redesign|living world redesign]] — locationDynamicStates로 구현됨 |
 | NPC knownFacts → Quest | ✅ 구현 | `quest-progression.service.ts` — NPC 대화로 퀘스트 Fact 점진 공개 |
 | 밸런스 상수 외부화 | ✅ 구현 | `quest-balance.config.ts` — SitGen 확률, PARTIAL 발견률 등 |
 | Off-screen Tick | ✅ 구현 | `world-tick.service.ts` — preStepTick/postStepTick |

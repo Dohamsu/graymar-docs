@@ -404,12 +404,12 @@ python3 scripts/bench-models.py \
 
 ## 9. 참조
 
-- `architecture/05_llm_narrative.md` — 전체 LLM 파이프라인 개요 (정본)
-- `architecture/26_narrative_pipeline_v2.md` — 3-Stage Pipeline + AI 가이드라인 부록
-- `architecture/30_marker_accuracy_improvement.md` — @마커 시스템 3전략
-- `architecture/31_memory_system_v4.md` — Memory v4 + entity_facts
-- `architecture/32_dialogue_split_pipeline.md` — 2-Stage 대사 분리
-- `architecture/34_player_first_event_engine.md` — Player-First 이벤트 엔진 (targetNpcId/sceneNpcIds)
-- `architecture/35_llm_streaming.md` — LLM 스트리밍 설계 + Dual-Track 구현 + 후속 수정 섹션 (A~E)
-- `architecture/INDEX.md` — 도메인별 색인
-- `guides/04_llm_memory_guide.md` — LLM 파이프라인·메모리 실무 가이드
+- [[architecture/05_llm_narrative|llm narrative]] — 전체 LLM 파이프라인 개요 (정본)
+- [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]] — 3-Stage Pipeline + AI 가이드라인 부록
+- [[architecture/30_marker_accuracy_improvement|marker accuracy improvement]] — @마커 시스템 3전략
+- [[architecture/31_memory_system_v4|memory system v4]] — Memory v4 + entity_facts
+- [[architecture/32_dialogue_split_pipeline|dialogue split pipeline]] — 2-Stage 대사 분리
+- [[architecture/34_player_first_event_engine|player first event engine]] — Player-First 이벤트 엔진 (targetNpcId/sceneNpcIds)
+- [[architecture/35_llm_streaming|llm streaming]] — LLM 스트리밍 설계 + Dual-Track 구현 + 후속 수정 섹션 (A~E)
+- [[architecture/INDEX|INDEX]] — 도메인별 색인
+- [[guides/04_llm_memory_guide|llm memory guide]] — LLM 파이프라인·메모리 실무 가이드

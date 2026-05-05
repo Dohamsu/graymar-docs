@@ -524,8 +524,8 @@ CORE 6 NPC 각각 시나리오 1개 추가 가능 — 각 NPC personality 발현
 
 ## 13. 관련 문서
 
-- `architecture/45_npc_free_dialogue.md` — daily_topics 기반 잡담 (Topic Freedom 토대)
-- `architecture/46_fact_pool_continuity.md` — Fact 분리 + Continuity (Continuity 토대)
-- `architecture/26_narrative_pipeline_v2.md` — 3-Stage Pipeline (Pipeline Trace 토대)
+- [[architecture/45_npc_free_dialogue|npc free dialogue]] — daily_topics 기반 잡담 (Topic Freedom 토대)
+- [[architecture/46_fact_pool_continuity|fact pool continuity]] — Fact 분리 + Continuity (Continuity 토대)
+- [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]] — 3-Stage Pipeline (Pipeline Trace 토대)
 - `scripts/e2e/README.md` — 정본 e2e 4종 (audit 추가 위치)
 - `scripts/playtest.py` — V1~V9 검증 (자동 검증 룰 일부 재사용 가능)

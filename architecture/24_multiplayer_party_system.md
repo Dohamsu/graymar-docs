@@ -260,7 +260,7 @@ Phase 2까지는 "파티 전용 런"으로 솔로와 완전 분리된다. Phase 
 
 ## 10. 관련 문서
 
-- **구현 API**: `guides/08_party_guide.md` — 서비스/메서드/API/SSE 이벤트/DB 스키마
-- **서버 전체 맵**: `guides/01_server_module_map.md`
-- **클라이언트 맵**: `guides/02_client_component_map.md`
-- **LLM 파이프라인**: `guides/04_llm_memory_guide.md`
+- **구현 API**: [[guides/08_party_guide|party guide]] — 서비스/메서드/API/SSE 이벤트/DB 스키마
+- **서버 전체 맵**: [[guides/01_server_module_map|server module map]]
+- **클라이언트 맵**: [[guides/02_client_component_map|client component map]]
+- **LLM 파이프라인**: [[guides/04_llm_memory_guide|llm memory guide]]

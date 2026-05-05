@@ -287,10 +287,10 @@ private buildCombatChoices(...): ChoiceItem[] {
 
 ## 11. 문서 연관
 
-- `architecture/41_creative_combat_actions.md` — 창의 전투 MVP (입력창 강조 연관)
+- [[architecture/41_creative_combat_actions|creative combat actions]] — 창의 전투 MVP (입력창 강조 연관)
 - `client/src/components/battle/BattlePanel.tsx` — 기존 구현
 - `server/src/engine/combat/combat.service.ts` — buildCombatChoices
-- `specs/combat_engine_resolve_v1.md` — CHOICE → ActionPlan 매핑
+- [[specs/combat_engine_resolve_v1|combat engine resolve v1]] — CHOICE → ActionPlan 매핑
 
 ---
 

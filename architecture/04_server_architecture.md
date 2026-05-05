@@ -140,7 +140,7 @@ LLM 폴링용. 항상 반환: run 메타, turn 메타, serverResult, llm(status 
 
 ## 부록 A: 구 노드 타입 처리 규칙 (레거시 참조)
 
-> 원본 참조: `specs/node_resolve_rules_v1.md`
+> 원본 참조: [[specs/node_resolve_rules_v1|node resolve rules v1]]
 
 현재 HUB 엔진에서는 HUB/LOCATION/COMBAT만 사용하지만, 향후 구조화된 미션(Structured Mission) 모드에서 EVENT/REST/SHOP/EXIT 노드를 재활용할 수 있다. 아래는 각 노드의 서버 처리 규약이다.
 

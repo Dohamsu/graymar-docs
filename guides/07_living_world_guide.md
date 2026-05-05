@@ -1,7 +1,7 @@
 # Living World v2 구현 지침
 
 > 정본 위치: `server/src/engine/hub/` (living-world 서브폴더 없음, hub/ 평면 배치)
-> 설계 배경: `architecture/21_living_world_redesign.md` (배경/대안 분석)
+> 설계 배경: [[architecture/21_living_world_redesign|living world redesign]] (배경/대안 분석)
 > 타입 정본: `server/src/db/types/{world-state,location-state,world-fact,player-goal,npc-schedule}.ts`
 
 Living World v2를 구성하는 7개 서비스의 API, 호출 흐름, runState 스키마, 상수만 정리. 설계 배경/대안 비교는 21 원본 참조.

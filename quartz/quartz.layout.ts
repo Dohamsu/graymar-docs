@@ -41,7 +41,36 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer(),
   ],
   right: [
-    Component.Graph(),
+    Component.Graph({
+      localGraph: {
+        drag: true,
+        zoom: true,
+        depth: 2,                // 현재 페이지 + 2단계 연결까지
+        scale: 1.1,
+        repelForce: 0.5,
+        centerForce: 0.3,
+        linkDistance: 30,
+        fontSize: 0.6,
+        opacityScale: 1,
+        showTags: true,          // 태그도 그래프 노드로
+        removeTags: [],
+        focusOnHover: true,      // 호버 시 연결만 강조
+      },
+      globalGraph: {
+        drag: true,
+        zoom: true,
+        depth: -1,               // -1 = 전체 노드 (사이트 모든 페이지)
+        scale: 0.9,
+        repelForce: 0.5,
+        centerForce: 0.3,
+        linkDistance: 40,
+        fontSize: 0.6,
+        opacityScale: 1,
+        showTags: true,
+        removeTags: [],
+        focusOnHover: true,
+      },
+    }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],

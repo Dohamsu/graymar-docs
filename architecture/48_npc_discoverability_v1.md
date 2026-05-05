@@ -372,9 +372,9 @@ actionContext: {
 
 ## 12. 관련 문서
 
-- `architecture/45_npc_free_dialogue.md` — daily_topics 기반 잡담
-- `architecture/46_fact_pool_continuity.md` — Fact 분리 + Continuity (lock + fact awareness)
-- `architecture/47_dialogue_quality_audit.md` — NPA (이 회귀 검출 도구)
-- `guides/07_living_world_guide.md` — NpcSchedule (Layer 2 데이터 소스)
+- [[architecture/45_npc_free_dialogue|npc free dialogue]] — daily_topics 기반 잡담
+- [[architecture/46_fact_pool_continuity|fact pool continuity]] — Fact 분리 + Continuity (lock + fact awareness)
+- [[architecture/47_dialogue_quality_audit|dialogue quality audit]] — NPA (이 회귀 검출 도구)
+- [[guides/07_living_world_guide|living world guide]] — NpcSchedule (Layer 2 데이터 소스)
 - `server/src/turns/turns.service.ts:2299` — textMatchedNpcId 현행 로직
 - `server/src/engine/hub/event-matcher.service.ts` — Layer 3 변경 대상
