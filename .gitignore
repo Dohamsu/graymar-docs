@@ -27,3 +27,11 @@ playtest-reports/*.md
 playtest-reports/**/
 playtest-reports/archive/
 !playtest-reports/.gitkeep
+
+# Quartz 빌드 산출물 (content는 sync-content 스크립트로 매번 재생성)
+# 동기화된 content/ 파일은 git untracked 상태로 두고 commit 하지 않음
+quartz/node_modules/
+quartz/public/
+quartz/.quartz-cache/
+.gstack/
+quartz/docs/
