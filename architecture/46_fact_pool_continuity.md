@@ -371,11 +371,11 @@ factsParts.push([
 
 ## 11. 관련 문서
 
-- `architecture/34_player_first_event_engine.md` — NPC 결정 5단계 (이 설계는 그 위)
-- `architecture/45_npc_free_dialogue.md` — Phase 2 잡담 풀 (이 설계와 통합)
-- `architecture/33_lorebook_system.md` — 키워드 트리거 인프라 (활용)
-- `CLAUDE.md` §26 — 대화 잠금 (이 설계로 대체)
-- `CLAUDE.md` §34 — Player-First 5단계 (이 설계가 강화)
+- [[architecture/34_player_first_event_engine|player first event engine]] — NPC 결정 5단계 (이 설계는 그 위)
+- [[architecture/45_npc_free_dialogue|npc free dialogue]] — Phase 2 잡담 풀 (이 설계와 통합)
+- [[architecture/33_lorebook_system|lorebook system]] — 키워드 트리거 인프라 (활용)
+- [[CLAUDE]] §26 — 대화 잠금 (이 설계로 대체)
+- [[CLAUDE]] §34 — Player-First 5단계 (이 설계가 강화)
 
 ---
 

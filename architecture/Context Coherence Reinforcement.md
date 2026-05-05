@@ -1,7 +1,7 @@
 # 19. Context Coherence Reinforcement
 
 > 맥락 유지 강화 설계서
-> 선행 문서: `05_llm_narrative.md`, `18_narrative_runtime_patch.md`, `04_llm_memory_guide.md`
+> 선행 문서: [[architecture/05_llm_narrative|llm narrative]], `18_narrative_runtime_patch.md`, [[guides/04_llm_memory_guide|llm memory guide]]
 > 대상: 서사 맥락 유지, NPC 기억, 장면 연속성, 장기 기억 품질
 > 원칙: 기존 시스템을 깨지 않고, 계층별로 강화한다. 새 LLM 호출을 추가하지 않는다.
 

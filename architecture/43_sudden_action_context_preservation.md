@@ -423,12 +423,12 @@ function fallbackSummary(llmOutput: string, suddenAction?: SuddenAction): string
 
 ## 10. 기존 문서 연관
 
-- `09_npc_politics.md` — 5축 감정 모델 · posture 전환 규칙 (기반)
-- `14_user_driven_code_bridge.md` — IntentV3 → Incident 라우터 (확장 지점)
-- `21_living_world_redesign.md` — NpcAgenda · ConsequenceProcessor (연동)
+- [[architecture/09_npc_politics|npc politics]] — 5축 감정 모델 · posture 전환 규칙 (기반)
+- [[architecture/14_user_driven_code_bridge|user driven code bridge]] — IntentV3 → Incident 라우터 (확장 지점)
+- [[architecture/21_living_world_redesign|living world redesign]] — NpcAgenda · ConsequenceProcessor (연동)
 - `31_memory_system_v4.md` — Mid Summary 생성 로직 (§6 개선 대상)
-- `34_player_first_event_engine.md` — TurnMode · NPC 결정 우선순위 (상위 프레임워크)
-- `CLAUDE.md` Invariant 15 — NPC 이름 비공개→공개 단계 (관련)
+- [[architecture/34_player_first_event_engine|player first event engine]] — TurnMode · NPC 결정 우선순위 (상위 프레임워크)
+- [[CLAUDE]] Invariant 15 — NPC 이름 비공개→공개 단계 (관련)
 
 ---
 

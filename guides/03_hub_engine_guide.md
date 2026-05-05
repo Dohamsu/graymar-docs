@@ -1,7 +1,7 @@
 # HUB 엔진 구현 지침
 
 > 정본 위치: `server/src/engine/hub/`
-> 설계 문서: `architecture/03_hub_engine.md`, `14~17`, `18~20`
+> 설계 문서: [[architecture/03_hub_engine|hub engine]], `14~17`, `18~20`
 > 최종 갱신: 2026-04-03 (퀘스트/프리셋6종/특성/KW_OVERRIDE 추가)
 
 ## Action-First 파이프라인

@@ -1,7 +1,7 @@
 # 파티 시스템 구현 가이드
 
 > 정본 위치: `server/src/party/`
-> 설계 배경·Phase 계획: `architecture/24_multiplayer_party_system.md`
+> 설계 배경·Phase 계획: [[architecture/24_multiplayer_party_system|multiplayer party system]]
 > 최종 갱신: 2026-04-17
 
 최대 4인 파티 시스템 구현 가이드. 파티 CRUD, 실시간 채팅(SSE), 협동 던전(동시 턴/이동 투표/보상 분배), 런 통합(파티장 솔로 런 합류)을 포괄한다.
@@ -392,4 +392,4 @@ IN_DUNGEON ─(RUN_ENDED: endDungeon)→ OPEN/FULL
 - 에러: `server/src/common/errors/game-errors.ts` — `BadRequestError`, `NotFoundError`, `ForbiddenError`
 - 클라이언트 스토어: `client/src/store/party-store.ts`
 - 클라이언트 SSE: `client/src/lib/sse-client.ts`
-- 설계 문서: `architecture/24_multiplayer_party_system.md`
+- 설계 문서: [[architecture/24_multiplayer_party_system|multiplayer party system]]

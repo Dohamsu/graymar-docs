@@ -2,9 +2,9 @@
 
 > ⚠️ **부분 구식 (2026-04-22)**: HUB 순환 모드 도입 이전 서술 일부 포함.
 > 실제 현행 흐름은 아래 조합이 정본:
-> - HUB 구조: `03_hub_engine.md`
-> - 유저 드리븐 진행: `14_user_driven_code_bridge.md`
-> - 동적 세계: `21_living_world_redesign.md`
+> - HUB 구조: [[architecture/03_hub_engine|hub engine]]
+> - 유저 드리븐 진행: [[architecture/14_user_driven_code_bridge|user driven code bridge]]
+> - 동적 세계: [[architecture/21_living_world_redesign|living world redesign]]
 >
 > 원본: `02_game_systems.md` (622 lines) 압축본
 > 원본 정본: `run_node_system.md`, `run_planner_v1_1.md`, `character_growth_v1.md`, `rewards_and_progression_v1.md`
@@ -47,7 +47,7 @@ LOC_DOCKS_WAREHOUSE ─── LOC_SLUMS
 
 > 캐릭터 프리셋 4종(부두 노동자/탈영병/밀수업자/약초상)이 구현되어 있다.
 > 각 프리셋의 스탯 분배는 LOCATION 판정에 `floor(stat/3)` 보너스로 반영된다.
-> 상세: `03_hub_engine.md`, `content/graymar_v1/presets.json`
+> 상세: [[architecture/03_hub_engine|hub engine]], `content/graymar_v1/presets.json`
 
 ### 1.2 원본 설계: 선형 RUN 구조 (미구현)
 
@@ -332,7 +332,7 @@ GP로 투자 가능한 13종 영구 능력치:
 ---
 
 > **참조 문서**
-> - `03_hub_engine.md` --- HUB 엔진, Action-First 파이프라인, WorldState
+> - [[architecture/03_hub_engine|hub engine]] --- HUB 엔진, Action-First 파이프라인, WorldState
 > - `04_combat_engine.md` --- 전투 시스템, DOWNED, 보상 처리
 > - `content/graymar_v1/presets.json` --- 캐릭터 프리셋 정의
 > - `content/graymar_v1/items.json` --- 아이템 카탈로그
@@ -341,7 +341,7 @@ GP로 투자 가능한 13종 영구 능력치:
 
 ## 부록 A: 장비 리셋 스토리 정당화
 
-> 원본 참조: `specs/character_growth_v1.md` §2
+> 원본 참조: [[specs/character_growth_v1|character growth v1]] §2
 
 ### 장비 리셋 설정
 
@@ -365,7 +365,7 @@ GP로 투자 가능한 13종 영구 능력치:
 
 ## 부록 B: 보상 상한 & 패배/도주 경제 상세
 
-> 원본 참조: `specs/rewards_and_progression_v1.md`
+> 원본 참조: [[specs/rewards_and_progression_v1|rewards and progression v1]]
 
 ### 보상 상한 정책
 
@@ -397,7 +397,7 @@ GP로 투자 가능한 13종 영구 능력치:
 
 ## 부록 C: Phase별 노드 생성 가중치 상세
 
-> 원본 참조: `specs/run_planner_v1_1.md`
+> 원본 참조: [[specs/run_planner_v1_1|run planner v1 1]]
 
 선형 RUN 구조에서의 Phase별 상세 가중치 정책. 현재는 미구현이나 구조화된 미션 모드 도입 시 적용.
 

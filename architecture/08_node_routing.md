@@ -1,6 +1,6 @@
 # 08 — 노드 라우팅 아키텍처 (DAG 분기)
 
-> 원본 참조: `specs/node_routing_v2.md` (41KB 전문)
+> 원본 참조: [[specs/node_routing_v2|node routing v2]] (41KB 전문)
 > 상태: **✅ 구현됨** — DAG 기반 아키텍처(PlannedNodeV2, Edge, resolveNextNodeId) + 24노드 그래프 정의 + 3루트 조건부 분기 완료.
 > 의존: `run_node_system.md`, `node_resolve_rules_v1.md`, `vertical_slice_v1.md`
 
@@ -223,4 +223,4 @@ DEFAULT 엣지 없음 — S2는 반드시 3개 중 택1 필수.
 - LLM 컨텍스트: `routeTag`를 L0에 추가하여 루트별 내러티브 톤 유도
 - 런 복구(GET /runs/:runId): `currentGraphNodeId`로 위치 추적
 
-> 전체 상세(24개 노드 정의, encounter/event/NPC/item JSON, 서비스 의사코드)는 원본 `specs/node_routing_v2.md` 참조.
+> 전체 상세(24개 노드 정의, encounter/event/NPC/item JSON, 서비스 의사코드)는 원본 [[specs/node_routing_v2|node routing v2]] 참조.

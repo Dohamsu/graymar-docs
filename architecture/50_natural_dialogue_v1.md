@@ -312,10 +312,10 @@ v1에서 제외. 단 chat scenario에서 잡담 톤이 여전히 무겁다면 v2
 
 ## 13. 관련 문서
 
-- `architecture/26_narrative_pipeline_v2.md` — 3-Stage Pipeline (이 문서가 다루는 프롬프트 빌드의 토대)
-- `architecture/45_npc_free_dialogue.md` — daily_topics 잡담 시스템 (C 변경 대상)
-- `architecture/47_dialogue_quality_audit.md` — NPA 검증 도구 (Phase 4)
-- `architecture/49_npc_resolver_authority.md` — NPC 결정 단일 권한자
+- [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]] — 3-Stage Pipeline (이 문서가 다루는 프롬프트 빌드의 토대)
+- [[architecture/45_npc_free_dialogue|npc free dialogue]] — daily_topics 잡담 시스템 (C 변경 대상)
+- [[architecture/47_dialogue_quality_audit|dialogue quality audit]] — NPA 검증 도구 (Phase 4)
+- [[architecture/49_npc_resolver_authority|npc resolver authority]] — NPC 결정 단일 권한자
 - `server/src/llm/prompts/prompt-builder.service.ts` — 변경 대상 (A/C/D 모두)
 - `server/src/llm/prompts/system-prompts.ts` — 시스템 프롬프트 (A 보강 대상)
 - CLAUDE.md "LLM 설계 원칙" — Negative보다 Positive, 풍선효과, soft 지시 무시

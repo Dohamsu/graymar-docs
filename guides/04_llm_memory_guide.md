@@ -1,7 +1,7 @@
 # LLM & 메모리 시스템 구현 지침
 
 > 정본 위치: `server/src/llm/`
-> 설계 문서: `architecture/05_llm_narrative.md`, `18_narrative_runtime_patch.md`
+> 설계 문서: [[architecture/05_llm_narrative|llm narrative]], `18_narrative_runtime_patch.md`
 > 최종 갱신: 2026-04-03 (NPC 대사 품질/후처리 필터/퀘스트 힌트 추가)
 
 ## LLM Narrative Pipeline
@@ -28,7 +28,7 @@ HUB↔LOCATION 전환 시: 전환 화면 없이 즉시 전환, enter narrator만
 
 ## 강화된 LLM 파이프라인 (A56, 2026-05-04)
 
-> 설계: `architecture/56_npc_reaction_director.md`
+> 설계: [[architecture/56_npc_reaction_director|npc reaction director]]
 
 ResolveService 호출 직전 + 메인 LLM 호출 직전에 nano LLM 사전 결정 단계 추가:
 

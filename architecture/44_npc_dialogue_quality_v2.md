@@ -2,7 +2,7 @@
 
 **Status**: 📎 설계 (2026-04-22)
 **Context**: QA 60턴 종합 검증(run a63c12dd) NPC 대사 25개 분석 결과 두 개의 고정 이슈 도출
-**Related**: `30_marker_accuracy_improvement.md`, `32_dialogue_split_pipeline.md`, `26_narrative_pipeline_v2.md`
+**Related**: [[architecture/30_marker_accuracy_improvement|marker accuracy improvement]], [[architecture/32_dialogue_split_pipeline|dialogue split pipeline]], `26_narrative_pipeline_v2.md`
 
 ---
 

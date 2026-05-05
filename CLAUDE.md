@@ -143,8 +143,8 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 
 ## Architecture (요약)
 
-> 상세 서비스 맵: `guides/01_server_module_map.md`
-> 상세 컴포넌트 맵: `guides/02_client_component_map.md`
+> 상세 서비스 맵: [[guides/01_server_module_map|server module map]]
+> 상세 컴포넌트 맵: [[guides/02_client_component_map|client component map]]
 
 ### Server — 12 modules, 95 services, 10 controllers
 
@@ -180,7 +180,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | Narrative v2 & Event v2 | 4 | IntentMemory, EventDirector, ProceduralEvent, LlmIntentParser |
 | Living World v2 | 7 | LocationState, WorldFact, NpcSchedule, NpcAgenda, ConsequenceProcessor, SituationGenerator, PlayerGoal |
 
-> 상세: `guides/03_hub_engine_guide.md`
+> 상세: [[guides/03_hub_engine_guide|hub engine guide]]
 
 ### Client — 60 components, 5 stores
 
@@ -324,7 +324,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 | SignalChannel | `signal-feed.ts` | RUMOR, SECURITY, NPC_BEHAVIOR, ECONOMY, VISUAL |
 | NarrativeMarkType | `narrative-mark.ts` | BETRAYER, SAVIOR, KINGMAKER, SHADOW_HAND, MARTYR, PROFITEER, PEACEMAKER, WITNESS, ACCOMPLICE, AVENGER, COWARD, MERCIFUL |
 | StepStatus | `operation-session.ts` | PENDING, IN_PROGRESS, COMPLETED, SKIPPED |
-| Status ID | `specs/status_effect_system_v1.md` §10 | BLEED, POISON, STUN, WEAKEN, FORTIFY |
+| Status ID | [[specs/status_effect_system_v1|status effect system v1]] §10 | BLEED, POISON, STUN, WEAKEN, FORTIFY |
 | ResolveOutcome | `resolve-result.ts` | SUCCESS, PARTIAL, FAIL |
 | Client Phase | `game-store.ts` | TITLE, LOADING, HUB, LOCATION, COMBAT, NODE_TRANSITION, RUN_ENDED, ERROR |
 | StoryMessageType | `game.ts` | SYSTEM, NARRATOR, PLAYER, CHOICE, RESOLVE |
@@ -500,7 +500,7 @@ LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비�
 
 ## Document Status (설계 문서 현황)
 
-> **중간 색인**: `architecture/INDEX.md` — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
+> **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
 
 ### specs/ — 상세 스펙 (17 md)
 
