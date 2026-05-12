@@ -49,7 +49,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/05_llm_narrative|llm narrative]] — LLM 파이프라인 개요(L0~L4 컨텍스트, Token Budget 2500, LLM is narrative-only 불변). 모든 서술 문서의 진입점.
 - [[architecture/11_llm_prompt_caching|llm prompt caching]] — 시스템/정적/동적 블록 분리와 프롬프트 캐싱 전략(OpenAI/Anthropic/OpenRouter).
-- [[architecture/25_llm_model_evaluation|llm model evaluation]] — 모델 평가(v1+v2 통합). 현 선택: 메인 Gemini Flash(이후 Gemma4↔Flash Lite 교차 이력 포함) + fallback GPT-4.1 Mini.
+- [[architecture/25_llm_model_evaluation|llm model evaluation]] — 모델 평가(v1+v2 통합). **현 운영(2026-05): 메인 Gemma 4 26B MoE (OpenRouter) + fallback GPT-4.1 Mini.** Qwen3 235B → Gemini Flash Lite → Flash 교차 이력을 거쳐 Gemma 4 로 복귀.
 - `26_narrative_pipeline_v2.md` — 3-Stage 파이프라인(NanoDirector → 메인 LLM → NanoProcessor)과 Narrative v2 / EventDirector / Procedural Event(`18/19/20` 통합) + AI 구현 가이드라인.
 - [[architecture/30_marker_accuracy_improvement|marker accuracy improvement]] — @마커 오류율 개선 3전략(프롬프트 강화 + 서브 LLM 2차 검증 + JSON 모드).
 - `31_memory_system_v4.md` — nano 구조화 추출 + `entity_facts` UPSERT + 직전 턴 nano 요약 주입. 메모리 반복률 대폭 감소.

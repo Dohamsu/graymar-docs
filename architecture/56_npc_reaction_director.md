@@ -183,7 +183,7 @@ PromptBuilder
   ├─ NpcReaction 블록 (톤 가이드 + 추상)
   └─ ...
   ↓
-메인 LLM (Gemini Flash / Qwen3 등)
+메인 LLM (Gemma 4 26B MoE — OpenRouter)
   ↓
 [5.5 마커 후처리]
   ├─ A 단계: nano DialogueMarker
