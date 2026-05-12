@@ -200,6 +200,30 @@ v1은 **gpt-4.1-mini vs Gemma 4 계열** 4개 모델(E4B 로컬, 31B Gemini API,
 
 v2에서 Qwen3 235B가 품질/비용 모두에서 Gemma 4 26B MoE를 앞서면서 메인 모델이 교체됨. Gemma 4는 여전히 상위 2위로 유효한 선택.
 
+## 부록 A-1. 운영 모델 변천 — Gemma 4 복귀 (2026.5)
+
+v2 평가 결론(Qwen3 235B 메인)이 채택된 후, 운영 환경에서 Gemini 2.5 Flash Lite → Flash 로 차례 전환됐다가 **현재 Gemma 4 26B MoE 로 복귀**한 상태이다. 실제 운영값은 다음과 같다.
+
+| 시점 | 메인 | Fallback | 사유 |
+|---|---|---|---|
+| v1 (2026.4) | Gemma 4 26B MoE | Claude Haiku 4.5 | 한국어 품질 + 가격 |
+| v2 (2026.4) | Qwen3 235B A22B 2507 | GPT-4.1 Mini | 정량 평가 1위 |
+| Flash Lite 전환 | Gemini 2.5 Flash Lite | GPT-4.1 Mini | 속도 2.7배 (Qwen 14초 → 5.4초) |
+| Flash 전환 | Gemini 2.5 Flash | GPT-4.1 Mini | Flash Lite 메타서술/영어 누출 해소 |
+| **현재 (2026.5)** | **Gemma 4 26B MoE** | **GPT-4.1 Mini** | 한국어 서술 일관성 + 안정성 |
+
+`server/.env` 정본:
+
+```bash
+LLM_PROVIDER=openai
+OPENAI_MODEL=google/gemma-4-26b-a4b-it
+OPENAI_BASE_URL=https://openrouter.ai/api/v1
+LLM_FALLBACK_MODEL=openai/gpt-4.1-mini
+LLM_ALTERNATE_MODEL=google/gemma-4-26b-a4b-it
+```
+
+> v2 표(부록 A 상단)는 평가 시점의 정량 데이터로 참고용. 운영 의사결정은 정량 점수 외에 한국어 자연스러움 / 톤 일관성 / 비용 안정성 / OpenRouter 게이트웨이 안정성을 종합 판단해 Gemma 4 로 복귀했다.
+
 ## 부록 B. 가격 출처
 
 - OpenRouter 각 모델 가격 페이지 (2026.4 기준)
