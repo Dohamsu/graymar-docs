@@ -1,0 +1,196 @@
+# Graymar — LLM 기반 정치 음모 텍스트 RPG
+
+> 이름 없는 용병이 항만 도시 **그레이마르**의 권력 투쟁을 거쳐 성장하는 턴제 텍스트 RPG.
+> 서버가 모든 게임 로직을 결정론적으로 처리하고, LLM은 내러티브 텍스트만 생성한다.
+
+## Live Demo
+
+- **플레이**: [www.dimtale.com](https://www.dimtale.com)
+- **게임 진입**: [www.dimtale.com/play](https://www.dimtale.com/play)
+
+## Tech Stack
+
+| Layer | Tech | Version |
+|-------|------|---------|
+| Backend | NestJS | 11 |
+| ORM | Drizzle ORM | 0.45 |
+| DB | PostgreSQL | 16 |
+| Validation | Zod | 4.3 |
+| Frontend | Next.js | 16.1 |
+| React | React | 19.2 |
+| State | Zustand | 5.0 |
+| Styling | Tailwind CSS | 4 |
+| LLM | Gemma 4 26B MoE (메인) / GPT-4.1 Mini (fallback) / Gemini | OpenRouter Multi-provider |
+
+## Project Structure
+
+```
+├── server/              ← NestJS 백엔드 (12 modules, 95 services, 22 tables)
+├── client/              ← Next.js 16 프론트엔드 (60+ components, 5 stores)
+├── content/             ← 게임 콘텐츠 시드 데이터 (24 JSON, 43 NPC, 7 locations, 123 events)
+├── specs/               ← 상세 설계 스펙 (17 md)
+├── architecture/        ← 통합 아키텍처 문서 (40+ md + INDEX)
+├── guides/              ← 코드 구현 지침 (8 md)
+├── schema/              ← DB 스키마, JSON Schema, OpenAPI
+├── samples/             ← 샘플 페이로드 (JSON)
+├── scripts/             ← 자동화 스크립트 (playtest, e2e, audit_quality)
+├── playtest-reports/    ← 플레이테스트 리포트
+└── agents/              ← 에이전트 역할 정의서
+```
+
+## Quick Start
+
+### 1. 데이터베이스
+
+```bash
+cd server
+docker compose up -d
+```
+
+### 2. 서버
+
+```bash
+cd server
+pnpm install
+cp .env.example .env          # 환경 변수 편집
+npx drizzle-kit push          # DB 스키마 동기화
+pnpm start:dev                # http://localhost:3000
+```
+
+### 3. 클라이언트
+
+```bash
+cd client
+pnpm install
+pnpm dev -- --port 3001       # http://localhost:3001
+```
+
+## Game Overview
+
+### 핵심 루프
+
+```
+HUB (도시 거점) → 7 LOCATION 탐험 → COMBAT (턴제 전투) → HUB (순환)
+```
+
+### 캐릭터 프리셋 6종
+
+| ID | 이름 | 컨셉 |
+|----|------|------|
+| DOCKWORKER | 부두 노동자 | 근접 탱커 |
+| DESERTER | 탈영병 | 균형 전투 |
+| SMUGGLER | 밀수업자 | 은밀 특화 |
+| HERBALIST | 약초상 | 방어 유틸 |
+| FALLEN_NOBLE | 몰락 귀족 | 정치 특화 |
+| GLADIATOR | 검투사 | 공격 특화 |
+
+### 특성 6종
+
+| ID | 효과 |
+|----|------|
+| BATTLE_MEMORY | 전투 경험 보너스 |
+| STREET_SENSE | 위험 감지 |
+| SILVER_TONGUE | 설득/협상 보너스 |
+| GAMBLER_LUCK | FAIL→50% PARTIAL, 크리티컬 비활성 |
+| BLOOD_OATH | 저HP 보너스 +2/+3, 치료 50% 감소 |
+| NIGHT_CHILD | 밤 +2, 낮 -1 |
+
+### 캐릭터 생성
+
+이름 입력 → 프리셋 선택 → 특성 선택 → 보너스 스탯 +6 배분 → AI 초상화 생성 (Gemini)
+
+### 7개 탐험 장소
+
+시장 거리, 경비대 지구, 항만 부두, 빈민가, 상류 거리, 잠긴 닻 선술집, 항만 창고구
+
+### NPC 3계층 (43명)
+
+- **CORE** (6명): 메인 스토리 핵심 NPC — 전용 초상화
+- **SUB** (12명): 퀘스트/이벤트 연계 NPC — 전용 초상화
+- **BACKGROUND** (25명): 배경/분위기 NPC
+
+NPC별 다중 어체: HAOCHE(19) / HAPSYO(9) / HAEYO(7) / HAECHE(6) / BANMAL(2)
+
+### 퀘스트 시스템
+
+6단계 자동 전환 (S0→S5) + 3개 Arc 루트 (EXPOSE_CORRUPTION / PROFIT_FROM_CHAOS / ALLY_GUARD)
+
+### LLM 파이프라인
+
+```
+NanoDirector → Stage A(서술 LLM) → dialogue_slot → Stage B(대사 LLM) → 서버 조립
+                                     ↓
+                              로어북 키워드 매칭 → 관련 세계 지식 주입
+                                     ↓
+                              Memory v4: entity_facts UPSERT → nano 요약 주입
+```
+
+### 주요 시스템
+
+| 시스템 | 설명 |
+|--------|------|
+| Player-First 이벤트 엔진 | TurnMode 3분류 (PLAYER_DIRECTED/CONVERSATION_CONT/WORLD_EVENT) + NPC 5단계 우선순위 |
+| Action-First 파이프라인 | 플레이어 행동 → 이벤트 매칭 → 판정 (1d6+stat) |
+| Event Director | 123개 이벤트 라이브러리 + NanoEventDirector 동적 생성 |
+| Living World v2 | 장소 상태, NPC 스케줄·아젠다, 상황 생성, 결과 처리 |
+| Narrative Engine v1 | 사건 생명주기, 4상 시간, 시그널 피드, NPC 감정 5축 |
+| Memory v4 | entity_facts UPSERT + nano 요약 주입 (반복률 71% ↓) |
+| Token Budget | 2500 토큰 예산, 블록별 배분 + 저우선 트리밍 |
+| 전투 시스템 | 거리/각도 포지셔닝, 5종 상태이상, AI 성격별 행동 |
+| 장비 시스템 | 세트 효과, 지역 접미사, Legendary, 획득 토스트·교체 모달 |
+| LLM 스트리밍 | OpenRouter stream:true + SSE + 2-Phase 렌더링 |
+| 엔딩 연출 | Part B MIN_TURNS 가드 + arcRoute 12분기 에필로그 + personalClosing + DeadlineBanner |
+| 여정 아카이브 | ending_summary 캐시 + EndingsListScreen + JourneySummaryScreen 양피지 스타일 |
+
+## API Endpoints
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| POST | `/v1/auth/register` | 회원가입 |
+| POST | `/v1/auth/login` | 로그인 → JWT |
+| POST | `/v1/runs` | 새 RUN 생성 |
+| GET | `/v1/runs` | 활성 RUN 조회 |
+| GET | `/v1/runs/:runId` | RUN 상태 조회 |
+| POST | `/v1/runs/:runId/turns` | 턴 제출 |
+| GET | `/v1/runs/:runId/turns/:turnNo` | 턴 상세 (LLM 폴링) |
+| POST | `/v1/runs/:runId/turns/:turnNo/retry-llm` | LLM 재시도 |
+| GET | `/v1/settings/llm` | LLM 설정 조회 |
+| PATCH | `/v1/settings/llm` | LLM 설정 변경 |
+| POST | `/v1/bug-reports` | 버그 리포트 생성 |
+| GET | `/v1/bug-reports` | 버그 리포트 목록 |
+| GET | `/v1/bug-reports/:id` | 버그 리포트 상세 |
+| PATCH | `/v1/bug-reports/:id` | 버그 리포트 상태 변경 |
+| POST | `/v1/portrait/generate` | AI 초상화 생성 |
+| GET | `/v1/version` | 서버 버전 조회 |
+| GET | `/v1/endings` | 완료된 엔딩 요약 목록 (여정 아카이브) |
+| GET | `/v1/endings/:runId` | 특정 엔딩 상세 (JourneySummary) |
+| POST | `/v1/runs/:runId/items/equip` | 장비 장착 (슬롯 자동 배치) |
+| POST | `/v1/runs/:runId/items/unequip` | 장비 해제 |
+| POST | `/v1/runs/:runId/items/use` | 소모품 사용 (HEAL_HP / RESTORE_STAMINA) |
+
+## Design Invariants
+
+1. **Server is Source of Truth** — 모든 수치 계산, 확률, 상태 변경은 서버에서만
+2. **LLM is narrative-only** — LLM 출력은 게임 결과에 영향 없음
+3. **Idempotency** — `(run_id, turn_no)` + `(run_id, idempotency_key)` unique
+4. **RNG determinism** — `seed + cursor` 저장, 재현 가능
+5. **Theme memory (L0) 불변** — 토큰 예산 압박에도 삭제 금지
+6. **Action slot cap = 3** — Base 2 + Bonus 1
+7. **HUB Heat +-8 clamp** — 한 턴에 Heat 변동 제한
+8. **Token Budget 2500** — 블록별 예산 배분
+9. **Procedural Plot Protection** — 동적 이벤트에 arcRouteTag/commitmentDelta 불포함
+10. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns >= 15
+
+## Documentation
+
+| 폴더 | 내용 |
+|------|------|
+| `specs/` | 전투, 노드, LLM, API 등 상세 스펙 17편 |
+| `architecture/` | 통합 아키텍처 문서 40+ 편 + `INDEX.md` 도메인 색인 |
+| `guides/` | 서버 모듈맵, 클라이언트 컴포넌트맵, HUB 엔진 가이드 등 8편 |
+| `CLAUDE.md` | 프로젝트 작업 가이드라인 + LLM 설계 원칙 + 40+ Invariant |
+| `portfolio.md` | 프로젝트 포트폴리오 (기술 하이라이트·아키텍처·회고) |
+
+## License
+
+MIT
