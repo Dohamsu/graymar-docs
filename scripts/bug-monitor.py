@@ -8,6 +8,7 @@ import subprocess
 import json
 import sys
 import os
+import shutil
 from datetime import datetime, timezone, timedelta
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,6 +16,26 @@ REPORT_DIR = os.path.join(PROJECT_ROOT, "playtest-reports")
 DOCKER_CONTAINER = "textRpg-db"
 DB_USER = "user"
 DB_NAME = "textRpg"
+TOOL_PATH_EXTRA = ["/usr/local/bin", "/opt/homebrew/bin"]
+
+
+def tool_env():
+    """launchd의 짧은 PATH에서도 Homebrew/manual CLI를 찾도록 보강한다."""
+    env = os.environ.copy()
+    parts = [p for p in env.get("PATH", "").split(os.pathsep) if p]
+    for extra in TOOL_PATH_EXTRA:
+        if extra not in parts:
+            parts.append(extra)
+    env["PATH"] = os.pathsep.join(parts)
+    return env
+
+
+def resolve_executable(name):
+    env = tool_env()
+    path = shutil.which(name, path=env["PATH"])
+    if not path:
+        raise RuntimeError(f"필수 실행 파일을 찾을 수 없음: {name} (PATH={env['PATH']})")
+    return path, env
 
 # .env에서 Slack 웹훅 URL 읽기
 def get_slack_webhook():
@@ -29,14 +50,14 @@ def get_slack_webhook():
 
 def query_db(sql):
     """Docker를 통해 PostgreSQL 쿼리 실행"""
+    docker, env = resolve_executable("docker")
     result = subprocess.run(
-        ["docker", "exec", DOCKER_CONTAINER, "psql", "-U", DB_USER, "-d", DB_NAME,
+        [docker, "exec", DOCKER_CONTAINER, "psql", "-U", DB_USER, "-d", DB_NAME,
          "-t", "-A", "-F", "\t", "-c", sql],
-        capture_output=True, text=True, timeout=10
+        capture_output=True, text=True, timeout=10, env=env
     )
     if result.returncode != 0:
-        print(f"DB 오류: {result.stderr}", file=sys.stderr)
-        return []
+        raise RuntimeError(f"DB 오류: {result.stderr.strip() or result.stdout.strip()}")
     rows = []
     for line in result.stdout.strip().split("\n"):
         if line:
@@ -48,10 +69,11 @@ def send_slack(text):
     if not webhook:
         print("Slack 웹훅 URL 없음", file=sys.stderr)
         return
+    curl, env = resolve_executable("curl")
     subprocess.run(
-        ["curl", "-s", "-X", "POST", "-H", "Content-type: application/json",
+        [curl, "-s", "-X", "POST", "-H", "Content-type: application/json",
          "--data", json.dumps({"text": text}), webhook],
-        capture_output=True, timeout=10
+        capture_output=True, timeout=10, env=env
     )
 
 def analyze_reports(reports):
@@ -142,4 +164,8 @@ def main():
     print(f"알림 전송 완료: {total}건, 저장: {filepath}")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except RuntimeError as exc:
+        print(f"bug-monitor error: {exc}", file=sys.stderr)
+        sys.exit(1)
