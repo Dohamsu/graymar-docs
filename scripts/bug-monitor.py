@@ -13,6 +13,8 @@ from datetime import datetime, timezone, timedelta
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPORT_DIR = os.path.join(PROJECT_ROOT, "playtest-reports")
+STATE_DIR = os.path.expanduser("~/.hermes/state")
+SEEN_STATE_PATH = os.path.join(STATE_DIR, "graymar-bug-monitor-seen.json")
 DOCKER_CONTAINER = "textRpg-db"
 DB_USER = "user"
 DB_NAME = "textRpg"
@@ -76,6 +78,31 @@ def send_slack(text):
         capture_output=True, timeout=10, env=env
     )
 
+
+def load_seen_ids():
+    """이미 알림을 보낸 bug_report id 집합을 읽는다."""
+    try:
+        with open(SEEN_STATE_PATH) as f:
+            data = json.load(f)
+        return set(data.get("seen_ids", []))
+    except FileNotFoundError:
+        return set()
+    except json.JSONDecodeError:
+        return set()
+
+
+def save_seen_ids(seen_ids):
+    """동일 open 버그가 매 시간 반복 알림되지 않도록 상태를 저장한다."""
+    os.makedirs(STATE_DIR, exist_ok=True)
+    payload = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "seen_ids": sorted(seen_ids),
+    }
+    tmp_path = f"{SEEN_STATE_PATH}.tmp"
+    with open(tmp_path, "w") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    os.replace(tmp_path, SEEN_STATE_PATH)
+
 def analyze_reports(reports):
     """카테고리별 분류 및 요약"""
     categories = {}
@@ -97,8 +124,8 @@ def generate_report(categories, total_count):
     """마크다운 리포트 생성"""
     kst = datetime.now(timezone(timedelta(hours=9)))
     lines = [
-        f"# 버그 리포트 모니터 — {kst.strftime('%Y-%m-%d %H:%M KST')}",
-        f"\n미해결 리포트: **{total_count}건**\n",
+        f"# 새 버그 리포트 — {kst.strftime('%Y-%m-%d %H:%M KST')}",
+        f"\n신규 리포트: **{total_count}건**\n",
     ]
 
     category_labels = {
@@ -133,19 +160,22 @@ def generate_report(categories, total_count):
     return "\n".join(lines)
 
 def main():
-    # 1. 미해결 버그 리포트 조회
+    # 1. 현재 open 상태 버그 리포트 조회
     rows = query_db(
         "SELECT id, category, description, status, turn_no, run_id, "
         "created_at::text, recent_turns::text "
         "FROM bug_reports WHERE status = 'open' ORDER BY created_at DESC;"
     )
 
-    if not rows:
-        # 리포트 없으면 조용히 종료
+    seen_ids = load_seen_ids()
+    new_rows = [row for row in rows if row[0] not in seen_ids]
+
+    if not new_rows:
+        # 신규 리포트가 없으면 조용히 종료한다. 기존 open 항목 반복 알림 금지.
         return
 
-    total = len(rows)
-    categories = analyze_reports(rows)
+    total = len(new_rows)
+    categories = analyze_reports(new_rows)
 
     # 2. 리포트 파일 저장
     kst = datetime.now(timezone(timedelta(hours=9)))
@@ -157,11 +187,12 @@ def main():
     with open(filepath, "w") as f:
         f.write(report)
 
-    # 3. 알림 전송
+    # 3. 신규 리포트 알림 전송 및 중복 방지 상태 저장
     cat_summary = ", ".join(f"{k}:{len(v)}" for k, v in categories.items())
-    message = f"🐛 버그 리포트 모니터: {total}건 미해결 — {cat_summary}\n리포트: {filename}"
+    message = f"🐛 새 버그 리포트: {total}건 — {cat_summary}\n리포트: {filename}"
     send_slack(message)
-    print(f"알림 전송 완료: {total}건, 저장: {filepath}")
+    save_seen_ids(seen_ids | {row[0] for row in new_rows})
+    print(f"신규 알림 전송 완료: {total}건, 저장: {filepath}")
 
 if __name__ == "__main__":
     try:
