@@ -1,9 +1,9 @@
 # 서버 모듈/서비스 맵
 
 > 정본 위치: `server/src/`
-> 최종 갱신: 2026-04-17
+> 최종 갱신: 2026-07-03
 
-## 모듈 구조 (12 modules, 95 services, 10 controllers)
+## 모듈 구조 (14 modules, 104 services, 11 controllers)
 
 ```
 main.ts → AppModule
@@ -20,17 +20,17 @@ main.ts → AppModule
 │   └── auth.dto         ← 인증 DTO
 ├── db/                  ← Drizzle ORM
 │   ├── schema/          ← 20 파일 / 22 pgTable (아래 참조)
-│   └── types/           ← TypeScript types (42 파일, 아래 참조)
+│   └── types/           ← TypeScript types (43 파일, 아래 참조)
 ├── content/             ← 게임 콘텐츠 로더
-│   ├── content-loader.service  ← graymar_v1 JSON 24개 로드
+│   ├── content-loader.service  ← graymar_v1 JSON 27개 로드
 │   ├── content.types            ← NpcDefinition.unknownAlias/shortAlias, NpcTier 포함
 │   ├── content.module
 │   └── event-content.provider   ← 이벤트 콘텐츠 프로바이더
-├── engine/              ← Core game logic (60 services)
+├── engine/              ← Core game logic (65 services)
 │   ├── rng/             ← Deterministic RNG (splitmix64, seed+cursor)
 │   ├── stats/           ← Stat snapshot calculation
 │   ├── status/          ← Status effects lifecycle (tick/만료)
-│   ├── combat/          ← Hit, Damage, EnemyAI, CombatService (4 services)
+│   ├── combat/          ← Hit, Damage, EnemyAI, PropMatcher, CombatService (5 services)
 │   ├── input/           ← RuleParser → Policy → ActionPlan (3 services, 전투 입력용)
 │   ├── nodes/           ← 노드별 리졸버 + 전이 (7 services)
 │   │   ├── node-resolver.service   ← 노드 타입별 분기 진입점
@@ -48,7 +48,7 @@ main.ts → AppModule
 │   │   └── legendary-reward.service ← 전설 장비 보상 처리
 │   ├── planner/         ← RUN 계획 (1 service)
 │   │   └── run-planner.service ← RUN 구조 생성
-│   └── hub/             ← HUB 엔진 (37 services, 6 서브시스템 + 퀘스트 + TurnOrchestration, 아래 상세)
+│   └── hub/             ← HUB 엔진 (41 services, 6 서브시스템 + 퀘스트 + TurnOrchestration, 아래 상세)
 ├── runs/                ← RUN/버그리포트
 │   ├── runs.controller        ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 │   ├── runs.service
@@ -57,7 +57,10 @@ main.ts → AppModule
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 │   ├── turns.controller
 │   └── turns.service    ← nanoCtx 빌드만 수행 (NanoEventDirector 호출은 LLM Worker로 이관)
-├── llm/                 ← Async LLM narrative (19 services, 1 controller, 아래 상세)
+├── llm/                 ← Async LLM narrative (20 services, 1 controller, 아래 상세)
+├── endings/             ← 여정 아카이브 조회
+│   ├── endings.controller     ← GET /v1/endings, GET /v1/endings/:runId
+│   └── endings.module         ← SummaryBuilderService(engine/hub)를 lazy fallback으로 사용
 ├── campaigns/           ← 캠페인(시즌/이벤트) 관리
 │   ├── campaigns.controller   ← GET /v1/campaigns
 │   └── campaigns.service
@@ -81,11 +84,11 @@ main.ts → AppModule
 
 ---
 
-## HUB 엔진 서비스 (37 services, 6 서브시스템)
+## HUB 엔진 서비스 (41 services, 6 서브시스템)
 
 `server/src/engine/hub/`
 
-### 1. Base HUB (10 services)
+### 1. Base HUB (12 services)
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
@@ -99,8 +102,10 @@ main.ts → AppModule
 | SceneShellService | scene-shell.service.ts | 장면 분위기 + 선택지 생성 |
 | IntentParserV2Service | intent-parser-v2.service.ts | 자연어 → ActionType 파싱 + 고집 에스컬레이션 |
 | TurnOrchestrationService | turn-orchestration.service.ts | NPC 주입 (displayName) + 긴장도 관리 + TurnMode 3분류 결정 |
+| NpcResolverService | npc-resolver.service.ts | NPC 화자 결정 단일 권한자 — 텍스트매칭/IntentV3/대화잠금/Nano/이벤트배정 5단계 통합 (architecture/49) |
+| SuddenActionDetectorService | sudden-action-detector.service.ts | 돌발행동 분류 (CRITICAL 살해 의도 등) + N턴 맥락 보존 (architecture/43) |
 
-### 2. Narrative Engine v1 (8 services)
+### 2. Narrative Engine v1 (9 services)
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
@@ -112,6 +117,7 @@ main.ts → AppModule
 | NarrativeMarkService | narrative-mark.service.ts | 12개 불가역 표식 시스템 |
 | EndingGeneratorService | ending-generator.service.ts | 엔딩 조건 체크/결과 생성 (NATURAL ≥15턴, Quest S5+5) |
 | ShopService | shop.service.ts | 상점 메카닉 |
+| SummaryBuilderService | summary-builder.service.ts | RUN_ENDED 시 여정 요약(EndingSummary) 템플릿 조립 — LLM 호출 금지, 결정론적 (architecture/39) |
 
 ### 3. Structured Memory v2 (2 services)
 
@@ -140,7 +146,7 @@ main.ts → AppModule
 | ProceduralEventService | procedural-event.service.ts | 동적 이벤트 생성 (Trigger+Subject+Action+Outcome) |
 | LlmIntentParserService | llm-intent-parser.service.ts | LLM 기반 의도 파싱 (고위험 KW 우선, KW_OVERRIDE 장소명 복합감지) |
 
-### 6. Living World v2 (7 services) — 설계문서 21
+### 6. Living World v2 (8 services) — 설계문서 21, 48
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
@@ -151,10 +157,11 @@ main.ts → AppModule
 | ConsequenceProcessorService | consequence-processor.service.ts | 플레이어 행동 결과의 세계 반영 (연쇄 효과) |
 | SituationGeneratorService | situation-generator.service.ts | 상황 동적 생성 (9종 SituationTrigger, questFact 바이패스) |
 | PlayerGoalService | player-goal.service.ts | 플레이어 목표 추적/관리 (최대 5개) |
+| NpcWhereaboutsService | npc-whereabouts.service.ts | NPC 현재 위치 lookup (SAME/DIFFERENT_LOCATION + activity) — Discoverability Layer 2 (architecture/48) |
 
 ---
 
-## LLM 모듈 서비스 (17 services, 1 controller)
+## LLM 모듈 서비스 (20 services, 1 controller)
 
 `server/src/llm/`
 
@@ -173,6 +180,7 @@ main.ts → AppModule
 | NanoEventDirectorService | nano-event-director.service.ts | nano 동적 이벤트: 컨셉/NPC/fact/선택지 생성 (LLM Worker 비동기) |
 | NpcReactionDirectorService | npc-reaction-director.service.ts | nano 사전결정: NPC 반응(7종)+즉시목표+추상톤 3축(voiceQuality/emotionalUndertone/bodyLanguageMood). 메인 LLM이 추측 대신 결정 표현 — A56 |
 | ChallengeClassifierService | challenge-classifier.service.ts | 자유 행동 주사위 스킵: 룰 게이트(NON_CHALLENGE/ALWAYS_CHALLENGE) + 회색지대 nano 분류 (FREE/CHECK) — A56 |
+| ThemeClassifierService | theme-classifier.service.ts | NPC 대사 의미 테마 분류 — 동의어 우회 차단, 크로스 NPC 주제 반복 해소 (architecture/44 이슈②) |
 | DialogueGeneratorService | dialogue-generator.service.ts | 2-Stage 대사 분리 파이프라인 (서술+대사 분리, dialogue_slot, 하오체 검증) |
 | FactExtractorService | fact-extractor.service.ts | Memory v4: nano 구조화 추출 (entity_facts UPSERT, 반복률 71% 감소) |
 | LorebookService | lorebook.service.ts | 키워드 트리거 기반 세계 지식 동적 주입 (NPC/장소/사건/entity_facts) |
@@ -230,7 +238,7 @@ main.ts → AppModule
 
 ---
 
-## DB 타입 파일 (42 파일)
+## DB 타입 파일 (43 파일)
 
 `server/src/db/types/`
 
@@ -302,6 +310,7 @@ main.ts → AppModule
 | region-affix.ts | RegionAffix |
 | action-plan.ts | ActionPlan (전투용) |
 | graph-types.ts | 노드 그래프 타입 |
+| narrative-theme.ts | NPC 대사 의미 테마 타입 (architecture/44 이슈②) |
 | index.ts | 통합 export |
 
 ---
@@ -314,3 +323,11 @@ main.ts → AppModule
 - **DB 신규 테이블**: entity_facts (Memory v4), scene_images, campaigns, playtest_results.
 - **모듈 신규**: campaigns/, portrait/ (독립 모듈로 분리). scene-image/에 controller 추가.
 - **turns.service 경량화**: NanoEventDirector 호출을 LLM Worker로 이관 (nanoCtx만 빌드).
+
+## 최근 추가/변경 요약 (2026-05~07 동기화)
+
+- **HUB 확장**: 37 → 41 services. NpcResolver(architecture/49 단일 권한자), NpcWhereabouts(architecture/48), SuddenActionDetector(architecture/43), SummaryBuilder(architecture/39) 추가.
+- **LLM 확장**: 19 → 20 services. ThemeClassifier(architecture/44 이슈② 크로스 NPC 테마 반복 해소) 추가.
+- **combat 확장**: 4 → 5 services. PropMatcher(architecture/41 창의 전투) 추가.
+- **모듈 신규**: endings/ (여정 아카이브 조회 컨트롤러).
+- **DB 타입 신규**: narrative-theme.ts.
