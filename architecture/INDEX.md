@@ -69,7 +69,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/55_npa_metric_v2|npa metric v2]] — NPA 메트릭 v2: utterance 단위 자기 NPC register/호칭 평가로 다중 NPC 정확 측정.
 - [[architecture/56_npc_reaction_director|npc reaction director]] — NPC Reaction Director(추상 톤 3축 nano 사전결정) + ChallengeClassifier(자유 행동 주사위 스킵) + speechStyle 어구 예시 추상화(9 NPC) + 마커 substring 합쳐짐 자동 복구. 어휘 폭주 39.7% → 6.2% 해소(-84%). NpcSignatureGenerator/SIGFIX/MEMBOOST는 P0 검증으로 폐기.
 - [[architecture/58_fact_reveal_unification|fact reveal unification]] — 단서 기록·서술 단일화: 주제 우선 fact 선택(selectRevealableFact) + `ui.questReveal` 전달 + 미기록 detail 보류 가이드. "발견 로그와 NPC 대사가 다른 단서" 데스싱크 근본 차단.
-- [[architecture/59_fact_dialogue_followup_plan|fact dialogue followup plan]] — 58 검증 실측 3건 수정 계획: 판정 NPC ≠ 지목 NPC(이중 매처) + [단서 방향] nextHint 사장 + HINT_MODES off-by-one. 📋 계획.
+- [[architecture/59_fact_dialogue_followup_plan|fact dialogue followup plan]] — 58 검증 실측 3건 수정: 판정 NPC = 서술 NPC 정합(부분 이름 매칭) + [단서 방향] nextHint ui 전달 복구 + HINT_MODES off-by-one. ✅ 구현됨.
 
 ### 6. UI·클라이언트
 

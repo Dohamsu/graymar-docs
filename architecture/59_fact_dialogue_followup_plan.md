@@ -3,7 +3,15 @@
 > **목표**: architecture/58 라이브 검증(2026-07-04)에서 실측된 기존 이슈 3건 수정.
 > **선행**: architecture/58 (기록·서술 단일화) · architecture/49 (NpcResolver 단일 권한자)
 > **작성**: 2026-07-04
-> **Status**: 📋 계획 (확정)
+> **Status**: ✅ 구현됨 (2026-07-04 라이브 검증 통과)
+
+## 0. 구현 결과 (라이브 재검증)
+
+| 이슈 | 검증 결과 |
+|------|-----------|
+| 1 | "하를런에게 임금…" (부분 이름) → `[NpcResolver] STRONG_EXPLICIT_NAME conf=1` + 판정 NPC=HARLUN + `questReveal {FACT_WAGE_FRAUD_PATTERN, matchedByTopic: true}` — 이전 토브렌 오판·fallback 케이스 해소 |
+| 2 | 발견 다음 턴 프롬프트에 `[단서 방향]` 실출현 — nextHint가 직전 대화 주제(임금→장부 조작 흔적)와 자연 연결 |
+| 3 | mode=RUMOR_ECHO 정상 (mode=undefined 재발 없음) |
 
 ---
 
