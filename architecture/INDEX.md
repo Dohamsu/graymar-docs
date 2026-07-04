@@ -70,6 +70,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/56_npc_reaction_director|npc reaction director]] — NPC Reaction Director(추상 톤 3축 nano 사전결정) + ChallengeClassifier(자유 행동 주사위 스킵) + speechStyle 어구 예시 추상화(9 NPC) + 마커 substring 합쳐짐 자동 복구. 어휘 폭주 39.7% → 6.2% 해소(-84%). NpcSignatureGenerator/SIGFIX/MEMBOOST는 P0 검증으로 폐기.
 - [[architecture/58_fact_reveal_unification|fact reveal unification]] — 단서 기록·서술 단일화: 주제 우선 fact 선택(selectRevealableFact) + `ui.questReveal` 전달 + 미기록 detail 보류 가이드. "발견 로그와 NPC 대사가 다른 단서" 데스싱크 근본 차단.
 - [[architecture/59_fact_dialogue_followup_plan|fact dialogue followup plan]] — 58 검증 실측 3건 수정: 판정 NPC = 서술 NPC 정합(부분 이름 매칭) + [단서 방향] nextHint ui 전달 복구 + HINT_MODES off-by-one. ✅ 구현됨.
+- [[architecture/60_clue_flow_tuning|clue flow tuning]] — 흐름 점검 4건: LLM 워커 runState lost update 해소(P0, fresh 부분 패치) + 주제 불일치 fallback 금지(인계 양보) + [단서 방향] 공개 턴 이월 + 비주제 공개 확률 게이트. ✅ 구현됨.
 
 ### 6. UI·클라이언트
 
@@ -174,7 +175,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
   · `archive/37_streaming_transition_issues.md` — 36과 중복
   · `archive/38_stream_vs_nonstream_comparison.md` — 35와 중복
 - 폐기됨(이미 파일 없음): [[specs/combat_resolve_engine_v1|combat resolve engine v1]] — floor 미적용 오류 버전. 정본은 [[specs/combat_system|combat system]] + [[architecture/02_combat_system|combat system]].
-- 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(60~)를 사용.
+- 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(61~)를 사용.
 - **57번 문서 부재**: server 코드/커밋(`focused 모드 보조 NPC strip`, `익명 배경 인물 신원 hard 차단`)이 `architecture/57`을 참조하나 문서 파일이 레포에 없음 — 작성 필요.
 
 ---
