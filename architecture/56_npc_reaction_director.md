@@ -205,9 +205,26 @@ CHALLENGE_CLASSIFIER_ENABLED=true|false   # 기본 true
 
 ## 향후 검토 영역
 
-- **personality.signature 배열 안 어구 예시** (13 NPC): 현재 메인 LLM 노출 안 됨이지만 향후 signature 재활용 시 같은 anchor 발생 가능. 안전망으로 추상화 검토 가능.
+- **personality.signature 배열 안 어구 예시** (14 NPC): 메인 서술 LLM에는 노출 안 됨. 다만 아래 부록에서 실제로 2개의 다른 소비처가 이 배열을 재노출하고 있던 회귀가 발견·수정됨 — "노출 안 됨"은 소비처별로 개별 확인이 필요하다는 교훈.
 - **기억 회상률 강화**: A_REMOVE에서 26.4%, ABSTRACT에서 17.5%로 약간 후퇴. 명시 지시(MEMBOOST)가 아닌 다른 접근(예: 컨텍스트 풍부도 향상) 검토 필요.
 - **마커 합쳐짐 통계 누적**: `[MarkerCollision]` 로그 카운트로 자동 복구 빈도 모니터링.
+
+## 부록 — signature 노출 재발 발견 및 수정 (2026-07-06)
+
+**발견 경위**: NPC 대사 흐름 점검(성격/어조/단서/언급 프롬프트 배치 감사) 중 코드 대조로 확인.
+
+**재발 지점** — 본문의 "signature 노출 완전 제거"는 메인 서술 LLM 경로(`prompt-builder.service.ts`)에만 적용돼 있었고, 이후 추가된 2개 소비처가 같은 배열을 다시 원문 그대로 노출하고 있었음:
+
+| 파일 | 상태 | 노출 내용 |
+|------|------|-----------|
+| `npc-reaction-director.service.ts:242-243` | **활성** (`NPC_REACTION_DIRECTOR_ENABLED` 기본 true — 매 턴 실행) | `시그니처: ${ctx.signature.slice(0,3).join(', ')}` — 14개 NPC의 인용구 그대로 nano LLM 프롬프트에 주입 |
+| `dialogue-generator.service.ts:298-299` | 휴면 (`LLM_JSON_MODE=false`라 현재 도달 불가, 재활성화 시 즉시 재발) | `시그니처 표현: ${personality.signature.join(', ')}` |
+
+**수정**: 두 파일 모두 해당 라인 삭제 (메인 경로와 동일하게 "참조 자체 제거" 전략 채택 — signature 내용을 추상화하는 대신 speechStyle+core만으로 충분하다고 판단). `llm-worker.service.ts:452`의 `signature` 필드 전달도 함께 제거(죽은 플러밍 정리), `NpcReactionContext.signature` 타입 필드 삭제.
+
+**검증**: 관련 스펙 24개 통과, lint 신규 이슈 0, `pnpm build` 성공. 10턴 플레이테스트 스팟체크(`playtest_20260706_114135.json`, DESERTER/male) — signature 보유 NPC(로넨/에드릭/마이렐/펠릭스) 등장 구간에서 과거 앵커 패턴(에드릭 "수지가 맞지" 반복 등) 재발 없음, V7 프롬프트 누출 없음, V8 NPC 정합성 양호. 8시나리오 정밀 배터리는 회귀 신호가 없어 이번엔 생략.
+
+**결론/교훈**: "signature 노출 제거"처럼 여러 LLM 호출 경로가 같은 콘텐츠 필드를 참조하는 구조에서는, 수정을 한 소비처에 적용했다고 문서에 "완료"로 적기 전에 **해당 필드의 모든 참조처를 grep으로 재확인**해야 한다 (본 세션에서 이전에 발견한 한글 키워드 토크나이저 3중복·`matchParticleAll` 위치 조건 비대칭과 같은 유형의 회귀).
 
 ## 관련 커밋
 
