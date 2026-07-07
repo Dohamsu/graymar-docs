@@ -43,7 +43,11 @@ export function renderMarkdown(report: AuditReport): string {
   lines.push(`- **자유도**:   ${stars(q.topicFreedom.score)} (${q.topicFreedom.score.toFixed(2)} / 5)`);
   lines.push(`- **사람다움**: ${stars(q.humanity.score)} (${q.humanity.score.toFixed(2)} / 5)`);
   lines.push(`- **NPC 차별화**: ${stars(q.npcDistinctness.score)} (${q.npcDistinctness.score.toFixed(2)} / 5)`);
-  lines.push(`- **톤 일치도**: ${stars(q.toneMatch.score)} (${q.toneMatch.score.toFixed(2)} / 5)`);
+  lines.push(
+    q.toneMatch.insufficientSample
+      ? `- **톤 일치도**: 측정 제외 — 표본 부족 (참고값 ${q.toneMatch.score.toFixed(2)}, 종합은 4축 평균)`
+      : `- **톤 일치도**: ${stars(q.toneMatch.score)} (${q.toneMatch.score.toFixed(2)} / 5)`,
+  );
   lines.push(`- **종합**:     ${stars(q.overall)} (${q.overall.toFixed(2)} / 5)`);
   lines.push("");
 

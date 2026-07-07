@@ -730,28 +730,42 @@ function classifyUserTone(input: string): ToneCategory {
   return "unknown";
 }
 
-/** NPC 응답 톤 분류 (회피 어휘 + 길이). */
+/** heavy(무거운/회피) 어휘 목록 — classifyNpcTone과 baseline 보정이 공유하는 단일 정본.
+ *  arch/55 부록 B: 기존엔 두 곳에 중복 정의 + '독'이 substring 매칭이라
+ *  "유독/고독" 같은 무해 합성어에 오탐 ("유독 소란" → 독 판정). */
+const HEAVY_WORDS = [
+  "위험",
+  "조심",
+  "곤란",
+  "위태",
+  "독",
+  "썩은",
+  "음모",
+  "잘못",
+  "비밀",
+  "함부로",
+  "멀쩡",
+  "독초",
+];
+
+/** '독' 오탐을 만드는 무해 합성어 — 카운트 전에 제거 (word boundary 원칙). */
+const HEAVY_BENIGN_COMPOUNDS = /유독|고독|독특|독서|독립|감독|단독|독자|독백/g;
+
+function countHeavyWords(text: string): number {
+  const cleaned = text.replace(HEAVY_BENIGN_COMPOUNDS, "");
+  return HEAVY_WORDS.filter((w) => cleaned.includes(w)).length;
+}
+
+/** NPC 응답 톤 분류 (회피 어휘 + 길이).
+ *  arch/55 부록 B: 기존엔 80~200자 발화가 전부 unknown으로 버려져
+ *  발화가 긴 NPC(에드릭 평균 135자)는 톤 표본이 0~2턴으로 붕괴했다.
+ *  → heavy 신호가 없으면 길이 무관 casual로 분류해 표본 확보. */
 function classifyNpcTone(text: string): ToneCategory {
   if (!text) return "unknown";
-  const HEAVY_WORDS = [
-    "위험",
-    "조심",
-    "곤란",
-    "위태",
-    "독",
-    "썩은",
-    "음모",
-    "잘못",
-    "비밀",
-    "함부로",
-    "멀쩡",
-    "독초",
-  ];
-  const heavyCount = HEAVY_WORDS.filter((w) => text.includes(w)).length;
+  const heavyCount = countHeavyWords(text);
   if (heavyCount >= 2) return "serious";
   if (text.length > 200 && heavyCount >= 1) return "serious";
-  if (text.length <= 80 && heavyCount === 0) return "casual";
-  return "unknown";
+  return "casual"; // heavy 0건 또는 (짧은 발화 + heavy 1건)
 }
 
 function toneMatchScore(pairs: DialoguePair[]): ToneMatchScore {
@@ -797,20 +811,8 @@ function toneMatchScore(pairs: DialoguePair[]): ToneMatchScore {
       // dark NPC는 어두운 응답이 자연 — match (단, "회피 어휘 2회+"면 여전히 mismatch)
       if (baseline === "dark" || baseline === "cold") {
         // baseline이 dark/cold라도 회피 어휘가 과다하면 mismatch
-        const HEAVY_WORDS = [
-          "위험",
-          "조심",
-          "곤란",
-          "위태",
-          "독",
-          "썩은",
-          "음모",
-          "잘못",
-          "비밀",
-          "함부로",
-          "독초",
-        ];
-        const heavyCount = HEAVY_WORDS.filter((w) => npcText.includes(w)).length;
+        // (countHeavyWords — '유독' 등 무해 합성어 오탐 제거된 단일 정본)
+        const heavyCount = countHeavyWords(npcText);
         match = heavyCount <= 1;
       } else {
         // warm/neutral baseline이 serious 응답 → mismatch
@@ -836,9 +838,17 @@ function toneMatchScore(pairs: DialoguePair[]): ToneMatchScore {
     notes.push(`톤 일치 ${(matchRate * 100).toFixed(0)}%`);
   }
 
+  // arch/55 부록 B — 표본 미달 처리: 평가 턴 < 3이면 score는 신뢰 불가
+  // (0턴이면 기본값 0.5가 "나쁨(2.50)"처럼 표시되던 문제). overall에서 제외.
+  const insufficientSample = total < 3;
+  if (insufficientSample) {
+    notes.push(`⚠️ 표본 부족 (평가 ${total}턴 < 3) — 종합 평균에서 톤 축 제외`);
+  }
+
   return {
     score,
     matchRate,
+    insufficientSample,
     userToneDistribution: userToneDist,
     npcToneDistribution: npcToneDist,
     perTurn,
@@ -862,8 +872,11 @@ export function computeDialogueQuality(pairs: DialoguePair[]): DialogueQuality {
     humanity: h,
     npcDistinctness: d,
     toneMatch: tm,
-    // architecture/51 — 5 score 평균
-    overall: (c.score + t.score + h.score + d.score + tm.score) / 5,
+    // architecture/51 — 5 score 평균.
+    // arch/55 부록 B — 톤 표본 미달 시 4축 평균 (측정 불능을 점수로 섞지 않는다).
+    overall: tm.insufficientSample
+      ? (c.score + t.score + h.score + d.score) / 4
+      : (c.score + t.score + h.score + d.score + tm.score) / 5,
   };
 }
 

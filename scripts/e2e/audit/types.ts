@@ -153,6 +153,8 @@ export interface ToneMatchScore {
   score: number;
   /** 일치 턴 수 / 총 턴 수 */
   matchRate: number;
+  /** 평가 표본 < 3턴 — score는 참고값, overall 평균에서 제외 (arch/55 부록 B) */
+  insufficientSample?: boolean;
   /** 사용자 톤 분포 */
   userToneDistribution: Record<ToneCategory, number>;
   /** NPC 응답 톤 분포 */
