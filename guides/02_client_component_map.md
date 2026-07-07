@@ -1,12 +1,12 @@
 # 클라이언트 컴포넌트 맵
 
 > 정본 위치: `client/src/`
-> 최종 갱신: 2026-04-17
+> 최종 갱신: 2026-07-03
 
-## 컴포넌트 구조 (60 components, 5 stores)
+## 컴포넌트 구조 (68 components, 5 stores)
 
-실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **60**).
-영역별: narrative 4 / input 2 / hub 14 / location 3 / screens 4 / side-panel 7 / ui 12 / layout 2 / battle 1 / party 11.
+실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **68**).
+영역별: narrative 4 / input 2 / hub 14 / location 5 / screens 6 / side-panel 7 / ui 12 / layout 2 / battle 4 / party 11 / brand 1.
 
 ```
 app/
@@ -26,7 +26,7 @@ app/
     ├── FeatureCard.tsx ← 랜딩 섹션 카드
     └── MobileNav.tsx   ← 랜딩 모바일 네비
 
-components/ (60개)
+components/ (68개)
 ├── narrative/          ← 메시지 표시 (4)
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
 │   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑, NPC 카드, 보정치 뱃지, 대사/서술 혼합)
@@ -50,15 +50,19 @@ components/ (60개)
 │   ├── HubNotificationList.tsx    ← 피드형 알림 목록
 │   ├── PinnedAlertStack.tsx       ← 긴급 알림 고정 표시 (최대 3개)
 │   └── WorldDeltaSummaryCard.tsx  ← 턴 간 세계 변화 요약
-├── location/           ← LOCATION 알림/배경 (3)
+├── location/           ← LOCATION 알림/배경 (5)
 │   ├── LocationImage.tsx          ← 장소 배경 이미지 (켄 번스 페이드)
 │   ├── TurnResultBanner.tsx       ← 판정 결과 배너 (5초 자동 해제)
-│   └── LocationToastLayer.tsx     ← 플로팅 토스트 (3초 페이드)
-├── screens/            ← 전체 화면 (4)
+│   ├── LocationToastLayer.tsx     ← 플로팅 토스트 (3초 페이드)
+│   ├── DeadlineBanner.tsx         ← Soft Deadline 상단 배너 (D-3/2/1/0/초과)
+│   └── EquipmentDropToast.tsx     ← 장비 드랍 토스트 (rarity별 5초 자동 페이드)
+├── screens/            ← 전체 화면 (6)
 │   ├── StartScreen.tsx            ← 프리셋/특성/이름/초상화 생성 + 인증
 │   ├── RunEndScreen.tsx           ← 런 종료
 │   ├── EndingScreen.tsx           ← 엔딩 (NPC epilogues, 행동 성향)
-│   └── NodeTransitionScreen.tsx   ← 노드 전환
+│   ├── NodeTransitionScreen.tsx   ← 노드 전환
+│   ├── EndingsListScreen.tsx      ← 여정 아카이브 목록 (GET /v1/endings)
+│   └── JourneySummaryScreen.tsx   ← 여정 요약 (양피지 스타일, synopsis/keyEvents/keyNpcs/finale)
 ├── side-panel/         ← 사이드 패널 (7)
 │   ├── SidePanel.tsx              ← 6탭 컨테이너 (Character/Inventory/Equipment/NPC/Quest/SetBonus)
 │   ├── CharacterTab.tsx           ← 능력치 6개, 장비 슬롯
@@ -83,8 +87,13 @@ components/ (60개)
 ├── layout/             ← 레이아웃 (2)
 │   ├── Header.tsx                 ← 데스크톱 HUD (HP/Stamina 바, 자동 숨김)
 │   └── MobileBottomNav.tsx        ← 모바일 하단 네비 (햄버거 메뉴)
-├── battle/             ← 전투 화면 (1)
-│   └── BattlePanel.tsx            ← 적 카드 (HP, 상태효과, 거리/각도)
+├── battle/             ← 전투 화면 (4)
+│   ├── BattlePanel.tsx            ← 전투 패널 컨테이너 (적 카드 + 액션 바)
+│   ├── EnemyCard.tsx              ← 적 카드 (HP, 상태효과, 거리/각도, 클릭 타겟)
+│   ├── CombatActionBar.tsx        ← 5 주요 버튼 + 특수 행동 펼침 (버튼 폼)
+│   └── CombatItemPickerModal.tsx  ← 전투 중 아이템 사용 모달
+├── brand/              ← 브랜드 (1)
+│   └── DimtaleLogoAnimated.tsx    ← 브랜드 로고 애니메이션
 └── party/              ← 파티 시스템 (11)
     ├── PartyMainScreen.tsx        ← 파티 메인 (내 파티 + 검색)
     ├── PartyCreateModal.tsx       ← 파티 생성 모달

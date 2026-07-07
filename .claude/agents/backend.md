@@ -1,6 +1,6 @@
 ---
 name: backend
-description: NestJS 게임 서버 전담. turns.service.ts 턴 파이프라인, engine/hub/ 37개 서비스, LLM 스트리밍/파이프라인, 전투 엔진, 파티 시스템 등 서버 로직 구현/수정/디버깅 시 사용.
+description: NestJS 게임 서버 전담. turns.service.ts 턴 파이프라인, engine/hub/ 41개 서비스, LLM 스트리밍/파이프라인, 전투 엔진, 파티 시스템 등 서버 로직 구현/수정/디버깅 시 사용.
 tools: Read, Edit, Write, Glob, Grep, Bash
 model: inherit
 ---
@@ -39,39 +39,39 @@ server/src/
 │   ├── bug-report.service.ts       ← 인게임 버그 리포트 저장/조회
 │   └── bug-report.controller.ts
 ├── engine/
-│   ├── hub/                        ← 37 services, 6 서브시스템 (아래 상세)
-│   ├── combat/                     ← Hit, Damage, EnemyAI, CombatService (4)
+│   ├── hub/                        ← 41 services, 6 서브시스템 (아래 상세)
+│   ├── combat/                     ← Hit, Damage, EnemyAI, PropMatcher, CombatService (5)
 │   ├── input/                      ← RuleParser → Policy → ActionPlan (3, 전투 입력)
 │   ├── nodes/                      ← 노드별 리졸버 + 전이 (7)
 │   ├── rewards/                    ← 보상, 인벤토리, 장비, 접미사, Legendary (5)
 │   ├── planner/                    ← RunPlannerService (1)
 │   ├── rng/ · stats/ · status/     ← 결정론 RNG, 스탯, 상태이상 (3)
-├── llm/                            ← 11 services (아래 상세)
-├── party/                          ← 7 services + DTO + controller
-├── content/                        ← ContentLoader (graymar_v1 JSON 24개)
+├── llm/                            ← 20 services (아래 상세)
+├── party/                          ← 8 services + DTO + controller
+├── content/                        ← ContentLoader (graymar_v1 JSON 27개)
 ├── scene-image/ · portrait/        ← AI 초상화/장소 이미지 생성 (Gemini)
 ├── campaigns/ · auth/ · common/    ← 캠페인, JWT 인증, Guards/Filters/Pipes
 └── db/
-    ├── schema/                     ← 18 Drizzle 테이블 정의
-    └── types/                      ← 42 타입 파일 (정본: enums.ts)
+    ├── schema/                     ← 20 스키마 파일 / 22 pgTable
+    └── types/                      ← 43 타입 파일 (정본: enums.ts)
 ```
 
 `turns.service.ts`는 길기 때문에 수정 전 반드시 해당 구간만 Read하여 경계와 호출 순서를 확인한다.
 
-## HUB 엔진 — 6 서브시스템 37 서비스
+## HUB 엔진 — 6 서브시스템 41 서비스
 
 | 서브시스템 | 수 | 핵심 서비스 |
 |-----------|---|------------|
-| Base HUB | 10 | WorldState, Heat, EventMatcher, Resolve, IntentParserV2, QuestProgression, SceneShell, Agenda, Arc, TurnOrchestration |
-| Narrative Engine v1 | 8 | Incident, WorldTick, Signal, NpcEmotional, NarrativeMark, Ending, Operation, Shop |
+| Base HUB | 12 | WorldState, Heat, EventMatcher, Resolve, IntentParserV2, QuestProgression, SceneShell, Agenda, Arc, TurnOrchestration, NpcResolver, SuddenActionDetector |
+| Narrative Engine v1 | 9 | Incident, WorldTick, Signal, NpcEmotional, NarrativeMark, Ending, Operation, Shop, SummaryBuilder |
 | Structured Memory v2 | 2 | MemoryCollector, MemoryIntegration (finalizeVisit) |
 | User-Driven Bridge | 6 | IntentV3Builder, IncidentRouter, WorldDelta, PlayerThread, NotificationAssembler, IncidentResolutionBridge |
 | Narrative v2 & Event v2 | 4 | IntentMemory, EventDirector, ProceduralEvent, LlmIntentParser |
-| Living World v2 | 7 | LocationState, WorldFact, NpcSchedule, NpcAgenda, ConsequenceProcessor, SituationGenerator, PlayerGoal |
+| Living World v2 | 8 | LocationState, WorldFact, NpcSchedule, NpcAgenda, ConsequenceProcessor, SituationGenerator, PlayerGoal, NpcWhereabouts |
 
 상세 API: `guides/03_hub_engine_guide.md`, Living World는 `guides/07_living_world_guide.md`.
 
-## LLM 모듈 — 11 서비스
+## LLM 모듈 — 20 서비스
 
 | 서비스 | 역할 |
 |--------|------|
@@ -86,11 +86,14 @@ server/src/
 | LlmStreamBrokerService | OpenRouter stream:true + SSE 브로커 + 문장 단위 버퍼링 |
 | StreamClassifierService | 스트리밍 청크 분류(서술/대사/메타) |
 | LorebookService | 키워드 트리거 기반 세계 지식 동적 주입 (NPC knownFacts/장소비밀/사건단서/entity_facts) |
-| MemoryRendererService · FactExtractorService · MidSummaryService · AiTurnLogService · LlmConfigService | 메모리 v4 / 요약 / 런타임 설정 / 디버그 로그 |
+| NpcReactionDirectorService | nano 사전결정: NPC 반응 7종 + 즉시목표 + 추상 톤 3축 (A56) |
+| ChallengeClassifierService | 자유 행동 주사위 스킵 — 룰 게이트 + 회색지대 nano 분류 (A56) |
+| ThemeClassifierService | NPC 대사 의미 테마 분류 — 크로스 NPC 주제 반복 해소 (architecture/44) |
+| LlmCallerService · MemoryRendererService · FactExtractorService · MidSummaryService · AiTurnLogService · LlmConfigService | 공급자 호출 래퍼 / 메모리 v4 / 요약 / 런타임 설정 / 디버그 로그 |
 
 LLM Provider는 `llm/providers/`에 openai / claude / gemini / mock 4종 + registry. OpenRouter를 공용 엔드포인트로 사용.
 
-## Party 모듈 — 7 서비스
+## Party 모듈 — 8 서비스
 
 | 서비스 | 역할 |
 |--------|------|

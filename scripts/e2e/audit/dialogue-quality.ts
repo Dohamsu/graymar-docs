@@ -196,15 +196,29 @@ function pairText(p: DialoguePair): string {
  *  문장 종결부 (구두점/공백/줄끝/끝따옴표) 직전 형태로 매칭. */
 const SENT_END = `(?=[\\s.!?…"”'’]|$)`;
 const REGISTER_PATTERNS: Record<string, RegExp[]> = {
+  // 2026-07-07 수정 — HAOCHE에 최빈 종결 "-소"(있소/겠소/했소)가 빠져 있어
+  // 하오체를 완벽히 지키는 NPC도 45~59%로 오측정되던 버그 (로넨 45% 원인).
+  // HAPSYO "-니다"(됩니다/갑니다), HAEYO 일반 "-요"(가요/돼요)도 동일 보강.
   HAOCHE: [
     new RegExp(`(?:하오|이오|시오|이외다|소이다|구려|구먼|구만|라네|다네|이네|군그래|일세|이로세)${SENT_END}`),
-    new RegExp(`(?:[가-힣]오|[가-힣]네)${SENT_END}`),
+    new RegExp(`(?:[가-힣]오|[가-힣]네|[가-힣]소)${SENT_END}`),
   ],
-  HAEYO: [new RegExp(`(?:해요|이에요|예요|네요|거든요|군요)${SENT_END}`)],
+  HAEYO: [
+    new RegExp(`(?:해요|이에요|예요|네요|거든요|군요|[가-힣]요)${SENT_END}`),
+  ],
   BANMAL: [new RegExp(`(?:[가-힣]야|[가-힣]지|[가-힣]거든|[가-힣]어|[가-힣]아)${SENT_END}`)],
-  HAPSYO: [new RegExp(`(?:습니다|입니다|십시오|니까)${SENT_END}`)],
+  HAPSYO: [new RegExp(`(?:습니다|입니다|십시오|니까|[가-힣]니다)${SENT_END}`)],
   HAECHE: [new RegExp(`(?:했다|하다|[가-힣]는다|[가-힣]ㄴ다|[가-힣]다)${SENT_END}`)],
 };
+
+/** 말끝 흐림 파편 — 어체 판정 자체가 불가능한 조각은 분모에서 제외.
+ *  말줄임(…/...)으로 분할된 "그저", "사실", "사람들이라 함은" 류:
+ *  (a) 3자 이하 짧은 조각, (b) 조사로 끝나는 미완결 구.
+ *  speechStyle이 "말끝을 흐린다"인 NPC의 정상 발화를 위반으로 세지 않는다. */
+function isTrailingFragment(sentence: string): boolean {
+  if (sentence.length <= 3) return true;
+  return /[은는이가을를도만과와랑의]$/.test(sentence);
+}
 
 const PRONOUN_RE = /(그대|자네|당신|너|그쪽|손님|친구)/g;
 
@@ -304,7 +318,8 @@ function continuityScore(pairs: DialoguePair[]): ContinuityScore {
       const sentences = u.text
         .split(/[.!?…]\s*/)
         .map((s) => s.trim())
-        .filter(Boolean);
+        .filter(Boolean)
+        .filter((s) => !isTrailingFragment(s));
       for (const s of sentences) {
         toneDen++;
         if (patterns.some((re) => re.test(s))) toneHit++;

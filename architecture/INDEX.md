@@ -9,7 +9,7 @@
 - 전체 아키텍처: [[architecture/04_server_architecture|server architecture]]
 - 최근 파이프라인: `26_narrative_pipeline_v2.md`, [[architecture/35_llm_streaming|llm streaming]]
 - 최신 전투: [[architecture/41_creative_combat_actions|creative combat actions]](창의 입력), [[architecture/42_combat_ui_buttonform|combat ui buttonform]](버튼형 UI)
-- 최신 구현 가이드: `guides/01~06_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지)
+- 최신 구현 가이드: `guides/01~08_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지·LivingWorld·파티)
 
 CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX는 "어느 설계 문서를 봐야 하는가" 의 선택 기준이다. specs/ 는 원본 스펙(정본), architecture/ 는 통합/연동 관점, guides/ 는 실제 코드 위치 매핑이다.
 
@@ -57,7 +57,20 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/33_lorebook_system|lorebook system]] — 키워드 트리거 기반 세계 지식 동적 주입(NPC knownFacts/장소 비밀/사건 단서/entity_facts 키워드 검색).
 - [[architecture/34_player_first_event_engine|player first event engine]] — Player-First 이벤트 엔진(TurnMode 3분류, NPC 5단계 우선순위, contextNpcId, EventMatcher targetNpcId 가중치). 현 최신.
 - [[architecture/35_llm_streaming|llm streaming]] — LLM 스트리밍 설계(OpenRouter `stream:true` + `LlmStreamBroker` SSE + `StreamParser` 문장 단위 버퍼 + 2-Phase 렌더링). 폴링 fallback 포함.
+- [[architecture/43_sudden_action_context_preservation|sudden action context preservation]] — 돌발행동(살해 등 고충격 행위) 분류 + N턴 맥락 보존. SuddenActionDetectorService(engine/hub) 구현.
+- [[architecture/44_npc_dialogue_quality_v2|npc dialogue quality v2]] — 환각 융합 별칭 선제 차단(이슈①, marker) + 크로스 NPC 주제 반복 해소(이슈②, ThemeClassifier + narrativeThemes 기록).
+- [[architecture/45_npc_free_dialogue|npc free dialogue]] — NPC 자유 대화: 키워드 트리거 + daily_topic 잡담 풀 + FACT/DAILY 공개 항목. "알고 있는 전부가 단서" 문제 해소.
+- [[architecture/46_fact_pool_continuity|fact pool continuity]] — Fact를 일급 객체(facts.json)로 분리, fact 매칭이 NPC를 강제 등장시키지 않도록 NPC 결정과 분리. NPC 점프 근본 차단.
+- [[architecture/47_dialogue_quality_audit|dialogue quality audit]] — NPA(NPC 대사 품질) 정량 감사 시스템 설계. `scripts/e2e/audit/` 구현.
+- [[architecture/48_npc_discoverability_v1|npc discoverability v1]] — NPC 발견 가능성 Layer 설계(NpcWhereaboutsService 등). 49로 통합.
+- [[architecture/49_npc_resolver_authority|npc resolver authority]] — NpcResolverService 단일 권한자: 텍스트매칭/IntentV3/대화잠금/Nano/이벤트배정 5단계 우선순위 통합.
+- [[architecture/50_natural_dialogue_v1|natural dialogue v1]] — 📜 폐기. 전 phase 메트릭 후퇴로 전체 롤백, 51로 대체.
+- [[architecture/51_npc_distinctness_v1|npc distinctness v1]] — A50 회고 + NPA v2 메트릭 + R1 회피 어휘 룰 + CORE mannerism 확장.
+- [[architecture/55_npa_metric_v2|npa metric v2]] — NPA 메트릭 v2: utterance 단위 자기 NPC register/호칭 평가로 다중 NPC 정확 측정.
 - [[architecture/56_npc_reaction_director|npc reaction director]] — NPC Reaction Director(추상 톤 3축 nano 사전결정) + ChallengeClassifier(자유 행동 주사위 스킵) + speechStyle 어구 예시 추상화(9 NPC) + 마커 substring 합쳐짐 자동 복구. 어휘 폭주 39.7% → 6.2% 해소(-84%). NpcSignatureGenerator/SIGFIX/MEMBOOST는 P0 검증으로 폐기.
+- [[architecture/58_fact_reveal_unification|fact reveal unification]] — 단서 기록·서술 단일화: 주제 우선 fact 선택(selectRevealableFact) + `ui.questReveal` 전달 + 미기록 detail 보류 가이드. "발견 로그와 NPC 대사가 다른 단서" 데스싱크 근본 차단.
+- [[architecture/59_fact_dialogue_followup_plan|fact dialogue followup plan]] — 58 검증 실측 3건 수정: 판정 NPC = 서술 NPC 정합(부분 이름 매칭) + [단서 방향] nextHint ui 전달 복구 + HINT_MODES off-by-one. ✅ 구현됨.
+- [[architecture/60_clue_flow_tuning|clue flow tuning]] — 흐름 점검 4건: LLM 워커 runState lost update 해소(P0, fresh 부분 패치) + 주제 불일치 fallback 금지(인계 양보) + [단서 방향] 공개 턴 이월 + 비주제 공개 확률 게이트. ✅ 구현됨.
 
 ### 6. UI·클라이언트
 
@@ -123,7 +136,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-04-22)
+## 도메인별 최신 업데이트 기준 (2026-07-03)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
@@ -135,8 +148,9 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | LLM 서술     | 05, 11, 26, 35                     | 구현됨 (스트리밍)   |
 | 모델 평가    | 25                                 | 참고                |
 | 메모리       | 31                                 | 구현됨 (v4)         |
-| 대사/마커    | 30, 32, 33                         | 구현됨              |
-| 이벤트 엔진  | 34                                 | 구현됨 (Player-First, 28은 archive 배경) |
+| 대사/마커    | 30, 32, 33, **44, 45, 56, 58**     | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화) |
+| 이벤트 엔진  | 34, **43, 46**                     | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체, 28은 archive 배경) |
+| NPC 결정/품질 | **48, 49, 51, 47, 55**            | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭, 50은 폐기) |
 | UI/클라      | 15, 23, **42**                     | 구현됨              |
 | 파티         | 24                                 | 구현됨 (Phase 1~3)  |
 | 주사위/UX    | 22                                 | 구현됨              |
@@ -161,7 +175,8 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
   · `archive/37_streaming_transition_issues.md` — 36과 중복
   · `archive/38_stream_vs_nonstream_comparison.md` — 35와 중복
 - 폐기됨(이미 파일 없음): [[specs/combat_resolve_engine_v1|combat resolve engine v1]] — floor 미적용 오류 버전. 정본은 [[specs/combat_system|combat system]] + [[architecture/02_combat_system|combat system]].
-- 번호 공백(13, 27, 28, 29, 37, 38 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(43~)를 사용.
+- 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(61~)를 사용.
+- **57번 문서 부재**: server 코드/커밋(`focused 모드 보조 NPC strip`, `익명 배경 인물 신원 hard 차단`)이 `architecture/57`을 참조하나 문서 파일이 레포에 없음 — 작성 필요.
 
 ---
 
