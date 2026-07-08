@@ -390,3 +390,24 @@ factsParts.push([
 | 데이터 구조 | 변경 없음 | 변경 없음 |
 | DB 스키마 | 변경 없음 | 변경 없음 |
 | Quest progression | 기존 흐름 | 기존 흐름 (discoveredQuestFacts 그대로) |
+
+---
+
+## 부록 (2026-07-08) — 콜론 구제 유령 화자 차단 + 검증기 E1 정밀화
+
+NPA 감사에서 `MARKER_NPCID_NULL` ERROR 2건 발견 (첫 진입 턴, "창고지기"/"견습공").
+조사 결과: LLM이 즉흥 생성한 콘텐츠 외 인물의 콜론 대사(`창고지기: "..."`)를
+llm-worker B-1.5 구제 regex가 **검증 없이** `@[별칭]` 마커로 승격 →
+speakingNpc npcId=null 유령 화자. 플레이어가 이어 말을 걸면 NpcResolver가
+해석 불가라 대화 연속이 끊긴다 (본 문서의 환각 별칭 차단 원칙 위반 경로).
+
+수정 2건:
+1. **서버** (`llm-worker.service.ts` B-1.5) — `isKnownNpcAlias()` 검증 추가:
+   콜론 별칭이 name/unknownAlias/shortAlias/aliases 정확 일치 또는
+   수식어+실명 조합(`별칭 ⊇ name`)일 때만 승격, 미매칭은 `@[무명 인물]`(실루엣)로 정규화.
+2. **검증기** (`auto-verifier.ts` E1) — 콘텐츠 존재 별칭인데 npcId=null이면 ERROR
+   (진짜 회귀), 콘텐츠 외 별칭이면 `ANONYMOUS_SPEAKER` WARNING으로 강등.
+   판별은 `dialogue-quality.ts isKnownNpcDisplayName()` (서버 로직과 정렬).
+
+검증: 실콘텐츠 시뮬레이션 (창고지기→무명 인물, 마이렐/수식어+하위크→유지),
+07-08 리포트 재검증 ERROR 2→0 (WARNING 강등), 전체 테스트 871 passed.

@@ -106,6 +106,30 @@ function loadNpcs(): Map<string, NpcContentSnapshot> {
 }
 
 /**
+ * 표시이름이 콘텐츠에 존재하는 NPC의 이름 변형인지 판별 (auto-verifier E1 정밀화).
+ * 존재하는 별칭인데 npcId=null → 진짜 arch/46 회귀 (ERROR).
+ * 콘텐츠 외 즉흥 인물("창고지기" 등) → 익명 화자 (WARNING 강등).
+ * 매칭 규칙은 서버 B-1.5 콜론 구제의 isKnownNpcAlias와 정렬:
+ * 정확 일치(name/unknownAlias/aliases) + 수식어 조합(displayName ⊇ name).
+ */
+export function isKnownNpcDisplayName(displayName: string): boolean {
+  const a = displayName.trim();
+  if (a.length < 2) return false;
+  for (const npc of loadNpcs().values()) {
+    if (
+      a === npc.name ||
+      a === npc.unknownAlias ||
+      npc.aliases.includes(a) ||
+      (npc.name.length >= 2 && a.includes(npc.name)) ||
+      (npc.unknownAlias !== null && a.includes(npc.unknownAlias))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * architecture/55 — utterance.npcName으로 NPC 찾기.
  * NpcDialogueMarkerService가 마커에 넣어주는 이름은 NPC의 name / unknownAlias /
  * aliases 중 하나. 정확 매칭 우선, fallback 없음 (가짜 NPC면 null).

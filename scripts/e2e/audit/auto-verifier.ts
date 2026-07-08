@@ -9,6 +9,7 @@ import type {
   DialoguePair,
   DialogueQuality,
 } from "./types.js";
+import { isKnownNpcDisplayName } from "./dialogue-quality.js";
 
 const TOKEN_LIMIT_WARN = 13_000;
 const AVOID_WORDS = [
@@ -44,18 +45,30 @@ export function verify(
 
   // ── ERROR ────────────────────────────────────────────────
   for (const p of pairs) {
-    // E1. MARKER_NPCID_NULL — speakingNpc.npcId null인데 displayName이 무명 외
+    // E1. MARKER_NPCID_NULL — speakingNpc.npcId null인데 displayName이 무명 외.
+    //   2026-07-08 정밀화: 콘텐츠에 존재하는 별칭인데 null → 진짜 arch/46 회귀(ERROR).
+    //   콘텐츠 외 즉흥 인물("창고지기" 등) → 익명 화자 WARNING (실루엣 표시 자체는
+    //   정상이나, 플레이어가 이어 말 걸면 대화 연속 불가한 유령 화자).
     if (
       p.speakerNpcId === null &&
       p.speakerDisplayName &&
       p.speakerDisplayName !== "무명 인물"
     ) {
-      errors.push({
-        turn: p.turn,
-        rule: "MARKER_NPCID_NULL",
-        message: `speakingNpc.npcId=null인데 displayName="${p.speakerDisplayName}" — architecture/46 회귀`,
-        severity: "ERROR",
-      });
+      if (isKnownNpcDisplayName(p.speakerDisplayName)) {
+        errors.push({
+          turn: p.turn,
+          rule: "MARKER_NPCID_NULL",
+          message: `speakingNpc.npcId=null인데 displayName="${p.speakerDisplayName}" — 콘텐츠 존재 별칭 미해석, architecture/46 회귀`,
+          severity: "ERROR",
+        });
+      } else {
+        warnings.push({
+          turn: p.turn,
+          rule: "ANONYMOUS_SPEAKER",
+          message: `콘텐츠 외 익명 화자 "${p.speakerDisplayName}" (npcId=null) — 대화 연속 불가 유령 화자 가능성`,
+          severity: "WARNING",
+        });
+      }
     }
 
     // E2. MARKER_FORMAT_BROKEN — '@[' 토큰은 있는데 정상 마커가 0건
