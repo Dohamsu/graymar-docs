@@ -56,3 +56,42 @@ total(제출→DONE) − main(메인 호출) = 파이프라인 오버헤드:
 (a) 토큰 간 갭/총 스트림 상한 + 클라 스트림 리셋 프로토콜,
 (b) OpenRouter provider 고정/제외 리스트(`provider.order`/`ignore`),
 (c) 메인 모델 재평가 (arch/25 연장).
+
+---
+
+## 부록 A — provider 온건 고정 + 서빙 업체 로깅 (2026-07-09)
+
+§3의 "느린 생성" 대응 3안 중 (b) provider 고정을 온건 강도로 적용 (①로깅+②배제).
+
+### 조사 근거 (OpenRouter /api/v1/models/.../endpoints 실시간 조회)
+
+Gemma 4 26B는 10개 provider가 서빙 중이며 편차가 큼: Wafer 99.99% / Novita 99.65% /
+DeepInfra 98.7% (30분 uptime) vs **Cloudflare 69.2% / DekaLLM 69.8%**. 기존
+`sort: 'latency'`는 접속 지연만 봐서 저속 생성(10~14 tok/s) 스파이크를 못 거른다.
+
+### 적용 (openai.provider.ts — buildOpenRouterParams 단일화)
+
+```
+LLM_PROVIDER_SORT=throughput          # 생성 tok/s 우선 정렬
+LLM_PROVIDER_IGNORE=cloudflare,dekallm  # 저 uptime 배제 (블랙리스트)
+# allow_fallbacks: true 유지 — 배제 외 8개 provider 폴백 허용 (가용성 유지)
+```
+
+### 서빙 업체 로깅
+
+응답의 `provider` 필드를 `llm_token_stats.provider`(jsonb)에 기록 —
+스트림(청크)·비스트림 양쪽. 이후 느린 턴↔업체 상관을 실측해 ignore 목록을
+근거 기반으로 조정한다 (조회 예):
+
+```sql
+SELECT llm_token_stats->>'provider' AS p, count(*),
+  round(avg((llm_token_stats->>'completion')::int /
+        ((llm_token_stats->>'latencyMs')::int/1000.0))) AS avg_tok_s
+FROM turns WHERE llm_token_stats->>'provider' IS NOT NULL
+GROUP BY 1 ORDER BY avg_tok_s;
+```
+
+### 미적용 (강경 고정)
+
+`order`/`only`/`allow_fallbacks:false`는 특정 업체 장애 = 서비스 장애가 되어 보류.
+로깅 데이터 축적 후 필요 시 격상.

@@ -407,6 +407,8 @@ LLM_TIMEOUT_MS=8000
 LLM_MAX_TOKENS=1024
 LLM_TEMPERATURE=0.8
 LLM_FIRST_TOKEN_TIMEOUT_MS=5000       # 스트리밍 첫 토큰 타임아웃 — 초과 시 non-stream fallback (arch/62, 0=off)
+LLM_PROVIDER_SORT=throughput          # OpenRouter 라우팅 정렬 — 생성 tok/s 우선 (arch/62)
+LLM_PROVIDER_IGNORE=cloudflare,dekallm  # OpenRouter 배제 provider (저 uptime — arch/62 부록)
 LLM_FALLBACK_PROVIDER=openai          # fallback: 같은 OpenRouter 경유
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini  # fallback 모델 (이전: Claude Haiku 4.5)
 GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off)
