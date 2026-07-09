@@ -1,6 +1,22 @@
 # 서버·클라 개발 프로세스 재시작
 
-기존 graymar NestJS / Next dev 프로세스를 완전히 종료하고, 포트 점유를 해제한 뒤 서버(3000) + 클라이언트(3001)를 백그라운드로 재기동한다. 좀비 프로세스 누수 방지.
+기존 graymar NestJS / Next dev 프로세스를 완전히 종료하고, 포트 점유를 해제한 뒤 서버(3000) + 클라이언트(3001)를 재기동한다. 좀비 프로세스 누수 방지.
+
+## ⚠️ 서버는 launchd 상주 서비스 (2026-07-09 확인)
+
+서버 3000은 **launchd `com.graymar.server`(KeepAlive)** 가 관리한다 — kill해도 자동 리스폰되고,
+`pnpm start:dev`를 겹쳐 띄우면 포트 경쟁 + **LLM 워커 이중 폴링**(두 코드 버전이 턴을 번갈아 처리)이 발생한다.
+
+**서버 재시작 정본**:
+```bash
+cd /Users/dohamsu/Workspace/graymar/server && pnpm build \
+  && launchctl kickstart -k "gui/$(id -u)/com.graymar.server" \
+  && sleep 5 && curl -s http://localhost:3000/v1/version
+```
+
+watch 모드가 꼭 필요하면 먼저 `launchctl bootout "gui/$(id -u)/com.graymar.server"`로 상주 서비스를 내리고,
+작업 후 `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.graymar.server.plist`로 복귀.
+아래 절차(1~4)는 **launchd를 내린 상태의 watch 모드** 또는 클라이언트에만 해당.
 
 ## 언제 사용
 

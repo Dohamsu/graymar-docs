@@ -28,23 +28,37 @@ curl -s -X POST -H 'Content-type: application/json' \
 
 ## 서버 프로세스 관리 (필수)
 
-`pnpm start:dev &` 등 백그라운드로 서버를 시작하면, Claude Code 세션 종료 후에도 프로세스가 좀비로 남는다.
-**서버를 시작하기 전에 반드시 기존 좀비 프로세스를 정리하라.**
+**⚠️ 서버는 launchd 상주 서비스 `com.graymar.server`(KeepAlive)가 관리한다** —
+`node dist/src/main.js`를 graymar/server cwd로 실행하며, kill해도 수 초 내 자동 리스폰된다.
+`pnpm start:dev`를 병행하면 launchd 앱과 **포트 경쟁 + LLM 워커 이중 폴링**(신·구 코드가 턴을 번갈아 처리)이
+발생한다 (2026-07-09 선택지 검증에서 실측). 관련: `com.graymar.cloudflared`(api.dimtale.com 터널).
 
-### 서버 시작 전 정리 절차
+### 서버 재시작 (정본 절차)
 ```bash
-# 1) 기존 graymar NestJS/pnpm 좀비 전체 정리
+cd server && pnpm build && launchctl kickstart -k "gui/$(id -u)/com.graymar.server"
+sleep 5 && curl -s http://localhost:3000/v1/version   # 해시·startedAt 확인
+```
+
+### dev watch 모드가 꼭 필요할 때만
+```bash
+launchctl bootout "gui/$(id -u)/com.graymar.server"   # 상주 서비스 내리고
+cd server && pnpm start:dev                            # watch 실행
+# 작업 후 복귀: launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.graymar.server.plist
+```
+
+### 좀비 정리 (포트 충돌 시)
+```bash
 pkill -f 'graymar/server.*nest.js start --watch' 2>/dev/null
 pkill -f 'graymar/server.*pnpm start:dev' 2>/dev/null
-sleep 1
-# 2) 포트 점유 프로세스 최종 확인
-lsof -ti:3000 | xargs kill -9 2>/dev/null
+# 주의: launchd 앱은 명령줄이 상대경로(dist/src/main.js)라 경로 pkill에 안 걸린다.
+# cwd 기준 확인: lsof -c node | awk '$4=="cwd" && /graymar\/server/{print $2}'
+lsof -ti:3000 | xargs kill -9 2>/dev/null   # launchd가 자동 재기동함 (정상)
 ```
 
 ### 규칙
-- **서버 시작 전**: 위 정리 절차를 반드시 먼저 실행한다. `pnpm start:dev &`를 바로 실행하지 않는다.
-- **클라이언트도 동일**: Next.js 시작 전에 `lsof -ti:3001 | xargs kill -9 2>/dev/null`로 기존 프로세스 정리.
-- **다른 프로젝트 주의**: `mdfile` 등 다른 워크스페이스의 좀비도 남아있을 수 있으므로, 포트 충돌 발생 시 `ps aux | grep 'nest.js start'`로 전체 확인.
+- **재시작 = build + kickstart**. `pnpm start:dev`를 launchd 서비스 위에 겹쳐 띄우지 않는다.
+- **클라이언트**: Next.js 시작 전 `lsof -ti:3001 | xargs kill -9 2>/dev/null`로 기존 프로세스 정리.
+- **다른 프로젝트 주의**: 포트 충돌 시 `ps aux | grep 'nest.js start'` + cwd 확인으로 전체 점검.
 
 ## 워크플로우 규칙
 
