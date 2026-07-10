@@ -1,0 +1,235 @@
+{
+  "version": "1.0",
+  "incidents": [
+    {
+      "incidentId": "INC_SD_COLLAPSE",
+      "kind": "SOCIAL",
+      "title": "3번 갱도 붕괴 여파",
+      "description": "붕괴로 광부 열둘이 죽었다. 유족의 분노와 회사의 은폐가 마을을 짓누른다.",
+      "locationId": "LOC_SD_MINE",
+      "priority": 5,
+      "weight": 15,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "통제선 안팎으로 흉흉한 소문이 돈다",
+          "affordances": [
+            "INVESTIGATE",
+            "OBSERVE",
+            "TALK"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "무너진 3번 갱도 앞, 통제선 너머로 부서진 버팀목이 보인다. 유족 몇이 통제선 앞에 꽃을 놓고 있다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "유족과 조합이 진상 규명을 요구하기 시작한다",
+          "affordances": [
+            "PERSUADE",
+            "INVESTIGATE",
+            "HELP"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "광장 게시판 앞에 사람들이 모여 웅성인다. '사고가 아니다'라는 벽서가 붙었다 떼어진다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "RUMOR",
+          "severity": 3,
+          "textTemplate": "3번 갱도 붕괴가 사고가 아니라는 벽서가 광장에 붙었다",
+          "triggerStage": 0
+        },
+        {
+          "channel": "NPC_BEHAVIOR",
+          "severity": 2,
+          "textTemplate": "유족들이 통제선 앞에 모여 침묵시위를 벌인다",
+          "triggerStage": 1
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SD_STRIKE",
+      "kind": "SOCIAL",
+      "title": "광부 파업 조짐",
+      "description": "조합이 진상 규명과 보상을 걸고 파업을 준비한다. 회사는 외부 인력을 알아보고 있다.",
+      "locationId": "LOC_SD_SQUARE",
+      "priority": 3,
+      "weight": 10,
+      "spawnConditions": {
+        "minDay": 2,
+        "minHeat": 10
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "광장에서 서명이 모이고 있다",
+          "affordances": [
+            "TALK",
+            "PERSUADE",
+            "OBSERVE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "조합장 카야가 광장 한가운데서 서명판을 들고 있다. 광부들이 눈치를 보며 하나둘 다가간다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "NPC_BEHAVIOR",
+          "severity": 2,
+          "textTemplate": "광부들이 광장에서 서명을 모으고 있다",
+          "triggerStage": 0
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SD_SMUGGLE",
+      "kind": "ECONOMIC",
+      "title": "은괴 밀반출",
+      "description": "장부에 없는 은괴가 밤마다 마을을 빠져나간다.",
+      "locationId": "LOC_SD_FORGE",
+      "priority": 4,
+      "weight": 10,
+      "spawnConditions": {
+        "minDay": 2,
+        "minHeat": 15
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "밤 수레의 행선지가 수상하다",
+          "affordances": [
+            "SNEAK",
+            "OBSERVE",
+            "INVESTIGATE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "해 진 뒤 덮개를 씌운 수레가 대장간 거리 뒤편을 지나간다. 마부는 길을 묻는 눈길을 피한다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "ECONOMY",
+          "severity": 2,
+          "textTemplate": "밤마다 덮개 씌운 수레가 마을을 빠져나간다는 목격담",
+          "triggerStage": 0
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    }
+  ]
+}

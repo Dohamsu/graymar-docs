@@ -1,0 +1,145 @@
+[
+  {
+    "locationId": "LOC_SD_SQUARE",
+    "name": "마을 광장",
+    "shortName": "광장",
+    "description": "실버딘의 중심 광장. 광부들과 행상이 오가고 게시판에 공고가 붙는다.",
+    "tags": [
+      "SOCIAL",
+      "CROWDED"
+    ],
+    "dangerLevel": 1,
+    "availableAtNight": true,
+    "nightDescription": "횃불 아래 늦은 행상과 순찰꾼만 오간다. 게시판의 사고 공고가 바람에 펄럭인다.",
+    "hubAccessible": true,
+    "hubHint": "소문과 사람이 모이는 곳",
+    "moveKeywords": [
+      "광장",
+      "게시판",
+      "장터",
+      "마을 중심",
+      "중앙"
+    ],
+    "hubState": {
+      "security": 55,
+      "crime": 25,
+      "unrest": 35
+    },
+    "ambushEncounterId": "enc_market_thugs"
+  },
+  {
+    "locationId": "LOC_SD_MINE",
+    "name": "은광 갱도 입구",
+    "shortName": "갱도",
+    "description": "무너진 3번 갱도가 있는 은광 입구. 출입 통제선이 쳐져 있다.",
+    "tags": [
+      "DANGER",
+      "SECRET"
+    ],
+    "dangerLevel": 3,
+    "availableAtNight": true,
+    "nightDescription": "등불 하나 없는 갱도 입구. 통제선 너머에서 이따금 돌 구르는 소리가 난다.",
+    "hubAccessible": true,
+    "hubHint": "무너진 3번 갱도가 있는 곳",
+    "moveKeywords": [
+      "갱도",
+      "광산",
+      "은광",
+      "막장",
+      "통제선",
+      "3번"
+    ],
+    "hubState": {
+      "security": 30,
+      "crime": 40,
+      "unrest": 60
+    },
+    "ambushEncounterId": "enc_slum_gang"
+  },
+  {
+    "locationId": "LOC_SD_FORGE",
+    "name": "대장간 거리",
+    "shortName": "대장간",
+    "description": "풀무 소리가 끊이지 않는 대장간 거리. 광산 장비의 수리와 거래가 이뤄진다.",
+    "tags": [
+      "TRADE",
+      "WORK"
+    ],
+    "dangerLevel": 1,
+    "availableAtNight": false,
+    "nightDescription": "식은 화덕만 남은 거리. 늦게까지 남은 대장장이의 망치 소리가 드물게 울린다.",
+    "hubAccessible": true,
+    "hubHint": "장비와 실무 정보가 있는 곳",
+    "moveKeywords": [
+      "대장간",
+      "화덕",
+      "풀무",
+      "장비",
+      "수리"
+    ],
+    "hubState": {
+      "security": 60,
+      "crime": 15,
+      "unrest": 25
+    },
+    "ambushEncounterId": "enc_market_thugs"
+  },
+  {
+    "locationId": "LOC_SD_CHAPEL",
+    "name": "낡은 예배당",
+    "shortName": "예배당",
+    "description": "희생된 광부들의 위패가 모셔진 예배당. 유족들이 드나든다.",
+    "tags": [
+      "QUIET",
+      "SOCIAL"
+    ],
+    "dangerLevel": 1,
+    "availableAtNight": true,
+    "nightDescription": "촛불 몇 개만 남은 예배당. 밤 기도를 올리는 유족의 흐느낌이 낮게 들린다.",
+    "hubAccessible": true,
+    "hubHint": "유족과 증언이 있는 곳",
+    "moveKeywords": [
+      "예배당",
+      "교회",
+      "위패",
+      "사제",
+      "기도"
+    ],
+    "hubState": {
+      "security": 70,
+      "crime": 5,
+      "unrest": 45
+    },
+    "ambushEncounterId": "enc_slum_gang"
+  },
+  {
+    "locationId": "LOC_SD_INN",
+    "name": "잿빛 램프 여관",
+    "shortName": "여관",
+    "description": "실버딘의 거점 여관. 광부들의 술자리와 외지인의 숙소가 뒤섞인다.",
+    "tags": [
+      "HUB",
+      "SAFE"
+    ],
+    "dangerLevel": 0,
+    "availableAtNight": true,
+    "nightDescription": "램프 불빛 아래 밤늦은 술자리가 이어진다.",
+    "moveKeywords": [
+      "여관",
+      "잿빛 램프",
+      "숙소",
+      "주점",
+      "술집"
+    ],
+    "hubState": {
+      "security": 75,
+      "crime": 10,
+      "unrest": 15
+    },
+    "moveKeywordsFallback": [
+      "거점",
+      "본거지",
+      "돌아가"
+    ]
+  }
+]

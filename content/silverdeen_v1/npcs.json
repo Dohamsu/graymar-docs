@@ -1,0 +1,627 @@
+[
+  {
+    "npcId": "NPC_SD_FOREMAN",
+    "name": "베렉 콜",
+    "unknownAlias": "굳은 얼굴의 광산 감독관",
+    "shortAlias": "감독관",
+    "role": "광산 감독관 — 붕괴 사고의 진상을 덮으려는 실무 책임자",
+    "faction": "MINE_COMPANY",
+    "hostile": "conditional",
+    "combatProfile": null,
+    "title": "감독관",
+    "aliases": [
+      "베렉",
+      "베렉 콜",
+      "감독관"
+    ],
+    "nameStyle": "formal",
+    "gender": "male",
+    "basePosture": "CALCULATING",
+    "initialTrust": -10,
+    "tier": "CORE",
+    "entityAliases": [
+      "FOREMAN",
+      "BEREK",
+      "MINE_ORDER"
+    ],
+    "activityLocations": [
+      "LOC_SD_MINE",
+      "LOC_SD_SQUARE"
+    ],
+    "personality": {
+      "core": "회사의 이익 뒤에 숨은 실무형 은폐자",
+      "traits": [
+        "신중",
+        "권위적",
+        "방어적"
+      ],
+      "speechStyle": "짧고 사무적인 하오체 — 질문에는 절차와 규정을 방패로 세운다",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "덮으라는 지시와 광부들에 대한 오래된 책임감 사이",
+      "softSpot": "죽은 광부들의 이름이 하나하나 불릴 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SD_MINE",
+          "activity": "갱도 점검 지시",
+          "interactable": false
+        },
+        "DAY": {
+          "locationId": "LOC_SD_MINE",
+          "activity": "통제선 안쪽에서 작업 지휘",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SD_SQUARE",
+          "activity": "회사 사무소에 보고서 제출",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SD_INN",
+          "activity": "여관 구석에서 혼자 술을 마신다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SD_FOREMAN_ORDER",
+        "detail": "붕괴 직전 '3번 갱도 작업 중지 및 화약 반입' 지시서에 자신이 서명했다",
+        "importance": 0.9,
+        "keywords": [
+          "지시",
+          "화약",
+          "서명",
+          "명령"
+        ],
+        "minTrust": 25
+      },
+      {
+        "factId": "FACT_SD_VEIN_HIDDEN",
+        "detail": "3번 갱도 안쪽에서 노다지 은맥이 발견됐고, 회사는 이를 왕실 몫에서 빼돌리려 한다",
+        "importance": 1.0,
+        "keywords": [
+          "은맥",
+          "노다지",
+          "왕실",
+          "몫"
+        ],
+        "minTrust": 40
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SD_COLLAPSE"
+    ]
+  },
+  {
+    "npcId": "NPC_SD_SMITH",
+    "name": "일가 브란트",
+    "unknownAlias": "그을음 묻은 여자 대장장이",
+    "shortAlias": "대장장이",
+    "role": "대장간 거리의 대장장이 — 붕괴에서 오빠를 잃었다",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "일가",
+      "브란트",
+      "대장장이"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 10,
+    "tier": "CORE",
+    "entityAliases": [
+      "SMITH",
+      "ILGA",
+      "FORGE_TALK"
+    ],
+    "activityLocations": [
+      "LOC_SD_FORGE",
+      "LOC_SD_CHAPEL"
+    ],
+    "personality": {
+      "core": "슬픔을 노동으로 누르는 실용주의자",
+      "traits": [
+        "직설",
+        "끈기",
+        "의리"
+      ],
+      "speechStyle": "군더더기 없는 하오체 — 감정을 아끼고 사실을 먼저 말한다",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "복수심과 남은 가족을 지켜야 한다는 현실 사이",
+      "softSpot": "오빠의 이름 '토마스'가 언급될 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SD_FORGE",
+          "activity": "화덕에 불을 붙인다",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SD_FORGE",
+          "activity": "광산 장비를 수리한다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SD_CHAPEL",
+          "activity": "오빠의 위패 앞에 들른다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SD_INN",
+          "activity": "여관에서 늦은 저녁을 먹는다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SD_BLAST_MARKS",
+        "detail": "수리하러 들어갔던 3번 갱도 버팀목에서 화약 폭파 흔적을 봤다 — 자연 붕괴가 아니다",
+        "importance": 0.8,
+        "keywords": [
+          "폭파",
+          "화약",
+          "버팀목",
+          "흔적"
+        ],
+        "minTrust": 15
+      },
+      {
+        "factId": "FACT_SD_LEDGER_FAKE",
+        "detail": "회사 반출 기록의 은괴 수량이 실제 수레 대수와 맞지 않는다",
+        "importance": 0.7,
+        "keywords": [
+          "반출",
+          "기록",
+          "은괴",
+          "수레"
+        ],
+        "minTrust": 30
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SD_COLLAPSE",
+      "INC_SD_SMUGGLE"
+    ]
+  },
+  {
+    "npcId": "NPC_SD_INNKEEP",
+    "name": "도른",
+    "unknownAlias": "수염 덥수룩한 여관 주인",
+    "shortAlias": "여관 주인",
+    "role": "잿빛 램프 여관 주인 — 의뢰인, 마을 소문의 중심",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "도른",
+      "여관 주인"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 20,
+    "tier": "SUB",
+    "entityAliases": [
+      "INNKEEP",
+      "DORN"
+    ],
+    "activityLocations": [
+      "LOC_SD_INN"
+    ],
+    "personality": {
+      "core": "모두의 이야기를 듣지만 아무 편도 들지 않는 장사꾼",
+      "traits": [
+        "능청",
+        "정보통",
+        "중립"
+      ],
+      "speechStyle": "손님을 어르는 합쇼체 — 답보다 소문을 먼저 얹는다",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "조카가 3번 갱도 생존자라는 사실을 숨기고 있다",
+      "softSpot": "조카 이야기",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SD_INN",
+          "activity": "아침 준비",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SD_INN",
+          "activity": "카운터를 지킨다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SD_INN",
+          "activity": "저녁 손님을 받는다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SD_INN",
+          "activity": "밤 술자리를 돌본다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SD_COLLAPSE_ODD",
+        "detail": "붕괴 전날 밤 외지인 둘이 화약 냄새 나는 궤짝을 갱도 쪽으로 옮기는 걸 봤다는 손님이 있었다",
+        "importance": 0.6,
+        "keywords": [
+          "붕괴",
+          "외지인",
+          "궤짝",
+          "전날"
+        ],
+        "minTrust": 5
+      },
+      {
+        "factId": "FACT_SD_WITNESS",
+        "detail": "조카 '핍'이 3번 갱도에서 살아나왔지만 회사가 입막음 돈을 줬다",
+        "importance": 0.8,
+        "keywords": [
+          "생존",
+          "조카",
+          "입막음",
+          "증인"
+        ],
+        "minTrust": 35
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SD_COLLAPSE"
+    ]
+  },
+  {
+    "npcId": "NPC_SD_PRIEST",
+    "name": "한스",
+    "unknownAlias": "등 굽은 늙은 사제",
+    "shortAlias": "사제",
+    "role": "예배당 사제 — 유족들의 고해를 듣는다",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": "사제",
+    "aliases": [
+      "한스",
+      "사제"
+    ],
+    "nameStyle": "formal",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 5,
+    "tier": "SUB",
+    "entityAliases": [
+      "PRIEST",
+      "HANS",
+      "CHAPEL_TALK"
+    ],
+    "activityLocations": [
+      "LOC_SD_CHAPEL"
+    ],
+    "personality": {
+      "core": "고해의 비밀과 정의 사이에서 침묵을 택해온 노인",
+      "traits": [
+        "신중",
+        "연민",
+        "죄책감"
+      ],
+      "speechStyle": "느리고 완곡한 하오체 — 확언을 피하고 비유로 말한다",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "고해로 들은 진실을 발설할 수 없는 계율",
+      "softSpot": "위패 앞에서 우는 유족",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SD_CHAPEL",
+          "activity": "새벽 기도",
+          "interactable": false
+        },
+        "DAY": {
+          "locationId": "LOC_SD_CHAPEL",
+          "activity": "유족을 맞는다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SD_CHAPEL",
+          "activity": "저녁 미사",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SD_CHAPEL",
+          "activity": "촛불을 정리한다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SD_BUYER",
+        "detail": "고해 중 들었다 — 왕도에서 온 매입자가 '장부에 없는 은괴'를 산다며 마을에 머물고 있다",
+        "importance": 0.8,
+        "keywords": [
+          "매입자",
+          "왕도",
+          "은괴",
+          "장부"
+        ],
+        "minTrust": 30
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SD_SMUGGLE"
+    ]
+  },
+  {
+    "npcId": "NPC_SD_UNION",
+    "name": "카야",
+    "unknownAlias": "팔뚝 굵은 광부 조합장",
+    "shortAlias": "조합장",
+    "role": "광부 조합장 — 파업을 준비 중",
+    "faction": "MINERS_UNION",
+    "hostile": false,
+    "combatProfile": null,
+    "title": "조합장",
+    "aliases": [
+      "카야",
+      "조합장"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "HOSTILE",
+    "initialTrust": -5,
+    "tier": "SUB",
+    "entityAliases": [
+      "UNION",
+      "KAYA",
+      "STRIKE_TALK"
+    ],
+    "activityLocations": [
+      "LOC_SD_SQUARE",
+      "LOC_SD_MINE"
+    ],
+    "personality": {
+      "core": "동료를 잃은 분노를 조직으로 바꾸는 지도자",
+      "traits": [
+        "강단",
+        "불신",
+        "카리스마"
+      ],
+      "speechStyle": "거친 반말 — 외지인에게 날이 서 있다",
+      "speechRegister": "BANMAL",
+      "innerConflict": "파업이 남은 광부들의 일자리를 잃게 할 수 있다는 두려움",
+      "softSpot": "광부들의 가족 이야기",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SD_MINE",
+          "activity": "교대 광부를 맞는다",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SD_SQUARE",
+          "activity": "광장에서 서명을 모은다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SD_SQUARE",
+          "activity": "집회 준비",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SD_INN",
+          "activity": "조합원들과 밀담",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SD_COLLAPSE_ODD",
+        "detail": "붕괴 당일 아침, 회사가 갑자기 3번 갱도 교대조를 절반으로 줄였다 — 미리 알았던 것처럼",
+        "importance": 0.7,
+        "keywords": [
+          "교대",
+          "붕괴",
+          "줄였",
+          "당일"
+        ],
+        "minTrust": 10
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SD_STRIKE",
+      "INC_SD_COLLAPSE"
+    ]
+  },
+  {
+    "npcId": "NPC_SD_ORPHAN",
+    "name": "핍",
+    "unknownAlias": "눈치 빠른 전령 소년",
+    "shortAlias": "전령 소년",
+    "role": "마을 전령 소년 — 3번 갱도 붕괴의 유일한 생존 목격자",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "핍",
+      "전령"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "FEARFUL",
+    "initialTrust": 0,
+    "tier": "SUB",
+    "entityAliases": [
+      "PIP",
+      "ORPHAN",
+      "MESSENGER"
+    ],
+    "activityLocations": [
+      "LOC_SD_SQUARE",
+      "LOC_SD_INN"
+    ],
+    "personality": {
+      "core": "본 것을 말하고 싶지만 겁에 질린 아이",
+      "traits": [
+        "민첩",
+        "겁많음",
+        "솔직"
+      ],
+      "speechStyle": "빠르고 짧은 해요체 — 겁이 나면 말을 삼킨다",
+      "speechRegister": "HAEYO",
+      "innerConflict": "입막음 돈과 죽은 동료 광부들에 대한 미안함",
+      "softSpot": "안전을 약속받을 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SD_SQUARE",
+          "activity": "전갈 배달",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SD_SQUARE",
+          "activity": "광장에서 심부름",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SD_INN",
+          "activity": "여관 부엌에서 저녁",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SD_INN",
+          "activity": "다락방에 숨는다",
+          "interactable": false
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SD_WITNESS",
+        "detail": "붕괴 직전 갱도 안에서 '먼저 나가라'는 낯선 남자들의 목소리를 들었고, 도화선 타는 냄새를 맡았다",
+        "importance": 0.9,
+        "keywords": [
+          "목격",
+          "도화선",
+          "목소리",
+          "붕괴"
+        ],
+        "minTrust": 30
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SD_COLLAPSE"
+    ]
+  },
+  {
+    "npcId": "NPC_SD_BG_MINER",
+    "name": "올드 그림",
+    "unknownAlias": "늙은 광부",
+    "role": "늙은 광부",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "plain",
+    "basePosture": "CAUTIOUS",
+    "tier": "BACKGROUND",
+    "activityLocations": []
+  },
+  {
+    "npcId": "NPC_SD_BG_WASHER",
+    "name": "마르타",
+    "unknownAlias": "억척스러운 세탁부",
+    "role": "억척스러운 세탁부",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "plain",
+    "basePosture": "CAUTIOUS",
+    "tier": "BACKGROUND",
+    "activityLocations": []
+  },
+  {
+    "npcId": "NPC_SD_BG_PEDDLER",
+    "name": "피터 잰",
+    "unknownAlias": "말 많은 행상",
+    "role": "말 많은 행상",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "plain",
+    "basePosture": "CAUTIOUS",
+    "tier": "BACKGROUND",
+    "activityLocations": []
+  },
+  {
+    "npcId": "NPC_SD_BG_DRUNK",
+    "name": "홀거",
+    "unknownAlias": "술에 전 광부",
+    "role": "술에 전 광부",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "plain",
+    "basePosture": "CAUTIOUS",
+    "tier": "BACKGROUND",
+    "activityLocations": []
+  },
+  {
+    "npcId": "NPC_SD_BG_BELL",
+    "name": "브루노",
+    "unknownAlias": "말수 적은 종지기",
+    "role": "말수 적은 종지기",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "plain",
+    "basePosture": "CAUTIOUS",
+    "tier": "BACKGROUND",
+    "activityLocations": []
+  },
+  {
+    "npcId": "NPC_SD_BG_CARTER",
+    "name": "요른",
+    "unknownAlias": "무뚝뚝한 마부",
+    "role": "무뚝뚝한 마부",
+    "faction": null,
+    "hostile": false,
+    "combatProfile": null,
+    "title": null,
+    "aliases": [],
+    "nameStyle": "plain",
+    "basePosture": "CAUTIOUS",
+    "tier": "BACKGROUND",
+    "activityLocations": []
+  }
+]

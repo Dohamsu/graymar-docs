@@ -244,6 +244,15 @@
           "건강"
         ]
       }
+    ],
+    "entityAliases": [
+      "HARLUN",
+      "NPC_HARLAN",
+      "DOCK_WORKERS"
+    ],
+    "activityLocations": [
+      "LOC_HARBOR",
+      "LOC_SLUMS"
     ]
   },
   {
@@ -485,6 +494,13 @@
           "사무실"
         ]
       }
+    ],
+    "entityAliases": [
+      "NPC_EDRIC",
+      "SEO_DOYUN"
+    ],
+    "activityLocations": [
+      "LOC_MARKET"
     ]
   },
   {
@@ -720,6 +736,14 @@
           "보급"
         ]
       }
+    ],
+    "entityAliases": [
+      "MAIREL_FACTION",
+      "MAIREL_CORRUPTION",
+      "MAIREL_OFFICE"
+    ],
+    "activityLocations": [
+      "LOC_GUARD"
     ]
   },
   {
@@ -858,6 +882,13 @@
           "고민"
         ]
       }
+    ],
+    "entityAliases": [
+      "TOBREN",
+      "SMUGGLING"
+    ],
+    "activityLocations": [
+      "LOC_HARBOR"
     ]
   },
   {
@@ -1023,6 +1054,13 @@
           "기쁨"
         ]
       }
+    ],
+    "entityAliases": [
+      "LYRA"
+    ],
+    "activityLocations": [
+      "LOC_MARKET",
+      "LOC_GUARD"
     ]
   },
   {
@@ -1177,6 +1215,13 @@
           "빈민가"
         ]
       }
+    ],
+    "entityAliases": [
+      "HERB"
+    ],
+    "activityLocations": [
+      "LOC_MARKET",
+      "LOC_SLUMS"
     ]
   },
   {
@@ -1317,6 +1362,10 @@
           "사람"
         ]
       }
+    ],
+    "activityLocations": [
+      "LOC_MARKET",
+      "LOC_SLUMS"
     ]
   },
   {
@@ -1448,6 +1497,10 @@
           "후배"
         ]
       }
+    ],
+    "activityLocations": [
+      "LOC_HARBOR",
+      "LOC_GUARD"
     ]
   },
   {
@@ -1576,6 +1629,10 @@
           "추위"
         ]
       }
+    ],
+    "activityLocations": [
+      "LOC_SLUMS",
+      "LOC_MARKET"
     ]
   },
   {
@@ -1718,6 +1775,13 @@
           "불안"
         ]
       }
+    ],
+    "entityAliases": [
+      "SHADOW"
+    ],
+    "activityLocations": [
+      "LOC_SLUMS",
+      "LOC_HARBOR"
     ]
   },
   {
@@ -1846,6 +1910,16 @@
           "친구"
         ]
       }
+    ],
+    "entityAliases": [
+      "CAPTAIN_BELLON",
+      "GUARD_MORALE",
+      "PATROL",
+      "SHIFT_CHANGE",
+      "BLACKSMITH"
+    ],
+    "activityLocations": [
+      "LOC_GUARD"
     ]
   },
   {

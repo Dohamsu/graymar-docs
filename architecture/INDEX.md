@@ -23,6 +23,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/09_npc_politics|npc politics]] — 5축 감정(trust/fear/respect/affection/hostility)과 NPC 소개 조건(FRIENDLY 1회/CAUTIOUS 2회/HOSTILE 3회), posture 전환 규칙. Leverage/거래는 부분 구현.
 - `Narrative_Engine_v1_Integrated_Spec.md` — Narrative Engine v1 통합 스펙(Incident/4상 시간/Signal/NpcEmotional/Mark/Ending/Operation). 현 HUB 엔진의 기반 설계.
 - [[architecture/06_graymar_content|graymar content]] — 프리셋 6종, NPC 43명, 장소 7개, Incident 13건 등 graymar_v1 콘텐츠 스키마와 시드 데이터 구조.
+- [[architecture/63_multi_scenario_content_decoupling|multi scenario content decoupling]] — 멀티 시나리오 선행작업 ②~⑤: 엔진 하드코딩 콘텐츠 ID 외부화(표시명/활동장소/별칭/프롤로그/L0 테마), DAG graph.json화, 시스템 프롬프트 세계관 주입, silverdeen_v1 미니 팩 + scenarioId 런 경로. 단일 활성 시나리오 정책(① 멀티 팩 로더는 후속).
 
 ### 2. 게임 엔진
 

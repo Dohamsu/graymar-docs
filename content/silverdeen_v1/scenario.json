@@ -1,0 +1,124 @@
+{
+  "scenarioId": "silverdeen_v1",
+  "name": "실버딘 은광 마을",
+  "description": "무너진 3번 갱도의 진실을 쫓는 산악 광산 마을의 음모",
+  "order": 2,
+  "prerequisites": [],
+  "carryOverRules": {
+    "goldRate": 1.0,
+    "itemsCarry": true,
+    "reputationDecay": 0.5,
+    "statBonusPerScenario": {
+      "MaxHP": 10,
+      "ATK": 1,
+      "DEF": 1
+    }
+  },
+  "world": {
+    "settingLine": "중세 판타지 왕국",
+    "regionSummary": "실버딘 5개 지역 자유 탐험. 여관이 거점. Heat(경계도) 변동. 시간대별 분위기 차이."
+  },
+  "hub": {
+    "locationId": "LOC_SD_INN",
+    "name": "잿빛 램프 여관",
+    "returnLabel": "'잿빛 램프' 여관으로 돌아간다",
+    "returnHint": "여관에서 정보를 정리하고 다른 지역을 탐색한다",
+    "defaultLocationId": "LOC_SD_SQUARE"
+  },
+  "prologue": {
+    "npcId": "NPC_SD_INNKEEP",
+    "displayName": "도른",
+    "imageUrl": "/npc-portraits/unknown_silhouette.webp",
+    "atmospheres": [
+      "산바람이 덧문을 두드리는 밤이었다. '잿빛 램프' 여관의 벽난로 앞에서 당신은 싸구려 흑맥주를 홀짝이고 있었다. 램프 불빛이 흔들릴 때마다 광부들의 그림자가 벽을 타고 일렁였다.",
+      "진눈깨비가 창을 적시는 밤이었다. '잿빛 램프' 여관은 젖은 양모와 석탄 냄새로 가득했고, 당신은 구석 자리에서 말없이 잔을 기울이고 있었다.",
+      "갱도에서 올라온 광부들의 낮은 술렁임이 여관을 채우고 있었다. 열둘의 이름이 오르내릴 때마다 잔이 멎었다. 당신은 문을 등진 자리에서 그 침묵의 무게를 듣고 있었다."
+    ],
+    "lines": [
+      "그때, 수염 덥수룩한 여관 주인이 행주를 내려놓고 당신의 테이블로 다가왔다. 주위를 살피는 눈이 평소의 능청과 달랐다.",
+      "",
+      "@[도른|/npc-portraits/unknown_silhouette.webp] \"손님, 잠깐 실례하겠습니다. 잿빛 램프 주인장 도른이라고 합니다.\"",
+      "",
+      "당신은 잔을 내려놓고 사내를 살폈다. 장사꾼답게 웃고 있었지만 눈은 웃고 있지 않았다.",
+      "",
+      "@[도른|/npc-portraits/unknown_silhouette.webp] \"{HOOK}\"",
+      "",
+      "도른이 목소리를 한층 낮췄다.",
+      "",
+      "@[도른|/npc-portraits/unknown_silhouette.webp] \"3번 갱도 말입니다. 회사는 사고라고 못 박았지만… 붕괴 전날 밤 갱도로 올라간 궤짝을 봤다는 손님이 있었습니다.\"",
+      "",
+      "당신의 눈이 좁아졌다.",
+      "",
+      "@[도른|/npc-portraits/unknown_silhouette.webp] \"열둘이 묻혔습니다. 유족들은 답을 원하고, 저는 마을이 터지기 전에 진상을 알아야겠습니다. 조용히 캐 주십시오. 보수는 섭섭잖게 드리겠습니다.\"",
+      "",
+      "도른이 행주를 쥔 손에 힘을 주었다."
+    ],
+    "questEventText": "[의뢰] 무너진 3번 갱도 — 마을 네 구역을 탐색하여 붕괴의 진상을 캐라.",
+    "summaryShort": "프롤로그 — 여관에서 도른의 의뢰를 받다.",
+    "accept": {
+      "instructionLines": [
+        "[상황] 당신은 도른의 의뢰를 수락했다. 3번 갱도 붕괴의 진상을 캐기로 했다.",
+        "[NPC] 여관 주인 도른 — 잿빛 램프 여관의 주인. ⚠️ 말투: 합쇼체(\"~습니다\", \"~입니다\", \"~십시오\").",
+        "[서술 지시] 150~300자. 의뢰 수락 장면을 서술하세요.",
+        "- 당신이 수락의 의사를 행동으로 표현하는 장면을 묘사하세요.",
+        "- 도른이 안도하며 짧게 감사를 표한다. 반드시 합쇼체로 말한다.",
+        "- 도른의 @마커: @[도른|/npc-portraits/unknown_silhouette.webp] \"대사\" 형태로 작성하세요. 다른 NPC 마커를 사용하지 마세요.",
+        "- 여관을 나서며 밤의 실버딘 골목을 바라보는 것으로 마무리하세요. 어디로 갈지는 언급하지 마세요.",
+        "- 당신의 내면(\"결심한다\", \"다짐한다\")을 쓰지 마세요. 행동만 묘사하세요."
+      ],
+      "display": "당신은 고개를 끄덕이며 의뢰를 수락했다. 도른이 안도의 한숨을 내쉬었다. \"감사합니다. 조용히… 부탁드리겠습니다.\" 당신은 여관을 나서 밤의 실버딘 골목을 바라보았다."
+    },
+    "acceptChoiceHint": "도른의 부탁을 수락하고 붕괴의 진상을 캐기로 한다"
+  },
+  "themeMemories": [
+    {
+      "key": "location",
+      "value": "실버딘 — 왕국 북부 산악의 은광 마을. 광산 회사, 광부 조합, 왕실 감찰이 은맥의 이권을 둘러싸고 얽혀 있다.",
+      "importance": 1.0,
+      "tags": [
+        "LOCATION",
+        "THEME"
+      ]
+    },
+    {
+      "key": "quest",
+      "value": "무너진 3번 갱도 — 광부 열둘이 묻힌 붕괴 사고. 회사는 사고라 하지만 폭파 흔적과 입막음의 정황이 드러나고 있다.",
+      "importance": 1.0,
+      "tags": [
+        "QUEST",
+        "THEME"
+      ]
+    },
+    {
+      "key": "npc_client",
+      "value": "의뢰인 도른 — 잿빛 램프 여관의 주인. 마을 소문의 중심이며, 조카가 붕괴의 생존자라는 사실을 숨기고 있다.",
+      "importance": 0.9,
+      "tags": [
+        "NPC",
+        "THEME"
+      ]
+    },
+    {
+      "key": "hub_system",
+      "value": "HUB 거점 — '잿빛 램프' 여관. 실버딘의 안전한 거점. 이곳에서 광장/갱도/대장간/예배당으로 이동하며 진상을 캔다.",
+      "importance": 0.8,
+      "tags": [
+        "HUB",
+        "THEME"
+      ]
+    },
+    {
+      "key": "protagonist",
+      "value": "{CHARACTER_NAME} — {PROTAGONIST_THEME} 실버딘에는 일거리를 찾아 며칠 전 도착했다.",
+      "importance": 0.8,
+      "tags": [
+        "PROTAGONIST",
+        "THEME"
+      ]
+    }
+  ],
+  "initialNpcRelations": {
+    "NPC_SD_INNKEEP": 30,
+    "NPC_SD_SMITH": 10
+  }
+}

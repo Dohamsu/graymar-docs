@@ -1,0 +1,231 @@
+{
+  "version": "1.0",
+  "description": "실버딘 붕괴 은폐 사건 fact 풀",
+  "facts": {
+    "FACT_SD_COLLAPSE_ODD": {
+      "factId": "FACT_SD_COLLAPSE_ODD",
+      "topic": "붕괴 전후의 수상한 정황",
+      "description": "3번 갱도 붕괴 전날 밤 화약 궤짝 목격담과 당일 아침 교대조 축소 — 사고라기엔 준비된 정황이 많다",
+      "keywords": [
+        "붕괴",
+        "사고",
+        "궤짝",
+        "교대",
+        "전날"
+      ],
+      "stage": "S0→S1",
+      "discoveryLocations": [
+        "LOC_SD_INN",
+        "LOC_SD_SQUARE"
+      ],
+      "nextHint": "사고가 아니라면 흔적이 남아 있을 것이다. 갱도와 대장간에서 물증을 찾아보자.",
+      "knownBy": [
+        "NPC_SD_INNKEEP",
+        "NPC_SD_UNION"
+      ],
+      "versions": {
+        "NPC_SD_INNKEEP": "붕괴 전날 밤 외지인 둘이 화약 냄새 나는 궤짝을 갱도 쪽으로 옮겼다는 손님 이야기",
+        "NPC_SD_UNION": "붕괴 당일 아침 회사가 3번 갱도 교대조를 절반으로 줄였다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_INNKEEP",
+        "NPC_SD_UNION"
+      ]
+    },
+    "FACT_SD_BLAST_MARKS": {
+      "factId": "FACT_SD_BLAST_MARKS",
+      "topic": "버팀목의 폭파 흔적",
+      "description": "3번 갱도 버팀목에 남은 화약 폭파 흔적 — 자연 붕괴가 아니라 인위적 폭파다",
+      "keywords": [
+        "폭파",
+        "화약",
+        "버팀목",
+        "흔적",
+        "갱도"
+      ],
+      "stage": "S1→S2",
+      "discoveryLocations": [
+        "LOC_SD_FORGE",
+        "LOC_SD_MINE"
+      ],
+      "nextHint": "누가 폭파를 지시했는가. 회사 내부의 서류와 지시 계통을 캐야 한다.",
+      "knownBy": [
+        "NPC_SD_SMITH"
+      ],
+      "versions": {
+        "NPC_SD_SMITH": "수리하러 들어간 3번 갱도 버팀목에서 화약 폭파 흔적을 직접 봤다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_SMITH"
+      ]
+    },
+    "FACT_SD_WITNESS": {
+      "factId": "FACT_SD_WITNESS",
+      "topic": "생존 목격자의 증언",
+      "description": "생존자 핍이 붕괴 직전 낯선 남자들의 목소리와 도화선 타는 냄새를 기억한다 — 회사는 입막음 돈을 줬다",
+      "keywords": [
+        "생존",
+        "증인",
+        "목격",
+        "도화선",
+        "입막음"
+      ],
+      "stage": "S1→S2",
+      "discoveryLocations": [
+        "LOC_SD_INN",
+        "LOC_SD_SQUARE"
+      ],
+      "nextHint": "증언과 물증이 모였다. 폭파의 지시 계통 — 감독관을 조여야 한다.",
+      "knownBy": [
+        "NPC_SD_ORPHAN",
+        "NPC_SD_INNKEEP"
+      ],
+      "versions": {
+        "NPC_SD_ORPHAN": "붕괴 직전 '먼저 나가라'는 낯선 목소리와 도화선 냄새를 기억한다",
+        "NPC_SD_INNKEEP": "조카 핍이 살아나왔지만 회사가 입막음 돈을 줬다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_ORPHAN",
+        "NPC_SD_INNKEEP"
+      ]
+    },
+    "FACT_SD_FOREMAN_ORDER": {
+      "factId": "FACT_SD_FOREMAN_ORDER",
+      "topic": "감독관의 지시서",
+      "description": "붕괴 직전 '작업 중지 및 화약 반입' 지시서에 감독관 베렉 콜이 서명했다",
+      "keywords": [
+        "지시서",
+        "서명",
+        "감독관",
+        "화약",
+        "명령"
+      ],
+      "stage": "S2→S3",
+      "discoveryLocations": [
+        "LOC_SD_MINE"
+      ],
+      "nextHint": "감독관은 실무자일 뿐이다. 은괴가 어디로 새는지 — 반출 경로를 추적하자.",
+      "knownBy": [
+        "NPC_SD_FOREMAN"
+      ],
+      "versions": {
+        "NPC_SD_FOREMAN": "작업 중지·화약 반입 지시서에 본인이 서명했다 — 위에서 내려온 지시였다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_FOREMAN"
+      ]
+    },
+    "FACT_SD_LEDGER_FAKE": {
+      "factId": "FACT_SD_LEDGER_FAKE",
+      "topic": "조작된 반출 기록",
+      "description": "회사 반출 기록의 은괴 수량이 실제 수레 대수와 맞지 않는다 — 장부 밖 은괴가 새고 있다",
+      "keywords": [
+        "반출",
+        "기록",
+        "은괴",
+        "수레",
+        "장부"
+      ],
+      "stage": "S2→S3",
+      "discoveryLocations": [
+        "LOC_SD_FORGE",
+        "LOC_SD_SQUARE"
+      ],
+      "nextHint": "장부 밖 은괴를 사는 자가 있다. 마을에 머무는 외지 매입자를 찾아라.",
+      "knownBy": [
+        "NPC_SD_SMITH"
+      ],
+      "versions": {
+        "NPC_SD_SMITH": "수리 일지와 대조하면 반출 기록의 수레 대수가 맞지 않는다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_SMITH"
+      ]
+    },
+    "FACT_SD_BUYER": {
+      "factId": "FACT_SD_BUYER",
+      "topic": "왕도의 매입자",
+      "description": "왕도에서 온 매입자가 '장부에 없는 은괴'를 산다며 마을에 머물고 있다",
+      "keywords": [
+        "매입자",
+        "왕도",
+        "외지인",
+        "거래"
+      ],
+      "stage": "S3→S4",
+      "discoveryLocations": [
+        "LOC_SD_CHAPEL",
+        "LOC_SD_INN"
+      ],
+      "nextHint": "매입자와 회사 사이의 거래 — 숨긴 은맥의 존재가 이 음모의 핵심이다.",
+      "knownBy": [
+        "NPC_SD_PRIEST"
+      ],
+      "versions": {
+        "NPC_SD_PRIEST": "고해 중 들었다 — 왕도의 매입자가 장부에 없는 은괴를 산다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_PRIEST"
+      ]
+    },
+    "FACT_SD_VEIN_HIDDEN": {
+      "factId": "FACT_SD_VEIN_HIDDEN",
+      "topic": "숨겨진 은맥",
+      "description": "3번 갱도 안쪽에서 노다지 은맥이 발견됐다 — 회사는 왕실 몫에서 빼돌리려 갱도를 무너뜨려 봉인했다",
+      "keywords": [
+        "은맥",
+        "노다지",
+        "왕실",
+        "봉인",
+        "비밀"
+      ],
+      "stage": "S4→S5",
+      "discoveryLocations": [
+        "LOC_SD_MINE"
+      ],
+      "nextHint": "모든 조각이 맞춰졌다. 이 진실을 누구에게 넘길 것인가 — 최종 선택의 시간이다.",
+      "knownBy": [
+        "NPC_SD_FOREMAN"
+      ],
+      "versions": {
+        "NPC_SD_FOREMAN": "3번 갱도 안쪽 노다지 은맥 — 회사가 왕실 몫에서 빼돌리려 갱도째 봉인했다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_FOREMAN"
+      ]
+    },
+    "FACT_SD_BOTH_EVIDENCE": {
+      "factId": "FACT_SD_BOTH_EVIDENCE",
+      "topic": "진상의 전모",
+      "description": "폭파 지시서 + 조작 장부 + 생존자 증언 — 실버딘 붕괴 은폐의 전모를 입증할 증거가 모두 모였다",
+      "keywords": [
+        "전모",
+        "증거",
+        "입증",
+        "진상"
+      ],
+      "stage": "S4→S5",
+      "discoveryLocations": [
+        "LOC_SD_INN"
+      ],
+      "nextHint": "증거가 완성됐다. 조합·회사·왕도 — 어느 손에 쥐여줄 것인가.",
+      "knownBy": [
+        "NPC_SD_SMITH"
+      ],
+      "versions": {
+        "NPC_SD_SMITH": "모은 증거를 한데 묶으면 은폐의 전모가 입증된다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SD_SMITH"
+      ]
+    }
+  }
+}

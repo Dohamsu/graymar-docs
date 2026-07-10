@@ -1,0 +1,367 @@
+[
+  {
+    "eventId": "EVT_SD_SQUARE_RUMOR",
+    "locationId": "LOC_SD_SQUARE",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "TALK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "게시판 앞에서 행상과 세탁부가 목소리를 낮춘다. '사고 전날 밤 갱도 쪽으로 궤짝이 올라갔다더라'는 말이 스친다.",
+      "primaryNpcId": "NPC_SD_UNION",
+      "choices": [],
+      "tags": [
+        "GOSSIP",
+        "COLLAPSE"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_SQUARE_SIGN",
+    "locationId": "LOC_SD_SQUARE",
+    "eventType": "OPPORTUNITY",
+    "priority": 5,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "PERSUADE",
+      "TALK",
+      "HELP"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "조합장 카야가 서명판을 들고 있다. 외지인인 당신을 향해 경계 섞인 시선을 보낸다.",
+      "primaryNpcId": "NPC_SD_UNION",
+      "choices": [],
+      "tags": [
+        "UNION",
+        "PETITION"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_SQUARE_PIP",
+    "locationId": "LOC_SD_SQUARE",
+    "eventType": "ARC_HINT",
+    "priority": 5,
+    "weight": 35,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "TALK",
+      "OBSERVE",
+      "HELP"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "전령 소년 핍이 광장 구석에서 당신을 훔쳐본다. 눈이 마주치자 황급히 시선을 돌린다.",
+      "primaryNpcId": "NPC_SD_ORPHAN",
+      "choices": [],
+      "tags": [
+        "WITNESS",
+        "NPC_HINT"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_MINE_LINE",
+    "locationId": "LOC_SD_MINE",
+    "eventType": "CHECKPOINT",
+    "priority": 5,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "PERSUADE",
+      "SNEAK",
+      "BRIBE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "통제선 앞을 회사 경비가 지킨다. 감독관 베렉 콜이 서류를 든 채 갱도 입구를 오간다.",
+      "primaryNpcId": "NPC_SD_FOREMAN",
+      "choices": [],
+      "tags": [
+        "CHECKPOINT",
+        "COMPANY"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_MINE_DEBRIS",
+    "locationId": "LOC_SD_MINE",
+    "eventType": "OPPORTUNITY",
+    "priority": 5,
+    "weight": 40,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "SEARCH",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "통제선 밖까지 굴러 나온 버팀목 파편이 있다. 그을음이 이상하게 한쪽으로만 몰려 있다.",
+      "primaryNpcId": null,
+      "choices": [],
+      "tags": [
+        "EVIDENCE",
+        "BLAST"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_FORGE_REPAIR",
+    "locationId": "LOC_SD_FORGE",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "TALK",
+      "INVESTIGATE",
+      "HELP"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "대장장이 일가 브란트가 부서진 곡괭이 날을 두드리고 있다. '3번 갱도 물건'이라는 말에 망치질이 잠시 멎는다.",
+      "primaryNpcId": "NPC_SD_SMITH",
+      "choices": [],
+      "tags": [
+        "CRAFT",
+        "EVIDENCE"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_FORGE_CART",
+    "locationId": "LOC_SD_FORGE",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 35,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "OBSERVE",
+      "SNEAK",
+      "INVESTIGATE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "덮개 씌운 수레가 대장간 뒤편에 서 있다. 마부가 주위를 살피며 바퀴를 점검한다.",
+      "primaryNpcId": null,
+      "choices": [],
+      "tags": [
+        "SMUGGLING",
+        "NIGHT_MOVE"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_CHAPEL_MOURN",
+    "locationId": "LOC_SD_CHAPEL",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "TALK",
+      "OBSERVE",
+      "HELP"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "위패 앞에 유족들이 모여 있다. 사제 한스가 낮은 목소리로 위로의 기도를 올린다.",
+      "primaryNpcId": "NPC_SD_PRIEST",
+      "choices": [],
+      "tags": [
+        "MOURNING",
+        "FAMILY"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_CHAPEL_CONFESS",
+    "locationId": "LOC_SD_CHAPEL",
+    "eventType": "ARC_HINT",
+    "priority": 5,
+    "weight": 30,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "고해실 커튼이 흔들린다. 방금 나온 사내가 낯선 억양으로 사제에게 감사를 표하고 서둘러 떠난다.",
+      "primaryNpcId": "NPC_SD_PRIEST",
+      "choices": [],
+      "tags": [
+        "SECRET",
+        "OUTSIDER"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_INN_TALK",
+    "locationId": "LOC_SD_INN",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "TALK",
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "카운터의 도른이 잔을 닦으며 손님들의 이야기에 귀를 기울인다. 광부들의 술자리에서 붕괴 이야기가 오간다.",
+      "primaryNpcId": "NPC_SD_INNKEEP",
+      "choices": [],
+      "tags": [
+        "GOSSIP",
+        "HUB_TALK"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_INN_FOREMAN",
+    "locationId": "LOC_SD_INN",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 25,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "TALK",
+      "PERSUADE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "감독관 베렉 콜이 여관 구석에서 혼자 독한 술을 비우고 있다. 평소의 굳은 얼굴이 조금 풀려 있다.",
+      "primaryNpcId": "NPC_SD_FOREMAN",
+      "choices": [],
+      "tags": [
+        "COMPANY",
+        "DRINK"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SD_FALLBACK",
+    "locationId": "LOC_SD_SQUARE",
+    "eventType": "FALLBACK",
+    "priority": 1,
+    "weight": 10,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "OBSERVE",
+      "TALK",
+      "SEARCH",
+      "INVESTIGATE",
+      "PERSUADE",
+      "SNEAK",
+      "HELP",
+      "ANY"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "실버딘의 하루가 흘러간다. 광산 마을 특유의 잿빛 공기가 골목마다 가라앉아 있다.",
+      "primaryNpcId": null,
+      "choices": [],
+      "tags": [
+        "AMBIENT"
+      ]
+    }
+  }
+]

@@ -1,0 +1,102 @@
+{
+  "LOC_SD_SQUARE": [
+    {
+      "id": "sg_square_look",
+      "label": "주변을 주의 깊게 살핀다",
+      "affordance": "OBSERVE",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_square_talk",
+      "label": "근처 사람에게 말을 건다",
+      "affordance": "TALK",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_square_dig",
+      "label": "붕괴에 대해 조사한다",
+      "affordance": "INVESTIGATE",
+      "riskLevel": 1
+    }
+  ],
+  "LOC_SD_MINE": [
+    {
+      "id": "sg_mine_look",
+      "label": "주변을 주의 깊게 살핀다",
+      "affordance": "OBSERVE",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_mine_talk",
+      "label": "근처 사람에게 말을 건다",
+      "affordance": "TALK",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_mine_dig",
+      "label": "붕괴에 대해 조사한다",
+      "affordance": "INVESTIGATE",
+      "riskLevel": 1
+    }
+  ],
+  "LOC_SD_FORGE": [
+    {
+      "id": "sg_forge_look",
+      "label": "주변을 주의 깊게 살핀다",
+      "affordance": "OBSERVE",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_forge_talk",
+      "label": "근처 사람에게 말을 건다",
+      "affordance": "TALK",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_forge_dig",
+      "label": "붕괴에 대해 조사한다",
+      "affordance": "INVESTIGATE",
+      "riskLevel": 1
+    }
+  ],
+  "LOC_SD_CHAPEL": [
+    {
+      "id": "sg_chapel_look",
+      "label": "주변을 주의 깊게 살핀다",
+      "affordance": "OBSERVE",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_chapel_talk",
+      "label": "근처 사람에게 말을 건다",
+      "affordance": "TALK",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_chapel_dig",
+      "label": "붕괴에 대해 조사한다",
+      "affordance": "INVESTIGATE",
+      "riskLevel": 1
+    }
+  ],
+  "LOC_SD_INN": [
+    {
+      "id": "sg_inn_look",
+      "label": "주변을 주의 깊게 살핀다",
+      "affordance": "OBSERVE",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_inn_talk",
+      "label": "근처 사람에게 말을 건다",
+      "affordance": "TALK",
+      "riskLevel": 1
+    },
+    {
+      "id": "sg_inn_dig",
+      "label": "붕괴에 대해 조사한다",
+      "affordance": "INVESTIGATE",
+      "riskLevel": 1
+    }
+  ]
+}

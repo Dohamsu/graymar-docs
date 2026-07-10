@@ -1,0 +1,16 @@
+[
+  {
+    "shopId": "SHOP_SD_GENERAL",
+    "locationId": "LOC_SD_SQUARE",
+    "name": "광장 잡화점",
+    "description": "광장 한켠의 잡화 노점. 약초와 치료제, 광산 소모품을 판다.",
+    "refreshInterval": 10,
+    "stockPool": [
+      "ITEM_MINOR_HEALING",
+      "ITEM_STAMINA_TONIC",
+      "ITEM_SUPERIOR_HEALING"
+    ],
+    "stockSize": 4,
+    "uniqueChance": 0.1
+  }
+]

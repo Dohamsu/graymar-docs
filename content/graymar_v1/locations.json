@@ -79,7 +79,26 @@
           "INVESTIGATE"
         ]
       }
-    ]
+    ],
+    "shortName": "시장",
+    "hubAccessible": true,
+    "hubHint": "상인과 소문이 있는 곳",
+    "moveKeywords": [
+      "시장",
+      "상점가",
+      "장터",
+      "노점가",
+      "노점",
+      "좌판거리",
+      "상인들이 모인",
+      "물건 파는"
+    ],
+    "ambushEncounterId": "enc_market_thugs",
+    "hubState": {
+      "security": 60,
+      "crime": 30,
+      "unrest": 20
+    }
   },
   {
     "locationId": "LOC_GUARD",
@@ -140,7 +159,27 @@
           "SEARCH"
         ]
       }
-    ]
+    ],
+    "shortName": "경비대",
+    "hubAccessible": true,
+    "hubHint": "질서와 감시의 영역",
+    "moveKeywords": [
+      "경비대",
+      "경비",
+      "초소",
+      "병영",
+      "수비대",
+      "순찰대",
+      "경비병",
+      "병사들",
+      "관청"
+    ],
+    "ambushEncounterId": "enc_guard_ambush",
+    "hubState": {
+      "security": 80,
+      "crime": 10,
+      "unrest": 10
+    }
   },
   {
     "locationId": "LOC_HARBOR",
@@ -219,7 +258,28 @@
           "SNEAK"
         ]
       }
-    ]
+    ],
+    "shortName": "항만",
+    "hubAccessible": true,
+    "hubHint": "선원과 밀수품이 오가는 곳",
+    "moveKeywords": [
+      "항만",
+      "부두",
+      "항구",
+      "선착장",
+      "포구",
+      "배터",
+      "창고가",
+      "선박",
+      "정박",
+      "바닷가"
+    ],
+    "ambushEncounterId": "enc_harbor_pirates",
+    "hubState": {
+      "security": 40,
+      "crime": 50,
+      "unrest": 40
+    }
   },
   {
     "locationId": "LOC_SLUMS",
@@ -278,7 +338,26 @@
           "SEARCH"
         ]
       }
-    ]
+    ],
+    "shortName": "빈민가",
+    "hubAccessible": true,
+    "hubHint": "법 밖의 세계",
+    "moveKeywords": [
+      "빈민가",
+      "빈민",
+      "슬럼",
+      "뒷골목",
+      "하층가",
+      "빈민굴",
+      "어두운 골목",
+      "허름한 골목"
+    ],
+    "ambushEncounterId": "enc_slum_gang",
+    "hubState": {
+      "security": 20,
+      "crime": 70,
+      "unrest": 60
+    }
   },
   {
     "locationId": "LOC_NOBLE",
@@ -320,6 +399,17 @@
           "SEARCH"
         ]
       }
+    ],
+    "shortName": "상류 거리",
+    "moveKeywords": [
+      "귀족",
+      "상류",
+      "저택",
+      "귀족가",
+      "귀족 거리",
+      "정원",
+      "의회",
+      "노블"
     ]
   },
   {
@@ -365,6 +455,19 @@
           "SNEAK"
         ]
       }
+    ],
+    "shortName": "선술집",
+    "moveKeywords": [
+      "선술집",
+      "잠긴 닻",
+      "숙소",
+      "주점",
+      "술집"
+    ],
+    "moveKeywordsFallback": [
+      "거점",
+      "본거지",
+      "돌아가"
     ]
   },
   {
@@ -408,6 +511,15 @@
           "SNEAK"
         ]
       }
+    ],
+    "shortName": "항만 창고구",
+    "moveKeywords": [
+      "창고",
+      "창고구",
+      "창고 지구",
+      "물류",
+      "하역장",
+      "화물 창고"
     ]
   }
 ]

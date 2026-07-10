@@ -1,0 +1,545 @@
+[
+  {
+    "nodeId": "common_s0",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "isIntro": true,
+      "eventId": "S0_ARRIVE"
+    },
+    "environmentTags": [
+      "HARBOR",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "common_s1",
+        "condition": {
+          "type": "RANDOM",
+          "weight": 50
+        },
+        "priority": 1
+      },
+      {
+        "targetNodeId": "common_combat_dock_early",
+        "condition": {
+          "type": "RANDOM",
+          "weight": 50
+        },
+        "priority": 2
+      }
+    ]
+  },
+  {
+    "nodeId": "common_s1",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S1_GET_ANGLE"
+    },
+    "environmentTags": [
+      "HARBOR",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "common_combat_dock",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "common_combat_dock",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false,
+      "eventId": "ENC_DOCK_AMBUSH"
+    },
+    "environmentTags": [
+      "OPEN",
+      "COVER_CRATE"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "common_s2",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "common_combat_dock_early",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false,
+      "eventId": "ENC_DOCK_AMBUSH"
+    },
+    "environmentTags": [
+      "OPEN",
+      "COVER_CRATE"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "common_s1_late",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "common_s1_late",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S1_GET_ANGLE"
+    },
+    "environmentTags": [
+      "HARBOR",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "common_s2",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "common_s2",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S2_PROVE_TAMPER"
+    },
+    "environmentTags": [
+      "HARBOR",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guild_rest",
+        "condition": {
+          "type": "CHOICE",
+          "choiceId": "guild_ally"
+        },
+        "priority": 1
+      },
+      {
+        "targetNodeId": "guard_event_s3",
+        "condition": {
+          "type": "CHOICE",
+          "choiceId": "guard_ally"
+        },
+        "priority": 2
+      },
+      {
+        "targetNodeId": "solo_event_s3",
+        "condition": {
+          "type": "CHOICE",
+          "choiceId": "solo_path"
+        },
+        "priority": 3
+      }
+    ]
+  },
+  {
+    "nodeId": "guild_rest",
+    "nodeType": "REST",
+    "nodeMeta": {},
+    "environmentTags": [
+      "INDOOR",
+      "SAFE"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guild_shop",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guild_shop",
+    "nodeType": "SHOP",
+    "nodeMeta": {
+      "shopId": "SHOP_GUILD_ARMS"
+    },
+    "environmentTags": [
+      "INDOOR",
+      "MARKET"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guild_event_s3",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guild_event_s3",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S3_GUILD"
+    },
+    "environmentTags": [
+      "HARBOR",
+      "EAST_DOCK"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guild_combat",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guild_combat",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false,
+      "eventId": "ENC_WHARF_RAID"
+    },
+    "environmentTags": [
+      "OPEN",
+      "COVER_CRATE",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guild_event_s4",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guild_event_s4",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S4_GUILD"
+    },
+    "environmentTags": [
+      "HARBOR",
+      "GUARD_POST"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guild_boss",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guild_boss",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": true,
+      "eventId": "ENC_GUILD_BOSS"
+    },
+    "environmentTags": [
+      "OPEN",
+      "COVER_WALL",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "merge_s5",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guard_event_s3",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S3_GUARD"
+    },
+    "environmentTags": [
+      "INDOOR",
+      "GUARD_POST"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guard_shop",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guard_shop",
+    "nodeType": "SHOP",
+    "nodeMeta": {
+      "shopId": "SHOP_GUARD_SUPPLY"
+    },
+    "environmentTags": [
+      "INDOOR",
+      "GUARD_POST"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guard_combat",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guard_combat",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false,
+      "eventId": "ENC_BARRACKS"
+    },
+    "environmentTags": [
+      "INDOOR",
+      "NARROW"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guard_event_s4",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guard_event_s4",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S4_GUARD"
+    },
+    "environmentTags": [
+      "INDOOR",
+      "GUARD_POST"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guard_rest",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guard_rest",
+    "nodeType": "REST",
+    "nodeMeta": {},
+    "environmentTags": [
+      "INDOOR",
+      "SAFE"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "guard_boss",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "guard_boss",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": true,
+      "eventId": "ENC_GUARD_BOSS"
+    },
+    "environmentTags": [
+      "OPEN",
+      "COVER_WALL",
+      "AFTERNOON"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "merge_s5",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "solo_event_s3",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S3_SOLO"
+    },
+    "environmentTags": [
+      "NARROW",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "solo_combat",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "solo_combat",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false,
+      "eventId": "ENC_ALLEY"
+    },
+    "environmentTags": [
+      "NARROW",
+      "COVER_WALL",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "solo_rest",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "solo_rest",
+    "nodeType": "REST",
+    "nodeMeta": {},
+    "environmentTags": [
+      "INDOOR"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "solo_shop",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "solo_shop",
+    "nodeType": "SHOP",
+    "nodeMeta": {
+      "shopId": "SHOP_BLACK_MARKET"
+    },
+    "environmentTags": [
+      "NARROW",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "solo_event_s4",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "solo_event_s4",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S4_SOLO"
+    },
+    "environmentTags": [
+      "INDOOR",
+      "NARROW",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "solo_boss",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "solo_boss",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": true,
+      "eventId": "ENC_SOLO_BOSS"
+    },
+    "environmentTags": [
+      "INDOOR",
+      "NARROW",
+      "NIGHT"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "merge_s5",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "merge_s5",
+    "nodeType": "EVENT",
+    "nodeMeta": {
+      "eventId": "S5_RESOLVE"
+    },
+    "environmentTags": [
+      "HARBOR",
+      "TOWN_HALL"
+    ],
+    "edges": [
+      {
+        "targetNodeId": "merge_exit",
+        "condition": {
+          "type": "DEFAULT"
+        },
+        "priority": 1
+      }
+    ]
+  },
+  {
+    "nodeId": "merge_exit",
+    "nodeType": "EXIT",
+    "nodeMeta": {},
+    "environmentTags": [
+      "HARBOR"
+    ],
+    "edges": []
+  }
+]

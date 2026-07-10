@@ -1,0 +1,140 @@
+{
+  "questId": "MAIN_SD_Q1_COLLAPSE",
+  "title": "무너진 3번 갱도",
+  "scale": "광산 회사 음모",
+  "synopsis": "실버딘 은광 3번 갱도가 무너져 광부 열둘이 죽었다. 회사는 사고라 하지만, 마을에는 다른 소문이 돈다. 여관 주인 도른의 부탁으로 당신은 붕괴의 진상을 캐기 시작한다.",
+  "states": [
+    "S0_ARRIVE",
+    "S1_GET_ANGLE",
+    "S2_PROVE_TAMPER",
+    "S3_TRACE_ROUTE",
+    "S4_CONFRONT",
+    "S5_RESOLVE"
+  ],
+  "stateDescriptions": {
+    "S0_ARRIVE": "실버딘 도착. 도른의 의뢰를 받고 마을을 탐색하기 시작한다.",
+    "S1_GET_ANGLE": "붕괴가 단순 사고가 아니라는 정황을 확보한다.",
+    "S2_PROVE_TAMPER": "폭파 물증과 생존자 증언으로 인위적 붕괴를 입증한다.",
+    "S3_TRACE_ROUTE": "조작된 반출 기록과 은괴의 행방을 추적한다.",
+    "S4_CONFRONT": "숨겨진 은맥의 존재를 확인하고 흑막과 대면한다.",
+    "S5_RESOLVE": "최종 선택. 진상을 조합에 넘길 것인가, 회사와 거래할 것인가, 왕도에 고발할 것인가."
+  },
+  "stateTransitions": {
+    "S0_ARRIVE→S1_GET_ANGLE": {
+      "requiredFacts": [
+        "FACT_SD_COLLAPSE_ODD"
+      ],
+      "description": "수상한 정황을 인지하면 본격 조사 시작."
+    },
+    "S1_GET_ANGLE→S2_PROVE_TAMPER": {
+      "requiredFacts": [
+        "FACT_SD_BLAST_MARKS"
+      ],
+      "description": "폭파 물증 확보."
+    },
+    "S2_PROVE_TAMPER→S3_TRACE_ROUTE": {
+      "requiredFacts": [
+        "FACT_SD_FOREMAN_ORDER",
+        "FACT_SD_LEDGER_FAKE"
+      ],
+      "anyOf": true,
+      "description": "지시 계통 또는 장부 조작 확인."
+    },
+    "S3_TRACE_ROUTE→S4_CONFRONT": {
+      "requiredFacts": [
+        "FACT_SD_BUYER"
+      ],
+      "description": "매입자의 존재 확인."
+    },
+    "S4_CONFRONT→S5_RESOLVE": {
+      "requiredFacts": [
+        "FACT_SD_VEIN_HIDDEN"
+      ],
+      "description": "숨긴 은맥 — 진상의 핵심 확인."
+    }
+  },
+  "facts": [
+    "FACT_SD_COLLAPSE_ODD",
+    "FACT_SD_BLAST_MARKS",
+    "FACT_SD_WITNESS",
+    "FACT_SD_FOREMAN_ORDER",
+    "FACT_SD_LEDGER_FAKE",
+    "FACT_SD_BUYER",
+    "FACT_SD_VEIN_HIDDEN",
+    "FACT_SD_BOTH_EVIDENCE"
+  ],
+  "arcRoutes": [
+    {
+      "routeId": "EXPOSE_CORRUPTION",
+      "label": "진상 공개",
+      "description": "증거를 광부 조합과 유족에게 넘겨 회사를 심판대에 세운다.",
+      "keyAllies": [
+        "NPC_SD_UNION",
+        "NPC_SD_SMITH"
+      ],
+      "keyEnemies": [
+        "NPC_SD_FOREMAN"
+      ]
+    },
+    {
+      "routeId": "PROFIT_FROM_CHAOS",
+      "label": "침묵의 대가",
+      "description": "회사·매입자와 거래해 침묵의 대가를 챙긴다.",
+      "keyAllies": [
+        "NPC_SD_FOREMAN"
+      ],
+      "keyEnemies": [
+        "NPC_SD_UNION"
+      ]
+    },
+    {
+      "routeId": "ALLY_GUARD",
+      "label": "왕도 고발",
+      "description": "증거를 왕도 감찰관에게 넘겨 질서 안에서 처리한다.",
+      "keyAllies": [
+        "NPC_SD_PRIEST"
+      ],
+      "keyEnemies": [
+        "NPC_SD_FOREMAN"
+      ]
+    }
+  ],
+  "factToIncident": {
+    "FACT_SD_COLLAPSE_ODD": {
+      "incidents": [
+        "INC_SD_COLLAPSE"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SD_BLAST_MARKS": {
+      "incidents": [
+        "INC_SD_COLLAPSE"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SD_WITNESS": {
+      "incidents": [
+        "INC_SD_COLLAPSE"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SD_LEDGER_FAKE": {
+      "incidents": [
+        "INC_SD_SMUGGLE"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SD_BUYER": {
+      "incidents": [
+        "INC_SD_SMUGGLE"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SD_VEIN_HIDDEN": {
+      "incidents": [
+        "INC_SD_SMUGGLE"
+      ],
+      "controlBonus": 20
+    }
+  }
+}
