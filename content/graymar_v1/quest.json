@@ -449,5 +449,15 @@
       ],
       "controlBonus": 15
     }
+  },
+  "rewards": {
+    "factGold": 5,
+    "transitionGold": {
+      "S0_ARRIVE→S1_GET_ANGLE": 10,
+      "S1_GET_ANGLE→S2_PROVE_TAMPER": 15,
+      "S2_PROVE_TAMPER→S3_TRACE_ROUTE": 15,
+      "S3_TRACE_ROUTE→S4_CONFRONT": 20,
+      "S4_CONFRONT→S5_RESOLVE": 25
+    }
   }
 }
