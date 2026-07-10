@@ -2,7 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Slack 작업 알림 (필수)
+## Slack 작업 알림 (비활성 — 2026-07-09)
+
+**사용자 지시로 Slack 작업 알림을 보내지 않는다** (완료 알림·중간 보고 모두). 아래 절차는 재활성화를 대비한 기록이다.
 
 모든 유의미한 작업(코드 구현, 버그 수정, 분석, 플레이테스트 등) 완료 시 Slack 웹훅으로 알림을 보낸다.
 간단한 질문 응답이나 파일 읽기만 하는 경우는 제외.
