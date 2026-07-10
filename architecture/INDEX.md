@@ -24,6 +24,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - `Narrative_Engine_v1_Integrated_Spec.md` — Narrative Engine v1 통합 스펙(Incident/4상 시간/Signal/NpcEmotional/Mark/Ending/Operation). 현 HUB 엔진의 기반 설계.
 - [[architecture/06_graymar_content|graymar content]] — 프리셋 6종, NPC 43명, 장소 7개, Incident 13건 등 graymar_v1 콘텐츠 스키마와 시드 데이터 구조.
 - [[architecture/63_multi_scenario_content_decoupling|multi scenario content decoupling]] — 멀티 시나리오 선행작업 ②~⑤: 엔진 하드코딩 콘텐츠 ID 외부화(표시명/활동장소/별칭/프롤로그/L0 테마), DAG graph.json화, 시스템 프롬프트 세계관 주입, silverdeen_v1 미니 팩 + scenarioId 런 경로. 단일 활성 시나리오 정책(① 멀티 팩 로더는 후속).
+- [[architecture/64_npc_name_reveal_integrity|npc name reveal integrity]] — NPC 이름 공개 무결성: 롤백-재소개 상쇄(A)·소개 힌트 실명 오염(C)·injected 2턴 분리(D)·별칭 접두 중복(E) 수정 + 핍 케이스 실증. B(AppearanceIntro 후보화)는 후속.
 
 ### 2. 게임 엔진
 
