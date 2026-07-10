@@ -10,7 +10,7 @@
 
 | # | 항목 | 이번 범위 |
 |---|------|-----------|
-| ① | ContentLoader 싱글톤 → 멀티 팩 스코프 | ❌ **보류** (후속 P0) — 아래 "단일 활성 시나리오 정책" 참조 |
+| ① | ContentLoader 싱글톤 → 멀티 팩 스코프 | ✅ 구현 — **팩 캐시 + ALS 스코프** (부록 D). 단일 활성 시나리오 정책 폐지 |
 | ② | 엔진 코드 콘텐츠 ID 하드코딩 외부화 | ✅ 구현 |
 | ③ | RunPlanner DAG 그래프 콘텐츠화 | ✅ 구현 |
 | ④ | 시스템 프롬프트 세계관 분리 | ✅ 구현 |
@@ -300,3 +300,44 @@ scenario.json 확장 (graymar_v1 값 = 현행 하드코딩 그대로):
 - ⚠️ **단일 활성 시나리오 정책 여전** — 선택 UI 공개로 서로 다른 팩의 런이 동시에 생길 수
   있는 환경이 됐다. ensureScenario 가드가 순차 전환은 보장하나 동시 혼합 시 loadScenario
   스래싱 발생 — **① 멀티 팩 로더가 사실상 다음 필수 작업**.
+
+---
+
+## 부록 D — ① 멀티 팩 로더 구현 (2026-07-10)
+
+**단일 활성 시나리오 정책 폐지** — 서로 다른 시나리오의 런을 동시에 플레이해도
+상호 오염이 없다.
+
+### 구조
+
+- **ContentPackState + 팩 캐시**: 로더의 전역 상태 필드 31개를 팩 컨테이너로 추출,
+  `Map<scenarioId, ContentPackState>` 상주 캐시 (`ensurePack` lazy 로드 1회).
+  `loadAll`의 전역 교체·clear 개념 소멸. 기존 accessor 63개는 **private getter 위임**
+  (`private get npcs() { return this.pack().npcs; }`)으로 무수정 보존.
+- **AsyncLocalStorage 스코프** (`scenario-context.ts`): 어느 팩을 볼지는 비동기
+  실행 컨텍스트가 결정. 병렬 경로(HTTP 동시 요청, LLM 워커 5턴 병렬) 격리.
+- **호출 규약** — ALS enterWith의 함정(async callee 내부 설정은 await 경계에서
+  복원되어 caller에 전파 안 됨)을 테스트로 실증하고 확보/설정을 분리:
+  `await content.ensureScenario(id)` (팩 확보) + `content.enterScenario(id)`
+  (caller 동기 컨텍스트 설정). 진입점 4곳: turns.submitTurn / llm-worker processTurn /
+  runs.createRun / runs.getRun.
+- **하위호환**: `loadScenario()`는 "컨텍스트 없는 경로의 기본 팩 전환"(fallbackScenarioId)
+  의미로 유지 — 기존 테스트·스크립트 무수정. `pack()` 해석: ALS → fallback → 기본 팩
+  폴백(경고) → 부팅 중(로더 init 전)엔 빈 팩(구 구조의 빈 필드와 등가 — ContentValidator
+  onModuleInit 순서 크래시 실측 후 보정).
+
+### 검증
+
+- 격리 계약 스펙 4건 (`content-loader.multipack.spec.ts`): 중첩 컨텍스트 격리,
+  비동기 인터리브 격리(**ALS 함정 재현 테스트가 설계 결함을 사전에 잡음**),
+  팩 상주(스래싱 제거), loadScenario 하위호환.
+- 실런 인터리브: graymar·silverdeen 런 동시 생성 → 수락/이동/ACTION **동시 제출** —
+  각자 자기 세계(로넨/go_market/시장 ↔ 도른/go_sd_*/광장), LLM 병렬 서술 교차 오염 0,
+  `[Pack] loaded` 각 1회 (구 구조의 턴당 Scenario loaded 왕복 소멸).
+- 전체 테스트 923 passed (기존 실패 2건 외 신규 0).
+
+### 잔여
+
+- ContentValidator onModuleInit이 로더 init 순서에 따라 빈 팩을 검증할 수 있음 —
+  구 구조와 동일 동작이나, 검증을 ensurePack 직후로 옮기는 개선 후보.
+- 팩 캐시 무효화(콘텐츠 파일 변경 시 리로드)는 없음 — 콘텐츠 수정 후엔 재시작 (기존 동일).
