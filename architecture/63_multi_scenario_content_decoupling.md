@@ -15,7 +15,7 @@
 | ③ | RunPlanner DAG 그래프 콘텐츠화 | ✅ 구현 |
 | ④ | 시스템 프롬프트 세계관 분리 | ✅ 구현 |
 | ⑤ | 신규 시나리오 팩 제작 + 최소 플레이 경로 | ✅ 구현 (미니 팩) |
-| ⑥ | 클라이언트 동적화 (이미지 매핑·시나리오 선택 UI) | ❌ **보류** — 사용자 결정 필요 (시나리오 "선택" vs 캠페인 "연속") |
+| ⑥ | 클라이언트 동적화 (이미지 매핑·시나리오 선택 UI) | ✅ 구현 — **시나리오 선택 UI 방식** (부록 C) |
 | ⑦ | 검증 인프라 시나리오 인자화 | ❌ 보류 (⑤ 검증은 curl/직접 API로 수행) |
 
 ### 단일 활성 시나리오 정책 (① 보류의 귀결)
@@ -256,3 +256,47 @@ scenario.json 확장 (graymar_v1 값 = 현행 하드코딩 그대로):
   vote LOC_TEMPLE 유령 라벨(콘텐츠에 없는 장소 — 파생 fallback으로 id 표시).
 - [장소 기억] '그레이마르 시장'→'시장 거리' 등 표기 통일은 의도적 변경으로 확정.
 - getAffinityEntries 등 매 호출 재생성 — 규모상 영향 미미, 필요 시 scenarioId 키 캐시.
+
+---
+
+## 부록 C — ⑥ 클라이언트 구현 (2026-07-10, 시나리오 선택 UI 방식)
+
+### 서버
+
+- `GET /v1/scenarios` 신설 (`content/scenarios.controller.ts`) — 캠페인 없이 팩 목록 조회.
+- createRun/getRun 응답 `run.scenarioId` 포함 — 클라 시나리오 인지의 소스.
+- `ScenarioPrologueMeta.imageUrl` optional화 — 초상화 없는 팩은 무명 실루엣 규약
+  (`speakingNpc.imageUrl: undefined`)을 따른다. silverdeen의 존재하지 않는
+  `unknown_silhouette.webp` 참조 제거 (마커도 `@[도른]` URL 생략형 — 클라 파서 지원 확인).
+
+### 클라이언트
+
+- **여정 선택 화면** (`StartScreen` `SELECT_SCENARIO`): "새 게임" 진입 시
+  `GET /v1/scenarios` 조회 — 팩이 2개 이상일 때만 선택 화면 노출 (1개면 기존 흐름).
+  새 캐릭터 생성·이전 캐릭터 퀵스타트 양 경로 모두 게이트 통과. 선택값은
+  `createRun body.scenarioId`로 전달 (E2E로 body 캡처 검증).
+- **store.scenarioId** — 런 로드 3경로(신규/이어하기/캠페인)에서 응답 `run.scenarioId` 저장.
+- **HUB 라벨 시나리오 인지** — GameClient/HubScreen의 "그레이마르 거점" 하드코딩 →
+  `SCENARIO_UI_LABELS` (presets.ts, 클라 표기 단일 지점).
+- **프리셋 표기 어댑터** — `adaptPresetsForScenario()`: 실버딘 선택 시 프리셋
+  subtitle/description의 세계 종속 표현 치환 (서버 silverdeen presets.json 생성 규칙과 동일).
+  SELECT_PRESET 렌더 + characterInfo 빌더(사이드패널 subtitle) 적용.
+- **location-images 팩 인지 구조** — locationId 접두(`LOC_SD_*`)로 팩 판별.
+  이미지 없는 팩은 `null` 반환 → LocationImage 그라디언트 degradation +
+  result-mapper 필드 생략 (**graymar 전경 fallback 오염 차단**). 에셋 경로 규약
+  `/locations/<packId>/…` 명문화.
+
+### 검증 (Playwright E2E)
+
+가입 → 새 게임 → **여정 선택 화면(2개 카드)** → 실버딘 선택 → 캐릭터 생성 6단계 완주 →
+`POST /v1/runs` body에 `"scenarioId":"silverdeen_v1"` 캡처 → 인게임 진입:
+헤더 "실버딘 거점" + 프리셋 "광산의 주먹" + 실버딘 프롤로그 (그레이마르 오염 0).
+
+### 잔여
+
+- 클라 `PRESETS` 데이터 자체의 서버 fetch 전환 (현재는 치환 어댑터) — 팩별 고유 프리셋
+  구조가 생기면 필수.
+- silverdeen 전용 이미지 에셋 (장소·NPC 초상화) — Gemini 파이프라인 재가동 필요 (과금 확인).
+- ⚠️ **단일 활성 시나리오 정책 여전** — 선택 UI 공개로 서로 다른 팩의 런이 동시에 생길 수
+  있는 환경이 됐다. ensureScenario 가드가 순차 전환은 보장하나 동시 혼합 시 loadScenario
+  스래싱 발생 — **① 멀티 팩 로더가 사실상 다음 필수 작업**.
