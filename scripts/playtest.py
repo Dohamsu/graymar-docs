@@ -426,7 +426,7 @@ for t in turn_logs:
         marker_name = mm.group(1).strip()
         before = narr[max(0, mm.start() - 80):mm.start()]
         # "XX가 말했다" 패턴에서 XX ≠ marker_name이면 불일치
-        speaker_match = re.search(r"([가-힣]{2,10})[이가은는]\s*(?:말|물|외|중얼|속삭|답|대답|되물)", before)
+        speaker_match = re.search(r"([가-힣]{2,10})[이가은는]\s*(?:말|물(?=[었어으])|외치|외쳤|중얼|속삭|답하|답했|대답|되물)", before)
         if speaker_match:
             speaker = speaker_match.group(1)
             # 플레이어 지칭은 화자 후보에서 제외 (NPC 대사 앞에 "당신이 말을 걸자" 등)
