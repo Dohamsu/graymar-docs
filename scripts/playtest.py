@@ -470,11 +470,62 @@ for t in turn_logs:
             if ref in narr:
                 v9_issues.append(f"T{t['turn']}: CHOICE 턴 대화 맥락 가정 — '{ref}'")
 
-# V9-c: dialogue_slot speaker_id 매칭 실패 감지 — @[무명 인물] fallback 사용
+# V9-c: @[무명 인물] 판별 — 의도/의심 구분 (2026-07-11 노이즈 정밀화)
+#   무명은 두 종류: (a) 콘텐츠 외 즉흥 배경 인물("짐을 정리하던 인부") — 의도된
+#   실루엣 처리(arch/46), (b) 알려진 NPC 대사가 무명 처리 — 결함. 직전 문맥에
+#   알려진 NPC 이름/별칭이 있으면 (b) 의심으로만 경고, 없으면 계수하지 않는다.
+_npc_alias_pool = []
+try:
+    import os as _os
+    _npcs_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", "graymar_v1", "npcs.json")
+    with open(_npcs_path, encoding="utf-8") as _f:
+        _npcs_raw = json.load(_f)
+    def _collect_aliases(o):
+        if isinstance(o, dict):
+            if o.get("npcId"):
+                for k in ("name", "unknownAlias", "shortAlias"):
+                    v = o.get(k)
+                    if isinstance(v, str) and len(v) >= 2:
+                        _npc_alias_pool.append(v)
+                for a in (o.get("aliases") or []):
+                    if isinstance(a, str) and len(a) >= 2:
+                        _npc_alias_pool.append(a)
+            for v in o.values():
+                _collect_aliases(v)
+        elif isinstance(o, list):
+            for v in o:
+                _collect_aliases(v)
+    _collect_aliases(_npcs_raw)
+    # 유일 축약 단어 추가 — unknownAlias 마지막 단어가 단일 NPC로 해석되는 것만
+    # (서버 resolveColonLabelNpc Tier 3과 동일 기준; '여인'처럼 다중이면 제외)
+    from collections import Counter as _Counter
+    _last_words = _Counter()
+    def _collect_last_words(o):
+        if isinstance(o, dict):
+            ua = o.get("unknownAlias")
+            if o.get("npcId") and isinstance(ua, str) and " " in ua:
+                _last_words[ua.split()[-1]] += 1
+            for v in o.values():
+                _collect_last_words(v)
+        elif isinstance(o, list):
+            for v in o:
+                _collect_last_words(v)
+    _collect_last_words(_npcs_raw)
+    # 3자 이상만 — 2자 축약('인부' 등)은 일반 직업명과 충돌해 즉흥 인물 오탐 (실측)
+    _npc_alias_pool.extend(w for w, c in _last_words.items() if c == 1 and len(w) >= 3)
+except Exception:
+    pass  # 콘텐츠 로드 실패 시 구분 없이 전부 의심 경고 (보수적)
+
 for t in turn_logs:
     narr = t.get("narrative", "")
-    if "@[무명 인물]" in narr:
-        v9_issues.append(f"T{t['turn']}: dialogue_slot fallback 대사 — @[무명 인물] (NPC_ID 매칭 실패)")
+    for _am in re.finditer(r"@\[무명 인물\]", narr):
+        before = narr[max(0, _am.start() - 120):_am.start()]
+        suspects = [a for a in _npc_alias_pool if a in before]
+        if suspects or not _npc_alias_pool:
+            v9_issues.append(
+                f"T{t['turn']}: 무명 대사 의심 — 직전 문맥에 알려진 NPC({', '.join(suspects[:2]) or '?'}) 존재"
+            )
+        # 알려진 NPC 미등장 → 즉흥 배경 인물의 의도된 실루엣 — 계수 안 함
 
 # 단어 반복 검출 (3턴 윈도우에서 같은 2글자+ 단어가 5회+)
 for i in range(2, len(turn_logs)):
