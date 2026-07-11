@@ -266,9 +266,12 @@ for turn_i in range(MAX_TURNS):
     llm_result = poll_llm(run_id, submitted_turn)
     narrative = llm_result.get("output", "") if isinstance(llm_result, dict) else llm_result
 
+    # 카드 정합 분석 (2026-07-11): turnNo 기록이 로컬 카운터라 자동 진입 턴에서
+    # 실제 커밋 턴과 어긋남 — 폴링(submitted_turn)과 동일한 응답 turnNo로 기록.
+    current_turn = submitted_turn
     log_entry = {
         "turn": turn_i + 1,
-        "turnNo": current_turn,
+        "turnNo": submitted_turn,
         "nodeType": node_type,
         "input": input_desc,
         "hp": hp,
