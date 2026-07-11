@@ -450,17 +450,31 @@ else:
 print(f"\n[V9] 서술 품질:", flush=True)
 v9_issues = []
 
-# V9-a: sanitize 오탐 검출 — 비정상적 NPC 별칭 치환 감지
+# V9-a: 별칭 융합 잔존 감지 (테스트 감사 2026-07-12 재정의)
+#   구 패턴(r"허.{5,15}지")은 "허투루 넘기지" 같은 정상 문장에 광역 오탐 (실측).
+#   원 버그(alias 오삽입)는 서버 stripFusedAliasPrefix 계열로 근본 수정됨 —
+#   이 검사는 서버 방어가 놓친 잔존을 감지하는 회귀 센서로 재정의:
+#   알려진 unknownAlias 직전에 한글 1~2자가 공백 없이 밀착한 패턴만.
+_ua_pool = []
+try:
+    def _collect_ua(o):
+        if isinstance(o, dict):
+            ua = o.get("unknownAlias")
+            if o.get("npcId") and isinstance(ua, str) and len(ua) >= 4:
+                _ua_pool.append(ua)
+            for v in o.values():
+                _collect_ua(v)
+        elif isinstance(o, list):
+            for v in o:
+                _collect_ua(v)
+    _collect_ua(_npcs_raw)
+except Exception:
+    pass
 for t in turn_logs:
     narr = t.get("narrative", "")
-    # NPC unknownAlias가 일반 단어 속에 끼어있는 패턴 (예: "허덩치 큰 하역 인부지")
-    suspicious_patterns = [
-        (r"허.{5,15}지", "NPC alias 오삽입"),   # 허벅지 → 허+alias+지
-        (r"[가-힣]덩치 큰 하역", "BG_DOCKER alias 오삽입"),
-    ]
-    for pat, desc in suspicious_patterns:
-        if re.search(pat, narr):
-            v9_issues.append(f"T{t['turn']}: sanitize 오탐 — {desc}")
+    for ua in _ua_pool:
+        for m in re.finditer(r"(?:^|[\s\"\u201C.,!?…])([가-힣]{1,2})" + re.escape(ua), narr):
+            v9_issues.append(f"T{t['turn']}: 별칭 융합 잔존 — '{m.group(1)}{ua[:12]}…'")
 
 # V9-b: CHOICE 턴에서 이전 대화 맥락 가정 감지
 for t in turn_logs:
