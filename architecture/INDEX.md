@@ -78,7 +78,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/15_notification_system|notification system]] — Notification 아키텍처(설계/UI/브릿지 통합). 기존 `15/16/17` 3개 문서가 하나로 통합됨. 클라 실제 연결은 [[guides/02_client_component_map|client component map]].
 - [[architecture/23_dialogue_ui_redesign|dialogue ui redesign]] — 대화 UI 고도화(메신저 형태, NPC 카드 연출, 홑따옴표 강조).
-- [[architecture/68_uiux_audit_v1|uiux audit v1]] — 헤드리스 신규 유저 경로 실사 리뷰 + 6건 수정(인물 도감 조우 필터+이어하기 복원, 모바일 상태줄/인물 탭, 호외 모달 타이밍, "(으)로" 조사, 개발자 정보 dev 게이트). 부록 A: C-2~C-7 폴리싱(어포던스·배너·뮤트 팔레트·라벨·lucide·체크박스). 부록 B: C-1 거점 사랑방 개방(LOC_TAVERN/LOC_SD_INN hubAccessible, 서버 0줄). 부록 C: 자유 입력 발견성(코치마크+placeholder 예시+튜토리얼). 부록 D: NanoChoiceNpcFix(nano 선택지 sourceNpcId 오염 서버 검증 게이트, 버그 5f31d803). 백로그 전량 해소.
+- [[architecture/68_uiux_audit_v1|uiux audit v1]] — 헤드리스 신규 유저 경로 실사 리뷰 + 6건 수정(인물 도감 조우 필터+이어하기 복원, 모바일 상태줄/인물 탭, 호외 모달 타이밍, "(으)로" 조사, 개발자 정보 dev 게이트). 부록 A: C-2~C-7 폴리싱(어포던스·배너·뮤트 팔레트·라벨·lucide·체크박스). 부록 B: C-1 거점 사랑방 개방(LOC_TAVERN/LOC_SD_INN hubAccessible, 서버 0줄). 부록 C: 자유 입력 발견성(코치마크+placeholder 예시+튜토리얼). 부록 D: NanoChoiceNpcFix(nano 선택지 sourceNpcId 오염 서버 검증 게이트, 버그 5f31d803). 부록 E: 상점 노출 동선(구매 dead path 부활 + ui.shops 클라 소비 — 칩/진열/구매 버튼). 백로그 전량 해소.
 
 ### 7. 멀티플레이
 
