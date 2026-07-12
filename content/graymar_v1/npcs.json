@@ -4317,7 +4317,7 @@
   },
   {
     "npcId": "NPC_BG_BARD",
-    "name": "단테",
+    "name": "비올라",
     "unknownAlias": "류트를 든 음유시인",
     "role": "떠돌이 음유시인. 노래와 이야기로 선술집에서 환대받으며, 각 도시의 정치 풍자를 가사에 담는다.",
     "faction": null,
@@ -4366,7 +4366,7 @@
         }
       }
     },
-    "gender": "male",
+    "gender": "female",
     "daily_topics": [
       {
         "topicId": "TOPIC_BG_BARD_SONG",
@@ -4443,7 +4443,7 @@
         }
       }
     },
-    "gender": "male",
+    "gender": "female",
     "daily_topics": [
       {
         "topicId": "TOPIC_BG_COOK_SOUP",

@@ -334,3 +334,28 @@ S5 완주. 유닛 1043 passed / 실패 0.
 
 - 어휘 클러스터(2-B 계측으로 추이 수집 — '그는/멀리서/것이오' 상위)
 - 아크 커밋 라벨·결의 +2 밸런스는 실플레이어 데이터로 재조정 여지
+
+## 부록 G — 선술집 상주 BG 초상화 6종 (2026-07-12, 사용자 제작)
+
+이미지 커버리지 실측(초상화 29/43)에서 1순위로 추천한 **선술집 상주 BG
+6명** — 사랑방 개방(부록 B)으로 대화 노출이 급증한 인물들. 사용자가
+제작·투입, 매핑·검증은 세션에서 처리.
+
+| 파일 | NPC | 비고 |
+|------|-----|------|
+| tavern_bard.webp | NPC_BG_BARD 비올라 | **여성 전환 + 개명**(구 단테) — 콘텐츠 참조 0건 확인 후 |
+| tavern_cook.webp | NPC_BG_COOK 헬가 | **gender male→female 정정** (이름과 불일치하던 정본) |
+| harbor_captain_pipe.webp | NPC_BG_CAPTAIN_OLD 그래디 | |
+| veteran_swordsmith.webp | NPC_BG_ARMORER 갤러스 | |
+| old_artificer.webp | NPC_BG_ANTIQUE_DEALER 제롬 영감 | |
+| milo.webp | NPC_BG_WAREHOUSE_GUARD 마일로 | |
+
+- 규격 1024×1280(4:5) 다크 유화 — 표시 위젯(도감 카드 110×140 등)이
+  4:5라 원본 유지, 재인코딩 생략.
+- 매핑 2곳: 클라 `data/npc-portraits.ts` + 서버 `db/types/npc-portraits.ts`
+  (마커 URL 삽입용 — 양쪽 미러 규약).
+- 실전 검증: 밤 선술집 "류트를 든 음유시인에게 노래를 청한다" →
+  비올라 초상 버블·카드 표시 + 서술·nano 선택지 여성 지칭("그녀는…")
+  정합 — 콘텐츠 gender 변경이 파이프라인 전층 반영 확인.
+- 잔여 미보유: BG 8명(상류 거리 사용인 계열 — 저노출) + silverdeen 12명
+  (2순위 세트).
