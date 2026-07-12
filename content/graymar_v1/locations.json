@@ -416,6 +416,8 @@
     "locationId": "LOC_TAVERN",
     "name": "잠긴 닻 선술집",
     "description": "항구 도시의 오래된 선술집. 여행자와 현지인 모두가 모이는 정보의 교차점.",
+    "hubAccessible": true,
+    "hubHint": "휴식과 대화, 정보가 모이는 곳",
     "tags": [
       "SOCIAL",
       "REST",

@@ -117,6 +117,8 @@
     "name": "잿빛 램프 여관",
     "shortName": "여관",
     "description": "실버딘의 거점 여관. 광부들의 술자리와 외지인의 숙소가 뒤섞인다.",
+    "hubAccessible": true,
+    "hubHint": "휴식과 대화, 소문이 모이는 곳",
     "tags": [
       "HUB",
       "SAFE"

@@ -83,7 +83,7 @@
 
 | # | 항목 | 상태 |
 |---|------|------|
-| C-1 | HUB에서 자유 입력창 미렌더 (선택지 전용) | ⏸ 기획 판단 대기 — Action-First 철학과의 정합 |
+| C-1 | HUB에서 자유 입력창 미렌더 (선택지 전용) | ✅ 부록 B — A안(거점 사랑방 개방)으로 해소 (2026-07-12) |
 | C-2 | 선택지 어포던스 | ✅ 부록 A-1 (2026-07-12) |
 | C-3 | 시나리오 선택 화면 빈약 | ✅ 부록 A-2 |
 | C-4 | 스탯 무지개 색상 | ✅ 부록 A-3 |
@@ -151,3 +151,42 @@ PresetCard 인라인(제거) · game-store fallback(토큰 참조).
   (경고 4건은 기존 `<img>`·PRESETS 건).
 - launchd 재시작 후 실플레이 검증: A-1(도감 3명+별칭+복원), A-2(상태줄),
   A-3(인물 탭), A-5(조사) 직접 확인. A-4·A-6은 코드 게이트 검증.
+
+## 부록 B — C-1 해소: 거점 사랑방 개방 (A안, 2026-07-12)
+
+### 배경 판단
+
+HUB 자유 입력은 클라 누락이 아니라 **서버 계약**이었다 —
+`handleHubTurn`이 CHOICE 외 입력을 하드 거부(`HUB requires CHOICE input`),
+초기 설계(순환 허브 = 이동·정비 전용)의 의도적 제약. 자유 대화
+파이프라인(IntentParserV2→NpcResolver→EventDirector→Resolve)의 요구
+컨텍스트(NPC 배치·이벤트 매칭·locationSessionTurns·동적 상태)가 전부
+장소 단위라, HUB에 ACTION을 여는 것은 별도 경량 파이프라인 신설을 의미.
+
+검토안: A) 거점 사랑방 장소 개방(콘텐츠 1줄) / B) HUB ACTION 경량 허용
+(판정·fact 없는 겉대화 위험) / C) HUB 자체를 장소화(순환 설계 파괴).
+**A 채택** — 기존 LOCATION 자산 100% 재사용, HUB 리듬 유지, 롤백 1줄.
+
+### 구현 (서버 코드 0줄)
+
+- `graymar_v1/locations.json` LOC_TAVERN: `hubAccessible: true` +
+  hubHint "휴식과 대화, 정보가 모이는 곳". 이미 정식 장소로 완비
+  (SOCIAL/REST/INFORMATION 태그, secrets 1, 이벤트 11, NPC 배치 32참조,
+  이미지 tavern_day/night_safe) — 개방만 잠겨 있던 상태.
+- `silverdeen_v1/locations.json` LOC_SD_INN(잿빛 램프 여관, HUB/SAFE):
+  동일 적용 — 팩 계약 대칭 (거점 사랑방 1곳 규약).
+- 클라 `InputSection`/`MobileInputSection`: HUB에서 `return null` →
+  `HubInputNotice` 배너("거점에서는 행선지를 선택하세요 — 대화와 행동은
+  장소에 들어가 자유롭게 입력할 수 있습니다").
+- `go_tavern` choiceId는 hubChoiceIdFor() 기계 파생 — 서버 무수정.
+
+### 검증 (실측)
+
+HUB 5번째 선택지 등장 + 안내 배너 → 선술집 진입(서빙꾼 선인사) →
+자유 입력 "항구 소문을 물어본다" → 판정(카리스마2+🎲2+보정1=5 SUCCESS)
++ 주제 정합 응답 스트리밍. LOCATION 파이프라인 전체 정상.
+
+### 수용한 트레이드오프
+
+선술집 방문도 LOCATION 턴 — 시간대·D-day 시계 소모. 휴식·정보 수집에
+시간을 쓰는 자연스러운 교환으로 판단 (데드라인 경제 유지).
