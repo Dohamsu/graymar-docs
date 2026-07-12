@@ -258,7 +258,7 @@
   {
     "npcId": "NPC_EDRIC_VEIL",
     "name": "에드릭 베일",
-    "unknownAlias": "날카로운 눈매의 회계사",
+    "unknownAlias": "날카로운 회계사",
     "role": "은장부 상단 회계 담당. 숫자에 밝지만 도박 빚에 쫓기는 처지.",
     "faction": "MERCHANT_CONSORTIUM",
     "hostile": false,
@@ -506,7 +506,7 @@
   {
     "npcId": "NPC_MAIREL",
     "name": "마이렐 단 경",
-    "unknownAlias": "권위적인 야간 경비 책임자",
+    "unknownAlias": "야간 경비 책임자",
     "role": "그레이마르 도시수비대 야간 책임자. 전쟁 참전 경험이 있으며 부하들의 복지에 집착한다.",
     "faction": "CITY_GUARD",
     "hostile": "conditional",
@@ -749,7 +749,7 @@
   {
     "npcId": "NPC_TOBREN",
     "name": "토브렌 하위크",
-    "unknownAlias": "수상한 창고 관리인",
+    "unknownAlias": "수상한 관리인",
     "role": "동부 부두 창고 관리자. 아내와 딸을 먹여살려야 하는 가장으로, 밀수에 연루된 것도 가족 때문이다.",
     "faction": null,
     "hostile": "conditional",
@@ -894,7 +894,7 @@
   {
     "npcId": "NPC_MOON_SEA",
     "name": "라이라 케스텔",
-    "unknownAlias": "조용한 문서 실무자",
+    "unknownAlias": "조용한 실무자",
     "role": "상단 문서실 암호 메모 실무자. 고양이를 키우며 조용한 일상을 좋아하지만, 문서 속 비밀에 점점 깊이 빠지고 있다.",
     "faction": "MERCHANT_CONSORTIUM",
     "hostile": false,
@@ -1066,7 +1066,7 @@
   {
     "npcId": "NPC_MIRELA",
     "name": "미렐라",
-    "unknownAlias": "약초 노점의 노부인",
+    "unknownAlias": "약초 파는 노부인",
     "role": "시장 거리 약초 노점상. 약초와 치료제를 팔며 40년간 시장에서 장사해온 터줏대감. 시장 상인들의 분쟁 중재도 맡는다.",
     "faction": "MERCHANT_CONSORTIUM",
     "hostile": false,
@@ -1371,7 +1371,7 @@
   {
     "npcId": "NPC_CAPTAIN_BREN",
     "name": "브렌 대위",
-    "unknownAlias": "단정한 제복의 장교",
+    "unknownAlias": "단정한 장교",
     "role": "그레이마르 수비대 장교. 정의감이 강하지만 아픈 어머니 병원비 때문에 상부 압력을 견디고 있다.",
     "faction": "CITY_GUARD",
     "hostile": false,
@@ -1506,7 +1506,7 @@
   {
     "npcId": "NPC_ROSA",
     "name": "로자",
-    "unknownAlias": "다정한 보육원 여인",
+    "unknownAlias": "다정한 보모",
     "role": "빈민가 고아원 운영자. 전직 교사로 아이들을 돌보는 한편, 빈민가 주민들의 민원 대변인 역할도 한다.",
     "faction": null,
     "hostile": false,
@@ -1638,7 +1638,7 @@
   {
     "npcId": "NPC_INFO_BROKER",
     "name": "쉐도우",
-    "unknownAlias": "후드를 깊이 쓴 정보상",
+    "unknownAlias": "후드 쓴 정보상",
     "role": "뒷골목 정보 브로커. 양쪽 세력 모두에게 정보를 팔며, 요리에 일가견이 있어 거래 장소로 자기 부엌을 쓴다.",
     "faction": null,
     "hostile": false,
@@ -1787,7 +1787,7 @@
   {
     "npcId": "NPC_GUARD_CAPTAIN",
     "name": "벨론 대위",
-    "unknownAlias": "위풍당당한 수비대 장교",
+    "unknownAlias": "당당한 수비대 장교",
     "role": "그레이마르 수비대 대위. 마이렐의 상관으로 체스 애호가답게 모든 일에 수를 두듯 접근한다.",
     "faction": "CITY_GUARD",
     "hostile": false,
@@ -1925,7 +1925,7 @@
   {
     "npcId": "NPC_LORD_VANCE",
     "name": "밴스 경",
-    "unknownAlias": "은발의 귀족 신사",
+    "unknownAlias": "은발의 신사",
     "role": "그레이마르 도시 의회 의원. 겉으로는 온건한 중재자이나, 와인 수집가로서의 면모 뒤에 정보망을 구축해두었다.",
     "faction": "ARCANE_SOCIETY",
     "hostile": false,
@@ -2143,7 +2143,7 @@
   {
     "npcId": "NPC_OWEN_KEEPER",
     "name": "오웬",
-    "unknownAlias": "넉넉한 체구의 선술집 주인",
+    "unknownAlias": "선술집 주인",
     "role": "잠긴 닻 선술집의 주인. 모든 파벌이 드나드는 중립 지대를 운영하며, 젊은 시절 항해사였던 경험으로 바다 이야기에도 밝다.",
     "faction": null,
     "hostile": false,
@@ -2283,7 +2283,7 @@
   {
     "npcId": "NPC_SERA_DOCKS",
     "name": "세라",
-    "unknownAlias": "무표정한 창고 여인",
+    "unknownAlias": "무표정한 여인",
     "role": "항만 창고구 물류 관리인. 겉으로는 합법 화물만 다루지만, 어린 시절 고아 출신으로 밑바닥을 경험한 현실주의자.",
     "faction": "LABOR_GUILD",
     "hostile": false,
@@ -2415,7 +2415,7 @@
   {
     "npcId": "NPC_DAME_ISOLDE",
     "name": "이졸데 여사",
-    "unknownAlias": "향수 냄새가 강한 미망인",
+    "unknownAlias": "향수 짙은 미망인",
     "role": "상류 사교계의 여왕. 귀족들의 약점과 비밀을 수집하며, 남편의 의문사 이후 직접 가문의 재산을 관리하는 사업가이기도 하다.",
     "faction": "ARCANE_SOCIETY",
     "hostile": false,
@@ -2802,7 +2802,7 @@
   {
     "npcId": "NPC_GUARD_FELIX",
     "name": "펠릭스",
-    "unknownAlias": "풋풋한 젊은 경비병",
+    "unknownAlias": "풋풋한 경비병",
     "role": "그레이마르 수비대 하급 경비병. 시골 출신의 이상주의자로, 도시의 현실에 적응하며 성장 중이다.",
     "faction": "CITY_GUARD",
     "hostile": false,
@@ -3004,7 +3004,8 @@
           "상인"
         ]
       }
-    ]
+    ],
+    "shortAlias": "생선상인"
   },
   {
     "npcId": "NPC_BG_FRUIT_VENDOR",
@@ -3081,7 +3082,8 @@
           "상하"
         ]
       }
-    ]
+    ],
+    "shortAlias": "과일장수"
   },
   {
     "npcId": "NPC_BG_ANTIQUE_DEALER",
@@ -3158,7 +3160,8 @@
           "경매"
         ]
       }
-    ]
+    ],
+    "shortAlias": "영감"
   },
   {
     "npcId": "NPC_BG_SHOE_SHINE",
@@ -3235,7 +3238,8 @@
           "냄새"
         ]
       }
-    ]
+    ],
+    "shortAlias": "구두닦이"
   },
   {
     "npcId": "NPC_BG_MESSENGER",
@@ -3312,7 +3316,8 @@
           "비밀"
         ]
       }
-    ]
+    ],
+    "shortAlias": "전령"
   },
   {
     "npcId": "NPC_BG_ARMORER",
@@ -3389,7 +3394,8 @@
           "주문"
         ]
       }
-    ]
+    ],
+    "shortAlias": "무기관리병"
   },
   {
     "npcId": "NPC_BG_CLERK",
@@ -3466,7 +3472,8 @@
           "일상"
         ]
       }
-    ]
+    ],
+    "shortAlias": "접수관"
   },
   {
     "npcId": "NPC_BG_CAPTAIN_OLD",
@@ -3543,7 +3550,8 @@
           "외국"
         ]
       }
-    ]
+    ],
+    "shortAlias": "노선장"
   },
   {
     "npcId": "NPC_BG_DOCKER",
@@ -3620,7 +3628,8 @@
           "부두"
         ]
       }
-    ]
+    ],
+    "shortAlias": "인부"
   },
   {
     "npcId": "NPC_BG_ROPE_MAKER",
@@ -3697,7 +3706,8 @@
           "배"
         ]
       }
-    ]
+    ],
+    "shortAlias": "밧줄장인"
   },
   {
     "npcId": "NPC_BG_CUSTOMS",
@@ -3774,7 +3784,8 @@
           "항구"
         ]
       }
-    ]
+    ],
+    "shortAlias": "세관원"
   },
   {
     "npcId": "NPC_BG_HERB_CRONE",
@@ -3851,7 +3862,8 @@
           "별"
         ]
       }
-    ]
+    ],
+    "shortAlias": "약초 노파"
   },
   {
     "npcId": "NPC_BG_STREET_KID",
@@ -3928,7 +3940,8 @@
           "목격"
         ]
       }
-    ]
+    ],
+    "shortAlias": "골목 아이"
   },
   {
     "npcId": "NPC_BG_VAGRANT",
@@ -4005,7 +4018,8 @@
           "불안"
         ]
       }
-    ]
+    ],
+    "shortAlias": "떠돌이"
   },
   {
     "npcId": "NPC_BG_BEGGAR",
@@ -4082,7 +4096,8 @@
           "처마"
         ]
       }
-    ]
+    ],
+    "shortAlias": "걸인"
   },
   {
     "npcId": "NPC_BG_BUTLER",
@@ -4159,7 +4174,8 @@
           "귀족"
         ]
       }
-    ]
+    ],
+    "shortAlias": "집사"
   },
   {
     "npcId": "NPC_BG_GARDENER",
@@ -4236,7 +4252,8 @@
           "화단"
         ]
       }
-    ]
+    ],
+    "shortAlias": "정원사"
   },
   {
     "npcId": "NPC_BG_NOBLE_MAID",
@@ -4313,7 +4330,8 @@
           "사건"
         ]
       }
-    ]
+    ],
+    "shortAlias": "시녀"
   },
   {
     "npcId": "NPC_BG_BARD",
@@ -4390,7 +4408,8 @@
           "기분"
         ]
       }
-    ]
+    ],
+    "shortAlias": "음유시인"
   },
   {
     "npcId": "NPC_BG_COOK",
@@ -4467,7 +4486,8 @@
           "장보기"
         ]
       }
-    ]
+    ],
+    "shortAlias": "요리사"
   },
   {
     "npcId": "NPC_BG_BARMAID",
@@ -4544,7 +4564,8 @@
           "술집"
         ]
       }
-    ]
+    ],
+    "shortAlias": "서빙꾼"
   },
   {
     "npcId": "NPC_BG_DRUNK",
@@ -4621,7 +4642,8 @@
           "술기운"
         ]
       }
-    ]
+    ],
+    "shortAlias": "취객"
   },
   {
     "npcId": "NPC_BG_WAREHOUSE_GUARD",
@@ -4698,7 +4720,8 @@
           "수리"
         ]
       }
-    ]
+    ],
+    "shortAlias": "경비"
   },
   {
     "npcId": "NPC_BG_DOG_HANDLER",
@@ -4775,7 +4798,8 @@
           "도둑"
         ]
       }
-    ]
+    ],
+    "shortAlias": "조련사"
   },
   {
     "npcId": "NPC_BG_CARGO_INSPECTOR",
@@ -4852,7 +4876,8 @@
           "협조"
         ]
       }
-    ]
+    ],
+    "shortAlias": "검수원"
   },
   {
     "npcId": "NPC_RONEN",

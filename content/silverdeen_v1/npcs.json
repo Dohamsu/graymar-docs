@@ -2,7 +2,7 @@
   {
     "npcId": "NPC_SD_FOREMAN",
     "name": "베렉 콜",
-    "unknownAlias": "굳은 얼굴의 광산 감독관",
+    "unknownAlias": "광산 감독관",
     "shortAlias": "감독관",
     "role": "광산 감독관 — 붕괴 사고의 진상을 덮으려는 실무 책임자",
     "faction": "MINE_COMPANY",
@@ -98,7 +98,7 @@
   {
     "npcId": "NPC_SD_SMITH",
     "name": "일가 브란트",
-    "unknownAlias": "그을음 묻은 여자 대장장이",
+    "unknownAlias": "그을린 대장장이",
     "shortAlias": "대장장이",
     "role": "대장간 거리의 대장장이 — 붕괴에서 오빠를 잃었다",
     "faction": null,
@@ -195,7 +195,7 @@
   {
     "npcId": "NPC_SD_INNKEEP",
     "name": "도른",
-    "unknownAlias": "수염 덥수룩한 여관 주인",
+    "unknownAlias": "수염난 여관 주인",
     "shortAlias": "여관 주인",
     "role": "잿빛 램프 여관 주인 — 의뢰인, 마을 소문의 중심",
     "faction": null,
@@ -288,7 +288,7 @@
   {
     "npcId": "NPC_SD_PRIEST",
     "name": "한스",
-    "unknownAlias": "등 굽은 늙은 사제",
+    "unknownAlias": "등 굽은 사제",
     "shortAlias": "사제",
     "role": "예배당 사제 — 유족들의 고해를 듣는다",
     "faction": null,
@@ -370,7 +370,7 @@
   {
     "npcId": "NPC_SD_UNION",
     "name": "카야",
-    "unknownAlias": "팔뚝 굵은 광부 조합장",
+    "unknownAlias": "팔뚝 굵은 조합장",
     "shortAlias": "조합장",
     "role": "광부 조합장 — 파업을 준비 중",
     "faction": "MINERS_UNION",
@@ -454,7 +454,7 @@
   {
     "npcId": "NPC_SD_ORPHAN",
     "name": "핍",
-    "unknownAlias": "눈치 빠른 전령 소년",
+    "unknownAlias": "눈치 빠른 전령",
     "shortAlias": "전령 소년",
     "role": "마을 전령 소년 — 3번 갱도 붕괴의 유일한 생존 목격자",
     "faction": null,
@@ -562,7 +562,8 @@
     "nameStyle": "plain",
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
-    "activityLocations": []
+    "activityLocations": [],
+    "shortAlias": "세탁부"
   },
   {
     "npcId": "NPC_SD_BG_PEDDLER",
@@ -607,7 +608,8 @@
     "nameStyle": "plain",
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
-    "activityLocations": []
+    "activityLocations": [],
+    "shortAlias": "종지기"
   },
   {
     "npcId": "NPC_SD_BG_CARTER",
