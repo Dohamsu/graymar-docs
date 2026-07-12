@@ -5490,8 +5490,8 @@
     "friction": 0,
     "matchPolicy": "SUPPORT",
     "payload": {
+      "primaryNpcId": "NPC_BG_BARD",
       "sceneFrame": "선술집 무대에서 음유시인이 류트를 튕기며 오래된 발라드를 부르고 있다. 가사를 자세히 들으면 그레이마르의 실존 인물들을 빗대고 있다 — '은빛 왕관의 주인이 그림자에 팔리던 밤'이라는 구절이 유독 귀에 걸린다.",
-      "primaryNpcId": null,
       "choices": [
         {
           "id": "tav_enc_brd_observe",
