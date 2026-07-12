@@ -8,14 +8,23 @@
       "locationId": "LOC_MARKET",
       "requirements": {
         "minQuestState": "S1_GET_ANGLE",
-        "requiredFacts": ["FACT_LEDGER_EXISTS"],
+        "requiredFacts": [
+          "FACT_LEDGER_EXISTS"
+        ],
         "minReputation": null
       },
       "rewards": {
-        "facts": ["FACT_WAGE_FRAUD_PATTERN"],
-        "items": ["CLUE_TORN_SHIFT_SHEET"],
+        "facts": [
+          "FACT_WAGE_FRAUD_PATTERN"
+        ],
+        "items": [
+          "CLUE_TORN_SHIFT_SHEET"
+        ],
         "reputationChanges": [
-          { "factionId": "CITY_GUARD", "delta": -5 }
+          {
+            "factionId": "CITY_GUARD",
+            "delta": -5
+          }
         ],
         "gold": 0
       },
@@ -29,15 +38,31 @@
       "locationId": "LOC_GUARD",
       "requirements": {
         "minQuestState": "S2_PROVE_TAMPER",
-        "requiredFacts": ["FACT_WAGE_FRAUD_PATTERN", "FACT_TAMPERED_LOGS"],
-        "minReputation": { "factionId": "CITY_GUARD", "value": -10 }
+        "requiredFacts": [
+          "FACT_WAGE_FRAUD_PATTERN",
+          "FACT_TAMPERED_LOGS"
+        ],
+        "minReputation": {
+          "factionId": "CITY_GUARD",
+          "value": -10
+        }
       },
       "rewards": {
-        "facts": ["FACT_OFFICIAL_INQUIRY"],
-        "items": ["ITEM_GUARD_PERMIT"],
+        "facts": [
+          "FACT_OFFICIAL_INQUIRY"
+        ],
+        "items": [
+          "ITEM_GUARD_PERMIT"
+        ],
         "reputationChanges": [
-          { "factionId": "CITY_GUARD", "delta": 10 },
-          { "factionId": "MERCHANT_CONSORTIUM", "delta": -5 }
+          {
+            "factionId": "CITY_GUARD",
+            "delta": 10
+          },
+          {
+            "factionId": "MERCHANT_CONSORTIUM",
+            "delta": -5
+          }
         ],
         "gold": 30
       },
@@ -51,16 +76,33 @@
       "locationId": "LOC_GUARD",
       "requirements": {
         "minQuestState": "S4_CONFRONT",
-        "requiredFacts": ["FACT_OFFICIAL_INQUIRY", "FACT_MAIREL_GUARD_EVIDENCE"],
-        "minReputation": { "factionId": "CITY_GUARD", "value": 0 }
+        "requiredFacts": [
+          "FACT_OFFICIAL_INQUIRY",
+          "FACT_MAIREL_GUARD_EVIDENCE"
+        ],
+        "minReputation": {
+          "factionId": "CITY_GUARD",
+          "value": 0
+        }
       },
       "rewards": {
-        "facts": ["FACT_INSIDE_JOB"],
+        "facts": [
+          "FACT_INSIDE_JOB"
+        ],
         "items": [],
         "reputationChanges": [
-          { "factionId": "CITY_GUARD", "delta": 20 },
-          { "factionId": "MERCHANT_CONSORTIUM", "delta": -15 },
-          { "factionId": "LABOR_GUILD", "delta": 5 }
+          {
+            "factionId": "CITY_GUARD",
+            "delta": 20
+          },
+          {
+            "factionId": "MERCHANT_CONSORTIUM",
+            "delta": -15
+          },
+          {
+            "factionId": "LABOR_GUILD",
+            "delta": 5
+          }
         ],
         "gold": 100
       },
@@ -76,14 +118,23 @@
       "locationId": "LOC_HARBOR",
       "requirements": {
         "minQuestState": "S1_GET_ANGLE",
-        "requiredFacts": ["FACT_LEDGER_EXISTS"],
+        "requiredFacts": [
+          "FACT_LEDGER_EXISTS"
+        ],
         "minReputation": null
       },
       "rewards": {
-        "facts": ["FACT_ROUTE_TO_EAST_DOCK"],
-        "items": ["ITEM_SMUGGLE_MAP"],
+        "facts": [
+          "FACT_ROUTE_TO_EAST_DOCK"
+        ],
+        "items": [
+          "ITEM_SMUGGLE_MAP"
+        ],
         "reputationChanges": [
-          { "factionId": "LABOR_GUILD", "delta": -5 }
+          {
+            "factionId": "LABOR_GUILD",
+            "delta": -5
+          }
         ],
         "gold": -35
       },
@@ -97,15 +148,26 @@
       "locationId": "LOC_SLUMS",
       "requirements": {
         "minQuestState": "S3_TRACE_ROUTE",
-        "requiredFacts": ["FACT_ROUTE_TO_EAST_DOCK", "FACT_SMUGGLE_ROUTE_GUILD"],
+        "requiredFacts": [
+          "FACT_ROUTE_TO_EAST_DOCK",
+          "FACT_SMUGGLE_ROUTE_GUILD"
+        ],
         "minReputation": null
       },
       "rewards": {
-        "facts": ["FACT_BOTH_SIDES_EVIDENCE"],
+        "facts": [
+          "FACT_BOTH_SIDES_EVIDENCE"
+        ],
         "items": [],
         "reputationChanges": [
-          { "factionId": "LABOR_GUILD", "delta": -10 },
-          { "factionId": "MERCHANT_CONSORTIUM", "delta": -10 }
+          {
+            "factionId": "LABOR_GUILD",
+            "delta": -10
+          },
+          {
+            "factionId": "MERCHANT_CONSORTIUM",
+            "delta": -10
+          }
         ],
         "gold": 80
       },
@@ -119,16 +181,29 @@
       "locationId": "LOC_SLUMS",
       "requirements": {
         "minQuestState": "S4_CONFRONT",
-        "requiredFacts": ["FACT_BOTH_SIDES_EVIDENCE"],
+        "requiredFacts": [
+          "FACT_BOTH_SIDES_EVIDENCE"
+        ],
         "minReputation": null
       },
       "rewards": {
-        "facts": ["FACT_INSIDE_JOB"],
+        "facts": [
+          "FACT_INSIDE_JOB"
+        ],
         "items": [],
         "reputationChanges": [
-          { "factionId": "LABOR_GUILD", "delta": -15 },
-          { "factionId": "CITY_GUARD", "delta": -15 },
-          { "factionId": "MERCHANT_CONSORTIUM", "delta": -10 }
+          {
+            "factionId": "LABOR_GUILD",
+            "delta": -15
+          },
+          {
+            "factionId": "CITY_GUARD",
+            "delta": -15
+          },
+          {
+            "factionId": "MERCHANT_CONSORTIUM",
+            "delta": -10
+          }
         ],
         "gold": 150
       },
@@ -144,14 +219,26 @@
       "locationId": "LOC_GUARD",
       "requirements": {
         "minQuestState": "S1_GET_ANGLE",
-        "requiredFacts": ["FACT_LEDGER_EXISTS"],
-        "minReputation": { "factionId": "CITY_GUARD", "value": -5 }
+        "requiredFacts": [
+          "FACT_LEDGER_EXISTS"
+        ],
+        "minReputation": {
+          "factionId": "CITY_GUARD",
+          "value": -5
+        }
       },
       "rewards": {
-        "facts": ["FACT_TAMPERED_LOGS"],
-        "items": ["ITEM_GUARD_PERMIT"],
+        "facts": [
+          "FACT_TAMPERED_LOGS"
+        ],
+        "items": [
+          "ITEM_GUARD_PERMIT"
+        ],
         "reputationChanges": [
-          { "factionId": "CITY_GUARD", "delta": 10 }
+          {
+            "factionId": "CITY_GUARD",
+            "delta": 10
+          }
         ],
         "gold": 20
       },
@@ -165,15 +252,31 @@
       "locationId": "LOC_GUARD",
       "requirements": {
         "minQuestState": "S3_TRACE_ROUTE",
-        "requiredFacts": ["FACT_TAMPERED_LOGS", "FACT_MAIREL_GUARD_EVIDENCE"],
-        "minReputation": { "factionId": "CITY_GUARD", "value": 5 }
+        "requiredFacts": [
+          "FACT_TAMPERED_LOGS",
+          "FACT_MAIREL_GUARD_EVIDENCE"
+        ],
+        "minReputation": {
+          "factionId": "CITY_GUARD",
+          "value": 5
+        }
       },
       "rewards": {
-        "facts": ["FACT_OFFICIAL_INQUIRY"],
-        "items": ["CLUE_SMEARED_INK_LOG"],
+        "facts": [
+          "FACT_OFFICIAL_INQUIRY"
+        ],
+        "items": [
+          "CLUE_SMEARED_INK_LOG"
+        ],
         "reputationChanges": [
-          { "factionId": "CITY_GUARD", "delta": 15 },
-          { "factionId": "LABOR_GUILD", "delta": -5 }
+          {
+            "factionId": "CITY_GUARD",
+            "delta": 15
+          },
+          {
+            "factionId": "LABOR_GUILD",
+            "delta": -5
+          }
         ],
         "gold": 40
       },
@@ -187,20 +290,51 @@
       "locationId": "LOC_GUARD",
       "requirements": {
         "minQuestState": "S4_CONFRONT",
-        "requiredFacts": ["FACT_OFFICIAL_INQUIRY", "FACT_MAIREL_GUARD_EVIDENCE"],
-        "minReputation": { "factionId": "CITY_GUARD", "value": 10 }
+        "requiredFacts": [
+          "FACT_OFFICIAL_INQUIRY",
+          "FACT_MAIREL_GUARD_EVIDENCE"
+        ],
+        "minReputation": {
+          "factionId": "CITY_GUARD",
+          "value": 10
+        }
       },
       "rewards": {
-        "facts": ["FACT_INSIDE_JOB"],
+        "facts": [
+          "FACT_INSIDE_JOB"
+        ],
         "items": [],
         "reputationChanges": [
-          { "factionId": "CITY_GUARD", "delta": 25 },
-          { "factionId": "LABOR_GUILD", "delta": 10 },
-          { "factionId": "MERCHANT_CONSORTIUM", "delta": -10 }
+          {
+            "factionId": "CITY_GUARD",
+            "delta": 25
+          },
+          {
+            "factionId": "LABOR_GUILD",
+            "delta": 10
+          },
+          {
+            "factionId": "MERCHANT_CONSORTIUM",
+            "delta": -10
+          }
         ],
         "gold": 80
       },
       "nextStageCondition": null
     }
-  ]
+  ],
+  "routeCommitChoices": {
+    "EXPOSE_CORRUPTION": {
+      "label": "모은 단서로 부패의 실체를 파헤치기로 결심한다",
+      "hint": "위험하지만 진실을 밝히는 길 — 고발 노선"
+    },
+    "PROFIT_FROM_CHAOS": {
+      "label": "혼란을 기회 삼아 잇속을 챙기기로 마음먹는다",
+      "hint": "양쪽 모두와 거래하는 줄타기 — 실리 노선"
+    },
+    "ALLY_GUARD": {
+      "label": "경비대와 손잡고 사건을 해결하기로 한다",
+      "hint": "질서의 편에 서는 길 — 협력 노선"
+    }
+  }
 }

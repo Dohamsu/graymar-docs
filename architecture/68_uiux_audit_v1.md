@@ -292,3 +292,45 @@ import, 복제 drift 방지):
 
 판매(sell) 경로는 미구현 그대로 (TRADE 서사 담당). 상점 UI에서의
 판매 버튼은 수요 확인 후 별도 트랙.
+
+## 부록 F — 3사이클 완주 프로세스 + 결정 4건 구현 (2026-07-12)
+
+### 3사이클 결과 (완주 런 × 3)
+
+| | 게이트 | 퀘스트 | 자체 수정 |
+|---|---|---|---|
+| 1 | 8/9→정밀화 후 무관 | S5_RESOLVE | audit V8 화자 오탐(대사 내 명사 '떠도는 말') — 대사 내부 제외+발화 동사형 한정 |
+| 2 | 9/9 | S5_RESOLVE | 0 (NanoChoiceNpcFix 실전 2건 교정 — 부록 D 유효성 실증) |
+| 3 | 9/9 | S5_RESOLVE | 0 |
+
+S5 완주 3연속(이전: S3 조기 엔딩 2연속). 무명 실결함 0.
+
+### 결정 4건 구현 (사용자 선택: 1-A·2-B·3-B·4-A)
+
+- **4-A 봇 확장** (playtest.py): arc_* 최우선 클릭(1회) + ui.shops 확률
+  구매(아이템당 1회) + LOCATIONS에 tavern. 신규 기능이 완주 회귀에 편입.
+- **2-B 어휘 계측**: 종합 출력에 "어휘 반복 톱5" 상시 리포트(게이트 아님).
+- **3-B 진입 인사 무명** — **B안 전제 정정**: 오웬은 4상 전부 선술집
+  배치 완비. 실원인은 ACTION 이동(MOVE_LOCATION) 도착 턴이 도착
+  디렉티브(NPC 대사 금지)의 inputType==='SYSTEM' 한정에 안 걸리는 구멍.
+  → prompt-builder isMoveOnly를 MOVE 이벤트 기반으로 완화 (최소 수정).
+- **1-A 아크 커밋 동선**: questState S3+ && currentRoute null이면 HUB
+  선택지 선두에 노선 3종(`arc_commit_*`) 노출 — 라벨은 콘텐츠
+  (arc_events.json routeCommitChoices, ContentLoader 파생 API). 클릭 시
+  switchRoute + 결의 +2. 아크 자산 없는 팩(실버딘)은 자동 미노출
+  (팩 계약 — 유닛 2케이스). handleHubTurn arc_commit_ 분기 +
+  buildHubChoices/transitionToHub questState 배선.
+- 파생 수정: 구매 입력의 파서 target 누락(TRADE, target='') 실측 →
+  현 장소 재고 이름을 rawInput과 직접 대조해 보충.
+
+### 통합 검증 (완주 런 9/9)
+
+아크 커밋 T27(고발 노선) → **엔딩 "정의의 대가"** — 4런 연속
+NONE("스쳐간 이방인")이던 arcRoute 12분기 에필로그 최초 진입.
+상점 실구매 2건(치료제 15G + 장비 순찰대 경갑 55G), go_tavern 방문,
+S5 완주. 유닛 1043 passed / 실패 0.
+
+### 남은 관찰
+
+- 어휘 클러스터(2-B 계측으로 추이 수집 — '그는/멀리서/것이오' 상위)
+- 아크 커밋 라벨·결의 +2 밸런스는 실플레이어 데이터로 재조정 여지

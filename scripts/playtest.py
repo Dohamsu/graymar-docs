@@ -32,7 +32,8 @@ EMAIL = f"playtest_{int(time.time())}@test.com"
 PASSWORD = "Test1234!!"
 NICKNAME = "Tester"
 
-LOCATIONS = ["market", "guard", "harbor", "slums"]
+# tavern 포함 — 거점 사랑방(arch/68 부록 B) 자유 대화 경로도 완주 회귀에 포함
+LOCATIONS = ["market", "guard", "tavern", "harbor", "slums"]
 ACTIONS = [
     "주변을 살펴본다", "수상한 곳을 조사한다", "사람들에게 말을 건다",
     "조심스럽게 잠입한다", "거래를 시도한다", "도움을 준다",
@@ -155,6 +156,8 @@ print(f"Run: {run_id}, nodeType: {node_type}, HP: {init_hp}, Gold: {init_gold}",
 turn_logs = []
 loc_idx = 0
 loc_turns = 0
+bought_items = set()   # 4-A: 상점 구매 1회/아이템 제한
+arc_committed = False  # 4-A: 아크 커밋 선택지 1회 클릭
 
 for turn_i in range(MAX_TURNS):
     idem = str(uuid.uuid4())
@@ -173,9 +176,32 @@ for turn_i in range(MAX_TURNS):
     node_type = state.get("currentNode", {}).get("nodeType", "")
     choices = state.get("lastResult", {}).get("choices", [])
     hp = state.get("runState", {}).get("hp", "?")
+    gold = state.get("runState", {}).get("gold", 0) or 0
 
+    # 4-A: 아크 커밋 선택지 감지 시 최우선 클릭 (arc_ 접두 규약, 1회)
+    arc_choice = None
+    if not arc_committed:
+        for c in choices:
+            if str(c.get("id", "")).startswith("arc_"):
+                arc_choice = c
+                break
+    if arc_choice:
+        body = {"input": {"type": "CHOICE", "choiceId": arc_choice["id"]}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
+        input_desc = f"CHOICE:{arc_choice['id']} (arc)"
+        arc_committed = True
+    # 4-A: 상점 구매 — 현 장소 진열에서 살 수 있는 첫 품목 1회 구매
+    elif node_type == "LOCATION" and (shop_target := next(
+        (it for s in (state.get("lastResult", {}).get("ui", {}) or {}).get("shops", [])
+         for it in s.get("items", [])
+         if it.get("itemId") not in bought_items and gold >= it.get("price", 10**9)),
+        None,
+    )) and random.random() < 0.5:
+        _eul = "을" if 0xAC00 <= ord(shop_target["name"][-1]) <= 0xD7A3 and (ord(shop_target["name"][-1]) - 0xAC00) % 28 else "를"
+        body = {"input": {"type": "ACTION", "text": f"{shop_target['name']}{_eul} 구매한다"}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
+        input_desc = f"ACTION:buy({shop_target['name']})"
+        bought_items.add(shop_target["itemId"])
     # Determine input
-    if node_type == "HUB":
+    elif node_type == "HUB":
         loc_name = LOCATIONS[loc_idx % len(LOCATIONS)]
         target = None
         # 1) 장소명 매칭
@@ -428,8 +454,12 @@ for t in turn_logs:
     for mm in marker_matches:
         marker_name = mm.group(1).strip()
         before = narr[max(0, mm.start() - 80):mm.start()]
+        # 직전 대사 내부 텍스트 제거 — 대사 속 명사('떠도는 말들')를
+        # 화자로 오인하는 오탐 방지 (cycle1 T23 실측, 2026-07-12)
+        before = re.sub(r'["“][^"“”]*["”]?', ' ', before)
         # "XX가 말했다" 패턴에서 XX ≠ marker_name이면 불일치
-        speaker_match = re.search(r"([가-힣]{2,10})[이가은는]\s*(?:말|물(?=[었어으])|외치|외쳤|중얼|속삭|답하|답했|대답|되물)", before)
+        # '말'은 발화 동사형만 — 명사 '말(word)' ("그 말은") 제외
+        speaker_match = re.search(r"([가-힣]{2,10})[이가은는]\s*(?:말(?=[하했])|말을\s*(?:걸|이어|꺼내|덧붙)|물(?=[었어으])|외치|외쳤|중얼|속삭|답하|답했|대답|되물)", before)
         if speaker_match:
             speaker = speaker_match.group(1)
             # 플레이어 지칭은 화자 후보에서 제외 (NPC 대사 앞에 "당신이 말을 걸자" 등)
@@ -593,6 +623,20 @@ passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
 for k, v in all_checks.items():
     print(f"  {'✅' if v else '❌'} {k}", flush=True)
+
+# ── 어휘 반복 계측 (2-B, arch/68 후속 — 판단용 상시 리포트, 게이트 아님) ──
+_all_narr = " ".join((t.get("narrative") or "") for t in turn_logs)
+_tokens = re.findall(r"[가-힣]{2,4}", _all_narr)
+_STOP = {"있다", "있는", "있었", "당신", "그대", "그의", "그녀", "하는", "하며", "하고",
+         "것이", "들이", "에서", "으로", "를", "그리고", "하지만", "듯이", "채로",
+         "속에", "위로", "사이", "소리", "시선", "모습", "순간", "고개"}
+_freq = {}
+for _tk in _tokens:
+    if _tk in _STOP:
+        continue
+    _freq[_tk] = _freq.get(_tk, 0) + 1
+_top = sorted(_freq.items(), key=lambda x: -x[1])[:5]
+print("\n어휘 반복 톱5 (계측):", ", ".join(f"{w}×{c}" for w, c in _top), flush=True)
 
 # ═══════════════════════════════════════
 # 5. Git Version Tagging
