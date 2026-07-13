@@ -3806,13 +3806,13 @@
       "traits": [
         "모든 것에 점괘를 붙인다"
       ],
-      "speechStyle": "중얼거리듯 말하는 노파 경어. 의미심장한 경고를 자주 던진다.",
+      "speechStyle": "중얼거리듯 말하는 노파 경어. ~소/~하오 체. 의미심장한 경고를 자주 던진다. 금지: 반말, ~해, ~야, ~합니다, ~해요.",
       "innerConflict": "",
       "softSpot": "",
       "signature": [
         "마른 허브를 손가락으로 비비며 냄새를 맡는다"
       ],
-      "speechRegister": "HAECHE"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
@@ -4274,7 +4274,7 @@
       "traits": [
         "존재감을 지우는 데 천부적이다"
       ],
-      "speechStyle": "낮은 목소리의 시녀 경어. 필요한 말만 최소한으로 한다.",
+      "speechStyle": "낮은 목소리의 시녀 합쇼체. ~습니다/~입니다 체로 필요한 말만 최소한으로 한다. 금지: 반말, ~해, ~야, ~하오, ~해요.",
       "innerConflict": "",
       "softSpot": "",
       "signature": [
@@ -4820,7 +4820,7 @@
       "traits": [
         "원칙을 어기는 것을 절대 용납하지 않는다"
       ],
-      "speechStyle": "딱딱한 검수관 경어. 수량과 품목을 정확히 나열하며 감정 없이 사실만 말한다.",
+      "speechStyle": "딱딱한 검수관 합쇼체. ~습니다/~입니다 체로 수량과 품목을 정확히 나열하며 감정 없이 사실만 말한다. 금지: 반말, ~해, ~야, ~하오, ~해요.",
       "innerConflict": "",
       "softSpot": "",
       "signature": [
