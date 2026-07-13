@@ -73,7 +73,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/58_fact_reveal_unification|fact reveal unification]] — 단서 기록·서술 단일화: 주제 우선 fact 선택(selectRevealableFact) + `ui.questReveal` 전달 + 미기록 detail 보류 가이드. "발견 로그와 NPC 대사가 다른 단서" 데스싱크 근본 차단.
 - [[architecture/59_fact_dialogue_followup_plan|fact dialogue followup plan]] — 58 검증 실측 3건 수정: 판정 NPC = 서술 NPC 정합(부분 이름 매칭) + [단서 방향] nextHint ui 전달 복구 + HINT_MODES off-by-one. ✅ 구현됨.
 - [[architecture/60_clue_flow_tuning|clue flow tuning]] — 흐름 점검 4건: LLM 워커 runState lost update 해소(P0, fresh 부분 패치) + 주제 불일치 fallback 금지(인계 양보) + [단서 방향] 공개 턴 이월 + 비주제 공개 확률 게이트. ✅ 구현됨.
-- [[architecture/69_npc_living_presence|npc living presence]] — B축(살아있는 NPC), B0~B4 ✅ 구현. B0 계측(정보 편향 88% 실측)·B1 반응 자기목적 주입(INFO 88→40%)·B2 잡담 활동 결합·B3 재등장 연속성·B4 NPC 간 세계(잡담 경로 관계 근황 발화 selectRelationMentionCore, introduced 후보 한정+rel: 쿨다운; 목격 파이프 위치 판정 버그 수정으로 부활). 공용 헬퍼 getNpcSchedulePhaseEntry/getNpcCurrentActivity 4곳 재사용. A축(선제 단서 억제)은 arch/68 부록 M.
+- [[architecture/69_npc_living_presence|npc living presence]] — B축(살아있는 NPC), B0~B4 ✅ 구현. B0 계측(정보 편향 88% 실측)·B1 반응 자기목적 주입(INFO 88→40%)·B2 잡담 활동 결합·B3 재등장 연속성·B4 NPC 간 세계(잡담 경로 관계 근황 발화 selectRelationMentionCore, introduced 후보 한정+rel: 쿨다운; 목격 파이프 위치 판정 버그 수정으로 부활). 공용 헬퍼 getNpcSchedulePhaseEntry/getNpcCurrentActivity 4곳 재사용. 후속: 어미 다양화(26명 재배정·HAEYO 제거) 완료, 어체 검증은 C안 설계 확정·착수 대기 — C1 하오체 강제 레거시(자네→그대 치환) 제거 → C2 화자 인지 어체 계측(extractNpcUtterances×validateSpeechRegister) → C3 위반율 게이트 시 done 교체 선별 재생성. A축(선제 단서 억제)은 arch/68 부록 M.
 
 ### 6. UI·클라이언트
 
