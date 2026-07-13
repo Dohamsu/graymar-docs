@@ -9,6 +9,9 @@
 > 개정: 2026-07-13 코드 실측 검토 반영 — 진단 정밀화(§1), B0 계측 선행 신설,
 > dialogueAct 전달·정제 파이프·introduced 게이트·테스트 전략 추가(§3), B2 병행
 > 허용(§4).
+> 개정 2: 2026-07-13 B4 정밀 설계 — 범위 확정(B4-0 결정 표), 관계 근황 발화
+> 코어 설계(B4-1: selectRelationMentionCore + rel: 쿨다운 재사용), 목격 파이프
+> 기존 배선 명시(B4-2), 능동 세계를 3채널로 축소·백로그 분리(B4-3).
 
 ---
 
@@ -238,19 +241,105 @@ immediateGoal 자기목적 언급률, "성격과 별개 배척" 체감 개선, *
 유지), "아는 사이" 응대 자연·"지난번" 반복 없음. schedule 활동 결합(B2)도
 지속. 정제 파이프는 knownFacts 출처가 이 NPC 공유분 한정이라 불필요(위 정정).
 
-### Phase B4 — NPC 간 살아있는 세계 (선택, 후순위)
+### Phase B4 — NPC 간 살아있는 세계 (선택, 후순위 — 정밀 설계 2026-07-13)
 
-**작업**:
-- npcRelations를 대화에 반영: "오웬 그 친구가 요새…" 같은 NPC 간 근황 언급.
-  - **introduced 게이트 (검토 추가)**: NPC 간 실명 언급은 **미소개 실명
-    차단(불변식 15, arch/64)을 우회하는 통로**가 될 수 있다. 언급 대상
-    NPC가 introduced 상태일 때만 실명 허용, 미소개면 별칭(unknownAlias)으로
-    치환하거나 언급 자체를 생략하는 게이트를 주입 단계에 둔다.
-- 다른 NPC 아젠다 목격([목격 장면], 이미 존재)을 잡담·반응에 자연 연결.
-- 세계가 플레이어 없이도 돌아가는 감각 (NpcAgenda/situation-generator 활용).
+**목표**: 화자 NPC의 입을 통해 "다른 NPC도 각자의 삶을 사는 중"이라는 감각을
+전달한다. 신규 시스템을 만들지 않고, **이미 돌아가는 데이터**(npcRelations
+정적 관계 + recentAgendaEvents 동적 사건)를 잡담 경로에 연결한다.
 
-**검증**: NPC 간 언급 자연스러움, 세계 능동성 체감, **미소개 실명 노출 0**
-(R7 스트림 새니타이즈·audit 실명 센서 재사용).
+#### B4-0. 설계 결정 (범위 확정)
+
+| 결정 | 근거 |
+|------|------|
+| 주입 경로는 **잡담 모드(D) 블록 확장만** | reaction 경로(B1)는 불가침 — 근황 언급은 "대화가 원하는 것"이 아니라 잡담의 재료. 정보 턴에 끼면 노이즈. |
+| "근황"의 소스는 `recentAgendaEvents` | world-tick 219~227행이 매 tick NPC 아젠다 진행분을 `{npcId, signal}[]`로 ws에 저장 — **근황 데이터는 이미 생산 중**, 소비 채널만 없다. |
+| "관계 톤"의 소스는 `personality.npcRelations` | 실측: graymar 17/43명 보유, 관계 서술 텍스트 (예: 오웬→레닉 "술친구이자 정보원. 신뢰하지만 입이 가벼운 게 걱정"). |
+| 미소개 대상은 **언급 생략** (별칭 치환 아님) | NPC끼리 서로를 플레이어용 별칭("날카로운 눈매의 회계사")으로 부르는 건 부자연. 제3자 실명 호명은 이름 공개 경로(arch/66 외부 fallback)와 간섭하므로, introduced=true 대상만 후보 풀에 넣어 **구조적으로** 차단 (불변식 15). |
+| "능동적 세계"는 **전달 채널 정리로 축소** | 세계는 이미 플레이어 없이 돈다(world-tick·NpcSchedule·NpcAgenda). 부족한 건 전개가 아니라 **체감 채널** — signalFeed(있음)·[목격 장면](있음)·근황 발화(B4 신설)의 3채널로 정의하고, 그 이상(장소 재방문 변화 언급 등)은 백로그. |
+
+#### B4-1. 관계 근황 발화 — 잡담 모드 확장
+
+**후보 선정 (export core, 유닛 동반)**:
+
+```
+selectRelationMentionCore(
+  speakerDef,            // npcRelations 보유 화자
+  npcStates,             // introduced 판정
+  recentAgendaEvents,    // ws의 {npcId, signal}[] (없으면 [])
+  recentTopics,          // 화자 npcState.llmSummary.recentTopics
+  witnessNpcId,          // 이번 턴 [목격 장면] 대상 (중복 프레임 방지)
+): { targetNpcId, targetName, relationText, recentSignal|null } | null
+```
+
+- 후보 = 화자 `npcRelations` 키 중 `npcStates[target].introduced === true`.
+- 제외: ① `recentTopics`에 `rel:<npcId>` 기록 존재 (아래 쿨다운) ② 이번 턴
+  `agendaWitnessHint` 대상과 동일 NPC (같은 사건을 목격+전언 이중 서술 방지).
+- 우선순위: recentAgendaEvents에 signal이 있는 대상 > 관계만 있는 대상.
+  복수 후보면 잡담 화제 선택과 동일하게 랜덤 (기존 D 경로 관행).
+- **쿨다운은 기존 메커니즘 재사용**: 주입 시 `recentTopics`에
+  `{topic: 'rel:<npcId>'}` 기록 → daily_topic과 동일한 FIFO 회피가 자동
+  적용된다 (신규 상태 필드 0개).
+
+**프롬프트 주입** (잡담 [NPC 일상] 블록에 1~2줄 추가, 잡담 턴 한정):
+
+```
+[주변 인물 근황] (화자가 아는 것)
+{targetName}: {relationText}
+(최근 소식: {recentSignal})        ← signal 있을 때만
+→ 잡담 중 자연스러우면 한 문장으로만 곁들이세요. 관계 서술 범위 밖의
+  사건을 만들지 말고, 어색하면 생략하세요.
+```
+
+- recentSignal이 없으면 관계 톤만 — "그 친구 잘 지내나 모르겠군" 수준.
+  **사건 창작 방지는 positive 경계**("관계 서술 범위 안")로 처리.
+- 토큰 영향 ~80자, 잡담 턴 한정이라 예산(불변식 17) 영향 미미.
+
+#### B4-2. 목격 파이프 — 재사용 예정이었으나 **버그 발견·수정** (2026-07-13)
+
+[목격 장면] 배선은 존재하나(world-tick `recentAgendaEvents` →
+`buildAgendaWitnessHint` → prompt-builder 2671행 주입, 질문 턴 억제), **위치
+판정 버그로 상시 무력**이었다: `buildAgendaWitnessHint`가 `schedule.default`를
+`{ default?: string }`로 오독 — 실제로는 4상 객체(`{DAWN:{...},DAY:{...}}`)라
+`객체 !== playerLocation`이 항상 참 → 전 NPC 탈락 → agendaWitnessHint 상시
+null. B1의 `getNpcSchedulePhaseEntry(schedule, phaseV2)`로 현재 phase의
+locationId를 올바르게 판정하도록 수정하고, 반환을 `{text, npcIds}`로 바꿔
+witnessNpcIds를 B4-1 중복 제외에 노출. B4-1은 이 동일 데이터를 "현장
+목격"(같은 장소)과 "전언 근황"(다른 장소 소식)의 두 프레임으로 나눠 쓰며,
+후보 제외 규칙 ②가 두 프레임의 같은 턴 중복을 막는다.
+
+#### B4-3. 백로그 (이번 범위 밖)
+
+- 장소 재방문 시 변화 언급 ("지난번보다 경비가 늘었군") — locationDynamicStates 활용.
+- NPC 간 관계의 동적 변화 (사건이 npcRelations 톤을 바꾸는 것) — 콘텐츠
+  정적 필드라 런타임 오버레이 설계 필요.
+- silverdeen_v1 npcRelations 콘텐츠 보강 (현재 graymar 17명 위주).
+
+**검증**:
+- 유닛 (export core): introduced 필터·rel: 쿨다운·목격 중복 제외·signal
+  우선순위·후보 0 → null.
+- 잡담 실측 N턴: 근황 언급 발생·자연스러움, 같은 대상 반복 0, **미소개 실명
+  노출 0** (audit 실명 센서 + R7 스트림 새니타이즈 재사용 — 후보 필터로
+  구조 차단이 1차, 센서는 회귀 감지용).
+- signal 텍스트 경유 제3 실명 누출 여부 (LLM이 signal 원문을 옮길 때) —
+  기존 미소개 실명 후처리가 커버하는지 1회 확인.
+
+**구현 완료 + 실측 (2026-07-13)**:
+- 유닛 8케이스 통과(`npc-relation-mention.spec`), 전체 1102 passed.
+- **B4-1 근황 발화 발동**: playtest 30턴 중 T18 "[주변 인물 근황] 에드릭
+  베일: 상단과의 뒷거래 연결고리" 주입 — introduced 대상이라 실명 노출 정상,
+  **미소개 실명 노출 0**(playtest V8 PASS). 30턴 1건 = 잡담+관계+introduced
+  조건상 자연스러운 빈도.
+- **B4-2 목격 버그 수정 검증**: recentAgendaEvents 실제 생산 확인
+  (`{npcId:EDRIC, signal:"회계 장부 수정 흔적"}`). 이 세션 목격 0건은 에드릭
+  (LOC_MARKET/NOBLE)과 플레이어(LOC_HARBOR)의 **위치 불일치 = 올바른 동작**
+  (전엔 위치 무관 100% 무력, 후엔 위치 겹칠 때만). 근황 전언(B4-1)이 위치
+  무관하게 소식을 대신 전달.
+- **쿨다운 구현 정정**: 당초 recentTopics rel: 기록 재사용을 계획했으나,
+  실측 결과 기존 recentTopics 기록(turns.service 2934)이 `topic`에
+  sceneFrame/null을 넣어 daily_topic 쿨다운조차 불완전. 프롬프트 조립 시점
+  (prompt-builder)에서 화자 recentTopics를 **읽어 회피**(구현) + 복수 후보
+  랜덤으로 1차 방어. 잡담 발동 빈도가 낮아(fact 매칭 0 조건) 반복 실害 미미 —
+  실측에서 반복 관찰 시 turns.service 기록 경로 추가는 백로그.
 
 ---
 
@@ -261,7 +350,7 @@ B0 (계측 베이스라인) ── B1 착수 조건. 측정 먼저.
   └ B1 (반응 자기목적) ─ 근본. "배척 일변도" 해소. 최우선.
   └ B2 (잡담 고도화) ── B1과 병행 가능 (파이프 상이 — 잡담 D vs reaction).
       └ B3 (기억 연속성) ─ 재등장 깊이.
-          └ B4 (NPC 세계) ─ 선택. 여력 시.
+          └ B4 (NPC 세계) ─ 선택. 정밀 설계 완료(2026-07-13), 착수 대기.
 ```
 
 **B1이 핵심**: immediateGoal의 정보 편향이 "성격과 별개 배척"과 "부자연스러운
@@ -278,7 +367,9 @@ B0 (계측 베이스라인) ── B1 착수 조건. 측정 먼저.
 | 프롬프트 비대화 (이미 큼) | 새 주입 최소화 — 있는 데이터를 반응 결정에 연결. 규칙 추가 대신 **기존 R1~R6 재작성**. |
 | 자기목적 강조로 정보 획득 저하 | A축(주제 매칭 시 공개)은 유지 — 플레이어가 물으면 여전히 나옴. **S5 완주·fact 발견 턴수를 B0/B1 검증 지표에 포함** (선언이 아닌 계측으로 방어). |
 | 기억 참조가 단서 선제 노출로 회귀 | B3에서 A축 게이트 준수 — 기억은 톤에만, 단서는 명시 질문 시만. **주입 전 fact 키워드 정제 파이프** + 부록 M 센서 계측. |
-| NPC 간 언급이 미소개 실명 노출 통로화 | B4 introduced 게이트 — 미소개 NPC는 별칭 치환/언급 생략 (불변식 15). |
+| NPC 간 언급이 미소개 실명 노출 통로화 | B4 후보 풀 자체를 introduced=true로 한정 (구조 차단, 별칭 치환 아님 — B4-0) + audit 실명 센서·R7 회귀 감지. |
+| 근황 언급이 사건 창작(hallucination)으로 확대 | 관계 서술·recentSignal **범위 안** positive 경계 (B4-1 프롬프트) — signal 없으면 관계 톤만. |
+| 근황 언급 자체가 반복 패턴화 | recentTopics `rel:<npcId>` 기록으로 기존 FIFO 쿨다운 재사용 + 목격 중복 제외 (B4-1). |
 | ctx 조립 로직이 인라인으로 굳어 무테스트화 | B1 ctx 빌드를 export 순수 함수로 추출 + 유닛 동반 (테스트 감사 2026-07-12 패턴). |
 
 ---
