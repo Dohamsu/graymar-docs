@@ -313,6 +313,15 @@ witnessNpcIds를 B4-1 중복 제외에 노출. B4-1은 이 동일 데이터를 "
 - NPC 간 관계의 동적 변화 (사건이 npcRelations 톤을 바꾸는 것) — 콘텐츠
   정적 필드라 런타임 오버레이 설계 필요.
 - silverdeen_v1 npcRelations 콘텐츠 보강 (현재 graymar 17명 위주).
+- rel: 쿨다운 완전 지속 — 현재는 recentTopics 읽기 회피 + 랜덤(B4-1 정정).
+  turns.service 기록 경로 추가 시 지속 (실측 반복 관찰 시).
+- **factsParts 총량 예산 가드** (code-review 2026-07-13 발견) — 불변식 #17의
+  `enforceTotal`(총 2500 트림)은 `memoryParts`(assistant role)에만 적용되고,
+  `factsParts`(user role, 이번 턴 정보)는 총량 트리밍 밖이다. B2 `[NPC 일상]`·
+  B4 `[주변 인물 근황]`을 포함해 기존 수십 개 factsParts 블록 전체가 우선순위
+  맵 미등록 — 새 블록 고유 문제가 아닌 factsParts 설계 특성. 잡담·재등장 한정
+  + 블록당 ~80~150자라 실害 미미하나, factsParts 무제한 성장을 막는 총량 가드
+  (우선순위 맵 확장 또는 별도 enforceTotal)는 별도 리팩터로 다룬다.
 
 **검증**:
 - 유닛 (export core): introduced 필터·rel: 쿨다운·목격 중복 제외·signal
