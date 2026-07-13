@@ -120,8 +120,13 @@
 
 **작업**:
 - `NpcReactionContext`에 `currentActivity`(schedule 현재 4상 활동)·`agenda`·
-  `topInterest`(daily_topics 대표) 필드 추가. startNpcReaction(llm-worker
-  705행)에서 빌드해 direct()에 전달.
+  `dialogueAct` 필드 추가. startNpcReaction(llm-worker 705행)에서 빌드해
+  direct()에 전달.
+  - **topInterest 이관 (구현 정정 2026-07-13)**: 당초 daily_topics 대표를
+    topInterest로 넣으려 했으나, daily_topics.text는 구체 대사 예시("한때
+    항해사였소…")라 reaction ctx 주입 시 anchor 유발(원칙 42/56). B1
+    immediateGoal 전환에는 currentActivity+agenda로 충분하므로 topInterest는
+    **B2(잡담 모드)로 이관** — 잡담은 화제 자체가 목적이라 그 경로가 적합.
   - ctx 조립은 **export 순수 함수**(예: `buildNpcSelfContextCore`)로 추출해
     유닛 테스트 동반 (테스트 감사 2026-07-12 확립 패턴 — 인라인은 테스트
     불가 구조로 굳는다). 기존 npc-reaction-director.service.spec(30케이스)에
@@ -155,6 +160,29 @@
 **검증**: B0 베이스라인 대비 reactionType 분포가 posture별로 갈리는지,
 immediateGoal 자기목적 언급률, "성격과 별개 배척" 체감 개선, **정보 획득
 지표(S5 완주·fact 발견 턴수) 무후퇴**.
+
+**구현 완료 + A/B 결과 (2026-07-13)**:
+
+| 지표 | 베이스라인(B0) | B1 후 |
+|------|----------------|-------|
+| INFO(정보 편향) | **88%** | **40%** |
+| SELF(자기목적) | 0% | 25% |
+| MIXED | 4% | 15% |
+| SELF+MIXED | 4% | **40%** |
+| reactionType | PROBE 편중 | THREATEN 등장·posture 분화 |
+
+- 구현: (a) `getNpcSchedulePhaseEntry`/`getNpcCurrentActivity` 공용 헬퍼
+  (npc-schedule.ts, prompt-builder 치환) (b) `buildNpcSelfContextCore` export
+  순수 함수 + NpcReactionContext에 currentActivity/selfAgenda/dialogueAct
+  (c) buildUserMessage 주입 (d) immediateGoal 정의·R4 재작성(정보 편향 →
+  자기목적 기본, 정보는 파고들 때만). 유닛 7 + 전체 1094 passed.
+- **정보 편향 88→40%, 자기목적 계열 4→40%.** 정보상 "거래 유지", 토브렌
+  "가족 안전 확보", 브렌 "위협 관망하며 긴장 유지"로 성격별 분화.
+- 남은 INFO 40%는 이 세션이 **장부 퀘스트 조사 위주**여서 (에드릭 8건 전부
+  플레이어의 조사 대응) — R4 의도대로 "플레이어가 캐물으면 정보". 잡담 턴
+  단서 억제는 부록 M(A축)이 별도 담보.
+- 정보 획득 무후퇴: playtest 10/10 PASS(베이스라인 9/10), 퀘스트 정상 진행.
+- measure SELF_KW 실측 보강(거래/안전/가족/관망 등) 반영.
 
 ### Phase B2 — 잡담 모드 고도화 (화제 나열 → 삶의 맥락)
 
