@@ -308,6 +308,8 @@ for turn_i in range(MAX_TURNS):
         "narrative": narrative if narrative else "",
         "npcPortrait": llm_result.get("npcPortrait") if isinstance(llm_result, dict) else None,
         "rawInput": body.get("input", {}).get("text", ""),
+        # V10: 서술 화자(NpcResolver 최종) — 이벤트 정의 NPC와 대조용
+        "primaryNpcId": action_ctx.get("primaryNpcId"),
     }
     turn_logs.append(log_entry)
 
@@ -606,6 +608,43 @@ if v9_issues:
 else:
     print(f"  ✅ 품질 양호", flush=True)
 
+# V10: 선택지-서술 NPC 정합 (arch/68 부록 L — 이벤트-서술 분열 감지)
+#   버그 185a8ddd 계열: 매칭 이벤트가 특정 NPC(콘텐츠 payload.primaryNpcId)를
+#   전제하는데 서술 화자(actionContext.primaryNpcId)가 다르면, 선택지는 이벤트
+#   NPC를 가리키고 서술은 다른 NPC를 등장시키는 분열이 발생한다. EventChoiceGate
+#   (유닛)는 게이트 로직을 검증하고, V10은 실런에서 실제 분열을 통합 감지한다.
+print("\n[V10] 선택지-서술 NPC 정합:", flush=True)
+v10_issues = []
+_event_npc_map = {}
+try:
+    _ev_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", "graymar_v1", "events_v2.json")
+    with open(_ev_path, encoding="utf-8") as _f:
+        _ev_raw = json.load(_f)
+    _ev_list = _ev_raw.get("events", _ev_raw) if isinstance(_ev_raw, dict) else _ev_raw
+    for _e in _ev_list:
+        _eid = _e.get("eventId")
+        _enpc = (_e.get("payload") or {}).get("primaryNpcId")
+        if _eid and _enpc:
+            _event_npc_map[_eid] = _enpc
+except Exception as _e:
+    print(f"  (events_v2 로드 실패: {_e})", flush=True)
+for t in turn_logs:
+    if t.get("nodeType") != "LOCATION":
+        continue
+    eid = t.get("eventId")
+    event_npc = _event_npc_map.get(eid)
+    speaker = t.get("primaryNpcId")
+    # 이벤트가 특정 NPC 전제 + 서술 화자 존재 + 둘이 다름 → 분열
+    if event_npc and speaker and event_npc != speaker:
+        v10_issues.append(f"T{t['turn']}: 이벤트 NPC({event_npc}) ≠ 서술 화자({speaker}) — 선택지-서술 분열 [{eid}]")
+if v10_issues:
+    for issue in v10_issues[:5]:
+        print(f"  ❌ {issue}", flush=True)
+    if len(v10_issues) > 5:
+        print(f"  ... 외 {len(v10_issues)-5}건", flush=True)
+else:
+    print(f"  ✅ 정합성 양호", flush=True)
+
 # Summary
 print("\n" + "=" * 60, flush=True)
 all_checks = {
@@ -618,6 +657,7 @@ all_checks = {
     "V7_no_leak": len(v7_issues) == 0,
     "V8_npc_match": len(v8_issues) == 0,
     "V9_quality": len([i for i in v9_issues if "반복" in i]) <= 2,
+    "V10_choice_npc_match": len(v10_issues) == 0,
 }
 passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
