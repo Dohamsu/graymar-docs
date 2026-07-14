@@ -620,5 +620,1300 @@
       ]
     },
     "discoverableFact": "FACT_SS_DREAM_ANCHOR"
+  },
+  {
+    "eventId": "EVT_SS_INN_DREAM_MURMUR",
+    "locationId": "LOC_SS_INN",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "홀 난롯가에서 투숙객 서넛이 저마다 꾼 꿈을 맞춰보고 있다. 전직 장례사 헬룬이 낡은 수첩에 그 조각들을 옮겨 적으며 중얼거린다. \"같은 문장이 세 사람 입에서 나왔소. 죽은 자를 염할 때도 이런 건 못 봤는데.\"",
+      "primaryNpcId": "NPC_SS_HELUN",
+      "choices": [
+        {
+          "id": "ss_inn_murmur_join",
+          "label": "대화에 끼어 꿈의 공통점을 캐묻는다",
+          "hint": "여러 투숙객의 꿈이 겹치는 지점을 듣는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_murmur_helun",
+          "label": "헬룬의 수첩을 함께 들여다본다",
+          "hint": "장례사가 기록한 실종자의 마지막 말에 다가간다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_murmur_listen",
+          "label": "난롯가에 앉아 조용히 엿듣는다",
+          "hint": "안전하지만 단편만 얻는다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "GOSSIP",
+        "INN"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_INN_NAHAT_WHISPER",
+    "locationId": "LOC_SS_INN",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 58,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "구석 자리에서 이름을 잃은 귀환자 나하트가 벽을 향해 무언가를 읊고 있다. 별고래의 배 속에서 본 것들을, 자신의 말이 아닌 목소리로. 그가 문득 고개를 돌려 당신을 본다. \"당신도 곧 이 노래를 알게 될 거요.\"",
+      "primaryNpcId": "NPC_SS_NAHAT",
+      "choices": [
+        {
+          "id": "ss_inn_nahat_ask",
+          "label": "그가 읊는 것이 무엇인지 묻는다",
+          "hint": "별고래 내부의 기억 단편을 듣는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_nahat_watch",
+          "label": "그의 입 모양과 눈을 관찰한다",
+          "hint": "귀환자의 상태를 가늠한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_nahat_back",
+          "label": "조용히 물러나 자리를 뜬다",
+          "hint": "관여하지 않고 지나친다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "RETURNEE",
+        "INN"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_INN_IREN_ROOM",
+    "locationId": "LOC_SS_INN",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 56,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "이렌이 카운터 뒤에서 열쇠 하나를 만지작거린다. \"닷새째 안 돌아온 손님 방이에요. 유품이라도 정리해야 하는데… 혼자선 못 들어가겠어요.\" 그녀가 당신의 눈치를 살핀다.",
+      "primaryNpcId": "NPC_SS_IREN",
+      "choices": [
+        {
+          "id": "ss_inn_room_enter",
+          "label": "빈 방에 들어가 유품을 살핀다",
+          "hint": "실종자가 남긴 흔적을 조사한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_inn_room_iren",
+          "label": "이렌에게 그 손님이 어떤 사람이었는지 묻는다",
+          "hint": "실종 직전의 정황을 듣는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_room_decline",
+          "label": "지금은 사양하고 다른 볼일을 본다",
+          "hint": "관여를 미룬다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "MISSING",
+        "INN",
+        "INVESTIGATION"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_ABAS_LAMP",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "TRADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "별기름 램프 장인 아바스가 언 손을 불며 심지에 불을 붙인다. 그 불꽃은 바람에도 흔들리지 않고 푸르게 탄다. \"별고래 배 속은 등불 없인 못 들어가오. 보통 기름은 그 안에서 꺼지거든. 이건… 안 꺼지지.\"",
+      "primaryNpcId": "NPC_SS_ABAS",
+      "choices": [
+        {
+          "id": "ss_dock_lamp_ask",
+          "label": "별고래 내부 탐험 장비에 대해 묻는다",
+          "hint": "고래 사체 진입에 필요한 준비를 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_lamp_buy",
+          "label": "푸른 등불을 하나 흥정한다",
+          "hint": "탐험 장비를 구하려 시도한다",
+          "affordance": "TRADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_dock_lamp_watch",
+          "label": "장인의 작업을 지켜본다",
+          "hint": "별기름의 성질을 관찰한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "EQUIPMENT",
+        "DOCK",
+        "WHALE_INTERIOR"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_ROYAL_SHIP",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 58,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "BRIBE",
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "부두 인부들이 짐을 내리다 말고 수평선을 가리킨다. 극야의 어둠 속, 왕실 문장을 단 보고선의 불빛이 며칠째 만 바깥을 맴돈다는 이야기다. 항로 중개인 토바가 그 소문을 못 들은 척 장부를 덮는다.",
+      "primaryNpcId": "NPC_SS_TOBA",
+      "choices": [
+        {
+          "id": "ss_dock_ship_toba",
+          "label": "토바에게 저 배의 정체를 캐묻는다",
+          "hint": "외부 후원 세력의 개입 정황을 듣는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_ship_bribe",
+          "label": "동전을 쥐여주고 입항 일정을 산다",
+          "hint": "보고선의 목적에 대한 구체 정보를 얻는다",
+          "affordance": "BRIBE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_dock_ship_look",
+          "label": "부두 끝에서 배의 움직임을 관측한다",
+          "hint": "안전하게 배의 동태만 살핀다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "POLITICS",
+        "DOCK",
+        "OUTSIDERS"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_BROKER_DEAL",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "OBSERVE",
+      "PERSUADE",
+      "TRADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "토바가 언 밧줄 더미에 걸터앉아 당신을 위아래로 훑는다. \"섬 사람은 아니군. 여긴 발 잘못 디디면 얼음 밑으로 사라지는 곳이오. 어디로 가야 하고 어디를 피해야 하는지 — 그건 값이 나가는 정보요.\"",
+      "primaryNpcId": "NPC_SS_TOBA",
+      "choices": [
+        {
+          "id": "ss_dock_broker_hire",
+          "label": "안전한 이동 경로 정보를 산다",
+          "hint": "제한 구역과 위험 지대를 파악한다",
+          "affordance": "TRADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_dock_broker_press",
+          "label": "값을 깎으려 그의 약점을 떠본다",
+          "hint": "중개인의 뒷사정을 캔다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_dock_broker_pass",
+          "label": "관심 없는 척 지나간다",
+          "hint": "거래를 보류한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "INFO",
+        "DOCK",
+        "NAVIGATION"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_RIB_BRAN_COVER",
+    "locationId": "LOC_SS_RIB",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "PERSUADE",
+      "SNEAK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "채굴반장 브란이 늑골 사이 갱도 입구에 널판을 덧대고 있다. 방금 파낸 흔적을 덮으려는 손놀림이 급하다. \"거긴 무너졌소. 들어갈 것 없어.\" 그의 눈이 당신을 지나 갱도 안쪽을 흘긋 본다.",
+      "primaryNpcId": "NPC_SS_BRAN",
+      "choices": [
+        {
+          "id": "ss_rib_bran_probe",
+          "label": "무너졌다는 갱도의 상태를 캐묻는다",
+          "hint": "노동자 실종을 은폐하는 정황을 캔다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_rib_bran_slip",
+          "label": "그의 시선이 향한 안쪽으로 몰래 다가간다",
+          "hint": "덮으려는 두 번째 입구에 접근한다",
+          "affordance": "SNEAK",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_rib_bran_talk",
+          "label": "반장에게 채굴반의 안부를 넌지시 묻는다",
+          "hint": "실종된 반원들의 정황을 떠본다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "MISSING",
+        "RIB",
+        "COVERUP"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_RIB_YURMA_SEARCH",
+    "locationId": "LOC_SS_RIB",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 57,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "HELP",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "무장 순례자 유르마가 늑골 아래를 손전등으로 훑으며 낮게 동생의 이름을 부른다. 대답 대신 뼈 사이로 바람이 휘파람처럼 새어 나온다. 그녀가 당신을 보고 창을 고쳐 쥔다. \"혼자 왔소? 여긴 둘이 다니는 게 낫소.\"",
+      "primaryNpcId": "NPC_SS_YURMA",
+      "choices": [
+        {
+          "id": "ss_rib_yurma_join",
+          "label": "함께 늑골 안쪽을 수색하자고 제안한다",
+          "hint": "동행을 얻어 위험 구역을 함께 조사한다",
+          "affordance": "HELP",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_rib_yurma_ask",
+          "label": "잃어버린 동생에 대해 묻는다",
+          "hint": "실종자들의 공통점에 다가간다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_rib_yurma_scan",
+          "label": "그녀가 뒤진 곳을 함께 관찰한다",
+          "hint": "수색 흔적에서 단서를 살핀다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "MISSING",
+        "RIB",
+        "COMPANION"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_RIB_BONE_COLLAPSE",
+    "locationId": "LOC_SS_RIB",
+    "eventType": "AMBUSH",
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "HELP",
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "발밑에서 오래된 뼈가 삐걱인다. 순례자들이 기도하던 늑골 그늘이 갑자기 서리 먼지를 쏟으며 내려앉기 시작한다. 무언가가 뼈 안쪽에서 무게를 옮긴 것처럼.",
+      "primaryNpcId": null,
+      "choices": [
+        {
+          "id": "ss_rib_collapse_flee",
+          "label": "무너지는 늑골 아래에서 재빨리 벗어난다",
+          "hint": "붕괴를 피한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_rib_collapse_look",
+          "label": "쏟아지는 틈으로 안쪽을 살핀다",
+          "hint": "붕괴 지점 너머를 엿본다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_rib_collapse_brace",
+          "label": "기도하던 순례자를 끌어낸다",
+          "hint": "위험을 무릅쓰고 사람을 구한다",
+          "affordance": "HELP",
+          "riskLevel": 3
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "HAZARD",
+        "RIB",
+        "WHALE_INTERIOR"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_HEART_PENA_PERMIT",
+    "locationId": "LOC_SS_HEART",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "BRIBE",
+      "INVESTIGATE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "빛나는 액체 웅덩이 앞에 밧줄이 둘러쳐 있고, 허가관 페나가 명부를 든 채 길을 막는다. \"채취는 허가받은 자만. 물에 손 담근 자들이 어떻게 됐는지 보고도 그러시오?\" 그녀의 말투는 사무적이지만 눈은 웅덩이를 경계한다.",
+      "primaryNpcId": "NPC_SS_PENA",
+      "choices": [
+        {
+          "id": "ss_heart_pena_permit",
+          "label": "정식 접근 허가를 요청한다",
+          "hint": "제한 구역 진입 조건을 파악한다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_heart_pena_bribe",
+          "label": "명부에서 이름을 빼는 대가를 제시한다",
+          "hint": "허가 없이 접근할 길을 산다",
+          "affordance": "BRIBE",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_heart_pena_ask",
+          "label": "물에 손 담근 자들의 말로를 묻는다",
+          "hint": "오염의 증상에 대해 듣는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "ACCESS",
+        "HEART",
+        "CONTAMINATION"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_HEART_POOL_GLOW",
+    "locationId": "LOC_SS_HEART",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 52,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "STEAL"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "웅덩이 표면이 숨 쉬듯 밝아졌다 어두워진다. 그 빛에 얼굴을 비추면, 물속에서 아직 오지 않은 순간의 그림자가 어른거린다. 오래 보면 어느 쪽이 꿈인지 잊는다는 걸 알면서도, 눈을 떼기 어렵다.",
+      "primaryNpcId": null,
+      "choices": [
+        {
+          "id": "ss_heart_glow_gaze",
+          "label": "웅덩이에 손끝을 담가 예언의 조각을 본다",
+          "hint": "미래의 단편을 얻지만 오염 위험이 있다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_heart_glow_sample",
+          "label": "빛나는 액체를 작은 병에 담는다",
+          "hint": "심장 부산물 표본을 확보한다",
+          "affordance": "STEAL",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_heart_glow_turn",
+          "label": "눈을 돌리고 물러선다",
+          "hint": "오염을 피한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "PROPHECY",
+        "HEART",
+        "CONTAMINATION"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_HEART_LUOR_TEND",
+    "locationId": "LOC_SS_HEART",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "꿈기록 수녀 루오르가 웅덩이 가장자리에서 환자 하나를 부축하고 있다. 그 채취꾼은 자기 이름을 두 번 말했다가 잊고, 세 번째엔 남의 이름을 댄다. 루오르가 조용히 그 말을 받아 적는다. \"너무 오래 곁에 있었어요. 이제 저 사람은 여기가 꿈이라 믿어요.\"",
+      "primaryNpcId": "NPC_SS_LUOR",
+      "choices": [
+        {
+          "id": "ss_heart_luor_ask",
+          "label": "루오르에게 오염의 진행을 묻는다",
+          "hint": "꿈과 현실의 경계가 무너지는 과정을 듣는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_heart_luor_patient",
+          "label": "혼란에 빠진 채취꾼에게 말을 건다",
+          "hint": "오염자의 증언에서 단서를 얻는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_heart_luor_note",
+          "label": "그녀가 적는 기록을 곁눈질한다",
+          "hint": "수녀의 관찰 기록을 엿본다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "CONTAMINATION",
+        "HEART",
+        "CONVENT"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_CONVENT_SEFI_GUIDE",
+    "locationId": "LOC_SS_CONVENT",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 58,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "OBSERVE",
+      "PERSUADE",
+      "SNEAK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "어린 안내인 세피가 회랑 기둥 뒤에서 손짓한다. \"수녀님들은 방문자를 별로 안 좋아해요. 그치만 저는 숨은 기도문이 있는 데를 알아요. 별고래한테 진짜로 비는 말이요.\" 아이의 눈이 장난기와 두려움 사이에서 흔들린다.",
+      "primaryNpcId": "NPC_SS_SEFI",
+      "choices": [
+        {
+          "id": "ss_convent_sefi_follow",
+          "label": "세피를 따라 숨은 기도실로 간다",
+          "hint": "수녀원의 감춰진 신앙에 접근한다",
+          "affordance": "SNEAK",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_convent_sefi_ask",
+          "label": "아이에게 기도문이 무엇인지 먼저 묻는다",
+          "hint": "숨은 기도문의 내용을 떠본다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_convent_sefi_wary",
+          "label": "감시를 의식해 나중을 기약한다",
+          "hint": "위험을 피하고 물러난다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "SECRET",
+        "CONVENT",
+        "FAITH"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_CONVENT_MIREN_FIT",
+    "locationId": "LOC_SS_CONVENT",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "HELP",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "요양실에서 오염 환자 미렌이 발작하듯 몸을 떤다. 전직 채굴꾼인 그가 벽을 긁으며 외친다. \"심장이 뛰는 걸 봤어… 그 밑에 두 번째 입이 있어…\" 수녀들이 달려와 그를 눕히지만, 그의 눈은 당신을 붙든 채 놓지 않는다.",
+      "primaryNpcId": "NPC_SS_MIREN",
+      "choices": [
+        {
+          "id": "ss_convent_miren_calm",
+          "label": "미렌에게 다가가 그가 본 것을 묻는다",
+          "hint": "심장 웅덩이 목격담을 듣는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_convent_miren_watch",
+          "label": "발작의 양상과 수녀들의 대처를 관찰한다",
+          "hint": "오염 증상과 수녀원의 대응을 파악한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_convent_miren_help",
+          "label": "수녀들을 도와 그를 진정시킨다",
+          "hint": "환자의 신뢰를 얻는다",
+          "affordance": "HELP",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "CONTAMINATION",
+        "CONVENT",
+        "WITNESS"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_CONVENT_WATCH",
+    "locationId": "LOC_SS_CONVENT",
+    "eventType": "FACTION",
+    "priority": 4,
+    "weight": 53,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "회랑을 걷는 내내 등뒤로 시선이 따라붙는다. 루오르가 촛대를 손질하는 척 다가와 넌지시 묻는다. \"멀리서 오셨죠. 별고래를 풀어주러 왔나요, 아니면 잠재우러 왔나요. 수녀원은 후자를 택한 사람들이랍니다.\"",
+      "primaryNpcId": "NPC_SS_LUOR",
+      "choices": [
+        {
+          "id": "ss_convent_watch_probe",
+          "label": "수녀원이 무엇을 지키려는지 캐묻는다",
+          "hint": "봉인을 택한 세력의 입장을 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_convent_watch_align",
+          "label": "봉인에 관심 있는 척 루오르에게 동조한다",
+          "hint": "수녀원의 신뢰를 얻으려 시도한다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_convent_watch_deflect",
+          "label": "목적을 감추고 화제를 돌린다",
+          "hint": "의도를 숨긴다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "FACTION",
+        "CONVENT",
+        "SEAL"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_KAILUN_WARE",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "TRADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "얼어붙은 하수로 한켠, 조제사 카일룬이 병들을 늘어놓은 좌판 뒤에서 미소 짓는다. 유리병 속 액체마다 다른 색으로 흐릿하게 빛난다. \"잠 못 드는 밤에, 혹은 너무 깊이 자고 싶은 밤에. 뭘 원하든 여기 있소.\"",
+      "primaryNpcId": "NPC_SS_KAILUN",
+      "choices": [
+        {
+          "id": "ss_market_kailun_buy",
+          "label": "꿈약 하나를 흥정해 사들인다",
+          "hint": "금지 부산물을 거래한다",
+          "affordance": "TRADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_kailun_source",
+          "label": "약의 재료가 어디서 나는지 캐묻는다",
+          "hint": "심장 부산물 밀매 경로를 캔다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_kailun_watch",
+          "label": "좌판의 손님들을 관찰한다",
+          "hint": "누가 꿈약을 찾는지 살핀다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "SHOP",
+        "MARKET",
+        "DREAM_DRUG"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_RIVA_HAUL",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 56,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "OBSERVE",
+      "PERSUADE",
+      "SNEAK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "운반책 리바가 서리 낀 자루를 등에 지고 폐광 통로로 사라지려다 당신과 눈이 마주친다. 자루 틈으로 새어 나온 푸른 빛이 벽에 얼룩진다. \"본 거 없지?\" 그녀의 손이 허리춤 단검으로 간다.",
+      "primaryNpcId": "NPC_SS_RIVA",
+      "choices": [
+        {
+          "id": "ss_market_riva_follow",
+          "label": "그녀의 운반 경로를 몰래 뒤쫓는다",
+          "hint": "불법 유통 경로를 추적한다",
+          "affordance": "SNEAK",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_market_riva_talk",
+          "label": "적의를 누그러뜨리며 거래를 제안한다",
+          "hint": "운반책에게서 정보를 산다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_riva_back",
+          "label": "못 본 척 손을 들고 물러선다",
+          "hint": "충돌을 피한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "SMUGGLING",
+        "MARKET",
+        "CONTRABAND"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_ED_LEDGER",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 54,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "OBSERVE",
+      "PERSUADE",
+      "TRADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "떠돌이 서기관 에드가 촛농 얼룩진 명부를 넘기며 이름들을 소리 없이 읊는다. \"이름을 잃고 돌아온 자들… 나는 그들의 본명을 되찾아주지. 값은 다른 이름 하나요. 당신, 잊고 싶은 이름 있소?\"",
+      "primaryNpcId": "NPC_SS_ED",
+      "choices": [
+        {
+          "id": "ss_market_ed_ask",
+          "label": "이름 잃은 귀환자 명부를 보여달라 청한다",
+          "hint": "나하트를 포함한 귀환자들의 정체에 다가간다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_ed_trade",
+          "label": "정보 대가로 이름 하나를 내준다",
+          "hint": "귀환자 추적 단서를 산다",
+          "affordance": "TRADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_ed_read",
+          "label": "그가 읊는 이름들을 귀에 담는다",
+          "hint": "명부의 단편을 엿듣는다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "RETURNEE",
+        "MARKET",
+        "NAMES"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_TOWER_SAEL_COLD",
+    "locationId": "LOC_SS_TOWER",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 58,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "수석 관측관 사엘이 놋쇠 관측경에서 눈을 떼지 않은 채 말한다. \"기록은 후원자의 것이오. 당신 것이 아니고.\" 책상 위 서류 뭉치가 급히 뒤집혀 있다 — 방금 뭔가를 감춘 손길이 남아 있다.",
+      "primaryNpcId": "NPC_SS_SAEL",
+      "choices": [
+        {
+          "id": "ss_tower_sael_press",
+          "label": "감춘 서류의 내용을 캐묻는다",
+          "hint": "독점 보고서의 존재를 확인한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_tower_sael_flatter",
+          "label": "학자로서의 성과를 치켜세워 경계를 푼다",
+          "hint": "관측관의 신뢰를 떠본다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_tower_sael_scan",
+          "label": "책상과 뒤집힌 서류를 곁눈질한다",
+          "hint": "감춰진 기록의 단서를 살핀다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "POLITICS",
+        "TOWER",
+        "SECRET_REPORT"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_TOWER_ODRIN_HINT",
+    "locationId": "LOC_SS_TOWER",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "기록 보조원 오드린이 계단참에서 당신을 불러 세운다. 목소리를 낮추고, 위층을 흘긋 본다. \"사엘 님이 지운 관측 원본… 사본이 남아 있어요. 저도 이건 옳지 않다고 생각해서요.\"",
+      "primaryNpcId": "NPC_SS_ODRIN",
+      "choices": [
+        {
+          "id": "ss_tower_odrin_copy",
+          "label": "오드린에게 원본 사본을 보여달라 청한다",
+          "hint": "은폐된 관측 원본에 접근한다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_tower_odrin_why",
+          "label": "왜 위험을 무릅쓰는지 그의 진심을 묻는다",
+          "hint": "보조원의 동기와 신뢰도를 가늠한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_tower_odrin_later",
+          "label": "감시가 심하니 때를 보자고 답한다",
+          "hint": "접촉을 미룬다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "SECRET",
+        "TOWER",
+        "RECORDS"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_TOWER_AURORA_STIR",
+    "locationId": "LOC_SS_TOWER",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 52,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "관측탑 꼭대기의 유리 돔 너머로 오로라가 평소와 다르게 요동친다. 학자들이 기록판 앞에 몰려 웅성거린다 — 빛의 결이 별고래가 하늘을 갈랐던 그날 밤의 패턴과 겹친다는 것이다.",
+      "primaryNpcId": null,
+      "choices": [
+        {
+          "id": "ss_tower_aurora_study",
+          "label": "기록판에 붙어 오로라의 변화를 분석한다",
+          "hint": "별고래와 오로라의 연관을 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_tower_aurora_ask",
+          "label": "학자들에게 그날 밤 패턴을 묻는다",
+          "hint": "추락 당시의 관측 기록을 듣는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_tower_aurora_watch",
+          "label": "돔 아래에서 오로라를 직접 올려다본다",
+          "hint": "이상 징후를 눈에 담는다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "OMEN",
+        "TOWER",
+        "AURORA"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_BEACH_KASIEN_WARN",
+    "locationId": "LOC_SS_BEACH",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 58,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "얼어붙은 모래 위, 사냥꾼 잔족의 장로 카시엔이 고래 머리가 묻힌 자리를 등지고 앉아 있다. \"이 해변은 소리를 삼키오. 우리 조상들이 그렇게 만들었지 — 저 눈이 깨어나지 못하도록. 당신은 봉인을 풀 사람 같아 두렵소.\"",
+      "primaryNpcId": "NPC_SS_KASIEN",
+      "choices": [
+        {
+          "id": "ss_beach_kasien_lore",
+          "label": "침묵 봉인의 전승을 들려달라 청한다",
+          "hint": "별고래를 잠재운 옛 의식에 다가간다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_beach_kasien_probe",
+          "label": "봉인이 약해지고 있는지 캐묻는다",
+          "hint": "봉인의 현재 상태를 파악한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_beach_kasien_watch",
+          "label": "장로가 지키는 자리를 관찰한다",
+          "hint": "봉인의 흔적을 살핀다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "LORE",
+        "BEACH",
+        "SEAL"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_BEACH_EYE_REACT",
+    "locationId": "LOC_SS_BEACH",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 53,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "얼음 아래, 별처럼 빛나는 고래의 눈이 당신의 걸음을 따라 천천히 움직인다. 발자국 소리조차 삼켜진 정적 속에서, 그 빛이 물음처럼 밝아졌다 어두워진다. 무언가를 기다리는 것처럼.",
+      "primaryNpcId": null,
+      "choices": [
+        {
+          "id": "ss_beach_eye_approach",
+          "label": "눈이 묻힌 얼음 위로 다가가 손을 댄다",
+          "hint": "고래의 눈에 반응해 응답을 이끌어낸다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_beach_eye_speak",
+          "label": "정적을 향해 이름을, 혹은 물음을 던진다",
+          "hint": "봉인된 존재와의 접촉을 시도한다",
+          "affordance": "PERSUADE",
+          "riskLevel": 3
+        },
+        {
+          "id": "ss_beach_eye_retreat",
+          "label": "빛을 등지고 조용히 해변을 떠난다",
+          "hint": "접촉을 피한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "MYSTIC",
+        "BEACH",
+        "WHALE_EYE"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_BEACH_NAHAT_TIDE",
+    "locationId": "LOC_SS_BEACH",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 51,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
+    "affordances": [
+      "HELP",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "귀환자 나하트가 파도 없는 물가에 무릎을 꿇고 있다. \"극야가 가장 깊어지는 시각엔, 이 소리 없는 파도가 이름을 불러요. 내 이름도… 저 안에서 들었어요.\" 그가 손끝으로 얼음을 두드리자, 아무 소리도 나지 않는다.",
+      "primaryNpcId": "NPC_SS_NAHAT",
+      "choices": [
+        {
+          "id": "ss_beach_nahat_ask",
+          "label": "파도가 이름을 부르는 시각을 묻는다",
+          "hint": "봉인이 반응하는 조건을 파악한다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_beach_nahat_watch",
+          "label": "그가 얼음을 두드리는 자리를 관찰한다",
+          "hint": "특정 시간의 반응 지점을 살핀다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_beach_nahat_join",
+          "label": "함께 무릎 꿇고 정적에 귀 기울인다",
+          "hint": "귀환자와 함께 봉인의 소리를 듣는다",
+          "affordance": "HELP",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "MYSTIC",
+        "BEACH",
+        "RETURNEE"
+      ]
+    }
   }
 ]
