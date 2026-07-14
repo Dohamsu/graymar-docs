@@ -3,87 +3,131 @@
     "itemId": "ITEM_SS_MINOR_HEALING",
     "type": "CONSUMABLE",
     "name": "하급 심장액 물약",
+    "description": "별고래 심장액을 옅게 희석한 치료약. 극야해안 어디서나 구할 수 있는 기본 회복제.",
     "presentable": true,
     "combat": {
       "actionType": "USE_ITEM",
       "effect": "HEAL_HP",
       "value": 25,
       "targetSelf": true
-    }
+    },
+    "buyPrice": 15,
+    "maxStack": 3
   },
   {
     "itemId": "ITEM_SS_SUPERIOR_HEALING",
     "type": "CONSUMABLE",
     "name": "정제 심장액 물약",
+    "description": "심장 웅덩이에서 걸러낸 고농도 심장액. 상처를 빠르게 아물게 하지만 오래 마시면 꿈에 물든다.",
     "presentable": true,
     "combat": {
       "actionType": "USE_ITEM",
       "effect": "HEAL_HP",
       "value": 50,
       "targetSelf": true
-    }
+    },
+    "buyPrice": 30,
+    "maxStack": 2
   },
   {
     "itemId": "ITEM_SS_STAMINA",
     "type": "CONSUMABLE",
     "name": "별기름 강장제",
+    "description": "별고래 기름을 정제한 강장제. 언 몸에 온기를 돌려 기력을 회복시킨다.",
     "presentable": true,
     "combat": {
       "actionType": "USE_ITEM",
       "effect": "RESTORE_STAMINA",
       "value": 2,
       "targetSelf": true
-    }
+    },
+    "buyPrice": 14,
+    "maxStack": 2
   },
   {
     "itemId": "ITEM_SS_DREAM_WARD",
     "type": "CONSUMABLE",
     "name": "꿈 방호 부적",
-    "presentable": true
+    "description": "등불수녀원에서 엮은 별소금 부적. 지니면 오염된 꿈이 스며드는 것을 한동안 막아준다.",
+    "presentable": true,
+    "buyPrice": 20,
+    "maxStack": 3
   },
   {
     "itemId": "ITEM_SS_SMOKE_VIAL",
     "type": "CONSUMABLE",
     "name": "연막 유리병",
+    "description": "깨뜨리면 짙은 흰 안개가 피어오르는 유리병. 추격을 따돌리거나 몸을 숨길 때 쓴다.",
     "presentable": true,
     "combat": {
       "actionType": "USE_ITEM",
       "effect": "FLEE_BONUS",
       "value": 5,
       "targetSelf": true
-    }
+    },
+    "buyPrice": 25,
+    "maxStack": 1
   },
   {
     "itemId": "ITEM_SS_STAR_CHART",
-    "type": "KEY",
+    "type": "KEY_ITEM",
     "name": "낡은 별자리 도표",
+    "description": "오로라 관측탑에서 흘러나온 낡은 도표. 별고래가 하늘을 가른 궤적과 오로라 누출 지점이 표시돼 있다.",
     "presentable": true,
-    "factKey": "FACT_SS_AURORA_LEAK"
+    "factKey": "FACT_SS_AURORA_LEAK",
+    "buyPrice": 0,
+    "maxStack": 1
   },
   {
     "itemId": "ITEM_SS_DREAM_DRUG",
-    "type": "KEY",
+    "type": "KEY_ITEM",
     "name": "하얀 문 꿈약",
+    "description": "검은얼음 시장에서만 도는 금지 꿈약. 복용자를 '하얀 문' 너머의 꿈으로 이끈다는 소문이 돈다.",
     "presentable": true,
-    "factKey": "FACT_SS_WHITE_DOOR"
+    "factKey": "FACT_SS_WHITE_DOOR",
+    "buyPrice": 0,
+    "maxStack": 1
   },
   {
     "itemId": "ITEM_SS_NAME_LEDGER",
-    "type": "KEY",
+    "type": "KEY_ITEM",
     "name": "이름 장부",
+    "description": "떠돌이 서기관이 모은 명부. 이름을 잃고 돌아온 귀환자들의 본명과 사라진 날짜가 적혀 있다.",
     "presentable": true,
-    "factKey": "FACT_SS_NAHAT_MISSING"
+    "factKey": "FACT_SS_NAHAT_MISSING",
+    "buyPrice": 0,
+    "maxStack": 1
   },
   {
     "itemId": "EQ_SS_WHALEOIL_LAMP",
     "type": "EQUIPMENT",
     "name": "별기름 램프",
-    "presentable": true
+    "description": "부두 장인이 만든 푸른 불 램프. 보통 기름이 꺼지는 별고래 배 속에서도 꺼지지 않아, 어둠 속에서 시야와 판단을 밝힌다.",
+    "rarity": "RARE",
+    "slot": "TACTICAL",
+    "statBonus": {
+      "acc": 3,
+      "eva": 1
+    },
+    "narrativeTags": ["whale_interior", "explorer"],
+    "buyPrice": 40,
+    "sellPrice": 20,
+    "maxStack": 1
   },
   {
     "itemId": "EQ_SS_DREAM_COMPASS",
     "type": "EQUIPMENT",
     "name": "꿈 나침반",
-    "presentable": true
+    "description": "바늘이 별고래의 심장을 가리키는 기이한 나침반. 지닌 자는 꿈과 현실의 경계에서 길을 잃지 않으며, 오염된 꿈에 덜 흔들린다.",
+    "rarity": "UNIQUE",
+    "slot": "RELIC",
+    "statBonus": {
+      "acc": 3,
+      "resist": 3,
+      "speed": 2
+    },
+    "narrativeTags": ["dream_navigation", "mystic"],
+    "sellPrice": 50,
+    "maxStack": 1
   }
 ]
