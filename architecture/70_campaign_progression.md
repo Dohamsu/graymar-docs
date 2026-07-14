@@ -119,6 +119,7 @@ next = allByOrder.first(s => s.scenarioId ∉ completed)
 |------|------|
 | `POST /v1/runs` | `presetId`·`gender` optional 유지. 캠페인 모드+이후 시나리오면 무시(carryOver.identity 우선). 순서 위반 시 400. |
 | `GET /v1/campaigns/:id/scenarios` | 응답에 `status: COMPLETED\|CURRENT\|LOCKED` 필드 추가(비파괴적 확장). |
+| `POST /v1/runs/:runId/abort` (신규) | 진행 중 런 포기 → RUN_ABORTED. 캠페인 머지 없음 → 재도전 가능. RUN_ACTIVE 아니면 400. **§3.3 재도전 트리거 배선** — 클라 시작화면 "그만두기" 버튼 + 새 게임 활성 런 경고에서 호출. |
 
 ## 6. 불변식 · 엣지 케이스
 1. **단일 활성 시나리오 정책 유지** — 캐리오버는 순차이므로 동시 활성 없음. `enterScenario` 전역 교체와 충돌 없음.
