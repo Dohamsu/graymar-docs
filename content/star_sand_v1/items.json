@@ -3,19 +3,37 @@
     "itemId": "ITEM_SS_MINOR_HEALING",
     "type": "CONSUMABLE",
     "name": "하급 심장액 물약",
-    "presentable": true
+    "presentable": true,
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "HEAL_HP",
+      "value": 25,
+      "targetSelf": true
+    }
   },
   {
     "itemId": "ITEM_SS_SUPERIOR_HEALING",
     "type": "CONSUMABLE",
     "name": "정제 심장액 물약",
-    "presentable": true
+    "presentable": true,
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "HEAL_HP",
+      "value": 50,
+      "targetSelf": true
+    }
   },
   {
     "itemId": "ITEM_SS_STAMINA",
     "type": "CONSUMABLE",
     "name": "별기름 강장제",
-    "presentable": true
+    "presentable": true,
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "RESTORE_STAMINA",
+      "value": 2,
+      "targetSelf": true
+    }
   },
   {
     "itemId": "ITEM_SS_DREAM_WARD",
@@ -27,7 +45,13 @@
     "itemId": "ITEM_SS_SMOKE_VIAL",
     "type": "CONSUMABLE",
     "name": "연막 유리병",
-    "presentable": true
+    "presentable": true,
+    "combat": {
+      "actionType": "USE_ITEM",
+      "effect": "FLEE_BONUS",
+      "value": 5,
+      "targetSelf": true
+    }
   },
   {
     "itemId": "ITEM_SS_STAR_CHART",

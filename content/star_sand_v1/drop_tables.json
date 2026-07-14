@@ -1,0 +1,14 @@
+{
+  "basic": [
+    { "itemId": "ITEM_SS_MINOR_HEALING", "chance": 0.3, "qtyMin": 1, "qtyMax": 1 },
+    { "itemId": "ITEM_SS_STAMINA", "chance": 0.2, "qtyMin": 1, "qtyMax": 1 }
+  ],
+  "boss": [
+    { "itemId": "ITEM_SS_MINOR_HEALING", "chance": 0.6, "qtyMin": 1, "qtyMax": 2 },
+    { "itemId": "ITEM_SS_SMOKE_VIAL", "chance": 0.25, "qtyMin": 1, "qtyMax": 1 }
+  ],
+  "location": [
+    { "itemId": "ITEM_SS_MINOR_HEALING", "chance": 0.6, "qtyMin": 1, "qtyMax": 1 },
+    { "itemId": "ITEM_SS_STAMINA", "chance": 0.4, "qtyMin": 1, "qtyMax": 1 }
+  ]
+}

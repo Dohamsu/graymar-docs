@@ -1,0 +1,14 @@
+{
+  "basic": [
+    { "itemId": "ITEM_MINOR_HEALING", "chance": 0.3, "qtyMin": 1, "qtyMax": 1 },
+    { "itemId": "ITEM_STAMINA_TONIC", "chance": 0.2, "qtyMin": 1, "qtyMax": 1 }
+  ],
+  "boss": [
+    { "itemId": "ITEM_MINOR_HEALING", "chance": 0.6, "qtyMin": 1, "qtyMax": 2 },
+    { "itemId": "ITEM_POISON_NEEDLE", "chance": 0.25, "qtyMin": 1, "qtyMax": 1 }
+  ],
+  "location": [
+    { "itemId": "ITEM_MINOR_HEALING", "chance": 0.6, "qtyMin": 1, "qtyMax": 1 },
+    { "itemId": "ITEM_STAMINA_TONIC", "chance": 0.4, "qtyMin": 1, "qtyMax": 1 }
+  ]
+}
