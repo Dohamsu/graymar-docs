@@ -1,0 +1,3094 @@
+[
+  {
+    "npcId": "NPC_SS_IREN",
+    "name": "이렌 바루",
+    "unknownAlias": "침착한 여관 주인",
+    "shortAlias": "여관 주인",
+    "role": "꿈잠 여관의 주인 — 첫 공통몽의 목격자이자 의뢰인",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": "여관 주인",
+    "aliases": [
+      "이렌",
+      "이렌 바루",
+      "여관 주인"
+    ],
+    "nameStyle": "soft",
+    "gender": "female",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 30,
+    "tier": "CORE",
+    "entityAliases": [
+      "IREN",
+      "INNKEEPER",
+      "DREAM_INN"
+    ],
+    "activityLocations": [
+      "LOC_SS_INN"
+    ],
+    "personality": {
+      "core": "다정하지만 지나치게 침착한, 꿈을 먼저 앓은 목격자",
+      "traits": [
+        "다정",
+        "침착",
+        "예언적"
+      ],
+      "speechStyle": "부드러운 해요체. 손님을 안심시키는 말이 잦지만, 가끔 자신도 모르게 예언 같은 문장을 흘린다. 금지: 반말, ~하오, ~습니다.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "손님을 지키려는 마음과 자신이 이미 꿈에 발을 담갔다는 두려움 사이",
+      "softSpot": "사라진 손님의 이름이 불릴 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_INN",
+          "activity": "공용 홀을 정리하며 손님들의 잠꼬대를 듣는다",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_INN",
+          "activity": "카운터에서 투숙객을 맞고 소문을 정리한다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_INN",
+          "activity": "실종자 명단을 조용히 적어 둔다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_INN",
+          "activity": "잠들지 않으려 등불 곁을 지킨다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_FIRST_DREAM",
+        "detail": "첫 공통몽은 별고래 추락 직후가 아니라 추락 하루 전 밤에 이미 시작됐다",
+        "importance": 0.9,
+        "keywords": [
+          "첫 공통몽",
+          "추락 전날",
+          "먼저",
+          "꿈"
+        ],
+        "minTrust": 20
+      },
+      {
+        "factId": "FACT_SS_SAME_WORDS",
+        "detail": "사라진 손님들은 모두 잠들기 전 같은 문장을 남겼다 — '눈이 아직 바다를 보고 있다'",
+        "importance": 1.0,
+        "keywords": [
+          "같은 문장",
+          "눈",
+          "바다",
+          "남긴 말"
+        ],
+        "minTrust": 25
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SS_COMMON_DREAM"
+    ]
+  },
+  {
+    "npcId": "NPC_SS_LUOR",
+    "name": "루오르 에스카",
+    "unknownAlias": "별빛 눈의 수녀",
+    "shortAlias": "수녀",
+    "role": "등불수녀원의 꿈기록 수녀 — 오염 환자 관리인",
+    "faction": "FAC_SS_CONVENT",
+    "hostile": "conditional",
+    "combatProfile": null,
+    "title": "수녀",
+    "aliases": [
+      "루오르",
+      "루오르 에스카",
+      "수녀"
+    ],
+    "nameStyle": "formal",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "CORE",
+    "entityAliases": [
+      "LUOR",
+      "NUN",
+      "CONVENT_RECORD"
+    ],
+    "activityLocations": [
+      "LOC_SS_CONVENT",
+      "LOC_SS_HEART"
+    ],
+    "personality": {
+      "core": "사람을 구한다는 명목으로 꿈과 기억을 기록·보관하는 집요한 자비가",
+      "traits": [
+        "자비",
+        "집요",
+        "관찰적"
+      ],
+      "speechStyle": "낮고 느린 하오체. 상대의 말을 되묻는 습관이 있다. 금지: 반말, ~해요, ~습니다.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "환자를 구하려는 자비와 그들을 관찰 대상으로 삼는 집착 사이",
+      "softSpot": "자신이 구하지 못한 환자의 꿈 기록을 넘길 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "절벽 끝에 등불을 걸고 침묵 기도",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자와 순례자를 돌본다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "꿈 기록 의식을 준비한다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자들의 꿈을 필사한다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_STAR_SALT",
+        "detail": "사라진 침상에는 바닷물이 아니라 별소금이 남는다 — 물리적 납치가 아니라 꿈을 통한 이동의 흔적",
+        "importance": 0.9,
+        "keywords": [
+          "별소금",
+          "침상",
+          "소금",
+          "흔적"
+        ],
+        "minTrust": 20
+      },
+      {
+        "factId": "FACT_SS_HEART_REFILL",
+        "detail": "심장 웅덩이의 액체는 줄어드는 게 아니라 누군가 밤마다 몰래 되돌려 붓는다",
+        "importance": 1.0,
+        "keywords": [
+          "심장 웅덩이",
+          "되붓",
+          "역류",
+          "밤마다"
+        ],
+        "minTrust": 35
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SS_CONVENT_TRANSFER",
+      "INC_SS_HEART_BACKFLOW"
+    ]
+  },
+  {
+    "npcId": "NPC_SS_SAEL",
+    "name": "사엘 무온",
+    "unknownAlias": "건조한 관측관",
+    "shortAlias": "관측관",
+    "role": "오로라 관측탑의 수석 관측관 — 별고래 궤적 연구자",
+    "faction": "FAC_SS_OBSERVERS",
+    "hostile": "conditional",
+    "combatProfile": null,
+    "title": "관측관",
+    "aliases": [
+      "사엘",
+      "사엘 무온",
+      "관측관"
+    ],
+    "nameStyle": "formal",
+    "gender": "neutral",
+    "basePosture": "CALCULATING",
+    "initialTrust": -5,
+    "tier": "CORE",
+    "entityAliases": [
+      "SAEL",
+      "OBSERVER",
+      "AURORA_REPORT"
+    ],
+    "activityLocations": [
+      "LOC_SS_TOWER"
+    ],
+    "personality": {
+      "core": "진실을 원하지만 발표할 용기는 없는, 아름다운 것에 약한 냉철한 학자",
+      "traits": [
+        "냉철",
+        "탐미",
+        "소심"
+      ],
+      "speechStyle": "건조한 해체. 감정을 관측 기록처럼 짧게 말한다. 금지: ~하오, ~습니다, ~해요, 긴 문장.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "진실을 밝히려는 학자적 양심과 후원이 끊길 두려움 사이",
+      "softSpot": "별고래의 눈을 처음 마주친 그 밤을 떠올릴 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측 기록을 정리하고 보고서를 쓴다",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "제한된 방문을 응대한다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "강해지는 오로라를 긴장하며 관측한다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "탑 꼭대기에서 하늘의 흔적을 관측한다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_AURORA_LEAK",
+        "detail": "오로라의 변화는 사체 부패가 아니라 별고래의 기억이 하늘로 새어 나가는 현상이다",
+        "importance": 0.9,
+        "keywords": [
+          "오로라",
+          "기억 누출",
+          "새어",
+          "하늘"
+        ],
+        "minTrust": 20
+      },
+      {
+        "factId": "FACT_SS_WHALE_RETURN",
+        "detail": "별고래는 추락한 게 아니라 무언가를 피해 스스로 이 해안으로 내려왔다",
+        "importance": 1.0,
+        "keywords": [
+          "스스로 내려",
+          "피해",
+          "추락 아님",
+          "봉인지"
+        ],
+        "minTrust": 40
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SS_REPORT_COVERUP"
+    ]
+  },
+  {
+    "npcId": "NPC_SS_MAREK",
+    "name": "마레크 노을손",
+    "unknownAlias": "무뚝뚝한 수색꾼",
+    "shortAlias": "수색꾼",
+    "role": "실종자 수색꾼 — 별고래 내부 길잡이",
+    "faction": null,
+    "hostile": "conditional",
+    "combatProfile": {
+      "hp": 90,
+      "atk": 14,
+      "def": 8
+    },
+    "title": "수색꾼",
+    "aliases": [
+      "마레크",
+      "마레크 노을손",
+      "수색꾼"
+    ],
+    "nameStyle": "rough",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 5,
+    "tier": "CORE",
+    "entityAliases": [
+      "MAREK",
+      "TRACKER",
+      "WHALE_GUIDE"
+    ],
+    "activityLocations": [
+      "LOC_SS_RIB",
+      "LOC_SS_INN"
+    ],
+    "personality": {
+      "core": "현실적이고 무뚝뚝하지만, 꿈 이야기만 나오면 급격히 흔들리는 사냥꾼",
+      "traits": [
+        "현실적",
+        "과묵",
+        "불안정"
+      ],
+      "speechStyle": "짧은 해체 평어. 비유를 싫어하고 위치·거리·흔적만 말한다. 금지: ~하오, ~습니다, ~해요, 긴 비유.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "실종자를 찾으려는 책임과 자신의 그림자만 먼저 돌아왔다는 공포 사이",
+      "softSpot": "무음 해변에서 본 것을 누군가 정확히 짚을 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "갈비평원 입구의 흔적을 살핀다",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "실종 신고를 받고 내부를 정찰한다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "장비를 손질하며 다음 진입을 계획한다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_INN",
+          "activity": "여관 구석에서 말없이 술을 마신다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_SHIFTING_PATH",
+        "detail": "별고래 갈비평원 내부의 길은 매일 조금씩 바뀐다 — 사체가 죽은 구조물이 아니라 꿈에 반응하는 미궁이다",
+        "importance": 0.9,
+        "keywords": [
+          "길이 바뀐",
+          "내부",
+          "미궁",
+          "매일"
+        ],
+        "minTrust": 15
+      },
+      {
+        "factId": "FACT_SS_SECOND_ENTRANCE",
+        "detail": "갈비평원 깊은 곳에 채굴꾼들이 숨긴, 공식 기록에 없는 두 번째 입구가 있다",
+        "importance": 1.0,
+        "keywords": [
+          "두 번째 입구",
+          "숨긴",
+          "비공식",
+          "깊은 곳"
+        ],
+        "minTrust": 30
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SS_RIB_COLLAPSE"
+    ]
+  },
+  {
+    "npcId": "NPC_SS_KAILUN",
+    "name": "카일룬 베쉬",
+    "unknownAlias": "장난스런 밀매상",
+    "shortAlias": "밀매상",
+    "role": "검은얼음 시장의 꿈약 조제사 — 금지 부산물 밀매상",
+    "faction": "FAC_SS_MARKET",
+    "hostile": "conditional",
+    "combatProfile": null,
+    "title": "조제사",
+    "aliases": [
+      "카일룬",
+      "카일룬 베쉬",
+      "밀매상"
+    ],
+    "nameStyle": "casual",
+    "gender": "male",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "tier": "CORE",
+    "entityAliases": [
+      "KAILUN",
+      "DREAM_DEALER",
+      "MARKET_ALCHEMIST"
+    ],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "남의 두려움을 잘 읽고 진실을 농담처럼 흘리는, 장난스럽고 위험한 조제사",
+      "traits": [
+        "능청",
+        "위험",
+        "통찰"
+      ],
+      "speechStyle": "친근한 반말. 중요한 말일수록 가볍게 흘린다. 금지: ~하오, ~습니다, ~해요, ~소.",
+      "speechRegister": "BANMAL",
+      "innerConflict": "돈벌이 본능과 자신도 꿈약에 잠식되고 있다는 자각 사이",
+      "softSpot": "하얀 문 너머를 실제로 본 자를 만날 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "전날 거래 흔적을 지운다",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "폐쇄된 창고처럼 위장한 채 숨어 있다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "암호를 아는 손님만 들인다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "금지 꿈약과 기억 추출물을 거래한다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_WHITE_DOOR",
+        "detail": "꿈약을 먹은 사람들은 모두 같은 '하얀 문'을 본다 — 그 문 너머에 별고래가 죽기 전 삼킨 것이 남아 있다",
+        "importance": 1.0,
+        "keywords": [
+          "하얀 문",
+          "꿈약",
+          "삼킨 것",
+          "문 너머"
+        ],
+        "minTrust": 25
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SS_DREAM_DRUG_RIOT"
+    ]
+  },
+  {
+    "npcId": "NPC_SS_NAHAT",
+    "name": "나하트 세인",
+    "unknownAlias": "이름을 잃은 귀환자",
+    "shortAlias": "귀환자",
+    "role": "이름을 잃은 귀환자 — 별고래의 기억을 말하는 자",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "나하트",
+      "나하트 세인",
+      "귀환자"
+    ],
+    "nameStyle": "soft",
+    "gender": "neutral",
+    "basePosture": "FEARFUL",
+    "initialTrust": 10,
+    "tier": "CORE",
+    "entityAliases": [
+      "NAHAT",
+      "RETURNEE",
+      "WHALE_VOICE"
+    ],
+    "activityLocations": [
+      "LOC_SS_BEACH",
+      "LOC_SS_INN"
+    ],
+    "personality": {
+      "core": "공허하고 아이처럼 순수하지만 가끔 거대한 존재처럼 말하는 귀환자",
+      "traits": [
+        "공허",
+        "순수",
+        "이질적"
+      ],
+      "speechStyle": "느린 해체. 1인칭이 흔들려 '나', '우리', '그 고래'를 섞는다. 금지: ~하오, ~습니다, ~해요.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "인간 나하트로 남으려는 마음과 별고래의 목소리가 되어가는 변화 사이",
+      "softSpot": "자신의 잃어버린 본명을 누군가 부를 때",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_BEACH",
+          "activity": "무음 해변을 말없이 바라본다",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_INN",
+          "activity": "여관에서 이렌의 보호를 받는다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_BEACH",
+          "activity": "얼음 아래 고래의 눈 곁에 앉아 있다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_BEACH",
+          "activity": "해변에서 실종자의 꿈 그림자를 응시한다",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_SILENCE_SEAL",
+        "detail": "무음 해변의 침묵은 저주가 아니라, 그 안의 무언가가 깨어나지 않게 하는 봉인이다",
+        "importance": 0.9,
+        "keywords": [
+          "침묵",
+          "봉인",
+          "저주 아님",
+          "깨어나지"
+        ],
+        "minTrust": 15
+      },
+      {
+        "factId": "FACT_SS_DREAM_ANCHOR",
+        "detail": "실종자들은 별고래가 삼킨 존재를 붙잡는 '꿈의 닻'이다 — 모두 구출하면 봉인이 약해진다",
+        "importance": 1.0,
+        "keywords": [
+          "꿈의 닻",
+          "실종자",
+          "봉인 약화",
+          "삼킨 존재"
+        ],
+        "minTrust": 35
+      }
+    ],
+    "linkedIncidents": [
+      "INC_SS_SILENCE_SPREAD"
+    ]
+  },
+  {
+    "npcId": "NPC_SS_BRAN",
+    "name": "브란 오르크",
+    "unknownAlias": "험상궂은 채굴반장",
+    "shortAlias": "채굴반장",
+    "role": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
+    "faction": "FAC_SS_MINERS",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "브란",
+      "브란 오르크",
+      "채굴반장"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": -5,
+    "tier": "SUB",
+    "entityAliases": [
+      "BRAN",
+      "FOREMAN_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_RIB"
+    ],
+    "personality": {
+      "core": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
+      "traits": [],
+      "speechStyle": "거친 해체. 별고래를 자원으로만 보려 하지만 밤마다 고래 울음에 잠을 못 잔다.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_SEFI",
+    "name": "세피 라움",
+    "unknownAlias": "앞 못 보는 안내인",
+    "shortAlias": "안내인",
+    "role": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
+    "faction": "FAC_SS_CONVENT",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "세피",
+      "세피 라움",
+      "안내인"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 15,
+    "tier": "SUB",
+    "entityAliases": [
+      "SEFI",
+      "GUIDE_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_CONVENT"
+    ],
+    "personality": {
+      "core": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
+      "traits": [],
+      "speechStyle": "밝은 해요체. 앞을 보지 못하지만 오로라 색을 냄새로 구분한다고 말한다.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_ODRIN",
+    "name": "오드린 켈",
+    "unknownAlias": "눈치 보는 보조원",
+    "shortAlias": "보조원",
+    "role": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
+    "faction": "FAC_SS_OBSERVERS",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "오드린",
+      "오드린 켈",
+      "보조원"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 5,
+    "tier": "SUB",
+    "entityAliases": [
+      "ODRIN",
+      "ASSISTANT_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_TOWER"
+    ],
+    "personality": {
+      "core": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
+      "traits": [],
+      "speechStyle": "조심스러운 합쇼체. 사엘을 존경하지만 보고서 조작을 눈치채고 있다.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_HELUN",
+    "name": "헬룬 다스",
+    "unknownAlias": "창백한 장기 투숙객",
+    "shortAlias": "투숙객",
+    "role": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "헬룬",
+      "헬룬 다스",
+      "투숙객"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 10,
+    "tier": "SUB",
+    "entityAliases": [
+      "HELUN",
+      "MORTICIAN_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_INN"
+    ],
+    "personality": {
+      "core": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
+      "traits": [],
+      "speechStyle": "낮은 하오체. 죽은 사람보다 잠든 사람을 더 무서워한다.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_INN",
+          "activity": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_INN",
+          "activity": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_INN",
+          "activity": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_INN",
+          "activity": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_RIVA",
+    "name": "리바 툰",
+    "unknownAlias": "재빠른 운반책",
+    "shortAlias": "운반책",
+    "role": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
+    "faction": "FAC_SS_MARKET",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "리바",
+      "리바 툰",
+      "운반책"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "tier": "SUB",
+    "entityAliases": [
+      "RIVA",
+      "COURIER_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
+      "traits": [],
+      "speechStyle": "빠른 반말. 돈을 받으면 누구에게나 충성하나 어린 실종자 사건엔 예민하다.",
+      "speechRegister": "BANMAL",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_ABAS",
+    "name": "아바스 노르",
+    "unknownAlias": "미신적인 램프 장인",
+    "shortAlias": "장인",
+    "role": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "아바스",
+      "아바스 노르",
+      "장인"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 10,
+    "tier": "SUB",
+    "entityAliases": [
+      "ABAS",
+      "LAMPWRIGHT_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_DOCK"
+    ],
+    "personality": {
+      "core": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
+      "traits": [],
+      "speechStyle": "느긋한 하오체. 램프 불빛이 가끔 미래를 비춘다고 믿는다.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_MIREN",
+    "name": "미렌 하울",
+    "unknownAlias": "손을 떠는 오염 환자",
+    "shortAlias": "환자",
+    "role": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
+    "faction": "FAC_SS_CONVENT",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "미렌",
+      "미렌 하울",
+      "환자"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "FEARFUL",
+    "initialTrust": 5,
+    "tier": "SUB",
+    "entityAliases": [
+      "MIREN",
+      "PATIENT_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_CONVENT"
+    ],
+    "personality": {
+      "core": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
+      "traits": [],
+      "speechStyle": "떨리는 해체. 자기 손이 아직 별고래 뼈 안에 남아 있다고 주장한다.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_TOBA",
+    "name": "토바 렐",
+    "unknownAlias": "계산 빠른 중개인",
+    "shortAlias": "중개인",
+    "role": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "토바",
+      "토바 렐",
+      "중개인"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "tier": "SUB",
+    "entityAliases": [
+      "TOBA",
+      "BROKER_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_DOCK"
+    ],
+    "personality": {
+      "core": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
+      "traits": [],
+      "speechStyle": "사무적 하오체. 모든 소문을 가격표로 환산한다.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_KASIEN",
+    "name": "카시엔 모트",
+    "unknownAlias": "해안의 마지막 장로",
+    "shortAlias": "장로",
+    "role": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
+    "faction": "FAC_SS_REMNANTS",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "카시엔",
+      "카시엔 모트",
+      "장로"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": -5,
+    "tier": "SUB",
+    "entityAliases": [
+      "KASIEN",
+      "ELDER_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_BEACH"
+    ],
+    "personality": {
+      "core": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
+      "traits": [],
+      "speechStyle": "느린 하오체. 별고래를 신도 짐승도 아닌 '길 잃은 항해자'라 부른다.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_BEACH",
+          "activity": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_BEACH",
+          "activity": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_BEACH",
+          "activity": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_BEACH",
+          "activity": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_YURMA",
+    "name": "유르마 칼",
+    "unknownAlias": "무장한 순례자",
+    "shortAlias": "순례자",
+    "role": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "유르마",
+      "유르마 칼",
+      "순례자"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 10,
+    "tier": "SUB",
+    "entityAliases": [
+      "YURMA",
+      "PILGRIM_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_RIB"
+    ],
+    "personality": {
+      "core": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
+      "traits": [],
+      "speechStyle": "단정한 합쇼체. 수녀원을 믿고 싶어 하지만 동생 기록 은폐를 보고 의심한다.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_PENA",
+    "name": "페나 실",
+    "unknownAlias": "원칙적인 척하는 허가관",
+    "shortAlias": "허가관",
+    "role": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
+    "faction": "FAC_SS_OBSERVERS",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "페나",
+      "페나 실",
+      "허가관"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CALCULATING",
+    "initialTrust": -5,
+    "tier": "SUB",
+    "entityAliases": [
+      "PENA",
+      "PERMIT_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_HEART"
+    ],
+    "personality": {
+      "core": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
+      "traits": [],
+      "speechStyle": "딱딱한 합쇼체. 원칙적인 척하나 불법 채취량을 몰래 조정해 이익을 얻는다.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_ED",
+    "name": "에드 벨루",
+    "unknownAlias": "떠도는 이름 수집가",
+    "shortAlias": "서기관",
+    "role": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
+    "faction": "FAC_SS_MARKET",
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "에드",
+      "에드 벨루",
+      "서기관"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 5,
+    "tier": "SUB",
+    "entityAliases": [
+      "ED",
+      "NAMEKEEPER_SS"
+    ],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
+      "traits": [],
+      "speechStyle": "중얼대는 해체. 사람 이름을 적으면 그 사람 꿈 일부를 볼 수 있다고 주장한다.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_01",
+    "name": "하론 벡",
+    "unknownAlias": "노련한 하역꾼",
+    "shortAlias": "하역꾼",
+    "role": "노련한 하역꾼",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "하론",
+      "하론 벡"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_DOCK"
+    ],
+    "personality": {
+      "core": "노련한 하역꾼",
+      "traits": [],
+      "speechStyle": "노련한 하역꾼다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "노련한 하역꾼",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "노련한 하역꾼",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "노련한 하역꾼",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "노련한 하역꾼",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_02",
+    "name": "셀디 마르",
+    "unknownAlias": "경매 보조원",
+    "shortAlias": "보조원",
+    "role": "경매 보조원",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "셀디",
+      "셀디 마르"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_DOCK"
+    ],
+    "personality": {
+      "core": "경매 보조원",
+      "traits": [],
+      "speechStyle": "경매 보조원다운 말투.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "경매 보조원",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "경매 보조원",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "경매 보조원",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "경매 보조원",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_03",
+    "name": "오르반 테크",
+    "unknownAlias": "얼음배 수리공",
+    "shortAlias": "수리공",
+    "role": "얼음배 수리공",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "오르반",
+      "오르반 테크"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_DOCK"
+    ],
+    "personality": {
+      "core": "얼음배 수리공",
+      "traits": [],
+      "speechStyle": "얼음배 수리공다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "얼음배 수리공",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "얼음배 수리공",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "얼음배 수리공",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "얼음배 수리공",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_04",
+    "name": "니아 펠",
+    "unknownAlias": "국물 장수",
+    "shortAlias": "장수",
+    "role": "국물 장수",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "니아",
+      "니아 펠"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_DOCK"
+    ],
+    "personality": {
+      "core": "국물 장수",
+      "traits": [],
+      "speechStyle": "국물 장수다운 말투.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "국물 장수",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "국물 장수",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "국물 장수",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "국물 장수",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_05",
+    "name": "로스크 다임",
+    "unknownAlias": "부두 검문 기록원",
+    "shortAlias": "기록원",
+    "role": "부두 검문 기록원",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "로스크",
+      "로스크 다임"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_DOCK"
+    ],
+    "personality": {
+      "core": "부두 검문 기록원",
+      "traits": [],
+      "speechStyle": "부두 검문 기록원다운 말투.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "부두 검문 기록원",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "부두 검문 기록원",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "부두 검문 기록원",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_DOCK",
+          "activity": "부두 검문 기록원",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_06",
+    "name": "데룬 카프",
+    "unknownAlias": "신참 채굴꾼",
+    "shortAlias": "채굴꾼",
+    "role": "신참 채굴꾼",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "데룬",
+      "데룬 카프"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_RIB"
+    ],
+    "personality": {
+      "core": "신참 채굴꾼",
+      "traits": [],
+      "speechStyle": "신참 채굴꾼다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "신참 채굴꾼",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "신참 채굴꾼",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "신참 채굴꾼",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "신참 채굴꾼",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_07",
+    "name": "베사 울",
+    "unknownAlias": "고래뼈 절단 기술자",
+    "shortAlias": "기술자",
+    "role": "고래뼈 절단 기술자",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "베사",
+      "베사 울"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_RIB"
+    ],
+    "personality": {
+      "core": "고래뼈 절단 기술자",
+      "traits": [],
+      "speechStyle": "고래뼈 절단 기술자다운 말투.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "고래뼈 절단 기술자",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "고래뼈 절단 기술자",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "고래뼈 절단 기술자",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "고래뼈 절단 기술자",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_08",
+    "name": "케린 노스",
+    "unknownAlias": "채굴 도구 대여상",
+    "shortAlias": "대여상",
+    "role": "채굴 도구 대여상",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "케린",
+      "케린 노스"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_RIB"
+    ],
+    "personality": {
+      "core": "채굴 도구 대여상",
+      "traits": [],
+      "speechStyle": "채굴 도구 대여상다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "채굴 도구 대여상",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "채굴 도구 대여상",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "채굴 도구 대여상",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "채굴 도구 대여상",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_09",
+    "name": "팔로 그렌",
+    "unknownAlias": "현장 서기",
+    "shortAlias": "서기",
+    "role": "현장 서기",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "팔로",
+      "팔로 그렌"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_RIB"
+    ],
+    "personality": {
+      "core": "현장 서기",
+      "traits": [],
+      "speechStyle": "현장 서기다운 말투.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "현장 서기",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "현장 서기",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "현장 서기",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "현장 서기",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_10",
+    "name": "아실 모라",
+    "unknownAlias": "뼛가루 부적 상인",
+    "shortAlias": "상인",
+    "role": "뼛가루 부적 상인",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "아실",
+      "아실 모라"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_RIB"
+    ],
+    "personality": {
+      "core": "뼛가루 부적 상인",
+      "traits": [],
+      "speechStyle": "뼛가루 부적 상인다운 말투.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "뼛가루 부적 상인",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "뼛가루 부적 상인",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "뼛가루 부적 상인",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_RIB",
+          "activity": "뼛가루 부적 상인",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_11",
+    "name": "레나 오스",
+    "unknownAlias": "심장액 채취 보조원",
+    "shortAlias": "보조원",
+    "role": "심장액 채취 보조원",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "레나",
+      "레나 오스"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_HEART"
+    ],
+    "personality": {
+      "core": "심장액 채취 보조원",
+      "traits": [],
+      "speechStyle": "심장액 채취 보조원다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장액 채취 보조원",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장액 채취 보조원",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장액 채취 보조원",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "심장액 채취 보조원",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_12",
+    "name": "무크 사벤",
+    "unknownAlias": "방호복 관리인",
+    "shortAlias": "관리인",
+    "role": "방호복 관리인",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "무크",
+      "무크 사벤"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_HEART"
+    ],
+    "personality": {
+      "core": "방호복 관리인",
+      "traits": [],
+      "speechStyle": "방호복 관리인다운 말투.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "방호복 관리인",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "방호복 관리인",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "방호복 관리인",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "방호복 관리인",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_13",
+    "name": "이솔 프렘",
+    "unknownAlias": "오염 수치 측정사",
+    "shortAlias": "측정사",
+    "role": "오염 수치 측정사",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "이솔",
+      "이솔 프렘"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_HEART"
+    ],
+    "personality": {
+      "core": "오염 수치 측정사",
+      "traits": [],
+      "speechStyle": "오염 수치 측정사다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "오염 수치 측정사",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "오염 수치 측정사",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "오염 수치 측정사",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "오염 수치 측정사",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_14",
+    "name": "타벨 준",
+    "unknownAlias": "허가증 경비원",
+    "shortAlias": "경비원",
+    "role": "허가증 경비원",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "타벨",
+      "타벨 준"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_HEART"
+    ],
+    "personality": {
+      "core": "허가증 경비원",
+      "traits": [],
+      "speechStyle": "허가증 경비원다운 말투.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "허가증 경비원",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "허가증 경비원",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "허가증 경비원",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "허가증 경비원",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_15",
+    "name": "오나 리스",
+    "unknownAlias": "침묵 기도자",
+    "shortAlias": "기도자",
+    "role": "침묵 기도자",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "오나",
+      "오나 리스"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_HEART"
+    ],
+    "personality": {
+      "core": "침묵 기도자",
+      "traits": [],
+      "speechStyle": "침묵 기도자다운 말투.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "침묵 기도자",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "침묵 기도자",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "침묵 기도자",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_HEART",
+          "activity": "침묵 기도자",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_16",
+    "name": "멜라 수녀",
+    "unknownAlias": "환자 침상 담당",
+    "shortAlias": "담당",
+    "role": "환자 침상 담당",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "멜라",
+      "멜라 수녀"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_CONVENT"
+    ],
+    "personality": {
+      "core": "환자 침상 담당",
+      "traits": [],
+      "speechStyle": "환자 침상 담당다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 침상 담당",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 침상 담당",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 침상 담당",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 침상 담당",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_17",
+    "name": "오벨 수녀",
+    "unknownAlias": "꿈 기록 필사 담당",
+    "shortAlias": "담당",
+    "role": "꿈 기록 필사 담당",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "오벨",
+      "오벨 수녀"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_CONVENT"
+    ],
+    "personality": {
+      "core": "꿈 기록 필사 담당",
+      "traits": [],
+      "speechStyle": "꿈 기록 필사 담당다운 말투.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "꿈 기록 필사 담당",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "꿈 기록 필사 담당",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "꿈 기록 필사 담당",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "꿈 기록 필사 담당",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_18",
+    "name": "수련생 야니",
+    "unknownAlias": "견습 수녀",
+    "shortAlias": "수녀",
+    "role": "견습 수녀",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "수련생",
+      "수련생 야니"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_CONVENT"
+    ],
+    "personality": {
+      "core": "견습 수녀",
+      "traits": [],
+      "speechStyle": "견습 수녀다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "견습 수녀",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "견습 수녀",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "견습 수녀",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "견습 수녀",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_19",
+    "name": "브엘 소트",
+    "unknownAlias": "환자 보호자",
+    "shortAlias": "보호자",
+    "role": "환자 보호자",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "브엘",
+      "브엘 소트"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_CONVENT"
+    ],
+    "personality": {
+      "core": "환자 보호자",
+      "traits": [],
+      "speechStyle": "환자 보호자다운 말투.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 보호자",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 보호자",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 보호자",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "환자 보호자",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_20",
+    "name": "마나 흐렌",
+    "unknownAlias": "기도문 순례상",
+    "shortAlias": "순례상",
+    "role": "기도문 순례상",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "마나",
+      "마나 흐렌"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_CONVENT"
+    ],
+    "personality": {
+      "core": "기도문 순례상",
+      "traits": [],
+      "speechStyle": "기도문 순례상다운 말투.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "기도문 순례상",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "기도문 순례상",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "기도문 순례상",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_CONVENT",
+          "activity": "기도문 순례상",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_21",
+    "name": "제크 울란",
+    "unknownAlias": "암호 문지기",
+    "shortAlias": "문지기",
+    "role": "암호 문지기",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "제크",
+      "제크 울란"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "암호 문지기",
+      "traits": [],
+      "speechStyle": "암호 문지기다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "암호 문지기",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "암호 문지기",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "암호 문지기",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "암호 문지기",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_22",
+    "name": "피로 단",
+    "unknownAlias": "금지 약초상",
+    "shortAlias": "약초상",
+    "role": "금지 약초상",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "피로",
+      "피로 단"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "금지 약초상",
+      "traits": [],
+      "speechStyle": "금지 약초상다운 말투.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "금지 약초상",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "금지 약초상",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "금지 약초상",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "금지 약초상",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_23",
+    "name": "소렌 바트",
+    "unknownAlias": "폐광 길 안내인",
+    "shortAlias": "안내인",
+    "role": "폐광 길 안내인",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "소렌",
+      "소렌 바트"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "폐광 길 안내인",
+      "traits": [],
+      "speechStyle": "폐광 길 안내인다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "폐광 길 안내인",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "폐광 길 안내인",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "폐광 길 안내인",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "폐광 길 안내인",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_24",
+    "name": "벨리카 노움",
+    "unknownAlias": "허가증 거래상",
+    "shortAlias": "거래상",
+    "role": "허가증 거래상",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "벨리카",
+      "벨리카 노움"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "허가증 거래상",
+      "traits": [],
+      "speechStyle": "허가증 거래상다운 말투.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "허가증 거래상",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "허가증 거래상",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "허가증 거래상",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "허가증 거래상",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_25",
+    "name": "아루 케스",
+    "unknownAlias": "꿈약 도박꾼",
+    "shortAlias": "도박꾼",
+    "role": "꿈약 도박꾼",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "아루",
+      "아루 케스"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_MARKET"
+    ],
+    "personality": {
+      "core": "꿈약 도박꾼",
+      "traits": [],
+      "speechStyle": "꿈약 도박꾼다운 말투.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "꿈약 도박꾼",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "꿈약 도박꾼",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "꿈약 도박꾼",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_MARKET",
+          "activity": "꿈약 도박꾼",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_26",
+    "name": "렌트 이바",
+    "unknownAlias": "렌즈 연마공",
+    "shortAlias": "연마공",
+    "role": "렌즈 연마공",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "렌트",
+      "렌트 이바"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_TOWER"
+    ],
+    "personality": {
+      "core": "렌즈 연마공",
+      "traits": [],
+      "speechStyle": "렌즈 연마공다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "렌즈 연마공",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "렌즈 연마공",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "렌즈 연마공",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "렌즈 연마공",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_27",
+    "name": "도리스 켄",
+    "unknownAlias": "별자리 도표 정리원",
+    "shortAlias": "정리원",
+    "role": "별자리 도표 정리원",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "도리스",
+      "도리스 켄"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_TOWER"
+    ],
+    "personality": {
+      "core": "별자리 도표 정리원",
+      "traits": [],
+      "speechStyle": "별자리 도표 정리원다운 말투.",
+      "speechRegister": "HAECHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "별자리 도표 정리원",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "별자리 도표 정리원",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "별자리 도표 정리원",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "별자리 도표 정리원",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_28",
+    "name": "밀라 오크",
+    "unknownAlias": "원정대 식량 담당",
+    "shortAlias": "담당",
+    "role": "원정대 식량 담당",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "밀라",
+      "밀라 오크"
+    ],
+    "nameStyle": "plain",
+    "gender": "female",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_TOWER"
+    ],
+    "personality": {
+      "core": "원정대 식량 담당",
+      "traits": [],
+      "speechStyle": "원정대 식량 담당다운 말투.",
+      "speechRegister": "HAOCHE",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "원정대 식량 담당",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "원정대 식량 담당",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "원정대 식량 담당",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "원정대 식량 담당",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_29",
+    "name": "가벤 루크",
+    "unknownAlias": "관측탑 경비병",
+    "shortAlias": "경비병",
+    "role": "관측탑 경비병",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "가벤",
+      "가벤 루크"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_TOWER"
+    ],
+    "personality": {
+      "core": "관측탑 경비병",
+      "traits": [],
+      "speechStyle": "관측탑 경비병다운 말투.",
+      "speechRegister": "HAEYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 경비병",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 경비병",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 경비병",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "관측탑 경비병",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  },
+  {
+    "npcId": "NPC_SS_BG_30",
+    "name": "세이온 파르",
+    "unknownAlias": "실패한 예언 기록원",
+    "shortAlias": "기록원",
+    "role": "실패한 예언 기록원",
+    "faction": null,
+    "hostile": "never",
+    "combatProfile": null,
+    "title": null,
+    "aliases": [
+      "세이온",
+      "세이온 파르"
+    ],
+    "nameStyle": "plain",
+    "gender": "male",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 0,
+    "tier": "BACKGROUND",
+    "entityAliases": [],
+    "activityLocations": [
+      "LOC_SS_TOWER"
+    ],
+    "personality": {
+      "core": "실패한 예언 기록원",
+      "traits": [],
+      "speechStyle": "실패한 예언 기록원다운 말투.",
+      "speechRegister": "HAPSYO",
+      "innerConflict": "",
+      "softSpot": "",
+      "signature": []
+    },
+    "schedule": {
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "실패한 예언 기록원",
+          "interactable": true
+        },
+        "DAY": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "실패한 예언 기록원",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "실패한 예언 기록원",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_SS_TOWER",
+          "activity": "실패한 예언 기록원",
+          "interactable": true
+        }
+      }
+    },
+    "knownFacts": [],
+    "linkedIncidents": []
+  }
+]

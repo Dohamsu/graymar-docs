@@ -1,0 +1,65 @@
+[
+  {
+    "itemId": "ITEM_SS_MINOR_HEALING",
+    "type": "CONSUMABLE",
+    "name": "하급 심장액 물약",
+    "presentable": true
+  },
+  {
+    "itemId": "ITEM_SS_SUPERIOR_HEALING",
+    "type": "CONSUMABLE",
+    "name": "정제 심장액 물약",
+    "presentable": true
+  },
+  {
+    "itemId": "ITEM_SS_STAMINA",
+    "type": "CONSUMABLE",
+    "name": "별기름 강장제",
+    "presentable": true
+  },
+  {
+    "itemId": "ITEM_SS_DREAM_WARD",
+    "type": "CONSUMABLE",
+    "name": "꿈 방호 부적",
+    "presentable": true
+  },
+  {
+    "itemId": "ITEM_SS_SMOKE_VIAL",
+    "type": "CONSUMABLE",
+    "name": "연막 유리병",
+    "presentable": true
+  },
+  {
+    "itemId": "ITEM_SS_STAR_CHART",
+    "type": "KEY",
+    "name": "낡은 별자리 도표",
+    "presentable": true,
+    "factKey": "FACT_SS_AURORA_LEAK"
+  },
+  {
+    "itemId": "ITEM_SS_DREAM_DRUG",
+    "type": "KEY",
+    "name": "하얀 문 꿈약",
+    "presentable": true,
+    "factKey": "FACT_SS_WHITE_DOOR"
+  },
+  {
+    "itemId": "ITEM_SS_NAME_LEDGER",
+    "type": "KEY",
+    "name": "이름 장부",
+    "presentable": true,
+    "factKey": "FACT_SS_NAHAT_MISSING"
+  },
+  {
+    "itemId": "EQ_SS_WHALEOIL_LAMP",
+    "type": "EQUIPMENT",
+    "name": "별기름 램프",
+    "presentable": true
+  },
+  {
+    "itemId": "EQ_SS_DREAM_COMPASS",
+    "type": "EQUIPMENT",
+    "name": "꿈 나침반",
+    "presentable": true
+  }
+]

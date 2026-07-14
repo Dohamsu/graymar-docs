@@ -1,0 +1,178 @@
+[
+  {
+    "enemyId": "ENEMY_SS_SLEEPWALKER",
+    "name": "몽유병자",
+    "description": "공통몽에 잠식돼 눈을 뜬 채 걷는 자. 느리지만 붙잡으면 놓지 않는다.",
+    "faction": null,
+    "hp": 14,
+    "stats": {
+      "str": 8,
+      "dex": 2,
+      "wit": 1,
+      "con": 6,
+      "per": 2,
+      "cha": 1
+    },
+    "personality": "AGGRESSIVE",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "3-10"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SS_SMUGGLER",
+    "name": "밀수 경비",
+    "description": "검은얼음 시장의 무장 경비. 칼과 위협에 능하다.",
+    "faction": "FAC_SS_MARKET",
+    "hp": 18,
+    "stats": {
+      "str": 11,
+      "dex": 5,
+      "wit": 3,
+      "con": 6,
+      "per": 4,
+      "cha": 4
+    },
+    "personality": "TACTICAL",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "8-18"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SS_STARBEAST",
+    "name": "별빛 짐승",
+    "description": "별고래의 꿈에서 새어 나온 기억 생물. 소리 없이 빛으로 빚어진 형체.",
+    "faction": null,
+    "hp": 26,
+    "stats": {
+      "str": 13,
+      "dex": 9,
+      "wit": 2,
+      "con": 8,
+      "per": 6,
+      "cha": 1
+    },
+    "personality": "BERSERK",
+    "defaultDistance": "MID",
+    "defaultAngle": "SIDE",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "0-5"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SS_ZEALOT",
+    "name": "광신 수녀병",
+    "description": "봉인을 지키려 무기를 든 광신적 수도병. 신념이 두려움을 이긴다.",
+    "faction": "FAC_SS_CONVENT",
+    "hp": 20,
+    "stats": {
+      "str": 10,
+      "dex": 6,
+      "wit": 4,
+      "con": 7,
+      "per": 5,
+      "cha": 5
+    },
+    "personality": "TACTICAL",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "6-14"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SS_ADDICT",
+    "name": "꿈약 폭주자",
+    "description": "하얀 문을 열려는 꿈약 중독자. 고통을 못 느끼고 달려든다.",
+    "faction": null,
+    "hp": 16,
+    "stats": {
+      "str": 10,
+      "dex": 7,
+      "wit": 1,
+      "con": 5,
+      "per": 3,
+      "cha": 1
+    },
+    "personality": "BERSERK",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "2-8"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SS_GUARDIAN",
+    "name": "심장 수호물",
+    "description": "심장 웅덩이를 지키는 액체 형상의 수호물. 접근자를 꿈으로 끌어당긴다.",
+    "faction": null,
+    "hp": 30,
+    "stats": {
+      "str": 12,
+      "dex": 4,
+      "wit": 3,
+      "con": 12,
+      "per": 5,
+      "cha": 1
+    },
+    "personality": "SNIPER",
+    "defaultDistance": "MID",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "0-5"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SS_GUARD",
+    "name": "관측탑 경비",
+    "description": "원정대가 고용한 무장 경비. 규정대로 침입자를 제압한다.",
+    "faction": "FAC_SS_OBSERVERS",
+    "hp": 19,
+    "stats": {
+      "str": 11,
+      "dex": 5,
+      "wit": 4,
+      "con": 7,
+      "per": 6,
+      "cha": 4
+    },
+    "personality": "TACTICAL",
+    "defaultDistance": "MID",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "8-16"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SS_SHADE",
+    "name": "꿈 그림자",
+    "description": "무음 해변에 나타나는 실종자의 꿈 그림자. 소리 없이 다가와 기억을 앗는다.",
+    "faction": null,
+    "hp": 22,
+    "stats": {
+      "str": 9,
+      "dex": 11,
+      "wit": 5,
+      "con": 6,
+      "per": 8,
+      "cha": 1
+    },
+    "personality": "COWARDLY",
+    "defaultDistance": "FAR",
+    "defaultAngle": "BACK",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "0-3"
+    }
+  }
+]

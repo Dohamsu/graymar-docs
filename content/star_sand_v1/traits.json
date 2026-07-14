@@ -1,0 +1,77 @@
+[
+  {
+    "traitId": "SS_DREAM_TOUCHED",
+    "name": "꿈에 닿은 자",
+    "icon": "🌌",
+    "description": "꿈의 부름에 익숙해 오염을 견딘다.",
+    "effects": {
+      "actionBonuses": {
+        "OBSERVE": 1,
+        "INVESTIGATE": 1
+      },
+      "maxHpBonus": 5
+    }
+  },
+  {
+    "traitId": "SS_ICE_HARDENED",
+    "name": "얼음에 단련된",
+    "icon": "❄️",
+    "description": "극야의 추위가 몸을 단단히 벼렸다.",
+    "effects": {
+      "actionBonuses": {
+        "FIGHT": 1
+      },
+      "maxHpBonus": 15
+    }
+  },
+  {
+    "traitId": "SS_SALT_TONGUE",
+    "name": "소금 혀",
+    "icon": "🧂",
+    "description": "거친 부두 말솜씨로 사람을 움직인다.",
+    "effects": {
+      "actionBonuses": {
+        "PERSUADE": 1,
+        "THREATEN": 1
+      },
+      "maxHpBonus": 0
+    }
+  },
+  {
+    "traitId": "SS_LANTERN_EYE",
+    "name": "등불의 눈",
+    "icon": "🔦",
+    "description": "어둠 속에서도 흔적을 놓치지 않는다.",
+    "effects": {
+      "actionBonuses": {
+        "INVESTIGATE": 1,
+        "SNEAK": 1
+      },
+      "maxHpBonus": 0
+    }
+  },
+  {
+    "traitId": "SS_PILGRIM_FAITH",
+    "name": "순례자의 신념",
+    "icon": "🕯️",
+    "description": "믿음이 두려움을 이긴다.",
+    "effects": {
+      "actionBonuses": {
+        "HELP": 1
+      },
+      "maxHpBonus": 10
+    }
+  },
+  {
+    "traitId": "SS_STAR_MARKED",
+    "name": "별소금의 낙인",
+    "icon": "✨",
+    "description": "몸에 남은 별소금 자국이 꿈의 부름에 저항한다.",
+    "effects": {
+      "actionBonuses": {
+        "OBSERVE": 1
+      },
+      "maxHpBonus": 10
+    }
+  }
+]

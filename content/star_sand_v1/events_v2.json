@@ -1,0 +1,624 @@
+[
+  {
+    "eventId": "EVT_SS_INN_FIRST_DREAM",
+    "locationId": "LOC_SS_INN",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "이렌이 여관 장부를 넘기다 한 페이지에서 손을 멈춘다. 손님 전원이 같은 꿈을 처음 앓은 날짜가, 별고래가 하늘을 가른 날보다 하루 앞서 적혀 있다. \"꿈이 먼저였어요. 별은 그 다음이고요.\" 그녀의 목소리가 낮게 잠긴다.",
+      "primaryNpcId": "NPC_SS_IREN",
+      "choices": [
+        {
+          "id": "ss_inn_dream_investigate",
+          "label": "장부의 날짜를 별고래 추락일과 맞춰본다",
+          "hint": "첫 공통몽의 시점 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_dream_talk",
+          "label": "이렌에게 그날 밤 무슨 말을 했는지 묻는다",
+          "hint": "이렌이 겪은 사흘을 듣는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_dream_observe",
+          "label": "홀에서 잠든 손님들의 중얼거림을 듣는다",
+          "hint": "안전하지만 단편만 얻는다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "TIMELINE",
+        "INN"
+      ]
+    },
+    "discoverableFact": "FACT_SS_FIRST_DREAM"
+  },
+  {
+    "eventId": "EVT_SS_INN_SAME_WORDS",
+    "locationId": "LOC_SS_INN",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "TALK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "공용 홀 구석, 눈을 뜬 채 잠든 손님 셋이 낮게 같은 문장을 되뇐다. \"눈이 바다를 덮으면, 문이 열린다.\" 토씨 하나 다르지 않다. 벽난로 곁 헬룬이 그 소리를 애써 못 들은 척한다.",
+      "primaryNpcId": "NPC_SS_IREN",
+      "choices": [
+        {
+          "id": "ss_inn_words_observe",
+          "label": "되뇌는 문장을 그대로 받아적는다",
+          "hint": "남긴 말의 원형을 확보한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_words_investigate",
+          "label": "여러 손님에게 같은 말인지 하나씩 대조한다",
+          "hint": "문장이 공유된 것임을 확인한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_words_talk",
+          "label": "헬룬에게 언제부터 이랬는지 묻는다",
+          "hint": "확산 시점의 단서를 얻는다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "SAME_WORDS",
+        "INN"
+      ]
+    },
+    "discoverableFact": "FACT_SS_SAME_WORDS"
+  },
+  {
+    "eventId": "EVT_SS_CONVENT_STAR_SALT",
+    "locationId": "LOC_SS_CONVENT",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 62,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "실종자가 사라진 수녀원 침상마다, 빈 이불 위에 별처럼 반짝이는 소금 결정이 한 줌씩 남아 있다. 사람은 없고 흔적만 있다. 루오르가 그 위로 조용히 천을 덮는다.",
+      "primaryNpcId": "NPC_SS_LUOR",
+      "choices": [
+        {
+          "id": "ss_convent_salt_investigate",
+          "label": "소금 결정의 정체와 남은 위치를 살핀다",
+          "hint": "별소금 흔적의 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_convent_salt_observe",
+          "label": "침상 배열에서 규칙을 찾는다",
+          "hint": "사라진 순서의 패턴을 본다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_convent_salt_persuade",
+          "label": "루오르에게 이 결정이 무엇인지 묻는다",
+          "hint": "수녀원이 아는 바를 캐낸다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "STAR_SALT",
+        "CONVENT"
+      ]
+    },
+    "discoverableFact": "FACT_SS_STAR_SALT"
+  },
+  {
+    "eventId": "EVT_SS_RIB_SHIFTING_PATH",
+    "locationId": "LOC_SS_RIB",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "TALK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "어제 마레크가 분필로 표시해둔 갈림길 자국이, 오늘은 전혀 다른 통로 벽에 찍혀 있다. 별고래의 갈비 안쪽은 매일 조금씩 길을 바꾼다. \"지도는 소용없소. 어제의 길이 오늘의 벽이니.\"",
+      "primaryNpcId": "NPC_SS_MAREK",
+      "choices": [
+        {
+          "id": "ss_rib_path_investigate",
+          "label": "분필 자국이 옮겨간 경로를 추적한다",
+          "hint": "내부가 변형됨을 확인한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_rib_path_observe",
+          "label": "통로가 뒤틀리는 방향을 관찰한다",
+          "hint": "변형의 규칙 단서를 얻는다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_rib_path_talk",
+          "label": "마레크에게 길이 바뀌는 규칙을 묻는다",
+          "hint": "안내인의 경험을 듣는다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "SHIFTING_PATH",
+        "RIB"
+      ]
+    },
+    "discoverableFact": "FACT_SS_SHIFTING_PATH"
+  },
+  {
+    "eventId": "EVT_SS_RIB_SECOND_ENTRANCE",
+    "locationId": "LOC_SS_RIB",
+    "eventType": "OPPORTUNITY",
+    "priority": 3,
+    "weight": 55,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "BRIBE",
+      "INVESTIGATE",
+      "SNEAK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "채굴 통제선 너머, 무너진 늑골 사이로 공식 지도에 없는 두 번째 입구가 어둠 속에 입을 벌리고 있다. 마레크가 시선을 피한다 — 그도 알지만 말하지 않은 길이다.",
+      "primaryNpcId": "NPC_SS_MAREK",
+      "choices": [
+        {
+          "id": "ss_rib_entrance_investigate",
+          "label": "틈 안쪽 깊은 곳을 들여다본다",
+          "hint": "비공식 입구의 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_rib_entrance_sneak",
+          "label": "통제선을 피해 입구로 접근한다",
+          "hint": "들키지 않고 안을 확인한다",
+          "affordance": "SNEAK",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_rib_entrance_bribe",
+          "label": "마레크에게 눈감아 달라 청한다",
+          "hint": "안내인의 침묵을 산다",
+          "affordance": "BRIBE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "SECOND_ENTRANCE",
+        "RIB",
+        "HIDDEN"
+      ]
+    },
+    "discoverableFact": "FACT_SS_SECOND_ENTRANCE"
+  },
+  {
+    "eventId": "EVT_SS_TOWER_AURORA_LEAK",
+    "locationId": "LOC_SS_TOWER",
+    "eventType": "ARC_HINT",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "관측탑 렌즈 너머 오로라가 심장박동처럼 규칙적으로 명멸한다. 사엘이 계기판을 두드린다. \"저건 빛이 아니야. 어딘가에서 새어나오는 기억이지. 파장이… 사람 것이야.\"",
+      "primaryNpcId": "NPC_SS_SAEL",
+      "choices": [
+        {
+          "id": "ss_tower_aurora_investigate",
+          "label": "명멸 주기를 계기와 함께 기록한다",
+          "hint": "기억 누출의 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_tower_aurora_observe",
+          "label": "오로라가 그리는 형상을 응시한다",
+          "hint": "누출의 방향을 가늠한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_tower_aurora_persuade",
+          "label": "사엘에게 관측 원본을 보여달라 한다",
+          "hint": "은폐 전 데이터를 확보한다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "AURORA_LEAK",
+        "TOWER"
+      ]
+    },
+    "discoverableFact": "FACT_SS_AURORA_LEAK"
+  },
+  {
+    "eventId": "EVT_SS_TOWER_WHALE_RETURN",
+    "locationId": "LOC_SS_TOWER",
+    "eventType": "ARC_HINT",
+    "priority": 4,
+    "weight": 62,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "사엘이 궤도 계산지를 펼친다. 선들이 한 점으로 모인다. \"별고래는 떨어진 게 아니야. 스스로 내려왔어 — 정확히 저 봉인지 위로. 피해가 아니라, 돌아온 거지.\"",
+      "primaryNpcId": "NPC_SS_SAEL",
+      "choices": [
+        {
+          "id": "ss_tower_return_investigate",
+          "label": "하강 궤적을 직접 되짚어 계산한다",
+          "hint": "자발적 하강의 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_tower_return_observe",
+          "label": "궤적이 가리키는 봉인지 좌표를 확인한다",
+          "hint": "봉인지 위치를 특정한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_tower_return_persuade",
+          "label": "사엘에게 은폐된 결론을 말하게 한다",
+          "hint": "관측대가 감춘 판단을 듣는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "WHALE_RETURN",
+        "TOWER",
+        "SEAL"
+      ]
+    },
+    "discoverableFact": "FACT_SS_WHALE_RETURN"
+  },
+  {
+    "eventId": "EVT_SS_MARKET_WHITE_DOOR",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 3
+      }
+    ],
+    "affordances": [
+      "BRIBE",
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "검은얼음 시장 좌판 아래, 카일룬이 유리병에 든 뿌연 꿈약을 흔들어 보인다. \"하얀 문을 열면 삼켜진 걸 되찾지. 이름이든, 사람이든. 값만 치르면 돼.\" 취한 손님 하나가 병을 향해 손을 뻗는다.",
+      "primaryNpcId": "NPC_SS_KAILUN",
+      "choices": [
+        {
+          "id": "ss_market_door_investigate",
+          "label": "꿈약의 성분과 출처를 캐묻는다",
+          "hint": "하얀 문의 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_door_bribe",
+          "label": "카일룬에게 문 너머 이야기값을 치른다",
+          "hint": "문의 정체를 산다",
+          "affordance": "BRIBE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_door_observe",
+          "label": "거래 장면을 멀리서 지켜본다",
+          "hint": "안전하게 정황만 파악한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "WHITE_DOOR",
+        "MARKET",
+        "DRUG"
+      ]
+    },
+    "discoverableFact": "FACT_SS_WHITE_DOOR"
+  },
+  {
+    "eventId": "EVT_SS_MARKET_NAHAT_MISSING",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 58,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "BRIBE",
+      "INVESTIGATE",
+      "TALK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "시장 구석, 늙은 해안 사냥꾼 에드가 술잔을 만지작거리며 낮게 흘린다. \"봉인자 나하트… 그 이름, 옛날 첫 실종자 명단에 있던 사람이오. 이름을 대가로 내주고 돌아온 거지.\"",
+      "primaryNpcId": "NPC_SS_ED",
+      "choices": [
+        {
+          "id": "ss_market_nahat_investigate",
+          "label": "옛 실종자 명단과 나하트를 대조한다",
+          "hint": "귀환의 대가 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_nahat_talk",
+          "label": "에드에게 나하트의 옛 이름을 묻는다",
+          "hint": "실종자였던 과거를 듣는다",
+          "affordance": "TALK",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_market_nahat_bribe",
+          "label": "술 한 잔 값에 나머지 이야기를 산다",
+          "hint": "감춰둔 뒷얘기를 산다",
+          "affordance": "BRIBE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "NAHAT",
+        "MARKET",
+        "MISSING"
+      ]
+    },
+    "discoverableFact": "FACT_SS_NAHAT_MISSING"
+  },
+  {
+    "eventId": "EVT_SS_HEART_REFILL",
+    "locationId": "LOC_SS_HEART",
+    "eventType": "ENCOUNTER",
+    "priority": 4,
+    "weight": 60,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "별고래 심장 웅덩이의 수위가 어제보다 눈에 띄게 높다. 표면이 박동처럼 진동하며 조금씩 넘친다. 누군가 밤마다 이 액체를 몰래 되붓고 있다 — 마르지 않도록.",
+      "primaryNpcId": "NPC_SS_LUOR",
+      "choices": [
+        {
+          "id": "ss_heart_refill_investigate",
+          "label": "웅덩이 가장자리의 발자국과 자국을 살핀다",
+          "hint": "역류의 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_heart_refill_observe",
+          "label": "밤새 수위 변화를 지켜본다",
+          "hint": "되붓는 시점을 포착한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_heart_refill_persuade",
+          "label": "루오르에게 역류의 원인을 묻는다",
+          "hint": "수녀원이 아는 바를 캐낸다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "HEART_REFILL",
+        "HEART"
+      ]
+    },
+    "discoverableFact": "FACT_SS_HEART_REFILL"
+  },
+  {
+    "eventId": "EVT_SS_BEACH_SILENCE_SEAL",
+    "locationId": "LOC_SS_BEACH",
+    "eventType": "ARC_HINT",
+    "priority": 4,
+    "weight": 63,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "무음 해변, 파도 소리조차 닿지 않는 고요 속에서 나하트가 입을 연다 — 소리 없이, 그러나 또렷하게. \"이 침묵은 저주가 아니오. 무언가를 재우는 봉인이지. 깨어나지 않도록.\"",
+      "primaryNpcId": "NPC_SS_NAHAT",
+      "choices": [
+        {
+          "id": "ss_beach_seal_observe",
+          "label": "침묵의 경계가 어디까지인지 가늠한다",
+          "hint": "봉인 영역의 단서를 얻는다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_beach_seal_investigate",
+          "label": "모래에 남은 봉인의 흔적을 더듬는다",
+          "hint": "봉인의 성질을 확인한다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_beach_seal_persuade",
+          "label": "나하트에게 봉인의 대가를 묻는다",
+          "hint": "봉인자가 치른 값을 듣는다",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "SILENCE_SEAL",
+        "BEACH",
+        "SEAL"
+      ]
+    },
+    "discoverableFact": "FACT_SS_SILENCE_SEAL"
+  },
+  {
+    "eventId": "EVT_SS_BEACH_DREAM_ANCHOR",
+    "locationId": "LOC_SS_BEACH",
+    "eventType": "OPPORTUNITY",
+    "priority": 4,
+    "weight": 63,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "HELP",
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "나하트가 발밑 모래에 반쯤 묻힌, 별빛으로 벼려진 닻을 가리킨다. \"이 닻이 봉인을 붙들지. 실종자들의 꿈을 매개로. 그들을 되찾으면 닻이 풀리고… 삼켜진 것이 깨어나오.\"",
+      "primaryNpcId": "NPC_SS_NAHAT",
+      "choices": [
+        {
+          "id": "ss_beach_anchor_investigate",
+          "label": "닻과 실종자의 꿈이 어떻게 얽혔는지 추적한다",
+          "hint": "봉인 약화의 단서를 얻는다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_beach_anchor_observe",
+          "label": "닻의 별빛이 약해지는 정도를 관찰한다",
+          "hint": "봉인의 잔여 힘을 가늠한다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_beach_anchor_help",
+          "label": "나하트를 도와 닻의 상태를 함께 살핀다",
+          "hint": "봉인자의 신뢰를 얻는다",
+          "affordance": "HELP",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "DREAM_ANCHOR",
+        "BEACH",
+        "SEAL",
+        "CHOICE"
+      ]
+    },
+    "discoverableFact": "FACT_SS_DREAM_ANCHOR"
+  }
+]

@@ -1,0 +1,156 @@
+{
+  "questId": "MQ_SS_MISSING_DREAMS",
+  "title": "사라진 실종자들의 꿈",
+  "scale": "MAIN",
+  "synopsis": "사람들이 시체도 없이 사라지고, 산 자들이 실종자의 기억을 대신 꾸기 시작한다. 실종자들은 별고래가 삼킨 존재를 막는 '꿈의 닻'으로 붙잡혀 있다.",
+  "states": [
+    "S0_ARRIVE",
+    "S1_TRACE",
+    "S2_CONTACT",
+    "S3_INSIDE",
+    "S4_CHOICE",
+    "S5_RESOLVE"
+  ],
+  "stateDescriptions": {
+    "S0_ARRIVE": "극야해안에 도착해 첫 공통몽을 꾸고 실종의 이상함을 인지한다.",
+    "S1_TRACE": "실종자들의 마지막 흔적을 추적한다.",
+    "S2_CONTACT": "별고래의 꿈으로 접속하는 방법을 찾는다.",
+    "S3_INSIDE": "하늘 바다의 기억 속에서 실종자를 만난다.",
+    "S4_CHOICE": "구출과 봉인 사이의 대가를 결정한다.",
+    "S5_RESOLVE": "별고래의 눈 앞에서 최종 선택을 한다."
+  },
+  "stateTransitions": {
+    "S0_ARRIVE→S1_TRACE": {
+      "requiredFacts": [
+        "FACT_SS_FIRST_DREAM"
+      ],
+      "description": "꿈이 먼저 사람을 불렀음을 인지하면 추적 시작."
+    },
+    "S1_TRACE→S2_CONTACT": {
+      "requiredFacts": [
+        "FACT_SS_STAR_SALT",
+        "FACT_SS_SHIFTING_PATH"
+      ],
+      "description": "꿈을 통한 이동의 흔적과 사체의 미궁성을 확인."
+    },
+    "S2_CONTACT→S3_INSIDE": {
+      "requiredFacts": [
+        "FACT_SS_WHITE_DOOR",
+        "FACT_SS_HEART_REFILL"
+      ],
+      "description": "꿈 접속 경로를 확보."
+    },
+    "S3_INSIDE→S4_CHOICE": {
+      "requiredFacts": [
+        "FACT_SS_WHALE_RETURN",
+        "FACT_SS_NAHAT_MISSING"
+      ],
+      "description": "별고래가 봉인자로 왔음과 귀환의 대가를 확인."
+    },
+    "S4_CHOICE→S5_RESOLVE": {
+      "requiredFacts": [
+        "FACT_SS_SILENCE_SEAL",
+        "FACT_SS_DREAM_ANCHOR"
+      ],
+      "description": "봉인과 실종자의 관계를 알고 최종 선택."
+    }
+  },
+  "facts": [
+    "FACT_SS_FIRST_DREAM",
+    "FACT_SS_SAME_WORDS",
+    "FACT_SS_STAR_SALT",
+    "FACT_SS_SHIFTING_PATH",
+    "FACT_SS_SECOND_ENTRANCE",
+    "FACT_SS_AURORA_LEAK",
+    "FACT_SS_WHITE_DOOR",
+    "FACT_SS_HEART_REFILL",
+    "FACT_SS_NAHAT_MISSING",
+    "FACT_SS_WHALE_RETURN",
+    "FACT_SS_SILENCE_SEAL",
+    "FACT_SS_DREAM_ANCHOR"
+  ],
+  "arcRoutes": [
+    {
+      "routeId": "EXPOSE_CORRUPTION",
+      "label": "해방 — 닻을 끊는다",
+      "description": "실종자들을 현실로 되돌린다. 별고래의 눈이 뜨고, 삼킨 존재의 일부가 새어 나온다.",
+      "keyAllies": [
+        "NPC_SS_IREN",
+        "NPC_SS_MAREK",
+        "NPC_SS_YURMA"
+      ],
+      "keyEnemies": [
+        "NPC_SS_LUOR"
+      ]
+    },
+    {
+      "routeId": "ALLY_GUARD",
+      "label": "봉인 — 꿈을 잠근다",
+      "description": "실종자들을 꿈에 남겨 봉인을 유지한다. 해안은 안정되지만 침묵이 확장된다.",
+      "keyAllies": [
+        "NPC_SS_LUOR",
+        "NPC_SS_KASIEN",
+        "NPC_SS_SAEL"
+      ],
+      "keyEnemies": [
+        "NPC_SS_IREN"
+      ]
+    },
+    {
+      "routeId": "PROFIT_FROM_CHAOS",
+      "label": "전이 — 새 닻을 세운다",
+      "description": "새로운 닻을 세워 일부 구출과 봉인을 절충한다. 큰 대가를 치른다.",
+      "keyAllies": [
+        "NPC_SS_NAHAT",
+        "NPC_SS_KAILUN"
+      ],
+      "keyEnemies": []
+    }
+  ],
+  "factToIncident": {
+    "FACT_SS_FIRST_DREAM": {
+      "incidents": [
+        "INC_SS_COMMON_DREAM"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SS_HEART_REFILL": {
+      "incidents": [
+        "INC_SS_HEART_BACKFLOW"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SS_SECOND_ENTRANCE": {
+      "incidents": [
+        "INC_SS_RIB_COLLAPSE"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SS_WHITE_DOOR": {
+      "incidents": [
+        "INC_SS_DREAM_DRUG_RIOT"
+      ],
+      "controlBonus": 15
+    },
+    "FACT_SS_SILENCE_SEAL": {
+      "incidents": [
+        "INC_SS_SILENCE_SPREAD"
+      ],
+      "controlBonus": 20
+    }
+  },
+  "rewards": {
+    "factGold": 5,
+    "transitionGold": {
+      "S0_ARRIVE→S1_TRACE": 10,
+      "S1_TRACE→S2_CONTACT": 15,
+      "S2_CONTACT→S3_INSIDE": 15,
+      "S3_INSIDE→S4_CHOICE": 20,
+      "S4_CHOICE→S5_RESOLVE": 25
+    },
+    "transitionEquipment": {
+      "S1_TRACE→S2_CONTACT": "EQ_SS_WHALEOIL_LAMP",
+      "S3_INSIDE→S4_CHOICE": "EQ_SS_DREAM_COMPASS"
+    }
+  }
+}

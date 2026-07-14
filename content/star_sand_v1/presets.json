@@ -1,0 +1,207 @@
+[
+  {
+    "presetId": "SS_DOCKHAND",
+    "name": "부두 하역꾼",
+    "subtitle": "얼음 위의 주먹",
+    "description": "흰숨 부두에서 별고래 궤짝을 나르던 하역꾼. 사라진 동료를 찾아 나선다.",
+    "playstyleHint": "높은 체력과 근접 전투. 맞으면서 싸우는 탱커.",
+    "protagonistTheme": "전직 부두 하역꾼 — 흰숨 부두에서 별고래 부산물 궤짝을 나르며 살았다. 어느 밤 동료가 소금 자국만 남기고 사라진 뒤, 답을 찾아 남았다. 얼어붙은 화물 위에서 단련된 육체가 재산이다.",
+    "prologueHook": "부두에서 짐을 나르던 걸 봤어요. 사라진 이들을 찾아줄 사람이 필요해요.",
+    "stats": {
+      "MaxHP": 130,
+      "MaxStamina": 5,
+      "str": 14,
+      "dex": 4,
+      "wit": 4,
+      "con": 14,
+      "per": 5,
+      "cha": 5
+    },
+    "startingGold": 30,
+    "startingItems": [
+      {
+        "itemId": "ITEM_SS_MINOR_HEALING",
+        "qty": 2
+      }
+    ],
+    "npcPostureOverrides": {},
+    "actionBonuses": {
+      "FIGHT": 1
+    },
+    "hp": 130
+  },
+  {
+    "presetId": "SS_PILGRIM",
+    "name": "떠돌이 순례자",
+    "subtitle": "말의 온기",
+    "description": "별고래를 성자로 여겨 극야해안을 순례해 온 방랑자. 사람의 마음을 여는 데 능하다.",
+    "playstyleHint": "설득과 대화 중심. 사교로 정보를 얻는다.",
+    "protagonistTheme": "떠돌이 순례자 — 하늘에서 떨어진 성자를 좇아 여러 해안을 순례했다. 극야해안에서 실종의 소문을 듣고, 말과 온기로 진실을 캐려 한다.",
+    "prologueHook": "순례자님이라면 사람들이 입을 열 거예요. 조용히 진실을 캐 주세요.",
+    "stats": {
+      "MaxHP": 100,
+      "MaxStamina": 5,
+      "str": 5,
+      "dex": 5,
+      "wit": 8,
+      "con": 6,
+      "per": 6,
+      "cha": 14
+    },
+    "startingGold": 40,
+    "startingItems": [
+      {
+        "itemId": "ITEM_SS_MINOR_HEALING",
+        "qty": 1
+      }
+    ],
+    "npcPostureOverrides": {
+      "NPC_SS_LUOR": "CAUTIOUS"
+    },
+    "actionBonuses": {
+      "PERSUADE": 1,
+      "HELP": 1
+    },
+    "hp": 100
+  },
+  {
+    "presetId": "SS_SMUGGLER",
+    "name": "밀수 잠입꾼",
+    "subtitle": "그림자의 발",
+    "description": "검은얼음 시장을 드나들던 밀수꾼. 얼어붙은 폐광 길과 잠입에 능하다.",
+    "playstyleHint": "은신과 절도 중심. 위험을 피해 목표에 접근.",
+    "protagonistTheme": "전직 밀수 잠입꾼 — 검은얼음 시장의 금지 부산물을 폐광 길로 나르던 자. 거래가 틀어져 쫓기던 중 실종 사건에 얽혔다. 그림자처럼 움직이는 법을 안다.",
+    "prologueHook": "당신 같은 사람이면 눈에 안 띄게 움직일 수 있죠. 조용히 알아봐 줘요.",
+    "stats": {
+      "MaxHP": 105,
+      "MaxStamina": 6,
+      "str": 7,
+      "dex": 14,
+      "wit": 6,
+      "con": 6,
+      "per": 12,
+      "cha": 5
+    },
+    "startingGold": 35,
+    "startingItems": [
+      {
+        "itemId": "ITEM_SS_SMOKE_VIAL",
+        "qty": 1
+      }
+    ],
+    "npcPostureOverrides": {
+      "NPC_SS_KAILUN": "FRIENDLY"
+    },
+    "actionBonuses": {
+      "SNEAK": 1,
+      "STEAL": 1
+    },
+    "hp": 105
+  },
+  {
+    "presetId": "SS_HEALER",
+    "name": "오염 치유사",
+    "subtitle": "젖은 손의 자비",
+    "description": "심장액과 약초로 오염 환자를 돌보던 치유사. 꿈의 병리를 이해한다.",
+    "playstyleHint": "치유와 조사 중심. 오염과 상태이상에 강하다.",
+    "protagonistTheme": "떠돌이 치유사 — 심장 웅덩이의 액체와 약초로 오염 환자를 돌봐 왔다. 꿈이 병이 아니라 '전달'임을 어렴풋이 안다. 젖은 손으로 사람들을 붙든다.",
+    "prologueHook": "치유사님이라면 이 병의 정체를 알아볼 수 있을 거예요. 부탁드려요.",
+    "stats": {
+      "MaxHP": 110,
+      "MaxStamina": 5,
+      "str": 5,
+      "dex": 6,
+      "wit": 13,
+      "con": 8,
+      "per": 8,
+      "cha": 7
+    },
+    "startingGold": 35,
+    "startingItems": [
+      {
+        "itemId": "ITEM_SS_DREAM_WARD",
+        "qty": 1
+      },
+      {
+        "itemId": "ITEM_SS_MINOR_HEALING",
+        "qty": 1
+      }
+    ],
+    "npcPostureOverrides": {
+      "NPC_SS_MIREN": "FRIENDLY"
+    },
+    "actionBonuses": {
+      "HELP": 1,
+      "INVESTIGATE": 1
+    },
+    "hp": 110
+  },
+  {
+    "presetId": "SS_OBSERVER",
+    "name": "몰락 관측생",
+    "subtitle": "차가운 눈",
+    "description": "오로라 관측탑에서 쫓겨난 학생. 별고래의 궤적과 오로라를 읽을 줄 안다.",
+    "playstyleHint": "조사와 관찰 중심. 단서를 빠르게 꿴다.",
+    "protagonistTheme": "몰락한 관측생 — 오로라 관측탑에서 보고서 조작에 반발하다 쫓겨났다. 별자리와 궤적을 읽는 눈만 남았다. 진실을 기록으로 증명하려 한다.",
+    "prologueHook": "관측을 배우셨다면 이 오로라가 무엇을 말하는지 아실 거예요. 도와주세요.",
+    "stats": {
+      "MaxHP": 100,
+      "MaxStamina": 5,
+      "str": 4,
+      "dex": 6,
+      "wit": 14,
+      "con": 5,
+      "per": 13,
+      "cha": 6
+    },
+    "startingGold": 40,
+    "startingItems": [
+      {
+        "itemId": "ITEM_SS_STAR_CHART",
+        "qty": 1
+      }
+    ],
+    "npcPostureOverrides": {
+      "NPC_SS_SAEL": "CAUTIOUS"
+    },
+    "actionBonuses": {
+      "INVESTIGATE": 1,
+      "OBSERVE": 1
+    },
+    "hp": 100
+  },
+  {
+    "presetId": "SS_SURVIVOR",
+    "name": "귀환 생존자",
+    "subtitle": "꿈에 젖은 자",
+    "description": "한 번 사라졌다 돌아온 자. 이름은 지켰지만 꿈의 저항력을 얻었다.",
+    "playstyleHint": "균형형. 꿈/오염 저항이 높아 심층 탐험에 강하다.",
+    "protagonistTheme": "귀환 생존자 — 무음 해변에서 사라졌다 돌아왔으나, 나하트와 달리 이름을 지켜냈다. 대신 몸에 별소금 자국이 남아 꿈의 부름에 저항한다. 진실의 가장 가까이에 서 있다.",
+    "prologueHook": "당신은 돌아온 사람이라 들었어요. 그 눈이라면 꿈 안쪽을 견딜 수 있을 거예요.",
+    "stats": {
+      "MaxHP": 115,
+      "MaxStamina": 5,
+      "str": 8,
+      "dex": 8,
+      "wit": 9,
+      "con": 10,
+      "per": 10,
+      "cha": 6
+    },
+    "startingGold": 30,
+    "startingItems": [
+      {
+        "itemId": "ITEM_SS_DREAM_WARD",
+        "qty": 2
+      }
+    ],
+    "npcPostureOverrides": {
+      "NPC_SS_NAHAT": "FRIENDLY",
+      "NPC_SS_IREN": "FRIENDLY"
+    },
+    "actionBonuses": {
+      "OBSERVE": 1
+    },
+    "hp": 115
+  }
+]

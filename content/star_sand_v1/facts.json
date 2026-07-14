@@ -1,0 +1,337 @@
+{
+  "version": "1.0",
+  "description": "극야해안 별고래의 무덤 — 실종자들의 꿈 단서 12개",
+  "facts": {
+    "FACT_SS_FIRST_DREAM": {
+      "factId": "FACT_SS_FIRST_DREAM",
+      "topic": "첫 공통몽의 시점",
+      "description": "첫 공통몽은 별고래 추락 직후가 아니라 추락 하루 전 밤에 이미 시작됐다 — 꿈이 원인이고 실종은 결과다.",
+      "keywords": [
+        "첫 공통몽",
+        "추락 전날",
+        "먼저",
+        "꿈"
+      ],
+      "stage": "S0_ARRIVE→S1_TRACE",
+      "discoveryLocations": [
+        "LOC_SS_INN"
+      ],
+      "nextHint": "꿈이 먼저 사람을 불렀다면, 사라진 이들의 마지막 흔적을 쫓아야 한다.",
+      "knownBy": [
+        "NPC_SS_IREN"
+      ],
+      "versions": {
+        "NPC_SS_IREN": "여관 손님 전원이 같은 꿈을 꾼 날, 나만 사흘간 깨어나지 않은 채 말을 했다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_IREN"
+      ]
+    },
+    "FACT_SS_SAME_WORDS": {
+      "factId": "FACT_SS_SAME_WORDS",
+      "topic": "실종자들의 같은 문장",
+      "description": "사라진 사람들은 모두 잠들기 전 같은 문장을 남겼다 — '눈이 아직 바다를 보고 있다'. 무음 해변의 별고래 눈을 가리킨다.",
+      "keywords": [
+        "같은 문장",
+        "눈",
+        "바다",
+        "남긴 말"
+      ],
+      "stage": "S0_ARRIVE→S1_TRACE",
+      "discoveryLocations": [
+        "LOC_SS_INN"
+      ],
+      "nextHint": "그 눈이 있는 곳으로 흔적이 이어진다. 무음 해변과 사체 내부를 살펴야 한다.",
+      "knownBy": [
+        "NPC_SS_IREN",
+        "NPC_SS_HELUN"
+      ],
+      "versions": {
+        "NPC_SS_IREN": "사라진 손님들이 남긴 마지막 말이 하나같이 똑같았다",
+        "NPC_SS_HELUN": "장례사로서 수많은 마지막 말을 적었지만, 이렇게 똑같은 문장은 처음이다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_IREN",
+        "NPC_SS_HELUN"
+      ]
+    },
+    "FACT_SS_STAR_SALT": {
+      "factId": "FACT_SS_STAR_SALT",
+      "topic": "침상의 별소금",
+      "description": "사라진 침상에는 바닷물이 아니라 별소금이 남는다 — 물리적 납치가 아니라 꿈을 통한 이동의 흔적이다.",
+      "keywords": [
+        "별소금",
+        "침상",
+        "소금",
+        "흔적"
+      ],
+      "stage": "S1_TRACE→S2_CONTACT",
+      "discoveryLocations": [
+        "LOC_SS_CONVENT"
+      ],
+      "nextHint": "몸이 아니라 꿈이 옮겨졌다면, 꿈으로 들어가는 방법을 찾아야 한다.",
+      "knownBy": [
+        "NPC_SS_LUOR"
+      ],
+      "versions": {
+        "NPC_SS_LUOR": "환자들이 사라진 자리마다 젖은 별소금이 남는 것을 기록해 두었소"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_LUOR"
+      ]
+    },
+    "FACT_SS_SHIFTING_PATH": {
+      "factId": "FACT_SS_SHIFTING_PATH",
+      "topic": "바뀌는 내부 길",
+      "description": "별고래 갈비평원 내부의 길은 매일 조금씩 바뀐다 — 사체가 죽은 구조물이 아니라 꿈에 반응하는 미궁이다.",
+      "keywords": [
+        "길이 바뀐",
+        "내부",
+        "미궁",
+        "매일"
+      ],
+      "stage": "S1_TRACE→S2_CONTACT",
+      "discoveryLocations": [
+        "LOC_SS_RIB"
+      ],
+      "nextHint": "미궁이 꿈에 반응한다면, 길잡이 없이는 안으로 들어갈 수 없다.",
+      "knownBy": [
+        "NPC_SS_MAREK"
+      ],
+      "versions": {
+        "NPC_SS_MAREK": "어제 표시한 통로가 오늘은 없다. 사체 안은 매일 다른 길이다"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_MAREK"
+      ]
+    },
+    "FACT_SS_SECOND_ENTRANCE": {
+      "factId": "FACT_SS_SECOND_ENTRANCE",
+      "topic": "숨겨진 두 번째 입구",
+      "description": "갈비평원 깊은 곳에 채굴꾼들이 숨긴, 공식 기록에 없는 두 번째 입구가 있다. 실종자 일부가 이 입구로 접근했다.",
+      "keywords": [
+        "두 번째 입구",
+        "숨긴",
+        "비공식",
+        "깊은 곳"
+      ],
+      "stage": "S1_TRACE→S2_CONTACT",
+      "discoveryLocations": [
+        "LOC_SS_RIB"
+      ],
+      "nextHint": "그 입구가 사체 깊은 곳, 꿈의 안쪽으로 통한다.",
+      "knownBy": [
+        "NPC_SS_MAREK",
+        "NPC_SS_BRAN",
+        "NPC_SS_MIREN"
+      ],
+      "versions": {
+        "NPC_SS_MAREK": "공식 도면에 없는 입구가 늑골 안쪽에 하나 더 있다",
+        "NPC_SS_BRAN": "그 입구 얘긴 하지 마시오. 회사가 알면 내 목이 날아가오",
+        "NPC_SS_MIREN": "내 손이 아직 그 입구 안에 남아 있소… 두 번째 입구 말이오"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_MAREK",
+        "NPC_SS_BRAN",
+        "NPC_SS_MIREN"
+      ]
+    },
+    "FACT_SS_AURORA_LEAK": {
+      "factId": "FACT_SS_AURORA_LEAK",
+      "topic": "오로라의 기억 누출",
+      "description": "오로라의 변화는 사체 부패가 아니라 별고래의 기억이 하늘로 새어 나가는 현상이다. 오로라가 강할수록 꿈과 현실의 경계가 얇아진다.",
+      "keywords": [
+        "오로라",
+        "기억 누출",
+        "새어",
+        "하늘"
+      ],
+      "stage": "S2_CONTACT→S3_INSIDE",
+      "discoveryLocations": [
+        "LOC_SS_TOWER"
+      ],
+      "nextHint": "경계가 얇아지는 순간을 관측하면 꿈으로 접속할 창이 열린다.",
+      "knownBy": [
+        "NPC_SS_SAEL"
+      ],
+      "versions": {
+        "NPC_SS_SAEL": "오로라 스펙트럼이 부패가 아니야. 기억이 새는 거야. 데이터가 그렇게 말해"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_SAEL"
+      ]
+    },
+    "FACT_SS_WHITE_DOOR": {
+      "factId": "FACT_SS_WHITE_DOOR",
+      "topic": "하얀 문",
+      "description": "꿈약을 먹은 사람들은 모두 같은 '하얀 문'을 본다 — 그 문 너머에 별고래가 죽기 전 삼킨 것이 남아 있다.",
+      "keywords": [
+        "하얀 문",
+        "꿈약",
+        "삼킨 것",
+        "문 너머"
+      ],
+      "stage": "S2_CONTACT→S3_INSIDE",
+      "discoveryLocations": [
+        "LOC_SS_MARKET"
+      ],
+      "nextHint": "하얀 문이 꿈의 경계라면, 그 앞에서 실종자를 만날 수 있다.",
+      "knownBy": [
+        "NPC_SS_KAILUN"
+      ],
+      "versions": {
+        "NPC_SS_KAILUN": "약 먹은 놈들, 하나같이 하얀 문 얘길 해. 그 뒤에 뭐가 있는지는… 값을 더 쳐야 말해주지"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_KAILUN"
+      ]
+    },
+    "FACT_SS_HEART_REFILL": {
+      "factId": "FACT_SS_HEART_REFILL",
+      "topic": "심장 웅덩이의 역류",
+      "description": "심장 웅덩이의 액체는 줄어드는 게 아니라 누군가 밤마다 몰래 되돌려 붓는다 — 꿈 내부와 현실이 연결되어 있다.",
+      "keywords": [
+        "심장 웅덩이",
+        "되붓",
+        "역류",
+        "밤마다"
+      ],
+      "stage": "S2_CONTACT→S3_INSIDE",
+      "discoveryLocations": [
+        "LOC_SS_HEART"
+      ],
+      "nextHint": "웅덩이가 꿈 안쪽과 이어져 있다면, 이곳이 접속의 통로다.",
+      "knownBy": [
+        "NPC_SS_LUOR",
+        "NPC_SS_MIREN"
+      ],
+      "versions": {
+        "NPC_SS_LUOR": "액체가 줄지 않소. 밤마다 누군가 되돌려 붓는 것처럼",
+        "NPC_SS_MIREN": "밤에 봤소. 웅덩이에… 누가 액체를 붓고 있었소"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_LUOR",
+        "NPC_SS_MIREN"
+      ]
+    },
+    "FACT_SS_NAHAT_MISSING": {
+      "factId": "FACT_SS_NAHAT_MISSING",
+      "topic": "나하트의 정체",
+      "description": "나하트는 실종자 중 하나였을 가능성이 있다 — 이름을 잃은 것은 꿈에서 돌아올 때 정체성을 대가로 지불했기 때문이다.",
+      "keywords": [
+        "나하트",
+        "실종자였",
+        "이름",
+        "대가"
+      ],
+      "stage": "S3_INSIDE→S4_CHOICE",
+      "discoveryLocations": [
+        "LOC_SS_MARKET"
+      ],
+      "nextHint": "나하트가 돌아온 자라면, 그가 봉인의 열쇠를 알고 있을지 모른다.",
+      "knownBy": [
+        "NPC_SS_ED"
+      ],
+      "versions": {
+        "NPC_SS_ED": "그 귀환자의 본명을 적어봤소. 실종자 명단에 있던 이름이었소"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_ED"
+      ]
+    },
+    "FACT_SS_WHALE_RETURN": {
+      "factId": "FACT_SS_WHALE_RETURN",
+      "topic": "별고래의 귀환",
+      "description": "별고래는 추락한 게 아니라 무언가를 피해 스스로 이 해안으로 내려왔다 — 이 해안은 우연한 추락지가 아니라 봉인 장소다.",
+      "keywords": [
+        "스스로 내려",
+        "피해",
+        "추락 아님",
+        "봉인지"
+      ],
+      "stage": "S3_INSIDE→S4_CHOICE",
+      "discoveryLocations": [
+        "LOC_SS_TOWER",
+        "LOC_SS_BEACH"
+      ],
+      "nextHint": "봉인 장소라면, 별고래가 무엇을 가두러 왔는지 알아야 한다.",
+      "knownBy": [
+        "NPC_SS_SAEL",
+        "NPC_SS_KASIEN"
+      ],
+      "versions": {
+        "NPC_SS_SAEL": "궤적을 역산했어. 추락이 아니야. 스스로 내려왔어. 무언가를 피해서",
+        "NPC_SS_KASIEN": "전승에 있소. 별고래는 예전에도 이곳에 왔소. 길 잃은 항해자가 아니라, 무언가를 묻으러"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_SAEL",
+        "NPC_SS_KASIEN"
+      ]
+    },
+    "FACT_SS_SILENCE_SEAL": {
+      "factId": "FACT_SS_SILENCE_SEAL",
+      "topic": "침묵의 봉인",
+      "description": "무음 해변의 침묵은 저주가 아니라, 그 안의 무언가가 깨어나지 않게 하는 봉인이다.",
+      "keywords": [
+        "침묵",
+        "봉인",
+        "저주 아님",
+        "깨어나지"
+      ],
+      "stage": "S4_CHOICE→S5_RESOLVE",
+      "discoveryLocations": [
+        "LOC_SS_BEACH"
+      ],
+      "nextHint": "봉인을 깨면 실종자를 구하지만, 안의 것도 함께 깨어난다.",
+      "knownBy": [
+        "NPC_SS_NAHAT",
+        "NPC_SS_KASIEN"
+      ],
+      "versions": {
+        "NPC_SS_NAHAT": "조용해… 그건 저주가 아니라, 우리가 그것을 안 깨우려는 거야",
+        "NPC_SS_KASIEN": "소리가 사라지는 건 방어요. 안의 것을 깨우지 않으려는"
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_NAHAT",
+        "NPC_SS_KASIEN"
+      ]
+    },
+    "FACT_SS_DREAM_ANCHOR": {
+      "factId": "FACT_SS_DREAM_ANCHOR",
+      "topic": "실종자는 꿈의 닻",
+      "description": "실종자들은 별고래가 삼킨 존재를 붙잡는 '꿈의 닻'이다 — 모두 구출하면 봉인이 약해진다. 구출과 세계 안전 사이의 선택이 생긴다.",
+      "keywords": [
+        "꿈의 닻",
+        "실종자",
+        "봉인 약화",
+        "삼킨 존재"
+      ],
+      "stage": "S4_CHOICE→S5_RESOLVE",
+      "discoveryLocations": [
+        "LOC_SS_BEACH"
+      ],
+      "nextHint": "이제 별고래의 눈 앞에서 최종 선택을 해야 한다.",
+      "knownBy": [
+        "NPC_SS_NAHAT"
+      ],
+      "versions": {
+        "NPC_SS_NAHAT": "그들은 갇힌 게 아니야. 붙잡고 있는 거야. 그것이 깨지 않도록. 우리가."
+      },
+      "rumored": [],
+      "primarySources": [
+        "NPC_SS_NAHAT"
+      ]
+    }
+  }
+}

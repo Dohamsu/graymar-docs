@@ -1,0 +1,17 @@
+[
+  {
+    "shopId": "SHOP_SS_DOCK",
+    "locationId": "LOC_SS_DOCK",
+    "name": "흰숨 부두 잡화점",
+    "description": "부두 한켠의 잡화 노점. 심장액 물약과 별기름 강장제, 탐험 소모품을 판다.",
+    "refreshInterval": 10,
+    "stockPool": [
+      "ITEM_SS_MINOR_HEALING",
+      "ITEM_SS_STAMINA",
+      "ITEM_SS_DREAM_WARD",
+      "ITEM_SS_SUPERIOR_HEALING"
+    ],
+    "stockSize": 4,
+    "uniqueChance": 0.1
+  }
+]

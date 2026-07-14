@@ -1,0 +1,292 @@
+[
+  {
+    "encounterId": "enc_ss_inn_sleepwalker",
+    "name": "몽유병자의 습격",
+    "description": "여관 복도에서 잠든 손님이 갑자기 달려든다.",
+    "questState": "S0_ARRIVE",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_SLEEPWALKER",
+        "count": 2
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_SLEEPWALKER",
+        "instance": 0,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      },
+      {
+        "enemyRef": "ENEMY_SS_SLEEPWALKER",
+        "instance": 1,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      }
+    ],
+    "envTags": [
+      "INDOOR",
+      "NARROW"
+    ],
+    "toneHint": "eerie",
+    "timePhase": "NIGHT",
+    "rewards": {}
+  },
+  {
+    "encounterId": "enc_ss_dock_smuggler",
+    "name": "부두의 검문",
+    "description": "밤중 부두에서 증거를 캐던 중 밀수 경비에게 발각된다.",
+    "questState": "S1_TRACE",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_SMUGGLER",
+        "count": 2
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_SMUGGLER",
+        "instance": 0,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      },
+      {
+        "enemyRef": "ENEMY_SS_SMUGGLER",
+        "instance": 1,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      }
+    ],
+    "envTags": [
+      "OPEN",
+      "COVER_CRATE"
+    ],
+    "toneHint": "tense",
+    "timePhase": "NIGHT",
+    "rewards": {}
+  },
+  {
+    "encounterId": "enc_ss_rib_beast",
+    "name": "별빛 짐승",
+    "description": "갈비평원 그늘에서 별빛으로 빚어진 짐승이 나타난다.",
+    "questState": "S2_CONTACT",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_STARBEAST",
+        "count": 1
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_STARBEAST",
+        "instance": 0,
+        "distance": "MID",
+        "angle": "SIDE"
+      }
+    ],
+    "envTags": [
+      "OPEN",
+      "DARK"
+    ],
+    "toneHint": "mythic",
+    "timePhase": "NIGHT",
+    "rewards": {}
+  },
+  {
+    "encounterId": "enc_ss_heart_guardian",
+    "name": "심장의 수호물",
+    "description": "심장 웅덩이에 접근하자 액체 수호물이 깨어난다.",
+    "questState": "S2_CONTACT",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_GUARDIAN",
+        "count": 1
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_GUARDIAN",
+        "instance": 0,
+        "distance": "MID",
+        "angle": "FRONT"
+      }
+    ],
+    "envTags": [
+      "INDOOR",
+      "HAZARD"
+    ],
+    "toneHint": "ominous",
+    "timePhase": "DUSK",
+    "rewards": {}
+  },
+  {
+    "encounterId": "enc_ss_convent_zealot",
+    "name": "광신의 저지",
+    "description": "수녀원 금역에 다가서자 수도병이 길을 막는다.",
+    "questState": "S1_TRACE",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_ZEALOT",
+        "count": 2
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_ZEALOT",
+        "instance": 0,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      },
+      {
+        "enemyRef": "ENEMY_SS_ZEALOT",
+        "instance": 1,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      }
+    ],
+    "envTags": [
+      "INDOOR",
+      "NARROW"
+    ],
+    "toneHint": "tense",
+    "timePhase": "DAY",
+    "rewards": {}
+  },
+  {
+    "encounterId": "enc_ss_market_addict",
+    "name": "폭주자의 무리",
+    "description": "시장에서 하얀 문을 외치는 중독자들이 달려든다.",
+    "questState": "S2_CONTACT",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_ADDICT",
+        "count": 3
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_ADDICT",
+        "instance": 0,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      },
+      {
+        "enemyRef": "ENEMY_SS_ADDICT",
+        "instance": 1,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      },
+      {
+        "enemyRef": "ENEMY_SS_ADDICT",
+        "instance": 2,
+        "distance": "CLOSE",
+        "angle": "FRONT"
+      }
+    ],
+    "envTags": [
+      "UNDERGROUND",
+      "SMOKE"
+    ],
+    "toneHint": "chaotic",
+    "timePhase": "NIGHT",
+    "rewards": {}
+  },
+  {
+    "encounterId": "enc_ss_tower_guard",
+    "name": "관측탑 경비",
+    "description": "원본 기록을 캐던 중 경비에게 제지당한다.",
+    "questState": "S2_CONTACT",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_GUARD",
+        "count": 2
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_GUARD",
+        "instance": 0,
+        "distance": "MID",
+        "angle": "FRONT"
+      },
+      {
+        "enemyRef": "ENEMY_SS_GUARD",
+        "instance": 1,
+        "distance": "MID",
+        "angle": "FRONT"
+      }
+    ],
+    "envTags": [
+      "INDOOR",
+      "OPEN"
+    ],
+    "toneHint": "tense",
+    "timePhase": "DUSK",
+    "rewards": {}
+  },
+  {
+    "encounterId": "enc_ss_beach_shade",
+    "name": "꿈 그림자",
+    "description": "무음 해변에서 실종자의 꿈 그림자가 소리 없이 다가온다.",
+    "questState": "S4_CHOICE",
+    "nodeType": "COMBAT",
+    "nodeMeta": {
+      "isBoss": false
+    },
+    "enemies": [
+      {
+        "ref": "ENEMY_SS_SHADE",
+        "count": 2
+      }
+    ],
+    "initialPositioning": [
+      {
+        "enemyRef": "ENEMY_SS_SHADE",
+        "instance": 0,
+        "distance": "FAR",
+        "angle": "BACK"
+      },
+      {
+        "enemyRef": "ENEMY_SS_SHADE",
+        "instance": 1,
+        "distance": "FAR",
+        "angle": "BACK"
+      }
+    ],
+    "envTags": [
+      "OPEN",
+      "SILENT"
+    ],
+    "toneHint": "haunting",
+    "timePhase": "NIGHT",
+    "rewards": {}
+  }
+]

@@ -1,0 +1,859 @@
+{
+  "version": "1.0",
+  "incidents": [
+    {
+      "incidentId": "INC_SS_COMMON_DREAM",
+      "kind": "SOCIAL",
+      "title": "공통몽 확산",
+      "description": "여관 손님뿐 아니라 부두 노동자·수녀원 환자·채굴꾼까지 같은 꿈을 꾸기 시작한다. 방치하면 실종자가 늘고 이름을 잃는 자가 생긴다.",
+      "locationId": "LOC_SS_INN",
+      "priority": 5,
+      "weight": 15,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "잠든 자들이 같은 문장을 중얼거린다",
+          "affordances": [
+            "INVESTIGATE",
+            "OBSERVE",
+            "TALK"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "여관 공용 홀, 눈을 뜬 채 잠든 손님들이 낮게 같은 말을 되뇐다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "감염이 다른 장소로 번진다",
+          "affordances": [
+            "PERSUADE",
+            "HELP",
+            "INVESTIGATE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "부두와 갈비평원에서도 같은 꿈을 꿨다는 사람들이 술렁인다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "RUMOR",
+          "severity": 3,
+          "textTemplate": "잠든 자들이 같은 문장을 중얼거린다는 소문이 퍼진다",
+          "triggerStage": 0
+        },
+        {
+          "channel": "NPC_BEHAVIOR",
+          "severity": 2,
+          "textTemplate": "실종자가 또 나왔다는 이야기가 부두에 돈다",
+          "triggerStage": 1
+        }
+      ],
+      "dependencies": [],
+      "isCritical": true,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_RIB_COLLAPSE",
+      "kind": "SOCIAL",
+      "title": "갈비평원 붕괴",
+      "description": "별고래 갈비 내부 통로가 꿈의 변화로 뒤틀려 붕괴한다. 무리한 채굴은 실종자를 늘린다.",
+      "locationId": "LOC_SS_RIB",
+      "priority": 4,
+      "weight": 12,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "내부 통로가 어긋나 삐걱인다",
+          "affordances": [
+            "INVESTIGATE",
+            "OBSERVE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "늑골 안쪽 통로가 어제와 다르게 뒤틀려 있다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "채굴조합이 작업을 강행한다",
+          "affordances": [
+            "PERSUADE",
+            "THREATEN",
+            "HELP"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "채굴반장이 통제선 안으로 사람을 더 밀어 넣는다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "SECURITY",
+          "severity": 2,
+          "textTemplate": "갈비평원 내부 붕괴로 채굴꾼이 실종됐다",
+          "triggerStage": 1
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_HEART_BACKFLOW",
+      "kind": "SOCIAL",
+      "title": "심장액 역류",
+      "description": "심장 웅덩이의 액체가 넘쳐 주변 얼음과 사람의 꿈을 오염시킨다.",
+      "locationId": "LOC_SS_HEART",
+      "priority": 4,
+      "weight": 12,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "웅덩이 수위가 밤마다 차오른다",
+          "affordances": [
+            "INVESTIGATE",
+            "OBSERVE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "웅덩이 표면이 심장박동처럼 진동하며 조금씩 넘친다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "불법 채취로 역류가 심해진다",
+          "affordances": [
+            "PERSUADE",
+            "STEAL",
+            "BRIBE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "허가관이 채취량을 몰래 올린 흔적이 보인다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "VISUAL",
+          "severity": 3,
+          "textTemplate": "심장 웅덩이가 넘쳐 주변 얼음이 푸르게 물든다",
+          "triggerStage": 0
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_CONVENT_TRANSFER",
+      "kind": "POLITICAL",
+      "title": "수녀원 강제 이송",
+      "description": "루오르가 오염 환자와 실종자 가족을 수녀원으로 강제 이송하려 한다.",
+      "locationId": "LOC_SS_CONVENT",
+      "priority": 3,
+      "weight": 10,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "이송 명단이 작성된다",
+          "affordances": [
+            "INVESTIGATE",
+            "PERSUADE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "수녀원 문 앞에 이송될 자들의 명단이 붙는다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "가족들이 이송에 저항한다",
+          "affordances": [
+            "HELP",
+            "PERSUADE",
+            "THREATEN"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "환자 보호자들이 수녀원 문을 막아선다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "NPC_BEHAVIOR",
+          "severity": 2,
+          "textTemplate": "수녀원이 오염 환자를 강제로 데려간다는 원성이 돈다",
+          "triggerStage": 1
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_REPORT_COVERUP",
+      "kind": "POLITICAL",
+      "title": "관측 보고서 은폐",
+      "description": "사엘의 공식 보고서와 실제 관측 기록이 다르다는 소문이 퍼진다.",
+      "locationId": "LOC_SS_TOWER",
+      "priority": 3,
+      "weight": 10,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "보고서 불일치 소문이 돈다",
+          "affordances": [
+            "INVESTIGATE",
+            "TALK"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "관측탑 보조원들이 원본과 다른 보고서를 두고 수군거린다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "관측대가 감시를 강화한다",
+          "affordances": [
+            "PERSUADE",
+            "SNEAK",
+            "BRIBE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "탑 경비가 방문자의 동선을 기록하기 시작한다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "RUMOR",
+          "severity": 2,
+          "textTemplate": "관측대의 공식 보고서가 조작됐다는 이야기가 퍼진다",
+          "triggerStage": 0
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_DREAM_DRUG_RIOT",
+      "kind": "CRIMINAL",
+      "title": "꿈약 중독자 폭주",
+      "description": "꿈약 복용자들이 하얀 문을 열어야 한다며 무음 해변으로 몰려간다.",
+      "locationId": "LOC_SS_MARKET",
+      "priority": 4,
+      "weight": 11,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "중독자들이 하얀 문을 외친다",
+          "affordances": [
+            "OBSERVE",
+            "TALK"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "시장 구석에서 꿈약에 취한 자들이 '하얀 문'을 중얼거린다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "무음 해변으로 몰려간다",
+          "affordances": [
+            "PERSUADE",
+            "FIGHT",
+            "THREATEN"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "취한 무리가 무음 해변 쪽으로 비틀거리며 향한다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "SECURITY",
+          "severity": 3,
+          "textTemplate": "꿈약 중독자들이 무음 해변으로 몰려간다",
+          "triggerStage": 1
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_NAME_LOSS",
+      "kind": "SOCIAL",
+      "title": "이름 상실",
+      "description": "귀환자나 감염자가 자신의 이름을 잊고 다른 사람의 꿈 속 이름을 대신 말한다.",
+      "locationId": "LOC_SS_MARKET",
+      "priority": 3,
+      "weight": 9,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "누군가 자기 이름을 잊는다",
+          "affordances": [
+            "INVESTIGATE",
+            "TALK"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "귀환한 자가 자기 이름을 묻는 질문에 낯선 이름을 답한다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "이름 혼선이 번진다",
+          "affordances": [
+            "HELP",
+            "INVESTIGATE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "서로를 다른 이름으로 부르는 사람들이 늘어난다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "NPC_BEHAVIOR",
+          "severity": 2,
+          "textTemplate": "이름을 잊은 자들이 늘고 있다",
+          "triggerStage": 0
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_DOCK_LOCKDOWN",
+      "kind": "ECONOMIC",
+      "title": "부두 봉쇄",
+      "description": "외부 후원 세력이 사태 악화를 이유로 흰숨 부두를 봉쇄한다.",
+      "locationId": "LOC_SS_DOCK",
+      "priority": 3,
+      "weight": 9,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "봉쇄 소문이 돈다",
+          "affordances": [
+            "INVESTIGATE",
+            "TALK"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "항로 중개인이 외부 압력에 대해 목소리를 낮춘다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "부두가 실제로 막힌다",
+          "affordances": [
+            "PERSUADE",
+            "BRIBE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "얼어붙은 잔교에 검문이 서고 배가 묶인다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "ECONOMY",
+          "severity": 2,
+          "textTemplate": "외부 후원 세력이 부두를 봉쇄하려 한다",
+          "triggerStage": 1
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_SILENCE_SPREAD",
+      "kind": "SOCIAL",
+      "title": "침묵 확장",
+      "description": "무음 해변의 소리 없는 영역이 마을 쪽으로 넓어진다.",
+      "locationId": "LOC_SS_BEACH",
+      "priority": 4,
+      "weight": 13,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "해변의 침묵이 넓어진다",
+          "affordances": [
+            "OBSERVE",
+            "INVESTIGATE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "파도 소리가 닿지 않는 영역이 조금씩 마을 쪽으로 번진다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "일부 장소에서 소리가 사라진다",
+          "affordances": [
+            "HELP",
+            "PERSUADE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "부두 끝자락에서 말소리가 삼켜지기 시작한다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "VISUAL",
+          "severity": 3,
+          "textTemplate": "무음 해변의 침묵이 마을 쪽으로 확장된다",
+          "triggerStage": 0
+        }
+      ],
+      "dependencies": [],
+      "isCritical": true,
+      "relatedNpcIds": [],
+      "tags": []
+    },
+    {
+      "incidentId": "INC_SS_STARLIGHT_BEAST",
+      "kind": "MILITARY",
+      "title": "별빛 짐승 출현",
+      "description": "별고래의 꿈에서 새어 나온 기억 생물이 현실에 나타난다.",
+      "locationId": "LOC_SS_RIB",
+      "priority": 4,
+      "weight": 11,
+      "spawnConditions": {
+        "minDay": 1,
+        "minHeat": 0
+      },
+      "stages": [
+        {
+          "stage": 0,
+          "description": "빛나는 형체가 목격된다",
+          "affordances": [
+            "OBSERVE",
+            "INVESTIGATE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "갈비뼈 그늘에서 별빛으로 빚어진 짐승의 형체가 어른거린다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        },
+        {
+          "stage": 1,
+          "description": "짐승이 사람을 위협한다",
+          "affordances": [
+            "FIGHT",
+            "EVADE",
+            "OBSERVE"
+          ],
+          "matchPolicy": "SUPPORT",
+          "pressurePerTick": 3,
+          "controlReward": 15,
+          "controlPenalty": 5,
+          "sceneFrame": "별빛 짐승이 채굴꾼을 향해 소리 없이 다가선다.",
+          "choices": [],
+          "keywords": [],
+          "hintOnMatch": ""
+        }
+      ],
+      "resolutionConditions": {
+        "controlThreshold": 80,
+        "pressureThreshold": 95,
+        "deadlineTicks": 48
+      },
+      "impactOnResolve": {
+        "CONTAINED": {
+          "heatDelta": -10,
+          "tensionDelta": -2,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "ESCALATED": {
+          "heatDelta": 15,
+          "tensionDelta": 3,
+          "reputationChanges": {},
+          "flagsSet": []
+        },
+        "EXPIRED": {
+          "heatDelta": 5,
+          "tensionDelta": 1,
+          "reputationChanges": {},
+          "flagsSet": []
+        }
+      },
+      "signalTemplates": [
+        {
+          "channel": "SECURITY",
+          "severity": 3,
+          "textTemplate": "별빛으로 빚어진 짐승이 갈비평원에 나타났다",
+          "triggerStage": 1
+        }
+      ],
+      "dependencies": [],
+      "isCritical": false,
+      "relatedNpcIds": [],
+      "tags": []
+    }
+  ]
+}

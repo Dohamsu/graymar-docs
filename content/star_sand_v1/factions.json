@@ -1,0 +1,32 @@
+[
+  {
+    "factionId": "FAC_SS_CONVENT",
+    "name": "등불수녀원",
+    "initialReputation": 0,
+    "shortName": "수녀원"
+  },
+  {
+    "factionId": "FAC_SS_OBSERVERS",
+    "name": "북방 관측원정대",
+    "initialReputation": 0,
+    "shortName": "관측대"
+  },
+  {
+    "factionId": "FAC_SS_MINERS",
+    "name": "갈비평원 채굴조합",
+    "initialReputation": -5,
+    "shortName": "채굴조합"
+  },
+  {
+    "factionId": "FAC_SS_MARKET",
+    "name": "검은얼음 시장",
+    "initialReputation": 0,
+    "shortName": "검은시장"
+  },
+  {
+    "factionId": "FAC_SS_REMNANTS",
+    "name": "해안 사냥꾼의 잔족",
+    "initialReputation": 0,
+    "shortName": "잔족"
+  }
+]
