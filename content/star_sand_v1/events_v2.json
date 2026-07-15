@@ -1915,5 +1915,749 @@
         "RETURNEE"
       ]
     }
+  },
+  {
+    "eventId": "EVT_SS_INN_HELUN_MUTTER",
+    "locationId": "LOC_SS_INN",
+    "eventType": "RUMOR",
+    "priority": 5,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "OBSERVE",
+      "PERSUADE",
+      "INVESTIGATE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "구석 자리의 창백한 투숙객이 눈을 뜬 채 잠꼬대를 한다. 제 것이 아닌 억양, 제 것이 아닌 이름들. \"…등불을 세 번 흔들면 문이 열려…\" 헬룬은 자신이 무슨 말을 했는지 모르는 얼굴로 당신을 본다.",
+      "choices": [
+        {
+          "id": "ss_inn_helun_listen",
+          "label": "그가 읊는 문장을 끝까지 듣는다",
+          "hint": "실종자의 기억 단편",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_helun_ask",
+          "label": "깨워서 방금 한 말을 묻는다",
+          "hint": "본인은 기억 못 한다",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_helun_note",
+          "label": "억양·이름을 받아 적는다",
+          "hint": "나중에 대조할 단서",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "MURMUR",
+        "INN"
+      ],
+      "primaryNpcId": "NPC_SS_HELUN"
+    }
+  },
+  {
+    "eventId": "EVT_SS_INN_LAMP_TREMOR",
+    "locationId": "LOC_SS_INN",
+    "eventType": "ARC_HINT",
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "OBSERVE",
+      "INVESTIGATE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "홀의 고래기름 등불이 바람도 없이 일제히 같은 방향으로 눕는다. 아주 잠깐, 불꽃 속에서 바다 밑을 향해 뻗은 그림자가 보인다. 잠든 손님 몇이 동시에 몸을 뒤척였다.",
+      "choices": [
+        {
+          "id": "ss_inn_lamp_study",
+          "label": "불꽃이 눕는 방향을 살핀다",
+          "hint": "별고래 사체 쪽을 가리킨다",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_lamp_watch",
+          "label": "누가 함께 뒤척였는지 본다",
+          "hint": "연결된 자들을 안다",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "OMEN",
+        "INN"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_INN_MAREK_MAP",
+    "locationId": "LOC_SS_INN",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "PERSUADE",
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "마레크가 젖은 탁자에 손가락으로 무언가를 그리다 멈춘다. 별고래의 갈비뼈 안쪽, 지도에 없는 통로. \"들어간 자는 있는데 나온 길이 매번 달라. 그래서 내가 아직 살아 있는 거고.\"",
+      "choices": [
+        {
+          "id": "ss_inn_marek_route",
+          "label": "안전한 진입로를 묻는다",
+          "hint": "갈비평원 탐험 단서",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_marek_why",
+          "label": "왜 길이 바뀌는지 캐묻는다",
+          "hint": "꿈의 논리를 암시",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_marek_watch",
+          "label": "그가 지운 그림을 눈에 담는다",
+          "hint": "조용히 얻는 정보",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "WHALE",
+        "GUIDE",
+        "INN"
+      ],
+      "primaryNpcId": "NPC_SS_MAREK"
+    }
+  },
+  {
+    "eventId": "EVT_SS_INN_EMPTY_COT",
+    "locationId": "LOC_SS_INN",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 52,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "간밤에 또 한 침상이 비었다. 이불은 젖은 소금으로 무겁고, 베개에는 눈물처럼 마른 별소금 결정이 반짝인다. 주인 잃은 신발만 가지런히 놓여 있다.",
+      "choices": [
+        {
+          "id": "ss_inn_cot_salt",
+          "label": "별소금 결정을 채취한다",
+          "hint": "성분 단서",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_cot_look",
+          "label": "마지막 잠버릇의 흔적을 읽는다",
+          "hint": "사라진 방향 추정",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "SALT",
+        "INN"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_INN_IREN_ROSTER",
+    "locationId": "LOC_SS_INN",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "PERSUADE",
+      "BRIBE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "이렌이 낡은 숙박 명부를 품에 안은 채 망설인다. \"사라진 순서대로 이름을 적어 뒀어요. 규칙이 있는 것 같은데… 보여드리면, 손님도 그 규칙의 다음이 될까 봐 겁이 나요.\"",
+      "choices": [
+        {
+          "id": "ss_inn_roster_persuade",
+          "label": "안전을 약속하고 명부를 청한다",
+          "hint": "실종 순서 패턴",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_roster_bribe",
+          "label": "사례를 얹어 열람한다",
+          "hint": "즉시 열람",
+          "affordance": "BRIBE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_roster_read",
+          "label": "그녀 어깨너머로 훑는다",
+          "hint": "단편만",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "PATTERN",
+        "INN"
+      ],
+      "primaryNpcId": "NPC_SS_IREN"
+    }
+  },
+  {
+    "eventId": "EVT_SS_INN_STRANGER_TAB",
+    "locationId": "LOC_SS_INN",
+    "eventType": "OPPORTUNITY",
+    "priority": 5,
+    "weight": 60,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "TRADE",
+      "PERSUADE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "후드를 눌러쓴 손님이 당신 몫의 술값을 대신 치른다. \"극야에서 정보는 술보다 따뜻하지. 실종자 하나의 마지막 밤을 알아. 값은… 당신이 오늘 무엇을 봤는지면 돼.\"",
+      "choices": [
+        {
+          "id": "ss_inn_stranger_trade",
+          "label": "본 것을 내주고 정보를 산다",
+          "hint": "거래 성립",
+          "affordance": "TRADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_stranger_press",
+          "label": "정체부터 캐묻는다",
+          "hint": "경계·소량 정보",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_inn_stranger_watch",
+          "label": "거절하고 뒤를 밟는다",
+          "hint": "미행 기회",
+          "affordance": "OBSERVE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "INFO",
+        "STRANGER",
+        "INN"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_FROZEN_CATCH",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 54,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE",
+      "HELP"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "새벽 그물에 얼어붙은 무언가가 걸려 올라온다. 물고기가 아니다. 사람 형상으로 얼어붙은 소금 덩어리, 입 벌린 자리에 아직 마르지 않은 말 한 마디가 서려 있는 듯하다.",
+      "choices": [
+        {
+          "id": "ss_dock_catch_break",
+          "label": "소금 껍질을 조심히 깨본다",
+          "hint": "안쪽 단서",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_dock_catch_look",
+          "label": "형상의 자세를 관찰한다",
+          "hint": "마지막 순간 추정",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_catch_haul",
+          "label": "어부들과 함께 건져 눕힌다",
+          "hint": "호의·증언 확보",
+          "affordance": "HELP",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "SALT",
+        "DOCK"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_ABAS_WARD",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "TRADE",
+      "PERSUADE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "램프 장인 아바스가 심지에 별소금을 개어 넣으며 손짓한다. \"이 꿈막이 등을 머리맡에 두면 남의 꿈이 안 들어와요. 미신이라고들 하지만… 이걸 켜 둔 침상은 아직 하나도 안 비었소.\"",
+      "choices": [
+        {
+          "id": "ss_dock_abas_buy",
+          "label": "꿈막이 램프를 산다",
+          "hint": "보호 아이템·신뢰",
+          "affordance": "TRADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_abas_ask",
+          "label": "왜 효과가 있는지 묻는다",
+          "hint": "오염 원리 단서",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_abas_watch",
+          "label": "제작 과정을 지켜본다",
+          "hint": "별소금 용례",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "WARD",
+        "SALT",
+        "DOCK"
+      ],
+      "primaryNpcId": "NPC_SS_ABAS"
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_TIDE_NAMES",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "ARC_HINT",
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "OBSERVE",
+      "INVESTIGATE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "밀물이 부두 기둥을 핥고 물러날 때, 파도 소리 사이로 낮은 호명이 섞인다. 사라진 이들의 이름이 순서대로. 바다가 명부를 읽는 것 같다.",
+      "choices": [
+        {
+          "id": "ss_dock_tide_listen",
+          "label": "이름의 순서를 외운다",
+          "hint": "실종 순서 교차검증",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_tide_trace",
+          "label": "소리가 오는 물목을 짚는다",
+          "hint": "별고래 사체 방향",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DREAM",
+        "OMEN",
+        "DOCK"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_TOBA_MANIFEST",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "OPPORTUNITY",
+    "priority": 5,
+    "weight": 58,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "TRADE",
+      "BRIBE",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "중개인 토바가 젖은 적하목록을 부채질하듯 흔든다. \"마지막으로 실종된 선원이 무슨 짐을 지고 있었는지, 여기 다 적혀 있지. 물론… 종이값은 따로요.\"",
+      "choices": [
+        {
+          "id": "ss_dock_toba_buy",
+          "label": "목록을 사들인다",
+          "hint": "실종자 소지품 단서",
+          "affordance": "TRADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_toba_bribe",
+          "label": "웃돈으로 원본을 본다",
+          "hint": "숨긴 항목까지",
+          "affordance": "BRIBE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_toba_press",
+          "label": "공짜로 실토하게 압박한다",
+          "hint": "일부만·경계↑",
+          "affordance": "PERSUADE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "INFO",
+        "TRADE",
+        "DOCK"
+      ],
+      "primaryNpcId": "NPC_SS_TOBA"
+    }
+  },
+  {
+    "eventId": "EVT_SS_DOCK_LOCKDOWN_CHECK",
+    "locationId": "LOC_SS_DOCK",
+    "eventType": "CHECKPOINT",
+    "priority": 5,
+    "weight": 56,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "PERSUADE",
+      "BRIBE",
+      "SNEAK"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "부두 초입에 봉쇄 공고가 나붙고, 검문조가 오가는 이의 눈을 들여다본다. \"밤새 꿈을 꿨소? 같은 문장을 중얼거린 적은? …통과하려면 증명하시오.\"",
+      "choices": [
+        {
+          "id": "ss_dock_check_talk",
+          "label": "멀쩡함을 설득한다",
+          "hint": "통과·정보 교환",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_check_bribe",
+          "label": "통행료를 찔러준다",
+          "hint": "조용한 통과",
+          "affordance": "BRIBE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_dock_check_slip",
+          "label": "봉쇄선을 우회한다",
+          "hint": "은밀 진입·발각 위험",
+          "affordance": "SNEAK",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "LOCKDOWN",
+        "GUARD",
+        "DOCK"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_DREAM_VIAL",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "OPPORTUNITY",
+    "priority": 5,
+    "weight": 58,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "TRADE",
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "얼음 좌판 밑에서 푸르게 빛나는 작은 병들이 오간다. 꿈약. 한 모금이면 사라진 이의 꿈을 대신 꿀 수 있다고 한다 — 돌아올 수 있다면.",
+      "choices": [
+        {
+          "id": "ss_market_vial_buy",
+          "label": "꿈약 한 병을 산다",
+          "hint": "실종자 시점 단서·위험",
+          "affordance": "TRADE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_vial_check",
+          "label": "성분을 살핀다",
+          "hint": "심장액 함유 여부",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_market_vial_watch",
+          "label": "누가 사가는지 지켜본다",
+          "hint": "중독자 동선",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DRUG",
+        "DREAM",
+        "MARKET"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_ED_NAMES",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "TRADE",
+      "PERSUADE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "이름 수집가 에드가 낡은 장부를 펼친다. 사라진 이들이 마지막으로 남긴 '자기 이름'이 빼곡하다. \"이름을 잃기 직전에 다들 나한테 팔고 갔지. 왜인지는… 사겠다면 말해주고.\"",
+      "choices": [
+        {
+          "id": "ss_market_ed_buy",
+          "label": "이름 하나의 사연을 산다",
+          "hint": "실종자 개별 단서",
+          "affordance": "TRADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_market_ed_ask",
+          "label": "왜 이름을 파는지 캐묻는다",
+          "hint": "이름 상실 원리",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_market_ed_scan",
+          "label": "장부에서 아는 이름을 찾는다",
+          "hint": "연결 단서",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "NAME",
+        "LEDGER",
+        "MARKET"
+      ],
+      "primaryNpcId": "NPC_SS_ED"
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_RIVA_ROUTE",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "RUMOR",
+    "priority": 4,
+    "weight": 54,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "PERSUADE",
+      "BRIBE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "운반책 리바가 젖은 장갑을 벗으며 목소리를 낮춘다. \"폐광 밀수로가 밤마다 바뀌어요. 어제 있던 갱도가 오늘은 벽이고. 별고래가 떨어진 뒤로 땅이 꿈을 꾸는 것 같다니까.\"",
+      "choices": [
+        {
+          "id": "ss_market_riva_ask",
+          "label": "바뀌는 길의 규칙을 묻는다",
+          "hint": "심장 웅덩이 접근",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_market_riva_bribe",
+          "label": "안내를 매수한다",
+          "hint": "단축 경로",
+          "affordance": "BRIBE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_market_riva_watch",
+          "label": "그녀의 다음 운반을 지켜본다",
+          "hint": "실경로 관찰",
+          "affordance": "OBSERVE",
+          "riskLevel": 2
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "SMUGGLE",
+        "SHIFTING",
+        "MARKET"
+      ],
+      "primaryNpcId": "NPC_SS_RIVA"
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_HUSH_STALL",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "ARC_HINT",
+    "priority": 4,
+    "weight": 50,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "INVESTIGATE",
+      "OBSERVE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "시장 한복판, 좌판 하나만 소리가 지워진 듯 고요하다. 상인은 입을 벙긋대지만 말이 나오지 않고, 손님들은 그 앞을 무의식적으로 피해 걷는다. 침묵이 좌판을 삼키는 중이다.",
+      "choices": [
+        {
+          "id": "ss_market_hush_probe",
+          "label": "침묵의 경계에 손을 넣어본다",
+          "hint": "침묵 확장 단서·위험",
+          "affordance": "INVESTIGATE",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_hush_watch",
+          "label": "사람들이 왜 피하는지 본다",
+          "hint": "전염 양상",
+          "affordance": "OBSERVE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "SILENCE",
+        "OMEN",
+        "MARKET"
+      ]
+    }
+  },
+  {
+    "eventId": "EVT_SS_MARKET_KAILUN_PRICE",
+    "locationId": "LOC_SS_MARKET",
+    "eventType": "ENCOUNTER",
+    "priority": 5,
+    "weight": 70,
+    "conditions": null,
+    "gates": [],
+    "affordances": [
+      "TRADE",
+      "THREATEN",
+      "PERSUADE"
+    ],
+    "friction": 0,
+    "matchPolicy": "SUPPORT",
+    "payload": {
+      "sceneFrame": "꿈약 조제사 카일룬이 금지된 심장액 부산물의 값을 저울에 올린다. \"이건 꿈을 여는 열쇠이자 사람을 여는 열쇠지. 값이 궁금하면… 당신이 뭘 열고 싶은지부터 말해봐.\"",
+      "choices": [
+        {
+          "id": "ss_market_kailun_deal",
+          "label": "용도를 밝히고 흥정한다",
+          "hint": "조제 지식·재료",
+          "affordance": "TRADE",
+          "riskLevel": 1
+        },
+        {
+          "id": "ss_market_kailun_press",
+          "label": "출처를 대라고 위협한다",
+          "hint": "공급망 단서·적대↑",
+          "affordance": "THREATEN",
+          "riskLevel": 2
+        },
+        {
+          "id": "ss_market_kailun_talk",
+          "label": "그의 진짜 목적을 떠본다",
+          "hint": "전이 루트 암시",
+          "affordance": "PERSUADE",
+          "riskLevel": 1
+        }
+      ],
+      "effectsOnEnter": [],
+      "tags": [
+        "DRUG",
+        "HEART",
+        "MARKET"
+      ],
+      "primaryNpcId": "NPC_SS_KAILUN"
+    }
   }
 ]
