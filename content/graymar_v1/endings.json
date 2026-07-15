@@ -1,6 +1,7 @@
 {
   "version": "endings_v2",
   "softDeadlineDay": 14,
+  "defeatLine": "시야가 어두워진다. 이름 없는 용병의 이야기는 여기서 끝났다.",
 
   "closingLines": {
     "STABLE": "도시는 여전히 숨 쉬고 있었다.",
