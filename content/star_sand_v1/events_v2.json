@@ -10,7 +10,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -65,7 +68,8 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "TALK"
+      "TALK",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -115,7 +119,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -165,7 +172,8 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "TALK"
+      "TALK",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -220,7 +228,9 @@
     "affordances": [
       "BRIBE",
       "INVESTIGATE",
-      "SNEAK"
+      "SNEAK",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -267,11 +277,19 @@
     "priority": 4,
     "weight": 60,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -317,11 +335,19 @@
     "priority": 4,
     "weight": 62,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -377,7 +403,9 @@
     "affordances": [
       "BRIBE",
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -428,7 +456,8 @@
     "affordances": [
       "BRIBE",
       "INVESTIGATE",
-      "TALK"
+      "TALK",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -479,7 +508,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -525,11 +557,19 @@
     "priority": 4,
     "weight": 63,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -580,7 +620,9 @@
     "affordances": [
       "HELP",
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -637,7 +679,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -690,7 +735,9 @@
     ],
     "affordances": [
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -744,7 +791,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -798,7 +848,9 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "TRADE"
+      "TRADE",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -852,7 +904,9 @@
     "affordances": [
       "BRIBE",
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -906,7 +960,9 @@
     "affordances": [
       "OBSERVE",
       "PERSUADE",
-      "TRADE"
+      "TRADE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -960,7 +1016,10 @@
     "affordances": [
       "INVESTIGATE",
       "PERSUADE",
-      "SNEAK"
+      "SNEAK",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1014,7 +1073,8 @@
     "affordances": [
       "HELP",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1068,7 +1128,8 @@
     "affordances": [
       "HELP",
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1122,7 +1183,10 @@
     "affordances": [
       "BRIBE",
       "INVESTIGATE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1176,7 +1240,8 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "STEAL"
+      "STEAL",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1230,7 +1295,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1284,7 +1352,9 @@
     "affordances": [
       "OBSERVE",
       "PERSUADE",
-      "SNEAK"
+      "SNEAK",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1338,7 +1408,8 @@
     "affordances": [
       "HELP",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1392,7 +1463,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1446,7 +1520,9 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "TRADE"
+      "TRADE",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1500,7 +1576,9 @@
     "affordances": [
       "OBSERVE",
       "PERSUADE",
-      "SNEAK"
+      "SNEAK",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1554,7 +1632,9 @@
     "affordances": [
       "OBSERVE",
       "PERSUADE",
-      "TRADE"
+      "TRADE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1608,7 +1688,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1662,7 +1745,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1716,7 +1802,8 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1770,7 +1857,10 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1824,7 +1914,8 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1878,7 +1969,8 @@
     "affordances": [
       "HELP",
       "OBSERVE",
-      "PERSUADE"
+      "PERSUADE",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1923,11 +2015,19 @@
     "priority": 5,
     "weight": 70,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
       "PERSUADE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -1972,10 +2072,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2016,7 +2122,10 @@
     "affordances": [
       "PERSUADE",
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2061,10 +2170,16 @@
     "priority": 4,
     "weight": 52,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2105,7 +2220,9 @@
     "affordances": [
       "PERSUADE",
       "BRIBE",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2198,11 +2315,17 @@
     "priority": 4,
     "weight": 54,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "HELP"
+      "HELP",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2250,7 +2373,9 @@
     "affordances": [
       "TRADE",
       "PERSUADE",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2295,10 +2420,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2339,7 +2470,9 @@
     "affordances": [
       "TRADE",
       "BRIBE",
-      "PERSUADE"
+      "PERSUADE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2436,7 +2569,8 @@
     "affordances": [
       "TRADE",
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2484,7 +2618,9 @@
     "affordances": [
       "TRADE",
       "PERSUADE",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2529,11 +2665,18 @@
     "priority": 4,
     "weight": 54,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "PERSUADE",
       "BRIBE",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2578,10 +2721,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2622,7 +2771,9 @@
     "affordances": [
       "TRADE",
       "THREATEN",
-      "PERSUADE"
+      "PERSUADE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2671,7 +2822,10 @@
     "affordances": [
       "INVESTIGATE",
       "PERSUADE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2720,7 +2874,9 @@
     "affordances": [
       "PERSUADE",
       "THREATEN",
-      "BRIBE"
+      "BRIBE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2765,10 +2921,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2805,11 +2967,17 @@
     "priority": 5,
     "weight": 70,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "PERSUADE",
       "OBSERVE",
-      "HELP"
+      "HELP",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2858,7 +3026,8 @@
     "affordances": [
       "INVESTIGATE",
       "STEAL",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2902,11 +3071,17 @@
     "priority": 4,
     "weight": 52,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
       "HELP",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -2954,7 +3129,8 @@
     "affordances": [
       "PERSUADE",
       "HELP",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3003,7 +3179,9 @@
     "affordances": [
       "BRIBE",
       "PERSUADE",
-      "SNEAK"
+      "SNEAK",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3048,10 +3226,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3088,7 +3272,12 @@
     "priority": 4,
     "weight": 52,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
       "HELP",
@@ -3140,7 +3329,8 @@
     "affordances": [
       "STEAL",
       "INVESTIGATE",
-      "TRADE"
+      "TRADE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3184,11 +3374,18 @@
     "priority": 4,
     "weight": 54,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "INVESTIGATE",
       "BRIBE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3237,7 +3434,8 @@
     "affordances": [
       "PERSUADE",
       "HELP",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3286,7 +3484,9 @@
     "affordances": [
       "OBSERVE",
       "INVESTIGATE",
-      "HELP"
+      "HELP",
+      "SEARCH",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3331,11 +3531,18 @@
     "priority": 4,
     "weight": 54,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "PERSUADE",
       "BRIBE",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3384,7 +3591,8 @@
     "affordances": [
       "INVESTIGATE",
       "STEAL",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3428,10 +3636,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3468,10 +3682,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3512,7 +3732,10 @@
     "affordances": [
       "INVESTIGATE",
       "PERSUADE",
-      "OBSERVE"
+      "OBSERVE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3557,11 +3780,18 @@
     "priority": 4,
     "weight": 54,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "PERSUADE",
       "BRIBE",
-      "OBSERVE"
+      "OBSERVE",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3606,10 +3836,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3650,7 +3886,8 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "STEAL"
+      "STEAL",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3746,7 +3983,8 @@
     "affordances": [
       "PERSUADE",
       "OBSERVE",
-      "HELP"
+      "HELP",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3795,7 +4033,10 @@
     "affordances": [
       "PERSUADE",
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH",
+      "TALK",
+      "HELP"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3840,10 +4081,16 @@
     "priority": 4,
     "weight": 50,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
-      "INVESTIGATE"
+      "INVESTIGATE",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
@@ -3880,7 +4127,12 @@
     "priority": 4,
     "weight": 52,
     "conditions": null,
-    "gates": [],
+    "gates": [
+      {
+        "type": "COOLDOWN_TURNS",
+        "turns": 4
+      }
+    ],
     "affordances": [
       "OBSERVE",
       "PERSUADE",
@@ -3932,7 +4184,8 @@
     "affordances": [
       "INVESTIGATE",
       "OBSERVE",
-      "HELP"
+      "HELP",
+      "SEARCH"
     ],
     "friction": 0,
     "matchPolicy": "SUPPORT",
