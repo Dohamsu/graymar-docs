@@ -74,35 +74,74 @@
       "key": "location",
       "value": "극야해안 — 태양이 뜨지 않는 극지 해안. 하늘을 유영하던 별고래의 사체가 추락해, 사람들이 그 뼈와 심장에서 마법 자원을 캐낸다. 수녀원·관측대·채굴조합·검은시장·해안 잔족이 얽혀 있다.",
       "importance": 1.0,
-      "tags": ["LOCATION", "THEME"]
+      "tags": [
+        "LOCATION",
+        "THEME"
+      ]
     },
     {
       "key": "quest",
       "value": "사라진 실종자들의 꿈 — 사람들이 시체도 없이 사라지고, 산 자들이 실종자의 기억을 대신 꾸기 시작한다. 실종자들은 별고래가 삼킨 존재를 막는 '꿈의 닻'으로 붙잡혀 있다.",
       "importance": 1.0,
-      "tags": ["QUEST", "THEME"]
+      "tags": [
+        "QUEST",
+        "THEME"
+      ]
     },
     {
       "key": "npc_client",
       "value": "의뢰인 이렌 — 꿈잠 여관의 주인. 첫 공통몽의 목격자이며, 추락 첫날 밤 사흘간 깨어나지 않은 채 예언 같은 말을 했다.",
       "importance": 0.9,
-      "tags": ["NPC", "THEME"]
+      "tags": [
+        "NPC",
+        "THEME"
+      ]
     },
     {
       "key": "hub_system",
       "value": "HUB 거점 — '꿈잠 여관'. 극야해안의 거점. 이곳에서 부두/갈비평원/심장 웅덩이/수녀원/검은시장/관측탑/무음 해변으로 이동하며 진상을 캔다.",
       "importance": 0.8,
-      "tags": ["HUB", "THEME"]
+      "tags": [
+        "HUB",
+        "THEME"
+      ]
     },
     {
       "key": "protagonist",
       "value": "{CHARACTER_NAME} — {PROTAGONIST_THEME} 극야해안에는 일거리를 찾아 며칠 전 도착했다.",
       "importance": 0.8,
-      "tags": ["PROTAGONIST", "THEME"]
+      "tags": [
+        "PROTAGONIST",
+        "THEME"
+      ]
     }
   ],
   "initialNpcRelations": {
     "NPC_SS_IREN": 30,
     "NPC_SS_MAREK": 5
-  }
+  },
+  "meters": [
+    {
+      "id": "DREAM_TAINT",
+      "name": "꿈 오염",
+      "initial": 10,
+      "perTurnDelta": 2,
+      "maxDeltaPerTurn": 8,
+      "thresholds": [
+        {
+          "at": 50,
+          "signal": "해안 곳곳에서 잠꼬대가 늘고, 낮에도 눈을 뜬 채 중얼거리는 이가 보인다. 꿈이 번지고 있다."
+        },
+        {
+          "at": 80,
+          "signal": "꿈과 현실의 경계가 허물어진다. 멀쩡하던 이들이 남의 기억을 제 것처럼 말하기 시작했다."
+        },
+        {
+          "at": 100,
+          "signal": "별고래가 완전히 눈을 떴다. 해안 전체가 꿈에 잠긴다.",
+          "endingTrigger": "BAD_DREAM"
+        }
+      ]
+    }
+  ]
 }
