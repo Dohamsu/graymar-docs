@@ -56,7 +56,7 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_SS_LUOR": "CAUTIOUS"
+      "NPC_SS_LUOR": { "posture": "CAUTIOUS" }
     },
     "actionBonuses": {
       "PERSUADE": 1,
@@ -90,7 +90,7 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_SS_KAILUN": "FRIENDLY"
+      "NPC_SS_KAILUN": { "posture": "FRIENDLY" }
     },
     "actionBonuses": {
       "SNEAK": 1,
@@ -128,7 +128,7 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_SS_MIREN": "FRIENDLY"
+      "NPC_SS_MIREN": { "posture": "FRIENDLY" }
     },
     "actionBonuses": {
       "HELP": 1,
@@ -162,7 +162,7 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_SS_SAEL": "CAUTIOUS"
+      "NPC_SS_SAEL": { "posture": "CAUTIOUS" }
     },
     "actionBonuses": {
       "INVESTIGATE": 1,
@@ -196,8 +196,8 @@
       }
     ],
     "npcPostureOverrides": {
-      "NPC_SS_NAHAT": "FRIENDLY",
-      "NPC_SS_IREN": "FRIENDLY"
+      "NPC_SS_NAHAT": { "posture": "FRIENDLY" },
+      "NPC_SS_IREN": { "posture": "FRIENDLY" }
     },
     "actionBonuses": {
       "OBSERVE": 1

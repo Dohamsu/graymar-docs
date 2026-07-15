@@ -1,7 +1,7 @@
 [
   {
     "npcId": "NPC_SS_IREN",
-    "name": "이렌 바루",
+    "name": "이렌",
     "unknownAlias": "침착한 안주인",
     "shortAlias": "여관 주인",
     "role": "꿈잠 여관의 주인 — 첫 공통몽의 목격자이자 의뢰인",
@@ -96,7 +96,7 @@
   },
   {
     "npcId": "NPC_SS_LUOR",
-    "name": "루오르 에스카",
+    "name": "루오르",
     "unknownAlias": "별빛 눈의 수녀",
     "shortAlias": "수녀",
     "role": "등불수녀원의 꿈기록 수녀 — 오염 환자 관리인",
@@ -193,7 +193,7 @@
   },
   {
     "npcId": "NPC_SS_SAEL",
-    "name": "사엘 무온",
+    "name": "사엘",
     "unknownAlias": "건조한 관측관",
     "shortAlias": "관측관",
     "role": "오로라 관측탑의 수석 관측관 — 별고래 궤적 연구자",
@@ -288,7 +288,7 @@
   },
   {
     "npcId": "NPC_SS_MAREK",
-    "name": "마레크 노을손",
+    "name": "마레크",
     "unknownAlias": "무뚝뚝한 수색꾼",
     "shortAlias": "수색꾼",
     "role": "실종자 수색꾼 — 별고래 내부 길잡이",
@@ -388,7 +388,7 @@
   },
   {
     "npcId": "NPC_SS_KAILUN",
-    "name": "카일룬 베쉬",
+    "name": "카일룬",
     "unknownAlias": "장난스런 밀매상",
     "shortAlias": "밀매상",
     "role": "검은얼음 시장의 꿈약 조제사 — 금지 부산물 밀매상",
@@ -471,7 +471,7 @@
   },
   {
     "npcId": "NPC_SS_NAHAT",
-    "name": "나하트 세인",
+    "name": "나하트",
     "unknownAlias": "이름 잃은 귀환자",
     "shortAlias": "귀환자",
     "role": "이름을 잃은 귀환자 — 별고래의 기억을 말하는 자",
@@ -567,7 +567,7 @@
   },
   {
     "npcId": "NPC_SS_BRAN",
-    "name": "브란 오르크",
+    "name": "브란",
     "unknownAlias": "험상궂은 반장",
     "shortAlias": "채굴반장",
     "role": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
@@ -630,7 +630,7 @@
   },
   {
     "npcId": "NPC_SS_SEFI",
-    "name": "세피 라움",
+    "name": "세피",
     "unknownAlias": "눈먼 안내인",
     "shortAlias": "안내인",
     "role": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
@@ -693,7 +693,7 @@
   },
   {
     "npcId": "NPC_SS_ODRIN",
-    "name": "오드린 켈",
+    "name": "오드린",
     "unknownAlias": "눈치 보조원",
     "shortAlias": "보조원",
     "role": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
@@ -756,7 +756,7 @@
   },
   {
     "npcId": "NPC_SS_HELUN",
-    "name": "헬룬 다스",
+    "name": "헬룬",
     "unknownAlias": "창백한 투숙객",
     "shortAlias": "투숙객",
     "role": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
@@ -819,7 +819,7 @@
   },
   {
     "npcId": "NPC_SS_RIVA",
-    "name": "리바 툰",
+    "name": "리바",
     "unknownAlias": "재빠른 운반책",
     "shortAlias": "운반책",
     "role": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
@@ -882,7 +882,7 @@
   },
   {
     "npcId": "NPC_SS_ABAS",
-    "name": "아바스 노르",
+    "name": "아바스",
     "unknownAlias": "미신적 장인",
     "shortAlias": "장인",
     "role": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
@@ -945,7 +945,7 @@
   },
   {
     "npcId": "NPC_SS_MIREN",
-    "name": "미렌 하울",
+    "name": "미렌",
     "unknownAlias": "손 떠는 환자",
     "shortAlias": "환자",
     "role": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
@@ -1008,7 +1008,7 @@
   },
   {
     "npcId": "NPC_SS_TOBA",
-    "name": "토바 렐",
+    "name": "토바",
     "unknownAlias": "셈 빠른 중개인",
     "shortAlias": "중개인",
     "role": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
@@ -1071,7 +1071,7 @@
   },
   {
     "npcId": "NPC_SS_KASIEN",
-    "name": "카시엔 모트",
+    "name": "카시엔",
     "unknownAlias": "해안 노장로",
     "shortAlias": "장로",
     "role": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
@@ -1134,7 +1134,7 @@
   },
   {
     "npcId": "NPC_SS_YURMA",
-    "name": "유르마 칼",
+    "name": "유르마",
     "unknownAlias": "무장한 순례자",
     "shortAlias": "순례자",
     "role": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
@@ -1197,7 +1197,7 @@
   },
   {
     "npcId": "NPC_SS_PENA",
-    "name": "페나 실",
+    "name": "페나",
     "unknownAlias": "깐깐한 허가관",
     "shortAlias": "허가관",
     "role": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
@@ -1260,7 +1260,7 @@
   },
   {
     "npcId": "NPC_SS_ED",
-    "name": "에드 벨루",
+    "name": "에드",
     "unknownAlias": "이름 수집가",
     "shortAlias": "서기관",
     "role": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
