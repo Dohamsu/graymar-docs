@@ -2,7 +2,7 @@
   {
     "npcId": "NPC_SS_IREN",
     "name": "이렌 바루",
-    "unknownAlias": "침착한 여관 주인",
+    "unknownAlias": "침착한 안주인",
     "shortAlias": "여관 주인",
     "role": "꿈잠 여관의 주인 — 첫 공통몽의 목격자이자 의뢰인",
     "faction": null,
@@ -472,7 +472,7 @@
   {
     "npcId": "NPC_SS_NAHAT",
     "name": "나하트 세인",
-    "unknownAlias": "이름을 잃은 귀환자",
+    "unknownAlias": "이름 잃은 귀환자",
     "shortAlias": "귀환자",
     "role": "이름을 잃은 귀환자 — 별고래의 기억을 말하는 자",
     "faction": null,
@@ -568,7 +568,7 @@
   {
     "npcId": "NPC_SS_BRAN",
     "name": "브란 오르크",
-    "unknownAlias": "험상궂은 채굴반장",
+    "unknownAlias": "험상궂은 반장",
     "shortAlias": "채굴반장",
     "role": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
     "faction": "FAC_SS_MINERS",
@@ -631,7 +631,7 @@
   {
     "npcId": "NPC_SS_SEFI",
     "name": "세피 라움",
-    "unknownAlias": "앞 못 보는 안내인",
+    "unknownAlias": "눈먼 안내인",
     "shortAlias": "안내인",
     "role": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
     "faction": "FAC_SS_CONVENT",
@@ -694,7 +694,7 @@
   {
     "npcId": "NPC_SS_ODRIN",
     "name": "오드린 켈",
-    "unknownAlias": "눈치 보는 보조원",
+    "unknownAlias": "눈치 보조원",
     "shortAlias": "보조원",
     "role": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
     "faction": "FAC_SS_OBSERVERS",
@@ -757,7 +757,7 @@
   {
     "npcId": "NPC_SS_HELUN",
     "name": "헬룬 다스",
-    "unknownAlias": "창백한 장기 투숙객",
+    "unknownAlias": "창백한 투숙객",
     "shortAlias": "투숙객",
     "role": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
     "faction": null,
@@ -883,7 +883,7 @@
   {
     "npcId": "NPC_SS_ABAS",
     "name": "아바스 노르",
-    "unknownAlias": "미신적인 램프 장인",
+    "unknownAlias": "미신적 장인",
     "shortAlias": "장인",
     "role": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
     "faction": null,
@@ -946,7 +946,7 @@
   {
     "npcId": "NPC_SS_MIREN",
     "name": "미렌 하울",
-    "unknownAlias": "손을 떠는 오염 환자",
+    "unknownAlias": "손 떠는 환자",
     "shortAlias": "환자",
     "role": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
     "faction": "FAC_SS_CONVENT",
@@ -1009,7 +1009,7 @@
   {
     "npcId": "NPC_SS_TOBA",
     "name": "토바 렐",
-    "unknownAlias": "계산 빠른 중개인",
+    "unknownAlias": "셈 빠른 중개인",
     "shortAlias": "중개인",
     "role": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
     "faction": null,
@@ -1072,7 +1072,7 @@
   {
     "npcId": "NPC_SS_KASIEN",
     "name": "카시엔 모트",
-    "unknownAlias": "해안의 마지막 장로",
+    "unknownAlias": "해안 노장로",
     "shortAlias": "장로",
     "role": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
     "faction": "FAC_SS_REMNANTS",
@@ -1198,7 +1198,7 @@
   {
     "npcId": "NPC_SS_PENA",
     "name": "페나 실",
-    "unknownAlias": "원칙적인 척하는 허가관",
+    "unknownAlias": "깐깐한 허가관",
     "shortAlias": "허가관",
     "role": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
     "faction": "FAC_SS_OBSERVERS",
@@ -1261,7 +1261,7 @@
   {
     "npcId": "NPC_SS_ED",
     "name": "에드 벨루",
-    "unknownAlias": "떠도는 이름 수집가",
+    "unknownAlias": "이름 수집가",
     "shortAlias": "서기관",
     "role": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
     "faction": "FAC_SS_MARKET",
@@ -1560,7 +1560,7 @@
   {
     "npcId": "NPC_SS_BG_05",
     "name": "로스크 다임",
-    "unknownAlias": "부두 검문 기록원",
+    "unknownAlias": "검문 기록원",
     "shortAlias": "기록원",
     "role": "부두 검문 기록원",
     "faction": null,
@@ -1678,7 +1678,7 @@
   {
     "npcId": "NPC_SS_BG_07",
     "name": "베사 울",
-    "unknownAlias": "고래뼈 절단 기술자",
+    "unknownAlias": "고래뼈 기술자",
     "shortAlias": "기술자",
     "role": "고래뼈 절단 기술자",
     "faction": null,
@@ -1737,7 +1737,7 @@
   {
     "npcId": "NPC_SS_BG_08",
     "name": "케린 노스",
-    "unknownAlias": "채굴 도구 대여상",
+    "unknownAlias": "도구 대여상",
     "shortAlias": "대여상",
     "role": "채굴 도구 대여상",
     "faction": null,
@@ -1855,7 +1855,7 @@
   {
     "npcId": "NPC_SS_BG_10",
     "name": "아실 모라",
-    "unknownAlias": "뼛가루 부적 상인",
+    "unknownAlias": "부적 상인",
     "shortAlias": "상인",
     "role": "뼛가루 부적 상인",
     "faction": null,
@@ -1914,7 +1914,7 @@
   {
     "npcId": "NPC_SS_BG_11",
     "name": "레나 오스",
-    "unknownAlias": "심장액 채취 보조원",
+    "unknownAlias": "채취 보조원",
     "shortAlias": "보조원",
     "role": "심장액 채취 보조원",
     "faction": null,
@@ -2032,7 +2032,7 @@
   {
     "npcId": "NPC_SS_BG_13",
     "name": "이솔 프렘",
-    "unknownAlias": "오염 수치 측정사",
+    "unknownAlias": "오염 측정사",
     "shortAlias": "측정사",
     "role": "오염 수치 측정사",
     "faction": null,
@@ -2268,7 +2268,7 @@
   {
     "npcId": "NPC_SS_BG_17",
     "name": "오벨 수녀",
-    "unknownAlias": "꿈 기록 필사 담당",
+    "unknownAlias": "필사 담당",
     "shortAlias": "담당",
     "role": "꿈 기록 필사 담당",
     "faction": null,
@@ -2858,7 +2858,7 @@
   {
     "npcId": "NPC_SS_BG_27",
     "name": "도리스 켄",
-    "unknownAlias": "별자리 도표 정리원",
+    "unknownAlias": "도표 정리원",
     "shortAlias": "정리원",
     "role": "별자리 도표 정리원",
     "faction": null,
@@ -2917,7 +2917,7 @@
   {
     "npcId": "NPC_SS_BG_28",
     "name": "밀라 오크",
-    "unknownAlias": "원정대 식량 담당",
+    "unknownAlias": "식량 담당",
     "shortAlias": "담당",
     "role": "원정대 식량 담당",
     "faction": null,
@@ -3035,7 +3035,7 @@
   {
     "npcId": "NPC_SS_BG_30",
     "name": "세이온 파르",
-    "unknownAlias": "실패한 예언 기록원",
+    "unknownAlias": "예언 기록원",
     "shortAlias": "기록원",
     "role": "실패한 예언 기록원",
     "faction": null,
