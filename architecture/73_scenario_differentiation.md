@@ -318,3 +318,16 @@ Before(현행 2표본)/After 대조를 같은 조건(12턴×2프리셋)으로:
 여관 한 곳에서 매 탐색이 다른 저작 이벤트를 탐(cross-visit cooldown + 방문 내 하드캡이 다양성 보장). **토픽1(affordance)+A2' 후속(TurnMode 승격)이 합쳐져야 실효** — affordance는 후보를, 승격은 매칭 기회를 연다.
 
 **한계·판정**: 개선은 "대화 상대 없는 탐색"에 국소 작동. 저작 이벤트가 NPC를 세팅하면 후속은 대화 잠금에 흡수되므로, **대화·전투·거래 위주 플레이에선 여전히 FREE 우세**. 저작 이벤트 빈도의 추가 상승은 대화 잠금 정책 완화(고위험)를 건드려야 하므로 **여기까지가 저리스크 경계**. 실유저의 탐색 비중이 확인되면(제품 신호) 충분, 아니면 대화 잠금 완화는 보류.
+
+### 11.9 B2 ArcRoute 팩 정의화 — 엔진 팩화 (2026-07-15)
+
+§4 B2 1단계를 **enum 3개 고정 유지**(타입 안전) 방식으로 구현. 조사에서 star_sand는 `arc_events.json` 자체가 없어 routeCommitChoices 0개 → 종반이 사실상 NONE 단일 분기임을 확인(라벨 팩화만으론 종반이 안 바뀜) → **아크 자산 저작은 스코프 제외**, 엔진 하드코딩 청산에 집중.
+
+**발견·구현**:
+- **summary-builder 누출 버그** — 여정 아카이브 요약의 지명(`그레이마르`, line 379)·arcRoute 결말 12분기(`ARC_ROUTE_CLOSING`)·제목 fallback(`defaultArcTitle`)이 **graymar 하드코딩**이라 star_sand 여정 요약에 graymar 문구가 샜다. 세 지점을 endings.json 참조(`regionLabel`/`arcRouteEndings[route][stability].closingLine`/`.title`)로 전환, 미제공 시 팩 중립 fallback. 양 팩 endings.json에 regionLabel + closingLine 12분기씩 저작(star_sand는 극야 톤 신작).
+- **arc.service 언락 조건 외부화** — `checkUnlockConditions`의 하드코딩(Heat40/tension5/guard_trust)을 scenario.json `arcRoutes[].unlock`(field/op/value 점표기) 구동으로. graymar만 선언, star_sand 미선언(언락 0 = 기존 동작). 불변식 45 부채 청산.
+- enum `ARC_ROUTE`(3개) 유지 → 클라 타입 완화 불필요, 회귀 최소.
+
+**검증·회귀**: arc.service.spec 6종 신규(팩 조건 평가) + **A4 커밋(260117d)이 전체 스위트 미실행으로 깨뜨린 prompt-builder mock 3스위트 회귀 발견·수정**(getScenarioMeta mock 누락) + summary-builder mock 갱신. **1172 passed, 0 fail**. summary 누출의 런타임 실검증은 엔딩 완주(15턴+)가 필요해 단위 테스트(graymar 값 미러)로 대체.
+
+**판정**: 누출 버그 수정 + 불변식 45 청산의 실익 확보. 단 **star_sand 종반 실분기는 미변경**(아크 자산 미저작) — 진짜 종반 차별화는 star_sand arc_events.json 저작(별도 콘텐츠 대형)이 필요하며 이는 §5 시퀀스상 팩 3개+ 시점(B2 2단계) 과제로 남긴다. 교훈: **콘텐츠·프롬프트 변경 후에도 전체 단위 스위트를 돌릴 것**(A4 회귀 놓침 재발 방지).
