@@ -160,5 +160,30 @@
       "왕국 권력 다툼",
       "뒷거래"
     ]
-  }
+  },
+  "arcRoutes": [
+    {
+      "id": "EXPOSE_CORRUPTION",
+      "unlock": {
+        "field": "hubHeat",
+        "op": "gte",
+        "value": 40
+      }
+    },
+    {
+      "id": "PROFIT_FROM_CHAOS",
+      "unlock": {
+        "field": "tension",
+        "op": "gte",
+        "value": 5
+      }
+    },
+    {
+      "id": "ALLY_GUARD",
+      "unlock": {
+        "field": "flags.guard_trust",
+        "op": "truthy"
+      }
+    }
+  ]
 }

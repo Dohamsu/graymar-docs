@@ -2,90 +2,143 @@
   "version": "endings_v2",
   "softDeadlineDay": 14,
   "defeatLine": "시야가 어두워진다. 이름 없는 용병의 이야기는 여기서 끝났다.",
-
   "closingLines": {
     "STABLE": "도시는 여전히 숨 쉬고 있었다.",
     "UNSTABLE": "도시는 상처를 안고 다음 날을 맞았다.",
     "COLLAPSED": "도시는 무너졌지만, 누군가는 잿더미 위에 다시 서 있었다."
   },
-
   "cityStatusRules": {
     "STABLE": "containedCount >= escalatedCount + expiredCount",
     "COLLAPSED": "escalatedCount >= 3",
     "UNSTABLE": "default"
   },
-
   "arcRouteEndings": {
     "EXPOSE_CORRUPTION": {
       "STABLE": {
         "title": "정의의 대가",
         "epilogue": "당신이 모은 증거는 도시를 뒤흔들었다. 부패한 장교들이 연행되고, 밀수 조직은 와해되었다. 시민들은 거리에서 환호했지만, 권력의 빈자리를 노리는 눈들이 어둠 속에서 번뜩였다. 그레이마르는 상처를 치유하기 시작했고, 당신의 이름은 정의의 상징으로 남았다. 그러나 잠긴 닻 선술집의 오웬이 건넨 마지막 충고가 귓가에 맴돈다 — '영웅은 언제나 누군가의 표적이 되는 법이오.'",
-        "rewards": {"gold": 50, "reputation": {"CITY_GUARD": 10, "LABOR_GUILD": 5}}
+        "rewards": {
+          "gold": 50,
+          "reputation": {
+            "CITY_GUARD": 10,
+            "LABOR_GUILD": 5
+          }
+        },
+        "closingLine": "부패한 자들이 연행되고, 도시는 정의의 이름으로 숨을 돌렸다."
       },
       "UNSTABLE": {
         "title": "불완전한 진실",
         "epilogue": "부패의 일부는 밝혀졌으나, 핵심 인물 몇은 여전히 그림자 속에 남았다. 도시는 반쪽짜리 정의에 안도하면서도, 해결되지 않은 불안이 거리 곳곳에 남아 있었다. 당신이 떠나는 날, 빈민가 아이 하나가 당신의 등을 바라보며 손을 흔들었다.",
-        "rewards": {"gold": 30, "reputation": {"CITY_GUARD": 5}}
+        "rewards": {
+          "gold": 30,
+          "reputation": {
+            "CITY_GUARD": 5
+          }
+        },
+        "closingLine": "진실은 절반만 드러났고, 해결되지 않은 불안이 거리에 남았다."
       },
       "COLLAPSED": {
         "title": "진실이 삼킨 도시",
         "epilogue": "진실은 밝혀졌지만 도시는 감당하지 못했다. 폭동과 보복이 거리를 휩쓸었고, 경비대는 분열했다. 당신은 불길 속에서 장부를 안고 도시를 빠져나왔다. 정의는 실현되었으나, 정의의 대가는 도시 그 자체였다.",
-        "rewards": {"gold": 10}
+        "rewards": {
+          "gold": 10
+        },
+        "closingLine": "진실은 밝혀졌지만 도시는 그 무게를 감당하지 못하고 불길에 삼켜졌다."
       }
     },
     "PROFIT_FROM_CHAOS": {
       "STABLE": {
         "title": "황금빛 그림자",
         "epilogue": "당신은 양쪽 모두에게 정보를 팔아 막대한 부를 쌓았다. 길드도, 경비대도, 당신이 누구 편인지 끝내 알아내지 못했다. 그레이마르는 겉으로 평온했지만, 당신이 쥔 비밀들이 도시의 진짜 지도를 그리고 있었다. 선술집을 떠나며 주머니에 든 금화가 묵직하게 울렸다.",
-        "rewards": {"gold": 120, "reputation": {"CITY_GUARD": -5, "LABOR_GUILD": -5}}
+        "rewards": {
+          "gold": 120,
+          "reputation": {
+            "CITY_GUARD": -5,
+            "LABOR_GUILD": -5
+          }
+        },
+        "closingLine": "아무도 모르게 양쪽에서 금화를 챙기고 도시를 떠났다."
       },
       "UNSTABLE": {
         "title": "배신자의 길",
         "epilogue": "돈은 벌었지만 적도 만들었다. 양쪽 모두 당신의 이중 거래를 의심하기 시작했고, 밤거리에서 당신을 따라다니는 그림자가 느껴졌다. 금화는 많았지만 평화로운 밤은 없었다. 그레이마르를 떠나야 할 때가 왔다.",
-        "rewards": {"gold": 80}
+        "rewards": {
+          "gold": 80
+        },
+        "closingLine": "벌어들인 돈만큼의 적을 남기고 그레이마르를 뒤로했다."
       },
       "COLLAPSED": {
         "title": "재의 상인",
         "epilogue": "도시가 무너지는 와중에도 당신은 거래를 멈추지 않았다. 폭동 속에서 약탈당한 상점들 사이로 당신만이 금화를 세고 있었다. 부는 쌓였지만, 거래할 도시가 사라졌다. 잿더미 위에서 금화를 쥔 채 당신은 다음 항구를 바라봤다.",
-        "rewards": {"gold": 60}
+        "rewards": {
+          "gold": 60
+        },
+        "closingLine": "도시가 무너지는 와중에도 금화를 셌지만, 거래할 도시가 사라졌다."
       }
     },
     "ALLY_GUARD": {
       "STABLE": {
         "title": "질서의 수호자",
         "epilogue": "경비대와의 합동 작전은 성공적이었다. 밀수 거점은 소탕되었고, 항만에 평화가 돌아왔다. 마이렐 단 경이 당신에게 경비대 명예 휘장을 건넸다. 그러나 소탕 과정에서 놓친 밀수 두목의 행방은 여전히 오리무중이었다. 질서는 회복되었으나, 그 질서 아래 묻힌 것들도 있었다.",
-        "rewards": {"gold": 40, "reputation": {"CITY_GUARD": 15}}
+        "rewards": {
+          "gold": 40,
+          "reputation": {
+            "CITY_GUARD": 15
+          }
+        },
+        "closingLine": "경비대와 함께 항만의 질서를 되찾고 명예 휘장을 받았다."
       },
       "UNSTABLE": {
         "title": "불안한 평화",
         "epilogue": "밀수 조직의 말단은 잡았지만 뿌리는 뽑지 못했다. 경비대는 승리를 선언했으나, 부두 뒷골목에서는 여전히 수상한 화물이 오갔다. 당신은 경비대의 동맹자가 되었지만, 그 대가로 빈민가와 노동자들의 신뢰를 잃었다.",
-        "rewards": {"gold": 25, "reputation": {"CITY_GUARD": 8, "LABOR_GUILD": -8}}
+        "rewards": {
+          "gold": 25,
+          "reputation": {
+            "CITY_GUARD": 8,
+            "LABOR_GUILD": -8
+          }
+        },
+        "closingLine": "말단은 잡았으나 뿌리는 뽑지 못한 채 불안한 평화를 남겼다."
       },
       "COLLAPSED": {
         "title": "철권의 잔해",
         "epilogue": "경비대의 강경 대응은 도시를 통제하는 대신 부셔버렸다. 진압 작전은 폭동으로 번졌고, 당신이 지원한 경비대마저 분열했다. 마이렐은 마지막으로 당신에게 한숨을 내쉬며 말했다 — '질서가 무엇인지, 나도 모르겠소.' 폐허 위에 경비대 깃발만 바람에 찢겨 나부꼈다.",
-        "rewards": {"gold": 15, "reputation": {"CITY_GUARD": -10}}
+        "rewards": {
+          "gold": 15,
+          "reputation": {
+            "CITY_GUARD": -10
+          }
+        },
+        "closingLine": "경비대의 강경책은 진압이 아니라 폭동이 되어 도시를 부숴놓았다."
       }
     },
     "NONE": {
       "STABLE": {
         "title": "스쳐간 이방인",
         "epilogue": "당신은 어느 편에도 서지 않았다. 장부의 행방도, 도시의 비밀도, 끝내 파헤치지 않은 채 선술집에서 마지막 에일을 마셨다. 도시는 스스로의 방식대로 상처를 봉합했고, 당신은 이름 없는 용병으로 왔다가 이름 없는 용병으로 떠났다.",
-        "rewards": {"gold": 15}
+        "rewards": {
+          "gold": 15
+        },
+        "closingLine": "어느 편에도 서지 않은 채 이름 없는 용병으로 도시를 떠났다."
       },
       "UNSTABLE": {
         "title": "방관자의 무게",
         "epilogue": "아무것도 하지 않은 것이 곧 선택이었다. 도시의 혼란은 당신이 떠난 뒤에도 계속되었고, 혹자는 당신이 무언가 할 수 있었다고 말했다. 잠긴 닻 선술집의 의자에 당신이 앉았던 자리만이 비어 있었다.",
-        "rewards": {"gold": 10}
+        "rewards": {
+          "gold": 10
+        },
+        "closingLine": "아무것도 하지 않은 것이 곧 선택이었다. 의자에 남은 온기만이 흔적이었다."
       },
       "COLLAPSED": {
         "title": "잿더미의 증인",
         "epilogue": "도시가 무너지는 것을 지켜볼 수밖에 없었다. 장부도, 진실도, 어느 것 하나 구하지 못한 채 도시의 문은 닫혔다. 먼 언덕에서 연기가 피어오르는 그레이마르를 바라보며, 당신은 아무 말도 하지 않았다.",
-        "rewards": {"gold": 5}
+        "rewards": {
+          "gold": 5
+        },
+        "closingLine": "도시가 무너지는 것을 지켜볼 수밖에 없었다."
       }
     }
   },
-
   "npcEpilogueTemplates": {
     "NPC_HARLUN": {
       "high_trust": "하를런 보스는 부두에서 당신의 이름을 기억했다. 노동자들 사이에서 당신은 전설이 되었다.",
@@ -153,7 +206,6 @@
       "hostile": "오웬은 출입을 금지했다. 선술집의 중립을 위협한 자에게 예외는 없다."
     }
   },
-
   "statistics": {
     "trackItems": [
       "daysSpent",
@@ -165,5 +217,6 @@
       "arcRoute",
       "discoveredFactCount"
     ]
-  }
+  },
+  "regionLabel": "그레이마르"
 }
