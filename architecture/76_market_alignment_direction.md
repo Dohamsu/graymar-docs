@@ -84,6 +84,8 @@
 
 **검증:** 서버 빌드·**1284 passed**(scene-trace +9)·린트 0. 파일: `location-state`(propsTraces 타입), `fact-extractor.service`(extractSceneTrace·parseSceneTrace), `llm-worker`(extractAndStoreSceneTrace CAS), `context-builder`(흔적 주입 + B 되짚기 지시).
 
+**실플레이 검증 + 핫픽스 (2026-07-16, server 944be95):** 12턴 플레이테스트가 결함 2건 실측 — ① `parseSceneTrace`가 "흔적 없음"(부정 접두)을 흔적으로 통과(null 정규식이 정확 매칭만) → 부정 표현 위치 무관 차단. ② 비물리 턴(TRADE/INVESTIGATE)에서 배경 묘사("긁힌 양피지 모서리") 오추출 → **물리 행동(FIGHT/STEAL/THREATEN/SNEAK)·창의(plausibility≠NORMAL) 턴만** 추출 게이트 + 프롬프트를 "이번 턴 플레이어가 만든 변화만"으로 강화. 재검증: 전부 비물리인 10턴 런에서 [SceneTrace] 0·"흔적 없음" 0(과잉 제거 확인), D3 statHint 라이브 정확(TRADE→cha·조사→per). scene-trace.spec +2 회귀 가드. **미확인**: 물리 행동 발생 시 흔적 저장 positive 경로는 게이트 후 전용 재현 안 함(추출·저장 경로 자체는 1차 런에서 발화 실측, 게이트 조건만 변경).
+
 ### D4 — 반복 서사 방어 계측 상시화 〔P1 · 계측〕
 - 73 §8 n-gram + premise 다양성 + "미해결 스레드 존재 시 신규 스레드 억제" 확인을 playtest 정본 지표로 승격.
 - 자율 팩 다회 런에서 "무한 생성되지만 진행 안 됨" 패턴 감시 (3막+인력이 설계상 방어하나 실측 필요 — P8과 통합).
