@@ -162,7 +162,7 @@ NanoEventDirector 비동기 분리 패턴 재사용:
 | **P4** ✅ **구현 완료** | Emergent Director (비동기 선계산 + 폴백 체인 + 인력) — §15 구현 로그·E2E 실측 | 엔진 대 | P1·P3 |
 | **G2 관문** ✅ **통과** | 정합·공정·해결가능한 미스터리 생성 + 채택 루프 실작동 실측(15턴×3). 결함 2건 발견·수정 — §16 | 검증 완료 | — |
 | **P5** ✅ **구현** | 종결 파이프 (규명율 엔딩 + 게이지/acts 종결 + 톤 매트릭스) — §17. 아카이브 규명율/진상 필드는 후속 | 엔진 중 | **G2 통과** · P2 |
-| **P6** | 신규 팩 콘텐츠 저작 — 그레이마르 세계 확장 도시 (장소 7~8·코어 6·motifs 10±·팔레트·endingTones) | 콘텐츠 | P3 계약 확정 후 병행 |
+| **P6** ✅ **구현(카른홀트)** | 신규 팩 콘텐츠 저작 — 그레이마르 세계 확장 도시 (장소 7~8·코어 6·motifs 10±·팔레트·endingTones) | 콘텐츠 | P3 계약 확정 후 병행 |
 | **P7** | 주민화 + 재진입(캠페인 예외·보상 감쇠) | 엔진 소 | P5 |
 | **P8** | 계측·플레이테스트 (분포 지표, 10~15턴 다회) | 검증 | 전체 |
 
@@ -405,3 +405,19 @@ G2 통과 후 §6 종결을 구현. AUTHORED(Incident resolved)와 별개 종결
 **후속 수정 (2026-07-16, server `2899bc2`)**: P5 리뷰에서 발견 — [마지막 장면] 디렉티브 톤맵이 AUTHORED 4종만 알아 AUTONOMOUS endingType은 범용 톤으로 떨어지던 것 교정 (clearanceBand 판별 → closingLine을 서술 톤으로, 팩 커스텀 endingType 자동 커버).
 
 **후속(P6~P8)**: 여정 아카이브에 규명율·진상 요약 전용 필드(현재 endingResult.clearanceRate까지) · 재진입 경제 보상 감쇠(P7) · P6 새 도시 저작 · P8 다회 계측 (+ 규칙 1.5-A의 대화 중단 체감 관찰) · packMeter endingTrigger id 시맨틱 문서화(P6 팩 계약 — 현재 truthy만 사용). P5로 **AUTONOMOUS 런이 시작→전개→종결까지 완주 가능**.
+
+## 18. P6 카른홀트 팩 저작 (2026-07-16)
+
+자율 서사 **첫 실제 AUTONOMOUS 팩** — 그레이마르 세계 확장(왕국 북부 국경 은광·주조 도시). 지금까지 graymar 임시 픽스처로 검증했으나, P6은 실제 팩을 저작해 자율 파이프 전체를 새 콘텐츠로 완주 검증.
+
+- **저작물**: scenario.json(AUTONOMOUS·세계관·감각팔레트·motifs 10·meters[광산불안]·endingTones[규명율×게이지]·hub[무너진 곡괭이]·prologue[실종 광부 아내 메린]) · locations 8(주조소/갱도/숙소촌/감독청/검은시장/국경초소/폐갱, hubAccessible) · npcs 코어 6(감독관 발드릭/길드장 토르그/밀수두목 카이라/의뢰인 메린/술집주인 오슬라/조각공 옌 + castingConstraints) · presets 4 · 전투/아이템(graymar 재사용).
+
+**저작 중 발견·수정한 결함 4건** (실팩이라야 드러난 것):
+1. scenario.json **motifs 필드 누락**(Write 실수) → 즉시 폴백. 추가.
+2. nano가 **castingConstraints 금지역할·motifs 수 위반** → `sanitizeGeneratedSeed`(클램프·위반 제거)로 흡수.
+3. **truth.culprit이 forbiddenRoles(CULPRIT) 무시**하던 검증 갭(오슬라 진범 배정) → validatePlotSeedCore 진범 제약 체크 추가.
+4. **hubAccessible 누락** — 거점만 설정해 HUB 이동 선택지 1개 → 주요 8장소 hubAccessible 추가.
+
+**검증**: plotSeed 정합 생성(진범 오슬라·"은괴 횡령·주화 위조 위해 광부 실종을 갱도 붕괴로 위장", keyFacts 9 논리 연결) + 15턴 실런 선계산 8·채택 2·규명 2·turnMode 균형(WORLD 5/CONV 3)·V 8/10. **새 팩에서도 시작→전개 자율 루프 작동.** server `80640d0`, content **feat/autonomous-karnholt 브랜치**(P3~P5 의존 — main 미노출, 프로덕션 dormant).
+
+**후속**: 20턴+ 종결 완주(acts 28/게이지 임계) 확인 · scene_shells·이미지(비활성) · P7 주민화 · P8 다회 계측. P6로 **자율 서사가 실제 신규 팩에서 완주 가능함을 입증**.
