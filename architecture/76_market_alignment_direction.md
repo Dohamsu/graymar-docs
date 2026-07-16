@@ -73,6 +73,14 @@
 
 **검증:** 서버 빌드·**1275 passed**(classifier +4·resolve +3)·린트 0. 파일: `challenge-classifier.service`(타입·프롬프트·파싱·검증), `resolve.service`(statHint override·difficultyMod), `turns.service`(배선·actionContext.plausibility), `prompt-builder`(치환 디렉티브), `injected-block-headers`(드리프트 가드 등록).
 
+##### 통합 nano 감정 — 보편 적용 (2026-07-16, server 0b1424c)
+
+**기상천외 입력 실측이 룰 게이트 우회 노출:** "고대의 마법 주문으로 불길"을 FIGHT로 표현하면 RULE_CHECK로 nano를 건너뛰어 plausibility 미검사 → **마법이 그대로 재생**("불길이 일렁이며 열기를 뿜어내자")되고 "불길 흔적"까지 저장. 또 "간판을 뜯어냄"이 INVESTIGATE로 오분류돼 물리 흔적 게이트를 놓침.
+
+**해소 — appraisal을 회색지대뿐 아니라 모든 유의미 행동에 보편 적용:** RULE_FREE(구조적 이동/휴식/상점)만 즉결, 나머지(FIGHT 등 포함)는 nano 감정을 타되 **result만 CHECK로 고정**(주사위 스킵 방지), plausibility·statHint·difficulty는 nano 판단. + **physicalImpact(신규)**: "이 행동이 물리 흔적을 남기나"를 nano가 직접 판단 → 흔적 게이트를 actionType 추측이 아닌 nano 판단으로 전환(오분류 우회). IMPLAUSIBLE이면 physicalImpact=false 서버 강제(마법 흔적 차단).
+
+**재검증(동일 기상천외 6입력, 항만):** ① 마법-as-FIGHT → `plaus=IMPLAUSIBLE phys=false`, 서술 재해석("허세 섞인 몸짓과 헛된 외침"), difficultyMod-2로 FAIL, **불길 흔적 미생성** ② 동료 소환 → NPC 자연 거부("부르짖는다고 나타나지 않소") ③ 간판 뜯어냄(INVESTIGATE 오분류) → `phys=true`로 흔적 추출됨 ④ propsTraces 실저장(흩어진 주사위·영수증 조각). classifier +3, 1285 passed. **트레이드오프**: 도전 행동도 감정 nano 호출(killswitch 유지). **잔여**: 빠른 연속 턴에서 CAS 충돌로 흔적 일부 유실(soft data 허용), intent 오분류 자체는 존속(physicalImpact가 우회).
+
 #### D3-a 흔적(propsState) + B 되짚기 (2026-07-16 구현 · 미커밋)
 
 **출력 측 — 내 행동이 세계에 남는다.** 입력 자유화(위)의 짝. 조사 발견: 세계는 이미 PLAYER_ACTION fact·NpcPersonalMemory로 **기록**은 하나, 물리 흔적은 없고 되짚기는 소극적.
