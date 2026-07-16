@@ -1,6 +1,6 @@
 # 76. 시장 조사 대응 방향 — "이해하고 기억해주는 경험" 정렬
 
-> 상태: 📐 방향 확정 대기 (2026-07-16) — 소유자 제공 시장 조사(AI 텍스트 RPG 이용자 긍/부정 요인)를 현 구조와 대조해 수정 방향을 도출. 조사 원문의 결론: **"내가 상상한 행동을 게임이 이해하고 기억해주는 경험에는 돈을 내지만, AI가 저지른 오류를 내가 계속 수정해야 하는 경험에는 돈을 내지 않는다."**
+> 상태: ✅ 구현됨 (D1·D2·D3 + 자유도 체감 A/B, 2026-07-16) — 잔여 D4 계측·D1-c·D3-b/c는 §5 체크리스트. 소유자 제공 시장 조사(AI 텍스트 RPG 이용자 긍/부정 요인)를 현 구조와 대조해 수정 방향을 도출·구현. 조사 원문의 결론: **"내가 상상한 행동을 게임이 이해하고 기억해주는 경험에는 돈을 내지만, AI가 저지른 오류를 내가 계속 수정해야 하는 경험에는 돈을 내지 않는다."**
 > 관련: [[75_autonomous_pack_design]] (재플레이성 트랙 — P6 카른홀트까지 배포), [[73_scenario_differentiation]] (반복 서사 계측 지표), arch/75 P5 리뷰의 NPC 반응 평가 (사물·기행·공포 행동화 갭).
 
 ---
@@ -128,22 +128,39 @@ CLAUDE.md 설계 불변식 인근에 등재 (지금 코드 변경 없음, 미래
 
 | # | 항목 | 규모 | 상태 | 커밋 |
 |---|------|------|------|------|
-| D5 | 과금 3원칙 CLAUDE.md 등재 | 문서만 | ✅ | 미커밋 |
-| D1-a | 강제창(1.5-C)에서 대화 잠금 활성 턴 제외 | 엔진 소 | ✅ | 미커밋 |
-| D1-b | 사교 발화·REST 의도 턴 비트 채택 금지 | 엔진 소 | ✅ | 미커밋 |
+| D5 | 과금 3원칙 CLAUDE.md 등재 | 문서만 | ✅ | docs 0bd41f9 |
+| D1-a | 강제창(1.5-C)에서 대화 잠금 활성 턴 제외 | 엔진 소 | ✅ | f7a92b6 |
+| D1-b | 사교 발화·REST 의도 턴 비트 채택 금지 | 엔진 소 | ✅ | f7a92b6 |
 | D1-c | P8 계측에 "의도 정합 채택률" 추가 | 계측 | ⬜ | — |
-| D1-d | 신규 불변식 D("비트는 정합 시만 — 강제 진행 금지") CLAUDE.md 등재 (불변식 47) | 문서만 | ✅ | 미커밋 |
-| D2-a | FREE 판정 스킵 사유 표시 | 클라 소 | ✅ | 미커밋 |
-| D2-b | 보정치 출처 분해 노출 (스탯/특기/이벤트/상태) | 서버+클라 소 | ✅ | 미커밋 |
-| D2-c | FAIL 턴 "무엇이 부족했나" 표시 | 클라 소 | ✅ | 미커밋 |
-| D3-①stat | statHint — 행동-특정 스탯(nano 제안·서버 검증) | 엔진 소 | ✅ | 미커밋 |
-| D3-②diff | difficultyMod — 과감함 보정 clamp[-2,2] | 엔진 소 | ✅ | 미커밋 |
-| D3-③plaus | plausibility — IMPLAUSIBLE 서술 치환(LOCATION 이식) | 엔진 소 | ✅ | 미커밋 |
-| D3-a | 사물 상태 경량(propsState) — nano 추출 흔적 링버퍼 | 엔진 중 | ✅ | 미커밋 |
-| D3-B | 되짚기 — 고임팩트 과거 행동 NPC 언급 허용(정보 억제 유지) | 엔진 소 | ✅ | 미커밋 |
+| D1-d | 신규 불변식 D("비트는 정합 시만 — 강제 진행 금지") CLAUDE.md 등재 (불변식 47) | 문서만 | ✅ | docs 0bd41f9 |
+| D2-a | FREE 판정 스킵 사유 표시 | 클라 소 | ✅ | f7a92b6·client af4b065 |
+| D2-b | 보정치 출처 분해 노출 (스탯/특기/이벤트/상태) | 서버+클라 소 | ✅ | f7a92b6·client af4b065 |
+| D2-c | FAIL 턴 "무엇이 부족했나" 표시 | 클라 소 | ✅ | client af4b065 |
+| D3-①stat | statHint — 행동-특정 스탯(nano 제안·서버 검증) | 엔진 소 | ✅ | f7a92b6 |
+| D3-②diff | difficultyMod — 과감함 보정 clamp[-2,2] | 엔진 소 | ✅ | f7a92b6 |
+| D3-③plaus | plausibility — IMPLAUSIBLE 서술 치환(LOCATION 이식) | 엔진 소 | ✅ | f7a92b6 |
+| D3-univ | 통합 nano 감정 — plausibility·physicalImpact 보편 적용(룰 게이트 우회 해소) | 엔진 소 | ✅ | 0b1424c |
+| D3-a | 사물 상태 경량(propsState) — nano 추출 흔적 링버퍼 | 엔진 중 | ✅ | f7a92b6·핫픽스 944be95 |
+| D3-B | 되짚기 — 고임팩트 과거 행동 NPC 언급 허용(정보 억제 유지) | 엔진 소 | ✅ | f7a92b6 |
 | D3-b | 기행 감정축 (WEIRD → suspicion) — statHint가 오분류 일부 흡수 | 엔진 소 | 🅿️ 부분 | — |
 | D3-c | 공포 행동화 (fear 임계 → 회피/신고/도주) | 엔진 중 | ⬜ | — |
 | D4 | 반복 서사 계측 상시화 (n-gram·premise·스레드 억제 → playtest 정본 지표) | 계측 | ⬜ | — |
 | D6 | 팩 저작 도구 | 장기 보류 | 🅿️ 보류 | — |
 
-**이어작업 안내**: 미착수 세션은 §1 대조표(왜)→§2 해당 D절(무엇을)→§3 금지사항 순으로 읽고 착수. D1은 P4 규칙 1.5(server `783d400`, turns.service determineTurnModeCore 1.5절)와 AUTONOMOUS_BALANCE.BEAT_FORCE_AFTER_TURNS가 대상. D3은 arch/75 P5 리뷰의 NPC 반응 평가(npc-emotional ACTION_IMPACT·sudden-action-detector·witness-reaction.core 참조)가 배경.
+### 5.1 다음 세션 이어작업 (2026-07-16 인계)
+
+**배포 상태 (프로덕션):** server `0b1424c`(launchd 3000, `/v1/version` 확인) · client `af4b065`(미배포·D2 UI) · docs `2491b51`. **push 안 함** — 로컬 3레포 main 커밋만. 전체 1285 passed, 린트 0.
+
+**완료 (D1·D2·D3 + 자유도 체감 A/B):** 강제창 의도 존중(불변식 47)·과금 3원칙·판정 투명성(보정 분해/FAIL 부족분/FREE 스킵)·actionType 탈버킷(통합 nano 감정: statHint·difficultyMod·plausibility·physicalImpact)·물리 흔적(propsState nano 추출)·되짚기. 기상천외 입력 실측으로 마법-as-FIGHT 재생·흔적 과잉·오분류 우회까지 해소 검증.
+
+**남은 작업 (우선순위):**
+1. **D4 계측 상시화** — n-gram·premise 다양성·미해결 스레드 억제를 `scripts/playtest.py` 정본 지표로 승격. (73 §8 참조)
+2. **D1-c** — P8 계측에 "의도 정합 채택률"(채택 비트 ↔ 플레이어 행동 affordance 일치율). 자율 서사(arch/75) P8과 통합.
+3. **D3-c 공포 행동화** — fear 임계 초과 NPC 회피/신고/도주 능동화. 배경: `npc-emotional`·`sudden-action-detector`·`witness-reaction.core`.
+4. **D3-b 기행 감정축** — WEIRD→suspicion. statHint가 스탯 오분류만 흡수, 감정축은 미착수.
+
+**잔여 관찰(비차단):** ① propsTrace가 빠른 연속 턴에서 CAS 충돌로 일부 유실(soft data 허용) ② intent 파서 오분류("간판 뜯어냄"→INVESTIGATE) 존속 — physicalImpact가 흔적은 우회하나 NPC 반응 매핑엔 영향. 근본 교정은 intent parser 튜닝(별도 트랙).
+
+**killswitch:** `CHALLENGE_CLASSIFIER_ENABLED`(감정 전체), `PROPS_TRACE_DISABLED`(흔적 추출), `PLOT_DIRECTOR_DISABLED`(자율 디렉터).
+
+**참고:** 미착수 항목은 §1 대조표(왜)→§2 해당 D절(무엇을)→§3 금지사항 순으로 읽고 착수. 기상천외 입력 재현은 커스텀 rawInput 테스트가 필요(playtest.py는 자동 생성 행동만) — GLADIATOR 프리셋 + go_harbor 진입 + 파괴/마법/소환 입력 조합이 회귀 검증 세트.
