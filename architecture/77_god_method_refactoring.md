@@ -1,6 +1,6 @@
 # 77. God Method 리팩토링 계획 — 대형 파일 구조 개선
 
-> 상태: 🔄 Phase 1 진행 중 (2026-07-16) — P1.0 하네스 + P1.0b COMBAT 보강 + P1.1~P1.10 추출 완료 (God method 2,838→2,250줄, -21%). 진행 로그는 §9.
+> 상태: ✅ Phase 1 완료 (2026-07-16) — P1.0 하네스 + P1.0b COMBAT 보강 + P1.1~P1.17 추출 + P1.final (God method **2,838→1,087줄, -62%**). 잔여는 조율 로직 — 의도적 잔존. 다음: Phase 2(context-builder) 또는 P3.X(중복 단일화). 진행 로그는 §9.
 > 관련: [[guides/01_server_module_map|server module map]], [[guides/02_client_component_map|client component map]]
 > 원칙: 동작 보존 리팩토링(behavior-preserving) — 기능 변경 0, 순수 구조 개선. 각 단계는 독립 커밋 + 회귀 검증 통과가 조건.
 
@@ -156,4 +156,6 @@ Phase 5 (클라이언트) — 언제든 병행 가능
 - **2026-07-16 P1.1** (9c22569): 획득 아이템 블록 추출 (buildAcquiredItemsBlock).
 - **2026-07-16 P1.0b** (698ae46): **COMBAT fixture 3종 보강** — P1.0이 HUB/LOCATION만 캡처해 전투 분기([전투 장면] 디렉티브·isCombat 게이트·기만 전술) 무방비였던 갭 보완. 진입 SYSTEM / DISTRACTION+도주 / FEINT 지속. 캡처는 launchd bootout → env 기동 → 전투 시나리오 → 복구 절차.
 - **2026-07-16 P1.2~P1.10** (e29920a..839077c, 커밋당 1블록): 대화 행위 톤 가이드 / 창의 행동 재해석 4종 / Nano 이벤트 컨셉 / NpcReaction P0 / 직전 NPC 발화(105줄) / 대화 단계 카운터 / 행동-반응 매핑(70줄) / 대화 연속 상태 / NPC 등장 주입(156줄). 매 커밋 스냅샷 17개 byte-equal + build. **God method 2,838 → 2,250줄 (-21%)**. 전체 1,336 passed·린트 0·재시작 확인(839077c).
-- **잔여 (P1 계속)**: 등장 가능 NPC 목록(로스터) / Narrative Engine(사건·감정·마크·시그널) / 이번 턴 행동+답변 가이드 / 감각 초점·최근 사용 표현 / 메모리 블록 앞부분(L0~L1) 등 — 동일 패턴으로 추출 계속. P1.final에서 파일 분할 여부 판단.
+- **2026-07-16 P1.11~P1.17** (커밋당 1블록, ..be84b1b): NPC 로스터(244줄, **탈출 상태 targetNpcIds는 반환값으로 공유**) / Narrative Engine(98줄) / 플레이어 행동(178줄) / 문체·초점(106줄) / L0~L1 메모리 묶음(316줄) / 턴 결과(140줄) / NPC 대화 자세(118줄). 숨은 외부 의존(sr·useJsonMode·isQuestionTurn)은 tsc가 검출 → 파라미터로 명시화. **God method 2,838 → 1,087줄 (-62%)**.
+- **2026-07-16 P1.final**: 전체 1,336 passed·린트 0·재시작(be84b1b) + playtest 8턴 sanity 9/10 (V2는 단축런 특성, 서술 품질 V7~V10 전부 green). **파일 분할 판단: 보류** — 추출 빌더들이 content/tokenBudget 의존을 서비스와 공유해 응집. 파일(3,583줄)이 부담되면 `prompts/blocks/` 이관은 후속 선택지.
+- **잔여 (의도적 잔존)**: 시스템 프롬프트 병합/파티 모드/JSON 스키마/Token Budget 트리밍/witness·agitation·전투 디렉티브 등 조율 로직 ~1,087줄 — 코디네이터 메서드의 본래 몫. 2단계 다듬기(서명 축소·순수 함수화·블록별 유닛)는 필요 시 별도 사이클.
