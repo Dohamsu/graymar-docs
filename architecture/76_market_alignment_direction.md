@@ -1,6 +1,6 @@
 # 76. 시장 조사 대응 방향 — "이해하고 기억해주는 경험" 정렬
 
-> 상태: ✅ 구현됨 (D1·D2·D3 + 자유도 체감 A/B, 2026-07-16) — 잔여 D4 계측·D1-c·D3-b/c는 §5 체크리스트. 소유자 제공 시장 조사(AI 텍스트 RPG 이용자 긍/부정 요인)를 현 구조와 대조해 수정 방향을 도출·구현. 조사 원문의 결론: **"내가 상상한 행동을 게임이 이해하고 기억해주는 경험에는 돈을 내지만, AI가 저지른 오류를 내가 계속 수정해야 하는 경험에는 돈을 내지 않는다."**
+> 상태: ✅ 구현됨 (D1·D2·D3 + 자유도 체감 A/B + D4·D1-c 계측 + D3-b′/c′/combat 감정·행동화 탈버킷, 2026-07-16) — 원안 D3-b/c는 폐기·재설계로 대체, 잔여는 §5 미실측 항목 관찰. 소유자 제공 시장 조사(AI 텍스트 RPG 이용자 긍/부정 요인)를 현 구조와 대조해 수정 방향을 도출·구현. 조사 원문의 결론: **"내가 상상한 행동을 게임이 이해하고 기억해주는 경험에는 돈을 내지만, AI가 저지른 오류를 내가 계속 수정해야 하는 경험에는 돈을 내지 않는다."**
 > 관련: [[75_autonomous_pack_design]] (재플레이성 트랙 — P6 카른홀트까지 배포), [[73_scenario_differentiation]] (반복 서사 계측 지표), arch/75 P5 리뷰의 NPC 반응 평가 (사물·기행·공포 행동화 갭).
 
 ---
@@ -94,9 +94,45 @@
 
 **실플레이 검증 + 핫픽스 (2026-07-16, server 944be95):** 12턴 플레이테스트가 결함 2건 실측 — ① `parseSceneTrace`가 "흔적 없음"(부정 접두)을 흔적으로 통과(null 정규식이 정확 매칭만) → 부정 표현 위치 무관 차단. ② 비물리 턴(TRADE/INVESTIGATE)에서 배경 묘사("긁힌 양피지 모서리") 오추출 → **물리 행동(FIGHT/STEAL/THREATEN/SNEAK)·창의(plausibility≠NORMAL) 턴만** 추출 게이트 + 프롬프트를 "이번 턴 플레이어가 만든 변화만"으로 강화. 재검증: 전부 비물리인 10턴 런에서 [SceneTrace] 0·"흔적 없음" 0(과잉 제거 확인), D3 statHint 라이브 정확(TRADE→cha·조사→per). scene-trace.spec +2 회귀 가드. **미확인**: 물리 행동 발생 시 흔적 저장 positive 경로는 게이트 후 전용 재현 안 함(추출·저장 경로 자체는 1차 런에서 발화 실측, 게이트 조건만 변경).
 
+#### D3-b′/c′/combat 재설계 — 감정·행동화 탈버킷 (2026-07-16 확정, 원안 D3-b/c 폐기)
+
+**폐기 사유:** 원안 D3-b(WEIRD→suspicion)·D3-c(fear 임계 3종)는 그 자체가 또 하나의 버킷/임계 특수 룰 — D3 탈버킷이 판정 계층에서 해소한 문제를 감정 계층에서 재생산한다. 원칙("플레이어 입력에 다양하게 반응, 누적 기억으로 세계 형성")에 맞춰 통합 nano 감정 패턴으로 일반화한다. 실측 근거 3가지: ① 감정 갱신이 `ACTION_IMPACT` 11-actionType 정적 테이블뿐(내용 무관 — 기행이 TALK로 trust+5) ② NpcReactionDirector가 이미 `emotionalShiftHint`(4축 ±3)를 산출하나 **서버 상태 미적용(죽은 출력)** ③ NPC 능동 행동이 trust 밴드+당턴 목격 경로만(누적 감정의 세계 출구 없음).
+
+**D3-b′ — 감정 탈버킷 (입력측, LOCATION):**
+- 통합 nano 감정(ChallengeClassifier — 기존 호출, 신규 콜 0)에 `socialImpact` 확장: 이 행동이 상대·목격 NPC에게 주는 인상을 5축 델타(각 clamp ±5, 서버 검증)로 제안.
+- 적용: `applyActionImpact(state, actionType, outcome, direct, nanoImpact?)` — **nano 존재 시** 축별 `round(base×0.4 + nano×2)` 블렌드(테이블=진폭 뼈대, nano=의미 보정), outcome 배율·FAIL 부호 분기·directMod는 기존 유지. nano 부재(파싱 실패·killswitch) 시 기존 테이블 100% — 안전 fallback.
+- NpcReactionDirector `emotionalShiftHint` 배선: 워커에서 반응 생성 후 `applyRunStatePatch`(fresh CAS, arch/60)로 대화 NPC 감정에 ±3 보정 적용(다음 턴 반영) — NPC 개별 해석 층. posture 재파생 포함.
+
+**D3-c′ — 감정→세계 행동화 (출력측):**
+- 순수 코어 `npc-agitation.core.ts`: 누적 감정 종합+posture → 능동 행동 결정(결정론 — 감정 자체가 이미 nano 판단의 누적이므로 카테고리 매핑은 서버 룰이 불변식 1에 부합). 우선순위 fear > suspicion > trust:
+  - fear ≥ 임계(60): FEARFUL/CAUTIOUS → **FLEE_LOCATION**(`ws.npcLocations` 이탈 — 다음 방문 시 부재), 그 외 → **AVOID**(거리두기 디렉티브)
+  - suspicion ≥ 60 & trust < -10: HOSTILE/CALCULATING → **REPORT**(Heat+5, 서버 매핑), 그 외 → AVOID
+  - trust ≥ 50 & attachment ≥ 30: **APPROACH**(NPC가 먼저 다가와 귀띔 — 긍정 행동화)
+- 트리거: 당턴 감정 갱신 직후 eventPrimaryNpc 대상, NPC당 쿨다운(6턴, `npcState.lastAgitationTurn`). **권한 경계**: 당턴 witness 반응 발화 NPC 제외(급성=witness/만성=agitation), 발화·태도 문장은 여전히 NpcReactionDirector 권한 — 본 경로는 세계 결과(Heat/이동/이벤트)+LLM 디렉티브만.
+- 시그널 피드 연동은 후속(이벤트+Heat 우선 — 정직 스코프).
+
+**D3-b′-combat — 전투 기만·전술 감정 (전투 확장):**
+- 게이트: ACTION && PropMatcher **Tier 3/4**(프롭·카테고리 미매칭 창의 입력) && rawInput 실질 길이 — 평타/버튼 전투는 nano 0회 유지(레이턴시 보호). killswitch `COMBAT_TACTIC_DISABLED`.
+- nano 전술 감정: `{tactic: NONE|DISTRACTION|INTIMIDATION|FEINT, plausibility}` — "운석이 떨어진다고 소리침"=DISTRACTION(가능한 거짓말), "운석을 떨어뜨림"=IMPLAUSIBLE(기존 fantasy 재해석). 키워드 테이블이 구분 못 하는 지점을 nano가 커버.
+- 서버 매핑(순수 코어 `combat-tactic.core.ts`): DISTRACTION → fleeBonus(성향 가중 평균) + 당턴 적 acc-2 / INTIMIDATION → 겁 많은 적 acc-3 / FEINT → 당턴 명중 +2. **성향 차등**: COWARDLY ×1.5 · AGGRESSIVE/SNIPER ×1.0 · TACTICAL ×0.5 · BERSERK ×0. **동일 tactic 전투 내 1회**(`battleState.usedTactics` — 재사용 시 효과 0 + "더는 속지 않는다" 이벤트).
+
+**구현 반영 (2026-07-16, D3-b′/c′/combat — 미커밋):**
+- **D3-b′**: classifier `socialImpact` 5축(±5 clamp, IMPLAUSIBLE 양수 trust 서버 차단, 전 축 0=null) + `applyActionImpact(..., nanoImpact?)` 블렌드(`round(base×0.4 + nano×2)`, nano 부재 시 테이블 100%) + ACTION 턴만 배선(CHOICE는 라벨이라 제외) + 워커 `emotionalShiftHint` CAS 배선(`npcEmotionalShift` 패치, 다음 턴 반영). 유닛: classifier +4, npc-emotional 신설 +7.
+- **D3-c′**: `npc-agitation.core.ts`(fear≥60→FLEE/AVOID · susp≥60&trust<-10→REPORT(Heat+5)/AVOID · trust≥50&attach≥30→APPROACH, 쿨다운 6턴) + turns.service 배선(당턴 witness NPC 제외 — 급성/만성 권한 분리) + `ui.npcAgitation`→프롬프트 "[NPC 능동 행동]" 디렉티브(헤더 레지스트리 등록) + FLEE는 `ws.npcFleeOverrides`(untilDay=day+1, **스케줄 재계산이 npcLocations를 매번 재구축해 즉시 쓰기만으론 복귀해버리는 결함 실측** → schedule 우선 적용·만료 정리). 임계·비용은 quest-balance.config. 유닛: agitation +10, schedule 신설 +3.
+- **combat**: `appraiseCombatTactic`(nano, killswitch `COMBAT_TACTIC_DISABLED`) + `combat-tactic.core.ts`(성향 민감도 COWARDLY1.5/TACTICAL0.5/BERSERK0) + Tier 3/4 ACTION 게이트(버튼·평타 nano 0) + combat.service 소비(FLEE 보너스 합산·적 acc 디버프·FEINT 명중+2·TACTIC 이벤트). 유닛: tactic +6.
+- **부수 버그 수정(기존)**: `getAmbushEncounterId`가 팩에 없는 `enc_generic`을 반환 → 무기 위협(KILL_ATTEMPT) 전투 전이가 **500 크래시**(graymar 실측, 검증 중 발견). 존재 검증 후 팩 첫 encounter fallback (content-loader 단일 지점 규약).
+
+**실런 검증:** ① 위협 누적 → 오웬 fear 100·posture FEARFUL → **T13 `[NPC_AGITATION, FLEE_LOCATION]` 발동**·ui 전달 ② 기행-as-TALK에서 suspicion 상승·trust 억제(블렌드 실측) ③ KILL_ATTEMPT → COMBAT 전이(크래시 해소 확인) → "운석이 떨어진다!" 외침 → **nano DISTRACTION 분류** → 상대가 BERSERK 해적 2체라 민감도 0 → "아무도 속지 않았다" 이벤트(**성향 차등이 설계 그대로 발화**) → 도주 성공. 전체 1318 passed·린트 0. **미실측**: REPORT/APPROACH 발동(유닛만)·npcFleeOverrides 실런 지속(스케줄 유닛으로 커버)·COWARDLY 상대 기만 보너스 실효.
+
 ### D4 — 반복 서사 방어 계측 상시화 〔P1 · 계측〕
 - 73 §8 n-gram + premise 다양성 + "미해결 스레드 존재 시 신규 스레드 억제" 확인을 playtest 정본 지표로 승격.
 - 자율 팩 다회 런에서 "무한 생성되지만 진행 안 됨" 패턴 감시 (3막+인력이 설계상 방어하나 실측 필요 — P8과 통합).
+
+**구현 반영 (2026-07-16, D4 + D1-c — 미커밋):** `scripts/playtest.py`에 "서사 방향 계측" 섹션 신설(리포트+JSON `directionMetrics` 저장, **게이트 아님** — baseline 축적 전 임계 미설정). ① **D4-1 n-gram 반복률**: 턴 간 3-gram 중복 비율 + 인접 턴 자카드 평균(@마커 제거 후 한글 word-gram). ② **D4-2 이벤트·premise 다양성**: 매칭 소스 히스토그램(BEAT/SIT/PROC/EVT/FREE_*) + distinct eventId 비율. ③ **D4-3 스레드 억제**: 생성 시점 미해결 스레드 2+ 공존한 신규 스레드 수 — **post-hoc 근사**(최종 status·lastTurnNo로 당시 생존 추정)이며 PlayerThread가 플레이어 행동 패턴 자동 파생이라 봇 무작위 행동 영향 포함(해석 주의). ④ **D4-4 무진행 감시**: plotProgress 채택/폐기/keyFact 대비 — 채택 3+ & fact 0이면 stall 플래그.
+
+**D1-c 구현(서버+계측):** 채택 시 `plotProgress.beatAdoptions[]`에 {turnNo, beatId, actionType, aligned, premise 60자} 기록(계측 전용, 판정 무영향). `aligned` 정의: 비트 affordances ∋ actionType = true / 지정·불일치 = false / **미지정(행동 무관 비트) = null → 정합률 분모 제외**. 순수 헬퍼 `isBeatIntentAligned`(beat-gravity.ts) + 유닛 3종. playtest가 정합률·premise 다양성(채택 premise 간 2-gram 자카드 역수)을 리포트.
+
+**실측 (카른홀트 12턴 1런):** 채택 3·폐기 0·keyFact 3(무진행 아님), **정합률 33%**(일치 1/불일치 2/무관 0), premise 다양성 1.00, 3-gram 반복률 0.005, 스레드 억제 위반 3건. 표본 1런이라 판단 유보 — 단 **affordance 불일치 채택이 구조적으로 가능함**(장소+fact 보너스만으로 `BEAT_ADOPT_MIN_SCORE` 도달)은 확인. 채택 임계에 affordance 정합을 필수화할지는 다회 축적 후 별도 결정(지금은 계측만 — D1 목적은 관찰). AUTHORED(graymar) dry-run에서 신규 섹션 무해 확인(자율 데이터 없음 안내). 서버 1288 passed·린트 0.
 
 ### D5 — 과금 3원칙 등재 〔P0 · 문서만〕
 CLAUDE.md 설계 불변식 인근에 등재 (지금 코드 변경 없음, 미래 결정 봉인):
@@ -131,7 +167,7 @@ CLAUDE.md 설계 불변식 인근에 등재 (지금 코드 변경 없음, 미래
 | D5 | 과금 3원칙 CLAUDE.md 등재 | 문서만 | ✅ | docs 0bd41f9 |
 | D1-a | 강제창(1.5-C)에서 대화 잠금 활성 턴 제외 | 엔진 소 | ✅ | f7a92b6 |
 | D1-b | 사교 발화·REST 의도 턴 비트 채택 금지 | 엔진 소 | ✅ | f7a92b6 |
-| D1-c | P8 계측에 "의도 정합 채택률" 추가 | 계측 | ⬜ | — |
+| D1-c | P8 계측에 "의도 정합 채택률" 추가 | 계측 | ✅ | 미커밋 |
 | D1-d | 신규 불변식 D("비트는 정합 시만 — 강제 진행 금지") CLAUDE.md 등재 (불변식 47) | 문서만 | ✅ | docs 0bd41f9 |
 | D2-a | FREE 판정 스킵 사유 표시 | 클라 소 | ✅ | f7a92b6·client af4b065 |
 | D2-b | 보정치 출처 분해 노출 (스탯/특기/이벤트/상태) | 서버+클라 소 | ✅ | f7a92b6·client af4b065 |
@@ -142,9 +178,10 @@ CLAUDE.md 설계 불변식 인근에 등재 (지금 코드 변경 없음, 미래
 | D3-univ | 통합 nano 감정 — plausibility·physicalImpact 보편 적용(룰 게이트 우회 해소) | 엔진 소 | ✅ | 0b1424c |
 | D3-a | 사물 상태 경량(propsState) — nano 추출 흔적 링버퍼 | 엔진 중 | ✅ | f7a92b6·핫픽스 944be95 |
 | D3-B | 되짚기 — 고임팩트 과거 행동 NPC 언급 허용(정보 억제 유지) | 엔진 소 | ✅ | f7a92b6 |
-| D3-b | 기행 감정축 (WEIRD → suspicion) — statHint가 오분류 일부 흡수 | 엔진 소 | 🅿️ 부분 | — |
-| D3-c | 공포 행동화 (fear 임계 → 회피/신고/도주) | 엔진 중 | ⬜ | — |
-| D4 | 반복 서사 계측 상시화 (n-gram·premise·스레드 억제 → playtest 정본 지표) | 계측 | ⬜ | — |
+| D3-b′ | 감정 탈버킷 — socialImpact + shiftHint 배선 (원안 D3-b 폐기·재설계) | 엔진 중 | ✅ | 미커밋 |
+| D3-c′ | 감정→세계 행동화 — agitation 코어 + Heat/도주/디렉티브 (원안 D3-c 폐기·재설계) | 엔진 중 | ✅ | 미커밋 |
+| D3-cb | 전투 기만 전술 — tacticalImpact nano + 성향 차등 + 1회 감쇠 | 엔진 중 | ✅ | 미커밋 |
+| D4 | 반복 서사 계측 상시화 (n-gram·premise·스레드 억제 → playtest 정본 지표) | 계측 | ✅ | 미커밋 |
 | D6 | 팩 저작 도구 | 장기 보류 | 🅿️ 보류 | — |
 
 ### 5.1 다음 세션 이어작업 (2026-07-16 인계)
@@ -153,11 +190,9 @@ CLAUDE.md 설계 불변식 인근에 등재 (지금 코드 변경 없음, 미래
 
 **완료 (D1·D2·D3 + 자유도 체감 A/B):** 강제창 의도 존중(불변식 47)·과금 3원칙·판정 투명성(보정 분해/FAIL 부족분/FREE 스킵)·actionType 탈버킷(통합 nano 감정: statHint·difficultyMod·plausibility·physicalImpact)·물리 흔적(propsState nano 추출)·되짚기. 기상천외 입력 실측으로 마법-as-FIGHT 재생·흔적 과잉·오분류 우회까지 해소 검증.
 
-**남은 작업 (우선순위):**
-1. **D4 계측 상시화** — n-gram·premise 다양성·미해결 스레드 억제를 `scripts/playtest.py` 정본 지표로 승격. (73 §8 참조)
-2. **D1-c** — P8 계측에 "의도 정합 채택률"(채택 비트 ↔ 플레이어 행동 affordance 일치율). 자율 서사(arch/75) P8과 통합.
-3. **D3-c 공포 행동화** — fear 임계 초과 NPC 회피/신고/도주 능동화. 배경: `npc-emotional`·`sudden-action-detector`·`witness-reaction.core`.
-4. **D3-b 기행 감정축** — WEIRD→suspicion. statHint가 스탯 오분류만 흡수, 감정축은 미착수.
+**완료 (감정·행동화 탈버킷, 2026-07-16 미커밋):** 원안 D3-b/c 폐기 → D3-b′(socialImpact 감정 블렌드 + shiftHint 배선)·D3-c′(agitation 코어 + Heat/도주 오버라이드/디렉티브)·D3-cb(전투 기만 전술 + 성향 차등) 재설계 구현. §2 D3-b′/c′/combat 재설계 절 참조. 부수: enc_generic 500 크래시 수정. **남은 관찰**: REPORT/APPROACH 실런 발동·COWARDLY 기만 보너스 실효·감정 블렌드 일관성(NPA 감정축 다회 계측).
+
+**완료 (계측 트랙, 2026-07-16 미커밋):** D4 서사 방향 계측 4종(`playtest.py` §4.5 + `directionMetrics` JSON) + D1-c 의도 정합 채택률(서버 `plotProgress.beatAdoptions` + `isBeatIntentAligned`). 카른홀트 12턴 실측: 정합률 33%(표본 1런), affordance 불일치 채택이 구조적으로 가능함 확인 — 다회 축적 후 임계 필수화 여부 별도 결정. §2 D4 구현 반영 절 참조.
 
 **잔여 관찰(비차단):** ① propsTrace가 빠른 연속 턴에서 CAS 충돌로 일부 유실(soft data 허용) ② intent 파서 오분류("간판 뜯어냄"→INVESTIGATE) 존속 — physicalImpact가 흔적은 우회하나 NPC 반응 매핑엔 영향. 근본 교정은 intent parser 튜닝(별도 트랙).
 

@@ -683,6 +683,116 @@ _top = sorted(_freq.items(), key=lambda x: -x[1])[:5]
 print("\n어휘 반복 톱5 (계측):", ", ".join(f"{w}×{c}" for w, c in _top), flush=True)
 
 # ═══════════════════════════════════════
+# 4.5 서사 방향 계측 (D4 + D1-c, arch/76 — 판단용 상시 리포트, 게이트 아님)
+# ═══════════════════════════════════════
+print("\n" + "─" * 60, flush=True)
+print("서사 방향 계측 (D4 + D1-c, arch/76)", flush=True)
+print("─" * 60, flush=True)
+from collections import Counter
+
+def _word_ngrams(text, n=3):
+    """@마커 제거 후 한글 토큰 word n-gram 집합"""
+    toks = re.findall(r"[가-힣]{2,}", re.sub(r"@\[[^\]]+\]", "", text or ""))
+    return set(tuple(toks[i:i+n]) for i in range(len(toks) - n + 1))
+
+# D4-1: 서술 n-gram 반복률 — 턴 간 3-gram 중복 비율 + 인접 턴 자카드 유사도
+_turn_tris = [(t["turn"], _word_ngrams(t.get("narrative", ""))) for t in turn_logs if t.get("narrative")]
+_tri_seen = {}
+for _tn, _tg in _turn_tris:
+    for _g in _tg:
+        _tri_seen.setdefault(_g, set()).add(_tn)
+_tri_total = len(_tri_seen)
+_tri_repeated = sum(1 for _turns in _tri_seen.values() if len(_turns) >= 2)
+trigram_repeat_ratio = _tri_repeated / _tri_total if _tri_total else 0.0
+_jac_pairs = []
+for (_, a), (_, b) in zip(_turn_tris, _turn_tris[1:]):
+    if a or b:
+        _jac_pairs.append(len(a & b) / len(a | b))
+adjacent_jaccard = sum(_jac_pairs) / len(_jac_pairs) if _jac_pairs else 0.0
+print(f"[D4-1] 서술 3-gram 반복률: {trigram_repeat_ratio:.3f} ({_tri_repeated}/{_tri_total}) · 인접 턴 자카드 평균: {adjacent_jaccard:.3f}", flush=True)
+
+# D4-2: 이벤트·premise 다양성 — 매칭 소스 히스토그램 + distinct 비율
+_EVT_PREFIXES = ["BEAT_", "SIT_", "PROC_", "EVT_", "FREE_PLAYER_", "FREE_CONV_"]
+_src_hist = Counter()
+_evt_ids = []
+for t in turn_logs:
+    if t.get("nodeType") != "LOCATION" or not t.get("eventId"):
+        continue
+    eid = t["eventId"]
+    _evt_ids.append(eid)
+    _src = next((p.rstrip("_") for p in _EVT_PREFIXES if eid.startswith(p)), "OTHER")
+    _src_hist[_src] += 1
+distinct_event_ratio = len(set(_evt_ids)) / len(_evt_ids) if _evt_ids else 0.0
+print(f"[D4-2] 이벤트 소스 분포: {dict(_src_hist)} · distinct 비율: {distinct_event_ratio:.2f}", flush=True)
+
+# D4-3: 미해결 스레드 억제 확인 — 생성 시점에 미해결 스레드 2개+ 공존한 신규 스레드 수
+#   근사(post-hoc): o가 t 생성 시점(firstTurnNo)에 살아있었다 =
+#   o.firstTurnNo < t.firstTurnNo AND (o가 최종 미해결이거나 o.lastTurnNo >= t.firstTurnNo)
+_threads = world_state.get("playerThreads", []) or []
+_UNRESOLVED = {"EMERGING", "ACTIVE"}
+thread_suppress_violations = []
+for _t in _threads:
+    _first = _t.get("firstTurnNo", 0)
+    _coexist = sum(
+        1 for _o in _threads
+        if _o.get("threadId") != _t.get("threadId")
+        and _o.get("firstTurnNo", 0) < _first
+        and (_o.get("status") in _UNRESOLVED or _o.get("lastTurnNo", 0) >= _first)
+    )
+    if _coexist >= 2:
+        thread_suppress_violations.append(f"{_t.get('threadId', '?')} (T{_first}, 공존 {_coexist})")
+print(f"[D4-3] 스레드: 총 {len(_threads)}개 · 미해결 {sum(1 for _t in _threads if _t.get('status') in _UNRESOLVED)}개 · 억제 위반(공존 2+ 중 신규): {len(thread_suppress_violations)}건", flush=True)
+for _v in thread_suppress_violations[:3]:
+    print(f"  ⚠️ {_v}", flush=True)
+
+# D4-4 + D1-c: 자율 팩 — 무진행 감시 + 의도 정합 채택률 (AUTHORED 런은 데이터 없음)
+_plot_progress = run_state.get("plotProgress") or {}
+_adoptions = _plot_progress.get("beatAdoptions") or []
+_adopted_n = _plot_progress.get("adoptedBeatCount", 0)
+_discarded_n = _plot_progress.get("discardedBeatCount", 0)
+_key_facts_n = len(_plot_progress.get("discoveredKeyFactIds", []))
+intent_alignment_rate = None
+_stall_flag = False
+_premise_diversity = None
+if _adopted_n or _discarded_n or _adoptions:
+    _al_true = sum(1 for a in _adoptions if a.get("aligned") is True)
+    _al_false = sum(1 for a in _adoptions if a.get("aligned") is False)
+    _al_neutral = sum(1 for a in _adoptions if a.get("aligned") is None)
+    if _al_true + _al_false:
+        intent_alignment_rate = _al_true / (_al_true + _al_false)
+    # 무진행 감시: 비트는 채택되는데 keyFact 발견 0 → "무한 생성·무진행" 신호
+    _stall_flag = _adopted_n >= 3 and _key_facts_n == 0
+    # premise 다양성: 채택 premise 간 2-gram 자카드 평균 (낮을수록 다양)
+    _prem_grams = [_word_ngrams(a.get("premise", ""), 2) for a in _adoptions if a.get("premise")]
+    if len(_prem_grams) >= 2:
+        _pj = [len(a & b) / len(a | b) for i, a in enumerate(_prem_grams) for b in _prem_grams[i+1:] if a or b]
+        _premise_diversity = 1 - (sum(_pj) / len(_pj)) if _pj else None
+    print(f"[D4-4] 자율 진행: 비트 채택 {_adopted_n} · 폐기 {_discarded_n} · keyFact 발견 {_key_facts_n}" + (" · ⚠️ 무진행 신호(채택 3+ & fact 0)" if _stall_flag else ""), flush=True)
+    _rate_str = f"{intent_alignment_rate:.0%}" if intent_alignment_rate is not None else "N/A(전부 행동 무관)"
+    print(f"[D1-c] 의도 정합 채택률: {_rate_str} (일치 {_al_true} / 불일치 {_al_false} / 무관 {_al_neutral})" + (f" · premise 다양성: {_premise_diversity:.2f}" if _premise_diversity is not None else ""), flush=True)
+    for a in _adoptions:
+        print(f"  T{a.get('turnNo')}: {a.get('beatId')} action={a.get('actionType')} aligned={a.get('aligned')} — {(a.get('premise') or '')[:40]}", flush=True)
+else:
+    print(f"[D4-4/D1-c] 자율 팩 데이터 없음 (AUTHORED 런 또는 비트 미발화)", flush=True)
+
+direction_metrics = {
+    "trigramRepeatRatio": trigram_repeat_ratio,
+    "adjacentJaccard": adjacent_jaccard,
+    "eventSourceHistogram": dict(_src_hist),
+    "distinctEventRatio": distinct_event_ratio,
+    "threadTotal": len(_threads),
+    "threadUnresolved": sum(1 for _t in _threads if _t.get("status") in _UNRESOLVED),
+    "threadSuppressViolations": len(thread_suppress_violations),
+    "beatAdopted": _adopted_n,
+    "beatDiscarded": _discarded_n,
+    "keyFactsDiscovered": _key_facts_n,
+    "beatStallFlag": _stall_flag,
+    "intentAlignmentRate": intent_alignment_rate,
+    "premiseDiversity": _premise_diversity,
+    "beatAdoptions": _adoptions,
+}
+
+# ═══════════════════════════════════════
 # 5. Git Version Tagging
 # ═══════════════════════════════════════
 def git_info(repo_dir):
@@ -799,6 +909,7 @@ output = {
     "verification": all_checks,
     "narrativeMetrics": narrative_metrics,
     "outcomeDistribution": outcome_distribution,
+    "directionMetrics": direction_metrics,
 }
 
 output_path = args.output
