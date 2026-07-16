@@ -402,4 +402,6 @@ G2 통과 후 §6 종결을 구현. AUTHORED(Incident resolved)와 별개 종결
 
 **실검증** (graymar 임시 픽스처 + 게이지 CITY_UNREST 빠른 임계, 20턴 런): **게이지 임계 종결 turn16, 규명율 30%(3/10), band=MID, 게이지 종결이라 endingTone=CITY_RIOT(gaugeCollapse) 오버레이, RUN_ENDED 정상, 10/10 PASS.** AUTHORED 무회귀(1260 passed). server `5ae22ab`.
 
-**후속(P6~P8)**: 여정 아카이브에 규명율·진상 요약 전용 필드(현재 endingResult.clearanceRate까지) · 재진입 경제 보상 감쇠(P7) · P6 새 도시 저작 · P8 다회 계측. P5로 **AUTONOMOUS 런이 시작→전개→종결까지 완주 가능**.
+**후속 수정 (2026-07-16, server `2899bc2`)**: P5 리뷰에서 발견 — [마지막 장면] 디렉티브 톤맵이 AUTHORED 4종만 알아 AUTONOMOUS endingType은 범용 톤으로 떨어지던 것 교정 (clearanceBand 판별 → closingLine을 서술 톤으로, 팩 커스텀 endingType 자동 커버).
+
+**후속(P6~P8)**: 여정 아카이브에 규명율·진상 요약 전용 필드(현재 endingResult.clearanceRate까지) · 재진입 경제 보상 감쇠(P7) · P6 새 도시 저작 · P8 다회 계측 (+ 규칙 1.5-A의 대화 중단 체감 관찰) · packMeter endingTrigger id 시맨틱 문서화(P6 팩 계약 — 현재 truthy만 사용). P5로 **AUTONOMOUS 런이 시작→전개→종결까지 완주 가능**.
