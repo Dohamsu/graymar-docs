@@ -1,0 +1,333 @@
+[
+  {
+    "enemyId": "ENEMY_DOCK_THUG",
+    "name": "부두 깡패",
+    "description": "항만 노동 길드의 비공식 집행자. 거친 주먹질이 주무기.",
+    "faction": "LABOR_GUILD",
+    "hp": 15,
+    "stats": {
+      "str": 12,
+      "dex": 2,
+      "wit": 2,
+      "con": 5,
+      "per": 2,
+      "cha": 4
+    },
+    "personality": "AGGRESSIVE",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "5-15"
+    }
+  },
+  {
+    "enemyId": "ENEMY_HARBOR_WATCHMAN",
+    "name": "항만 경비병",
+    "description": "상인 길드가 고용한 정규 경비. 방패와 곤봉으로 무장.",
+    "faction": "MERCHANT_CONSORTIUM",
+    "hp": 25,
+    "stats": {
+      "str": 14,
+      "dex": 3,
+      "wit": 4,
+      "con": 9,
+      "per": 3,
+      "cha": 4
+    },
+    "personality": "TACTICAL",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "10-20"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SMUGGLER",
+    "name": "밀수업자",
+    "description": "동쪽 부두를 근거지로 삼는 밀수꾼. 석궁과 단검 휴대.",
+    "faction": null,
+    "hp": 18,
+    "stats": {
+      "str": 16,
+      "dex": 4,
+      "wit": 6,
+      "con": 4,
+      "per": 4,
+      "cha": 6
+    },
+    "personality": "SNIPER",
+    "defaultDistance": "FAR",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "15-30",
+      "items": [
+        "ITEM_SMOKE_BOMB"
+      ]
+    }
+  },
+  {
+    "enemyId": "ENEMY_CORRUPT_GUARD",
+    "name": "매수된 수비대원",
+    "description": "장부 은폐에 가담한 도시 수비대 소속. 정규 훈련을 받은 만큼 강하다.",
+    "faction": "CITY_GUARD",
+    "hp": 30,
+    "stats": {
+      "str": 16,
+      "dex": 4,
+      "wit": 5,
+      "con": 11,
+      "per": 4,
+      "cha": 5
+    },
+    "personality": "TACTICAL",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [
+      "SLOW"
+    ],
+    "loot": {
+      "gold": "20-35"
+    }
+  },
+  {
+    "enemyId": "ENEMY_WAREHOUSE_GUARD",
+    "name": "창고 야경꾼",
+    "description": "동쪽 부두 창고를 지키는 고용 야경꾼. 겁이 많아 위협하면 도주한다.",
+    "faction": null,
+    "hp": 12,
+    "stats": {
+      "str": 10,
+      "dex": 2,
+      "wit": 3,
+      "con": 6,
+      "per": 2,
+      "cha": 5
+    },
+    "personality": "COWARDLY",
+    "defaultDistance": "MID",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "3-8"
+    }
+  },
+  {
+    "enemyId": "ENEMY_HIRED_MUSCLE",
+    "name": "고용 무력배",
+    "description": "길드가 밀수 경호에 고용한 거구. 주먹과 곤봉 사용.",
+    "faction": "LABOR_GUILD",
+    "hp": 22,
+    "stats": {
+      "str": 13,
+      "dex": 2,
+      "wit": 3,
+      "con": 7,
+      "per": 2,
+      "cha": 4
+    },
+    "personality": "AGGRESSIVE",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "10-20"
+    }
+  },
+  {
+    "enemyId": "ENEMY_CORRUPT_GUARD_LOYAL",
+    "name": "마이렐 충성 부하",
+    "description": "마이렐에게 충성하는 수비대 정예. 방패술 숙련.",
+    "faction": "CITY_GUARD",
+    "hp": 25,
+    "stats": {
+      "str": 12,
+      "dex": 3,
+      "wit": 4,
+      "con": 10,
+      "per": 3,
+      "cha": 5
+    },
+    "personality": "TACTICAL",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "15-25"
+    }
+  },
+  {
+    "enemyId": "ENEMY_GUILD_THUG_ELITE",
+    "name": "길드 정예 깡패",
+    "description": "항만 길드의 숙련된 전투원. 단검과 주먹 병용.",
+    "faction": "LABOR_GUILD",
+    "hp": 28,
+    "stats": {
+      "str": 16,
+      "dex": 3,
+      "wit": 4,
+      "con": 6,
+      "per": 3,
+      "cha": 5
+    },
+    "personality": "AGGRESSIVE",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "15-30"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SLUM_THUG",
+    "name": "빈민가 건달",
+    "description": "빈민가 뒷골목을 근거지로 삼는 좀도둑 겸 건달. 녹슨 칼과 주먹을 사용.",
+    "faction": null,
+    "hp": 14,
+    "stats": {
+      "str": 11,
+      "dex": 2,
+      "wit": 2,
+      "con": 4,
+      "per": 2,
+      "cha": 5
+    },
+    "personality": "AGGRESSIVE",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "3-10"
+    }
+  },
+  {
+    "enemyId": "ENEMY_SLUM_KNIFE",
+    "name": "칼잡이",
+    "description": "빈민가에서 삯을 받고 움직이는 칼잡이. 빠른 단검 공격이 특기.",
+    "faction": null,
+    "hp": 18,
+    "stats": {
+      "str": 14,
+      "dex": 4,
+      "wit": 5,
+      "con": 3,
+      "per": 4,
+      "cha": 7
+    },
+    "personality": "AGGRESSIVE",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "SIDE",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "8-18"
+    }
+  },
+  {
+    "enemyId": "ENEMY_MARKET_ENFORCER",
+    "name": "시장 강제징수원",
+    "description": "시장 구역에서 보호비를 뜯는 불량배. 곤봉으로 무장.",
+    "faction": "MERCHANT_CONSORTIUM",
+    "hp": 16,
+    "stats": {
+      "str": 12,
+      "dex": 2,
+      "wit": 3,
+      "con": 6,
+      "per": 2,
+      "cha": 4
+    },
+    "personality": "AGGRESSIVE",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "5-15"
+    }
+  },
+  {
+    "enemyId": "ENEMY_HARBOR_PIRATE",
+    "name": "항만 해적",
+    "description": "정박 중인 선박을 노리는 소규모 해적. 커틀라스와 권총 소지.",
+    "faction": null,
+    "hp": 20,
+    "stats": {
+      "str": 15,
+      "dex": 3,
+      "wit": 4,
+      "con": 5,
+      "per": 3,
+      "cha": 5
+    },
+    "personality": "BERSERK",
+    "defaultDistance": "CLOSE",
+    "defaultAngle": "FRONT",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "10-25"
+    }
+  },
+  {
+    "enemyId": "ENEMY_TOBREN_COMBAT",
+    "name": "토브렌 하위크 (전투형)",
+    "description": "궁지에 몰린 토브렌. 단검 난동, FLEE 경향 높음.",
+    "faction": null,
+    "hp": 20,
+    "stats": {
+      "str": 11,
+      "dex": 3,
+      "wit": 3,
+      "con": 5,
+      "per": 2,
+      "cha": 6
+    },
+    "personality": "COWARDLY",
+    "defaultDistance": "MID",
+    "defaultAngle": "SIDE",
+    "statusImmunities": [],
+    "loot": {
+      "gold": "10-20"
+    }
+  },
+  {
+    "enemyId": "ENEMY_GUILD_ENFORCER",
+    "name": "길드 집행관",
+    "description": "상인 길드의 비밀 집행자. 냉정하고 치밀하며, 길드의 어두운 일을 처리한다.",
+    "hp": 45,
+    "stats": {
+      "str": 18,
+      "dex": 8,
+      "con": 14
+    },
+    "aiPersonality": "TACTICAL",
+    "lootTable": [],
+    "tags": [
+      "GUILD",
+      "ELITE",
+      "BOSS"
+    ],
+    "distance": "CLOSE",
+    "angle": "FRONT"
+  },
+  {
+    "enemyId": "ENEMY_SHADOW_ASSASSIN",
+    "name": "그림자 암살자",
+    "description": "빈민가 지하에서 활동하는 프로 암살자. 독과 단검을 사용하며 빠르게 사라진다.",
+    "hp": 35,
+    "stats": {
+      "str": 14,
+      "dex": 16,
+      "con": 8
+    },
+    "aiPersonality": "SNIPER",
+    "lootTable": [],
+    "tags": [
+      "SLUMS",
+      "ELITE",
+      "ASSASSIN"
+    ],
+    "distance": "MID",
+    "angle": "BACK"
+  }
+]

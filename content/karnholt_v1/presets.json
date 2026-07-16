@@ -1,0 +1,68 @@
+[
+  {
+    "presetId": "KH_MINER",
+    "name": "은광 광부",
+    "subtitle": "곡괭이의 무게",
+    "description": "평생 갱도에서 은맥을 캐 온 광부. 사라진 동료를 찾아 나선다.",
+    "playstyleHint": "높은 체력과 완력. 갱도의 위험을 몸으로 버티는 탱커.",
+    "protagonistTheme": "은광 광부 — 카른홀트 갱도에서 은맥을 캐며 살았다. 어느 밤 동료가 곡괭이만 남기고 사라진 뒤, 답을 찾아 남았다. 어둠 속에서 단련된 몸이 재산이다.",
+    "prologueHook": "갱도에서 일하던 걸 봤어요. 사라진 이들의 사정을 아는 사람이 필요해요.",
+    "stats": { "MaxHP": 130, "MaxStamina": 5, "str": 14, "dex": 5, "wit": 4, "con": 14, "per": 5, "cha": 4 },
+    "startingGold": 25,
+    "startingItems": [{ "itemId": "ITEM_MINOR_HEALING", "qty": 2 }],
+    "npcPostureOverrides": {
+      "NPC_KH_GUILDMASTER": { "posture": "FRIENDLY", "trustDelta": 15 }
+    },
+    "actionBonuses": { "FIGHT": 1, "SEARCH": 1 },
+    "hp": 130
+  },
+  {
+    "presetId": "KH_RUNNER",
+    "name": "국경 밀매꾼",
+    "subtitle": "성에 밟는 발",
+    "description": "검은 시장과 국경을 오가며 물건을 나르던 밀매꾼. 눈에 띄지 않게 움직인다.",
+    "playstyleHint": "높은 민첩. 은밀·절도·회피에 능한 잠입형.",
+    "protagonistTheme": "국경 밀매꾼 — 검은 시장의 금지 물품을 국경 너머로 나르던 자. 거래가 틀어져 쫓기던 중 위조 주화 사건에 얽혔다. 그림자처럼 움직이는 법을 안다.",
+    "prologueHook": "당신 같은 사람이면 눈에 안 띄게 움직일 수 있죠. 조용히 알아봐 줘요.",
+    "stats": { "MaxHP": 100, "MaxStamina": 6, "str": 6, "dex": 14, "wit": 8, "con": 8, "per": 12, "cha": 6 },
+    "startingGold": 40,
+    "startingItems": [{ "itemId": "ITEM_SMOKE_BOMB", "qty": 1 }, { "itemId": "ITEM_MINOR_HEALING", "qty": 1 }],
+    "npcPostureOverrides": {
+      "NPC_KH_SMUGGLER": { "posture": "CAUTIOUS", "trustDelta": 10 }
+    },
+    "actionBonuses": { "SNEAK": 1, "STEAL": 1 },
+    "hp": 100
+  },
+  {
+    "presetId": "KH_CLERK",
+    "name": "파면된 서기",
+    "subtitle": "장부를 읽는 눈",
+    "description": "주조 감독청에서 쫓겨난 서기. 장부와 저울의 눈속임을 꿰뚫어 본다.",
+    "playstyleHint": "높은 재치·통찰. 조사·수색·설득에 능한 지능형.",
+    "protagonistTheme": "파면된 서기 — 주조 감독청에서 장부 조작에 반발하다 쫓겨났다. 숫자와 저울을 읽는 눈만 남았다. 진실을 기록으로 증명하려 한다.",
+    "prologueHook": "장부를 볼 줄 아신다면 이 도시의 숫자가 얼마나 어긋났는지 아실 거예요. 도와주세요.",
+    "stats": { "MaxHP": 95, "MaxStamina": 5, "str": 5, "dex": 6, "wit": 14, "con": 8, "per": 13, "cha": 9 },
+    "startingGold": 35,
+    "startingItems": [{ "itemId": "ITEM_MINOR_HEALING", "qty": 1 }],
+    "npcPostureOverrides": {
+      "NPC_KH_WARDEN": { "posture": "HOSTILE", "trustDelta": -10 }
+    },
+    "actionBonuses": { "INVESTIGATE": 1, "PERSUADE": 1 },
+    "hp": 95
+  },
+  {
+    "presetId": "KH_SELLSWORD",
+    "name": "떠돌이 용병",
+    "subtitle": "빚에 쫓기는 검",
+    "description": "일감을 따라 국경까지 흘러든 용병. 완력과 배짱으로 밥벌이를 한다.",
+    "playstyleHint": "균형 잡힌 전투·위협. 힘과 민첩을 겸비한 만능형.",
+    "protagonistTheme": "떠돌이 용병 — 갚지 못한 빚을 피해 국경 도시까지 흘러들었다. 검 한 자루와 배짱이 전부다. 위조 주화 소문 뒤에 큰 돈이 있음을 직감한다.",
+    "prologueHook": "손이 거친 걸 보니 싸움 좀 하시겠네요. 위험한 일이 될지도 몰라요.",
+    "stats": { "MaxHP": 120, "MaxStamina": 5, "str": 12, "dex": 11, "wit": 5, "con": 11, "per": 6, "cha": 7 },
+    "startingGold": 30,
+    "startingItems": [{ "itemId": "ITEM_STAMINA_TONIC", "qty": 1 }, { "itemId": "ITEM_MINOR_HEALING", "qty": 1 }],
+    "npcPostureOverrides": {},
+    "actionBonuses": { "FIGHT": 1, "THREATEN": 1 },
+    "hp": 120
+  }
+]
