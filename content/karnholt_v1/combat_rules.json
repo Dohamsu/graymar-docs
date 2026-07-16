@@ -1,0 +1,72 @@
+{
+  "version": "engine_v1",
+  "note": "엔진 정본: design/combat_system.md, design/combat_engine_resolve_v1.md",
+
+  "hit": {
+    "formula": "d20 + ACC >= 10 + targetEVA",
+    "autoCritical": 20,
+    "autoMiss": 1
+  },
+
+  "damage": {
+    "formula": "ATK * (100 / (100 + DEF))",
+    "variance": 0.1,
+    "critIgnoreDEF": 0.3
+  },
+
+  "crit": {
+    "formula": "clamp(CRIT, 0, 50)",
+    "multiplierBase": 1.5,
+    "multiplierMax": 2.5
+  },
+
+  "stamina": {
+    "costPerAction": 1,
+    "costBonusAction": 2,
+    "forcedPenalty": {
+      "condition": "stamina == 0 && staminaCost > 0",
+      "accMod": -5,
+      "damageMod": -0.2
+    },
+    "defendRecovery": 1
+  },
+
+  "actionSlots": {
+    "base": 2,
+    "bonus": 1,
+    "max": 3
+  },
+
+  "bonusSlot": {
+    "formula": "baseChance + TacticalScore * 0.8%",
+    "tacticalScore": "ACC*0.4 + EVA*0.3 + CRIT*0.2 + TraitBonus",
+    "cap": 60,
+    "limitPerTurn": 1
+  },
+
+  "flee": {
+    "formula": "d20 + SPEED >= 12 + engaged_enemy_count * 2",
+    "staminaCost": 2,
+    "successResult": "battleEnded, no loot",
+    "failResult": "turn consumed, opportunity attack from each ENGAGED enemy"
+  },
+
+  "downed": {
+    "trigger": "hp == 0",
+    "resistFormula": "d20 + RESIST >= 15",
+    "resistSuccess": "hp = 1",
+    "resistFail": "flags.downed = true",
+    "note": "즉사 없음 — DOWNED 상태로 전환"
+  },
+
+  "statusEffects": ["BLEED", "STUN", "SLOW", "WEAKEN", "EXPOSED"],
+
+  "scenarioOverrides": {
+    "hpZeroNarrative": "제압/부상 (사망 아님, 항구 도시 치안 설정)",
+    "combatFailureEffects": {
+      "reputationPenalty": true,
+      "loseRandomClue": true,
+      "advanceTimeStep": true
+    }
+  }
+}

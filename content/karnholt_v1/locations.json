@@ -1,0 +1,266 @@
+[
+  {
+    "locationId": "LOC_KH_TAVERN",
+    "name": "무너진 곡괭이",
+    "shortName": "술집",
+    "description": "광부와 뜨내기가 뒤섞이는 허름한 술집. 카른홀트의 소문이 모이는 거점이다.",
+    "tags": [
+      "SOCIAL",
+      "SAFE",
+      "HUB"
+    ],
+    "dangerLevel": 0,
+    "availableAtNight": true,
+    "nightDescription": "밤이 깊을수록 화주가 돌고 혀가 풀린다. 낮에 못 하던 말이 오간다.",
+    "adjacentLocations": [
+      "LOC_KH_MARKET",
+      "LOC_KH_CAMP"
+    ],
+    "baseState": {
+      "controllingFaction": "NEUTRAL",
+      "security": 40,
+      "prosperity": 30,
+      "unrest": 20
+    },
+    "secrets": [],
+    "hubAccessible": true,
+    "hubHint": "소문과 정보가 모이는 거점. 자유롭게 말을 걸 수 있다",
+    "moveKeywords": [
+      "술집",
+      "무너진 곡괭이",
+      "거점"
+    ],
+    "ambushEncounterId": "enc_generic"
+  },
+  {
+    "locationId": "LOC_KH_FOUNDRY",
+    "name": "왕립 주조소",
+    "shortName": "주조소",
+    "description": "왕국 주화를 찍는 변방 유일의 주조소. 벌겋게 단 화로와 압인기가 밤낮으로 돌아간다.",
+    "tags": [
+      "INDUSTRY",
+      "GUARDED",
+      "AUTHORITY"
+    ],
+    "dangerLevel": 2,
+    "availableAtNight": true,
+    "nightDescription": "야간 교대조가 화로를 지킨다. 은괴가 오가는 시간, 눈이 많다.",
+    "adjacentLocations": [
+      "LOC_KH_OFFICE",
+      "LOC_KH_MARKET"
+    ],
+    "baseState": {
+      "controllingFaction": "ROYAL_MINT",
+      "security": 80,
+      "prosperity": 70,
+      "unrest": 15
+    },
+    "secrets": [],
+    "moveKeywords": [
+      "주조소",
+      "화로",
+      "압인기"
+    ],
+    "ambushEncounterId": "enc_generic",
+    "hubAccessible": true,
+    "hubHint": "왕국 주화가 찍히는 주조소. 감독관과 은괴가 오간다"
+  },
+  {
+    "locationId": "LOC_KH_MINE",
+    "name": "은광 갱도",
+    "shortName": "갱도",
+    "description": "산 속으로 뻗은 은광 갱도. 곡괭이 소리와 물방울 소리가 어둠 속에 울린다.",
+    "tags": [
+      "MINE",
+      "DANGEROUS",
+      "LABOR"
+    ],
+    "dangerLevel": 3,
+    "availableAtNight": true,
+    "nightDescription": "야간 채굴조만 남은 갱도는 등불 하나에 의지한다. 낙반과 실종이 잦은 시간.",
+    "adjacentLocations": [
+      "LOC_KH_CAMP",
+      "LOC_KH_DEEPSHAFT"
+    ],
+    "baseState": {
+      "controllingFaction": "MINERS_GUILD",
+      "security": 40,
+      "prosperity": 50,
+      "unrest": 50
+    },
+    "secrets": [],
+    "moveKeywords": [
+      "갱도",
+      "은광",
+      "광산"
+    ],
+    "ambushEncounterId": "enc_generic",
+    "hubAccessible": true,
+    "hubHint": "은맥을 캐는 갱도. 광부들의 불만과 실종의 현장"
+  },
+  {
+    "locationId": "LOC_KH_CAMP",
+    "name": "광부 숙소촌",
+    "shortName": "숙소촌",
+    "description": "갱도 아래 다닥다닥 붙은 광부들의 판잣집. 가난과 불만이 고인 곳.",
+    "tags": [
+      "RESIDENTIAL",
+      "POOR",
+      "SOCIAL"
+    ],
+    "dangerLevel": 1,
+    "availableAtNight": true,
+    "nightDescription": "고단한 광부들이 잠든 밤, 판잣집 사이로 은밀한 대화가 오간다.",
+    "adjacentLocations": [
+      "LOC_KH_TAVERN",
+      "LOC_KH_MINE"
+    ],
+    "baseState": {
+      "controllingFaction": "MINERS_GUILD",
+      "security": 30,
+      "prosperity": 20,
+      "unrest": 60
+    },
+    "secrets": [],
+    "moveKeywords": [
+      "숙소촌",
+      "판잣집",
+      "광부촌"
+    ],
+    "ambushEncounterId": "enc_generic",
+    "hubAccessible": true,
+    "hubHint": "광부들이 모여 사는 숙소촌. 소문과 원성이 고인 곳"
+  },
+  {
+    "locationId": "LOC_KH_OFFICE",
+    "name": "주조 감독청",
+    "shortName": "감독청",
+    "description": "왕이 임명한 감독관이 주조와 은맥 장부를 관리하는 관청. 권위와 서류의 냄새가 밴 곳.",
+    "tags": [
+      "AUTHORITY",
+      "GUARDED",
+      "BUREAUCRACY"
+    ],
+    "dangerLevel": 2,
+    "availableAtNight": false,
+    "nightDescription": "밤에는 문이 잠기고 경비만 남는다.",
+    "adjacentLocations": [
+      "LOC_KH_FOUNDRY",
+      "LOC_KH_GATE"
+    ],
+    "baseState": {
+      "controllingFaction": "ROYAL_MINT",
+      "security": 75,
+      "prosperity": 60,
+      "unrest": 10
+    },
+    "secrets": [],
+    "moveKeywords": [
+      "감독청",
+      "관청",
+      "감독관"
+    ],
+    "ambushEncounterId": "enc_generic",
+    "hubAccessible": true,
+    "hubHint": "왕립 주조 감독청. 장부와 권위의 중심"
+  },
+  {
+    "locationId": "LOC_KH_MARKET",
+    "name": "검은 시장",
+    "shortName": "시장",
+    "description": "국경 도시답게 온갖 것이 거래되는 뒷골목 시장. 무게가 안 맞는 주화가 가장 먼저 도는 곳.",
+    "tags": [
+      "TRADE",
+      "UNDERWORLD",
+      "CROWDED"
+    ],
+    "dangerLevel": 2,
+    "availableAtNight": true,
+    "nightDescription": "밤에 진짜 거래가 열린다. 밀수품과 위조 주화가 등불 아래 오간다.",
+    "adjacentLocations": [
+      "LOC_KH_TAVERN",
+      "LOC_KH_FOUNDRY",
+      "LOC_KH_GATE"
+    ],
+    "baseState": {
+      "controllingFaction": "SMUGGLERS",
+      "security": 35,
+      "prosperity": 55,
+      "unrest": 40
+    },
+    "secrets": [],
+    "moveKeywords": [
+      "시장",
+      "검은 시장",
+      "뒷골목"
+    ],
+    "ambushEncounterId": "enc_generic",
+    "hubAccessible": true,
+    "hubHint": "온갖 것이 거래되는 검은 시장. 위조 주화가 먼저 도는 곳"
+  },
+  {
+    "locationId": "LOC_KH_GATE",
+    "name": "국경 초소",
+    "shortName": "초소",
+    "description": "왕국 끝자락을 지키는 국경 초소. 드나드는 짐과 사람을 검문하지만, 눈감아 주는 대가가 오간다.",
+    "tags": [
+      "BORDER",
+      "GUARDED",
+      "CHECKPOINT"
+    ],
+    "dangerLevel": 2,
+    "availableAtNight": true,
+    "nightDescription": "야간 검문은 형식적이다. 뇌물이 오가는 시간.",
+    "adjacentLocations": [
+      "LOC_KH_OFFICE",
+      "LOC_KH_MARKET"
+    ],
+    "baseState": {
+      "controllingFaction": "ROYAL_MINT",
+      "security": 60,
+      "prosperity": 30,
+      "unrest": 25
+    },
+    "secrets": [],
+    "moveKeywords": [
+      "초소",
+      "국경",
+      "검문소"
+    ],
+    "ambushEncounterId": "enc_generic",
+    "hubAccessible": true,
+    "hubHint": "왕국 끝을 지키는 국경 초소. 뇌물과 밀수가 오간다"
+  },
+  {
+    "locationId": "LOC_KH_DEEPSHAFT",
+    "name": "폐갱 심층",
+    "shortName": "폐갱",
+    "description": "은맥이 마른 뒤 버려진 깊은 갱도. 물이 차고 공기가 탁하다. 사람들이 가지 않는 곳에 무언가 감춰진다.",
+    "tags": [
+      "MINE",
+      "ABANDONED",
+      "DANGEROUS"
+    ],
+    "dangerLevel": 4,
+    "availableAtNight": true,
+    "nightDescription": "폐갱의 밤은 낮과 다르지 않다. 어둠뿐인 곳에서 발소리만이 울린다.",
+    "adjacentLocations": [
+      "LOC_KH_MINE"
+    ],
+    "baseState": {
+      "controllingFaction": "NEUTRAL",
+      "security": 10,
+      "prosperity": 0,
+      "unrest": 30
+    },
+    "secrets": [],
+    "moveKeywords": [
+      "폐갱",
+      "버려진 갱도",
+      "심층"
+    ],
+    "ambushEncounterId": "enc_generic",
+    "hubAccessible": true,
+    "hubHint": "버려진 폐갱 심층. 사람이 가지 않는 어둠"
+  }
+]

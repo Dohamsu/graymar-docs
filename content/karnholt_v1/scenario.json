@@ -1,0 +1,125 @@
+{
+  "scenarioId": "karnholt_v1",
+  "name": "카른홀트",
+  "description": "왕국 북부 국경의 은광·주조 도시. 위조 주화와 사라진 광부, 세 세력의 암투 속에서 진실을 캐는 자율 서사 시나리오.",
+  "order": 2,
+  "prerequisites": [],
+  "narrativeMode": "AUTONOMOUS",
+  "carryOverRules": {
+    "goldRate": 1.0,
+    "itemsCarry": true,
+    "reputationDecay": 0.5,
+    "statBonusPerScenario": { "MaxHP": 10, "ATK": 1, "DEF": 1 }
+  },
+  "world": {
+    "settingLine": "중세 판타지 왕국 북부 국경",
+    "regionSummary": "카른홀트 — 왕국 북부 산악 국경의 은광·주조 도시. 왕국 주화를 찍는 유일한 변방 주조소가 있어, 광산 길드·왕립 주조 감독청·밀수 위조단이 은맥과 주화를 놓고 얽혀 있다. 안개 낀 갱도에서 광부가 소리 없이 사라지고, 시장에는 무게가 안 맞는 주화가 돈다."
+  },
+  "sensoryPalette": {
+    "visual": ["은빛 광맥", "갱도 등불", "벌겋게 단 주조 화로", "쌓인 석탄재", "안개 낀 산비탈", "녹슨 곡괭이"],
+    "sound": ["곡괭이가 바위를 때리는 소리", "화로 풀무 소리", "주화 찍는 압인기", "갱도에 울리는 물방울", "멀리서 나는 낙반음"],
+    "smell": ["쇳내", "석탄 연기", "축축한 갱도 흙", "달군 금속", "값싼 화주"],
+    "touch": ["살을 에는 산바람", "그을음 묻은 손", "차가운 은괴"],
+    "motif": ["위조 주화", "무너진 갱도", "사라진 광부", "은맥", "주조 각인"]
+  },
+  "meters": [
+    {
+      "id": "MINE_UNREST",
+      "name": "광산 불안",
+      "initial": 30,
+      "perTurnDelta": 3,
+      "maxDeltaPerTurn": 8,
+      "thresholds": [
+        {
+          "at": 60,
+          "signal": "광부들이 곡괭이를 내려놓고 웅성거린다. 감독관의 채근이 거칠어진다."
+        },
+        {
+          "at": 80,
+          "signal": "갱도 곳곳에서 파업 구호가 오르고, 무장한 감독대가 배치된다. 화약고에 불씨 하나면 터질 판이다.",
+          "endingTrigger": "MINE_STRIKE"
+        }
+      ]
+    }
+  ],
+  "endingTones": {
+    "HIGH": {
+      "endingType": "TRUTH_REVEALED",
+      "tone": "위조와 실종의 전모를 밝혀냈다. 카른홀트의 저울은 다시 무게를 되찾고, 당신의 이름은 진실을 캔 자로 갱도 벽에 새겨진다."
+    },
+    "MID": {
+      "endingType": "PARTIAL_TRUTH",
+      "tone": "절반의 진실만 손에 쥔 채 도시를 떠난다. 몇몇은 처벌받았으나 은맥 깊은 곳의 그림자는 그대로 남았다."
+    },
+    "LOW": {
+      "endingType": "UNRESOLVED",
+      "tone": "진실은 갱도의 어둠에 묻힌 채 미제로 남았다. 위조 주화는 여전히 시장을 돌고, 당신은 답 없이 산을 내려간다."
+    },
+    "gaugeCollapse": {
+      "endingType": "MINE_STRIKE",
+      "tone": "광산이 폭발하듯 봉기했다. 갱도가 불타고 감독대와 광부가 뒤엉키는 혼란 속에서, 당신은 미처 밝히지 못한 진실을 뒤로하고 서둘러 결말을 맞는다."
+    }
+  },
+  "hub": {
+    "locationId": "LOC_KH_TAVERN",
+    "name": "무너진 곡괭이",
+    "returnLabel": "'무너진 곡괭이'로 돌아간다",
+    "returnHint": "술집에서 소문을 정리하고 다른 구역을 탐색한다",
+    "defaultLocationId": "LOC_KH_MARKET"
+  },
+  "prologue": {
+    "npcId": "NPC_KH_WIDOW",
+    "displayName": "메린",
+    "imageUrl": "/npc-portraits/silhouette.webp",
+    "atmospheres": [
+      "산 아래로 안개가 두껍게 깔린 저녁이었다. 술집 '무너진 곡괭이'의 구석에서 당신은 쇳내 밴 화주를 홀짝이고 있었다. 화로의 잔열이 벽을 데우고, 갱도에서 올라온 광부들의 지친 웅성거림이 낮게 깔렸다.",
+      "밖에서는 진눈깨비가 흩날렸다. '무너진 곡괭이'의 낡은 문틈으로 산바람이 새어들 때마다 등불이 흔들렸다. 당신은 값싼 화주 잔을 감싸 쥐고 온기를 붙잡고 있었다.",
+      "멀리 주조소의 압인기 소리가 밤공기를 타고 둔탁하게 울렸다. 술집 천장의 그을린 등잔 아래, 석탄재 냄새와 화주 향이 뒤섞인 자리에서 당신은 말없이 잔을 기울였다."
+    ],
+    "lines": [
+      "실례해요, 낯선 분. 며칠째 이 술집에서 일거리를 찾는 걸 봤어요.",
+      "제 남편이 은광 갱도에서 사라졌어요. 낙반이라 했지만… 시신도, 곡괭이도 나오지 않았어요. 감독청은 사고로 덮으려 하고요.",
+      "그이가 사라지기 전, 무게가 이상한 주화 얘길 했어요. 겁에 질려 있었죠. 부탁드려요. 조용히, 무슨 일이 있었는지 알아봐 주세요. 사례는 섭섭잖게 드릴게요."
+    ],
+    "questEventText": "메린이 사라진 남편과 이상한 주화에 대한 조사를 의뢰했다.",
+    "summaryShort": "실종된 광부의 아내 메린이 남편 실종과 위조 주화 조사를 의뢰",
+    "accept": "의뢰를 받아들인다",
+    "acceptChoiceHint": "메린의 의뢰를 수락한다"
+  },
+  "themeMemories": [
+    {
+      "key": "location",
+      "value": "카른홀트 — 왕국 북부 국경의 은광·주조 도시. 왕국 주화를 찍는 변방 주조소가 있고, 광산 길드·왕립 주조 감독청·밀수 위조단이 은맥과 주화를 놓고 다툰다. 안개 낀 갱도에서 광부가 사라지고 무게가 안 맞는 주화가 돈다.",
+      "importance": 1.0,
+      "tags": ["LOCATION", "THEME"]
+    },
+    {
+      "key": "protagonist",
+      "value": "{CHARACTER_NAME} — {PROTAGONIST_THEME} 카른홀트에는 일거리를 찾아 며칠 전 도착했다.",
+      "importance": 0.8,
+      "tags": ["PROTAGONIST", "THEME"]
+    },
+    {
+      "key": "hub_system",
+      "value": "HUB 거점 — '무너진 곡괭이' 술집. 카른홀트의 거점. 이곳에서 주조소·은광 갱도·광부 숙소촌·감독청·검은 시장·국경 초소·폐갱으로 이동하며 진상을 캔다.",
+      "importance": 0.8,
+      "tags": ["HUB", "THEME"]
+    }
+  ],
+  "motifs": [
+    { "motifId": "MOTIF_COIN_FORGERY", "name": "주화 위조", "summary": "무게·순도가 안 맞는 위조 주화가 주조소 밖에서 찍혀 유통된다" },
+    { "motifId": "MOTIF_MISSING_MINER", "name": "광부 실종", "summary": "갱도에서 광부가 시신도 없이 사라진다" },
+    { "motifId": "MOTIF_COLLAPSE_COVERUP", "name": "붕괴 은폐", "summary": "갱도 낙반·사고가 조작되거나 은폐된다" },
+    { "motifId": "MOTIF_INFILTRATION", "name": "잠입", "summary": "누군가 가짜 신분으로 조직에 숨어든다" },
+    { "motifId": "MOTIF_BRIBERY", "name": "뇌물", "summary": "감독관·초소 관리가 뇌물로 눈을 감는다" },
+    { "motifId": "MOTIF_DEBT", "name": "빚의 굴레", "summary": "갚지 못한 빚이 사람을 범죄로 몬다" },
+    { "motifId": "MOTIF_BLACKMAIL", "name": "협박", "summary": "약점을 쥐고 상대를 조종한다" },
+    { "motifId": "MOTIF_BETRAYAL", "name": "배신·밀고", "summary": "조직 내부에 정보를 흘리는 배신자가 있다" },
+    { "motifId": "MOTIF_STOLEN_SILVER", "name": "은괴 횡령", "summary": "장부에 없는 은괴가 빼돌려져 사라진다" },
+    { "motifId": "MOTIF_FACTION_WAR", "name": "세력 다툼", "summary": "광산 길드·주조 감독청·밀수단이 은맥과 주화를 놓고 충돌한다" }
+  ],
+  "initialNpcRelations": {
+    "NPC_KH_WIDOW": 30,
+    "NPC_KH_INNKEEP": 15
+  }
+}

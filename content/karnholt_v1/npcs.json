@@ -1,0 +1,138 @@
+[
+  {
+    "npcId": "NPC_KH_WIDOW",
+    "name": "메린",
+    "unknownAlias": "지친 눈의 여인",
+    "shortAlias": "여인",
+    "aliases": ["메린", "여인"],
+    "role": "실종 광부의 아내 · 의뢰인",
+    "roleKeywords": ["메린", "의뢰인", "아내", "부인"],
+    "gender": "female",
+    "tier": "CORE",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 30,
+    "nameStyle": "soft",
+    "personality": {
+      "core": "남편을 잃고도 무너지지 않으려 이를 악문 강단 있는 여인. 절박하지만 비굴하지 않다.",
+      "speechStyle": "예의 바른 해요체. 감정을 억누른 차분한 어조로 부탁하되, 진실 앞에서는 떨림을 감추지 못한다.",
+      "speechRegister": "HAEYO"
+    },
+    "castingConstraints": {
+      "forbiddenRoles": ["CULPRIT", "ACCOMPLICE"],
+      "fixedTraits": "남편을 진심으로 걱정하는 의뢰인 — 사건의 피해자 쪽"
+    }
+  },
+  {
+    "npcId": "NPC_KH_WARDEN",
+    "name": "발드릭 경",
+    "unknownAlias": "금테 두른 관리",
+    "shortAlias": "관리",
+    "aliases": ["발드릭", "감독관", "발드릭 경"],
+    "role": "왕립 주조 감독관",
+    "roleKeywords": ["발드릭", "감독관", "감독", "관리", "주조관"],
+    "gender": "male",
+    "tier": "CORE",
+    "basePosture": "CALCULATING",
+    "initialTrust": 0,
+    "nameStyle": "formal",
+    "personality": {
+      "core": "왕명을 등에 업은 냉정한 관료. 주조소의 모든 저울과 장부를 쥐고 있으며, 자신의 자리를 위협하는 것은 무엇이든 덮는다.",
+      "speechStyle": "격식 있는 합쇼체. 위압적이고 절제된 어조로 거리를 둔다. 아랫사람에겐 명령조, 조사자에겐 방어적.",
+      "speechRegister": "HAPSYO"
+    },
+    "castingConstraints": {
+      "forbiddenRoles": ["CLIENT"],
+      "fixedTraits": "권력을 쥔 감독관 — 부패했을 수도, 억울할 수도 있으나 언제나 무언가를 감춘다"
+    }
+  },
+  {
+    "npcId": "NPC_KH_GUILDMASTER",
+    "name": "토르그",
+    "unknownAlias": "굳은살 박인 손",
+    "shortAlias": "손",
+    "aliases": ["토르그", "길드장", "조합장"],
+    "role": "광산 길드장",
+    "roleKeywords": ["토르그", "길드장", "조합장", "길드"],
+    "gender": "male",
+    "tier": "CORE",
+    "basePosture": "CAUTIOUS",
+    "initialTrust": 10,
+    "nameStyle": "rough",
+    "personality": {
+      "core": "평생 갱도에서 살아온 광부 출신 길드장. 조합원을 지키려 하지만 감독청과 밀수단 사이에서 아슬아슬한 줄타기를 한다.",
+      "speechStyle": "투박한 하오체. 짧고 직설적으로 말하며 조합원을 '형제'라 부른다. 권력자 앞에서도 굽히지 않는 고집.",
+      "speechRegister": "HAOCHE"
+    },
+    "castingConstraints": {
+      "fixedTraits": "광부들의 대변자 — 조합의 이익을 위해서라면 회색지대도 넘나든다"
+    }
+  },
+  {
+    "npcId": "NPC_KH_SMUGGLER",
+    "name": "카이라",
+    "unknownAlias": "그림자 걸친 상인",
+    "shortAlias": "상인",
+    "aliases": ["카이라", "상인", "밀매상"],
+    "role": "밀수·위조단 두목",
+    "roleKeywords": ["카이라", "밀매상", "밀수", "두목", "상인"],
+    "gender": "female",
+    "tier": "CORE",
+    "basePosture": "CALCULATING",
+    "initialTrust": -5,
+    "nameStyle": "sharp",
+    "personality": {
+      "core": "검은 시장을 쥔 영리한 밀수단 두목. 감정보다 이문으로 움직이며, 위조 주화 유통망의 한 축을 쥐고 있다.",
+      "speechStyle": "매끄러운 반말과 존대를 오가는 계산적 어조. 상대의 값을 재며 말하고, 위협에도 웃음을 잃지 않는다.",
+      "speechRegister": "HAEYO"
+    },
+    "castingConstraints": {
+      "forbiddenRoles": ["CLIENT"],
+      "fixedTraits": "이익으로 움직이는 밀수단 두목 — 위조에 얽혔을 수도, 이용당했을 수도"
+    }
+  },
+  {
+    "npcId": "NPC_KH_INNKEEP",
+    "name": "오슬라",
+    "unknownAlias": "행주 쥔 안주인",
+    "shortAlias": "안주인",
+    "aliases": ["오슬라", "안주인", "주인"],
+    "role": "'무너진 곡괭이' 술집 주인",
+    "roleKeywords": ["오슬라", "안주인", "술집 주인", "주인장"],
+    "gender": "female",
+    "tier": "CORE",
+    "basePosture": "FRIENDLY",
+    "initialTrust": 15,
+    "nameStyle": "warm",
+    "personality": {
+      "core": "카른홀트의 모든 소문이 지나가는 술집의 안주인. 오래 이곳을 지켜본 눈으로 손님을 읽고, 필요한 말만 흘린다.",
+      "speechStyle": "친근한 해요체. 넉살 좋게 잡담을 받아주되, 위험한 화제엔 목소리를 낮추고 눈치를 살핀다.",
+      "speechRegister": "HAEYO"
+    },
+    "castingConstraints": {
+      "forbiddenRoles": ["CULPRIT"],
+      "fixedTraits": "정보통 안주인 — 거점의 중립적 관찰자, 사건의 배후는 아니다"
+    }
+  },
+  {
+    "npcId": "NPC_KH_ENGRAVER",
+    "name": "옌",
+    "unknownAlias": "잉크 밴 손가락",
+    "shortAlias": "손가락",
+    "aliases": ["옌", "조각공", "각인공"],
+    "role": "주조 각인 조각공",
+    "roleKeywords": ["옌", "조각공", "각인공", "각인"],
+    "gender": "male",
+    "tier": "CORE",
+    "basePosture": "FEARFUL",
+    "initialTrust": 5,
+    "nameStyle": "quiet",
+    "personality": {
+      "core": "주화 각인을 새기는 손재주 좋은 조각공. 말수가 적고 겁이 많으며, 누구보다 주조의 비밀에 가까이 있다.",
+      "speechStyle": "조심스러운 해요체와 말끝 흐림. 겁에 질려 짧게 답하고, 추궁받으면 시선을 피하며 얼버무린다.",
+      "speechRegister": "HAEYO"
+    },
+    "castingConstraints": {
+      "fixedTraits": "주조의 비밀에 가장 가까운 조각공 — 공범일 수도, 협박당한 목격자일 수도"
+    }
+  }
+]
