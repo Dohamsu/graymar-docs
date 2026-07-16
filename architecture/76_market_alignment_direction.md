@@ -1,6 +1,6 @@
 # 76. 시장 조사 대응 방향 — "이해하고 기억해주는 경험" 정렬
 
-> 상태: ✅ 구현됨 (D1·D2·D3 + 자유도 체감 A/B + D4·D1-c 계측 + D3-b′/c′/combat 감정·행동화 탈버킷, 2026-07-16) — 원안 D3-b/c는 폐기·재설계로 대체, 잔여는 §5 미실측 항목 관찰. 소유자 제공 시장 조사(AI 텍스트 RPG 이용자 긍/부정 요인)를 현 구조와 대조해 수정 방향을 도출·구현. 조사 원문의 결론: **"내가 상상한 행동을 게임이 이해하고 기억해주는 경험에는 돈을 내지만, AI가 저지른 오류를 내가 계속 수정해야 하는 경험에는 돈을 내지 않는다."**
+> 상태: ✅ 구현됨 (D1·D2·D3 + 자유도 체감 A/B + D4·D1-c 계측 + D3-b′/c′/combat 감정·행동화 탈버킷 + 후속 2건[의미 단서 교체·전투 앵커링 해소], 2026-07-16) — 원안 D3-b/c는 폐기·재설계로 대체, 잔여는 §5 미실측 항목 관찰(REPORT/APPROACH 발동·기만 보너스 실효·감정 블렌드 일관성·R2 제거의 응답률 영향·배경 대사 soft 위반). 소유자 제공 시장 조사(AI 텍스트 RPG 이용자 긍/부정 요인)를 현 구조와 대조해 수정 방향을 도출·구현. 조사 원문의 결론: **"내가 상상한 행동을 게임이 이해하고 기억해주는 경험에는 돈을 내지만, AI가 저지른 오류를 내가 계속 수정해야 하는 경험에는 돈을 내지 않는다."**
 > 관련: [[75_autonomous_pack_design]] (재플레이성 트랙 — P6 카른홀트까지 배포), [[73_scenario_differentiation]] (반복 서사 계측 지표), arch/75 P5 리뷰의 NPC 반응 평가 (사물·기행·공포 행동화 갭).
 
 ---
@@ -121,6 +121,10 @@
 - **D3-c′**: `npc-agitation.core.ts`(fear≥60→FLEE/AVOID · susp≥60&trust<-10→REPORT(Heat+5)/AVOID · trust≥50&attach≥30→APPROACH, 쿨다운 6턴) + turns.service 배선(당턴 witness NPC 제외 — 급성/만성 권한 분리) + `ui.npcAgitation`→프롬프트 "[NPC 능동 행동]" 디렉티브(헤더 레지스트리 등록) + FLEE는 `ws.npcFleeOverrides`(untilDay=day+1, **스케줄 재계산이 npcLocations를 매번 재구축해 즉시 쓰기만으론 복귀해버리는 결함 실측** → schedule 우선 적용·만료 정리). 임계·비용은 quest-balance.config. 유닛: agitation +10, schedule 신설 +3.
 - **combat**: `appraiseCombatTactic`(nano, killswitch `COMBAT_TACTIC_DISABLED`) + `combat-tactic.core.ts`(성향 민감도 COWARDLY1.5/TACTICAL0.5/BERSERK0) + Tier 3/4 ACTION 게이트(버튼·평타 nano 0) + combat.service 소비(FLEE 보너스 합산·적 acc 디버프·FEINT 명중+2·TACTIC 이벤트). 유닛: tactic +6.
 - **부수 버그 수정(기존)**: `getAmbushEncounterId`가 팩에 없는 `enc_generic`을 반환 → 무기 위협(KILL_ATTEMPT) 전투 전이가 **500 크래시**(graymar 실측, 검증 중 발견). 존재 검증 후 팩 첫 encounter fallback (content-loader 단일 지점 규약).
+
+**후속 — R2 어휘 인용 가이드 → 의미 단서 교체 (2026-07-16, 미커밋):** 운석 기만 턴 서술이 가짜 운석을 폭발음·진동으로 **반쯤 실체화**하는 결함 실측. 원인 3중주: ① R2 키워드 가이드(A51)가 거짓 외침 속 단어('떨어진다')를 콕 집어 인용 지시 ② 감각 초점(청각+촉각)이 폭발음·진동 채움 유도 ③ "기만이 통했다" 이벤트에 해석 규칙 부재. 소유자 방향("어휘 주입 대신 전후 상황 단서")에 따라 **기만턴 특수 분기 없이 일반 교체**: 낱말 리스트 지시 삭제(`extractTopUserKeywords` 제거) → "주제 반영 + 입력 속 주장·외침은 '말한 것'일 뿐, 정본은 [이번 턴 사건]·판정" 의미 가이드로 대체 + `actionContext.appraisalNote`(LOCATION=nano reason, COMBAT=기만 성격 문장 — 동일 채널)를 가이드에 병기. 재검증: 운석 실체화 완전 소멸("외치자 … 적들은 하늘을 올려다보았고 … 하늘을 쳐다보는 게 무의미하다는 듯 돌아섰다"). **관찰**: R2 제거가 응답률(NPA)에 주는 영향은 다회 계측 몫 — 질문 우선 블록·주제 반영 지시가 잔존 방어.
+
+**후속 — 전투 턴 장소 NPC 앵커링 해소 (2026-07-16, 미커밋):** FEINT 검증에서 전투 중 오웬이 유일 화자로 등판·서버 이벤트와 모순 대사("페인트가 통했다" vs "속임수는 통하지 않소") 실측. 원인 4단 연쇄: ① **triggerCombat 조기 커밋이 actionHistory 기록(정상 지점보다 앞) 건너뜀** → FIGHT 턴 이력 누락 (DB 실측 `["BRIBE","TALK"]`) ② 대화 잠금이 직전 TALK 기준 오산출("오웬과 2턴째 연속 대화 중" — 불변식 26이 데이터 누락으로 무력화) ③ [대화 연속 상태]+R6("이 턴은 오웬만 말합니다")가 COMBAT 턴에 그대로 주입(연속 블록 게이트가 `!isHub`뿐) ④ 전투 서술 초점 디렉티브 부재. 수정 A+B: **A** 전투 전이 분기에 actionHistory 기록 추가(이력 소비자 전반 — 고집·중복 방지 — 도 복구) / **B** prompt-builder `isCombat` 게이트(대화 잠금·직전 발화 이어받기·focused·턴 카운터 4블록) + `[전투 장면 — 서술 초점]` positive 디렉티브(헤더 등록). 재검증: 서술 중심이 적(깡패 표정·후퇴)으로 이동, 주변 인물은 배경 반응, 오웬 대사 소멸. **잔여 관찰**: 배경 인물 1명 짧은 대사("잡아라!") — soft 위반, 다회 계측 몫.
 
 **실런 검증:** ① 위협 누적 → 오웬 fear 100·posture FEARFUL → **T13 `[NPC_AGITATION, FLEE_LOCATION]` 발동**·ui 전달 ② 기행-as-TALK에서 suspicion 상승·trust 억제(블렌드 실측) ③ KILL_ATTEMPT → COMBAT 전이(크래시 해소 확인) → "운석이 떨어진다!" 외침 → **nano DISTRACTION 분류** → 상대가 BERSERK 해적 2체라 민감도 0 → "아무도 속지 않았다" 이벤트(**성향 차등이 설계 그대로 발화**) → 도주 성공. 전체 1318 passed·린트 0. **미실측**: REPORT/APPROACH 발동(유닛만)·npcFleeOverrides 실런 지속(스케줄 유닛으로 커버)·COWARDLY 상대 기만 보너스 실효.
 

@@ -41,3 +41,4 @@ quartz/content/factions/
 quartz/content/quest/
 quartz/content/incidents/
 quartz/content/items/
+__pycache__/
