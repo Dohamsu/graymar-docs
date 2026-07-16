@@ -39,6 +39,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 ### 3. 서버·데이터
 
 - [[architecture/04_server_architecture|server architecture]] — NestJS 10 모듈, 65+ 서비스, Drizzle ORM 18 테이블, Server-Is-Source-of-Truth 원칙, Idempotency, RNG 결정론 등 정본.
+- [[architecture/77_god_method_refactoring|god method refactoring]] — 대형 파일 구조 개선 계획(📋 미착수). God method 4개 실측(turns 4,440줄·llm-worker 3,503줄·prompt-builder 2,838줄) + 동작 보존 5단계(스냅샷 하네스 → 조율 로직 함수화) + 추출 금지선(스트림/DB 커밋/락)·오배치 리스크.
 - [[architecture/10_region_economy|region economy]] — 리전별 경제(골드 유동성, 상점 물가)와 장비/세트 연계. 장비 드랍은 완성, 리전별 동적 경제는 부분.
 - [[architecture/12_equipment_system|equipment system]] — 장비 드랍/착용, 접미사, 세트 효과, Legendary. Phase 4에서 구현 완료.
 
