@@ -43,6 +43,8 @@
 - (c) P8 계측에 **의도 정합 채택률**(채택 비트가 플레이어 행동 계열과 affordance 일치한 비율) 추가.
 - **신규 불변식 후보 D**: "디렉터 비트는 플레이어 의도와 정합할 때만 채택 — 서사 강제 진행 금지. 인력(gravity)은 유인이지 강제가 아니다."
 
+**구현 반영 (2026-07-16, D1-a/b + D1-d + D5 — 미커밋):** CLAUDE.md 불변식 47(불변식 D) + 과금 3원칙 등재(D5·D1-d). 엔진(`turns.service.ts`): (a) `conversationLockActive`(직전 대화 NPC + 대화 계열 행동) 계산 → `determineTurnModeCore` 규칙 1.5의 강제창 분기를 `beatForceWindow && !conversationLockActive`로 가드(대화 잠금 4턴 캡이 정체를 자연 해소하므로 굶주림 없음). (b) `intentSuppressesBeat`(REST 또는 순수 사교 발화 `SOCIAL_SPEECH_ACTS`) → 규칙 1.5·3.6 승격 금지 + 채택 블록(`if (beatAvailable && !intentSuppressesBeat && plotSeed)`) 이중 가드. 탐색 행동(A) 승격은 유지. 유닛 6종 추가(player-first.spec — 대화 잠금 유지·탐색 예외·사교/REST 억제), 전체 1266 passed. **미검증(계측)**: 실제 의도 정합 채택률은 D1-c(P8 계측)에서 확인.
+
 ### D2 — 판정 투명성 마감 〔P0 · 클라 소〕
 골격(공식+주사위)은 이미 시장 상위권. 남은 갭만 마감:
 - FREE 판정 스킵 턴에 사유 표시 ("일상 행동 — 판정 불필요").
@@ -50,11 +52,37 @@
 - FAIL 턴에 "무엇이 부족했나" (필요 5, 굴림 3+보정 1 = 4).
 - 위치: TurnResultBanner·주사위 연출 툴팁 — 서버는 이미 다 아는 값이라 UI 전달만.
 
+**구현 반영 (2026-07-16, D2-a/b/c — 미커밋):** 서버는 이미 diceRoll/statBonus/baseMod/totalScore를 `resolveBreakdown`으로 전달 중이었고(클라 `ResolveOutcomeInline` 공식 렌더 기존), 남은 갭만 마감. **D2-b**: `resolve.service` baseMod 누적을 `addMod(label,value)`로 바꿔 `modifiers: Array<{label,value}>` 출처 분해 생성(지형 유리/불리·소란·위험 감수·언변 세트·배경 경험·장소 제약/이점) → `ResolveResult`·`ResolveBreakdown`·turns.service 전달 → 클라 `BreakdownFormula`가 단일 "보정" 대신 항목별 렌더(modifiers 없으면 합산 fallback). **D2-c**: 판정 임계를 `RESOLVE_SUCCESS_THRESHOLD=5`/`PARTIAL=3` 상수로 정본화(computeOutcome 참조) → breakdown에 successThreshold 전달 → FAIL 턴 "성공 필요 5 · N만큼 부족" 표시. **D2-a**: ChallengeClassifier `result==='FREE'`(구조적 MOVE/REST/SHOP 제외) 시 `ui.resolveSkipped=true` → 클라 "✓ 일상 행동 — 판정 불필요" 안내. 검증: 서버/클라 빌드·1268 passed(resolve +2·player-first 유지)·양쪽 린트 0. 전 시나리오 공통(AUTHORED/AUTONOMOUS 무관).
+
 ### D3 — 자유도 체감 3종 (NPC 반응 평가와 교차점) 〔P1 · 엔진 중〕
 조사의 "기상천외한 행동 성공의 만족감" + "상태를 바꾸는 경험"을 자유 입력에서 완성. arch/75 P5 리뷰에서 실측한 갭과 동일:
 - **사물 상태 경량 구현**: 장소별 `propsState`(파괴·전도·탈취 흔적 몇 개) — 다음 턴 서술·NPC 반응이 참조. 전면 오브젝트 시스템이 아니라 "흔적 5~10개 링버퍼" 수준.
 - **기행 감정축**: 비정형 행동의 오분류(TALK→trust+5) 교정 — WEIRD 신호 → suspicion 상승.
 - **공포 행동화**: fear 임계 초과 NPC의 회피·신고·도주 능동 행동 (수치가 세계를 움직이게).
+
+#### D3-입력 자유화 — actionType 탈버킷 (2026-07-16 구현 · 미커밋)
+
+**배경 (소유자 실측 지적):** actionType(15종) 버킷이 **판정(스탯·난이도)까지 고정**해, 창의 행동이 버킷에 갇히는 느낌("탁자에 올라가 춤춘다"→TALK→카리스마 판정). 실측: actionType의 기계적 역할은 **스탯 선택 + 소수 보정뿐**이고, 서술은 이미 rawInput 원문을 받으며, 전투엔 이미 창의 처리(arch/41)가 있으나 LOCATION엔 없음.
+
+**설계:** actionType은 "판정 가족"으로만 남기고, **행동-특정 3파라미터를 ChallengeClassifier(이미 도는 nano FREE/CHECK 호출)에 확장** — 새 nano 호출 0. nano 제안 → **서버 검증**(불변식 1 보존).
+- **① statHint** — 이 행동에 맞는 스탯을 nano가 제안, 서버가 허용집합(`str/dex/wit/con/per/cha`) 검증 → `ACTION_STAT_MAP` 기본 대신 사용. 벽 타기가 TALK로 분류돼도 dex 판정.
+- **② difficultyMod** — 행동 과감함/규모, clamp `[-2,+2]` → `modifiers`에 "행동 난이도"로 누적(D2 투명성 UI에 노출). "왕을 반역시킨다"가 실제로 어려워짐.
+- **③ plausibility** — `NORMAL/UNUSUAL/IMPLAUSIBLE`. IMPLAUSIBLE(마법·순간이동·세계 밖)은 **거부 아닌 서술 치환**(전투 crFlags.fantasy 철학을 LOCATION에 이식 — prompt-builder `[행동 재해석 지시]` 블록). 기계적 제한은 ②의 난이도 페널티로 자연 발생. "한계=버킷 강제"에서 "한계=그럴듯함 치환/난이도"로 전환.
+
+**경계(정직):** 회색지대(창의·자유 행동)만 nano 확장 — 룰 게이트 행동(FIGHT/PERSUADE 등)은 기본값 유지(FIGHT는 arch/41이 별도 처리). 성공 시 *효과 어휘*(heat/gold/관계/아이템)는 여전히 서버 바운드. ①②③은 "어떤 스탯·얼마나 어렵게·어떻게 서술"만 자유화.
+
+**검증:** 서버 빌드·**1275 passed**(classifier +4·resolve +3)·린트 0. 파일: `challenge-classifier.service`(타입·프롬프트·파싱·검증), `resolve.service`(statHint override·difficultyMod), `turns.service`(배선·actionContext.plausibility), `prompt-builder`(치환 디렉티브), `injected-block-headers`(드리프트 가드 등록).
+
+#### D3-a 흔적(propsState) + B 되짚기 (2026-07-16 구현 · 미커밋)
+
+**출력 측 — 내 행동이 세계에 남는다.** 입력 자유화(위)의 짝. 조사 발견: 세계는 이미 PLAYER_ACTION fact·NpcPersonalMemory로 **기록**은 하나, 물리 흔적은 없고 되짚기는 소극적.
+
+- **A. propsState (흔적 — 신규, nano 추출형):** enum 고정이 아니라 **nano가 서술에서 물리 흔적을 추출**(생성 아님 → 환각 없음, 정형화 회피). `FactExtractorService.extractSceneTrace`(전용 nano, maxTokens 40, killswitch `PROPS_TRACE_DISABLED`) → 워커 fire-and-forget(DONE 이후, 레이턴시 0) → `applyRunStatePatch`(arch/60 fresh CAS)로 `locationDynamicStates[loc].propsTraces` 링버퍼(max 6, 중복·evict). `parseSceneTrace` 엄격 검증(null·서술체 종결·20자 초과 배제, 유닛 9). context-builder가 현재 장소 흔적을 positive 지시로 주입("이 장소에 남은 흔적: … 관련 상황이면 반영, 매 턴 반복 금지"). **narrative-only** — 판정·수치 무영향(불변식 1·2).
+- **B. 되짚기 (기존 재사용 + 좁은 확장):** NpcPersonalMemory는 이미 주입 중(만남 로그·trust). 기존 arch/69 B3 지시는 **선제 언급 억제**(부록 M — 잡담 단서 0). 이를 회귀시키지 않도록, **고임팩트 과거 행동(위협/전투/절도/도움/뇌물)만** "상황과 맞물리면 먼저 되짚어도 좋다(새 정보·단서 유출은 여전히 금지)"로 좁게 허용. "네가 나를 협박했잖아"는 되지만 클루 덤핑은 안 됨.
+
+**경계(정직):** 흔적 추출은 LOCATION 턴마다 nano 1콜 추가(async·killswitch). 대사·이동 등 흔적 없는 턴은 nano가 null 반환(비용은 있으나 레이턴시 0). D3-b(WEIRD→suspicion 감정축)·D3-c(공포 행동화)는 미착수 — statHint가 오분류의 스탯 부분만 흡수.
+
+**검증:** 서버 빌드·**1284 passed**(scene-trace +9)·린트 0. 파일: `location-state`(propsTraces 타입), `fact-extractor.service`(extractSceneTrace·parseSceneTrace), `llm-worker`(extractAndStoreSceneTrace CAS), `context-builder`(흔적 주입 + B 되짚기 지시).
 
 ### D4 — 반복 서사 방어 계측 상시화 〔P1 · 계측〕
 - 73 §8 n-gram + premise 다양성 + "미해결 스레드 존재 시 신규 스레드 억제" 확인을 playtest 정본 지표로 승격.
@@ -90,16 +118,20 @@ CLAUDE.md 설계 불변식 인근에 등재 (지금 코드 변경 없음, 미래
 
 | # | 항목 | 규모 | 상태 | 커밋 |
 |---|------|------|------|------|
-| D5 | 과금 3원칙 CLAUDE.md 등재 | 문서만 | ⬜ | — |
-| D1-a | 강제창(1.5-C)에서 대화 잠금 활성 턴 제외 | 엔진 소 | ⬜ | — |
-| D1-b | 사교 발화·REST 의도 턴 비트 채택 금지 | 엔진 소 | ⬜ | — |
+| D5 | 과금 3원칙 CLAUDE.md 등재 | 문서만 | ✅ | 미커밋 |
+| D1-a | 강제창(1.5-C)에서 대화 잠금 활성 턴 제외 | 엔진 소 | ✅ | 미커밋 |
+| D1-b | 사교 발화·REST 의도 턴 비트 채택 금지 | 엔진 소 | ✅ | 미커밋 |
 | D1-c | P8 계측에 "의도 정합 채택률" 추가 | 계측 | ⬜ | — |
-| D1-d | 신규 불변식 D("비트는 정합 시만 — 강제 진행 금지") CLAUDE.md 등재 | 문서만 | ⬜ | — |
-| D2-a | FREE 판정 스킵 사유 표시 | 클라 소 | ⬜ | — |
-| D2-b | 보정치 출처 분해 노출 (스탯/특기/이벤트/상태) | 서버+클라 소 | ⬜ | — |
-| D2-c | FAIL 턴 "무엇이 부족했나" 표시 | 클라 소 | ⬜ | — |
-| D3-a | 사물 상태 경량(propsState) 스코프 설계 → 구현 | 설계+엔진 중 | ⬜ | — |
-| D3-b | 기행 감정축 (WEIRD → suspicion, TALK 오분류 교정) | 엔진 소 | ⬜ | — |
+| D1-d | 신규 불변식 D("비트는 정합 시만 — 강제 진행 금지") CLAUDE.md 등재 (불변식 47) | 문서만 | ✅ | 미커밋 |
+| D2-a | FREE 판정 스킵 사유 표시 | 클라 소 | ✅ | 미커밋 |
+| D2-b | 보정치 출처 분해 노출 (스탯/특기/이벤트/상태) | 서버+클라 소 | ✅ | 미커밋 |
+| D2-c | FAIL 턴 "무엇이 부족했나" 표시 | 클라 소 | ✅ | 미커밋 |
+| D3-①stat | statHint — 행동-특정 스탯(nano 제안·서버 검증) | 엔진 소 | ✅ | 미커밋 |
+| D3-②diff | difficultyMod — 과감함 보정 clamp[-2,2] | 엔진 소 | ✅ | 미커밋 |
+| D3-③plaus | plausibility — IMPLAUSIBLE 서술 치환(LOCATION 이식) | 엔진 소 | ✅ | 미커밋 |
+| D3-a | 사물 상태 경량(propsState) — nano 추출 흔적 링버퍼 | 엔진 중 | ✅ | 미커밋 |
+| D3-B | 되짚기 — 고임팩트 과거 행동 NPC 언급 허용(정보 억제 유지) | 엔진 소 | ✅ | 미커밋 |
+| D3-b | 기행 감정축 (WEIRD → suspicion) — statHint가 오분류 일부 흡수 | 엔진 소 | 🅿️ 부분 | — |
 | D3-c | 공포 행동화 (fear 임계 → 회피/신고/도주) | 엔진 중 | ⬜ | — |
 | D4 | 반복 서사 계측 상시화 (n-gram·premise·스레드 억제 → playtest 정본 지표) | 계측 | ⬜ | — |
 | D6 | 팩 저작 도구 | 장기 보류 | 🅿️ 보류 | — |
