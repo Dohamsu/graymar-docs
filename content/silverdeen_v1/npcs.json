@@ -547,7 +547,11 @@
     "nameStyle": "plain",
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
-    "activityLocations": []
+    "activityLocations": [],
+    "personality": {
+      "speechRegister": "HAECHE"
+    },
+    "shortAlias": "광부"
   },
   {
     "npcId": "NPC_SD_BG_WASHER",
@@ -563,7 +567,10 @@
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
     "activityLocations": [],
-    "shortAlias": "세탁부"
+    "shortAlias": "세탁부",
+    "personality": {
+      "speechRegister": "HAECHE"
+    }
   },
   {
     "npcId": "NPC_SD_BG_PEDDLER",
@@ -578,7 +585,11 @@
     "nameStyle": "plain",
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
-    "activityLocations": []
+    "activityLocations": [],
+    "personality": {
+      "speechRegister": "HAEYO"
+    },
+    "shortAlias": "행상"
   },
   {
     "npcId": "NPC_SD_BG_DRUNK",
@@ -593,7 +604,11 @@
     "nameStyle": "plain",
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
-    "activityLocations": []
+    "activityLocations": [],
+    "personality": {
+      "speechRegister": "HAECHE"
+    },
+    "shortAlias": "술꾼"
   },
   {
     "npcId": "NPC_SD_BG_BELL",
@@ -609,7 +624,10 @@
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
     "activityLocations": [],
-    "shortAlias": "종지기"
+    "shortAlias": "종지기",
+    "personality": {
+      "speechRegister": "HAOCHE"
+    }
   },
   {
     "npcId": "NPC_SD_BG_CARTER",
@@ -624,6 +642,10 @@
     "nameStyle": "plain",
     "basePosture": "CAUTIOUS",
     "tier": "BACKGROUND",
-    "activityLocations": []
+    "activityLocations": [],
+    "personality": {
+      "speechRegister": "HAECHE"
+    },
+    "shortAlias": "마부"
   }
 ]
