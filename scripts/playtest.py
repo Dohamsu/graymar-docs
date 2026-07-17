@@ -444,6 +444,12 @@ for turn_i in range(MAX_TURNS):
         "rawInput": body.get("input", {}).get("text", ""),
         # V10: 서술 화자(NpcResolver 최종) — 이벤트 정의 NPC와 대조용
         "primaryNpcId": action_ctx.get("primaryNpcId"),
+        # V10 정밀화(2026-07-17): 분열은 이벤트 고유 선택지가 실제 노출됐을 때만
+        # 플레이어 대면 — EventChoiceGate 폐기 턴을 FP로 세지 않기 위해
+        # 이번 턴 응답(server_result)의 선택지 id를 기록
+        "choiceIds": [
+            c.get("id", "") for c in (server_result.get("choices") or [])
+        ],
     }
     turn_logs.append(log_entry)
 
@@ -758,21 +764,29 @@ try:
     with open(_ev_path, encoding="utf-8") as _f:
         _ev_raw = json.load(_f)
     _ev_list = _ev_raw.get("events", _ev_raw) if isinstance(_ev_raw, dict) else _ev_raw
+    _event_choice_map = {}
     for _e in _ev_list:
         _eid = _e.get("eventId")
         _enpc = (_e.get("payload") or {}).get("primaryNpcId")
         if _eid and _enpc:
             _event_npc_map[_eid] = _enpc
+            _event_choice_map[_eid] = {
+                c.get("id") for c in ((_e.get("payload") or {}).get("choices") or []) if c.get("id")
+            }
 except Exception as _e:
     print(f"  (events_v2 로드 실패: {_e})", flush=True)
+    _event_choice_map = {}
 for t in turn_logs:
     if t.get("nodeType") != "LOCATION":
         continue
     eid = t.get("eventId")
     event_npc = _event_npc_map.get(eid)
     speaker = t.get("primaryNpcId")
-    # 이벤트가 특정 NPC 전제 + 서술 화자 존재 + 둘이 다름 → 분열
-    if event_npc and speaker and event_npc != speaker:
+    # 정밀화(2026-07-17): 이벤트 고유 선택지가 이번 턴 응답에 실제 노출된 경우만
+    # 플레이어 대면 분열 — EventChoiceGate가 폐기한 턴(정상 player-first)은 제외.
+    _offered = set(t.get("choiceIds") or [])
+    _event_choices_exposed = bool(_event_choice_map.get(eid, set()) & _offered)
+    if event_npc and speaker and event_npc != speaker and _event_choices_exposed:
         v10_issues.append(f"T{t['turn']}: 이벤트 NPC({event_npc}) ≠ 서술 화자({speaker}) — 선택지-서술 분열 [{eid}]")
 if v10_issues:
     for issue in v10_issues[:5]:
