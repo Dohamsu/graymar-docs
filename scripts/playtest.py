@@ -871,25 +871,19 @@ for t in turn_logs:
 distinct_event_ratio = len(set(_evt_ids)) / len(_evt_ids) if _evt_ids else 0.0
 print(f"[D4-2] 이벤트 소스 분포: {dict(_src_hist)} · distinct 비율: {distinct_event_ratio:.2f}", flush=True)
 
-# D4-3: 미해결 스레드 억제 확인 — 생성 시점에 미해결 스레드 2개+ 공존한 신규 스레드 수
-#   근사(post-hoc): o가 t 생성 시점(firstTurnNo)에 살아있었다 =
-#   o.firstTurnNo < t.firstTurnNo AND (o가 최종 미해결이거나 o.lastTurnNo >= t.firstTurnNo)
+# D4-3 (2026-07-17 재조준): 구 '억제 위반' 계측 폐기 — playerThreads는 플레이어
+#   행동 카운터(장소×접근×목표, 엔딩 성향 요약 소비)라 신규 생성은 위반이 아니라
+#   행동 다양성이다. 서사가 벌린 떡밥의 미해소는 사건(incident) 축이 정본.
+#   교체: ① 스레드 상태 분포(정보성 — COMPLETED 정산 배선 후 유의미)
+#         ② 미해소 사건 공존 수 (서사 방향 감시의 본래 의도)
 _threads = world_state.get("playerThreads", []) or []
 _UNRESOLVED = {"EMERGING", "ACTIVE"}
-thread_suppress_violations = []
-for _t in _threads:
-    _first = _t.get("firstTurnNo", 0)
-    _coexist = sum(
-        1 for _o in _threads
-        if _o.get("threadId") != _t.get("threadId")
-        and _o.get("firstTurnNo", 0) < _first
-        and (_o.get("status") in _UNRESOLVED or _o.get("lastTurnNo", 0) >= _first)
-    )
-    if _coexist >= 2:
-        thread_suppress_violations.append(f"{_t.get('threadId', '?')} (T{_first}, 공존 {_coexist})")
-print(f"[D4-3] 스레드: 총 {len(_threads)}개 · 미해결 {sum(1 for _t in _threads if _t.get('status') in _UNRESOLVED)}개 · 억제 위반(공존 2+ 중 신규): {len(thread_suppress_violations)}건", flush=True)
-for _v in thread_suppress_violations[:3]:
-    print(f"  ⚠️ {_v}", flush=True)
+from collections import Counter as _Counter
+_status_dist = _Counter(_t.get("status", "?") for _t in _threads)
+_approach_kinds = len({_t.get("approachVector") for _t in _threads})
+_open_incidents = sum(1 for _i in (world_state.get("activeIncidents") or []) if not _i.get("resolved"))
+print(f"[D4-3] 행동 스레드: 총 {len(_threads)}개 · 상태 {dict(_status_dist)} · 접근 다양성 {_approach_kinds}종 (정보성)", flush=True)
+print(f"[D4-3b] 미해소 사건 공존: {_open_incidents}건" + (" ⚠️ 3건+ — 떡밥 과적 신호" if _open_incidents >= 3 else ""), flush=True)
 
 # D4-4 + D1-c: 자율 팩 — 무진행 감시 + 의도 정합 채택률 (AUTHORED 런은 데이터 없음)
 _plot_progress = run_state.get("plotProgress") or {}
@@ -928,7 +922,9 @@ direction_metrics = {
     "distinctEventRatio": distinct_event_ratio,
     "threadTotal": len(_threads),
     "threadUnresolved": sum(1 for _t in _threads if _t.get("status") in _UNRESOLVED),
-    "threadSuppressViolations": len(thread_suppress_violations),
+    "threadStatusDist": dict(_status_dist),
+    "threadApproachKinds": _approach_kinds,
+    "openIncidents": _open_incidents,
     "beatAdopted": _adopted_n,
     "beatDiscarded": _discarded_n,
     "keyFactsDiscovered": _key_facts_n,
