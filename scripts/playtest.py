@@ -939,6 +939,68 @@ if _adopted_n or _discarded_n or _adoptions:
 else:
     print(f"[D4-4/D1-c] 자율 팩 데이터 없음 (AUTHORED 런 또는 비트 미발화)", flush=True)
 
+# D5: 지칭 명사구 반복 + 대명사 개시어율 (서술 품질 사이클 2026-07-18)
+#   ① 대명사 개시어율 — 서버 extractOverusedOpeners와 동일 전처리(마커 대사·인용
+#      제거, [.!?…다] 문장 분리, 첫 단어 한글 2+자)를 재현하되, 대명사 화이트리스트
+#      계열을 1키로 합산해 측정한다 (서버 패치 전/후 비교 기준 지표).
+#   ② 지칭 명사구 반복 — 주어형 토큰(은/는/이/가 조사 제거 stem)을 런 전체 누적으로
+#      집계해 3회+ 반복을 보고. 분류: CONTENT_ALIAS(콘텐츠 별칭·실명 풀 매칭) /
+#      NON_ALIAS(즉흥 지칭·일반 명사 후보 — 사람 지칭 여부는 리포트 검토로 판정).
+#      판단용 상시 리포트이며 게이트 아님. 별칭 풀은 V9-c의 _npc_alias_pool 재사용
+#      (로드 실패 시 전량 NON_ALIAS로 보고됨에 유의).
+_PRONOUN_OPENERS = {
+    "그는", "그가", "그의", "그를", "그도", "그에게",
+    "그녀는", "그녀가", "그녀의", "그녀를", "그녀도", "그녀에게",
+}
+_PRONOUN_STEMS = {"그", "그녀", "그것", "당신", "자신", "우리", "서로", "모두", "누군가", "무언가"}
+_d5_sent_total = 0
+_d5_pronoun_initial = 0
+_d5_opener_counts = Counter()
+_d5_stem_counts = Counter()
+for _t in turn_logs:
+    _txt = _t.get("narrative", "")
+    if not _txt:
+        continue
+    # 서버 전처리 재현: 마커+대사 → 인용 제거
+    _narr = re.sub(r'@\[[^\]]*\]\s*"[^"]*"', "", _txt)
+    _narr = re.sub(r'"[^"]*"', "", _narr)
+    _narr = re.sub(r"@\[[^\]]*\]", "", _narr)
+    for _raw in re.split(r"(?<=[.!?…다])\s+", _narr):
+        _s = _raw.strip()
+        if len(_s) < 6:
+            continue
+        _first = _s.split()[0] if _s.split() else ""
+        if not re.match(r"^[가-힣]{2,}", _first):
+            continue
+        _d5_sent_total += 1
+        if _first in _PRONOUN_OPENERS:
+            _d5_pronoun_initial += 1
+            _d5_opener_counts["그/그녀(대명사)"] += 1
+        else:
+            _d5_opener_counts[_first] += 1
+    # 주어형 stem 집계 (조사 앞 한글 2~6자)
+    for _stem in re.findall(r"([가-힣]{2,6})(?:은|는|이|가)\s", _narr):
+        if _stem in _PRONOUN_STEMS:
+            continue
+        _d5_stem_counts[_stem] += 1
+pronoun_opener_rate = _d5_pronoun_initial / _d5_sent_total if _d5_sent_total else 0.0
+_d5_opener_top = _d5_opener_counts.most_common(5)
+print(f"[D5-1] 대명사 개시어율: {pronoun_opener_rate:.1%} ({_d5_pronoun_initial}/{_d5_sent_total}) · top 개시어: " + ", ".join(f"{k}×{v}" for k, v in _d5_opener_top), flush=True)
+_d5_referent_repeats = []
+for _stem, _n in _d5_stem_counts.most_common():
+    if _n < 3:
+        break
+    _cls = "CONTENT_ALIAS" if any(_stem == _a or _stem in _a or _a in _stem for _a in _npc_alias_pool) else "NON_ALIAS"
+    _d5_referent_repeats.append({"stem": _stem, "count": _n, "cls": _cls})
+if _d5_referent_repeats:
+    _d5_top10 = _d5_referent_repeats[:10]
+    print("[D5-2] 지칭/명사 반복 (런 누적 3회+, top 10): " + ", ".join(f"{r['stem']}({'C' if r['cls'] == 'CONTENT_ALIAS' else 'N'},{r['count']})" for r in _d5_top10), flush=True)
+    _d5_non_alias_max = max((r["count"] for r in _d5_referent_repeats if r["cls"] == "NON_ALIAS"), default=0)
+    if _d5_non_alias_max >= 3:
+        print(f"  ↳ NON_ALIAS 3회+ 존재 — 즉흥 지칭 후보 검토 필요 (착수 트리거 후보)", flush=True)
+else:
+    print("[D5-2] 지칭/명사 반복 3회+ 없음", flush=True)
+
 direction_metrics = {
     "trigramRepeatRatio": trigram_repeat_ratio,
     "adjacentJaccard": adjacent_jaccard,
@@ -956,6 +1018,10 @@ direction_metrics = {
     "intentAlignmentRate": intent_alignment_rate,
     "premiseDiversity": _premise_diversity,
     "beatAdoptions": _adoptions,
+    "pronounOpenerRate": pronoun_opener_rate,
+    "sentenceTotal": _d5_sent_total,
+    "openerTop": [{"opener": k, "count": v} for k, v in _d5_opener_top],
+    "referentRepeats": _d5_referent_repeats,
 }
 
 # ═══════════════════════════════════════
