@@ -1,6 +1,6 @@
 # 77. God Method 리팩토링 계획 — 대형 파일 구조 개선
 
-> 상태: ✅ Phase 1 완료 (2026-07-16) — P1.0 하네스 + P1.0b COMBAT 보강 + P1.1~P1.17 추출 + P1.final (God method **2,838→1,087줄, -62%**). 잔여는 조율 로직 — 의도적 잔존. 다음: Phase 2(context-builder) 또는 P3.X(중복 단일화). 진행 로그는 §9.
+> 상태: ✅ **전 Phase 완료** (2026-07-18) — P1 prompt-builder(2,838→1,087, -62%) · P2 context-builder(1,528→553, -64%) · P3 handleLocationTurnInner(4,440→1,937, -56%) · P4 llm-worker processTurnInner(3,503→1,746, -50%) · 전투/DAG C1~C5(Combat 544→319, -41% + 골드 무바닥 결함 수정) · P5 클라(StartScreen -26% / game-store -42% / StoryBlock -45%). 매 스텝 유닛 green + playtest/E2E/browse 게이트, 회귀 0(V9 실패 4건 전부 flaky 판정·인과 배제). 잔여는 각 코디네이터 본연 몫 + §5 재비대화 래칫(미착수). 진행 로그는 §9.
 > 관련: [[guides/01_server_module_map|server module map]], [[guides/02_client_component_map|client component map]]
 > 원칙: 동작 보존 리팩토링(behavior-preserving) — 기능 변경 0, 순수 구조 개선. 각 단계는 독립 커밋 + 회귀 검증 통과가 조건.
 
