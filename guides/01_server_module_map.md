@@ -182,7 +182,7 @@ main.ts → AppModule
 | ContextBuilderService | context-builder.service.ts | L0-L4 메모리 컨텍스트 빌드 + 선별 주입 |
 | MemoryRendererService | memory-renderer.service.ts | StructuredMemory → 프롬프트 블록 |
 | AiTurnLogService | ai-turn-log.service.ts | LLM 호출 로그 기록 (ai_turn_logs 테이블) |
-| TokenBudgetService | token-budget.service.ts | 토큰 예산 관리 (2500 토큰), 저우선 블록 트리밍 |
+| TokenBudgetService | token-budget.service.ts | 토큰 예산 관리 — 메모리 블록 2500 + 총량 백스톱 GRAND_TOTAL_CHAR_BUDGET 16,000자 (arch/79) |
 | MidSummaryService | mid-summary.service.ts | 4턴 초과 시 중간 요약 생성 |
 | NpcDialogueMarkerService | npc-dialogue-marker.service.ts | 서버 regex + nano LLM 하이브리드 @마커 삽입, 불일치 교정 (Step F) |
 | NanoDirectorService | nano-director.service.ts | nano 전처리: 연출 지시서 생성 (첫 문장, NPC 행동, 반복 회피) |

@@ -54,7 +54,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 ### 5. LLM·서술 파이프라인
 
-- [[architecture/05_llm_narrative|llm narrative]] — LLM 파이프라인 개요(L0~L4 컨텍스트, Token Budget 2500, LLM is narrative-only 불변). 모든 서술 문서의 진입점.
+- [[architecture/05_llm_narrative|llm narrative]] — LLM 파이프라인 개요(L0~L4 컨텍스트, Token Budget 2단 — 메모리 2500+총량 백스톱 16,000자 arch/79, LLM is narrative-only 불변). 모든 서술 문서의 진입점.
 - [[architecture/11_llm_prompt_caching|llm prompt caching]] — 시스템/정적/동적 블록 분리와 프롬프트 캐싱 전략(OpenAI/Anthropic/OpenRouter).
 - [[architecture/25_llm_model_evaluation|llm model evaluation]] — 모델 평가(v1+v2 통합). **현 운영(2026-05): 메인 Gemma 4 26B MoE (OpenRouter) + fallback GPT-4.1 Mini.** Qwen3 235B → Gemini Flash Lite → Flash 교차 이력을 거쳐 Gemma 4 로 복귀.
 - `26_narrative_pipeline_v2.md` — 3-Stage 파이프라인(NanoDirector → 메인 LLM → NanoProcessor)과 Narrative v2 / EventDirector / Procedural Event(`18/19/20` 통합) + AI 구현 가이드라인.

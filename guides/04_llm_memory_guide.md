@@ -113,9 +113,16 @@ go_hub/MOVE_LOCATION/RUN_ENDED → `MemoryIntegration.finalizeVisit()` → `run_
 
 ---
 
-## Token Budget (2500 토큰)
+## Token Budget (메모리 블록 2500 + 총량 백스톱 16,000자)
 
-`server/src/llm/token-budget.service.ts` — 설계문서 18
+`server/src/llm/token-budget.service.ts` — 설계문서 18 + architecture/79
+
+> **2단 구조 (2026-07-19, arch/79)**: 아래 2500 예산은 **assistant 메모리 블록만** 관할한다.
+> 프롬프트 전체(시스템+메모리+facts)는 `GRAND_TOTAL_CHAR_BUDGET`(16,000자 ≈ 9.7k tok)
+> 백스톱이 상한 — 초과 시 스냅샷성 블록([NPC 일상]/[세계 상태])부터 제거, 기억성 블록은
+> 부분 절삭만, 시스템·행동·판정·단서·직전 발언·L0는 절대 보호 (`enforceGrandTotal`,
+> prompt-builder). 11k tok부터 soft 문체 지시 준수가 무너지는 실측(1,556턴)이 근거.
+> 시스템 프롬프트는 arch/79 P3-A에서 12,154→4,668자로 재압축됨 (P0/P1/P2 박스가 정본).
 
 ### 블록별 예산
 | 블록 | 토큰 | 내용 |
