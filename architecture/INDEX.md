@@ -26,6 +26,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/63_multi_scenario_content_decoupling|multi scenario content decoupling]] — 멀티 시나리오 선행작업 ②~⑤: 엔진 하드코딩 콘텐츠 ID 외부화(표시명/활동장소/별칭/프롤로그/L0 테마), DAG graph.json화, 시스템 프롬프트 세계관 주입, silverdeen_v1 미니 팩 + scenarioId 런 경로. 단일 활성 시나리오 정책(① 멀티 팩 로더는 후속).
 - [[architecture/70_campaign_progression|campaign progression]] — ✅ 구현됨. 캠페인 순차 진행(한 캐릭터 이어달리기, 되돌아가기 불가): `?? 'DOCKWORKER'` 폴백 7곳 제거(star_sand 진입 400 언블록) + 집합 기반 다음 순번 게이팅(status COMPLETED/CURRENT/LOCKED) + 캐릭터 정체성(gender/이름/특성) 이월 + RUN_ABORTED 재도전 시맨틱. 캐리오버 엔진 ~75% 기구현 위 배선.
 - [[architecture/64_npc_name_reveal_integrity|npc name reveal integrity]] — NPC 이름 공개 무결성: 롤백-재소개 상쇄(A)·소개 힌트 실명 오염(C)·injected 2턴 분리(D)·별칭 접두 중복(E) 수정 + 핍 케이스 실증. B(AppearanceIntro 후보화)는 후속.
+- [[architecture/73_scenario_differentiation|scenario differentiation]] — 📎 설계(제안, 미구현). 시나리오 동형 수렴 층위 진단(첫인상=프리셋 명명 / 중반=이벤트 밀도 / 종반=ArcRoute 삼각) + Tier A(콘텐츠 탈템플릿)/B(packMeters·아크 팩화)/C 개선안 + 검증 지표 6종. packMeters(B1)는 별빛모래에 선반영.
 
 ### 2. 게임 엔진
 
@@ -35,11 +36,12 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/22_dice_roll_animation|dice roll animation]] — 1d6 판정 주사위 애니메이션과 순차 공식 노출 UX. 현재는 클라이언트 ResolveDisplay에 연동.
 - [[architecture/41_creative_combat_actions|creative combat actions]] — 창의 전투 5-Tier 분류 시스템(등록 프롭/즉흥 카테고리/서술 커버/환상 재해석/허공 응시) + PropMatcher + CombatService effects 통합 + LLM 조건부 재해석 블록. 서버 결정론 유지, LLM은 합리적 치환만.
 - [[architecture/42_combat_ui_buttonform|combat ui buttonform]] — 전투 UI 버튼 폼(적 카드 클릭 타겟 + 주요 5 버튼 + 특수 펼침 + 아이템 모달). 기존 17개 숫자 리스트 → 5~8 visible (-60%). 서버 로직 불변, 하위 호환 choiceId 유지.
+- [[architecture/65_economy_loop_v1|economy loop v1]] — 경제 루프 v1: 단서·진전 사례금(quest.json rewards — factGold/transitionGold, 총량 유한) + 정보 보류 턴 BRIBE 선택지 노출(bribeOpportunity) + BRIBE 비용 config 외부화(-6/-3). 부록 B: 엔딩 완주 평가 P1~P4(이동 상용구 KW_OVERRIDE·작별 잠금 해제·접두 융합 별칭·전환 장비 보상). 부록 C: 마커·대사 정합 마감(콜론 라벨 3-Tier). 부록 D: 엔딩 턴 피날레 디렉티브.
 
 ### 3. 서버·데이터
 
 - [[architecture/04_server_architecture|server architecture]] — NestJS 10 모듈, 65+ 서비스, Drizzle ORM 18 테이블, Server-Is-Source-of-Truth 원칙, Idempotency, RNG 결정론 등 정본.
-- [[architecture/77_god_method_refactoring|god method refactoring]] — 대형 파일 구조 개선 계획(📋 미착수). God method 4개 실측(turns 4,440줄·llm-worker 3,503줄·prompt-builder 2,838줄) + 동작 보존 5단계(스냅샷 하네스 → 조율 로직 함수화) + 추출 금지선(스트림/DB 커밋/락)·오배치 리스크.
+- [[architecture/77_god_method_refactoring|god method refactoring]] — 대형 파일 구조 개선(✅ 전 Phase 완료 2026-07-18). P1 prompt-builder -62% · P2 context-builder -64% · P3 turns.service Inner -56% · P4 llm-worker Inner -50%(금지선 4곳 마킹) · 전투/DAG -41%(골드 무바닥 수정) · P5 클라 3파일 -26~-45%. 매 스텝 유닛 green + playtest/E2E 게이트, 회귀 0. §9 진행 로그가 정본. 잔여: §5 재비대화 래칫(ESLint max-lines warn)만.
 - [[architecture/10_region_economy|region economy]] — 리전별 경제(골드 유동성, 상점 물가)와 장비/세트 연계. 장비 드랍은 완성, 리전별 동적 경제는 부분.
 - [[architecture/12_equipment_system|equipment system]] — 장비 드랍/착용, 접미사, 세트 효과, Legendary. Phase 4에서 구현 완료.
 
@@ -48,6 +50,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/07_game_progression|game progression]] — HUB 순환 → LOCATION 탐험 → 엔딩의 흐름. HUB 모드 도입 이후 업데이트 필요.
 - [[architecture/14_user_driven_code_bridge|user driven code bridge]] — 플레이어 입력 → IntentV3Builder → IncidentRouter → WorldDelta → PlayerThread → Notification의 유저 드리븐 브릿지.
 - [[architecture/21_living_world_redesign|living world redesign]] — Living World v2 전면 재설계(LocationDynamicState/WorldFact/NpcSchedule/NpcAgenda/SituationGenerator/ConsequenceProcessor/PlayerGoal).
+- [[architecture/71_campaign_free_scenario_selection|campaign free scenario selection]] — 캠페인 자유 시나리오 선택(원점 정책 폐기, AVAILABLE/IN_PROGRESS/COMPLETED) + creation-bundle API(팩 프리셋·특성 서빙) + 캐릭터 생성 6단계 통일 + 장비 carrySnapshot 이월 + 소모품 골드 환산 + campaignSummary 서사 이월. 70의 순차 게이팅을 대체.
 
 ### 5. LLM·서술 파이프라인
 
@@ -75,6 +78,13 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/58_fact_reveal_unification|fact reveal unification]] — 단서 기록·서술 단일화: 주제 우선 fact 선택(selectRevealableFact) + `ui.questReveal` 전달 + 미기록 detail 보류 가이드. "발견 로그와 NPC 대사가 다른 단서" 데스싱크 근본 차단.
 - [[architecture/59_fact_dialogue_followup_plan|fact dialogue followup plan]] — 58 검증 실측 3건 수정: 판정 NPC = 서술 NPC 정합(부분 이름 매칭) + [단서 방향] nextHint ui 전달 복구 + HINT_MODES off-by-one. ✅ 구현됨.
 - [[architecture/60_clue_flow_tuning|clue flow tuning]] — 흐름 점검 4건: LLM 워커 runState lost update 해소(P0, fresh 부분 패치) + 주제 불일치 fallback 금지(인계 양보) + [단서 방향] 공개 턴 이월 + 비주제 공개 확률 게이트. ✅ 구현됨.
+- [[architecture/61_choice_recommendation_tuning|choice recommendation tuning]] — 선택지 추천 점검 P1~P6: nano 미리보기 머리150+꼬리350(끝 NPC 질문 반영) + dialogueAct 전달(작별 턴 자기모순 차단) + 직전 라벨 반복 금지 + go_hub 라벨-결과 정합 + modifier/hint 복원 + "~한다" 문체 통일. ✅ 구현됨 (2026-07-09).
+- [[architecture/62_latency_optimization|latency optimization]] — LLM 턴 레이턴시 최적화 4건: Track1∥NpcReaction 병렬 + Challenge∥이벤트매칭 병렬 + 워커 즉시 킥(wake) + 첫 토큰 타임아웃(LLM_FIRST_TOKEN_TIMEOUT_MS→non-stream fallback). 부록 A: OpenRouter provider sort/ignore. 병목은 nano 직렬 체인. ✅ 구현됨 (2026-07-09).
+- [[architecture/66_npc_self_introduction|npc self introduction]] — NPC 자기소개 사전 확정 3단 사다리: nano 실명 대사 사전 생성(서버 검증+어체 템플릿) → 프롬프트 positive 주입 → 미반영 시 서버 삽입(지연 0턴). 전 성향 통일 임계(FRIENDLY/FEARFUL 1회·CAUTIOUS 2회·CALCULATING/HOSTILE 3회), 소개 턴 별칭 마커→다음 턴 실명(IntroMarkerNorm). 성사 0%→5/5 실측 — 불변식 15의 정본.
+- [[architecture/67_nano_engine_audit|nano engine audit]] — Nano 엔진 전수 감사: 요청 단위 timeoutMs(light 5s/dialogue 10s 죽은 설정 부활) + 워커 이중 처리 락(.returning 선점) + NpcReaction JSON 재시도 + nano 모델 env 고정. 부록 A·B: 카드 정합 근본 수정(V8 3중 원인)·테스트 시스템 감사. 부록 D: 자유 대화 정합 4종(언급 질문 가드·화자 단일화·작별 소개 이월·재탕 센서).
+- [[architecture/72_npc_reaction_authority_unification|npc reaction authority unification]] — NPC 반응 권한 통합: 목격자 반응(Layer 3)↔NpcReactionDirector 이중 권한 해소 — 대화 상대 목격자 루프 제외(② 단일 권한) + 당턴 1회 발화 + posture 우선 trust 밴드(witness-reaction.core) + [직전 목격] nano 블록. 버그 599a00a1.
+- [[architecture/74_autonomous_narrative_direction|autonomous narrative direction]] — 📎 논의. "핵심 NPC+세계관만 저작, LLM이 스토리·NPC 생성" 바람 ↔ 불변식 1·2 충돌 지점 실측 + 3층 하이브리드 디렉터 모드 + 자율 L0~L3 + 기본값편향 역설. 상세설계는 75로 확정.
+- [[architecture/75_autonomous_pack_design|autonomous pack design]] — 📐 상세설계 확정 → **P0~P6+P8 구현·배포**(2026-07-16, karnholt_v1 AUTONOMOUS 팩). 진상 선확정 Plot Seed(PlotSeedGenerator+검증/폴백) + Emergent Director 비트 선계산(PlotDirector, 워커 비동기 CAS)+동기 채택(beat-gravity, 불변식 47 의도 정합) + 동적 NPC(dynamic-npc stub) + 규명율 엔딩(autonomous-ending) + 킬스위치. §19 P8 계측: 디렉터 존재감 낮음(채택 0~2/12턴) — stale 창 확대 vs 수용 소유자 결정 대기.
 - [[architecture/69_npc_living_presence|npc living presence]] — B축(살아있는 NPC), B0~B4 ✅ 구현. B0 계측(정보 편향 88% 실측)·B1 반응 자기목적 주입(INFO 88→40%)·B2 잡담 활동 결합·B3 재등장 연속성·B4 NPC 간 세계(잡담 경로 관계 근황 발화 selectRelationMentionCore, introduced 후보 한정+rel: 쿨다운; 목격 파이프 위치 판정 버그 수정으로 부활). 공용 헬퍼 getNpcSchedulePhaseEntry/getNpcCurrentActivity 4곳 재사용. 후속: 어미 다양화(26명 재배정·HAEYO 제거) + 어체 검증 경로 **완결** — C1 하오체 강제 후처리 제거 → C2 화자 인지 계측(llm_speech_audit, 검증기 버그 7건 발견·수정) → C2.5 forbidHint·검증기 정비 → **C2.6 시스템 프롬프트 하오체 전역 강제 레거시 정정(진짜 원인)** → 하오체 침식 80→9.1%로 C3(선별 재생성) 미발동 확정. 잔여 과제는 문서 §7 통합. A축(선제 단서 억제)은 arch/68 부록 M.
 
 ### 6. UI·클라이언트
@@ -99,6 +109,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - `Context Coherence Reinforcement.md` — 컨텍스트 일관성 강화 원칙(씬 연속성 7규칙, sceneFrame 3단계 억제, 씬 이벤트 1턴 유지). 모든 서술 파이프라인 문서의 공통 제약.
 - `fixplan_history.md` — 완료된 플레이테스트 패치 내역(기존 `fixplan3/4/5` 통합). 히스토리 참조용이며, 신규 이슈는 본 히스토리와 중복되지 않도록 확인 필요.
+- [[architecture/76_market_alignment_direction|market alignment direction]] — 시장 조사 대응 방향: AI 텍스트 RPG 이용자 긍/부정 요인 ↔ 현 구조 대조 + D1(의도 존중 가드=불변식 47)·D2(판정 투명성 UI)·D3(actionType 탈버킷+감정 행동화)·D4(반복 계측)·D5(과금 3원칙) ✅ 구현. 잔여는 D6(저작 도구)뿐. §5 진행 체크리스트.
+- `36_llm_pipeline_changelog_20260417.md` — 📜 이력. 2026-04-17 LLM 파이프라인·렌더링·품질 수정 Before/After 정리.
 
 ---
 
@@ -142,27 +154,29 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-07-03)
+## 도메인별 최신 업데이트 기준 (2026-07-18)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
-| 세계/NPC     | 01, 06, 09                         | 구현됨              |
-| 전투         | 02, 08, **41, 42**                 | 구현됨 (창의 Tier + 버튼 UI) |
-| HUB/진행     | 03, 07, 14                         | 구현됨 (07 부분 업데이트 필요) |
+| 세계/NPC     | 01, 06, 09, **63, 64, 66, 69**     | 구현됨 (멀티 시나리오 + 이름 공개 무결성 + 자기소개 + Living Presence) |
+| 전투         | 02, 08, **41, 42**                 | 구현됨 (창의 Tier + 버튼 UI + arch/76 전투 기만) |
+| HUB/진행     | 03, 07, 14, **70, 71**             | 구현됨 (07 부분 업데이트 필요, 캠페인은 71이 정본) |
 | Living World | 21                                 | 구현됨              |
-| 서버/데이터  | 04, 10, 12                         | 구현됨 (10 리전 경제 부분) |
-| LLM 서술     | 05, 11, 26, 35                     | 구현됨 (스트리밍)   |
+| 서버/데이터  | 04, 10, 12, **77**                 | 구현됨 (10 리전 경제 부분, 77 God method 완료) |
+| LLM 서술     | 05, 11, 26, 35, **62**             | 구현됨 (스트리밍 + 레이턴시 최적화) |
 | 모델 평가    | 25                                 | 참고                |
 | 메모리       | 31                                 | 구현됨 (v4)         |
-| 대사/마커    | 30, 32, 33, **44, 45, 56, 58**     | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화) |
+| 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝 + nano 감사) |
 | 이벤트 엔진  | 34, **43, 46**                     | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체, 28은 archive 배경) |
-| NPC 결정/품질 | **48, 49, 51, 47, 55**            | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭, 50은 폐기) |
-| UI/클라      | 15, 23, **42**                     | 구현됨              |
+| NPC 결정/품질 | **48, 49, 51, 47, 55, 72**        | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭 + 반응 권한 통합, 50은 폐기) |
+| UI/클라      | 15, 23, **42, 68**                 | 구현됨 (UI/UX 실사 리뷰 + 부록 A~M) |
 | 파티         | 24                                 | 구현됨 (Phase 1~3)  |
 | 주사위/UX    | 22                                 | 구현됨              |
 | 엔딩/아카이브 | 39                                 | 구현됨 (Phase 1)    |
 | 소지품/아이템 | 40                                 | 구현됨 (UX 개선 + LLM 정합성) |
-| 창의 전투    | **41, 42** (신규)                  | 구현됨 (MVP + 버튼 UI) |
+| 경제         | **65**                             | 구현됨 (사례금 + BRIBE 정보 구매) |
+| 자율 서사    | **74(논의), 75(설계·P0~P8)**       | 구현됨·프로덕션 (karnholt_v1, P7/P8 후속 대기) |
+| 시장 대응    | **76**                             | 구현됨 (D6 저작 도구만 잔여) |
 | 컨텍스트 일관성 | Context Coherence Reinforcement | 적용됨              |
 | 플레이테스트 | fixplan_history.md                 | 히스토리            |
 
@@ -181,7 +195,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
   · `archive/37_streaming_transition_issues.md` — 36과 중복
   · `archive/38_stream_vs_nonstream_comparison.md` — 35와 중복
 - 폐기됨(이미 파일 없음): [[specs/combat_resolve_engine_v1|combat resolve engine v1]] — floor 미적용 오류 버전. 정본은 [[specs/combat_system|combat system]] + [[architecture/02_combat_system|combat system]].
-- 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(61~)를 사용.
+- 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(78~)를 사용.
 - **57번 문서 부재**: server 코드/커밋(`focused 모드 보조 NPC strip`, `익명 배경 인물 신원 hard 차단`)이 `architecture/57`을 참조하나 문서 파일이 레포에 없음 — 작성 필요.
 
 ---

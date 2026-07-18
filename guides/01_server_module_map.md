@@ -1,9 +1,9 @@
 # 서버 모듈/서비스 맵
 
 > 정본 위치: `server/src/`
-> 최종 갱신: 2026-07-03
+> 최종 갱신: 2026-07-18
 
-## 모듈 구조 (14 modules, 104 services, 11 controllers)
+## 모듈 구조 (14 modules, 107 services, 12 controllers)
 
 ```
 main.ts → AppModule
@@ -13,7 +13,9 @@ main.ts → AppModule
 │   ├── filters/         ← game-exception.filter
 │   ├── guards/          ← auth.guard
 │   ├── pipes/           ← zod-validation.pipe
-│   └── text-utils.ts    ← 텍스트 유틸리티
+│   ├── text-utils.ts    ← 텍스트 유틸리티
+│   ├── dialogue-act.ts  ← 사교 발화 감지 (GREETING/WELLBEING/THANKS/FAREWELL — 불변식 44)
+│   └── korean.ts        ← 한국어 조사 처리 (korParticleRo 등, architecture/68)
 ├── auth/                ← 인증 모듈
 │   ├── auth.controller  ← POST /v1/auth/register, POST /v1/auth/login
 │   ├── auth.service     ← JWT 세션 관리
@@ -21,16 +23,19 @@ main.ts → AppModule
 ├── db/                  ← Drizzle ORM
 │   ├── schema/          ← 20 파일 / 22 pgTable (아래 참조)
 │   └── types/           ← TypeScript types (43 파일, 아래 참조)
-├── content/             ← 게임 콘텐츠 로더
-│   ├── content-loader.service  ← graymar_v1 JSON 27개 로드
+├── content/             ← 게임 콘텐츠 로더 (멀티 팩)
+│   ├── content-loader.service  ← 팩별 JSON 로드 + ContentPackState 캐시 (graymar/silverdeen/karnholt)
 │   ├── content.types            ← NpcDefinition.unknownAlias/shortAlias, NpcTier 포함
 │   ├── content.module
-│   └── event-content.provider   ← 이벤트 콘텐츠 프로바이더
+│   ├── event-content.provider   ← 이벤트 콘텐츠 프로바이더
+│   ├── scenarios.controller     ← GET /v1/scenarios, GET /v1/scenarios/:id/creation-bundle (architecture/63⑥, 71)
+│   ├── scenario-context.ts      ← AsyncLocalStorage 시나리오 스코프 (ensureScenario/enterScenario — architecture/63①)
+│   └── dynamic-npc.ts           ← 동적 NPC stub 검증·등록 (자율 서사 P1 — architecture/75 §4.1)
 ├── engine/              ← Core game logic (65 services)
 │   ├── rng/             ← Deterministic RNG (splitmix64, seed+cursor)
 │   ├── stats/           ← Stat snapshot calculation
 │   ├── status/          ← Status effects lifecycle (tick/만료)
-│   ├── combat/          ← Hit, Damage, EnemyAI, PropMatcher, CombatService (5 services)
+│   ├── combat/          ← Hit, Damage, EnemyAI, PropMatcher, CombatService (5 services) + combat-tactic.core (적 기만 감정, arch/76 D3)
 │   ├── input/           ← RuleParser → Policy → ActionPlan (3 services, 전투 입력용)
 │   ├── nodes/           ← 노드별 리졸버 + 전이 (7 services)
 │   │   ├── node-resolver.service   ← 노드 타입별 분기 진입점
@@ -49,6 +54,7 @@ main.ts → AppModule
 │   ├── planner/         ← RUN 계획 (1 service)
 │   │   └── run-planner.service ← RUN 구조 생성
 │   └── hub/             ← HUB 엔진 (41 services, 6 서브시스템 + 퀘스트 + TurnOrchestration, 아래 상세)
+│       └── (순수 모듈)  ← beat-gravity(비트 채택), autonomous-ending(규명율 종결), pack-meter, plot-seed-validator — 자율 서사 P3~P5 (architecture/75)
 ├── runs/                ← RUN/버그리포트
 │   ├── runs.controller        ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 │   ├── runs.service
@@ -56,7 +62,10 @@ main.ts → AppModule
 │   └── bug-report.service     ← 버그 리포트 CRUD
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 │   ├── turns.controller
-│   └── turns.service    ← nanoCtx 빌드만 수행 (NanoEventDirector 호출은 LLM Worker로 이관)
+│   ├── turns.service    ← 턴 파이프라인 조율 (arch/77 P3: Inner 4,440→1,937줄, 추출 메서드 다수)
+│   ├── npc-agitation.core.ts     ← 감정→세계 행동화 (fear 도주/susp 신고/trust 접근, arch/76 D3)
+│   ├── witness-reaction.core.ts  ← 목격자 반응 posture 우선 trust 밴드 (architecture/72)
+│   └── run-state-apply.core.ts   ← 인벤토리 수량 병합 단일화 순수 함수 (5개 보상 경로 공통, arch/77 P3)
 ├── llm/                 ← Async LLM narrative (20 services, 1 controller, 아래 상세)
 ├── endings/             ← 여정 아카이브 조회
 │   ├── endings.controller     ← GET /v1/endings, GET /v1/endings/:runId
@@ -161,13 +170,13 @@ main.ts → AppModule
 
 ---
 
-## LLM 모듈 서비스 (20 services, 1 controller)
+## LLM 모듈 서비스 (23 services, 1 controller)
 
 `server/src/llm/`
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
-| LlmWorkerService | llm-worker.service.ts | Background poller (1s), PENDING→DONE, NanoEventDirector 비동기 호출, 스트리밍 파이프라인 진입점 |
+| LlmWorkerService | llm-worker.service.ts | Background poller (1s), PENDING→DONE, NanoEventDirector 비동기 호출, 스트리밍 파이프라인 진입점 (arch/77 P4: Inner 3,503→1,746줄, 금지선 4곳 마킹) |
 | LlmCallerService | llm-caller.service.ts | LLM 공급자 호출 래퍼 (retry, timeout, fallback 모델, cost_usd 추적) |
 | LlmConfigService | llm-config.service.ts | 런타임 LLM 설정 관리 (provider, model, JSON 모드) |
 | ContextBuilderService | context-builder.service.ts | L0-L4 메모리 컨텍스트 빌드 + 선별 주입 |
@@ -186,12 +195,21 @@ main.ts → AppModule
 | LorebookService | lorebook.service.ts | 키워드 트리거 기반 세계 지식 동적 주입 (NPC/장소/사건/entity_facts) |
 | LlmStreamBrokerService | llm-stream-broker.service.ts | 턴별 SSE 채널 관리 (OpenRouter stream:true 토큰 브로드캐스트) |
 | StreamClassifierService | stream-classifier.service.ts | 스트리밍 토큰 실시간 분류 (narration vs dialogue, 문장 단위 버퍼링) |
-| PromptBuilderService | prompts/prompt-builder.service.ts | 시스템 프롬프트 조립 + NPC 소개 분기 + PRESET_MANNERISMS |
+| PromptBuilderService | prompts/prompt-builder.service.ts | 시스템 프롬프트 조립 + NPC 소개 분기 + PRESET_MANNERISMS (arch/77 P1: 2,838→1,087줄) |
+| LlmCallLogService | llm-call-log.service.ts | 턴당 LLM 호출 실측 로그 — llm_call_logs 테이블 배치(1행) 기록 (turn-context ALS와 연동) |
+| PlotDirectorService | plot-director.service.ts | 자율 서사 Emergent Director — 비트 후보 2~3개 nano 선계산 → nextBeatCandidates 저장 (architecture/75 §5, AUTONOMOUS 전용) |
+| PlotSeedGeneratorService | plot-seed-generator.service.ts | Plot Seed 생성 — nano 진상 생성 + validatePlotSeedCore 검증/재롤 + 결정론 폴백 (architecture/75 §3, createRun 백그라운드) |
 | LlmSettingsController | llm-settings.controller.ts | GET/PATCH /v1/settings/llm (런타임 설정) |
+
+**순수 모듈/유틸 (서비스 아님):**
+- `narrative-filter.core.ts` — 서술 품질 후처리 필터 체인 export 정본 (플레이어 대사 방어→메타 서술→R1→미소개 실명→경어체→opening, arch/77 P4.1)
+- `turn-context.ts` — 턴 단위 LLM 호출 로그 ALS 스코프 (유닛 이코노미 실측)
+- `npc-relation-mention.ts` — NPC 관계 근황 발화 후보 선정 (arch/69 B4)
+- `npc-utterance.util.ts` — @마커에서 특정 NPC 발화 추출
 
 **하위 모듈:**
 - `providers/` — OpenAI(OpenRouter 경유), Claude, Gemini, Mock (4 providers) + LlmProviderRegistryService
-- `prompts/` — PromptBuilder + system-prompts + intent-system-prompt
+- `prompts/` — PromptBuilder + system-prompts + intent-system-prompt + speech-register(어체 규칙) + intro-directive(자기소개 디렉티브, arch/66) + injected-block-headers(주입 블록 헤더 정본)
 - `types/` — LLM 공급자 인터페이스 타입
 
 ---
@@ -207,7 +225,7 @@ main.ts → AppModule
 
 ---
 
-## DB 스키마 (20 파일, 22 pgTable)
+## DB 스키마 (21 파일, 23 pgTable)
 
 `server/src/db/schema/`
 
@@ -225,6 +243,7 @@ main.ts → AppModule
 | recent_summaries | 최근 요약 |
 | entity_facts | Memory v4 구조화 팩트 저장 (NPC/장소/사건 키별 UPSERT, 반복 방어) |
 | ai_turn_logs | LLM 호출 로그 (cost_usd, cacheCreationTokens 포함) |
+| llm_call_logs | 턴 단위 LLM 유닛 이코노미 실측 (호출별 usage/cost 배치 1행) |
 | scene_images | 씬 이미지 캐시/메타데이터 |
 | campaigns | 시즌/이벤트 캠페인 메타 |
 | playtest_results | 플레이테스트 자동 실행 결과 |
@@ -238,7 +257,7 @@ main.ts → AppModule
 
 ---
 
-## DB 타입 파일 (43 파일)
+## DB 타입 파일 (45 파일)
 
 `server/src/db/types/`
 
@@ -291,6 +310,12 @@ main.ts → AppModule
 | npc-portraits.ts | NPC/프리셋 초상화 경로/크롭 메타 |
 | carry-over.ts | 런 종료 간 이어지는 보상/성장 데이터 |
 
+### 자율 서사 타입 (architecture/75)
+| 파일 | 내용 |
+|------|------|
+| plot-seed.ts | PlotSeed(진상·keyFacts·acts), Motif, NarrativeMode, BeatCandidate |
+| pack-meter.ts | 팩별 게이지(packMeters — 광산 불안 등, endingTrigger 임계) |
+
 ### 기타 타입
 | 파일 | 내용 |
 |------|------|
@@ -331,3 +356,12 @@ main.ts → AppModule
 - **combat 확장**: 4 → 5 services. PropMatcher(architecture/41 창의 전투) 추가.
 - **모듈 신규**: endings/ (여정 아카이브 조회 컨트롤러).
 - **DB 타입 신규**: narrative-theme.ts.
+
+## 최근 추가/변경 요약 (2026-07-18 동기화)
+
+- **자율 서사 P0~P6 (architecture/75)**: LLM에 PlotSeedGenerator·PlotDirector 서비스, engine/hub에 beat-gravity·autonomous-ending·pack-meter·plot-seed-validator 순수 모듈, content에 dynamic-npc(동적 NPC stub), db/types에 plot-seed.ts·pack-meter.ts 추가. AUTONOMOUS 팩(karnholt_v1) 전용 — AUTHORED 런은 무동작.
+- **멀티 시나리오 (architecture/63)**: scenario-context.ts(AsyncLocalStorage 팩 스코프) + scenarios.controller(GET /v1/scenarios, creation-bundle) — 컨트롤러 11 → 12.
+- **LLM 유닛 이코노미**: turn-context.ts(ALS) + LlmCallLogService + llm_call_logs 테이블 — 스키마 21 파일 / 23 pgTable.
+- **arch/76 D3 (탈버킷)**: turns/npc-agitation.core(감정→행동화) · witness-reaction.core(architecture/72) · combat/combat-tactic.core(전투 기만) 순수 모듈.
+- **arch/77 God method 리팩토링**: turns.service Inner -56% · llm-worker Inner -50%(금지선 4곳 마킹) · prompt-builder -62% · context-builder -64% · Combat -41%. narrative-filter.core.ts(후처리 필터 정본) · run-state-apply.core.ts(인벤토리 병합) 신설. 파일 구조는 동일, 메서드가 다수의 private 메서드/순수 모듈로 분해됨.
+- **합계**: 104 → 107 services, 11 → 12 controllers, DB 타입 43 → 45 파일.

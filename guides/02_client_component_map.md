@@ -1,12 +1,12 @@
 # 클라이언트 컴포넌트 맵
 
 > 정본 위치: `client/src/`
-> 최종 갱신: 2026-07-03
+> 최종 갱신: 2026-07-18
 
-## 컴포넌트 구조 (68 components, 5 stores)
+## 컴포넌트 구조 (77 components, 5 stores)
 
-실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **68**).
-영역별: narrative 4 / input 2 / hub 14 / location 5 / screens 6 / side-panel 7 / ui 12 / layout 2 / battle 4 / party 11 / brand 1.
+실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **77**).
+영역별: narrative 7 / input 2 / hub 15 / location 5 / screens 11 / side-panel 7 / ui 12 / layout 2 / battle 4 / party 11 / brand 1.
 
 ```
 app/
@@ -26,18 +26,22 @@ app/
     ├── FeatureCard.tsx ← 랜딩 섹션 카드
     └── MobileNav.tsx   ← 랜딩 모바일 네비
 
-components/ (68개)
-├── narrative/          ← 메시지 표시 (4)
+components/ (77개)
+├── narrative/          ← 메시지 표시 (7)
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
-│   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑, NPC 카드, 보정치 뱃지, 대사/서술 혼합)
+│   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑, 보정치 뱃지, 대사/서술 혼합 — arch/77 P5c로 -45%)
 │   ├── StreamingBlock.tsx    ← 스트리밍 중 실시간 렌더링 (SSE 토큰 → 점진적 텍스트)
-│   └── DialogueBubble.tsx    ← NPC 대사 말풍선 (어체·speechRegister별 색조, 초상화 썸네일)
+│   ├── DialogueBubble.tsx    ← NPC 대사 말풍선 (어체·speechRegister별 색조, 초상화 썸네일)
+│   ├── NpcPortraitCard.tsx   ← NPC 초상화 카드 (StoryBlock에서 분리, arch/77 P5c)
+│   ├── SceneImageButton.tsx  ← 장면 이미지 버튼+로딩 (StoryBlock에서 분리, arch/77 P5c)
+│   └── narrative-text.tsx    ← 서술 텍스트 렌더 유틸 정본 (마커 정리·세그먼트 파싱 — StreamTyper/TypewriterText/StreamingBlock 공유)
 ├── input/              ← 입력 처리 (2)
 │   ├── InputSection.tsx      ← 텍스트 입력 + 퀵 액션 (LOCATION 전용)
 │   └── QuickActionButton.tsx ← 빠른 행동 버튼
-├── hub/                ← HUB 화면 (14)
+├── hub/                ← HUB 화면 (15)
 │   ├── HubScreen.tsx              ← HUB 메인 화면 (4 지역 카드)
 │   ├── HeatGauge.tsx              ← 도시 열기 (0~100) 시각화
+│   ├── PackMeterGauge.tsx         ← 팩 세계축 게이지 (packMeters — Header 상태바 노출, architecture/73 B1)
 │   ├── TimePhaseIndicator.tsx     ← DAWN/DAY/DUSK/NIGHT 표시
 │   ├── TimePhaseTransition.tsx    ← DAY↔NIGHT 전환 알림
 │   ├── LocationHeader.tsx         ← 지역 헤더
@@ -56,8 +60,11 @@ components/ (68개)
 │   ├── LocationToastLayer.tsx     ← 플로팅 토스트 (3초 페이드)
 │   ├── DeadlineBanner.tsx         ← Soft Deadline 상단 배너 (D-3/2/1/0/초과)
 │   └── EquipmentDropToast.tsx     ← 장비 드랍 토스트 (rarity별 5초 자동 페이드)
-├── screens/            ← 전체 화면 (6)
-│   ├── StartScreen.tsx            ← 프리셋/특성/이름/초상화 생성 + 인증
+├── screens/            ← 전체 화면 (11 = 6 + start-screen/ 5)
+│   ├── StartScreen.tsx            ← 프리셋/특성/이름/초상화 생성 + 인증 + 시나리오 선택 (arch/77 P5a로 -26%)
+│   ├── start-screen/              ← StartScreen 분리 하위 (arch/77 P5a)
+│   │   ├── AuthForm.tsx / CreationLayout.tsx / PresetCard.tsx / RadarChart.tsx / PortraitLoadingOverlay.tsx
+│   │   └── stat-config.ts         ← 스탯 설정 상수 (tsx 아님, 컴포넌트 수 제외)
 │   ├── RunEndScreen.tsx           ← 런 종료
 │   ├── EndingScreen.tsx           ← 엔딩 (NPC epilogues, 행동 성향)
 │   ├── NodeTransitionScreen.tsx   ← 노드 전환
@@ -108,7 +115,7 @@ components/ (68개)
     └── LootDistribution.tsx       ← 던전 종료 보상 분배 화면
 ```
 
-> StoryBlock 이번 세션 반영: `renderNarrationLines` 헬퍼로 서술 개행 처리, `StreamTyper` once-guard (StreamTyper→onComplete 중복 방지), 공통 `font-narrative` 부모 래퍼 통일(L888/L989), `data-dialogue-bubble` DOM 스캔으로 대사/서술 영역 분리.
+> StoryBlock 렌더 정책: `StreamTyper` once-guard (StreamTyper→onComplete 중복 방지 + 멱등성), 공통 `font-narrative` 부모 래퍼 통일, `data-dialogue-bubble` DOM 스캔으로 대사/서술 영역 분리. 렌더 유틸·NPC 카드·장면 이미지는 arch/77 P5c에서 narrative-text.tsx / NpcPortraitCard / SceneImageButton으로 분리 (동작 보존).
 
 ---
 
@@ -116,11 +123,12 @@ components/ (68개)
 
 ```
 store/
-├── game-store.ts       ← Zustand (게임 전체 상태)
-├── auth-store.ts       ← JWT 인증 (login/register/hydrate)
-├── settings-store.ts   ← 텍스트 속도 + 스트리밍 토글 (localStorage)
-├── party-store.ts      ← 파티 상태 (로비, 채팅, 투표, SSE 구독)
-└── game-selectors.ts   ← Notification 쿼리 셀렉터
+├── game-store.ts          ← Zustand (게임 전체 상태 — arch/77 P5b로 -42%, 공개 훅 유지)
+├── game-store.helpers.ts  ← game-store 헬퍼 정본 (상태 매핑 + 내러티브 파이프라인 flush/poll/stream — store 아님)
+├── auth-store.ts          ← JWT 인증 (login/register/hydrate)
+├── settings-store.ts      ← 텍스트 속도 + 스트리밍 토글 (localStorage)
+├── party-store.ts         ← 파티 상태 (로비, 채팅, 투표, SSE 구독)
+└── game-selectors.ts      ← Notification 쿼리 셀렉터
 ```
 
 ### game-store.ts 주요 상태/액션
@@ -164,11 +172,12 @@ selectFeedNotifications()      // FEED_ITEM presentation
 
 ---
 
-## 라이브러리 (10 files)
+## 라이브러리 (11 files)
 
 ```
 lib/
 ├── api-client.ts        ← Server API 래퍼 (retryLlm, party 엔드포인트 포함)
+├── korean.ts            ← 한국어 조사 선택 유틸 (server common/korean.ts와 동일 로직 — "(으)로" 병기 제거)
 ├── result-mapper.ts     ← ServerResultV1 → StoryMessage[] (RESOLVE 포함)
 ├── hud-mapper.ts        ← Diff → PlayerHud/Inventory/Enemy update
 ├── api-errors.ts        ← ApiError 클래스
