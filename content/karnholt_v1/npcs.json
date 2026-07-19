@@ -37,8 +37,8 @@
   {
     "npcId": "NPC_KH_WARDEN",
     "name": "발드릭 경",
-    "unknownAlias": "금테 두른 관리",
-    "shortAlias": "관리",
+    "unknownAlias": "금테 두른 감독관",
+    "shortAlias": "감독관",
     "aliases": [
       "발드릭",
       "감독관",
