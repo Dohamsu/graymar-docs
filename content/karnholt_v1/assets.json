@@ -1,5 +1,252 @@
 {
   "packId": "karnholt_v1",
-  "portraits": [],
-  "locations": []
+  "portraits": [
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_01.webp",
+      "kind": "portrait",
+      "keywords": [
+        "광부",
+        "강단"
+      ],
+      "gender": "female"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_02.webp",
+      "kind": "portrait",
+      "keywords": [
+        "노파",
+        "소문"
+      ],
+      "gender": "female"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_03.webp",
+      "kind": "portrait",
+      "keywords": [
+        "메린",
+        "과부",
+        "의뢰인"
+      ],
+      "gender": "female"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_04.webp",
+      "kind": "portrait",
+      "keywords": [
+        "상인",
+        "노점"
+      ],
+      "gender": "female"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_05.webp",
+      "kind": "portrait",
+      "keywords": [
+        "서기",
+        "장부"
+      ],
+      "gender": "female"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_06.webp",
+      "kind": "portrait",
+      "keywords": [
+        "오슬라",
+        "술집",
+        "안주인"
+      ],
+      "gender": "female"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_07.webp",
+      "kind": "portrait",
+      "keywords": [
+        "카이라",
+        "밀수",
+        "두목"
+      ],
+      "gender": "female"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_08.webp",
+      "kind": "portrait",
+      "keywords": [
+        "경비",
+        "초소병"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_09.webp",
+      "kind": "portrait",
+      "keywords": [
+        "광부",
+        "젊은"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_10.webp",
+      "kind": "portrait",
+      "keywords": [
+        "광부",
+        "중년"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_11.webp",
+      "kind": "portrait",
+      "keywords": [
+        "밀수",
+        "거간"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_12.webp",
+      "kind": "portrait",
+      "keywords": [
+        "발드릭",
+        "감독관",
+        "관료"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_13.webp",
+      "kind": "portrait",
+      "keywords": [
+        "상인",
+        "행상"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_14.webp",
+      "kind": "portrait",
+      "keywords": [
+        "각인",
+        "조각공"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_15.webp",
+      "kind": "portrait",
+      "keywords": [
+        "잡부",
+        "뜨내기"
+      ],
+      "gender": "male"
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/portraits/portrait_16.webp",
+      "kind": "portrait",
+      "keywords": [
+        "토르그",
+        "길드장",
+        "광부"
+      ],
+      "gender": "male"
+    }
+  ],
+  "locations": [
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_01.webp",
+      "kind": "location",
+      "keywords": [
+        "banner",
+        "카른홀트"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_02.webp",
+      "kind": "location",
+      "keywords": [
+        "camp",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_03.webp",
+      "kind": "location",
+      "keywords": [
+        "deepshaft",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_04.webp",
+      "kind": "location",
+      "keywords": [
+        "foundry",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_05.webp",
+      "kind": "location",
+      "keywords": [
+        "gate",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_06.webp",
+      "kind": "location",
+      "keywords": [
+        "market",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_07.webp",
+      "kind": "location",
+      "keywords": [
+        "market",
+        "night"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_08.webp",
+      "kind": "location",
+      "keywords": [
+        "mine",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_09.webp",
+      "kind": "location",
+      "keywords": [
+        "mine",
+        "night"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_10.webp",
+      "kind": "location",
+      "keywords": [
+        "office",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_11.webp",
+      "kind": "location",
+      "keywords": [
+        "tavern",
+        "day"
+      ]
+    },
+    {
+      "url": "/pack-assets/karnholt_v1/locations/location_12.webp",
+      "kind": "location",
+      "keywords": [
+        "tavern",
+        "night"
+      ]
+    }
+  ]
 }
