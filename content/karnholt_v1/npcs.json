@@ -4,9 +4,17 @@
     "name": "메린",
     "unknownAlias": "지친 눈의 여인",
     "shortAlias": "여인",
-    "aliases": ["메린", "여인"],
+    "aliases": [
+      "메린",
+      "여인"
+    ],
     "role": "실종 광부의 아내 · 의뢰인",
-    "roleKeywords": ["메린", "의뢰인", "아내", "부인"],
+    "roleKeywords": [
+      "메린",
+      "의뢰인",
+      "아내",
+      "부인"
+    ],
     "gender": "female",
     "tier": "CORE",
     "basePosture": "FRIENDLY",
@@ -18,18 +26,32 @@
       "speechRegister": "HAEYO"
     },
     "castingConstraints": {
-      "forbiddenRoles": ["CULPRIT", "ACCOMPLICE"],
+      "forbiddenRoles": [
+        "CULPRIT",
+        "ACCOMPLICE"
+      ],
       "fixedTraits": "남편을 진심으로 걱정하는 의뢰인 — 사건의 피해자 쪽"
-    }
+    },
+    "speechRegister": "HAEYO"
   },
   {
     "npcId": "NPC_KH_WARDEN",
     "name": "발드릭 경",
     "unknownAlias": "금테 두른 관리",
     "shortAlias": "관리",
-    "aliases": ["발드릭", "감독관", "발드릭 경"],
+    "aliases": [
+      "발드릭",
+      "감독관",
+      "발드릭 경"
+    ],
     "role": "왕립 주조 감독관",
-    "roleKeywords": ["발드릭", "감독관", "감독", "관리", "주조관"],
+    "roleKeywords": [
+      "발드릭",
+      "감독관",
+      "감독",
+      "관리",
+      "주조관"
+    ],
     "gender": "male",
     "tier": "CORE",
     "basePosture": "CALCULATING",
@@ -41,18 +63,30 @@
       "speechRegister": "HAPSYO"
     },
     "castingConstraints": {
-      "forbiddenRoles": ["CLIENT"],
+      "forbiddenRoles": [
+        "CLIENT"
+      ],
       "fixedTraits": "권력을 쥔 감독관 — 부패했을 수도, 억울할 수도 있으나 언제나 무언가를 감춘다"
-    }
+    },
+    "speechRegister": "HAPSYO"
   },
   {
     "npcId": "NPC_KH_GUILDMASTER",
     "name": "토르그",
     "unknownAlias": "굳은살 박인 손",
     "shortAlias": "손",
-    "aliases": ["토르그", "길드장", "조합장"],
+    "aliases": [
+      "토르그",
+      "길드장",
+      "조합장"
+    ],
     "role": "광산 길드장",
-    "roleKeywords": ["토르그", "길드장", "조합장", "길드"],
+    "roleKeywords": [
+      "토르그",
+      "길드장",
+      "조합장",
+      "길드"
+    ],
     "gender": "male",
     "tier": "CORE",
     "basePosture": "CAUTIOUS",
@@ -65,16 +99,27 @@
     },
     "castingConstraints": {
       "fixedTraits": "광부들의 대변자 — 조합의 이익을 위해서라면 회색지대도 넘나든다"
-    }
+    },
+    "speechRegister": "HAOCHE"
   },
   {
     "npcId": "NPC_KH_SMUGGLER",
     "name": "카이라",
     "unknownAlias": "그림자 걸친 상인",
     "shortAlias": "상인",
-    "aliases": ["카이라", "상인", "밀매상"],
+    "aliases": [
+      "카이라",
+      "상인",
+      "밀매상"
+    ],
     "role": "밀수·위조단 두목",
-    "roleKeywords": ["카이라", "밀매상", "밀수", "두목", "상인"],
+    "roleKeywords": [
+      "카이라",
+      "밀매상",
+      "밀수",
+      "두목",
+      "상인"
+    ],
     "gender": "female",
     "tier": "CORE",
     "basePosture": "CALCULATING",
@@ -86,18 +131,30 @@
       "speechRegister": "HAEYO"
     },
     "castingConstraints": {
-      "forbiddenRoles": ["CLIENT"],
+      "forbiddenRoles": [
+        "CLIENT"
+      ],
       "fixedTraits": "이익으로 움직이는 밀수단 두목 — 위조에 얽혔을 수도, 이용당했을 수도"
-    }
+    },
+    "speechRegister": "HAECHE"
   },
   {
     "npcId": "NPC_KH_INNKEEP",
     "name": "오슬라",
     "unknownAlias": "행주 쥔 안주인",
     "shortAlias": "안주인",
-    "aliases": ["오슬라", "안주인", "주인"],
+    "aliases": [
+      "오슬라",
+      "안주인",
+      "주인"
+    ],
     "role": "'무너진 곡괭이' 술집 주인",
-    "roleKeywords": ["오슬라", "안주인", "술집 주인", "주인장"],
+    "roleKeywords": [
+      "오슬라",
+      "안주인",
+      "술집 주인",
+      "주인장"
+    ],
     "gender": "female",
     "tier": "CORE",
     "basePosture": "FRIENDLY",
@@ -109,18 +166,30 @@
       "speechRegister": "HAEYO"
     },
     "castingConstraints": {
-      "forbiddenRoles": ["CULPRIT"],
+      "forbiddenRoles": [
+        "CULPRIT"
+      ],
       "fixedTraits": "정보통 안주인 — 거점의 중립적 관찰자, 사건의 배후는 아니다"
-    }
+    },
+    "speechRegister": "HAOCHE"
   },
   {
     "npcId": "NPC_KH_ENGRAVER",
     "name": "옌",
     "unknownAlias": "잉크 밴 손가락",
     "shortAlias": "손가락",
-    "aliases": ["옌", "조각공", "각인공"],
+    "aliases": [
+      "옌",
+      "조각공",
+      "각인공"
+    ],
     "role": "주조 각인 조각공",
-    "roleKeywords": ["옌", "조각공", "각인공", "각인"],
+    "roleKeywords": [
+      "옌",
+      "조각공",
+      "각인공",
+      "각인"
+    ],
     "gender": "male",
     "tier": "CORE",
     "basePosture": "FEARFUL",
@@ -133,6 +202,7 @@
     },
     "castingConstraints": {
       "fixedTraits": "주조의 비밀에 가장 가까운 조각공 — 공범일 수도, 협박당한 목격자일 수도"
-    }
+    },
+    "speechRegister": "HAEYO"
   }
 ]
