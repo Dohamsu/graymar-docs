@@ -40,6 +40,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 ### 3. 서버·데이터
 
+- [[architecture/80_pack_asset_pool|pack asset pool]] — ✅ 구현됨. 팩 에셋 풀 이미지 자동 매칭: 소유자가 content/<pack>/assets/에 이미지 투입 → sync_pack_assets.py(ASCII 슬러그 정규화 — URL 실명 치환 404 실측 방어) → 저작 NPC 결정론 배정 + 동적 NPC 등록 시 배정(성별·키워드 스코어, 런 내 고정·중복 배제) + 클라 장소 리졸버. 풀 비면 완전 무동작. 카른홀트 최초 적용 (2026-07-19).
+
 - [[architecture/04_server_architecture|server architecture]] — NestJS 10 모듈, 65+ 서비스, Drizzle ORM 18 테이블, Server-Is-Source-of-Truth 원칙, Idempotency, RNG 결정론 등 정본.
 - [[architecture/77_god_method_refactoring|god method refactoring]] — 대형 파일 구조 개선(✅ 전 Phase 완료 2026-07-18). P1 prompt-builder -62% · P2 context-builder -64% · P3 turns.service Inner -56% · P4 llm-worker Inner -50%(금지선 4곳 마킹) · 전투/DAG -41%(골드 무바닥 수정) · P5 클라 3파일 -26~-45%. 매 스텝 유닛 green + playtest/E2E 게이트, 회귀 0. §9 진행 로그가 정본. 잔여: §5 재비대화 래칫(ESLint max-lines warn)만.
 - [[architecture/10_region_economy|region economy]] — 리전별 경제(골드 유동성, 상점 물가)와 장비/세트 연계. 장비 드랍은 완성, 리전별 동적 경제는 부분.
