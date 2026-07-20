@@ -3,9 +3,9 @@
 > 정본 위치: `client/src/`
 > 최종 갱신: 2026-07-18
 
-## 컴포넌트 구조 (77 components, 5 stores)
+## 컴포넌트 구조 (70 components, 5 stores)
 
-실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **77**).
+실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **70**).
 영역별: narrative 7 / input 2 / hub 15 / location 5 / screens 11 / side-panel 7 / ui 12 / layout 2 / battle 4 / party 11 / brand 1.
 
 ```
@@ -26,7 +26,7 @@ app/
     ├── FeatureCard.tsx ← 랜딩 섹션 카드
     └── MobileNav.tsx   ← 랜딩 모바일 네비
 
-components/ (77개)
+components/ (70개)
 ├── narrative/          ← 메시지 표시 (7)
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
 │   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑, 보정치 뱃지, 대사/서술 혼합 — arch/77 P5c로 -45%)
@@ -38,22 +38,15 @@ components/ (77개)
 ├── input/              ← 입력 처리 (2)
 │   ├── InputSection.tsx      ← 텍스트 입력 + 퀵 액션 (LOCATION 전용)
 │   └── QuickActionButton.tsx ← 빠른 행동 버튼
-├── hub/                ← HUB 화면 (15)
-│   ├── HubScreen.tsx              ← HUB 메인 화면 (4 지역 카드)
-│   ├── HeatGauge.tsx              ← 도시 열기 (0~100) 시각화
+├── hub/                ← HUB 보조 컴포넌트 (8) — HUB 화면 본체는 GameClient/NarrativePanel 이 렌더
+│   ├── HeatGauge.tsx              ← 도시 열기 (0~100) 시각화 (Header 사용)
 │   ├── PackMeterGauge.tsx         ← 팩 세계축 게이지 (packMeters — Header 상태바 노출, architecture/73 B1)
-│   ├── TimePhaseIndicator.tsx     ← DAWN/DAY/DUSK/NIGHT 표시
+│   ├── TimePhaseIndicator.tsx     ← DAWN/DAY/DUSK/NIGHT 표시 (Header 사용)
 │   ├── TimePhaseTransition.tsx    ← DAY↔NIGHT 전환 알림
 │   ├── LocationHeader.tsx         ← 지역 헤더
 │   ├── ResolveOutcomeBanner.tsx   ← 판정 결과 배너 (순차 fade-in 공식)
 │   ├── ResolveOutcomeBanner.backup.tsx ← 레거시 백업 (미사용, 참고용)
-│   ├── DiceFace.tsx               ← 주사위 눈 SVG (1~6, 판정 애니메이션)
-│   ├── SignalFeedPanel.tsx        ← 5채널 시그널 피드
-│   ├── IncidentTracker.tsx        ← 활성 사건 control/pressure 게이지
-│   ├── NpcRelationshipCard.tsx    ← NPC 5축 감정 요약
-│   ├── HubNotificationList.tsx    ← 피드형 알림 목록
-│   ├── PinnedAlertStack.tsx       ← 긴급 알림 고정 표시 (최대 3개)
-│   └── WorldDeltaSummaryCard.tsx  ← 턴 간 세계 변화 요약
+│   └── DiceFace.tsx               ← 주사위 눈 SVG (1~6, 판정 애니메이션)
 ├── location/           ← LOCATION 알림/배경 (5)
 │   ├── LocationImage.tsx          ← 장소 배경 이미지 (켄 번스 페이드)
 │   ├── TurnResultBanner.tsx       ← 판정 결과 배너 (5초 자동 해제)

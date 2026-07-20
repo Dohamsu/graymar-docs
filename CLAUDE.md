@@ -223,13 +223,13 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 
 > 상세: [[guides/03_hub_engine_guide|hub engine guide]]
 
-### Client — 77 components, 5 stores
+### Client — 70 components, 5 stores
 
 | 영역 | 수 | 핵심 |
 |------|---|------|
 | narrative/ | 7 | NarrativePanel, StoryBlock, StreamingBlock, DialogueBubble, NpcPortraitCard, SceneImageButton, narrative-text |
 | input/ | 2 | InputSection, QuickActionButton |
-| hub/ | 15 | HubScreen, SignalFeed, Incident, NPC, Notifications, CollapsibleSection, DiceFace, PackMeterGauge |
+| hub/ | 8 | HeatGauge, TimePhaseIndicator/Transition, LocationHeader, ResolveOutcomeBanner, DiceFace, PackMeterGauge (HUB 본체는 GameClient/NarrativePanel 렌더) |
 | location/ | 5 | TurnResultBanner, LocationToastLayer, LocationImage 외 |
 | screens/ | 11 | StartScreen(+start-screen/ 하위 5), EndingScreen, RunEndScreen, NodeTransitionScreen 외 |
 | side-panel/ | 7 | SidePanel, CharacterTab, InventoryTab, EquipmentTab, SetBonusDisplay, NpcDossierTab, QuestTab |
@@ -725,7 +725,7 @@ LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비�
 | 파일 | 내용 |
 |------|------|
 | 01_server_module_map.md | 서버 전체 서비스 맵 (107 services, 45 타입 파일) |
-| 02_client_component_map.md | 클라이언트 컴포넌트 맵 (77 components, stores, CSS) |
+| 02_client_component_map.md | 클라이언트 컴포넌트 맵 (70 components, stores, CSS) |
 | 03_hub_engine_guide.md | HUB 엔진 구현 (판정, EventDirector, Narrative, NPC, 평판) |
 | 04_llm_memory_guide.md | LLM 파이프라인, 메모리 L0~L4, Token Budget, Scene Continuity |
 | 05_runstate_constants.md | RunState JSONB 구조, 핵심 상수, Content Data |
