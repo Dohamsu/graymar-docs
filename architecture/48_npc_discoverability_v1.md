@@ -378,3 +378,51 @@ actionContext: {
 - [[guides/07_living_world_guide|living world guide]] — NpcSchedule (Layer 2 데이터 소스)
 - `server/src/turns/turns.service.ts:2299` — textMatchedNpcId 현행 로직
 - `server/src/engine/hub/event-matcher.service.ts` — Layer 3 변경 대상
+
+---
+
+## 부록 A — 퀘스트 방향 힌트 whereabouts 합성 (2026-07-20)
+
+**배경 (사용자 논의).** "누가 어디 있는지"를 HUB 이동 선택지(장소마다 `hubHint` 병기)에
+넣으면 정보 나열·과밀로 몰입이 깨진다. 대신 **퀘스트 방향 힌트(nextHint) 대사에 녹여**
+"어디에 있는 누구를 찾아가는 게 좋겠다" 형태로 제시한다. Layer 2 `NpcWhereaboutsService`를
+본래 트리거(사용자 NPC 호명)와 별개의 **새 소비처**(퀘스트 힌트 소비 턴)에서 재사용한다.
+
+**혼합(hybrid) 흐름.** 서버가 위치 절을 **확정 조립**하고, 그 단일 문자열이 두 경로로 함께 흐른다.
+
+```
+fact 발견 턴  ── getFactNpc(factId) → pendingQuestHint.targetNpcId 저장
+                                       (permanent-stats.ts)
+                              │
+소비 턴  ── lookupNpc(targetNpcId, curLoc, phaseV2, runState)
+            → composeHintWithWhereabouts(baseHint, where, {introduced, npcDisplay})
+                              │
+              ┌──────────────┴───────────────┐
+      ui.questDirectionHint            prompt-builder [단서 방향]
+      (방식1 — 확정 문자열)             directive의 "${hint}" (방식2 — LLM이 각색)
+```
+
+**핵심 파일.**
+- `engine/hub/quest-hint-whereabouts.core.ts` — 순수 합성 헬퍼 `composeHintWithWhereabouts()` (+ `.spec.ts` 9케이스)
+- `turns.service.ts` 저장부(`pendingQuestHint`에 `targetNpcId`)·소비부(`questDirectionHintForUi` 조립 시 lookup+합성)
+- `quest-progression.service.ts` — `getFactNpc(factId)` public 노출 (fact→NPC)
+
+**불변식 15 준수.** `introduced=false`면 실명(`npcDisplay`)을 문장에 넣지 않는다. baseHint가
+이미 역할/직업으로 대상을 지칭하므로("…회계를 다루는 사람을 찾아봐라") 미소개 시엔
+위치 절만 붙이고 "그런 인물"로 지시한다. 소개된 NPC만 실명 + 조사(`korParticle`).
+`lookupNpc`가 `interactable=false`(취침 등)를 `UNKNOWN` 처리 → 못 만나는 시간대엔 위치 절 미부착.
+
+**합성 문안.**
+| 상태 | introduced | 문안 |
+|---|---|---|
+| DIFFERENT_LOCATION | false | `{base} 그런 인물은 지금 {장소} 쪽에 있을 것이다.` |
+| DIFFERENT_LOCATION | true | `{base} 지금이라면 {장소} 쪽에서 {실명}{을/를} 만날 수 있을 것이다.` |
+| SAME_LOCATION | false | `{base} 마침 그럴 만한 인물이 이곳에 머물고 있다.` |
+| SAME_LOCATION | true | `{base} 마침 {실명}{이/가} 이곳에 머물고 있다.` |
+| UNKNOWN | — | 원본 힌트 그대로 |
+
+**실측 (chatty 15턴, 서버 DEBUG 로그 `[Quest] whereaboutsHint 합성`).**
+- 미소개 HARLUN → "…찾아봐라. **그런 인물은 지금 항만 부두 쪽에 있을 것이다.**" (실명 노출 0)
+- 소개 에드릭 베일 → "…살펴봐라. **지금이라면 시장 거리 쪽에서 에드릭 베일을 만날 수 있을 것이다.**"
+- 같은 에드릭이 턴에 따라 시장 거리↔상류 거리로 변동 (시간대 스케줄 실시간 반영)
+- 품질 게이트 10/10 PASS, 회귀 0. (§11 v2 "시간대별 위치 변동 반영"의 부분 실현)
