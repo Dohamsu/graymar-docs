@@ -925,7 +925,7 @@
         "NPC_EDRIC_VEIL": "같은 상단. 에드릭의 장부 조작을 일부 알고 있다. 그를 불쌍하게 여긴다",
         "NPC_INFO_BROKER": "정보 가치를 아는 사이. 서로 경계하면서도 거래한다"
       },
-      "speechRegister": "HAPSYO"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
@@ -2832,7 +2832,7 @@
         "NPC_MAIREL": "마이렐의 야간 명령에 복종하지만, 석연찮은 지시가 많아 점점 의심이 커진다",
         "NPC_GUARD_CAPTAIN": "벨론 대위의 신중함을 이해하려 하지만, 가끔 답답해한다"
       },
-      "speechRegister": "HAPSYO"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
@@ -4120,7 +4120,7 @@
       "signature": [
         "허리를 꼿꼿이 세우고 손을 모은 채 말한다"
       ],
-      "speechRegister": "HAPSYO"
+      "speechRegister": "HAOCHE"
     },
     "schedule": {
       "default": {
