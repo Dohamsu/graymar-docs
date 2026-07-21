@@ -234,14 +234,6 @@ def agent_decide(persona_key, node_type, choices, last_narr, last_action, hp, lo
 # ═══════════════════════════════════════
 print(f"=== 플레이테스트 시작 ({MAX_TURNS}턴, {args.preset}, {args.gender}, choice_rate={args.choice_rate}) ===", flush=True)
 
-# 모델 전환 (선택적)
-_orig_model = None
-if args.model:
-    _, settings = api("GET", "/settings/llm")
-    _orig_model = settings.get("openaiModel", "")
-    api("PATCH", "/settings/llm", {"openaiModel": args.model})
-    print(f"모델 전환: {_orig_model} → {args.model}", flush=True)
-
 status, resp = api("POST", "/auth/register", {"email": EMAIL, "password": PASSWORD, "nickname": NICKNAME})
 if status != 201:
     status, resp = api("POST", "/auth/login", {"email": EMAIL, "password": PASSWORD})
@@ -251,6 +243,17 @@ if not token:
     sys.exit(1)
 session.headers["Authorization"] = f"Bearer {token}"
 print(f"Auth: {EMAIL}", flush=True)
+
+# 모델 전환 (선택적) — settings 엔드포인트는 JWT 필요 → 반드시 auth 이후
+_orig_model = None
+if args.model:
+    _, settings = api("GET", "/settings/llm")
+    _orig_model = settings.get("openaiModel", "")
+    _, patched = api("PATCH", "/settings/llm", {"openaiModel": args.model})
+    if patched.get("openaiModel") != args.model:
+        print(f"모델 전환 실패: {patched}", flush=True)
+        sys.exit(1)
+    print(f"모델 전환: {_orig_model} → {args.model}", flush=True)
 
 if args.dry_run:
     dry_run_setup()
