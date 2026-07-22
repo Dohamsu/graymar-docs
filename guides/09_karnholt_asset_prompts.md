@@ -76,6 +76,39 @@ no people in focus, no text, aspect ratio 16:9.
 |---|---|
 | `banner_카른홀트.webp` → `locations/`에 | 시나리오 선택 배너 (풀 첫 이미지가 배너로 쓰이므로 파일명 사전순 앞이 유리 — `a_banner_카른홀트.webp` 권장): Sweeping aerial view of Karnholt — a fortified mining town wedged in a snowy mountain pass, smoke rising from the royal foundry, mine entrances dotting the slopes, gray peaks and low fog, last light of dusk. |
 
+## 5. 플레이어 프리셋 초상화 8장 (4 출신 × 남/여)
+
+> **저장 위치가 다릅니다**: 팩 에셋 풀(`content/.../assets/`)이 아니라
+> **`client/public/preset-portraits/karnholt_v1/`** 에 아래 파일명 그대로 저장.
+> sync 스크립트의 자동 매칭 대상이 아니며, 저장 후 `client/src/data/presets.ts`의
+> `PRESET_PORTRAITS`에 수동 매핑합니다 (하단 스니펫).
+>
+> 생성 팁 (2026-07-22 실측): 공통 프리픽스의 "no text"만으로는 우하단에
+> **가짜 화가 서명**이 자주 생깁니다 — 프롬프트 끝에
+> `no artist signature, no watermark` 를 덧붙이거나, 생성 후 하단 스트립을
+> 크롭하세요. UI는 4:5 `object-cover(top)` 크롭이라 정사각(1:1) 생성물도
+> 좌우만 잘려 안전합니다.
+
+| 파일명 | 프롬프트 (공통 프리픽스 뒤에) |
+|---|---|
+| `kh_miner_m.webp` | A lifelong silver miner in his 40s, broad shoulders and thick forearms, soot-darkened weathered face, leather mining cap with a candle bracket, pickaxe handle over one shoulder, resolute grief-hardened eyes searching for a lost comrade. |
+| `kh_miner_f.webp` | A lifelong silver miner woman in her 30s, strong build, hair tied back under a leather mining cap, coal dust across her cheekbones, gloved hands gripping a pickaxe strap, resolute grief-hardened eyes searching for a lost comrade. |
+| `kh_runner_m.webp` | A lean border smuggler in his 20s, frost-dusted hooded winter coat with hidden pockets, sharp wary eyes scanning sideways, faint scar on his cheek, breath visible in the cold, quick and quiet presence. |
+| `kh_runner_f.webp` | A lean female border smuggler in her 20s, frost-dusted hooded winter coat with hidden pockets, sharp wary eyes scanning sideways, dark hair escaping the hood, breath visible in the cold, quick and quiet presence. |
+| `kh_clerk_m.webp` | A dismissed mint clerk in his 30s, shabby once-fine coat, wire-frame spectacles, ink-stained fingers holding a worn ledger, sunken perceptive eyes that catch every falsified number, quiet resentment and sharp intellect. |
+| `kh_clerk_f.webp` | A dismissed female mint clerk in her 30s, shabby once-fine coat, wire-frame spectacles, tight bun with loose strands, ink-stained fingers holding a worn ledger, perceptive eyes that catch every falsified number, quiet resentment and sharp intellect. |
+| `kh_sellsword_m.webp` | A wandering sellsword in his 30s, dented breastplate over a patched gambeson, sword hilt visible over his shoulder, stubbled jaw, weary hunted gaze of a man running from debts, pragmatic and battle-worn. |
+| `kh_sellsword_f.webp` | A wandering female sellsword in her 30s, dented breastplate over a patched gambeson, sword hilt visible over her shoulder, short practical hair, weary hunted gaze of a woman running from debts, pragmatic and battle-worn. |
+
+**저장 후 매핑** — `client/src/data/presets.ts`의 `PRESET_PORTRAITS`에 추가:
+
+```ts
+KH_MINER: { male: "/preset-portraits/karnholt_v1/kh_miner_m.webp", female: "/preset-portraits/karnholt_v1/kh_miner_f.webp" },
+KH_RUNNER: { male: "/preset-portraits/karnholt_v1/kh_runner_m.webp", female: "/preset-portraits/karnholt_v1/kh_runner_f.webp" },
+KH_CLERK: { male: "/preset-portraits/karnholt_v1/kh_clerk_m.webp", female: "/preset-portraits/karnholt_v1/kh_clerk_f.webp" },
+KH_SELLSWORD: { male: "/preset-portraits/karnholt_v1/kh_sellsword_m.webp", female: "/preset-portraits/karnholt_v1/kh_sellsword_f.webp" },
+```
+
 ---
 
-**저장 후 절차**: 저에게 "이미지 넣었어"라고 알려주시면 sync → 서버 재시작 → 클라 배포를 진행합니다 (CLAUDE.md 팩 에셋 풀 정책).
+**저장 후 절차**: 저에게 "이미지 넣었어"라고 알려주시면 sync → 서버 재시작 → 클라 배포를 진행합니다 (CLAUDE.md 팩 에셋 풀 정책). 프리셋 초상화(§5)는 sync 대상이 아니므로 `preset-portraits/karnholt_v1/` 배치 + `PRESET_PORTRAITS` 매핑 + 클라 push만으로 반영됩니다.
