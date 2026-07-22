@@ -438,7 +438,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 LLM_PROVIDER=openai          # openai | claude | gemini | mock
 OPENAI_API_KEY=sk-...
 OPENAI_MODEL=google/gemma-4-26b-a4b-it   # OpenRouter 메인 모델 (Gemma 4 26B MoE)
-LLM_ALTERNATE_MODEL=google/gemma-4-26b-a4b-it  # 교차 모델 (동일 모델 사용)
+LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash  # 짝수 턴 교차 모델 (2026-07-22 — 어휘 편향 상쇄, 인접 턴 반복 자카드 0 실측)
 OPENAI_BASE_URL=https://openrouter.ai/api/v1  # optional, OpenAI-compatible endpoint
 CLAUDE_API_KEY=               # optional
 GEMINI_API_KEY=               # optional
@@ -454,8 +454,10 @@ LLM_PROVIDER_SORT=throughput          # OpenRouter 라우팅 정렬 — 생성 t
 LLM_PROVIDER_IGNORE=cloudflare,dekallm  # OpenRouter 배제 provider (저 uptime — arch/62 부록)
 LLM_FALLBACK_PROVIDER=openai          # fallback: 같은 OpenRouter 경유
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini  # fallback 모델 (이전: Claude Haiku 4.5)
-GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off)
+GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off, DeepSeek는 코드에서 enabled:false 자동 주입)
 LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비호환, false 권장)
+LLM_SHORT_RESPONSE_MIN_TOKENS=150     # ShortResponse 재시도 임계 (기본 200 — 교차 모델 짧은 서술 이중 과금 방지)
+LLM_PROVIDER_REQUIRE_PARAMS=true      # penalty 미지원 프로바이더 배제 (불변식 50 레버 보장, 2026-07-22 채택)
 ```
 
 ## Implementation Phase Status (구현 단계)
