@@ -22,7 +22,7 @@ main.ts → AppModule
 │   └── auth.dto         ← 인증 DTO
 ├── db/                  ← Drizzle ORM
 │   ├── schema/          ← 20 파일 / 22 pgTable (아래 참조)
-│   └── types/           ← TypeScript types (43 파일, 아래 참조)
+│   └── types/           ← TypeScript types (47 파일, 아래 참조)
 ├── content/             ← 게임 콘텐츠 로더 (멀티 팩)
 │   ├── content-loader.service  ← 팩별 JSON 로드 + ContentPackState 캐시 (graymar/silverdeen/karnholt)
 │   ├── content.types            ← NpcDefinition.unknownAlias/shortAlias, NpcTier 포함
@@ -257,7 +257,7 @@ main.ts → AppModule
 
 ---
 
-## DB 타입 파일 (45 파일)
+## DB 타입 파일 (47 파일)
 
 `server/src/db/types/`
 

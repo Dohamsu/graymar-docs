@@ -46,7 +46,7 @@ server/src/
 │   ├── rewards/                    ← 보상, 인벤토리, 장비, 접미사, Legendary (5)
 │   ├── planner/                    ← RunPlannerService (1)
 │   ├── rng/ · stats/ · status/     ← 결정론 RNG, 스탯, 상태이상 (3)
-├── llm/                            ← 20 services (아래 상세)
+├── llm/                            ← 23 services (아래 상세)
 ├── party/                          ← 8 services + DTO + controller
 ├── content/                        ← ContentLoader (graymar_v1 JSON 27개)
 ├── scene-image/ · portrait/        ← AI 초상화/장소 이미지 생성 (Gemini)
@@ -71,7 +71,7 @@ server/src/
 
 상세 API: `guides/03_hub_engine_guide.md`, Living World는 `guides/07_living_world_guide.md`.
 
-## LLM 모듈 — 20 서비스
+## LLM 모듈 — 23 서비스
 
 | 서비스 | 역할 |
 |--------|------|
