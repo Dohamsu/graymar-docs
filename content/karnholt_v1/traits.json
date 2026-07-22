@@ -1,0 +1,60 @@
+[
+  {
+    "traitId": "KH_TUNNEL_SENSE",
+    "name": "갱도의 감",
+    "icon": "⛏️",
+    "description": "어둠 속에서 평생을 보낸 자의 감각. 무너질 벽과 숨은 틈을 몸이 먼저 안다.",
+    "effects": {
+      "actionBonuses": { "SEARCH": 1, "INVESTIGATE": 1 },
+      "maxHpBonus": 5
+    }
+  },
+  {
+    "traitId": "KH_COIN_EYE",
+    "name": "주화 보는 눈",
+    "icon": "🪙",
+    "description": "무게와 광택만으로 위조 주화를 가려낸다. 시장 바닥에서 속는 일이 없다.",
+    "effects": {
+      "actionBonuses": { "OBSERVE": 1, "TRADE": 1 },
+      "goldBonus": 15
+    }
+  },
+  {
+    "traitId": "KH_BORDER_FOOT",
+    "name": "국경의 발",
+    "icon": "🥾",
+    "description": "눈 덮인 밀수로를 소리 없이 오간 발. 경비의 시선이 닿지 않는 길을 안다.",
+    "effects": {
+      "actionBonuses": { "SNEAK": 1, "STEAL": 1 }
+    }
+  },
+  {
+    "traitId": "KH_FURNACE_GRIT",
+    "name": "용광로 근성",
+    "icon": "🔥",
+    "description": "주조소 화덕 곁에서 단련된 몸과 배짱. 열기와 위협 앞에서 물러서지 않는다.",
+    "effects": {
+      "actionBonuses": { "FIGHT": 1, "THREATEN": 1 },
+      "maxHpBonus": 10
+    }
+  },
+  {
+    "traitId": "KH_LEDGER_MIND",
+    "name": "장부의 머리",
+    "icon": "📜",
+    "description": "숫자와 도장의 어긋남을 놓치지 않는다. 말로 사람을 움직이는 법도 안다.",
+    "effects": {
+      "actionBonuses": { "PERSUADE": 1, "INVESTIGATE": 1 }
+    }
+  },
+  {
+    "traitId": "KH_MINERS_BOND",
+    "name": "광부의 의리",
+    "icon": "🤝",
+    "description": "갱도에서 등을 맡겨 본 사람의 신의. 처음 보는 이도 그 눈빛을 알아본다.",
+    "effects": {
+      "actionBonuses": { "HELP": 1 },
+      "globalTrustBonus": 5
+    }
+  }
+]
