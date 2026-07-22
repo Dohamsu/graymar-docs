@@ -388,6 +388,13 @@ retry-llm 보존). 유닛 5케이스 + 실런 스모크(빈 서술 0) 검증.
 결함 런 2종 FAIL·정상 런 2종 PASS 오프라인 검증 + 라이브 11/11 편입. **센서 첫 검증에서
 기존 리뷰가 놓친 실결함 발굴**: 확정 검증 런(0e6cc9ec) T5가 `{"content": "..."}` JSON
 봉투 노출 — ModelRun의 JSON 형식 누출 2회째(01d79acc T5 프리픽스 + 0e6cc9ec 봉투).
-③ allowlist 프로바이더 장애 시 fallback 거동 관찰 + **ModelRun 거취 결정 대기**
-(JSON 누출 2회 — 제외 시 Friendli 단독의 단일화 리스크와 상충) ④ Solar Pro 3는
-penalty 미지원+지시 준수 불안정으로 후보 제외.
+③ ~~allowlist 운영 관찰·ModelRun 거취~~ **완결 (server 2e3b646, 2026-07-22)** —
+ⓐ JSON 형태 구제 가드: `salvageNarrativeShape`(봉투 언랩·프리픽스 제거·불가 시
+재시도 체인) — caller는 narrative 스테이지+비JSON모드 한정(nano 정당 JSON 오폭 방지),
+워커 게이트가 스트리밍 경로 커버. ModelRun은 가드 전제로 **유지**.
+ⓑ 제3 후보 스모크: Novita 14.6~16.3s / Parasail 14.5~25.1s (형식·한국어 정상,
+평시 투입엔 저속) → **Novita를 가용성 백스톱으로 3순위 추가**
+(`ModelRun|Friendli|Novita` — throughput 정렬상 평시 미선택, 동시 저하 시
+FAILED 대신 15초 턴). ⓒ 채택 후 실과금 4런 누적 턴당 $0.001046(≈₩1.57) 안정.
+잔여 감시는 상시 수단(V11 게이트 + FAILED 카운트)으로 이관.
+④ Solar Pro 3는 penalty 미지원+지시 준수 불안정으로 후보 제외.
