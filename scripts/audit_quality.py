@@ -72,7 +72,8 @@ CURRENCY_FORBID = {
     '닢':     r'(?<=[0-9])\s*닢(?![가-힣])',    # 숫자 뒤 "닢"만
 }
 
-URL_PAT = re.compile(r'/npc-portraits/[^\s\]"]+\.webp')
+# npc-portraits(고정 매핑) + pack-assets(arch/80 팩 에셋 풀) 두 URL 체계 모두 제외
+URL_PAT = re.compile(r'/(?:npc-portraits|pack-assets)/[^\s\]"]+\.webp')
 ENG_PAT = re.compile(r'\b[A-Za-z]{3,}\b')
 ENG_ALLOW = {'NPC', 'ID', 'URL', 'HP', 'MP'}
 

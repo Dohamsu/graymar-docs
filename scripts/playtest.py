@@ -27,6 +27,7 @@ parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
 parser.add_argument("--scenario", default=None, help="시나리오 팩 ID (default: 서버 기본=graymar_v1)")
 parser.add_argument("--agent", default=None, help="에이전트 플레이어 페르소나 (coercer|chatty|weirdo|brawler) — LLM이 서술을 읽고 의도 연속 플레이 + 위화감 자동 노트")
 parser.add_argument("--agent-model", default="openai/gpt-4.1-mini", help="에이전트 플레이어 LLM 모델 (OpenRouter)")
+parser.add_argument("--turn-delay", type=float, default=0, help="턴 간 대기 초 (인간 페이스 모사 — AUTONOMOUS 팩 시드/디렉터 검증용)")
 args = parser.parse_args()
 
 BASE = args.base
@@ -290,6 +291,10 @@ bought_items = set()   # 4-A: 상점 구매 1회/아이템 제한
 arc_committed = False  # 4-A: 아크 커밋 선택지 1회 클릭
 
 for turn_i in range(MAX_TURNS):
+    # 인간 플레이 페이스 모사 — AUTONOMOUS 팩은 Plot Seed 백그라운드 생성(60초~2분대
+    # 실측)이 빠른 턴 제출을 못 따라잡으면 디렉터가 조용히 무발화 (2026-07-22 실측)
+    if args.turn_delay > 0 and turn_i > 0:
+        time.sleep(args.turn_delay)
     idem = str(uuid.uuid4())
 
     # Refresh state
