@@ -379,7 +379,10 @@ allowlist(`LLM_PROVIDER_ONLY_MAP`) 구현이 전제조건**이 된 경위 포함
 | 승격 검증 2차 — cerebras 허용, 빈 서술 5턴 (12턴 chatty) | 71637853-41c2-4d73-a811-45e770285555 |
 | **확정 — allowlist ModelRun\|Friendli, 빈 서술 0 (12턴 chatty)** | **0e6cc9ec-285d-492b-99fd-cc2b0b9933ed** |
 
-**후속(백로그)**: ① 빈 서술 DONE 경로 수리 (0토큰 응답이 llmStatus=DONE 커밋,
-retry-llm 게이트 미발동) ② playtest 빈 서술 센서 추가 (5턴 공백에도 10/10 PASS)
+**후속(백로그)**: ① ~~빈 서술 DONE 경로 수리~~ **완료 (server ccadb18)** —
+0토큰·공백 응답 3층 방어: caller `ensureNonEmpty` throw(재시도·fallback 체인 활용) +
+`generateStream` 빈 스트림 throw(non-stream 전환) + 워커 최종 게이트(FAILED 커밋으로
+retry-llm 보존). 유닛 5케이스 + 실런 스모크(빈 서술 0) 검증.
+② playtest 빈 서술 센서 추가 (5턴 공백에도 10/10 PASS)
 ③ allowlist 프로바이더 장애 시 fallback 거동 관찰 ④ Solar Pro 3는 penalty
 미지원+지시 준수 불안정으로 후보 제외.
