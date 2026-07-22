@@ -383,6 +383,11 @@ allowlist(`LLM_PROVIDER_ONLY_MAP`) 구현이 전제조건**이 된 경위 포함
 0토큰·공백 응답 3층 방어: caller `ensureNonEmpty` throw(재시도·fallback 체인 활용) +
 `generateStream` 빈 스트림 throw(non-stream 전환) + 워커 최종 게이트(FAILED 커밋으로
 retry-llm 보존). 유닛 5케이스 + 실런 스모크(빈 서술 0) 검증.
-② playtest 빈 서술 센서 추가 (5턴 공백에도 10/10 PASS)
-③ allowlist 프로바이더 장애 시 fallback 거동 관찰 ④ Solar Pro 3는 penalty
-미지원+지시 준수 불안정으로 후보 제외.
+② ~~playtest 빈 서술 센서 추가~~ **완료 (docs — playtest.py V11)** — 빈 서술(DONE)·
+서술 선두 raw JSON 1건이라도 FAIL, FAILED/TIMEOUT은 카운트만(방어 작동 = 게이트 비대상).
+결함 런 2종 FAIL·정상 런 2종 PASS 오프라인 검증 + 라이브 11/11 편입. **센서 첫 검증에서
+기존 리뷰가 놓친 실결함 발굴**: 확정 검증 런(0e6cc9ec) T5가 `{"content": "..."}` JSON
+봉투 노출 — ModelRun의 JSON 형식 누출 2회째(01d79acc T5 프리픽스 + 0e6cc9ec 봉투).
+③ allowlist 프로바이더 장애 시 fallback 거동 관찰 + **ModelRun 거취 결정 대기**
+(JSON 누출 2회 — 제외 시 Friendli 단독의 단일화 리스크와 상충) ④ Solar Pro 3는
+penalty 미지원+지시 준수 불안정으로 후보 제외.

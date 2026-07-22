@@ -74,14 +74,15 @@ def poll_llm(run_id, turn_no, max_wait=90):
             ui = data.get("serverResult", {}).get("ui", {})
             return {
                 "output": llm.get("output") or "",
+                "status": "DONE",
                 "npcPortrait": ui.get("npcPortrait"),
                 "speakingNpc": ui.get("speakingNpc"),
                 "newsHeadlines": ui.get("newsHeadlines"),
             }
         if status in ("FAILED", "SKIPPED"):
-            return {"output": f"[LLM_{status}]"}
+            return {"output": f"[LLM_{status}]", "status": status}
         time.sleep(3)
-    return {"output": "[LLM_TIMEOUT]"}
+    return {"output": "[LLM_TIMEOUT]", "status": "TIMEOUT"}
 
 # ═══════════════════════════════════════
 # 0. Dry-run: LLM provider를 mock으로 전환
@@ -458,6 +459,8 @@ for turn_i in range(MAX_TURNS):
         "nodeOutcome": node_outcome,
         "events": [e.get("kind", "") for e in events],
         "narrative": narrative if narrative else "",
+        # V11: 빈 서술(DONE인데 출력 없음)과 FAILED/TIMEOUT을 구분하기 위한 상태 기록
+        "llmStatus": llm_result.get("status", "") if isinstance(llm_result, dict) else "",
         "npcPortrait": llm_result.get("npcPortrait") if isinstance(llm_result, dict) else None,
         "rawInput": body.get("input", {}).get("text", ""),
         # V10: 서술 화자(NpcResolver 최종) — 이벤트 정의 NPC와 대조용
@@ -814,6 +817,38 @@ if v10_issues:
 else:
     print(f"  ✅ 정합성 양호", flush=True)
 
+# V11: 서술 존재·형식 (arch/25 D-8 백로그 ② — 하드 결함 게이트)
+#   배경: run 71637853 — 12턴 중 5턴 빈 서술(0토큰 DONE)인데 V1~V10 전부 통과.
+#   기존 게이트는 서술 존재를 암묵 전제로 내용 품질만 검사 — 빈 서술은 검사 대상이
+#   없어 역설적으로 무사통과. 빈 서술·서술 자리 raw JSON(run 01d79acc T5 실측)은
+#   해석 여지 없는 하드 결함이라 1건이라도 FAIL. FAILED/TIMEOUT 턴은 서버 3층
+#   방어(server ccadb18)가 작동한 결과라 게이트 비대상 — 카운트만 노출해
+#   allowlist 프로바이더 악화 관찰(task #3) 재료로 남긴다.
+print("\n[V11] 서술 존재·형식:", flush=True)
+v11_issues = []
+v11_failed_count = 0
+for t in turn_logs:
+    _status = t.get("llmStatus", "")
+    _narr = (t.get("narrative") or "").strip()
+    if _status == "SKIPPED" or _narr == "[LLM_SKIPPED]":
+        continue  # 정당한 무서술 턴 (프롤로그 등)
+    if _status in ("FAILED", "TIMEOUT") or _narr in ("[LLM_FAILED]", "[LLM_TIMEOUT]"):
+        v11_failed_count += 1
+        continue
+    if not _narr:
+        v11_issues.append(f"T{t['turn']}: 빈 서술 (llmStatus=DONE)")
+    elif re.match(r'^\s*\{\s*"', _narr):
+        v11_issues.append(f"T{t['turn']}: 서술 선두 raw JSON 누출 — {_narr[:40]!r}")
+if v11_issues:
+    for issue in v11_issues[:5]:
+        print(f"  ❌ {issue}", flush=True)
+    if len(v11_issues) > 5:
+        print(f"  ... 외 {len(v11_issues)-5}건", flush=True)
+else:
+    print("  ✅ 빈 서술·JSON 누출 없음", flush=True)
+if v11_failed_count:
+    print(f"  ⚠️ FAILED/TIMEOUT 턴 {v11_failed_count}건 — 서버 방어 작동 (게이트 비대상, 프로바이더 관찰 재료)", flush=True)
+
 # Summary
 print("\n" + "=" * 60, flush=True)
 all_checks = {
@@ -827,6 +862,7 @@ all_checks = {
     "V8_npc_match": len(v8_issues) == 0,
     "V9_quality": len([i for i in v9_issues if "반복" in i]) <= 2,
     "V10_choice_npc_match": len(v10_issues) == 0,
+    "V11_narrative_present": len(v11_issues) == 0,
 }
 passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
