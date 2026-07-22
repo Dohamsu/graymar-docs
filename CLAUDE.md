@@ -262,7 +262,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | Gemma 4 26B MoE (메인, stream:true) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter |
+| LLM | Gemma 4 26B MoE (메인, stream:true) / DeepSeek V4 Flash (짝수 턴 교차) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D) |
 
 ## LLM 설계 원칙 (필수 참고)
 
@@ -665,7 +665,7 @@ LLM_PROVIDER_REQUIRE_PARAMS=true      # penalty 미지원 프로바이더 배제
 | 22_dice_roll_animation.md | ✅ 구현됨 | 주사위 판정 애니메이션 |
 | 23_dialogue_ui_redesign.md | ✅ 설계 | 대화 UI 고도화 (메신저 형태) |
 | 24_multiplayer_party_system.md | ✅ 구현됨 | 파티 설계·Phase 1~3 (구현 API는 guides/08) |
-| 25_llm_model_evaluation.md | 📎 참고 | LLM 모델 평가 (v1+v2 통합) + 운영 모델 변천 부록. **현 운영: Gemma 4 26B MoE 메인 + GPT-4.1 Mini fallback** |
+| 25_llm_model_evaluation.md | 📎 참고 | LLM 모델 평가 (v1+v2+v3 통합) + 운영 모델 변천 부록. **현 운영: Gemma 4 26B MoE 메인 + DeepSeek V4 Flash 짝수 턴 교차 + GPT-4.1 Mini fallback (부록 D)** |
 | 26_narrative_pipeline_v2.md | ✅ 구현됨 | 3-Stage Pipeline + Narrative v2/Event(18/19/20 부록) + AI 가이드라인(부록 A) |
 | archive/27_image_asset_plan.md | 📜 아카이브 | 에셋 계획 — 부분 구현, content/ 하위 실측 참조 (2026-04-22) |
 | archive/28_nano_event_director.md | 📜 아카이브 | 34_player_first_event_engine 의 배경 설계 (2026-04-22) |

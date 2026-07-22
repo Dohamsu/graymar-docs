@@ -4,6 +4,7 @@
 > 그레이마르 텍스트 RPG 내러티브 생성에 최적인 모델을 선정.
 > @마커 NPC 혼선은 파이프라인(NpcDialogueMarker) 이슈로 모든 모델 공통 발생 — 모델 평가에서 제외.
 > v1 평가(Gemma 4 vs GPT-4.1-mini, 2026.4.5~6)는 본 문서 말미 부록 참조.
+> **v3 평가(2026-07-22, DeepSeek V4 교차 채택 + 프로바이더 튜닝)는 부록 D — 현 운영 구성의 정본.**
 
 ## 1. 테스트 환경
 
@@ -210,7 +211,8 @@ v2 평가 결론(Qwen3 235B 메인)이 채택된 후, 운영 환경에서 Gemini
 | v2 (2026.4) | Qwen3 235B A22B 2507 | GPT-4.1 Mini | 정량 평가 1위 |
 | Flash Lite 전환 | Gemini 2.5 Flash Lite | GPT-4.1 Mini | 속도 2.7배 (Qwen 14초 → 5.4초) |
 | Flash 전환 | Gemini 2.5 Flash | GPT-4.1 Mini | Flash Lite 메타서술/영어 누출 해소 |
-| **현재 (2026.5)** | **Gemma 4 26B MoE** | **GPT-4.1 Mini** | 한국어 서술 일관성 + 안정성 |
+| Gemma 복귀 (2026.5) | Gemma 4 26B MoE | GPT-4.1 Mini | 한국어 서술 일관성 + 안정성 |
+| **현재 (2026.7)** | **Gemma 4 26B MoE + DeepSeek V4 Flash 교차** | **GPT-4.1 Mini** | v3 평가 — 어휘 편향 상쇄 교차 채택 (부록 D) |
 
 `server/.env` 정본:
 
@@ -219,7 +221,9 @@ LLM_PROVIDER=openai
 OPENAI_MODEL=google/gemma-4-26b-a4b-it
 OPENAI_BASE_URL=https://openrouter.ai/api/v1
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini
-LLM_ALTERNATE_MODEL=google/gemma-4-26b-a4b-it
+LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash   # 짝수 턴 교차 (v3, 부록 D)
+LLM_SHORT_RESPONSE_MIN_TOKENS=150                # 교차 이중 과금 방지 (부록 D §4)
+LLM_PROVIDER_REQUIRE_PARAMS=true                 # penalty 레버 보장 (부록 D §5)
 ```
 
 > v2 표(부록 A 상단)는 평가 시점의 정량 데이터로 참고용. 운영 의사결정은 정량 점수 외에 한국어 자연스러움 / 톤 일관성 / 비용 안정성 / OpenRouter 게이트웨이 안정성을 종합 판단해 Gemma 4 로 복귀했다.
@@ -240,3 +244,89 @@ LLM_ALTERNATE_MODEL=google/gemma-4-26b-a4b-it
 | Flash Lite | fe8e2e98-6e46-4fdd-83f8-d13ab07d63ae | e7ef7ed8-6c4d-47d3-97cf-6d1f256f3606 |
 | Gemma 4 (5턴 비교) | bebed203-2720-4af4-a607-e073cfa55219 | — |
 | GPT-4.1 Mini (5턴 비교) | 1d7d836e-81fe-4b6a-940e-002b599f6dbc | — |
+
+---
+
+## 부록 D. v3 평가 — DeepSeek V4 교차 채택 + 프로바이더 튜닝 (2026-07-22)
+
+> 2026.4 평가 이후 신규 모델 재검토. 12턴 × 단일 세션, DESERTER, graymar_v1,
+> `scripts/playtest.py` 게이트 10종 + `llm_call_logs` 실과금 기준 (환율 ₩1,500/USD).
+> **결론: 메인 Gemma 26B 유지 + `LLM_ALTERNATE_MODEL`(짝수 턴)에 DeepSeek V4 Flash 투입.**
+
+### D-1. 후보 스크리닝
+
+OpenRouter 2026.4~6 신규 모델 중 가격 밴드(현행 ~₩1.5/턴) 내 후보를 선별:
+
+- **테스트 진행**: DeepSeek V4 Flash($0.094/$0.188, 롤플레이 컬렉션 사용량 1위), Gemma 4 31B dense($0.10/$0.35), DeepSeek V4 Pro($0.435/$0.870 — 가풍 판별용 1런)
+- **서류 탈락**: Qwen3.6 27B($0.289/$2.40 밴드 초과), Qwen3.5-35B-A3B(active 3B — Next 80B A3B의 장기 컨텍스트 약점 전례), MiniMax M3(output 고가), Xiaomi MiMo-V2.5(한국어 미문서화), Qwen3 235B 재채택(output $0.10→$0.55 인상 + 레이턴시 전례), EXAONE·HyperCLOVA(OpenRouter 미제공)
+
+### D-2. 정량 비교 (서술 호출 실측, 12턴 지시 = 호출 14~16회)
+
+| | Gemma 26B ①/② | Gemma 31B | DS Flash | DS Pro |
+|---|---|---|---|---|
+| 평균 레이턴시 | 9.3 / 8.6초 | 6.2초 | **4.0초** | 8.1초 |
+| 최악 턴 | 15.8 / 16.9초 | 15.0초 | **6.0초** | 14.7초 |
+| 턴당 실과금 | ₩1.45 / 1.48 | ₩3.72 | **₩0.87** | **₩22.09** |
+| 평균 출력 tok | 266 / 257 | 245 | 300 | 390 |
+| 과거형 혼용률 | 0% / 0% | 0% | 11% | 8% |
+| 대명사 개시어율 | 22.0% / 18.3% | — | 20.2% | **5.3%** |
+
+- 26B 2런의 유사 수치(레이턴시·비용)로 런 간 분산 소폭 확인 — 모델 간 차이는 유의미.
+- **31B 탈락**: 품질 동급(판정 반영 우수)이나 실과금 2.6배. **Pro 탈락**: 대명사·서술 밀도 최고지만 실과금 15배.
+- **표시가 ≠ 실과금**: `sort:throughput`이 고가 프로바이더를 잡으면 표시가의 3~4배 과금 (31B ₩6~9 턴, Pro 4배). 이후 모델 검토는 반드시 `llm_call_logs.cost_usd` 실측 기준.
+
+### D-3. DeepSeek 가풍 (Flash·Pro 공통 — 크기 무관 확정)
+
+1. **서술 과거형 혼용 8~11%** (Gemma 0%). soft 지시로 교정 낙관 불가.
+2. **별칭 어휘 본문 혼입**: "일곱 상냥한 서빙꾼 차이가 나더군"(Flash), 자기소개 이름 자리 별칭 침투(Pro). 별칭 마커 시스템과 상성 주의.
+3. **세계관 아나크로니즘**: 계산기·손목시계 (교차 런 짝수 턴 2건/7턴). audit_quality.py 금지어 사전 밖 — 자동 감지 불가 (소유자 수용 판단, 2026-07-22).
+4. **기본 reasoning 활성**: 미차단 시 reasoning이 maxTokens를 소진해 content 0자 (1차 런 11/15턴 빈 서술 실측) → `reasoning: { enabled: false }` 주입으로 해소 (server a1a81af).
+
+강점: 게임 단서 생성력·턴 간 소재 연속성 최고 (순찰표 교대 공백, 장부 필체 위조 아크 등 — v2의 Qwen3 235B 강점 계열), 전 턴 6초 이하 유일.
+
+### D-4. 교차(alternate) 채택 검증
+
+`LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash` (짝수 턴) 2런 실측:
+
+- **인접 턴 자카드 0.000** (순수 런 0.001~0.004) — 연속 턴이 항상 다른 모델이라 인접 반복이 구조적으로 소멸. 교차 취지(어휘 편향 상쇄) 지표 실증.
+- 3-gram 총량은 0.009로 상승하나 출처 추적 결과 동일 모델 2턴 간격 자기반복 (크로스 오염 1건 — 시간대 전환 상용구뿐).
+- **모델 경계 대화 인계 4/4 성공**: 같은 NPC·같은 어체(하오체)·같은 조사 아크가 GM↔DS를 넘나들며 7턴 지속. 문체 오염 전파 없음 (GM 턴 과거형 0% 유지).
+- **ShortResponse 이중 과금**: 임계 200에서 DS 정상 짧은 서술(160~190tok)이 재시도에 걸려 2/7턴 2배 지불 → 임계 env 외부화(`LLM_SHORT_RESPONSE_MIN_TOKENS`, server 5bd5372) 후 150 설정으로 0회.
+
+### D-5. OpenRouter 프로바이더 튜닝 실측
+
+| 구성 | 결과 | 판정 |
+|---|---|---|
+| `require_parameters: true` 단독 | 10/10, 빈 서술 0, 전 턴 <7.2초 (DS 5.8/GM 3.6초) | ✅ **채택** |
+| + `max_price: 0.10/0.35` | Gemma 풀 1곳으로 질식 → FAILED 턴 1, DS 18초 | ❌ (사용 시 0.15/0.45↑) |
+| `order: DeepInfra` 우선 | DS 빈 스트림 3/7 — reasoning 지원 **선언≠실동작** | ❌ |
+
+- **require 채택 근거**: DS Flash 프로바이더 19곳 중 4곳(GMICloud·Baidu·DigitalOcean·Alibaba)이 frequency_penalty 미지원 — 불변식 50의 반복 억제 레버가 라우팅 운에 따라 조용히 무력화되던 것을 차단.
+- 프로바이더 간 동일 모델 가격 편차 최대 2.6배 — 런 간 비용 변동(₩0.87~1.68)의 원인.
+- 캐시는 실재 (NextBit Gemma 폴백 턴에서 3.6k tok 적중 → 턴 비용 절반). 단 적중은 동일 프로바이더 연속 라우팅 전제라 throughput 랜덤 라우팅과 상성 나쁨 — 향후 과제.
+- env 스위치 3종(`REQUIRE_PARAMS`/`MAX_PRICE`/`ORDER`)은 server 8866f70, 미설정 시 기존 동작.
+
+### D-6. 파생 수정 (커밋)
+
+| 커밋 | 내용 |
+|---|---|
+| server `a1a81af` | DeepSeek reasoning 비활성 주입 (Gemini 전용 분기 확장) |
+| server `5bd5372` | ShortResponse 임계 env 외부화 |
+| server `8866f70` | 프로바이더 튜닝 env 3종 + require 채택 |
+| docs `132fdf3` | playtest `--model` 전환을 auth 이후로 이동 — JWT 가드 도입 후 401 조용한 실패로 무동작이던 버그 (1차 "DeepSeek 런"이 실제로는 Gemma로 돌았음) |
+
+### D-7. v3 테스트 Run ID (12턴 단일 세션)
+
+| 구성 | Run ID |
+|---|---|
+| Gemma 26B ① (기준) | 05b32518-f09f-49fb-9e40-5a2c92fa6a24 |
+| Gemma 26B ② (대조 — --model 버그로 전환 실패한 런) | 36bd5b3b-f80b-4439-b2ce-09fa46319226 |
+| Gemma 31B | 3928d1c2-4fac-4cd3-9343-55174225c5fe |
+| DS Flash (reasoning 미차단 — 무효) | 13cb3b69-7c75-4d59-bb14-c48809c93aaa |
+| DS Flash (정상) | 27c79abf-d746-4661-8aa6-437bc89b3d64 |
+| DS Pro | afa2f4c2-aa40-4287-8a55-55cd9da5a8ea |
+| 교차 1차 (임계 200) | f3d8c108-66c2-4df4-84e3-2650360ac7f5 |
+| 교차 2차 (임계 150) | 4e307f8a-6061-4c24-bdd0-8a9923485708 |
+| 튜닝 A+B (require+상한) | 7d0931fb-d11f-4195-9756-003f02a65b31 |
+| 튜닝 C (DeepInfra 우선) | 2c48736c-9b8b-4695-a1cb-803fe3cccfac |
+| 튜닝 require 단독 (채택 구성) | d0a0abfa-eb91-44e1-bbfe-2edd2229cc01 |
