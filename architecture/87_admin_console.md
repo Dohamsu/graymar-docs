@@ -300,3 +300,20 @@ admin/app/
 - 클라 `CostReconciliation.tsx` — **OpenRouter 스타일 모델별 누적 막대**(dailyByModel 상위 8+기타, CHART_COLORS 팔레트) + 서버 측정 점선 오버레이 + 갭 KPI(실제−측정, %) + 모델별 실제 청구 표. `LlmCostChart`는 그라디언트 area("서버 측정 비용"). 전부 원화. 미설정 시 management 키 발급 안내 배너. 서버 응답에 `modelList`+`dailyByModel`(flat 행) 추가.
 - **주의**: Activity `date`는 UTC 이며 `"YYYY-MM-DD HH:MM:SS"` 형식으로 옴 → 서비스에서 10자 정규화 필수(미정규화 시 측정 date와 병합 깨짐, 실측 버그). `llm_call_logs.created_at`은 서버 로컬 → 일 경계 스큐 가능. 실지출 진실원은 Activity(실제 청구), `llm_call_logs`는 서버 경유분만.
 - **검증(2026-07-23)**: management 키 실연동 후 헤드리스 렌더 확인 — 30일 실제 ₩16,273 vs 측정 ₩155(갭 99%), 누적 막대·모델 범례·측정 점선·모델별 표 정상, 콘솔 에러 0.
+
+---
+
+## 10. 테스터 정책 정정 + 비용 단일화 (2026-07-23)
+
+### 10.1 테스터 = 수집 + 제외 (삭제 아님)
+소유자 정정: 테스터 처리의 의도는 **"테스트 로그는 수집하되 대시보드 실유저 집계에서만 제외"** 이지 삭제가 아니다.
+- **go-forward 정책**: 테스터 계정·로그는 **보존**한다. 정본 `playtest@test.com` 재사용(§8.1)이 그 구조 — 로그는 쌓이되 도메인 기반으로 실유저 신호에서 제외된다. **더 이상 대량 삭제하지 않는다** (개별 삭제 `DELETE /users/:id`는 명시 요청 시에만).
+- **제외 범위 확장**: 기존 4지표(가입·활성유저·활성런·오늘턴)에 더해 **포인트 지표(유통량·발행·소진·시계열)도 테스터 제외**로 일관화(admin-stats, point_transactions JOIN users + notTesterSql). 실측: 유통량 5095→5045(정본 테스터 50p 보너스 제외).
+- **되돌릴 수 없는 이력**: §8.1의 1,706개 대량 삭제는 이 정정 이전 소유자의 명시적 "하드 삭제" 선택으로 실행됨. 삭제된 llm_call_logs는 복구 불가(§9의 측정치 붕괴 원인). 이후 원칙은 keep+exclude.
+
+### 10.2 비용 = 실제 청구 단일화 (측정 폐기)
+"서버 측정 vs 실제 청구" 이중 표시가 갭 99%로 혼란을 유발 → **비용의 진실원은 OpenRouter 실제 청구(Activity) 하나로 통일**.
+- 폐기: CostReconciliation의 측정 오버레이 점선·갭 KPI·서버측정 KPI, LLM 탭의 측정 차트(LlmCostChart 삭제)·측정 모델 표(ModelsCostSection).
+- CostReconciliation → **"LLM 실제 과금"** 전용(모델별 누적 막대 + 실제 청구 총액 + 모델별 표). 대시보드·LLM 탭 공통. KPI도 "LLM 실제 청구(7일)" 단일.
+- 근거: `llm_call_logs` 측정은 **로그 삭제에 취약**(§9)해 총비용 지표로 부적합. 원래 용도(런별 비용 귀속)는 유효하나 대시보드 총비용에선 뺀다. 서버 endpoint(`cost-reconciliation`)는 measured 필드를 여전히 반환하나 UI는 actual만 사용.
+- 잔여: 오늘 지출은 Activity 정산 지연(완료 UTC일)으로 익일 반영 — 라이브 today 지표가 필요하면 후속.
