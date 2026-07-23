@@ -297,5 +297,6 @@ admin/app/
 - 응답 `ActivityItem`: `{ date(UTC), model, model_permaslug, provider_name, usage(USD 실청구), requests, prompt/completion/reasoning_tokens }`. 최근 30 완료 UTC일. `usage`가 실제 청구액(사용자 CSV `total_usage`와 동일 필드).
 - **인증 = Management(Provisioning) 키** — 일반 추론 키(sk-or-v1-)는 403. `openrouter.ai/settings/management-keys`에서 발급 → server `.env` `OPENROUTER_MANAGEMENT_KEY`.
 - 서버 `AdminOpenRouterService.costReconciliation(days)` — Activity(10분 캐시) + `llm_call_logs` 측정을 일자·모델별 병합. 미설정 시 `configured:false` + 측정치만 반환(UI 안내). `GET /v1/admin/stats/cost-reconciliation?days=`.
-- 클라 `CostReconciliation.tsx` — 실제 vs 측정 그룹 막대(recharts, Brush 확대/축소) + 갭 KPI(실제−측정, %) + 실제 청구 모델별 표. 전부 원화. 미설정 시 management 키 발급 안내 배너.
-- **주의**: Activity `date`는 UTC, `llm_call_logs.created_at`은 서버 로컬 → 일 경계 스큐 가능. 실지출 진실원은 Activity(실제 청구), `llm_call_logs`는 서버 경유분만.
+- 클라 `CostReconciliation.tsx` — **OpenRouter 스타일 모델별 누적 막대**(dailyByModel 상위 8+기타, CHART_COLORS 팔레트) + 서버 측정 점선 오버레이 + 갭 KPI(실제−측정, %) + 모델별 실제 청구 표. `LlmCostChart`는 그라디언트 area("서버 측정 비용"). 전부 원화. 미설정 시 management 키 발급 안내 배너. 서버 응답에 `modelList`+`dailyByModel`(flat 행) 추가.
+- **주의**: Activity `date`는 UTC 이며 `"YYYY-MM-DD HH:MM:SS"` 형식으로 옴 → 서비스에서 10자 정규화 필수(미정규화 시 측정 date와 병합 깨짐, 실측 버그). `llm_call_logs.created_at`은 서버 로컬 → 일 경계 스큐 가능. 실지출 진실원은 Activity(실제 청구), `llm_call_logs`는 서버 경유분만.
+- **검증(2026-07-23)**: management 키 실연동 후 헤드리스 렌더 확인 — 30일 실제 ₩16,273 vs 측정 ₩155(갭 99%), 누적 막대·모델 범례·측정 점선·모델별 표 정상, 콘솔 에러 0.
