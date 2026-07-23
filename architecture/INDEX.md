@@ -222,6 +222,8 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 전투 UI 변경             | [[architecture/42_combat_ui_buttonform|combat ui buttonform]] → `client/src/components/battle/*`            |
 | HUB 엔진 이슈            | [[architecture/03_hub_engine|hub engine]] → [[architecture/21_living_world_redesign|living world redesign]] → [[guides/03_hub_engine_guide|hub engine guide]] |
 | 콘텐츠(시드 데이터) 수정 | [[architecture/06_graymar_content|graymar content]] → `content/graymar_v1/`                            |
+| 아이템 추가/이미지        | [[guides/10_star_sand_item_prompts|item prompts]] (서버·카탈로그·이미지 3층 프로세스) + [[architecture/86_pack_parity_mobile_ux|pack parity]] |
+| 비-graymar 팩 정합        | [[architecture/63_multi_scenario_content_decoupling|multi scenario decoupling]] + [[architecture/86_pack_parity_mobile_ux|pack parity]] (팩 스코프·초상화·아이템) |
 | 클라이언트 UI 변경       | [[guides/02_client_component_map|client component map]] (+ `15`, `23`)                         |
 | 파티 기능                | [[architecture/24_multiplayer_party_system|multiplayer party system]] → server `party/` 모듈                    |
 | 포인트/과금 (소프트 베타) | [[architecture/85_point_system|point system]] → server `points/` 모듈 + `turns.chargeKey`                     |

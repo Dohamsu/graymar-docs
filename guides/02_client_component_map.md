@@ -31,7 +31,7 @@ components/ (70개)
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
 │   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑, 보정치 뱃지, 대사/서술 혼합 — arch/77 P5c로 -45%)
 │   ├── StreamingBlock.tsx    ← 스트리밍 중 실시간 렌더링 (SSE 토큰 → 점진적 텍스트)
-│   ├── DialogueBubble.tsx    ← NPC 대사 말풍선 (어체·speechRegister별 색조, 초상화 썸네일)
+│   ├── DialogueBubble.tsx    ← NPC 대사 말풍선 (어체·speechRegister별 색조, 초상화 썸네일; 무명 인물=물음표·흐림 / BACKGROUND 단역=실루엣·역할명, arch/86)
 │   ├── NpcPortraitCard.tsx   ← NPC 초상화 카드 (StoryBlock에서 분리, arch/77 P5c)
 │   ├── SceneImageButton.tsx  ← 장면 이미지 버튼+로딩 (StoryBlock에서 분리, arch/77 P5c)
 │   └── narrative-text.tsx    ← 서술 텍스트 렌더 유틸 정본 (마커 정리·세그먼트 파싱 — StreamTyper/TypewriterText/StreamingBlock 공유)
