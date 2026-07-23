@@ -1,6 +1,7 @@
 # Subprojects (separate repos)
 server/
 client/
+admin/
 
 # System files
 .DS_Store
