@@ -283,3 +283,19 @@ admin/app/
 
 ### 8.6 검증
 서버 build·lint 0·유닛(tester.util 7 + admin dto/ops 기존 8) + 라이브 왕복(overview 테스터 제외·bug-report 보고자·password 변경 후 login·cascade 삭제 후 404). 어드민 build·lint 0. 차트 브라우저 시각 확인은 admin JWT 필요 — 별도 QA 잔여.
+
+---
+
+## 9. 실제 과금 대조 — OpenRouter Activity 연동 (2026-07-23)
+
+**배경**: 어드민 비용 차트(`llm_call_logs` 기반)가 실제 OpenRouter 청구와 큰 괴리(주간 실측 $5.15 vs 측정 $0.10, 53배). 원인 분석:
+- **단가는 정확** — `costUsd`는 OpenRouter 응답의 `usage.cost`를 그대로 저장(자체 가격표 아님, openai.provider). 제로/누락 비용 행 0건.
+- **원인 ① 테스터 로그 삭제(지배적, ~89%)** — §8.1 테스터 정리 때 `llm_call_logs` 5,059행 삭제. 실제 과금 대부분이 테스터 플레이테스트 게임 턴 비용이라 차트가 붕괴.
+- **원인 ② 서버 미경유 호출(구조적, ~11%)** — `llm_call_logs`에 아예 안 남는 실지출: 플레이테스트 **에이전트 플레이어**(`--agent`, gpt-4.1-mini를 OpenRouter 직접 호출, 서버 우회) + **모델 평가**(arch/25, deepseek-v4-pro·solar-pro-3 등 턴 파이프라인 밖).
+
+**연동**: OpenRouter Activity API(`GET /api/v1/activity`)로 실제 청구를 대조.
+- 응답 `ActivityItem`: `{ date(UTC), model, model_permaslug, provider_name, usage(USD 실청구), requests, prompt/completion/reasoning_tokens }`. 최근 30 완료 UTC일. `usage`가 실제 청구액(사용자 CSV `total_usage`와 동일 필드).
+- **인증 = Management(Provisioning) 키** — 일반 추론 키(sk-or-v1-)는 403. `openrouter.ai/settings/management-keys`에서 발급 → server `.env` `OPENROUTER_MANAGEMENT_KEY`.
+- 서버 `AdminOpenRouterService.costReconciliation(days)` — Activity(10분 캐시) + `llm_call_logs` 측정을 일자·모델별 병합. 미설정 시 `configured:false` + 측정치만 반환(UI 안내). `GET /v1/admin/stats/cost-reconciliation?days=`.
+- 클라 `CostReconciliation.tsx` — 실제 vs 측정 그룹 막대(recharts, Brush 확대/축소) + 갭 KPI(실제−측정, %) + 실제 청구 모델별 표. 전부 원화. 미설정 시 management 키 발급 안내 배너.
+- **주의**: Activity `date`는 UTC, `llm_call_logs.created_at`은 서버 로컬 → 일 경계 스큐 가능. 실지출 진실원은 Activity(실제 청구), `llm_call_logs`는 서버 경유분만.

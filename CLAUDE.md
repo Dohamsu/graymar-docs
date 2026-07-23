@@ -460,6 +460,7 @@ GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=of
 LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비호환, false 권장)
 LLM_SHORT_RESPONSE_MIN_TOKENS=150     # ShortResponse 재시도 임계 (기본 200 — 교차 모델 짧은 서술 이중 과금 방지)
 LLM_PROVIDER_REQUIRE_PARAMS=true      # penalty 미지원 프로바이더 배제 (불변식 50 레버 보장, 2026-07-22 채택)
+OPENROUTER_MANAGEMENT_KEY=            # 어드민 실제 과금 대조용 — OpenRouter Activity API. 일반 추론 키는 403, management 키 필요 (arch/87 §9)
 ```
 
 ## Implementation Phase Status (구현 단계)
