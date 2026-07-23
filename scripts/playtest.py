@@ -249,6 +249,23 @@ if not token:
 session.headers["Authorization"] = f"Bearer {token}"
 print(f"Auth: {EMAIL}", flush=True)
 
+# ── 포인트 잔액 사전 체크 (arch/85 채팅 5p/턴 — 잔액 0이면 전 턴 402로
+#    0턴인데 조용히 PASS 나는 false-PASS 방지, 2026-07-23 실측) ──
+_, _bal = api("GET", "/points/balance")
+if _bal.get("enabled", False):
+    _need = MAX_TURNS * int(_bal.get("chatCost", 5))
+    if int(_bal.get("points", 0)) < _need:
+        _redeem_code = os.environ.get("PLAYTEST_REDEEM_CODE", "")
+        if _redeem_code:
+            _, _red = api("POST", "/points/redeem", {"code": _redeem_code})
+            if _red.get("balance") is not None:
+                print(f"포인트 자동 충전: +{_red.get('granted')}p → 잔액 {_red.get('balance')}p", flush=True)
+            _, _bal = api("GET", "/points/balance")
+    if int(_bal.get("points", 0)) < _need:
+        print(f"포인트 부족: 잔액 {_bal.get('points', 0)}p < 필요 {_need}p ({MAX_TURNS}턴 × {_bal.get('chatCost', 5)}p)", flush=True)
+        print("→ PLAYTEST_REDEEM_CODE 환경변수로 충전 코드를 지정하거나 어드민 코드 발급 후 재실행 (memory: project_playtest_points_gate)", flush=True)
+        sys.exit(2)
+
 # 모델 전환 (선택적) — settings 엔드포인트는 JWT 필요 → 반드시 auth 이후
 _orig_model = None
 if args.model:
@@ -427,6 +444,11 @@ for turn_i in range(MAX_TURNS):
         body["expectedNextTurnNo"] = expected
         body["idempotencyKey"] = str(uuid.uuid4())
         status, resp = api("POST", f"/runs/{run_id}/turns", body)
+
+    if status == 402:
+        # 포인트 소진 — 계속 돌려봤자 전 턴 402라 즉시 중단 (침묵 진행 금지)
+        print(f"  T{turn_i+1}: 포인트 소진(402) — 턴 제출 불가, 루프 중단", flush=True)
+        break
 
     if status not in (200, 201):
         print(f"  T{turn_i+1}: ERROR {status} - {json.dumps(resp)[:100]}", flush=True)
@@ -855,6 +877,9 @@ if v11_failed_count:
 # Summary
 print("\n" + "=" * 60, flush=True)
 all_checks = {
+    # V0 — 실행 턴 존재 게이트: 턴 0건이면 나머지 검증은 전부 무의미 (포인트
+    # 소진·서버 다운 등으로 0턴인데 8/11 PASS 나던 false-PASS 방어, 2026-07-23)
+    "V0_turns_executed": len(turn_logs) > 0,
     "V1_incidents": len(incidents) > 0,
     "V2_encounter": enc_pass >= 2,
     "V3_posture": len(posture_none) == 0,
@@ -871,6 +896,10 @@ passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
 for k, v in all_checks.items():
     print(f"  {'✅' if v else '❌'} {k}", flush=True)
+if len(turn_logs) == 0:
+    print("❌ 하드 FAIL: 실행 턴 0건 — 종합 판정 무효 (포인트 잔액/서버 상태 확인)", flush=True)
+elif len(turn_logs) < MAX_TURNS * 0.5:
+    print(f"⚠️ 요청 턴수 미달: {len(turn_logs)}/{MAX_TURNS} — 표본 부족, 게이트 판정 주의", flush=True)
 
 # ── 어휘 반복 계측 (2-B, arch/68 후속 — 판단용 상시 리포트, 게이트 아님) ──
 _all_narr = " ".join((t.get("narrative") or "") for t in turn_logs)
@@ -1296,3 +1325,7 @@ if _orig_model and args.model:
     print(f"모델 복원: {args.model} → {_orig_model}", flush=True)
 
 print(f"=== 플레이테스트 완료 ===", flush=True)
+
+# V0 하드 FAIL — 0턴 실행은 exit 1 (CI/자동화에서 침묵 통과 방지)
+if len(turn_logs) == 0:
+    sys.exit(1)
