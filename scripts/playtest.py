@@ -28,11 +28,14 @@ parser.add_argument("--scenario", default=None, help="시나리오 팩 ID (defau
 parser.add_argument("--agent", default=None, help="에이전트 플레이어 페르소나 (coercer|chatty|weirdo|brawler) — LLM이 서술을 읽고 의도 연속 플레이 + 위화감 자동 노트")
 parser.add_argument("--agent-model", default="openai/gpt-4.1-mini", help="에이전트 플레이어 LLM 모델 (OpenRouter)")
 parser.add_argument("--turn-delay", type=float, default=0, help="턴 간 대기 초 (인간 페이스 모사 — AUTONOMOUS 팩 시드/디렉터 검증용)")
+parser.add_argument("--new-account", action="store_true", help="정본 테스터 대신 새 계정 생성 (기본: playtest@test.com 재사용)")
 args = parser.parse_args()
 
 BASE = args.base
 MAX_TURNS = args.turns
-EMAIL = f"playtest_{int(time.time())}@test.com"
+# 정본 테스터 계정 재사용 (register 409 → login fallback). --new-account 시에만 새로 생성.
+# 어드민 집계 제외·정리 대상은 테스트 도메인 기준 (server/src/common/tester.util.ts).
+EMAIL = f"playtest_{int(time.time())}@test.com" if args.new_account else "playtest@test.com"
 PASSWORD = "Test1234!!"
 NICKNAME = "Tester"
 

@@ -253,3 +253,33 @@ admin/app/
 - [ ] 어드민 응답에서 `passwordHash` 등 민감 컬럼 select 제외 (Drizzle columns 명시)
 - [ ] 포인트 조정: 음수 잔액 방지 + 원장·캐시 원자성 (기존 PointsService 트랜잭션 재사용)
 - [ ] run abort: RUN_ENDED 메모리 통합 경로 준수 (불변식 20)
+
+---
+
+## 8. 관제 강화 (2026-07-23, server 99a32cc)
+
+소프트 베타 운영 중 요청된 7건. arch/87 §5.2 "차트 라이브러리 금지"는 이 사이클에서 **사용자 지시로 명시적 오버라이드**(recharts 도입).
+
+### 8.1 테스터 계정 개념 도입
+- **정본 판정**: `server/src/common/tester.util.ts` — 이메일 도메인 기준(`test.com`·`t.com`·`example.com`·`test.local`·`example.test`·`graymar.local`). 별도 컬럼 없이(마이그레이션 회피) `isTesterEmail()` + `TESTER_DOMAINS_SQL_ARRAY` 단일 정본. 실유저 도메인(gmail·naver·회사)은 절대 미포함.
+- **집계 제외**: `admin-stats.service.overview` 의 가입·활성 유저·활성 런·오늘 턴 4지표가 `notTesterSql(emailCol)` predicate 로 테스터를 제외(턴 집계는 실패율까지 실유저 기준). 대시보드에 "테스터 제외" 캡션.
+- **정리 실적**: 테스트 도메인 계정 1,706개 + 관련 데이터(런 1,650·턴 18,974·llm 로그 5,059·파티 47·캠페인 40 등)를 단일 트랜잭션 cascade 삭제. 실유저 15명만 잔존. 이후 정본 테스터 `playtest@test.com` fresh 재생성(비번 `Test1234!!`).
+- **스크립트 재사용**: `scripts/playtest.py` 기본값을 `playtest@test.com` register-or-login 재사용으로 전환(`--new-account` 시에만 신규). `party-playtest.py` 도 결정론적 `party_<name>@test.com` + login fallback.
+
+### 8.2 유저 관제 — 삭제·비밀번호
+- **하드 삭제**: `DELETE /v1/admin/users/:id`(reason 필수) → `AdminOpsService.cascadeDeleteUsers(userFilter)`. FK `onDelete` 미설정이라 역위상 순서 수동 삭제(트랜잭션): run children(run_id) → 타인 런 잔여 유저행 → 파티 children(party_id) → 타인 파티 잔여 유저행 → run_sessions → redeem_codes 체인 → 유저 직접소유(campaigns/hub_states/player_profiles/point_transactions) → parties → users. `run_sessions.party_id`·`campaign_id` FK 때문에 run_sessions 를 parties·campaigns 보다 먼저 삭제. **admin role 계정은 차단**(ForbiddenError). 클라: 이메일 재입력 2단 확인.
+- **비밀번호 강제 변경**: `POST /v1/admin/users/:id/password`(password ≥8 + reason) → auth 와 동일 bcrypt rounds 12. 클라: UserDetailPanel 모달. 왕복 검증(변경 후 새 비번 login 200).
+- 단일 유저 삭제와 대량 정리가 **동일 cascade 순서**를 공유(서비스 `cascadeDeleteUsers` = 정리 SQL 과 동형).
+
+### 8.3 런 관제 — 스턱 강제 종료
+스턱 런 배너 각 행에 **강제 종료** 버튼 추가(기존 `POST /v1/admin/runs/:id/abort` 재사용, RUN_ABORTED, reason 2단 확인). 스턱은 정의상 RUN_ACTIVE 라 abort 경로가 그대로 성립.
+
+### 8.4 LLM 비용 차트 + 원화
+- **차트**: `admin/components/LlmCostChart.tsx` — recharts ComposedChart(일 비용 막대 + 호출 라인 이중축) + **Brush 드래그 확대/축소** + 기간 선택(7/30/90일 refetch). LLM 관제 탭에 배치.
+- **원화 통일**: `admin/lib/format.ts` `USD_TO_KRW=1500`·`usdToKrw`·`fmtKrw`. 어드민의 모든 금액(대시보드 KPI·비용 차트·모델별 비용 테이블)을 ₩ 표기. 환율 1500원/$ 고정(프로젝트 정책).
+
+### 8.5 버그 리포트 보고자
+`BugReportService.findAll/findOne` 이 users leftJoin 으로 `reporterNickname`·`reporterEmail` 제공(`getTableColumns` 스프레드). 어드민 버그 테이블에 보고자 열 + 상세 메타에 이메일. 계정 삭제 시 null → "(삭제된 계정)".
+
+### 8.6 검증
+서버 build·lint 0·유닛(tester.util 7 + admin dto/ops 기존 8) + 라이브 왕복(overview 테스터 제외·bug-report 보고자·password 변경 후 login·cascade 삭제 후 404). 어드민 build·lint 0. 차트 브라우저 시각 확인은 admin JWT 필요 — 별도 QA 잔여.

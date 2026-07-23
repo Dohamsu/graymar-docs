@@ -65,7 +65,8 @@ class Player:
         self.token = ""
         self.user_id = ""
         safe_name = re.sub(r"[^a-zA-Z0-9]", "", name) or f"p{random.randint(100,999)}"
-        self.email = f"party_{safe_name}_{int(time.time())}_{random.randint(100,999)}@test.com"
+        # 정본 테스터 계정 재사용 (register 실패 시 login fallback). 어드민 집계 제외 도메인.
+        self.email = f"party_{safe_name.lower()}@test.com"
         self.nickname = name
 
     def api(self, method, path, body=None, timeout=30):
@@ -83,12 +84,17 @@ class Player:
         s, r = self.api("POST", "/auth/register", {
             "email": self.email, "password": PASSWORD, "nickname": self.nickname,
         })
-        if s == 201:
+        if s != 201:
+            # 정본 계정 재사용 — 이미 존재하면 login fallback
+            s, r = self.api("POST", "/auth/login", {
+                "email": self.email, "password": PASSWORD,
+            })
+        if s in (200, 201) and r.get("token"):
             self.token = r.get("token", "")
             self.user_id = r.get("user", {}).get("id", "")
             self.session.headers["Authorization"] = f"Bearer {self.token}"
             return True
-        print(f"  [{self.name}] 등록 실패: status={s} resp={r}", flush=True)
+        print(f"  [{self.name}] 인증 실패: status={s} resp={r}", flush=True)
         return False
 
     def create_solo_run(self, scenario_id):
