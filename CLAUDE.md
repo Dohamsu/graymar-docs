@@ -741,7 +741,7 @@ LLM_PROVIDER_REQUIRE_PARAMS=true      # penalty 미지원 프로바이더 배제
 | 07_living_world_guide.md | Living World 7 서비스 (LocationState/WorldFact/NpcSchedule/NpcAgenda/Consequence/Situation/PlayerGoal) 메서드·스키마 |
 | 08_party_guide.md | 파티 시스템 서비스·엔드포인트·DB 테이블·SSE 이벤트 |
 | 09_karnholt_asset_prompts.md | 카른홀트 팩 에셋 생성 프롬프트 (arch/80 팩 에셋 풀용) — 초상화/장소 파일명 짝지은 27종 + 공통 스타일 프리픽스 |
-| 10_star_sand_item_prompts.md | 별빛모래 아이템 이미지 프롬프트 — 소비품 5·핵심템 3·장비 2(10종) + 아이콘 공통 스타일. `client/public/items/`에 itemId 소문자.webp 배치(팩 에셋 풀과 별개 경로) |
+| 10_star_sand_item_prompts.md | 별빛모래 아이템 이미지 프롬프트(10종) + 아이콘 공통 스타일 + **부록: 새 아이템 추가 3층 프로세스**(서버 `items.json`·클라 `ITEM_CATALOG`·이미지 `client/public/items/itemId소문자.webp` — 팩 에셋 풀과 별개 경로, usableInHub는 effect 기준) |
 
 ## Working Language
 
