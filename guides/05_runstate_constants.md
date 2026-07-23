@@ -22,7 +22,9 @@ RunState {
   actionHistory: ActionHistoryEntry[]  // 고집 에스컬레이션 + NPC 만남 추적 (Fixplanv2 PR-A: primaryNpcId 추가)
 
   // NPC 시스템
-  npcStates: Record<string, NPCState>  // introduced, encounterCount, NpcEmotionalState, personalMemory 포함
+  npcStates: Record<string, NPCState>  // introduced, encounterCount, lastEncounterNodeId, NpcEmotionalState, personalMemory 포함
+  //   ⤷ lastEncounterNodeId: encounterCount per-visit 증가 dedup 키(LOCATION 노드 instance).
+  //     actionHistory 스캔 대신 명시 플래그 — 워커 LockSeed 백필 오염 면역 (arch/88 C)
   relationships: Record<string, Relationship>
   pbp: PlayerBehaviorProfile
 
