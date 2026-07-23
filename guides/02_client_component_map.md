@@ -84,9 +84,8 @@ components/ (70개)
 │   ├── PortraitCropModal.tsx      ← 초상화 크롭 (react-easy-crop, 4:5)
 │   ├── BugReportButton.tsx        ← 인게임 버그 리포트 트리거 버튼
 │   └── BugReportModal.tsx         ← 버그 리포트 + 클라 스냅샷/DOM 요약 전송
-├── layout/             ← 레이아웃 (2)
-│   ├── Header.tsx                 ← 데스크톱 HUD (HP/Stamina 바, 자동 숨김)
-│   └── MobileBottomNav.tsx        ← 모바일 하단 네비 (햄버거 메뉴)
+├── layout/             ← 레이아웃 (1)
+│   └── Header.tsx                 ← 데스크톱 HUD + 모바일 MobileHeader 햄버거 탭 메뉴 (자동 숨김)
 ├── battle/             ← 전투 화면 (4)
 │   ├── BattlePanel.tsx            ← 전투 패널 컨테이너 (적 카드 + 액션 바)
 │   ├── EnemyCard.tsx              ← 적 카드 (HP, 상태효과, 거리/각도, 클릭 타겟)
