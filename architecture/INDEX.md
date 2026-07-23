@@ -224,4 +224,5 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 콘텐츠(시드 데이터) 수정 | [[architecture/06_graymar_content|graymar content]] → `content/graymar_v1/`                            |
 | 클라이언트 UI 변경       | [[guides/02_client_component_map|client component map]] (+ `15`, `23`)                         |
 | 파티 기능                | [[architecture/24_multiplayer_party_system|multiplayer party system]] → server `party/` 모듈                    |
+| 포인트/과금 (소프트 베타) | [[architecture/85_point_system|point system]] → server `points/` 모듈 + `turns.chargeKey`                     |
 | 플레이테스트 이슈 회귀   | `fixplan_history.md` (중복 확인)                                           |
