@@ -37,6 +37,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/41_creative_combat_actions|creative combat actions]] — 창의 전투 5-Tier 분류 시스템(등록 프롭/즉흥 카테고리/서술 커버/환상 재해석/허공 응시) + PropMatcher + CombatService effects 통합 + LLM 조건부 재해석 블록. 서버 결정론 유지, LLM은 합리적 치환만.
 - [[architecture/42_combat_ui_buttonform|combat ui buttonform]] — 전투 UI 버튼 폼(적 카드 클릭 타겟 + 주요 5 버튼 + 특수 펼침 + 아이템 모달). 기존 17개 숫자 리스트 → 5~8 visible (-60%). 서버 로직 불변, 하위 호환 choiceId 유지.
 - [[architecture/65_economy_loop_v1|economy loop v1]] — 경제 루프 v1: 단서·진전 사례금(quest.json rewards — factGold/transitionGold, 총량 유한) + 정보 보류 턴 BRIBE 선택지 노출(bribeOpportunity) + BRIBE 비용 config 외부화(-6/-3). 부록 B: 엔딩 완주 평가 P1~P4(이동 상용구 KW_OVERRIDE·작별 잠금 해제·접두 융합 별칭·전환 장비 보상). 부록 C: 마커·대사 정합 마감(콜론 라벨 3-Tier). 부록 D: 엔딩 턴 피날레 디렉티브.
+- [[architecture/89_quest_reward_attribution|quest reward attribution]] — 사례금 귀속 재설계(65 후속): 지급 주체 없이 fact 발견 즉시 골드가 솟던 구조 폐기. C = quest.json `clientNpcId` 계약 + 이벤트 주체 명시 + 프롬프트에서 적립 이벤트 제외(LLM이 현장 NPC에 임의 귀속 — 실측 72턴 중 35%). B′ = `pendingQuestReward` 적립 → 정산 3트리거(의뢰인 대면·거점 복귀·런 종료). 거점 정산이 왕복 강요(불변식 47)와 미수령 사장을 동시에 차단.
 
 ### 3. 서버·데이터
 
@@ -181,7 +182,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 주사위/UX    | 22                                 | 구현됨              |
 | 엔딩/아카이브 | 39                                 | 구현됨 (Phase 1)    |
 | 소지품/아이템 | 40                                 | 구현됨 (UX 개선 + LLM 정합성) |
-| 경제         | **65**                             | 구현됨 (사례금 + BRIBE 정보 구매) |
+| 경제         | **65**, 89                         | 구현됨 (사례금 적립·정산 + BRIBE 정보 구매) |
 | 자율 서사    | **74(논의), 75(설계·P0~P8)**       | 구현됨·프로덕션 (karnholt_v1, P7/P8 후속 대기) |
 | 시장 대응    | **76**                             | 구현됨 (D6 저작 도구만 잔여) |
 | 컨텍스트 일관성 | Context Coherence Reinforcement | 적용됨              |

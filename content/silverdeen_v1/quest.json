@@ -1,6 +1,7 @@
 {
   "questId": "MAIN_SD_Q1_COLLAPSE",
   "title": "무너진 3번 갱도",
+  "clientNpcId": "NPC_SD_INNKEEP",
   "scale": "광산 회사 음모",
   "synopsis": "실버딘 은광 3번 갱도가 무너져 광부 열둘이 죽었다. 회사는 사고라 하지만, 마을에는 다른 소문이 돈다. 여관 주인 도른의 부탁으로 당신은 붕괴의 진상을 캐기 시작한다.",
   "states": [
