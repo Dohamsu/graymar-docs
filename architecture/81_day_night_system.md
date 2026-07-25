@@ -1,6 +1,6 @@
-# 81 — 밤낮 시스템 재설계 (2026-07-20)
+# 81 — 밤낮 시스템 재설계 (2026-07-20) + 2차 재설계 (2026-07-25)
 
-> 상태: ✅ 구현·배포. server `3f219f0`+`644af71`, client `4406aaa`.
+> 상태: ✅ 구현·배포. server `3f219f0`+`644af71`, client `4406aaa`. **2차: §2차 재설계 참조.**
 > 배경: "컨셉은 좋은데 맥락이 끊기고, 강제로 밤낮 전환되고, 특이사항이 안 느껴진다"는 사용자 체감.
 
 ## 진단 — 이중 시간계가 절반만 배선
@@ -46,3 +46,44 @@
 
 ## 잔여 (백로그)
 - 시간대별 **특이 이벤트/시그널** ("밤에만 벌어지는 일") — 콘텐츠 작업. 원 진단 ③의 미해결 축.
+
+---
+
+## 2차 재설계 (2026-07-25) — "시간은 이동과 시간이 걸리는 행동에서만 흐른다"
+
+> 배경: "대화 중에 시간대가 급격히 바뀌는 게 이상하다. 장소 이동이나 시간이 걸리는
+> 행동을 했을 때 시간이 흐르게 하라"는 소유자 지시.
+
+### 실측 진단 (배포 후 실유저 런 6개, phase 턴 129·전환 38회)
+
+1. **전환 과빈** — 평균 **3.4턴마다** 시간대 전환. 1차 실측(chatty 봇, 15턴 4tick)은
+   잡담 위주라 실유저(조사·이동 위주, 1tick/턴)와 괴리. 대화·조사 턴이 시계를 밀어
+   "대화 중 일몰"이 상시 발생.
+2. **이동은 시간이 0** — `MOVE_LOCATION: 2` 비용은 **죽은 코드**였다. 실제 이동 3경로
+   (HUB `go_*` / `performLocationTransition` / `returnToHubFlow`)는 전부
+   `applyNarrativeTicksAndRewards`(preStepTick) **이전에 조기 return** → 설계 의도와
+   정반대로 "대화하면 시간이 가고 이동하면 안 가는" 배선.
+3. **전환 상투구 anchor** — `transPhrase` 예문("해가 기울며 그림자가 길어지고" 등)을
+   LLM이 그대로 복제, 전환 38회 중 41히트. 불변식 50 위반 실측.
+
+### 구현 (server ca44b01 시점)
+
+| # | 변경 | 위치 |
+|---|------|------|
+| ① | **행동 시간표 재설계** — 대화 계열(TALK/PERSUADE/BRIBE/THREATEN/HELP/TRADE/OBSERVE) + 사교 발화 = **0(시간 정지)** / 시간이 걸리는 행동(INVESTIGATE/SEARCH/SNEAK/STEAL/FIGHT/SHOP) = 1 / REST = 2. 정본을 `turns/time-cost.ts`로 추출(유닛 4케이스) | `time-cost.ts` `computeTurnTimeCost` |
+| ② | **이동 시계 배선 복구** — `WorldTickService.advanceClockForTravel(ws, ticks)` 신설(경량: clock/phaseV2/day 전진 + timePhase 미러 + `recentPhaseTransition` 기록 + NPC 스케줄 재배치. **Incident tick·spawn·signal·packMeter는 의도적 제외** — 이동 SYSTEM 턴에 사건 스폰 부작용 방지). 직행 이동(LOC→LOC) `MOVE_TIME_COST=2`, HUB 경유 편도 `TRAVEL_LEG_TIME_COST=1`(왕복 합 = 직행과 등가, 2배 벌어짐 방지). 유닛 6케이스 | `world-tick.service.ts` + turns.service 이동 3경로 |
+| ③ | **전환 상투구 anchor 제거** — `transPhrase` 예문 삭제, "이 장소·상황의 구체 사물로 표현(상투구 반복 금지)" 추상 지시로 교체 | `prompt-builder.service.ts` [시간대 전환] |
+
+이동 턴 전환 시 `recentPhaseTransition`이 도착 턴 LLM 컨텍스트로 소비되어
+"도착하니 해가 저물어 있었다"류 서술이 자연 발생한다.
+
+### 검증 (chatty 12턴 + 10턴 실런, 게이트 PASS)
+
+- 대화 턴(TALK/PERSUADE/사교) 동안 phase 불변 — **대화 중 전환 0회** (T4~T7 DAY 고정 등).
+- 전환은 전부 이동·조사 턴에서만 발생. 시계 산수 기대값=실측 완전 일치(clock 10, clock 4).
+- HUB 왕복(장소→HUB→장소) = 총 2tick = 직행과 등가 확인.
+- 전체 유닛 1,583 green(신규 10 포함), 스냅샷 17 통과.
+
+### 불변 (갱신)
+- 시간 진행 소유자 = **WorldTickService** (`preStepTick` — 행동 턴 + `advanceClockForTravel` — 이동 턴). 그 외 경로에서 globalClock/phaseV2 변경 금지.
+- **대화로는 시간이 흐르지 않는다** — 대화 계열·사교 발화 timeCost 0. 시간대 전환은 이동·시간 소요 행동에서만.
