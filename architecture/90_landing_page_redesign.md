@@ -162,7 +162,7 @@
 | 단계 | 범위 | 산출물 | 리스크 |
 |------|------|--------|--------|
 | **P1 카피 교체** ✅ 2026-07-25 | 기존 구조 유지, 텍스트·CTA·섹션 헤더·FAQ 무료 문구만 교체. v2 톤(§3.1)으로 히어로·기능 카드 6장(4→6, lg 3열)·전 섹션 헤더 한국어화·nav 한국어화·"무료" 문구 교정(FAQ+JSON-LD+keywords) 적용. 빌드·lint 0·데스크톱/모바일 렌더 실측 | page.tsx + MobileNav.tsx | 0 (즉시 배포 가능) |
-| **P2 구조 재배치 + 카탈로그** | 섹션 순서 변경, 시나리오 4팩 카드 섹션 신규 (기존 배너 에셋 재활용) | 신규 `landing/ScenarioCatalog.tsx` | 소 — 이미지 에셋 존재 확인 필요 |
+| **P2 구조 재배치 + 카탈로그** ✅ 2026-07-25 | 섹션 재배치(Hero→영상→카탈로그→기능→실제화면→스토리→가이드→FAQ→CTA) + ScenarioCatalog 신규(4팩 카드, `getScenarioBannerImage` 정본 재사용, silverdeen 그라데이션 fallback). 별빛모래·카른홀트 카피는 scenario.json 실측 기반(별고래 꿈 전이·위조 주화/실종 광부). 빌드·lint 0·양 뷰포트 렌더 실측. client 0414e52 | `landing/ScenarioCatalog.tsx` + page.tsx | 소 — 이미지 에셋 존재 확인 필요 |
 | **P3 게임플레이 재현** | CSS 애니메이션 목업 섹션 | 신규 `landing/GameplayDemo.tsx` | 중 — 디자인 공수. 타이핑 keyframes |
 | **P4 사회적 증명** | 실데이터 수치 주입 (ISR revalidate 1h) | admin overview 공개용 경량 endpoint 또는 빌드 스크립트 | 중 — 서버 API 1개 추가 (`GET /v1/stats/public` 등, 캐시 필수) |
 
