@@ -101,6 +101,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/23_dialogue_ui_redesign|dialogue ui redesign]] — 대화 UI 고도화(메신저 형태, NPC 카드 연출, 홑따옴표 강조).
 - [[architecture/68_uiux_audit_v1|uiux audit v1]] — 헤드리스 신규 유저 경로 실사 리뷰 + 6건 수정(인물 도감 조우 필터+이어하기 복원, 모바일 상태줄/인물 탭, 호외 모달 타이밍, "(으)로" 조사, 개발자 정보 dev 게이트). 부록 A: C-2~C-7 폴리싱(어포던스·배너·뮤트 팔레트·라벨·lucide·체크박스). 부록 B: C-1 거점 사랑방 개방(LOC_TAVERN/LOC_SD_INN hubAccessible, 서버 0줄). 부록 C: 자유 입력 발견성(코치마크+placeholder 예시+튜토리얼). 부록 D: NanoChoiceNpcFix(nano 선택지 sourceNpcId 오염 서버 검증 게이트, 버그 5f31d803). 부록 E: 상점 노출 동선(구매 dead path 부활 + ui.shops 클라 소비 — 칩/진열/구매 버튼). 부록 F: 3사이클 완주 프로세스 + 아크 커밋 HUB 명시 분기(routeCommitChoices)·봇 확장·어휘 계측·도착 디렉티브 완화. 부록 G: 선술집 BG 초상화 6종(비올라 여성 개명·헬가 gender 정정). 부록 H: 오웬 별칭 반복(저장 직전 최종 정리 + 우호 상주 appearanceCount 조기 소개). 백로그 전량 해소.
 
+- [[architecture/90_landing_page_redesign|landing page redesign]] — 랜딩 리디자인 P1~P4 (2026-07-25~26). 상용 6종+서사 게임 카피 6종 실측 벤치마크 → 카피 톤 원칙 5(§1.2). P1 카피 v2 전면 교체·P2 섹션 재배치+시나리오 카탈로그 4팩·P3 게임플레이 CSS 재현 루프·P4 사회적 증명(`GET /v1/stats/public` + LiveStats ISR). 프로덕션 검증 완료.
+
 ### 7. 멀티플레이
 
 - [[architecture/24_multiplayer_party_system|multiplayer party system]] — 파티 Phase 1+2+3 통합 설계(CRUD/초대/SSE 채팅/로비/동시 턴/통합 판정/3인칭 서술/이동 투표/보상 분배/런 통합). 구현 API는 CLAUDE.md Endpoint 표와 server `party/` 모듈 참조.
@@ -177,7 +179,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝 + nano 감사) |
 | 이벤트 엔진  | 34, **43, 46**                     | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체, 28은 archive 배경) |
 | NPC 결정/품질 | **48, 49, 51, 47, 55, 72**        | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭 + 반응 권한 통합, 50은 폐기) |
-| UI/클라      | 15, 23, **42, 68**                 | 구현됨 (UI/UX 실사 리뷰 + 부록 A~M) |
+| UI/클라      | 15, 23, **42, 68, 90**             | 구현됨 (UI/UX 실사 리뷰 + 랜딩 리디자인 P1~P4) |
 | 파티         | 24                                 | 구현됨 (Phase 1~3)  |
 | 주사위/UX    | 22                                 | 구현됨              |
 | 엔딩/아카이브 | 39                                 | 구현됨 (Phase 1)    |

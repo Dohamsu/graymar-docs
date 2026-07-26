@@ -626,6 +626,7 @@ OPENROUTER_MANAGEMENT_KEY=            # 어드민 실제 과금 대조용 — Op
 | **어드민 콘솔 (2026-07-23)** | arch/87 — 서버 admin/ 모듈(관제 API 12종: overview KPI·llm-cost·points 시계열·유저 검색/조정·런 목록/스턱/abort/retry·failures·health) + 하이브리드 AdminGuard(x-admin-token OR JWT+users.role, @AdminEndpoint 정본=가드+감사 로그 admin_audit_logs) + **보안 결함 2건 봉쇄**(settings/llm PATCH·bug-reports 목록/상세/PATCH 일반 유저 개방) + 별도 앱 graymar-admin(4번째 레포, Vercel graymar-admin, 5탭 UI). 헤드리스 QA 5탭 검증, 잔여=admin.dimtale.com DNS·GitHub 앱 접근 1클릭 | ✅ 완료 |
 | **비-graymar 팩 정합 + 모바일 UX (2026-07-23)** | 별빛모래 실플레이 결함 일괄 — ① equip/unequip/useItem 팩 스코프(enterScenario) 누락 → getItem 기본팩 조회 → 고유 아이템(EQ_SS_*) 장착·사용 거부. 세 메서드 스코프 추가(규약: 런 팩 콘텐츠 참조 진입점은 enterScenario 필수) ② 팩 프리셋 초상화 — character.portrait가 adaptPresetsForScenario 목록(graymar 6종)에 없는 SS_*/KH_* 미표시 → 통합맵 PRESET_PORTRAITS 조회 ③ 아이템 3층(이미지 client/public/items + ITEM_CATALOG + 서버 items.json, 별빛모래 10종, guides/10 프로세스) ④ 모바일 — 서술 스크롤 flex min-h-0 누락(overflow 무력화) 수정·장비 해제 탭 Header 햄버거 배선·무명 인물vsBACKGROUND 단역 아바타 차별(DialogueBubble)·MobileBottomNav orphan 삭제. server 8651b01 + client 6커밋 — architecture/86 | ✅ 완료 |
 | **S5 엔딩 동선 + encounterCount 수정 (2026-07-23)** | 활성 star_sand 런 분석 도출 2건 — **B** S5 종착 상태 최종 선택(arc 커밋) 동선 부재: star_sand에 arc_events.json 자체가 없어 routeCommitChoices 빈 배열 → arc_commit 선택지 미노출 → 모든 런 currentRoute=null 무커밋(NONE) 엔딩(3루트 엔딩 콘텐츠 사장). 콘텐츠 arc_events.json 신규(해방/봉인/전이) + QuestProgression.isTerminalState() + 종착·미커밋 시 거점 복귀 pendingQuestHint(아크 자산 없는 팩 무영향). 팩 계약 신설: arcRouteEndings 정의 팩은 routeCommitChoices 필수. **C** encounterCount 전 NPC 0 고착(관계 깊이 티어링 무동작): 증가 게이트 actionHistory.some(primaryNpcId===npcId)를 워커 LockSeed(서술 화자 백필)가 오염 → NPC가 환경 이벤트 턴에 화자로 먼저 등장 시 증가 영구 스킵. per-visit 키를 nodeInstanceId 명시 플래그(NPCState.lastEncounterNodeId)로 교체 → isFirstEncounter/재회·shouldIntroduce·NpcReactionDirector 복원. 검증: star_sand 12턴 IREN/ED enc=1(dedup 정상). server 24b781e + content 1b1cc90 — architecture/88 | ✅ 완료 |
+| **랜딩 리디자인 P1~P4 (2026-07-25~26)** | arch/90 — 상용 6종(F&F·Hidden Door·크랙 등)+서사 게임 카피 6종(Disco·산나비 등) 실측 벤치마크 → 카피 톤 원칙 5(대칭 슬로건 금지·구체 사물·동사 비틀기·구어 마무리·시스템은 벌어지는 일) 확립. P1 카피 전면 교체(기능 카드 4→6, 영문 헤더 한국어화, '전부 무료'→free-to-start 교정) + P2 섹션 재배치·시나리오 카탈로그 4팩 카드 + P3 게임플레이 재현(CSS 12초 루프: 입력→1d6 판정→서술→NPC 대사) + P4 사회적 증명(`GET /v1/stats/public` 무인증·10분 캐시·테스터 제외 + LiveStats ISR 1h, 실측 1,494턴·230런, 소표본 fallback). 프로덕션 dimtale.com 검증 | ✅ 완료 |
 
 ## Document Status (설계 문서 현황)
 
@@ -653,7 +654,7 @@ OPENROUTER_MANAGEMENT_KEY=            # 어드민 실제 과금 대조용 — Op
 | input_processing_pipeline_v1.md | ⚠️ 부분 | 전투 입력만 구현 |
 | node_routing_v2.md | ✅ 구현됨 | DAG 24노드 + 조건부 분기 |
 
-### architecture/ — 통합 아키텍처 (72 md + INDEX)
+### architecture/ — 통합 아키텍처 (73 md + INDEX)
 
 | 파일 | 상태 | 비고 |
 |------|------|------|
@@ -731,6 +732,7 @@ OPENROUTER_MANAGEMENT_KEY=            # 어드민 실제 과금 대조용 — Op
 | 85_point_system.md | ✅ 구현됨 (미커밋) | 포인트 시스템 — 코드 발급→충전→채팅 5p 차감(전 턴 일괄·다회용·가입 50p). DB 4종 + PointsService + API + 워커 D5 환불 2경로 + 클라(💎 Header·PointsModal·402 유도). 소프트 베타 비용 통제. 라이브 8경로 검증, 커밋 잔여 (2026-07-23) |
 | 88_endgame_arc_commit_encounter_fix.md | ✅ 구현됨 | S5 엔딩 동선(arc 커밋) 복구 + encounterCount 추적 수정 — B: star_sand arc_events.json 누락으로 최종 선택 미노출→3루트 엔딩 사장, 콘텐츠 신규 + 종착 상태 거점 복귀 힌트(isTerminalState). 팩 계약: arcRouteEndings 정의 팩은 routeCommitChoices 필수. C: 워커 LockSeed 백필이 encounterCount 게이트 오염→전 NPC 0 고착, nodeInstanceId per-visit 플래그(lastEncounterNodeId)로 교체·관계 깊이 티어링 복원. star_sand 12턴 검증 (2026-07-23) |
 | 89_quest_reward_attribution.md | ✅ 구현됨 | 사례금 귀속 재설계 — 지급 주체 없이 fact 발견 즉시 골드가 솟던 구조를 폐기. C: quest.json `clientNpcId` 계약(3팩) + 이벤트 텍스트 주체 명시 + 프롬프트 적립 이벤트 제외(LLM이 현장 NPC에 임의 귀속 — 실측 72턴 중 35%가 "그 자리 NPC가 돈 주머니를 건넴", THREATEN 턴 포함). B′: `pendingQuestReward` 적립 → 정산 3트리거(의뢰인 대면·거점 복귀·런 종료). 거점 정산이 왕복 강요(불변식 47 충돌)와 미수령 사장을 동시에 막는 안전판. HUD 미정산 표기 (2026-07-25) |
+| 90_landing_page_redesign.md | ✅ 구현됨 | 랜딩 리디자인 P1~P4 — 상용·게임 카피 벤치마크(§1.2 톤 원칙 5) + 카피 v2 + 섹션 재배치 + ScenarioCatalog/GameplayDemo/LiveStats + 공개 stats API. 운영 메모: Vercel env 확인·로컬 .env.production.local 함정 (2026-07-25~26) |
 | 87_admin_console.md | ✅ 구현됨 | 어드민 콘솔 — users.role+AdminGuard 하이브리드+@AdminEndpoint(감사 로그)+관제 API 12종+별도 앱(graymar-admin 레포·Vercel). 보안 결함 2건 봉쇄(settings/llm PATCH·bug-reports 어드민 게이트). QA 실측 함정: raw SQL timestamp 문자열·llmError jsonb 렌더·빈 쿼리 422 (2026-07-23) |
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 — ① equip/unequip/useItem 팩 스코프 누락(getItem 기본팩 조회→고유 아이템 장착·사용 불가) 수정 ② 팩 프리셋 초상화 통합맵 PRESET_PORTRAITS 조회(adaptPresetsForScenario 미포함 SS_*/KH_* 미표시 해소) ③ 아이템 3층(이미지·ITEM_CATALOG·서버 정의, guides/10) ④ 모바일(서술 스크롤 min-h-0·장비 해제 탭 Header 배선·무명vsBG 아바타 차별·MobileBottomNav orphan 삭제). 별빛모래 실플레이 결함 일괄 (2026-07-23) |
 | 79_prompt_token_optimization.md | ✅ 구현됨 | 측정 기반 프롬프트 예산 — P1 회고 1,556턴(soft 문체 11k 절벽) → 예산 10k → 4파트(재시도 스킵·시스템 -62%·NPC 클러스터 압축·총량 백스톱). avg -31%·절벽 턴 0%·게이트 7런 10/10·회귀 0. 대화 턴 대명사 기저는 크기 무관 확정 → arch/78 백로그 (2026-07-19) |
