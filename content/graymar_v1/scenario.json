@@ -16,13 +16,13 @@
   },
   "world": {
     "settingLine": "중세 판타지 왕국",
-    "regionSummary": "그레이마르 7개 지역 자유 탐험. 선술집이 거점. Heat(경계도) 변동. 시간대별 분위기 차이."
+    "regionSummary": "그레이마르 7개 지역 자유 탐험. 거점을 축으로 순환. Heat(경계도) 변동. 시간대별 분위기 차이."
   },
   "hub": {
     "locationId": "LOC_TAVERN",
-    "name": "잠긴 닻 선술집",
-    "returnLabel": "'잠긴 닻' 선술집으로 돌아간다",
-    "returnHint": "선술집에서 정보를 정리하고 다른 지역을 탐색한다",
+    "name": "그레이마르 거점",
+    "returnLabel": "거점으로 돌아간다",
+    "returnHint": "거점에서 정보를 정리하고 다른 지역을 탐색한다",
     "defaultLocationId": "LOC_MARKET"
   },
   "prologue": {
@@ -107,7 +107,7 @@
     },
     {
       "key": "hub_system",
-      "value": "HUB 거점 — '잠긴 닻' 선술집. 항만 한구석의 허름하지만 안전한 선술집. 이곳에서 시장/경비대/항만/빈민가로 이동하며 임무를 수행한다.",
+      "value": "HUB 거점 — 그레이마르 거점. 항만 도시의 길목으로, 특정 건물이 아니라 지역들을 잇는 지점이다. 이곳에서 시장/경비대/항만/빈민가/'잠긴 닻' 선술집으로 이동하며 임무를 수행한다.",
       "importance": 0.8,
       "tags": [
         "HUB",

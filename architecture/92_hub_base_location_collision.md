@@ -1,0 +1,282 @@
+# 92. 거점(HUB) ↔ 거점 장소 정체성 충돌 — 조사 및 수정 계획
+
+**상태**: ✅ 구현됨 (A안 — 2026-07-26)
+**발견 경로**: 별빛모래(star_sand_v1) 실플레이 — "꿈잠 여관"이 거점과 장소로 이중 존재
+**영향 범위**: 4팩 전부 (증상 가시성만 팩별로 다름)
+**작성**: 2026-07-26
+
+---
+
+## 1. 증상 (실측)
+
+### 1.1 실런 턴 시퀀스 — run `c4c934d8`(star_sand_v1, 47턴)
+
+```
+T9  LOCATION CHOICE go_hub      → "꿈잠 여관으로 발걸음을 돌린다."   (부두에서 출발)
+T10 HUB      SYSTEM             → "거점으로 돌아왔다."               (currentLocationId = null)
+T11 HUB      CHOICE go_ss_inn   → "꿈잠 여관으로 향한다."            ← 꿈잠 여관에서 꿈잠 여관으로 이동
+T12 LOCATION SYSTEM             → "꿈잠 여관에 도착했다."
+...
+T24 LOCATION CHOICE go_hub      → "꿈잠 여관으로 발걸음을 돌린다."   ← 꿈잠 여관 안에서
+```
+
+### 1.2 선택지 라벨 (T13, 플레이어가 여관 안에서 이렌과 대화 중)
+
+```json
+{ "id": "nano_13_0", "label": "그녀가 말하는 '잠결에 같은 곳을 가리키는' 이야기를 더 묻는다" },
+{ "id": "nano_13_1", "label": "그녀의 말에 대해 조용히 듣거나 주변을 살핀다" },
+{ "id": "nano_13_2", "label": "그녀에게서 정보를 얻기 위해 찻잔을 살펴본다" },
+{ "id": "go_hub",    "label": "'꿈잠 여관'으로 돌아간다" }     ← 여관 안에서 여관으로 복귀
+```
+
+### 1.3 LLM 서술 오염 (T10 / T11)
+
+| 턴 | 실제 상태 | 서술 |
+|----|----------|------|
+| T9 | 부두 → 이탈 | "…부두의 소란스러운 소음을 뒤로하고 발걸음을 옮기자…" |
+| T10 | HUB 도착 (장소 없음) | "성에 갈라진 돌길… **거리는 낮빛에 젖어 있다. 극야의 해안이라고 믿기지 않을 만큼 밝은 햇살이 등골목 사이로 쏟아져 내린다**" |
+| T11 | 여관으로 출발 | "**비릿한 소금기와 고래기름 냄새가 섞인 부두의 공기를 뒤로하고** 발걸음을 옮긴다" ← 2턴 전에 이미 떠난 부두를 다시 떠남 |
+| T12 | 여관 내부 | "고래기름 등불이 낮은 불꽃으로 깜빡인다…" |
+
+플레이어가 읽는 흐름: **부두 이탈 → 거리 도착 → 부두 이탈(재) → 여관 내부**.
+게다가 T10은 극야(수 개월간 해가 뜨지 않는 설정)에 "밝은 햇살"을 서술했다.
+
+### 1.4 프롬프트 층 확인
+
+- **T10(HUB)**: `[현재 장소]` 블록 **자체가 없음** — `currentLocationId=null`이라 장소 앵커 0.
+  그런데 이벤트 `kind='MOVE'`("거점으로 돌아왔다") 때문에 `isMoveOnly` 도착 디렉티브가 걸린다:
+  > ⚠️ **새 장소 도착** 장면입니다. … 이 장면은 오직 **이 장소의 환경·분위기 묘사**만으로 씁니다
+
+  **장소가 없는데 그 장소의 환경을 묘사하라고 명령**하는 상태 → LLM은 지시를 따라
+  "돌길·등골목·밝은 햇살"을 창작한다. D5의 근본 원인은 이름이 아니라 **이 디렉티브**다.
+- **T11(HUB, go_ss_inn)**: `[현재 장소] 현재 위치: LOC_SS_INN` / `[현재 장면 상태] 현재 위치: 꿈잠 여관, 이번 방문 1턴째` —
+  이미 목적지가 현재 장소로 세팅됨. 그런데 `[최근 대화 이력]`은 `[턴 9] go_hub → [턴 11] go_ss_inn`으로 **T10이 빠져 있어**,
+  LLM에게는 "부두를 떠나는 선택 2회 연속"으로 보인다.
+
+---
+
+## 2. 근본 원인
+
+**"거점"의 정체성이 두 갈래로 갈라져 있다.**
+
+| 층 | 거점의 정의 |
+|----|------------|
+| 엔진 | `currentLocationId = null` 인 **추상 상태** — 이동 메뉴 + Heat 감쇠 + 사례금 정산 + 아크 커밋 + actionHistory 리셋 |
+| 콘텐츠 (`scenario.json hub.name`) | **거점 장소 그 자체** ("꿈잠 여관") |
+| 클라 (`SCENARIO_UI_LABELS.hubName`) | 팩마다 다름 — graymar/silverdeen은 "…거점"(추상), star_sand/karnholt는 장소명(구체) |
+
+`arch/68 부록 B`(C-1 거점 사랑방 개방, A안)가 거점 장소를 `hubAccessible: true`로 정식 LOCATION으로 개방했을 때,
+**이름·프레이밍 분리를 하지 않았다**. 그 결과 같은 고유명이 두 상태에 동시 부착됐고,
+HUB 이동 목록에 거점 자기 자신이 남아 "자기 자신으로 이동" 선택지가 생겼다.
+
+당시 부록 B는 C안("HUB 자체를 장소화 — 순환 설계 파괴")을 명시적으로 기각했으므로,
+**두 상태를 유지하는 것은 설계 의도**다. 문제는 두 상태가 **같은 이름을 쓰는 것**이다.
+
+graymar에서 증상이 덜 보였던 이유는 클라 라벨만 "그레이마르 거점"으로 마스킹했기 때문이며,
+서버 `go_hub` 라벨은 `"'잠긴 닻' 선술집으로 돌아간다"`로 **동일한 결함을 갖는다** (선술집 안에서도 표시됨).
+
+---
+
+## 3. 결함 목록
+
+| # | 층 | 결함 | 위치 |
+|---|----|------|------|
+| **D1** | 콘텐츠 | `scenario.json hub.name` / `returnLabel` / `returnHint` 가 거점 장소의 고유명을 그대로 사용 | 4팩 `scenario.json` |
+| **D2** | 서버 선택지 | HUB 이동 목록에 거점 자기 자신 포함 → 거점에서 "거점으로 향한다" | `scene-shell.service.ts:616` + `content-loader.getHubAccessibleLocations()` |
+| **D3** | 서버 선택지 | LOCATION 선택지 말미에 `go_hub` 무조건 부착 → 거점 장소 안에서 "거점으로 돌아간다" | `scene-shell.service.ts:723,842` + `llm-worker.service.ts:2903,3633,3769,4281` |
+| **D4** | 클라 | `SCENARIO_UI_LABELS.hubName` 이 장소명과 동일 (star_sand·karnholt) → HUB 헤더가 "꿈잠 여관" | `client/src/data/presets.ts:175-178` |
+| **D5** | 프롬프트 | **HUB 복귀 턴에도 "새 장소 도착" 디렉티브가 걸려 없는 장소의 환경 묘사를 강제** → LLM이 거점을 임의 창작 (극야에 "밝은 햇살" 세계관 위반 실측) | `prompt-builder.service.ts:1582` (`isMoveOnly`) |
+| **D6** | 프롬프트 | `recentTurns` 가 `inputType='SYSTEM'` 을 전량 제외 → 도착 턴이 이력에서 사라져 직전 장소 이탈 서술 재생 | `context-builder.service.ts:1836` |
+| **D7** | 서버 텍스트 | HUB 복귀 summary/event 하드코딩 `"거점으로 돌아왔다. 도시의 소식을 정리한다."` — 해안 마을에 '도시' (불변식 45 위반) | `node-transition.service.ts:236,244` |
+| **D8** | 콘텐츠 | `locations.json tags: ["HUB"]` 는 코드 미사용 死데이터, `hubAccessible`과 의미 중복 | silverdeen·karnholt·star_sand |
+| **D9** | 동선 | 거점 장소 진입에 4턴 소비(go_hub → HUB 도착 → go_* → 도착) + 시계 2tick | 구조적 (B안에서만 해소) |
+
+### 팩별 D1/D4 현황
+
+| 팩 | `hub.name` | `hub.returnLabel` | 클라 `hubName` | 거점 장소명 | 가시 충돌 |
+|----|-----------|-------------------|---------------|------------|:--------:|
+| graymar_v1 | 잠긴 닻 선술집 | '잠긴 닻' 선술집으로 돌아간다 | 그레이마르 거점 | 잠긴 닻 선술집 | 서버 라벨만 |
+| silverdeen_v1 | 잿빛 램프 여관 | '잿빛 램프' 여관으로 돌아간다 | 실버딘 거점 | 잿빛 램프 여관 | 서버 라벨만 |
+| **star_sand_v1** | **꿈잠 여관** | **'꿈잠 여관'으로 돌아간다** | **꿈잠 여관** | **꿈잠 여관** | **전층** |
+| **karnholt_v1** | **무너진 곡괭이** | **'무너진 곡괭이'로 돌아간다** | **무너진 곡괭이** | **무너진 곡괭이** | **전층** |
+
+---
+
+## 4. 수정 방향 3안
+
+### A안 — 이름·프레이밍 분리 (거점 = 추상 공간으로 통일)
+
+거점은 "장소들 사이의 거리/교차로"이고, 거점 장소(여관)는 그 안의 한 장소로 확정한다.
+graymar 클라 라벨이 이미 채택한 모델을 전 층으로 확장.
+
+| 단계 | 내용 | 파일 |
+|------|------|------|
+| A-1 | `hub.name` → 지역 거점 표기("극야해안 거점"), `returnLabel` → "거점으로 돌아간다", `returnHint` 동조. `hub.locationId`는 유지(NPC 기본 소재지 fallback) | 4팩 `scenario.json` |
+| A-2 | 클라 `SCENARIO_UI_LABELS.hubName` 4팩 "…거점"으로 통일 | `client/src/data/presets.ts` |
+| A-3 | HUB 복귀 턴의 도착 디렉티브를 **"이동 중 경유"** 프레이밍으로 분기 — 없는 장소의 환경 묘사 강제를 제거. 새 블록·새 앵커 없음 (§4.1 참조). **프롤로그 턴 제외** | `prompt-builder.service.ts:1582` |
+| A-4 | `recentTurns` 에 이동/도착 SYSTEM 턴을 1줄 요약으로 포함 (전량 개방은 노이즈 → `MOVE`/`HUB_RETURN` 태그 보유 턴만). D6 해소 | `context-builder.service.ts` |
+| A-5 | HUB 복귀 summary/event 텍스트를 `hub` 메타 파생으로 (`'도시'` 하드코딩 제거) | `node-transition.service.ts` |
+| A-6 | `timePhase` 설명 하드코딩(`DAY: '해가 밝게 비치고 시장/거리가 활기참.'`)을 팩 오버라이드 허용 — 극야 팩은 DAY도 어둡다 | `prompt-builder.service.ts:1925` + `scenario.json` |
+| A-7 | `locations.json` 死데이터 `tags:["HUB"]` 정리 | 3팩 |
+
+- **해소**: D1·D2·D3·D4·D5·D6·D7·D8 (D2/D3은 라벨 모순이 사라져 논리적으로 정합 — 거점↔여관은 서로 다른 두 지점)
+- **미해소**: D9 (거점 장소 진입 4턴)
+- **코드 변경량**: 서버 3파일 소규모 + 클라 1파일 + 콘텐츠 4팩
+- **리스크**: 낮음. 프롬프트 스냅샷 테스트 갱신 필요. `hub.name` 변경이 `returnToHubFlow` systemText·프롬프트에 전파됨(의도된 변경)
+
+#### 4.1 명명 방식 — 추상형 채택, 산문 앵커 필드 미도입
+
+초안에서 "구체형 `hub.sceneName`(예: '부두로 갈라지는 성에 낀 길목')이 LLM 앵커로 강하다"고
+적었으나 **철회한다**. 엔진은 LOCATION 턴에도 산문 설명을 주입하지 않기 때문이다:
+
+```
+[현재 장소] 현재 위치: LOC_SS_INN (이 장소에 있는 인물: 이렌, 나하트, 헬룬)
+```
+
+`locations.json` 의 `description`/`nightDescription` 은 메인 서술 프롬프트에 **들어가지 않는다**
+(`context-builder.buildWorldSnapshot` — ID + 등장 인물뿐). 나머지는 LLM 이 장소명에서 렌더한다.
+HUB 에만 구체 산문을 주입하는 것은 **불변식 50 · `feedback_concrete_vocab_anchor`**
+(구체 어휘 주입 = anchor, 저모델이 그대로 복제 반복)를 어기는 패턴 이탈이다.
+
+→ **필드 추가 0개.** `hub` 블록의 표기 3개(`name`/`returnLabel`/`returnHint`)만 교체하고,
+D5 는 A-3(디렉티브 분기)로 해소한다.
+
+### B안 — 거점 장소 통합 (arch/68 C안 재검토)
+
+`go_hub` 를 `performLocationTransition(hub.locationId)` 로 바꿔 거점 = 거점 장소 하나로 만든다.
+
+- **해소**: D1~D9 전부 (D9 포함 — 여관 진입 즉시)
+- **이관 필요 목록** (HUB 노드에만 붙어 있는 자산):
+  - `HEAT_DECAY_ON_HUB_RETURN` Heat 감쇠 / `actionHistory` 리셋 / `combatWindowCount` 리셋 (`world-state.returnToHub`)
+  - arch/89 사례금 정산 트리거 ② `HUB_RETURN`
+  - `buildHubChoices` — 이동 목록 + `arc_commit_*` + Heat 액션(`contact_ally`/`pay_cost`)을 LOCATION 선택지로 병합
+  - 클라: `HubInputNotice`(HUB 자유입력 차단 배너), `NodeTransitionScreen` "거점 복귀", `LocationHeader` 거점 복귀 버튼
+  - arch/84 파티 리더 대표 CHOICE 통과 조건(`nodeType === 'HUB'` 화이트리스트, `party.controller.ts:479,492`)
+  - `prompt-builder` `isHub` 분기 / `environmentTags: ['HUB','GRAYMAR']`
+- **리스크**: 높음. arch/68이 "순환 설계 파괴"로 기각한 안. HUB 리듬(이동=턴 소모) 소멸 → 데드라인 경제 재밸런싱 필요. 파티 경로 회귀 위험
+- **부수 효과**: 거점에서 자유 입력 가능 → arch/68 C-1의 원래 목표를 정면 달성
+
+### C안 — HUB 이동 목록에서 거점 자기 자신만 제외
+
+`getHubAccessibleLocations()` 에서 `hub.locationId` 필터.
+
+- **단독 채택 불가**: 거점 장소 진입 경로가 사라져 arch/68 부록 B(사랑방 개방)가 무효화되고,
+  거점 상주 NPC(이렌·오웬 등)와의 대화 및 arch/89 정산 트리거 ①(의뢰인 대면)이 **도달 불능**이 된다.
+- B안의 부분집합으로만 의미가 있다(go_hub가 거점 장소에 착지하는 경우).
+
+---
+
+## 5. 검증 계획 (안 확정 후)
+
+### 자동
+- `scripts/playtest.py --turns 12` × star_sand_v1 + graymar_v1(회귀) — 거점 왕복 포함 경로 강제
+- 유닛: `getHubMeta()` 라벨 / `buildHubChoices` 라벨 중복 0 / 프롬프트 `[거점]` 블록 스냅샷 / `recentTurns` MOVE 포함
+- 프롬프트 스냅샷 갱신 (`__snapshots__/prompt-builder.snapshot.spec.ts.snap`)
+
+### 실측 확인 항목
+1. HUB 헤더 라벨 ≠ 거점 장소명
+2. HUB 선택지에 "(거점명)으로 향한다" 중복 0건
+3. 거점 장소 내부 선택지의 `go_hub` 라벨이 장소명과 불일치
+4. HUB 턴 서술의 세계관 정합 — 극야 팩에서 "햇살/밝은 낮" 0건
+5. `go_hub` 직후 `go_*` 턴에서 직전 장소 이탈 재서술 0건
+
+---
+
+## 6. 결정 (2026-07-26)
+
+| 항목 | 결정 | 근거 |
+|------|------|------|
+| 채택 안 | **A안** | 문제는 설계 오류가 아니라 이름 중복. arch/68 이 두 상태 유지를 이미 채택했고, B 는 Heat 감쇠·정산 트리거·아크 커밋·파티 리더 CHOICE 이관 범위가 큼 |
+| 거점 명명 | **추상형 "<지역> 거점"**, `sceneName` 필드 미도입 | §4.1 — 엔진이 LOCATION 에도 산문을 안 넣는다. HUB 만 예외로 넣으면 불변식 50 위반 |
+| D5 수정 방식 | **디렉티브 분기** (블록 신설 아님) | §1.4 — 근본 원인이 "없는 장소의 환경 묘사 강제" |
+| A-6 (시간대 하드코딩) | **포함, 독립 커밋** | 같은 파일을 만지므로 함께. 단 원인·검증 범위가 달라 되돌리기 쉽게 분리 |
+| D9 (거점 진입 4턴) | **미해소 — B안 백로그** | 이름 분리 후 모든 이동이 HUB 경유 2턴으로 동등해져 "거점만 손해" 체감이 소멸. 턴 수 자체 단축은 B안 필요 |
+
+### 확정 명명
+
+| 팩 | `hub.name` | `hub.returnLabel` |
+|----|-----------|-------------------|
+| graymar_v1 | 그레이마르 거점 | 거점으로 돌아간다 |
+| silverdeen_v1 | 실버딘 거점 | 거점으로 돌아간다 |
+| karnholt_v1 | 카른홀트 거점 | 거점으로 돌아간다 |
+| star_sand_v1 | 극야해안 거점 | 거점으로 돌아간다 |
+
+---
+
+## 7. 구현 로그 (2026-07-26)
+
+### 변경 목록
+
+| 단계 | 파일 | 내용 |
+|------|------|------|
+| A-1 | 4팩 `scenario.json` | `hub.name`/`returnLabel`/`returnHint` 교체. `locationId`·`defaultLocationId` 불변 |
+| A-1′ | 4팩 `scenario.json` | **조사 중 추가 발견** — `world.regionSummary`("선술집이 거점")와 L0 `themeMemories.hub_system`("HUB 거점 — '잠긴 닻' 선술집")이 LLM 에게 "거점 = 그 건물"이라고 계속 가르치고 있었다. 라벨만 고치면 의미 층에서 충돌이 재생산된다 → 4팩 전부 "거점은 특정 건물이 아니라 장소들을 잇는 지점" 프레이밍으로 교체 + 거점 장소를 이동 목적지 목록에 명시 |
+| A-2 | `client/src/data/presets.ts` | `SCENARIO_UI_LABELS.hubName` 4팩 통일 |
+| A-3 | `prompt-builder.service.ts` | `isMoveOnly` 도착 디렉티브를 `isHub` 분기 — 거점은 "이동 중" 프레이밍 |
+| A-4 | `context-builder.service.ts` | `selectRecentTurnEntries()` 정본 추출 + MOVE 이벤트 SYSTEM 턴 복원. 렌더링은 `prompt-builder` 에서 `(이동) …` 1줄 |
+| A-5 | `node-transition.service.ts` | HUB 복귀 summary/event 를 hub 메타 파생 (`'도시의 소식'` 제거) |
+| A-6 | `prompt-builder.service.ts` · `system-prompts.ts` · `carry-over.ts` · star_sand `scenario.json` | `world.phaseHints` 팩 오버라이드 신설. 선언 팩은 `[현재 시간대]` 본문 + 시스템 프롬프트 P1-C 모순 예시를 추상 규칙으로 교체 (극야에 "낮에 달빛 금지"는 틀린 지시) |
+| — | `content-loader.service.ts` · `fake-scenario-meta.ts` | `DEFAULT_HUB_META` fallback 동조 |
+
+### 신규 테스트
+
+- `content-loader.scenario.spec.ts` — **팩 계약 기계 검증**: `hub.name`/`returnLabel`/`returnHint` 가 거점 장소명을 포함하지 않을 것 (graymar·silverdeen 2케이스). 이 토픽의 재발을 콘텐츠 층에서 막는다.
+- `context-builder.recent-turns.spec.ts` — `selectRecentTurnEntries` 6케이스 (MOVE SYSTEM 보존 / 비-MOVE SYSTEM 제외 / 비-SYSTEM 미부착 / 시간순·5건 창 / 도착 턴 창 점유 / 빈 입력)
+- `system-prompts.phase-hints.spec.ts` — A-6 양 분기 3케이스 (미선언 팩 문면 보존 포함)
+
+### 게이트
+
+`서버 build ✅ / lint 0 ✅ / 유닛 1,603 passed·0 failed ✅ / 스냅샷 17 ✅ / 클라 build ✅`
+
+스냅샷 갱신 2회 — ① A-3 디렉티브(HUB fixture 1건, **1줄**) ② A-1′ `regionSummary`(전 17건, **1줄씩**).
+두 번 모두 갱신 전에 diff 를 눈으로 확인해 의도 외 변경이 없음을 검증했다. A-6 은 graymar 가
+`phaseHints` 미선언이라 스냅샷 무변동(문면 보존 설계가 실제로 동작함을 확인).
+
+### 실측 검증 (§5 체크리스트)
+
+star_sand 최종 런 `18495167` / graymar 회귀 런 `2cbd420a` (각 12턴):
+
+| # | 항목 | 결과 |
+|---|------|------|
+| 1 | HUB 헤더 ≠ 거점 장소명 | ✅ "극야해안 거점" vs 장소 "꿈잠 여관" |
+| 2 | HUB 이동 목록 중복 | ✅ 8개 목적지 중 거점명과 겹치는 항목 0 |
+| 3 | 거점 장소 내부 `go_hub` 라벨 | ✅ `"거점으로 돌아간다"` (구: `"'꿈잠 여관'으로 돌아간다"`) |
+| 4 | 극야 정합 — 햇살/햇빛/밝은 낮 | ✅ **0건** (A-6 직전 런 `8bf9f59b` 에는 T10 "낮은 햇살" 존재) |
+| 5 | `go_hub` 직후 `go_*` 턴의 직전 장소 이탈 재서술 | ✅ 해소 — T10 이 "검은얼음 시장의 어귀를 벗어나자"(구) → **"돌과 나무가 섞인 여관 건물이 시야에 들어온다"**(신) |
+
+턴 시퀀스 (구 → 신):
+
+```
+구: T9  go_hub    "꿈잠 여관으로 발걸음을 돌린다."
+    T10 HUB       "거점으로 돌아왔다."
+    T11 go_ss_inn "꿈잠 여관으로 향한다."      ← 여관에서 여관으로
+신: T8  MOVE      "극야해안 거점으로 돌아가기로 한다."
+    T9  HUB       "극야해안 거점으로 돌아왔다."
+    T10 go_ss_inn "꿈잠 여관으로 향한다."      ← 거점에서 여관으로 (정상)
+```
+
+### 구현 중 발생한 실수 1건 (기록)
+
+A-4 최초 구현에서 `.where(...)` 블록을 통째로 교체하며 **`eq(turns.runId, runId)` 필터까지 삭제**해,
+`recentTurns` 가 전 런에서 조회됐다 (다른 런의 T43~T47 이 프롬프트에 주입된 것을 실런 프롬프트
+덤프에서 발견). **유닛 1,594건이 전부 통과했다** — 드리즐 쿼리 체인을 검증하는 테스트가 없어
+SQL 스코프 회귀는 유닛으로 잡히지 않는다(기존 갭, 이번에 도입된 것 아님). 실런 프롬프트 대조가
+유일한 감지 경로였다. 재발 방지로 순수 로직을 `selectRecentTurnEntries` 정본으로 분리했으나,
+**쿼리 스코프 자체는 여전히 유닛 미커버**로 남는다.
+
+### V9 게이트 실패에 관하여
+
+star_sand·graymar 최종 런 모두 `V9_quality ❌` 이나 **이번 변경과 무관**하다. 근거:
+
+- 실패 유형이 변경 전후 동일한 일반 어휘 반복 — 변경 전 `'책상'×6`·`'서류'×6`, 변경 후 `'좌판'×5`·`'상자'×6`
+- 오늘 변경 **이전** 리포트에서도 이미 2회 실패 (`164031`, `165120`)
+- arch/78·82 어휘 반복 백로그의 알려진 flaky 센서 (임계: 반복 이슈 3건+)
+
+나머지 11개 게이트는 두 팩 모두 통과.
+
+### 잔여
+
+- **D9** (거점 장소 진입 4턴) — B안 백로그. 이름 분리로 모든 이동이 HUB 경유로 동등해져 체감은 해소
+- **D8** (`locations.json tags:["HUB"]` 死데이터) — 미착수, 저순위
+- `phaseHints` 는 star_sand 만 선언. karnholt(산악 안개)·silverdeen 은 기본값으로 충분하다고 판단해 미선언 (필요 시 콘텐츠 3줄)
+- 커밋·푸시 미수행 (명시 요청 시)
