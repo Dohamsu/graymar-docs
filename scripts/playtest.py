@@ -18,6 +18,8 @@ parser = argparse.ArgumentParser(description="Playtest runner")
 parser.add_argument("--turns", type=int, default=20, help="최대 턴 수 (default: 20)")
 parser.add_argument("--preset", default="DESERTER", help="프리셋 (default: DESERTER)")
 parser.add_argument("--gender", default="male", help="성별 (default: male)")
+parser.add_argument("--character-name", default=None,
+                    help="캐릭터 이름 (arch/91 통성명·재회 호명 경로 검증용. 미지정 시 이름 없는 런)")
 parser.add_argument("--base", default="http://localhost:3000/v1", help="서버 URL")
 parser.add_argument("--output", default=None, help="결과 JSON 파일 경로")
 parser.add_argument("--loc-turns", type=int, default=4, help="장소당 체류 턴 수 (default: 4)")
@@ -284,6 +286,8 @@ if args.dry_run:
 # 2. Create Run
 # ═══════════════════════════════════════
 _run_body = {"presetId": args.preset, "gender": args.gender}
+if args.character_name:
+    _run_body["characterName"] = args.character_name
 if args.scenario:
     _run_body["scenarioId"] = args.scenario
 status, resp = api("POST", "/runs", _run_body)
