@@ -381,11 +381,11 @@ arch/78·82 트랙 소관.
 - 라이브: star_sand 10턴 ×2 (12/12 PASS, 계측 라인에 별칭 `이름×6`이 게이트 제외로 표기 —
   팩 인지가 실제로 작동함을 확인) · graymar 10턴 (V9 `장부×8` 심각도 발동 = 진짜 양성).
 
-### 미해결 (이번 런에서 관찰)
+### 미해결 (이번 런에서 관찰) → §10에서 해소
 
 graymar 회귀 런에서 **V10 실패** 1건: `T10 이벤트 NPC(NPC_GUARD_CAPTAIN) ≠ 서술 화자
 (NPC_TOBREN) [EVT_GUARD_OPP_REWARD]`. graymar 는 `_CONTENT_DIR` 이 구 하드코딩 경로와
-**동일**하므로 이번 변경과 무관한 게임측 발생(arch/68 부록 L 유형). 별건으로 남긴다.
+**동일**하므로 센서 변경과 무관한 게임측 발생. **§10에서 근본 수정.**
 
 ### 남은 판단거리
 
@@ -400,3 +400,83 @@ graymar 회귀 런에서 **V10 실패** 1건: `T10 이벤트 NPC(NPC_GUARD_CAPTA
 - **D8** (`locations.json tags:["HUB"]` 死데이터) — 미착수, 저순위
 - `phaseHints` 는 star_sand 만 선언. karnholt(산악 안개)·silverdeen 은 기본값으로 충분하다고 판단해 미선언 (필요 시 콘텐츠 3줄)
 - 커밋·푸시 미수행 (명시 요청 시)
+
+---
+
+## 10. V10 분열 근본 수정 — 부재 NPC 화자 승격 (2026-07-26)
+
+§9 검증 런에서 남긴 V10 실패를 추적한 결과, 단순 "이벤트 NPC ≠ 서술 화자"가 아니라
+**그 장소에 있지도 않은 인물이 화자로 승격**되는 결함이었다.
+
+### 실측
+
+플레이어 입력 **"수상한 곳을 조사한다"** @ `LOC_GUARD` (경비대 지구):
+
+```
+actionContext: { eventId: EVT_GUARD_OPP_REWARD,
+                 primaryNpcId: NPC_TOBREN,
+                 npcResolutionSource: EVENT_PRIMARY }
+이벤트 콘텐츠 정의: payload.primaryNpcId = NPC_GUARD_CAPTAIN
+ws.npcLocations:   NPC_TOBREN = LOC_DOCKS_WAREHOUSE   ← 경비대에 없음
+서버 로그:         [NpcOverride] Player targeted NPC_TOBREN (was: NPC_GUARD_CAPTAIN)
+```
+
+서술 결과 — 창고 관리자가 경비대 지구에 등장하고, **항구 감각까지 끌고 왔다**:
+
+> 손목의 가죽 끈을 초조하게 만지작거리는 손끝이 미세하게 떨린다. 주변에서는 **눅눅한
+> 타르 냄새와 짠 바닷바람**이 섞여 들어오고 …
+> @[수상한 관리인] "내 이름은 **단정한 장교** 하위크라고 하네. 이 근처 창고는 내가 관리하고 있거든."
+
+(자기소개가 2회 나오고 그중 하나는 **다른 NPC의 별칭**('단정한 장교' = NPC_CAPTAIN_BREN)과
+융합됐다 — 잘못된 화자가 세워진 뒤 마커·소개 계열이 연쇄로 흔들린 2차 증상.)
+
+### 원인 — 두 결함의 곱
+
+`turns.service` 의 "플레이어 대상 NPC 오버라이드" 블록:
+
+1. **별칭을 토큰 단위로 부분 매칭.** Pass 3 이 `(.+?)(?:을|를)\s` 로 `"수상한 곳"` 을 뽑고,
+   `NPC_TOBREN.unknownAlias = "수상한 관리인"` 의 토큰 `['수상한','관리인']` 중
+   **`'수상한'` 하나로 매칭이 성립**했다. 관형 수식어는 변별력이 없고, graymar 만 해도
+   `수상한/조용한/단정한/조용한` 4명이 공유한다. 즉 **"수상한 곳"(장소)이 "수상한
+   관리인"(사람)으로** 읽혔다.
+2. **후보가 팩 전체 NPC.** `getAllNpcs()` 를 그대로 순회해 재실 여부를 보지 않았다.
+   그래서 추론이 틀렸을 때 "없는 사람이 화자로 등장"까지 곧장 갔다.
+
+### 수정 — `npc-override.core.ts` 정본 + 2겹 방어
+
+| 겹 | 규칙 |
+|----|------|
+| 직접 원인 | 별칭 매칭 키를 **핵심 명사(마지막 토큰)** 로 제한 — `"수상한 관리인"` → `"관리인"` |
+| 일반 방어 | 추론 매칭(Pass 2~4) 후보를 **현재 장소 재실 NPC** 로 제한 (`presentNpcs` ∪ `npcLocations`) |
+
+**Pass 1(실명·별칭 전체 일치)은 장소 무관하게 유지**한다 — 플레이어의 명시 지목이며
+Player-First(arch/49)를 존중해야 한다. 재실 정보가 비어 있으면 추론 매칭은 무동작(보수적).
+
+인라인 블록은 `src/turns/npc-override.core.ts` 로 추출했다 (기존 `witness-reaction.core`·
+`run-state-apply.core` 패턴).
+
+### 검증
+
+- 유닛 `npc-override.core.spec.ts` **18케이스** — 회귀 3(수식어 오매칭) + 위치 게이트 3 +
+  Pass 1 존중 2 + 정상 지목 4 + 경계 3 + `aliasHeadNoun` 3. 실제 콘텐츠 값 사용.
+  "위치 게이트가 아니라 핵심 명사 규칙이 막는지"를 분리 검증하는 케이스 포함.
+- 전체 스위트 **1,621 passed / 0 failed** · lint 0
+- **라이브 재현**: 동일 입력·동일 장소에서 화자가 `NPC_MAIREL`(경비대 실재실)로 해결.
+  `SIT_ACTIVITY_NPC_MAIREL_1 / EVENT_PRIMARY` — 토브렌 미승격 확인.
+- playtest graymar 12턴 **12/12 PASS** (V10 정합 양호)
+
+### 부수 발견 — 화자·장소 정합 전수 조사
+
+DB 전수(LOCATION 화자 턴 246건, 스케줄 보유 NPC 한정):
+**스케줄상 올 수 없는 장소의 화자 21건 = 8.5%**.
+
+| 해결 경로 | 건수 | 성격 |
+|-----------|-----:|------|
+| EVENT_PRIMARY | 4 | **이번 수정 대상** (오버라이드가 payload를 덮은 뒤 읽힌 경로) |
+| STRONG_EXPLICIT_NAME / CHOICE_EXPLICIT | 5 | 플레이어 명시 호명 — Player-First, 의도된 동작(보존) |
+| CONVERSATION_LOCK / CONTEXT_CONTINUITY | 7 | 위 명시 호명이 대화 잠금으로 이어진 것 |
+| (미기록) | 5 | 경로 불명 |
+
+최대 클러스터(`NPC_SS_LUOR @ LOC_SS_INN` 8회)는 플레이어가 직접 호명한 뒤 잠금이
+이어진 사례로, 이번 수정이 **일부러 보존한** 경로다. 다만 "부재 NPC를 이름으로 불렀을 때
+그 자리에 소환할 것인가"는 별개의 설계 판단으로 남는다 — 후속 토픽.
