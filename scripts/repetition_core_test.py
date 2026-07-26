@@ -1,0 +1,98 @@
+"""
+repetition_core 유닛 (arch/92 §8) — 의존성 없이 실행:  python3 scripts/repetition_core_test.py
+
+구 인라인 구현에서는 게이트 **실패** 경로를 실런 없이 확인할 수 없었다.
+여기서 4대 결함 각각과 양쪽 게이트 경로를 합성 입력으로 고정한다.
+"""
+
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import repetition_core as rc  # noqa: E402
+
+_fails = []
+
+
+def check(name, cond, detail=""):
+    if cond:
+        print(f"  ✅ {name}")
+    else:
+        print(f"  ❌ {name}  {detail}")
+        _fails.append(name)
+
+
+def turns_of(*narratives):
+    """서술 리스트 → (narratives, turnNos) — 턴 번호는 1부터."""
+    return list(narratives), list(range(1, len(narratives) + 1))
+
+
+print("[stem_word] 조사 분리")
+check("'소리가' → '소리'", rc.stem_word("소리가") == "소리", rc.stem_word("소리가"))
+check("'장부의' → '장부'", rc.stem_word("장부의") == "장부", rc.stem_word("장부의"))
+check("'고개를' → '고개'", rc.stem_word("고개를") == "고개", rc.stem_word("고개를"))
+check("'으로' 우선 ('불빛으로'→'불빛')", rc.stem_word("불빛으로") == "불빛", rc.stem_word("불빛으로"))
+# 2자 미만이 되면 원형 유지 — '바다'를 '바'로 깎지 않는다
+check("'바다' 유지", rc.stem_word("바다") == "바다", rc.stem_word("바다"))
+check("'그녀는' 유지 아님('그녀')", rc.stem_word("그녀는") == "그녀", rc.stem_word("그녀는"))
+
+print("\n[결함 ①] 윈도우 중복 계수 제거 — 한 반복은 1건")
+# '찻잔'이 T1에 6회. 3턴 윈도우가 T3까지 밀리며 같은 6회를 3번 본다.
+n, t = turns_of("찻잔 찻잔 찻잔 찻잔 찻잔 찻잔.", "조용하다.", "조용하다.", "조용하다.", "조용하다.")
+hits, _ = rc.detect(n, t, rc.build_stopwords(), [])
+check("'찻잔' 1건으로 dedupe", len([h for h in hits if h.word == "찻잔"]) == 1, str(hits))
+check("카운트는 최대값 6", hits and hits[0].count == 6, str(hits))
+
+print("\n[결함 ②] 조사 변형이 한 stem 으로 합산")
+n, t = turns_of("상자를 열었다. 상자에 손을 넣었다. 상자의 바닥. 상자가 흔들린다. 상자와 벽. 상자로 향한다.", "", "")
+hits, _ = rc.detect(n, t, rc.build_stopwords(), [])
+check("'상자' 6회로 합산", any(h.word == "상자" and h.count == 6 for h in hits), str(hits))
+
+print("\n[결함 ③] 대명사는 게이트에서 제외")
+n, t = turns_of("그녀는 웃었다. 그녀의 손. 그녀가 돌아본다. 그녀를 본다. 그녀는 말한다. 그녀도 웃는다.", "", "")
+hits, _ = rc.detect(n, t, rc.build_stopwords(), [])
+check("대명사 감지 0건", not any("그녀" in h.word for h in hits), str(hits))
+
+print("\n[결함 ④] 팩 지명은 게이트에서 제외 (콘텐츠 파생)")
+place = rc.extract_place_words([{"name": "꿈잠 여관", "shortName": "여관", "moveKeywords": ["여관", "꿈잠"]}])
+n, t = turns_of("여관 여관 여관 여관 여관 여관.", "", "")
+hits, _ = rc.detect(n, t, rc.build_stopwords(place), [])
+check("'여관' 제외됨", not any(h.word == "여관" for h in hits), str(hits))
+check("지명 미선언 팩에선 감지됨", any(
+    h.word == "여관" for h in rc.detect(n, t, rc.build_stopwords(), [])[0]))
+
+print("\n[콘텐츠 별칭] 게이트 제외 + 계측 분리")
+n, t = turns_of("이렌 이렌 이렌 이렌 이렌 이렌.", "", "")
+hits, alias_hits = rc.detect(n, t, rc.build_stopwords(), ["이렌"])
+check("게이트 대상 0건", len(hits) == 0, str(hits))
+check("계측에는 남음", any(h.word == "이렌" and h.count == 6 for h in alias_hits), str(alias_hits))
+
+print("\n[게이트] 심각도 경로 — 단일 단어 8회+")
+severe_hits = [rc.Hit("찻잔", rc.SEVERE_COUNT, 3)]
+failed, severe, too_many = rc.evaluate_gate(severe_hits)
+check("심각 1건만으로 FAIL", failed is True)
+check("severe 로 분류", len(severe) == 1 and not too_many)
+# 구 구현 회귀: 리스트 길이(1)를 임계(5)와 비교하면 통과해 버렸다
+check("건수 비교로 새지 않음", not (len(severe_hits) <= rc.MAX_DISTINCT and not failed))
+
+print("\n[게이트] 건수 경로 — 서로 다른 단어 6종+")
+many_hits = [rc.Hit(f"단어{i}", 5, i) for i in range(rc.MAX_DISTINCT + 1)]
+failed, severe, too_many = rc.evaluate_gate(many_hits)
+check("건수 초과로 FAIL", failed is True and too_many and not severe)
+
+print("\n[게이트] 통과 경로 — baseline 은 통과시킨다")
+base_hits = [rc.Hit("좌판", 6, 3), rc.Hit("소리", 6, 5)]
+failed, severe, too_many = rc.evaluate_gate(base_hits)
+check("6회 2종은 PASS (만성 baseline)", failed is False, f"severe={severe} many={too_many}")
+check("임계 경계 5종은 PASS", rc.evaluate_gate([rc.Hit(f"w{i}", 5, i) for i in range(rc.MAX_DISTINCT)])[0] is False)
+check("빈 입력 PASS", rc.evaluate_gate([])[0] is False)
+
+print("\n[경계] 짧은 런 — 윈도우보다 턴이 적으면 무동작")
+n, t = turns_of("찻잔 찻잔 찻잔 찻잔 찻잔 찻잔.", "조용하다.")
+check("2턴 런에서 예외 없이 0건", rc.detect(n, t, rc.build_stopwords(), [])[0] == [])
+
+print("\n" + "=" * 52)
+if _fails:
+    print(f"실패 {len(_fails)}건: {', '.join(_fails)}")
+    sys.exit(1)
+print("전체 통과")

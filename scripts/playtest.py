@@ -671,6 +671,17 @@ if v8_issues:
 else:
     print(f"  ✅ 정합성 양호", flush=True)
 
+# ── 어휘 반복 정본 (arch/92 §8) ─────────────────────────────────────────────
+#   순수 로직은 scripts/repetition_core.py — 인라인으로 두면 게이트 실패 경로를
+#   실런 없이 검증할 수 없다(스크립트가 top-level 실행). 대명사 상수는 V9 반복
+#   센서와 D5 지칭 집계가 이 정본을 함께 참조한다 (구: D5 지역 정의라 V9이
+#   대명사를 게이트로 이중 처벌).
+import repetition_core as _rep
+_PRONOUN_OPENERS = _rep.PRONOUN_OPENERS
+_PRONOUN_STEMS = _rep.PRONOUN_STEMS
+_stem_word = _rep.stem_word
+
+
 # V9: 서술 품질 (반복/하오체 미마킹 + sanitize 오탐 + CHOICE 대화 맥락)
 print(f"\n[V9] 서술 품질:", flush=True)
 v9_issues = []
@@ -717,10 +728,14 @@ for t in turn_logs:
 #   실루엣 처리(arch/46), (b) 알려진 NPC 대사가 무명 처리 — 결함. 직전 문맥에
 #   알려진 NPC 이름/별칭이 있으면 (b) 의심으로만 경고, 없으면 계수하지 않는다.
 _npc_alias_pool = []
+# [arch/92 §8] 활성 팩 기준으로 로드 — 구 코드는 graymar_v1 경로 하드코딩이라
+# 별빛모래·카른홀트 런에서 **다른 팩의 NPC 별칭 풀**로 판정하고 있었다
+# (V9-c 무명 대사 의심 + D5-2 CONTENT_ALIAS 분류가 전부 오염).
+_PACK_ID = args.scenario or "graymar_v1"
+import os as _os
+_CONTENT_DIR = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", _PACK_ID)
 try:
-    import os as _os
-    _npcs_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", "graymar_v1", "npcs.json")
-    with open(_npcs_path, encoding="utf-8") as _f:
+    with open(_os.path.join(_CONTENT_DIR, "npcs.json"), encoding="utf-8") as _f:
         _npcs_raw = json.load(_f)
     def _collect_aliases(o):
         if isinstance(o, dict):
@@ -769,21 +784,47 @@ for t in turn_logs:
             )
         # 알려진 NPC 미등장 → 즉흥 배경 인물의 의도된 실루엣 — 계수 안 함
 
-# 단어 반복 검출 (3턴 윈도우에서 같은 2글자+ 단어가 5회+)
-for i in range(2, len(turn_logs)):
-    window_narrs = [turn_logs[j].get("narrative", "") for j in range(max(0, i-2), i+1)]
-    combined = " ".join(window_narrs)
-    # @마커 내부 텍스트 제거 (NPC 별칭이 마커로 반복 카운트되는 것 방지)
-    combined = re.sub(r"@\[[^\]]+\]", "", combined)
-    words = re.findall(r"[가-힣]{2,4}", combined)
-    from collections import Counter
-    word_counts = Counter(words)
-    # 일반 조사/어미 제외
-    COMMON_WORDS = {"당신", "당신은", "당신의", "당신이", "당신을", "그는", "그의", "있다", "없다", "있었", "하고", "에서", "으로", "이다", "했다", "하는", "것이", "있는", "위에", "앞에", "속에", "조용한", "낡은", "어두운", "시장", "경비", "경비대", "항만", "부두", "선술집", "골목", "창고"}
-    for word, cnt in word_counts.most_common(3):
-        if cnt >= 5 and word not in COMMON_WORDS and len(word) >= 2:
-            v9_issues.append(f"T{turn_logs[i]['turn']}: '{word}' {cnt}회 반복 (3턴 내)")
-            break
+# ── 단어 반복 검출 (3턴 윈도우, arch/92 §8 재작성) ──────────────────────────
+#   구 구현의 4대 결함을 함께 고친다:
+#   ① 윈도우별 이슈 적재 → 한 반복이 최대 3윈도우에 걸려 단일 반복이 3이슈로
+#      계상됐다(임계 <=2 즉시 초과). **단어 단위로 dedupe**하고 최대 카운트만 남긴다.
+#   ② `[가-힣]{2,4}` 고정폭 절단 → 조사가 안 떨어져 감지 토큰 43종 중 53%가
+#      조사 종결 어절('소리가'·'장부의'·'고개를'). 어절을 넓게 잡아 _stem_word로 정규화.
+#   ③ 대명사('그녀는'·'그가')를 게이트로 이중 처벌 → arch/78 D5-1이 이미 측정·수용 중.
+#   ④ 제외 목록이 graymar 지명 하드코딩 → 활성 팩 콘텐츠에서 파생.
+#   NPC 실명·콘텐츠 별칭은 게이트에서 빼되 계측에는 남긴다(3턴 대화 중 이름 5~8회는 정상).
+_REP_PLACE_WORDS = set()
+try:
+    with open(_os.path.join(_CONTENT_DIR, "locations.json"), encoding="utf-8") as _lf:
+        _REP_PLACE_WORDS = _rep.extract_place_words(json.load(_lf))
+except Exception:
+    pass  # 로드 실패 시 지명이 반복으로 잡힐 수 있음 (보수적)
+
+_rep_hits, _rep_alias_hits = _rep.detect(
+    [t.get("narrative", "") for t in turn_logs],
+    [t["turn"] for t in turn_logs],
+    _rep.build_stopwords(_REP_PLACE_WORDS),
+    _npc_alias_pool,
+)
+_rep_gate_failed, _rep_severe, _rep_too_many = _rep.evaluate_gate(_rep_hits)
+
+for _w, _c, _tn in _rep_severe:
+    v9_issues.append(f"T{_tn}: '{_w}' {_c}회 반복 (3턴 내) — 심각")
+if _rep_too_many and not _rep_severe:
+    v9_issues.append(
+        f"반복 어휘 {len(_rep_hits)}종 (임계 {_rep.MAX_DISTINCT}종 초과): "
+        + ", ".join(f"'{h.word}'×{h.count}" for h in _rep_hits[:6])
+    )
+# 계측 — 게이트 통과 여부와 무관하게 항상 보고 (만성 추이 관찰용)
+if _rep_hits or _rep_alias_hits:
+    _rep_line = ", ".join(f"{h.word}×{h.count}" for h in _rep_hits[:8])
+    _alias_line = ", ".join(f"{h.word}×{h.count}" for h in _rep_alias_hits[:4])
+    print(
+        f"  · [계측] 반복 어휘 {len(_rep_hits)}종"
+        + (f": {_rep_line}" if _rep_line else "")
+        + (f" · 콘텐츠 별칭(게이트 제외) {_alias_line}" if _alias_line else ""),
+        flush=True,
+    )
 # NPC 대사 미마킹 (따옴표 없는 NPC 어체 문장에 @마커 없음)
 # 다양한 어체 지원: 하오체(~소/~오), 해요체(~요), 합쇼체(~다/~까), 반말(~야/~해), 해체(~지/~거든)
 for t in turn_logs:
@@ -810,7 +851,9 @@ print("\n[V10] 선택지-서술 NPC 정합:", flush=True)
 v10_issues = []
 _event_npc_map = {}
 try:
-    _ev_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", "graymar_v1", "events_v2.json")
+    # [arch/92 §8] 활성 팩 기준 — 구 graymar_v1 하드코딩은 비-graymar 런에서
+    # V10(이벤트-서술 NPC 정합) 게이트를 남의 팩 이벤트로 판정하게 만들었다.
+    _ev_path = _os.path.join(_CONTENT_DIR, "events_v2.json")
     with open(_ev_path, encoding="utf-8") as _f:
         _ev_raw = json.load(_f)
     _ev_list = _ev_raw.get("events", _ev_raw) if isinstance(_ev_raw, dict) else _ev_raw
@@ -892,7 +935,10 @@ all_checks = {
     "V6_resolve": resolve_count > 0,
     "V7_no_leak": len(v7_issues) == 0,
     "V8_npc_match": len(v8_issues) == 0,
-    "V9_quality": len([i for i in v9_issues if "반복" in i]) <= 2,
+    # [arch/92 §8] 구 `len([i for i in v9_issues if "반복" in i]) <= 2` 는
+    # ① 이슈 문면 substring 매칭이라 계측 항목이 게이트로 새고 ② 슬라이딩 윈도우
+    # 중복 계수로 단일 반복이 3이슈가 되던 구조. 판정을 불린 하나로 확정한다.
+    "V9_quality": not _rep_gate_failed,
     "V10_choice_npc_match": len(v10_issues) == 0,
     "V11_narrative_present": len(v11_issues) == 0,
 }
@@ -1028,11 +1074,9 @@ else:
 #      NON_ALIAS(즉흥 지칭·일반 명사 후보 — 사람 지칭 여부는 리포트 검토로 판정).
 #      판단용 상시 리포트이며 게이트 아님. 별칭 풀은 V9-c의 _npc_alias_pool 재사용
 #      (로드 실패 시 전량 NON_ALIAS로 보고됨에 유의).
-_PRONOUN_OPENERS = {
-    "그는", "그가", "그의", "그를", "그도", "그에게",
-    "그녀는", "그녀가", "그녀의", "그녀를", "그녀도", "그녀에게",
-}
-_PRONOUN_STEMS = {"그", "그녀", "그것", "당신", "자신", "우리", "서로", "모두", "누군가", "무언가"}
+# [arch/92 §8] _PRONOUN_OPENERS / _PRONOUN_STEMS 는 V9 앞 공용 상수 블록으로
+# 이동 — V9 반복 센서와 정본을 공유한다 (구: D5 지역 정의라 V9이 대명사를
+# 게이트로 이중 처벌).
 _d5_sent_total = 0
 _d5_pronoun_initial = 0
 _d5_opener_counts = Counter()
@@ -1196,6 +1240,9 @@ npc_met = sum(1 for n in npc_states.values() if n.get("encounterCount", 0) > 0)
 # ═══════════════════════════════════════
 output = {
     "meta": {
+        # [arch/92 §8] 실행 팩 기록 — 없으면 사후 리포트 분석에서 어느 팩 런인지
+        # 알 수 없어 콘텐츠 파생 판정(별칭·지명)을 재현할 수 없다 (77런 회고 시 실측).
+        "scenario": _PACK_ID,
         "preset": args.preset,
         "gender": args.gender,
         "maxTurns": MAX_TURNS,
