@@ -699,7 +699,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | input_processing_pipeline_v1.md | ⚠️ 부분 | 전투 입력만 구현 |
 | node_routing_v2.md | ✅ 구현됨 | DAG 24노드 + 조건부 분기 |
 
-### architecture/ — 통합 아키텍처 (83 md + INDEX)
+### architecture/ — 통합 아키텍처 (84 md + INDEX)
 
 > 아래는 **파일명·상태·한 줄 성격**만. 도메인별 1~2문단 요약과 상호 참조 맵은
 > [[architecture/INDEX|INDEX]] 가 정본이다 (같은 설명을 두 곳에 두지 않는다).
@@ -783,6 +783,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 92_hub_base_location_collision.md | ✅ 구현됨 | 거점(HUB) ↔ 거점 장소 정체성 충돌 |
 | 93_location_backdrop.md | ✅ 구현됨 | 장소 배경 지속화 |
 | 94_mobile_scroll_viewport.md | ✅ 구현됨 | 모바일 스크롤·뷰포트 정합 |
+| 95_prompt_split_analysis.md | 📎 분석 | 프롬프트 이분할(서술·대사계) 재검토 — 원형 재기각, 역전 설계(대사 선행 주입)만 조건부 후보 |
 | 90_landing_page_redesign.md | ✅ 구현됨 | 랜딩 리디자인 P1~P4 |
 | 87_admin_console.md | ✅ 구현됨 | 어드민 콘솔 — users.role+AdminGuard 하이브리드+@AdminEndpoint(감사 로그)+관제… |
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 |
