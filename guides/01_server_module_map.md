@@ -17,7 +17,7 @@ main.ts → AppModule
 │   ├── dialogue-act.ts  ← 사교 발화 감지 (GREETING/WELLBEING/THANKS/FAREWELL — 불변식 44)
 │   └── korean.ts        ← 한국어 조사 처리 (korParticleRo 등, architecture/68)
 ├── auth/                ← 인증 모듈
-│   ├── auth.controller  ← POST /v1/auth/register, POST /v1/auth/login
+│   ├── auth.controller  ← POST /v1/auth/register, POST /v1/auth/login, GET /v1/auth/me(회원번호)
 │   ├── auth.service     ← JWT 세션 관리
 │   └── auth.dto         ← 인증 DTO
 ├── db/                  ← Drizzle ORM

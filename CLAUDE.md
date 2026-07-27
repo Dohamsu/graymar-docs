@@ -398,7 +398,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 
 ## API Endpoints
 
-실제 라우트 76개 전수 (2026-07-27 컨트롤러 19개 기준). **admin** 표시는 `@AdminEndpoint`
+실제 라우트 77개 전수 (2026-07-27 컨트롤러 19개 기준). **admin** 표시는 `@AdminEndpoint`
 (x-admin-token OR JWT+users.role, 감사 로그 `admin_audit_logs` — arch/87). 그 외는 JWT 인증,
 `/v1/stats/public` 만 무인증.
 
@@ -406,8 +406,9 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| POST | `/v1/auth/register` | 회원가입 (email, password, nickname) — 가입 보너스 포인트 지급 |
+| POST | `/v1/auth/register` | 회원가입 (email, password, nickname) — 회원번호 자동 부여 + 가입 보너스 포인트 |
 | POST | `/v1/auth/login` | 로그인 → JWT |
+| GET | `/v1/auth/me` | 현재 로그인 유저 (회원번호 `memberNo` 포함) |
 | POST | `/v1/runs` | 새 RUN 생성 (presetId, gender, scenarioId) |
 | GET | `/v1/runs` | 활성 RUN 조회 (userId 기반) |
 | GET | `/v1/runs/:runId` | RUN 상태 조회 (turnsLimit 옵션) |
@@ -670,6 +671,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **랜딩 리디자인 P1~P4 (2026-07-25~26)** | [arch/90] 상용·게임 카피 12종 벤치마크로 톤 원칙 5 확립 후 카피 전면 교체 + 시나리오 카탈로그 + 게임플레이 CSS 재현 + 공개 통계 API | ✅ 완료 |
 | **거점 정체성 충돌 + 검증 인프라 (2026-07-26)** | [arch/92] "여관에서 여관으로 이동"의 원인이 설계가 아니라 이름 중복임을 규명하고 4팩 거점 명명을 추상형으로 전환. V9 반복 센서 정밀화도 함께 | ✅ 완료 |
 | **장소 배경 지속화 (2026-07-27)** | [arch/93] 대화 중 장면이 없는 구간(중앙값 3턴·최장 23턴)을 배경 레이어로 메움. 헤더 밴드안은 뷰포트 25% 잠식으로 기각 | ✅ 완료 |
+| **회원번호 도입 (2026-07-27)** | 문의·지원에서 부를 수 있는 가입순 정수 식별자 — `users.member_no`(DB 시퀀스 부여, 재사용 없음) + 기존 31명 가입순 백필 + `GET /v1/auth/me` + 설정 모달 "내 계정"에 `#0016` 표시·복사 | ✅ 완료 |
 | **모바일 스크롤·뷰포트 정합 (2026-07-27)** | [arch/94] 헤드리스 4뷰포트 점검으로 11종 수정 — 스크롤 되돌림 follow 모델, overscroll-contain, 타이틀·로그인 스크롤 구조, 모달 16곳, safe-area | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
