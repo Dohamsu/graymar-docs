@@ -198,6 +198,9 @@ async function main() {
   const api = new ApiClient();
   const email = `audit_${args.scenarioId}_${Date.now()}@test.com`;
   await api.register(email);
+  // 포인트 게이트 방어 (arch/85): 가입 보너스 50p = 10턴뿐 — setup 포함 시나리오가
+  // 중반 402로 죽어 부분 표본 점수가 나온다 (2026-07-27 chat-edric 실측).
+  await api.redeemPoints(process.env.AUDIT_REDEEM_CODE ?? "Z48S-FB46");
   const runResp = await api.createRun(scenario.preset, scenario.gender);
   const runId = runResp.run.id;
   console.log(`Run: ${runId}`);

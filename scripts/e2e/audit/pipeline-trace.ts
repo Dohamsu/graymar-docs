@@ -32,7 +32,9 @@ const BLOCK_PATTERNS: Array<{ name: string; re: RegExp }> = [
   { name: "fact 공개 (A)", re: /\[이번 턴 NPC가 공개할 정보\][\s\S]*?(?=\n\[|$)/ },
   { name: "인계 가이드 (B)", re: /\[NPC 모름 — 인계 가이드\][\s\S]*?(?=\n\[|$)/ },
   { name: "default 텍스트 (C)", re: /\[일반 정보 — 도시 분위기\][\s\S]*?(?=\n\[|$)/ },
-  { name: "NPC 일상 화제 (D)", re: /\[NPC 일상 화제[\s\S]*?(?=\n\[|$)/ },
+  // arch/69 B2에서 헤더가 "[NPC 일상 — 지금 이 순간]"으로 개명됨 — 구 헤더도 함께 매칭
+  // (2026-07-27 실측: 구 regex만으로는 D 모드 감지 전멸 → 화제 다양성 0% 오측정)
+  { name: "NPC 일상 화제 (D)", re: /\[NPC 일상(?: 화제| —)[\s\S]*?(?=\n\[|$)/ },
   { name: "NPC 정보", re: /\[NPC 정보\][\s\S]*?(?=\n\[|$)/ },
   { name: "NPC 등장", re: /\[NPC 등장\][\s\S]*?(?=\n\[|$)/ },
   { name: "NPC 관계", re: /\[NPC 관계\][\s\S]*?(?=\n\[|$)/ },

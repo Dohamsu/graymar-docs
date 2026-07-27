@@ -94,6 +94,19 @@ export class ApiClient {
     return this.token!;
   }
 
+  /**
+   * 포인트 충전 코드 사용 (arch/85). 신규 테스트 계정은 가입 보너스 50p뿐이라
+   * 10턴 초과 시나리오가 402(INSUFFICIENT_POINTS)로 죽는다 — 가입 직후 호출.
+   * 코드 소진/비활성 등 실패는 경고만 남기고 진행 (POINTS_ENABLED=false 환경 호환).
+   */
+  async redeemPoints(code: string) {
+    const r = await this.request("POST", "/points/redeem", { code });
+    if (r.status !== 200 && r.status !== 201) {
+      console.warn(`(경고) 포인트 충전 실패 ${r.status}: ${JSON.stringify(r.body)} — 잔액 부족 시 턴 제출이 402로 실패할 수 있음`);
+    }
+    return r;
+  }
+
   async createRun(presetId: string, gender: "male" | "female") {
     const r = await this.request("POST", "/runs", { presetId, gender });
     if (r.status !== 200 && r.status !== 201) {
