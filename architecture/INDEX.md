@@ -126,6 +126,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 ### 10. 기타
 
 - [[architecture/Context Coherence Reinforcement|context coherence reinforcement]] — 컨텍스트 일관성 강화 원칙(씬 연속성 7규칙, sceneFrame 3단계 억제, 씬 이벤트 1턴 유지). 모든 서술 파이프라인 문서의 공통 제약.
+- [[architecture/phase_history|phase history]] — 📜 이력. CLAUDE.md `Implementation Phase Status` 표의 **원문 전량**(163 항목, 최초 구현 → 2026-07-27). CLAUDE.md 는 상시 로드되므로 최근 74항목의 압축본만 남기고 원문을 이리로 옮겼다 — "과거에 이걸 왜/어떻게 했나"는 여기 또는 각 arch 문서.
 - [[architecture/fixplan_history|fixplan history]] — 완료된 플레이테스트 패치 내역(기존 `fixplan3/4/5` 통합). 히스토리 참조용이며, 신규 이슈는 본 히스토리와 중복되지 않도록 확인 필요.
 - [[architecture/76_market_alignment_direction|market alignment direction]] — 시장 조사 대응 방향: AI 텍스트 RPG 이용자 긍/부정 요인 ↔ 현 구조 대조 + D1(의도 존중 가드=불변식 47)·D2(판정 투명성 UI)·D3(actionType 탈버킷+감정 행동화)·D4(반복 계측)·D5(과금 3원칙) ✅ 구현. 잔여는 D6(저작 도구)뿐. §5 진행 체크리스트.
 - [[architecture/36_llm_pipeline_changelog_20260417|llm pipeline changelog 20260417]] — 📜 이력. 2026-04-17 LLM 파이프라인·렌더링·품질 수정 Before/After 정리.
