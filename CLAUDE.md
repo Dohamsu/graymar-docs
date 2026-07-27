@@ -597,81 +597,80 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 
 | 작업 | 요약 | 상태 |
 |------|------|------|
-| **엔딩 연출 개선** | Part B MIN_TURNS 가드 + commitTurnRecord 순서 수정 + arcRoute 분기 에필로그(12분기) + personalClosing + ui.endingResult 누락… | ✅ 완료 |
-| **여정 아카이브 Phase 1** | run_sessions.ending_summary jsonb + SummaryBuilderService(synopsis/keyEvents/keyNpcs/finale 템플릿)… | ✅ 완료 |
-| **아이템 정합성 (A+B)** | 시스템 프롬프트 3/4번(구체 아이템·골드 증여 금지 규칙) + prompt-builder [이번 턴 획득 아이템] 블록 + EventItemReward 타입 + turns.service… | ✅ 완료 |
-| **소지품 UX 개선** | InventoryTab 교체 확인 모달(EquipReplaceModal + 비교 카드) + USABLE_ITEMS 동적화(ItemMeta.usableInHub) + 전투 중 사용 버튼 자동… | ✅ 완료 |
+| **엔딩 연출 개선** | [arch/39] 엔딩 직전·직후 연출 강화 — MIN_TURNS 가드, arcRoute 12분기 에필로그, personalClosing, SoftDeadline 배너(D-3~초과)와 LLM deadlineContext 주입 | ✅ 완료 |
+| **여정 아카이브 Phase 1** | [arch/39] 런 종료 시 SummaryBuilder 가 ending_summary(jsonb) 를 만들고, GET /v1/endings + 양피지 스타일 여정 기록 화면으로 노출 | ✅ 완료 |
+| **아이템 정합성 (A+B)** | [arch/40] LLM 이 없는 아이템을 주던 문제를 프롬프트 금지 규칙 + [이번 턴 획득 아이템] 블록 + EventItemReward 실지급 경로로 봉합. KEY_ITEM 3종 매핑 | ✅ 완료 |
+| **소지품 UX 개선** | [arch/40] 장비 교체 확인 모달(비교 카드), usableInHub 기반 사용 판정 동적화, 전투 중 사용 차단, 드랍 토스트, 에러 문구 한국어화 10종 | ✅ 완료 |
 | **NPA v2 메트릭** | NpcDistinctness(distinct pool 매칭률) + ToneMatch(baseline-aware mismatch) 신설, 5축 점수(연결성·자유도·사람다움·차별화·톤일치) | ✅ 완료 |
-| **NPC Distinctness v1** | R1 회피 어휘 강제 룰(2회+ 등장 시 약한 표현 치환) + CORE 6명 mannerism 확장(speechStyle/signature) + rat-king dark 톤 화제 한정 — 차별화… | ✅ 완료 |
-| **A51 R2~R6 + A52 시스템 프롬프트 압축** | R2 사용자 키워드 인용 가이드 + R4 NPC 권장 호칭 자동 추출 + R5 HAOCHE 어미 후처리 + R6 단일 NPC 응답 강제 + C1 P0/P1/P2 우선순위 박스 + 프롬프트… | ✅ 완료 |
-| **NPA 메트릭 v2 (다중 NPC 정확화)** | toneConsistency / pronounConsistency를 utterance 단위로 자기 NPC register/호칭 평가 + system 프롬프트 자기모순 정정(실제 NPC… | ✅ 완료 |
-| **A56 NPC Reaction Director + 어휘 폭주 해소** | NpcReactionDirector(추상 톤 3축 nano 사전결정) + ChallengeClassifier(자유 행동 주사위 스킵) + speechStyle 어구 예시 추상화(9 NPC)… | ✅ 완료 |
+| **NPC Distinctness v1** | [arch/51] R1 회피 어휘 강제 치환(2회+ 등장 시) + CORE 6명 mannerism 확장 — 차별화 4.83/5, ERR 0 | ✅ 완료 |
+| **A51 R2~R6 + A52 시스템 프롬프트 압축** | 사용자 키워드 인용·권장 호칭 자동 추출·어미 후처리·단일 NPC 응답 강제 + P0/P1/P2 우선순위 박스. 시스템 프롬프트 11,400→9,000자(-21%) | ✅ 완료 |
+| **NPA 메트릭 v2 (다중 NPC 정확화)** | [arch/55] 톤·호칭 일치를 utterance 단위로 자기 NPC register 기준 평가해 다중 NPC 턴 오측정 해소 + 시스템 프롬프트 자기모순(실제 별칭을 금지 예시로 노출) 정정 | ✅ 완료 |
+| **A56 NPC Reaction Director + 어휘 폭주 해소** | [arch/56] nano 가 톤 3축을 사전 결정하고 speechStyle 어구 예시를 추상화 — 시그니처 어구 39.7→6.2%(-84%), 마이렐 패턴 완전 소멸 | ✅ 완료 |
 | **Fact 일급 객체 도입** | facts.json 신규 + ContentLoader API — Fact 를 NPC·Incident 와 동일 레벨의 콘텐츠 원자로 승격, 매칭/조회 일관화 | ✅ 완료 |
 | **잠금 NPC + Fact awareness 통합** | [arch/46] 대화 잠금 중 NPC 의 fact 인식 상태를 LLM 컨텍스트에 통합 전달 | ✅ 완료 |
 | **NPC 점프 완전 차단** | event.payload.primaryNpcId 동기화 누락 수정 + NPC 후보 names에서 일반 단어 제거(스트림 점프 차단) + 대화 잠금 중 MOVE_LOCATION 차단(회귀 방지) | ✅ 완료 |
-| **NPC 결정 권한 단일 통합** | [arch/48] NpcResolverService 신설 — 텍스트매칭/IntentV3/대화잠금/Nano/이벤트배정 5단계 우선순위를 단일 권한자로 통합. Discoverability + Content 검증… | ✅ 완료 |
+| **NPC 결정 권한 단일 통합** | [arch/49] 텍스트매칭·IntentV3·대화잠금·nano·이벤트배정 5단계를 NpcResolverService 한 곳으로 통합해 화자 결정 권한을 단일화 | ✅ 완료 |
 | **직전 NPC 대사 슬롯 + 회피 패턴 정상화** | 사용자 응답 복사 / 위치 회피 해소 — 직전 NPC 대사가 슬롯 누락 시 LLM 이 사용자 입력을 복사하는 버그 + 동일 NPC 의 위치 회피 부자연스러움 동시 해소 | ✅ 완료 |
-| **메인 LLM Gemma 4 26B 복귀** | [arch/25] Gemini Flash → Gemma 4 26B MoE (OpenRouter) 메인 복귀, fallback GPT-4.1 Mini 유지. 한국어 서술 일관성·톤·OpenRouter 게이트웨이… | ✅ 완료 |
-| **nano 선택지 DB/stream desync 봉합** | llm-worker.service.ts 의 첫 UPDATE 에서 llmChoices 분리 → Track 2 완료 후 finalChoices 단일 변수로 DB UPDATE + stream emit… | ✅ 완료 |
-| **Fact 공개 단일화** | [arch/58] 단서 기록·서술 데스싱크 해소 — selectRevealableFact(주제 우선 선택) + ui.questReveal 전달 + 보류 가이드(factWithheldHint). 기록 fact =… | ✅ 완료 |
+| **메인 LLM Gemma 4 26B 복귀** | [arch/25] Gemini Flash → Gemma 4 26B MoE 메인 복귀(fallback GPT-4.1 Mini 유지). 한국어 서술 일관성·톤·게이트웨이 안정성 종합 판단 | ✅ 완료 |
+| **nano 선택지 DB/stream desync 봉합** | 워커 첫 UPDATE 에서 llmChoices 를 떼고 Track 2 완료 후 finalChoices 단일 변수로 DB·스트림 동시 사용. 9턴 연속 라벨 byte-equal 검증 | ✅ 완료 |
+| **Fact 공개 단일화** | [arch/58] 기록 단서와 서술 단서가 어긋나던 데스싱크를 주제 우선 선택(selectRevealableFact) + ui.questReveal 동일 주입으로 봉합 | ✅ 완료 |
 | **단서 대화 후속 안정화** | [arch/59] 판정 NPC=서술 NPC 정합(NpcResolver 부분 이름 매칭) + [단서 방향] nextHint ui 전달 복구 + HINT_MODES off-by-one | ✅ 완료 |
 | **단서 흐름 튜닝 + 워커 정합성** | [arch/60] LLM 워커 runState lost update 해소(fresh 부분 패치) + 주제 불일치 fallback 금지(인계 양보) + [단서 방향] 공개 턴 이월 + 비주제 공개 확률 게이트 | ✅ 완료 |
-| **NPC 대화 자연화 3종** | ① 대화 행위 감지(인사/안부/감사/작별 — 사교 턴 fact 공개 게이트 + FAREWELL 잠금 해제 + 톤 가이드) ② primary NPC 직전 발화 이어받기(마커 기반 추출 → 메인… | ✅ 완료 |
-| **NPA 어미 메트릭 수정** | [arch/55] HAOCHE 최빈 종결 '-소' 누락 + 말끝 흐림 파편 집계 버그 — 하오체 준수 NPC가 45~59%로 오측정되던 것 88~100% 정상화 (로넨 45→100%, 위반 0건). 수정 전후 어미… | ✅ 완료 |
-| **NPC 이름 공개 무결성** | [arch/64] A~E + B(pendingIntroduction) + 연출 3층 방어(경로 분기/introAttempts/IntroFallback) + R7 스트림 문장 새니타이즈(emit 전 미공개 실명·별칭… | ✅ 완료 |
-| **멀티 시나리오 ① 멀티 팩 로더** | [arch/63] ContentPackState 팩 캐시 + AsyncLocalStorage 스코프 — 단일 활성 시나리오 정책 폐지, 서로 다른 팩 런 동시 플레이 격리. ensureScenario(팩… | ✅ 완료 |
-| **멀티 시나리오 ⑥ 클라 선택 UI** | [arch/63] GET /v1/scenarios + StartScreen 여정 선택 화면(2팩 이상일 때) + store.scenarioId + HUB 라벨/프리셋 표기 시나리오 인지… | ✅ 완료 |
-| **경제 루프 v1** | [arch/65] 단서·진전 사례금(quest.json rewards, 팩별) + 정보 보류 턴 BRIBE 선택지 노출(nanoCtx.bribeOpportunity) + BRIBE 기본 비용 -6/-3 config… | ✅ 완료 |
-| **엔딩 완주 평가 P1~P4** | [arch/65] P1 순수 이동 상용구 KW_OVERRIDE(26턴 갇힘 해소) + P2 NPC 작별 발화 잠금 해제(npcFarewell 마킹) + P3 접두 융합 별칭·무명 라벨 후처리 + P4 퀘스트 전환… | ✅ 완료 |
-| **마커·대사 정합 마감** | [arch/65] 콜론 라벨 3-Tier 유일성 매칭(무명 오귀속 6→1, 잔여는 의도) + 카드 서술 언급 검사 + 진입 턴 직전 인물 이월 차단 + audit V8/V9-c 노이즈 정밀화 — 9/9 PASS… | ✅ 완료 |
-| **엔딩 턴 피날레 + 자기소개 사전 확정** | [arch/65] 엔딩 확정 턴 [마지막 장면] 디렉티브(endingType별 종결 톤)+nano 스킵+소개 비활성 (부록 D) · NPC 자기소개 3단 사다리(nano 사전 생성→positive 주입→서버 삽입… | ✅ 완료 |
-| **Nano 엔진 감사** | [arch/67] 요청 단위 timeoutMs(light 5s/dialogue 10s — 죽은 설정 부활) + 워커 이중 처리 락(.returning 선점 확인, 7/650 실측) + NpcReaction JSON… | ✅ 완료 |
-| **카드 정합 근본 수정 + 테스트 시스템 감사** | [arch/67] V8 복합 원인(audit 턴 매핑 밀림 + 완전형 마커 미수집 + 부분 문자열 오매칭) 해소, 카드 교체 로직 부활 · 구 정책 테스트 갱신(스위트 실패 0)·V9-a 융합 센서 재정의·복제… | ✅ 완료 |
-| **자유 대화 정합 4종** | [arch/67] 언급 질문 가드 확장(조사·역할 경로, 얼마나/~가 말한) + 화자 표시·기록 소스 단일화(레거시 재계산 제거) + 작별 턴 소개 이월 + 재탕 감지 센서 — 자유 입력 '대화 상대 핑퐁' 해소… | ✅ 완료 |
-| **멀티 시나리오 디커플링 ②~⑤** | [arch/63] 엔진 하드코딩 콘텐츠 ID 외부화(표시명 11곳·활동장소·entityAliases·프롤로그 스크립트·L0 테마·moveKeywords·HUB 선택지) + DAG graph.json화 + 시스템… | ✅ 완료 |
-| **UI/UX 실사 리뷰 v1** | [arch/68] 헤드리스 신규 유저 경로 순회 + 6건 수정: 인물 도감 조우 필터(enc/app ≥1)+이어하기 복원(GET run npcEmotional 조립) · 모바일 상태줄(HP/STA/골드/시간)… | ✅ 완료 |
-| **UI/UX 폴리싱 C-2~C-7** | [arch/68] 선택지 rest 어포던스(.choice-btn 골드 카드) · 시나리오 카드 배너(getScenarioBannerImage, fallback 그라데이션) · 스탯 뮤트 앤틱 팔레트(--stat-*… | ✅ 완료 |
-| **C-1 거점 사랑방 개방 (A안)** | [arch/68] HUB 자유 입력은 서버 계약(CHOICE 전용) 유지 — 대신 팩별 거점 사랑방 장소를 HUB에 개방: graymar LOC_TAVERN·silverdeen LOC_SD_INN… | ✅ 완료 |
-| **자유 입력 발견성** | [arch/68] 첫 LOCATION 1회 코치마크(인라인 골드 배너, localStorage 플래그+포커스/닫기 소멸, useSyncExternalStore) + placeholder 행동 예시 4종 로테이션… | ✅ 완료 |
-| **NanoChoiceNpcFix** | [arch/68] nano 선택지 sourceNpcId 오염 서버 검증 게이트(버그 5f31d803) — 대화 연속 턴에서 대화 계열 선택지의 NPC가 대화 상대와 다르면 교정(지목형 라벨·작별 턴 예외)… | ✅ 완료 |
-| **상점 노출 동선** | [arch/68] 구매 dead path 부활(SHOP 인텐트 도달 불능 — TRADE+구매 표현 진입 확장, 상점 없는 장소 은유 침묵) + 클라 ui.shops 소비 신설: store shops 상태… | ✅ 완료 |
-| **NPC 선제 단서 억제 (부록 M)** | [arch/68] 이방인 잡담 시 NPC가 먼저 단서 흘리는 부자연스러움 제거 — 대화 계열(TALK/PERSUADE/TRADE/HELP)은 주제 매칭 시에만 fact 공개, 조사·탐색은 fallback 유지… | ✅ 완료 |
-| **이벤트-서술 NPC 분열 (부록 L)** | [arch/68] 버그 185a8ddd — 첫 진입 WORLD_EVENT로 음유시인 조우 이벤트 매칭, 서술은 정보상·선택지는 음유시인 분열. EVT_TAVERN_ENC_BARD primaryNpcId… | ✅ 완료 |
-| **판정·서술 불일치 + 초상화 오귀속 (부록 K)** | [arch/68] 버그 f4bf2e66 — bribeOpportunity가 nano 이벤트 컨셉 오염(OBSERVE인데 뇌물 서술) → NanoConceptGuard(비강압 행동+뇌물 신호 시 서술필드 억제… | ✅ 완료 |
-| **후처리 순서 의존성 정비 (부록 J)** | [arch/68] 소개·별칭 후처리 순서 사각지대(5.11 재삽입이 5.10 정리 이후) 해소 — 순수 텍스트 정리 5종을 멱등 배리어 sanitizeAliasArtifacts로 묶어… | ✅ 완료 |
-| **긴 별칭 일괄 정비 (부록 I)** | [arch/68] CORE/SUB 15/18명 긴 unknownAlias 편중 해소 — graymar 14명 압축(12~14자→5~10자, 첫인상 형용사 유지) + BACKGROUND shortAlias 25명… | ✅ 완료 |
-| **오웬 별칭 반복 수정 (부록 H)** | [arch/68] 사랑방 개방 후 오웬(9자 긴 별칭) 미소개 반복 결함 — 저장 직전 최종 별칭 정리(5.14, IntroFallback 재삽입 커버) + shouldIntroduce appearanceCount… | ✅ 완료 |
-| **선술집 BG 초상화 6종** | [arch/68] 사용자 제작 초상화(비올라·헬가·그래디·갤러스·제롬·마일로) 클라/서버 매핑 + 비올라 여성 개명(구 단테)·헬가 gender 정정 — 사랑방 개방 후속, 실전 검증(여성 지칭 전층 반영)… | ✅ 완료 |
-| **아크 커밋 동선 + 3사이클 프로세스** | [arch/68] S5 완주 3연속 실증 + 결정 4건: 아크 루트 HUB 명시 분기(arc_commit_*, 콘텐츠 routeCommitChoices, 팩 조건부 — "정의의 대가" 12분기 최초 진입) · 봇… | ✅ 완료 |
-| **캠페인 자유 시나리오 선택** | [arch/71] 첫 시나리오 자유 선택(원점 정책 폐기, AVAILABLE/IN_PROGRESS/COMPLETED) + GET /v1/scenarios/:id/creation-bundle(팩 프리셋·특성 서빙… | ✅ 완료 |
-| **NPC 반응 권한 통합** | [arch/72] 목격자 반응(Layer 3)↔NpcReactionDirector 이중 권한 해소: 대화 상대 목격자 루프 제외(② 단일 권한) + 당턴 1회 발화(2턴 중복 주입 제거) + posture 우선… | ✅ 완료 |
-| **자율 서사 팩 배포 (karnholt_v1, 2026-07-16)** | [arch/74] 논의 → 상세설계 → P0~P6+P8 구현·배포 — "진상 선확정 디렉터 모드" AUTONOMOUS 팩. PlotSeedGeneratorService(진상 선확정 Plot Seed+검증/폴백)… | ✅ 구현·배포 (P7 후속) |
-| **시장 조사 대응 (자유도·판정 투명성)** | [arch/76] D1 강제창 의도 존중(불변식 47: 대화 잠금·사교·REST 제외) + 과금 3원칙 등재 + D2 판정 투명성(보정 출처 분해 modifiers·FAIL 부족분·FREE 스킵 안내) + D3… | ✅ 완료 |
-| **감정·행동화 탈버킷 (D3-b′/c′/combat)** | [arch/76] 원안 D3-b/c 폐기·재설계 — ① 감정 탈버킷: nano socialImpact 5축(±5) + applyActionImpact 블렌드(base×0.4+nano×2, 부재 시 테이블 100%)… | ✅ 완료 |
-| **어체 정합 근원 수정 (2026-07-17)** | 3층 결함 동시 해소 — ① 시스템 프롬프트 P0-A 자기모순(하오체 무조건 열거 → speechRegister 준수) ② 구 R5 오폭 폐기(primary 일괄 하오체 치환이 합쇼체 보조 화자… | ✅ 완료 |
-| **감정→행동화 실증 완결 + 밸런스 (2026-07-17~18)** | agitation 4종 전부 실발동 실증 — FLEE(마이렐 fear 89.5)·AVOID·REPORT(에드릭 susp 63.5, heat+5 + 시그널 피드 SECURITY 가시화… | ✅ 완료 |
-| **서술 품질·계측 정비 (2026-07-17)** | ① 개시어 편중 동적 억제 — overusedOpeners(세션 3회+ 개시어 추출→[최근 사용 표현] 블록 확장, 26런 2,162문장 계측 15.3%→11.8% 실측, 롱런 잔여는 백로그:… | ✅ 완료 |
-| **arch/77 Phase 2 (2026-07-17~18)** | context-builder build() God method 1,528→553줄 (-64%) — P2.1~P2.10 동작 보존… | ✅ 완료 |
-| **서술 개시어·대명사 억제 사이클 (2026-07-18)** | [arch/78] D5 계측 센서(playtest.py — 대명사 개시어율·지칭 명사구 CONTENT/NON_ALIAS 분류) + 개시어 임계 3→2 + 대명사 화이트리스트 12종 1키 합산(동률 우선).… | ⚠️ 부분 달성 |
-| **팩 에셋 풀 (2026-07-19)** | [arch/80] 이미지 자동 매칭 시스템 — content/<pack>/assets/ 투입 + sync_pack_assets.py(ASCII 슬러그 — URL 실명 치환 404 방어) → 저작 NPC 팩 로드 시… | ✅ 완료 |
-| **프롬프트 토큰 최적화 (2026-07-19)** | [arch/79] P3~P4 — ShortResponse 재시도 스킵(16.5%→0%) + 시스템 프롬프트 재압축(12,154→4,668자, P0/P1/P2 박스 정본 승격) + NPC 발화 가이드 클러스터 지시… | ✅ 완료 |
-| **arch/77 전 Phase 마감 (2026-07-18)** | God method 리팩토링 완결 — P3 turns.service Inner 4,440→1,937줄(-56%) P3.1~P3.15(HUB복귀 2벌 단일화·Quest 528줄·Step1~3… | ✅ 완료 |
-| **밤낮 시스템 재설계 (2026-07-20)** | [arch/81] 이중 시간계 근본 해소 — ① 행동 가중 timeCost(사교 0·이동/휴식 2·기타 1, 기계식 전환 제거) ② 전환 서술 주입(recentPhaseTransition → 전환 턴만 [시간대… | ✅ 완료 |
-| **어체 자기모순 교정 (2026-07-20)** | [arch/82] 고정 팩 speechRegister↔speechStyle 모순 3건(펠릭스·라이라·올드릭, 전부 HAPSYO↔하오체 산문) 교정 — 프롬프트 상충 주입이 어체 혼용 유발. 3팩 전수 스캔(금지목록… | ✅ 완료 |
+| **NPC 대화 자연화 3종** | 사교 발화 감지로 잡담 턴 단서 덤핑 차단 + 직전 발화 이어받기 + 질문 우선 응답. 응답률 에드릭 56→70% | ✅ 완료 |
+| **NPA 어미 메트릭 수정** | [arch/55] 하오체 최빈 종결 '-소' 누락과 말끝 흐림 집계 버그로 45~59%로 오측정되던 준수율이 88~100%로 정상화(로넨 45→100%) | ✅ 완료 |
+| **NPC 이름 공개 무결성** | [arch/64] 롤백-재소개 상쇄·소개 힌트 실명 오염·2턴 분리를 3층 방어로 잡고, R7 스트림 새니타이즈로 emit 전 미공개 실명 차단. 회귀 26건 | ✅ 완료 |
+| **멀티 시나리오 ① 멀티 팩 로더** | [arch/63] ContentPackState 캐시 + AsyncLocalStorage 스코프로 단일 활성 시나리오 정책을 폐지 — 서로 다른 팩 런의 동시 플레이를 격리 | ✅ 완료 |
+| **멀티 시나리오 ⑥ 클라 선택 UI** | [arch/63] GET /v1/scenarios + 여정 선택 화면(2팩 이상일 때) + HUB 라벨·프리셋·장소 이미지의 시나리오 인지. E2E 완주 검증 | ✅ 완료 |
+| **경제 루프 v1** | [arch/65] 단서·진전 사례금(팩별 quest.json)과 정보 보류 턴 BRIBE 노출 신설. 근거는 30일 441턴에 골드 이벤트가 4건뿐이라는 실측 | ✅ 완료 |
+| **엔딩 완주 평가 P1~P4** | [arch/65] 이동 상용구로 26턴 갇히던 결함, 작별 후 잠금 해제, 접두 융합 별칭, 퀘스트 전환 장비 보상 — 완주를 막던 4건 해소 | ✅ 완료 |
+| **마커·대사 정합 마감** | [arch/65] 콜론 라벨 3-Tier 유일성 매칭으로 무명 오귀속 6→1, 카드 서술 언급 검사·진입 턴 이월 차단 추가. 9/9 PASS 최초 달성 | ✅ 완료 |
+| **엔딩 턴 피날레 + 자기소개 사전 확정** | [arch/66] 엔딩 턴 [마지막 장면] 디렉티브 + nano 사전 생성→positive 주입→서버 삽입 3단 사다리로 자기소개 성사 0%→보장 | ✅ 완료 |
+| **Nano 엔진 감사** | [arch/67] 죽어 있던 요청 단위 timeout 부활, 워커 이중 처리 락(7/650 실측), NpcReaction JSON 재시도(실패 10.4% 구제), nano 모델 env 고정 | ✅ 완료 |
+| **카드 정합 근본 수정 + 테스트 시스템 감사** | [arch/67] V8 3중 원인(턴 매핑 밀림·완전형 마커 미수집·부분 문자열 오매칭) 해소로 카드 교체 부활 + 복제 drift 를 export 정본 참조로 전환 | ✅ 완료 |
+| **자유 대화 정합 4종** | [arch/67] 언급 질문 가드 확장·화자 표시 단일화·작별 턴 소개 이월·재탕 센서로 자유 입력의 '대화 상대 핑퐁' 해소 | ✅ 완료 |
+| **멀티 시나리오 디커플링 ②~⑤** | [arch/63] 엔진에 박혀 있던 콘텐츠 ID 를 전부 외부화(표시명·별칭·프롤로그·L0 테마·HUB 선택지)하고 DAG 를 graph.json 으로. silverdeen_v1 미니 팩 신설 | ✅ 완료 |
+| **UI/UX 실사 리뷰 v1** | [arch/68] 헤드리스로 신규 유저 경로를 순회해 6건 수정 — 도감 조우 필터·이어하기 복원·모바일 상태줄/인물 탭·호외 타이밍·조사 처리·dev 게이트 | ✅ 완료 |
+| **UI/UX 폴리싱 C-2~C-7** | [arch/68] 선택지 rest 어포던스, 시나리오 배너, 스탯 뮤트 앤틱 팔레트(토큰 3곳 정본 수렴), 라벨 정리, 골드 체크박스 | ✅ 완료 |
+| **C-1 거점 사랑방 개방 (A안)** | [arch/68] HUB 자유 입력(서버 계약 CHOICE 전용)은 유지하고 거점 사랑방 장소를 hubAccessible 로 열어 기존 LOCATION 파이프라인을 그대로 재사용. 서버 0줄 | ✅ 완료 |
+| **자유 입력 발견성** | [arch/68] 첫 LOCATION 1회 코치마크 + placeholder 행동 예시 로테이션 + 튜토리얼 한 줄로 "선택지 클릭 게임" 오해 차단 | ✅ 완료 |
+| **NanoChoiceNpcFix** | [arch/68] nano 선택지의 sourceNpcId 오염을 finalChoices 확정 직전 단일 지점에서 교정(지목형·작별 턴 예외). 유닛 7케이스 | ✅ 완료 |
+| **상점 노출 동선** | [arch/68] 도달 불능이던 구매 경로를 TRADE+구매 표현으로 확장하고 ui.shops 를 클라가 소비(칩·진열·구매 버튼). 전 DB 최초 [상점] 이벤트 기록 | ✅ 완료 |
+| **NPC 선제 단서 억제 (부록 M)** | [arch/68] 이방인 잡담에 NPC 가 먼저 단서를 흘리지 않도록 대화 계열은 주제 매칭 시에만 fact 공개, 차단분은 뇌물 기회로 이월 | ✅ 완료 |
+| **이벤트-서술 NPC 분열 (부록 L)** | [arch/68] 조우 이벤트에 primaryNpcId 를 명시하고, 유저 지목이 이벤트 NPC 와 다르면 이벤트 선택지를 폐기하는 게이트 추가. playtest V10 센서 신설 | ✅ 완료 |
+| **판정·서술 불일치 + 초상화 오귀속 (부록 K)** | [arch/68] bribeOpportunity 가 nano 컨셉을 오염시키던 것을 NanoConceptGuard 로 억제(선택지는 유지), 마커 등장 후 무마커 대사는 무명화 | ✅ 완료 |
+| **후처리 순서 의존성 정비 (부록 J)** | [arch/68] 재삽입이 정리 뒤에 오던 순서 사각지대를 멱등 배리어 sanitizeAliasArtifacts 로 묶어 1차·최종 동일 호출. 동작 보존 1047 passed | ✅ 완료 |
+| **긴 별칭 일괄 정비 (부록 I)** | [arch/68] 12~14자 unknownAlias 를 5~10자로 압축(첫인상 형용사 유지) + BACKGROUND shortAlias 25명 신설. 코드 0줄, 긴 별칭 완전 소멸 | ✅ 완료 |
+| **오웬 별칭 반복 수정 (부록 H)** | [arch/68] 저장 직전 최종 별칭 정리로 IntroFallback 재삽입까지 커버 + 우호 NPC 강제소개 임계 차등. 오웬 T4 자기소개 실측 | ✅ 완료 |
+| **선술집 BG 초상화 6종** | [arch/68] 사용자 제작 초상화 6장 매핑 + 비올라 여성 개명·헬가 gender 정정. 사랑방 개방 후속 | ✅ 완료 |
+| **아크 커밋 동선 + 3사이클 프로세스** | [arch/68] S5 완주 3연속 실증 후 아크 루트를 HUB 명시 분기(routeCommitChoices)로 노출 — "정의의 대가" 12분기 최초 진입 | ✅ 완료 |
+| **캠페인 자유 시나리오 선택** | [arch/71] 원점 정책을 폐기하고 첫 시나리오 자유 선택 + creation-bundle API 로 팩 프리셋 서빙 + 장비·소모품·서사 이월 배선 | ✅ 완료 |
+| **NPC 반응 권한 통합** | [arch/72] 목격자 반응과 NpcReactionDirector 의 이중 권한 해소 — 대화 상대는 목격자 루프에서 제외하고 당턴 1회 발화로 제한 | ✅ 완료 |
+| **자율 서사 팩 배포 (karnholt_v1, 2026-07-16)** | [arch/75] "진상 선확정 디렉터 모드" AUTONOMOUS 팩(karnholt_v1) 배포 — Plot Seed 선확정 + 비트 선계산·의도 정합 채택 + 동적 NPC + 규명율 엔딩 | ✅ 구현·배포 (P7 후속) |
+| **시장 조사 대응 (자유도·판정 투명성)** | [arch/76] 강제 진행 차단(불변식 47)·판정 투명성 UI·actionType 탈버킷·흔적 추출·되짚기 구현 + 서사 방향 계측 4종 | ✅ 완료 |
+| **감정·행동화 탈버킷 (D3-b′/c′/combat)** | [arch/76] 원안 폐기 후 재설계 — nano socialImpact 5축 블렌드 + 감정→세계 행동화(도주/회피/신고/접근) + 전투 기만 성향 차등 | ✅ 완료 |
+| **어체 정합 근원 수정 (2026-07-17)** | [arch/82] 3층 동시 해소 — 시스템 프롬프트 하오체 강제 정정, 구 R5 일괄 치환 폐기 후 화자 인지 R5v2, 혼용 감지 확장. 합쇼체 끌림 11→1건 | ✅ 완료 |
+| **감정→행동화 실증 완결 + 밸런스 (2026-07-17~18)** | [arch/76] agitation 4종(FLEE·AVOID·REPORT·APPROACH) 전부 실발동 실증 + 임계 2회 조정(로그 감속 곡선 반영) + 검증 페르소나 3종 신설 | ✅ 완료 |
+| **서술 품질·계측 정비 (2026-07-17)** | 개시어 편중 동적 억제(15.3→11.8%) + PlayerThread 데드 상태 해소 + 스레드 억제 정책 기각(행동 카운터라 억제=기록 누락) + V10 센서 FP 제거 | ✅ 완료 |
+| **arch/77 Phase 2 (2026-07-17~18)** | context-builder build() 1,528→553줄(-64%). 동작 보존 컷-페이스트 10단계, 게이트 2회 전부 10/10, 암묵 클로저 의존 4건 명시화 | ✅ 완료 |
+| **서술 개시어·대명사 억제 사이클 (2026-07-18)** | [arch/78] D5 센서 + 개시어 임계 3→2 + 대명사 12종 합산. 20.3→16.2%(상대 -20.2%, 기준 미달 — soft 지시 천장). 즉흥 별칭 가설은 실측 기각 | ⚠️ 부분 달성 |
+| **팩 에셋 풀 (2026-07-19)** | [arch/80] 이미지를 폴더에 넣고 sync 하면 저작·동적 NPC 와 장소에 자동 배정(성별·키워드 스코어, 런 내 고정). 슬러그 정규화로 실명 URL 404 방어 | ✅ 완료 |
+| **프롬프트 토큰 최적화 (2026-07-19)** | [arch/79] 재시도 스킵(16.5→0%)·시스템 프롬프트 -62%·클러스터 압축·총량 백스톱 16,000자. avg 7,495tok(-31%), 절벽 턴 0% | ✅ 완료 |
+| **arch/77 전 Phase 마감 (2026-07-18)** | God method 리팩토링 완결 — turns.service -56%, llm-worker -50%, 전투/DAG -41%, 클라 3파일 -26~-45%. DAG 골드 무바닥 결함 수정 | ✅ 완료 |
+| **밤낮 시스템 재설계 (2026-07-20)** | [arch/81] 행동 가중 timeCost + 전환 턴 서술 주입 + 4상 UI 승격 + 이중 시간계 통합(timePhase = phaseV2 미러). 15턴 전환 5회→1회 | ✅ 완료 |
+| **어체 자기모순 교정 (2026-07-20)** | [arch/82] speechRegister 와 speechStyle 이 충돌하던 3명을 산문 기준으로 통일 — 프롬프트 상충 주입이 어체 혼용의 원인이었다 | ✅ 완료 |
 | **NPC 자연스러움 3종 (2026-07-20)** | 대화 분석(자연스러움·연속성) 도출 — #5 배경 감시자 advance-or-dismiss(정적 "훑어본다" 반복→진전/퇴장 강제) · #6 제스처 앵커 제거 L0+L1(recommendPool 삭제 — 정적 풀=anchor 불변식 41/42 + frequency/presence_penalty 0.4/0.3 미사용 모델 레버 투입, "목덜미" 상투구 0회) · #7 첫 조우 개방 깊이 티어(trust+encounterCount 긍정 프레이밍, 낯선 이 과다 개방 억제). memory feedback_concrete_vocab_anchor 신설 — architecture/82 B |
-| **포인트 시스템 (2026-07-23)** | [arch/85] 소프트 베타 비용 통제 — 코드 발급→충전→채팅 차감(5p/턴, 전 턴 일괄, 다회용 코드, 가입 50p). DB 4종(users.points + point_transactions 원장… | ✅ 완료 |
-| **자율 디렉터 존재감 튜닝 (2026-07-21)** | [arch/75] P8 후속 — 안 A(비트 신선도 stale 2→3턴)+안 C(GRAVITY_NPC 25→30·직전 상호작용 가중 ½→⅔) 구현, 안 B(강제창 4→3) 보류. 채택… | ✅ 완료 |
-| **LLM 31B 승격 + 프로바이더 allowlist (2026-07-22)** | [arch/25] 메인 Gemma 26B→31B dense + LLM_PROVIDER_ONLY_MAP 모델별 allowlist(ModelRun·Friendli·Novita — 풀 불안정 빈 서술 3~5/12턴 실측… | ✅ 완료 |
-| **파티 던전 클라이언트 배선 (2026-07-23)** | [arch/84] 파티 던전이 서버 엔진 완성/클라 UI 협동 입력 미배선이던 것 해소(2중 검증 발견). 서버: submitLeaderHubChoice(프롤로그·Heat CHOICE 리더 대표 통과)·가드… | ✅ 완료 |
-| **어드민 콘솔 (2026-07-23)** | [arch/87] 서버 admin/ 모듈(관제 API 12종: overview KPI·llm-cost·points 시계열·유저 검색/조정·런 목록/스턱/abort/retry·failures·health)… | ✅ 완료 |
-| **비-graymar 팩 정합 + 모바일 UX (2026-07-23)** | [arch/86] 별빛모래 실플레이 결함 일괄 — ① equip/unequip/useItem 팩 스코프(enterScenario) 누락 → getItem 기본팩 조회 → 고유 아이템(EQ_SS_*) 장착·사용… | ✅ 완료 |
-| **S5 엔딩 동선 + encounterCount 수정 (2026-07-23)** | [arch/88] 활성 star_sand 런 분석 도출 2건 — B S5 종착 상태 최종 선택(arc 커밋) 동선 부재: star_sand에 arc_events.json 자체가 없어… | ✅ 완료 |
-| **플레이어 이름 인지 (2026-07-26)** | [arch/91] 캐릭터 이름이 캐릭터 생성→UI 표기→엔딩 요약으로만 흐르고 플레이 안에서 전혀 안 쓰이던 것(실측 800+턴 중 등장 1건, 그마저 첫 만남 NPC의 무근거 호명) 해소. A 프롤로그 통성명… | ✅ 완료 |
-| **랜딩 리디자인 P1~P4 (2026-07-25~26)** | [arch/90] 상용 6종(F&F·Hidden Door·크랙 등)+서사 게임 카피 6종(Disco·산나비 등) 실측 벤치마크 → 카피 톤 원칙 5(대칭 슬로건 금지·구체 사물·동사 비틀기·구어 마무리·시스템은… | ✅ 완료 |
-| **거점 정체성 충돌 + 검증 인프라 (2026-07-26)** | [arch/92] 별빛모래 실플레이에서 "꿈잠 여관에서 꿈잠 여관으로 이동" 발견. 원인은 설계 오류가 아니라 이름 중복(엔진의 거점=추상 상태 currentLocationId=null ↔ 콘텐츠… | ✅ 완료 |
-| **장소 배경 지속화 (2026-07-27)** | [arch/93] 이미지 채널 5개 중 대화 중 살아있는 것이 초상화뿐이라, 장면이 한 번도 안 뜨는 구간이 중앙값 3턴·p90 6턴·최장 23턴(2,117턴/532구간 실측). "부족한 것은 인물이 아니라… | ✅ 완료 |
-| **모바일 스크롤·뷰포트 정합 (2026-07-27)** | [arch/94] 헤드리스 모바일 4뷰포트(390x844/390x480/390x380/844x390) 실런 전수 점검 → 11종 수정. P1 ① 서술 스크롤 되돌림: "하단 100px" 단일 임계를 follow… | ✅ 완료 |
-
+| **포인트 시스템 (2026-07-23)** | [arch/85] 채팅 1턴 5p 차감(코드 발급→충전→차감), 실패 턴 환불 2경로, 클라 잔액·충전 모달·402 유도. 소프트 베타 비용 통제 | ✅ 완료 |
+| **자율 디렉터 존재감 튜닝 (2026-07-21)** | [arch/83] 병목이 임계가 아니라 "기회 창×신선도" 동시 성립임을 진단하고 stale 2→3턴·GRAVITY 상향. 채택 0~2→2.0/12턴, 강제 진행 회귀 0 | ✅ 완료 |
+| **LLM 31B 승격 + 프로바이더 allowlist (2026-07-22)** | [arch/25] 메인 26B→31B dense + 모델별 프로바이더 allowlist(빈 서술 3~5/12턴 대응) + 빈 서술 3층 방어. 턴당 실과금 ₩1.57 | ✅ 완료 |
+| **파티 던전 클라이언트 배선 (2026-07-23)** | [arch/84] 서버 엔진은 완성인데 클라 협동 입력이 미배선이던 것 해소 + 프롤로그 소프트락(전 팩 신규 파티 진입 불능) 제거 | ✅ 완료 |
+| **어드민 콘솔 (2026-07-23)** | [arch/87] 관제 API 12종 + 하이브리드 AdminGuard·@AdminEndpoint 감사 로그 + 별도 앱. 일반 유저에 열려 있던 보안 결함 2건 봉쇄 | ✅ 완료 |
+| **비-graymar 팩 정합 + 모바일 UX (2026-07-23)** | [arch/86] 팩 스코프 누락으로 고유 아이템을 못 쓰던 것, 팩 프리셋 초상화 미표시, 아이템 3층 프로세스, 모바일 서술 스크롤 min-h-0 회귀 | ✅ 완료 |
+| **S5 엔딩 동선 + encounterCount 수정 (2026-07-23)** | [arch/88] arc_events.json 부재로 3루트 엔딩이 사장되던 것과, 워커 백필이 조우 카운트를 오염시켜 관계 티어링이 죽어 있던 것 수정 | ✅ 완료 |
+| **플레이어 이름 인지 (2026-07-26)** | [arch/91] 프롤로그 통성명 + 통성명 기반 재회 호명. 재회 트리거 미발동의 원인이 encounterCount 고착임을 규명해 computeFamiliarity 로 전환 | ✅ 완료 |
+| **랜딩 리디자인 P1~P4 (2026-07-25~26)** | [arch/90] 상용·게임 카피 12종 벤치마크로 톤 원칙 5 확립 후 카피 전면 교체 + 시나리오 카탈로그 + 게임플레이 CSS 재현 + 공개 통계 API | ✅ 완료 |
+| **거점 정체성 충돌 + 검증 인프라 (2026-07-26)** | [arch/92] "여관에서 여관으로 이동"의 원인이 설계가 아니라 이름 중복임을 규명하고 4팩 거점 명명을 추상형으로 전환. V9 반복 센서 정밀화도 함께 | ✅ 완료 |
+| **장소 배경 지속화 (2026-07-27)** | [arch/93] 대화 중 장면이 없는 구간(중앙값 3턴·최장 23턴)을 배경 레이어로 메움. 헤더 밴드안은 뷰포트 25% 잠식으로 기각 | ✅ 완료 |
+| **모바일 스크롤·뷰포트 정합 (2026-07-27)** | [arch/94] 헤드리스 4뷰포트 점검으로 11종 수정 — 스크롤 되돌림 follow 모델, overscroll-contain, 타이틀·로그인 스크롤 구조, 모달 16곳, safe-area | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
