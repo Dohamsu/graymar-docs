@@ -921,6 +921,62 @@ else:
 if v11_failed_count:
     print(f"  ⚠️ FAILED/TIMEOUT 턴 {v11_failed_count}건 — 서버 방어 작동 (게이트 비대상, 프로바이더 관찰 재료)", flush=True)
 
+# V12: 프롬프트 예산 — 재비대 가드 (arch/79 2차 + arch/95 §6, 2026-07-27)
+#   배경: arch/79(7/19) 이후 3주간 신규 블록 5계열+규칙 재성장으로 백스톱 발동률이
+#   0%→35%로 자랐는데 감시 지표가 없어 아무도 못 봤다 — 그 부작용이 [NPC 일상]
+#   잡담 화제 블록 상시 삭제(D 블록 미주입 버그)였다. 턴별 최종 프롬프트
+#   (includeDebug llmPrompt, 백스톱 절삭 후) 총 문자수를 집계해 게이트한다.
+#   - 발동 추정: 절삭 후에도 ≥16,000자에 남는 턴 — 백스톱이 스냅샷 제거로도 상한
+#     (GRAND_TOTAL 16,500자)을 못 맞춘 턴의 근사치. 정밀 판정은 서버 [GrandBudget] 로그.
+#   - FAIL 시 대응은 프롬프트 다이어트가 정본 — 상한 상향으로 풀지 말 것 (arch/95 §6).
+PROMPT_BUDGET_CAP = 16500      # server token-budget.service.ts GRAND_TOTAL_CHAR_BUDGET
+PROMPT_FIRE_PROXY = 16000      # 발동 추정 임계 (상한의 ~97%)
+PROMPT_AVG_LIMIT = 15000       # 평균 경보선 (2026-07-27 압축 후 실측 avg 12.7k + 18% 여유)
+print("\n[V12] 프롬프트 예산 (재비대 가드):", flush=True)
+prompt_sizes = []
+for t in turn_logs:
+    _tn = t.get("turnNo")
+    if not _tn:
+        continue
+    try:
+        _p = get_prompt(run_id, _tn)
+    except Exception:
+        _p = None
+    if not _p:
+        continue
+    _msgs = _p if isinstance(_p, list) else [_p]
+    _total = sum(
+        len((m or {}).get("content") or "") if isinstance(m, dict) else len(str(m))
+        for m in _msgs
+    )
+    if _total > 0:
+        prompt_sizes.append((t["turn"], _total))
+prompt_budget_metrics = None
+if prompt_sizes:
+    _sizes = [s for _, s in prompt_sizes]
+    _p_avg = sum(_sizes) // len(_sizes)
+    _p_max = max(_sizes)
+    _fired = [(tt, s) for tt, s in prompt_sizes if s >= PROMPT_FIRE_PROXY]
+    _fire_rate = len(_fired) / len(_sizes)
+    v12_pass = _fire_rate <= 0.20 and _p_avg <= PROMPT_AVG_LIMIT
+    prompt_budget_metrics = {
+        "avgChars": _p_avg,
+        "maxChars": _p_max,
+        "sampleTurns": len(_sizes),
+        "fireProxyCount": len(_fired),
+        "fireProxyRate": round(_fire_rate, 3),
+        "capChars": PROMPT_BUDGET_CAP,
+    }
+    print(f"  프롬프트 총량: avg {_p_avg:,}자 / max {_p_max:,}자 (표본 {len(_sizes)}턴, 상한 {PROMPT_BUDGET_CAP:,}자)", flush=True)
+    print(f"  백스톱 발동 추정(≥{PROMPT_FIRE_PROXY:,}자): {len(_fired)}/{len(_sizes)}턴 ({_fire_rate*100:.0f}%)", flush=True)
+    if v12_pass:
+        print("  ✅ 예산 정상 — 재비대 없음", flush=True)
+    else:
+        print("  ❌ 재비대 경보 — 프롬프트 다이어트 필요 (상한 상향으로 풀지 말 것, arch/95 §6)", flush=True)
+else:
+    v12_pass = True
+    print("  ⚠️ 프롬프트 표본 없음 (includeDebug 미보존?) — 게이트 스킵", flush=True)
+
 # Summary
 print("\n" + "=" * 60, flush=True)
 all_checks = {
@@ -941,6 +997,8 @@ all_checks = {
     "V9_quality": not _rep_gate_failed,
     "V10_choice_npc_match": len(v10_issues) == 0,
     "V11_narrative_present": len(v11_issues) == 0,
+    # V12 — 프롬프트 예산 재비대 가드 (arch/95 §6): 발동 추정률 ≤20% AND avg ≤15,000자
+    "V12_prompt_budget": v12_pass,
 }
 passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
@@ -1266,6 +1324,7 @@ output = {
         "discoveredQuestFacts": discovered_facts,
     },
     "verification": all_checks,
+    "promptBudget": prompt_budget_metrics,
     "narrativeMetrics": narrative_metrics,
     "outcomeDistribution": outcome_distribution,
     "directionMetrics": direction_metrics,
