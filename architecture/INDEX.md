@@ -7,7 +7,7 @@
 
 - 세계관/배경: [[architecture/01_world_narrative|world narrative]]
 - 전체 아키텍처: [[architecture/04_server_architecture|server architecture]]
-- 최근 파이프라인: `26_narrative_pipeline_v2.md`, [[architecture/35_llm_streaming|llm streaming]]
+- 최근 파이프라인: [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]], [[architecture/35_llm_streaming|llm streaming]]
 - 최신 전투: [[architecture/41_creative_combat_actions|creative combat actions]](창의 입력), [[architecture/42_combat_ui_buttonform|combat ui buttonform]](버튼형 UI)
 - 최신 구현 가이드: `guides/01~08_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지·LivingWorld·파티)
 
@@ -21,7 +21,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/01_world_narrative|world narrative]] — 그레이마르 왕국의 정치 음모 배경과 3 루트(부패 폭로/혼란 이익/근위 동맹) 서사 골격. 모든 서술의 톤과 사건 시드의 뿌리.
 - [[architecture/09_npc_politics|npc politics]] — 5축 감정(trust/fear/respect/affection/hostility)과 NPC 소개 조건(FRIENDLY 1회/CAUTIOUS 2회/HOSTILE 3회), posture 전환 규칙. Leverage/거래는 부분 구현.
-- `Narrative_Engine_v1_Integrated_Spec.md` — Narrative Engine v1 통합 스펙(Incident/4상 시간/Signal/NpcEmotional/Mark/Ending/Operation). 현 HUB 엔진의 기반 설계.
+- [[architecture/Narrative_Engine_v1_Integrated_Spec|narrative engine v1]] — Narrative Engine v1 통합 스펙(Incident/4상 시간/Signal/NpcEmotional/Mark/Ending/Operation). 현 HUB 엔진의 기반 설계.
 - [[architecture/06_graymar_content|graymar content]] — 프리셋 6종, NPC 43명, 장소 7개, Incident 13건 등 graymar_v1 콘텐츠 스키마와 시드 데이터 구조.
 - [[architecture/63_multi_scenario_content_decoupling|multi scenario content decoupling]] — 멀티 시나리오 선행작업 ②~⑤: 엔진 하드코딩 콘텐츠 ID 외부화(표시명/활동장소/별칭/프롤로그/L0 테마), DAG graph.json화, 시스템 프롬프트 세계관 주입, silverdeen_v1 미니 팩 + scenarioId 런 경로. 단일 활성 시나리오 정책(① 멀티 팩 로더는 후속).
 - [[architecture/70_campaign_progression|campaign progression]] — ✅ 구현됨. 캠페인 순차 진행(한 캐릭터 이어달리기, 되돌아가기 불가): `?? 'DOCKWORKER'` 폴백 7곳 제거(star_sand 진입 400 언블록) + 집합 기반 다음 순번 게이팅(status COMPLETED/CURRENT/LOCKED) + 캐릭터 정체성(gender/이름/특성) 이월 + RUN_ABORTED 재도전 시맨틱. 캐리오버 엔진 ~75% 기구현 위 배선.
@@ -48,7 +48,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/04_server_architecture|server architecture]] — NestJS 10 모듈, 65+ 서비스, Drizzle ORM 18 테이블, Server-Is-Source-of-Truth 원칙, Idempotency, RNG 결정론 등 정본.
 - [[architecture/77_god_method_refactoring|god method refactoring]] — 대형 파일 구조 개선(✅ 전 Phase 완료 2026-07-18). P1 prompt-builder -62% · P2 context-builder -64% · P3 turns.service Inner -56% · P4 llm-worker Inner -50%(금지선 4곳 마킹) · 전투/DAG -41%(골드 무바닥 수정) · P5 클라 3파일 -26~-45%. 매 스텝 유닛 green + playtest/E2E 게이트, 회귀 0. §9 진행 로그가 정본. 잔여: §5 재비대화 래칫(ESLint max-lines warn)만.
 - [[architecture/10_region_economy|region economy]] — 리전별 경제(골드 유동성, 상점 물가)와 장비/세트 연계. 장비 드랍은 완성, 리전별 동적 경제는 부분.
-- [[architecture/12_equipment_system|equipment system]] — 장비 드랍/착용, 접미사, 세트 효과, Legendary. Phase 4에서 구현 완료.
+- [[architecture/87_admin_console|admin console]] — ✅ 구현됨(2026-07-23). 어드민 콘솔: 서버 `admin/` 모듈 관제 API 12종(overview KPI·llm-cost·points 시계열·유저 조정·런 스턱/abort/retry·failures·health) + 하이브리드 AdminGuard(x-admin-token OR JWT+users.role) + `@AdminEndpoint` 정본(가드+감사 로그 `admin_audit_logs`) + 별도 앱 graymar-admin(4번째 레포·Vercel). **보안 결함 2건 봉쇄**: settings/llm PATCH·bug-reports 목록/상세/PATCH 가 일반 유저에게 열려 있었다. QA 함정은 §9(raw SQL timestamp 문자열·llmError jsonb 렌더·빈 쿼리 422).
 
 ### 4. 진행·라우팅
 
@@ -56,15 +56,16 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/14_user_driven_code_bridge|user driven code bridge]] — 플레이어 입력 → IntentV3Builder → IncidentRouter → WorldDelta → PlayerThread → Notification의 유저 드리븐 브릿지.
 - [[architecture/21_living_world_redesign|living world redesign]] — Living World v2 전면 재설계(LocationDynamicState/WorldFact/NpcSchedule/NpcAgenda/SituationGenerator/ConsequenceProcessor/PlayerGoal).
 - [[architecture/71_campaign_free_scenario_selection|campaign free scenario selection]] — 캠페인 자유 시나리오 선택(원점 정책 폐기, AVAILABLE/IN_PROGRESS/COMPLETED) + creation-bundle API(팩 프리셋·특성 서빙) + 캐릭터 생성 6단계 통일 + 장비 carrySnapshot 이월 + 소모품 골드 환산 + campaignSummary 서사 이월. 70의 순차 게이팅을 대체.
+- [[architecture/92_hub_base_location_collision|hub base location collision]] — ✅ 구현됨(A안, 2026-07-26). 거점(HUB)↔거점 장소 정체성 충돌: 같은 고유명이 추상 상태(`currentLocationId=null`)와 실제 LOCATION 에 동시 부착돼 "꿈잠 여관에서 꿈잠 여관으로 이동"이 성립했다. 설계 오류가 아니라 **이름 중복**이 원인(arch/68 부록 B 가 거점 장소를 `hubAccessible` 로 열 때 이름·프레이밍을 분리하지 않음) → 4팩 `hub.name`/`returnLabel` 추상형 전환 + `regionSummary`·L0 `hub_system` 프레이밍 교체(라벨만 고치면 LLM 이 계속 "거점=그 건물"로 학습) + 자기 이동 선택지 제거 + HUB 복귀 턴 도착 디렉티브 분기(없는 장소 환경 묘사 강제). 스핀오프 §8~9 V9 반복 센서 정밀화(17%→6%, 92%가 센서 아티팩트) · §10 부재 NPC 화자 승격(별칭 관형어 부분 매칭). 잔여 D9(거점 진입 4턴)는 B안 백로그.
 
 ### 5. LLM·서술 파이프라인
 
 - [[architecture/05_llm_narrative|llm narrative]] — LLM 파이프라인 개요(L0~L4 컨텍스트, Token Budget 2단 — 메모리 2500+총량 백스톱 16,000자 arch/79, LLM is narrative-only 불변). 모든 서술 문서의 진입점.
 - [[architecture/11_llm_prompt_caching|llm prompt caching]] — 시스템/정적/동적 블록 분리와 프롬프트 캐싱 전략(OpenAI/Anthropic/OpenRouter).
 - [[architecture/25_llm_model_evaluation|llm model evaluation]] — 모델 평가(v1+v2+v3 통합). **현 운영(2026-07): 메인 Gemma 4 31B dense (OpenRouter, allowlist ModelRun·Friendli — 부록 D-8) + DeepSeek V4 Flash 짝수 턴 교차 + fallback GPT-4.1 Mini.** Qwen3 235B → Gemini Flash → Gemma 26B 복귀 → v3 교차 → 31B 승격 이력.
-- `26_narrative_pipeline_v2.md` — 3-Stage 파이프라인(NanoDirector → 메인 LLM → NanoProcessor)과 Narrative v2 / EventDirector / Procedural Event(`18/19/20` 통합) + AI 구현 가이드라인.
+- [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]] — 3-Stage 파이프라인(NanoDirector → 메인 LLM → NanoProcessor)과 Narrative v2 / EventDirector / Procedural Event(`18/19/20` 통합) + AI 구현 가이드라인.
 - [[architecture/30_marker_accuracy_improvement|marker accuracy improvement]] — @마커 오류율 개선 3전략(프롬프트 강화 + 서브 LLM 2차 검증 + JSON 모드).
-- `31_memory_system_v4.md` — nano 구조화 추출 + `entity_facts` UPSERT + 직전 턴 nano 요약 주입. 메모리 반복률 대폭 감소.
+- [[architecture/31_memory_system_v4|memory system v4]] — nano 구조화 추출 + `entity_facts` UPSERT + 직전 턴 nano 요약 주입. 메모리 반복률 대폭 감소.
 - [[architecture/32_dialogue_split_pipeline|dialogue split pipeline]] — 2-Stage 대사 분리(서술/대사), `dialogue_slot` JSON, 서버 마커 자동 삽입, 하오체 검증+재시도.
 - [[architecture/33_lorebook_system|lorebook system]] — 키워드 트리거 기반 세계 지식 동적 주입(NPC knownFacts/장소 비밀/사건 단서/entity_facts 키워드 검색).
 - [[architecture/34_player_first_event_engine|player first event engine]] — Player-First 이벤트 엔진(TurnMode 3분류, NPC 5단계 우선순위, contextNpcId, EventMatcher targetNpcId 가중치). 현 최신.
@@ -94,6 +95,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/75_autonomous_pack_design|autonomous pack design]] — 📐 상세설계 확정 → **P0~P6+P8 구현·배포**(2026-07-16, karnholt_v1 AUTONOMOUS 팩). 진상 선확정 Plot Seed(PlotSeedGenerator+검증/폴백) + Emergent Director 비트 선계산(PlotDirector, 워커 비동기 CAS)+동기 채택(beat-gravity, 불변식 47 의도 정합) + 동적 NPC(dynamic-npc stub) + 규명율 엔딩(autonomous-ending) + 킬스위치. §19 P8 계측: 디렉터 존재감 낮음(채택 0~2/12턴) — 후속은 83(안 A+C)으로 구현 완료.
 - [[architecture/83_director_presence_tuning|director presence tuning]] — ✅ 구현·검증(2026-07-21). arch/75 P8 후속: 채택 병목 = 임계가 아니라 "기회 창(WORLD_EVENT 게이트)×신선도(stale 2턴)" 동시 성립 진단 → 안 A(BEAT_STALE_MAX_TURNS 2→3)+안 C(GRAVITY_NPC_BONUS 25→30·직전 상호작용 가중 ½→⅔) 구현, 안 B(강제창 4→3)는 정합률 감시 하 보류. 채택 0~2→2.0/12턴·keyFact↑·강제 진행 회귀 0. §11 무명 화자 프레이밍(무명 정보원의 긴 증언 → 서술형 소문 우선 + 익명 @마커 ≤1, 무명 12→5·7회, 위화감 0×2런).
 - [[architecture/69_npc_living_presence|npc living presence]] — B축(살아있는 NPC), B0~B4 ✅ 구현. B0 계측(정보 편향 88% 실측)·B1 반응 자기목적 주입(INFO 88→40%)·B2 잡담 활동 결합·B3 재등장 연속성·B4 NPC 간 세계(잡담 경로 관계 근황 발화 selectRelationMentionCore, introduced 후보 한정+rel: 쿨다운; 목격 파이프 위치 판정 버그 수정으로 부활). 공용 헬퍼 getNpcSchedulePhaseEntry/getNpcCurrentActivity 4곳 재사용. 후속: 어미 다양화(26명 재배정·HAEYO 제거) + 어체 검증 경로 **완결** — C1 하오체 강제 후처리 제거 → C2 화자 인지 계측(llm_speech_audit, 검증기 버그 7건 발견·수정) → C2.5 forbidHint·검증기 정비 → **C2.6 시스템 프롬프트 하오체 전역 강제 레거시 정정(진짜 원인)** → 하오체 침식 80→9.1%로 C3(선별 재생성) 미발동 확정. 잔여 과제는 문서 §7 통합. A축(선제 단서 억제)은 arch/68 부록 M.
+- [[architecture/91_player_name_recognition|player name recognition]] — ✅ 구현됨(2026-07-26). 플레이어 이름 인지: 캐릭터 이름이 생성→UI→엔딩 요약으로만 흐르고 플레이 중엔 800+턴에 1건뿐이던 것 해소. A = 프롤로그 통성명 왕복(`{NAME_ASK}` 덩어리 토큰, 이름 미지정 런 41%는 3줄 통째 제거) · B = `NPCState.knowsPlayerName` + `shouldCallPlayerName` 게이트(npc-state.ts 단일 정본) + 자기소개 nano 되받기 + 마커 안전망. **§9**: 재회 트리거 미발동의 원인이 `encounterCount` 실플레이 고착임을 규명 → `computeFamiliarity`(방문+서술÷2) 파생 지표로 관계 깊이·`isReEncounter` 전환, "전 NPC 영구 첫 만남" 모순 해소. 계측 함정: `llmContext.npcStates` 는 턴 시작 스냅샷이라 5.11 CAS 결과가 안 보인다.
 
 ### 6. UI·클라이언트
 
@@ -103,15 +105,19 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/90_landing_page_redesign|landing page redesign]] — 랜딩 리디자인 P1~P4 (2026-07-25~26). 상용 6종+서사 게임 카피 6종 실측 벤치마크 → 카피 톤 원칙 5(§1.2). P1 카피 v2 전면 교체·P2 섹션 재배치+시나리오 카탈로그 4팩·P3 게임플레이 CSS 재현 루프·P4 사회적 증명(`GET /v1/stats/public` + LiveStats ISR). 프로덕션 검증 완료.
 
+- [[architecture/93_location_backdrop|location backdrop]] — ✅ 구현됨(2026-07-27, 클라 단독). 장소 배경 지속화: 대화 중 장면 이미지가 한 번도 안 뜨는 구간이 중앙값 3턴·p90 6턴·최장 23턴(2,117턴/532구간 실측) → "부족한 것은 인물이 아니라 장면"이고 공백은 지속으로만 메워진다는 판단으로 서술 패널 뒤 배경 레이어(알파+스크림, 장소·시간대 변경 시에만 교체). 헤더 밴드안은 모바일 뷰포트 25% 잠식(arch/86 서술 영역 반납)으로 기각, orphan `LocationImage.tsx` 는 크로스페이드만 이식 후 삭제. 신규 에셋 0·서술 파이프라인 무접촉. §7 후속: 장소 라벨 정본화.
+
 - [[architecture/94_mobile_scroll_viewport|mobile scroll viewport]] — 모바일 스크롤·뷰포트 정합 (2026-07-27). 헤드리스 4뷰포트 실런 점검 → 11종 수정: 서술 스크롤 follow 모델(제스처 우선·프로그램 스크롤 창 구분·터치 중 중단), `overscroll-contain` 전면(Android 당겨서 새로고침 차단), 타이틀/로그인 스크롤 구조 전환, 모달 16곳 2패턴, `MOBILE_HEADER_OFFSET` 단일 정본(고정 헤더 81px+safe-area), safe-area 커버리지. 규약 5종은 §5.
 
 ### 7. 멀티플레이
 
 - [[architecture/24_multiplayer_party_system|multiplayer party system]] — 파티 Phase 1+2+3 통합 설계(CRUD/초대/SSE 채팅/로비/동시 턴/통합 판정/3인칭 서술/이동 투표/보상 분배/런 통합). 구현 API는 CLAUDE.md Endpoint 표와 server `party/` 모듈 참조.
+- [[architecture/84_party_dungeon_client_wiring|party dungeon client wiring]] — ✅ 구현됨(2026-07-23). 파티 던전이 "서버 엔진 완성 / 클라 UI 미배선" 상태이던 것을 2중 검증으로 진단하고 해소. 서버: `submitLeaderHubChoice`(프롤로그·Heat CHOICE 리더 대표 통과)·가드 화이트리스트·턴 타이머 deadline·멤버 데이터 경로(`GET .../runs/:id/state`). 클라: game-store 파티 분기(리더도 파티 엔드포인트 경유)·`applyPartyTurnResult`+서사 폴링·멤버 진입 복원·투표 후 재복원. 프롤로그 accept_quest 소프트락(전 팩 신규 파티 진입 불능) 해소. arc_commit 투표화는 백로그, 2인 실시간 UI 는 수동 QA.
 
 ### 8. 엔딩·아카이브
 
 - [[architecture/39_ending_journey_archive|ending journey archive]] — 엔딩 직전/직후 연출 강화(Part B MIN_TURNS 가드, commitTurnRecord 순서 수정, arcRoute 12분기 에필로그, personalClosing 템플릿, SoftDeadline Signal + DeadlineBanner + LLM deadlineContext) + 여정 아카이브 Phase 1(`ending_summary` jsonb, SummaryBuilderService, EndingsController, EndingsListScreen/JourneySummaryScreen, lazy fallback).
+- [[architecture/88_endgame_arc_commit_encounter_fix|endgame arc commit encounter fix]] — ✅ 구현됨(2026-07-23). 활성 star_sand 런 분석 도출 2건. **B**: 팩에 `arc_events.json` 자체가 없어 `routeCommitChoices` 가 비고 → arc_commit 선택지 미노출 → 모든 런이 `currentRoute=null` 무커밋 엔딩으로 끝나 3루트 엔딩 콘텐츠가 사장됐다. 콘텐츠 신규 + `isTerminalState()` + 종착·미커밋 시 거점 복귀 힌트. **팩 계약 신설**: `arcRouteEndings` 정의 팩은 `routeCommitChoices` 필수. **C**: `encounterCount` 전 NPC 0 고착 — 증가 게이트를 워커 LockSeed(서술 화자 백필)가 오염 → per-visit 키를 `NPCState.lastEncounterNodeId` 명시 플래그로 교체, 관계 깊이 티어링 복원.
 
 ### 9. 소지품·아이템
 
@@ -119,10 +125,10 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 ### 10. 기타
 
-- `Context Coherence Reinforcement.md` — 컨텍스트 일관성 강화 원칙(씬 연속성 7규칙, sceneFrame 3단계 억제, 씬 이벤트 1턴 유지). 모든 서술 파이프라인 문서의 공통 제약.
-- `fixplan_history.md` — 완료된 플레이테스트 패치 내역(기존 `fixplan3/4/5` 통합). 히스토리 참조용이며, 신규 이슈는 본 히스토리와 중복되지 않도록 확인 필요.
+- [[architecture/Context Coherence Reinforcement|context coherence reinforcement]] — 컨텍스트 일관성 강화 원칙(씬 연속성 7규칙, sceneFrame 3단계 억제, 씬 이벤트 1턴 유지). 모든 서술 파이프라인 문서의 공통 제약.
+- [[architecture/fixplan_history|fixplan history]] — 완료된 플레이테스트 패치 내역(기존 `fixplan3/4/5` 통합). 히스토리 참조용이며, 신규 이슈는 본 히스토리와 중복되지 않도록 확인 필요.
 - [[architecture/76_market_alignment_direction|market alignment direction]] — 시장 조사 대응 방향: AI 텍스트 RPG 이용자 긍/부정 요인 ↔ 현 구조 대조 + D1(의도 존중 가드=불변식 47)·D2(판정 투명성 UI)·D3(actionType 탈버킷+감정 행동화)·D4(반복 계측)·D5(과금 3원칙) ✅ 구현. 잔여는 D6(저작 도구)뿐. §5 진행 체크리스트.
-- `36_llm_pipeline_changelog_20260417.md` — 📜 이력. 2026-04-17 LLM 파이프라인·렌더링·품질 수정 Before/After 정리.
+- [[architecture/36_llm_pipeline_changelog_20260417|llm pipeline changelog 20260417]] — 📜 이력. 2026-04-17 LLM 파이프라인·렌더링·품질 수정 Before/After 정리.
 
 ---
 
@@ -166,31 +172,31 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-07-18)
+## 도메인별 최신 업데이트 기준 (2026-07-27)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
-| 세계/NPC     | 01, 06, 09, **63, 64, 66, 69**     | 구현됨 (멀티 시나리오 + 이름 공개 무결성 + 자기소개 + Living Presence) |
+| 세계/NPC     | 01, 06, 09, **63, 64, 66, 69, 91** | 구현됨 (멀티 시나리오 + 이름 공개 무결성 + 자기소개 + Living Presence + 플레이어 이름 인지) |
 | 전투         | 02, 08, **41, 42**                 | 구현됨 (창의 Tier + 버튼 UI + arch/76 전투 기만) |
-| HUB/진행     | 03, 07, 14, **70, 71**             | 구현됨 (07 부분 업데이트 필요, 캠페인은 71이 정본) |
+| HUB/진행     | 03, 07, 14, **70, 71, 92**         | 구현됨 (07 부분 업데이트 필요, 캠페인은 71이 정본, 거점 명명은 92) |
 | Living World | 21                                 | 구현됨              |
-| 서버/데이터  | 04, 10, 12, **77**                 | 구현됨 (10 리전 경제 부분, 77 God method 완료) |
+| 서버/데이터  | 04, 10, 12, **77, 87**             | 구현됨 (10 리전 경제 부분, 77 God method 완료, 87 어드민 콘솔·보안 게이트) |
 | LLM 서술     | 05, 11, 26, 35, **62**             | 구현됨 (스트리밍 + 레이턴시 최적화) |
 | 모델 평가    | 25                                 | 참고                |
 | 메모리       | 31                                 | 구현됨 (v4)         |
 | 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝 + nano 감사) |
 | 이벤트 엔진  | 34, **43, 46**                     | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체, 28은 archive 배경) |
 | NPC 결정/품질 | **48, 49, 51, 47, 55, 72**        | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭 + 반응 권한 통합, 50은 폐기) |
-| UI/클라      | 15, 23, **42, 68, 90**             | 구현됨 (UI/UX 실사 리뷰 + 랜딩 리디자인 P1~P4) |
-| 파티         | 24                                 | 구현됨 (Phase 1~3)  |
+| UI/클라      | 15, 23, **42, 68, 90, 93, 94**     | 구현됨 (UI/UX 실사 리뷰 + 랜딩 리디자인 + 장소 배경 + 모바일 스크롤 정합) |
+| 파티         | 24, **84**                         | 구현됨 (Phase 1~3 + 클라 배선 완성) |
 | 주사위/UX    | 22                                 | 구현됨              |
-| 엔딩/아카이브 | 39                                 | 구현됨 (Phase 1)    |
+| 엔딩/아카이브 | 39, **88**                        | 구현됨 (Phase 1 + arc 커밋 동선 복구) |
 | 소지품/아이템 | 40                                 | 구현됨 (UX 개선 + LLM 정합성) |
 | 경제         | **65**, 89                         | 구현됨 (사례금 적립·정산 + BRIBE 정보 구매) |
 | 자율 서사    | **74(논의), 75(설계·P0~P8)**       | 구현됨·프로덕션 (karnholt_v1, P7/P8 후속 대기) |
 | 시장 대응    | **76**                             | 구현됨 (D6 저작 도구만 잔여) |
 | 컨텍스트 일관성 | Context Coherence Reinforcement | 적용됨              |
-| 플레이테스트 | fixplan_history.md                 | 히스토리            |
+| 플레이테스트 | fixplan_history                    | 히스토리            |
 
 ---
 
@@ -200,7 +206,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 - [[architecture/07_game_progression|game progression]] 는 HUB 모드 도입 이전 서술 일부 남아 있음 — 실제 구현은 [[architecture/03_hub_engine|hub engine]] + [[architecture/14_user_driven_code_bridge|user driven code bridge]] + [[architecture/21_living_world_redesign|living world redesign]] 조합을 우선.
 - [[architecture/10_region_economy|region economy]] 의 리전 동적 경제 파트는 부분 구현. 장비/세트는 [[architecture/12_equipment_system|equipment system]] 가 정본.
 - [[architecture/15_notification_system|notification system]] 는 기존 `15/16/17` 3개 문서 통합본. 구 파일명 참조는 본 문서로 리다이렉트.
-- `fixplan_history.md` 는 완료 이슈 아카이브. 신규 플레이테스트 이슈 리포트는 `playtest-reports/` 와 별개.
+- [[architecture/fixplan_history|fixplan history]] 는 완료 이슈 아카이브. 신규 플레이테스트 이슈 리포트는 `playtest-reports/` 와 별개.
 - 아카이브됨(2026-04-22):
   · `archive/27_image_asset_plan.md` — 에셋 생성 계획 (부분 구현, 현행은 content/ 하위 실측)
   · `archive/28_nano_event_director.md` — Player-First의 배경 설계, 현행은 [[architecture/34_player_first_event_engine|player first event engine]]
@@ -217,10 +223,10 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 작업 유형                | 먼저 볼 문서                                                                 |
 | ----------------------- | -------------------------------------------------------------------------- |
 | 새 서버 서비스 추가      | [[architecture/04_server_architecture|server architecture]] → [[guides/01_server_module_map|server module map]]             |
-| LLM 프롬프트 수정        | [[architecture/05_llm_narrative|llm narrative]] → `26_narrative_pipeline_v2.md` → [[guides/04_llm_memory_guide|llm memory guide]] |
+| LLM 프롬프트 수정        | [[architecture/05_llm_narrative|llm narrative]] → [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]] → [[guides/04_llm_memory_guide|llm memory guide]] |
 | 스트리밍/SSE 관련        | [[architecture/35_llm_streaming|llm streaming]] → [[guides/04_llm_memory_guide|llm memory guide]]                    |
 | 이벤트/NPC 매칭          | [[architecture/34_player_first_event_engine|player first event engine]] → [[architecture/03_hub_engine|hub engine]] → [[guides/03_hub_engine_guide|hub engine guide]] |
-| 메모리/컨텍스트 블록     | `31_memory_system_v4.md` → [[guides/04_llm_memory_guide|llm memory guide]]                 |
+| 메모리/컨텍스트 블록     | [[architecture/31_memory_system_v4|memory system v4]] → [[guides/04_llm_memory_guide|llm memory guide]]                 |
 | @마커/대사 분리          | [[architecture/30_marker_accuracy_improvement|marker accuracy improvement]] + [[architecture/32_dialogue_split_pipeline|dialogue split pipeline]]      |
 | 전투 밸런스/판정         | [[architecture/02_combat_system|combat system]] → [[specs/combat_system|combat system]]                           |
 | 창의 전투(자유 입력)     | [[architecture/41_creative_combat_actions|creative combat actions]] → `server/src/engine/combat/prop-matcher.service.ts` |
@@ -232,4 +238,4 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 클라이언트 UI 변경       | [[guides/02_client_component_map|client component map]] (+ `15`, `23`)                         |
 | 파티 기능                | [[architecture/24_multiplayer_party_system|multiplayer party system]] → server `party/` 모듈                    |
 | 포인트/과금 (소프트 베타) | [[architecture/85_point_system|point system]] → server `points/` 모듈 + `turns.chargeKey`                     |
-| 플레이테스트 이슈 회귀   | `fixplan_history.md` (중복 확인)                                           |
+| 플레이테스트 이슈 회귀   | [[architecture/fixplan_history|fixplan history]] (중복 확인)                                           |
