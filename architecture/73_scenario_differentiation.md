@@ -213,7 +213,7 @@ B1을 "A와 병행 가능한 규모"로 결론냈으나, 그 전제인 조건 �
 
 ## 11. 실측 신호 기반 실행 설계 — A2'/A4 (2026-07-15)
 
-> §10.4가 요구한 "baseline 신호"를 채우기 위해 별빛모래 **2표본 실플레이**(SS_DOCKHAND·SS_OBSERVER, 각 12턴, 정본 `scripts/playtest.py`)를 수집하고, 그 결과로 **A2 프레이밍을 정정**하며 실행 가능한 설계로 심화한다. B1(packMeters)은 이 논의와 별개로 선행 착수·배포 완료(server 59469a1 — [[project_autonomous_narrative_track]]).
+> §10.4가 요구한 "baseline 신호"를 채우기 위해 별빛모래 **2표본 실플레이**(SS_DOCKHAND·SS_OBSERVER, 각 12턴, 정본 `scripts/playtest.py`)를 수집하고, 그 결과로 **A2 프레이밍을 정정**하며 실행 가능한 설계로 심화한다. B1(packMeters)은 이 논의와 별개로 선행 착수·배포 완료(server 59469a1 — `memory/project_autonomous_narrative_track`).
 
 ### 11.1 실측 신호 (2표본 누적)
 

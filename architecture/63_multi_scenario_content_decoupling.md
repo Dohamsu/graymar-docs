@@ -263,7 +263,7 @@ scenario.json 확장 (graymar_v1 값 = 현행 하드코딩 그대로):
 
 ### 서버
 
-- `GET /v1/scenarios` 신설 (`content/scenarios.controller.ts`) — 캠페인 없이 팩 목록 조회.
+- `GET /v1/scenarios` 신설 (`server/src/content/scenarios.controller.ts`) — 캠페인 없이 팩 목록 조회.
 - createRun/getRun 응답 `run.scenarioId` 포함 — 클라 시나리오 인지의 소스.
 - `ScenarioPrologueMeta.imageUrl` optional화 — 초상화 없는 팩은 무명 실루엣 규약
   (`speakingNpc.imageUrl: undefined`)을 따른다. silverdeen의 존재하지 않는

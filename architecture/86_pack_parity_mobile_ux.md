@@ -1,6 +1,6 @@
 # 86. 비-graymar 팩 정합 + 모바일 UX 마감
 
-> 관련: [[63_multi_scenario_content_decoupling|멀티 시나리오 디커플링]] · [[80_pack_asset_pool|팩 에셋 풀]] · [[../guides/10_star_sand_item_prompts|아이템 프롬프트·프로세스]]
+> 관련: [[63_multi_scenario_content_decoupling|멀티 시나리오 디커플링]] · [[80_pack_asset_pool|팩 에셋 풀]] · [[guides/10_star_sand_item_prompts|아이템 프롬프트·프로세스]]
 > 작성: 2026-07-23 · 상태: ✅ 구현·배포
 
 별빛모래(star_sand_v1) 실플레이에서 드러난 **비-graymar 팩 정합 결함**과 **모바일 UX 결함**을 일괄 수정했다. 공통 뿌리는 "graymar가 기본 팩이라 우연히 동작하던 경로가, 고유 콘텐츠를 가진 팩(별빛모래·카른홀트)에서 깨진다"는 것이다.

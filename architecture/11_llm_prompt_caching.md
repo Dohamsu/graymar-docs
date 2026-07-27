@@ -1,7 +1,7 @@
 # 11. LLM Prompt Caching 설계
 
 정본: 이 문서
-관련: [[architecture/05_llm_narrative|llm narrative]], [[specs/llm_context_system_v1|llm context system v1]]
+관련: [[architecture/05_llm_narrative|llm narrative]], [[specs/llm_context_system|llm context system]]
 
 ---
 

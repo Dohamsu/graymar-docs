@@ -212,7 +212,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
   · `archive/28_nano_event_director.md` — Player-First의 배경 설계, 현행은 [[architecture/34_player_first_event_engine|player first event engine]]
   · `archive/37_streaming_transition_issues.md` — 36과 중복
   · `archive/38_stream_vs_nonstream_comparison.md` — 35와 중복
-- 폐기됨(이미 파일 없음): [[specs/combat_resolve_engine_v1|combat resolve engine v1]] — floor 미적용 오류 버전. 정본은 [[specs/combat_system|combat system]] + [[architecture/02_combat_system|combat system]].
+- 폐기됨(이미 파일 없음): `specs/combat_resolve_engine_v1.md` — floor 미적용 오류 버전. 정본은 [[specs/combat_system|combat system]] + [[architecture/02_combat_system|combat system]].
 - 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(78~)를 사용.
 - **57번 문서 부재**: server 코드/커밋(`focused 모드 보조 NPC strip`, `익명 배경 인물 신원 hard 차단`)이 `architecture/57`을 참조하나 문서 파일이 레포에 없음 — 작성 필요.
 

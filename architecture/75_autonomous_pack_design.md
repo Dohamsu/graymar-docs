@@ -213,10 +213,10 @@ P0 후퇴선은 **해석 심 비용**만 커버했으나, 진짜 미검증 가�
 ### 12.1 구현 (최소 침습)
 | 파일 | 변경 |
 |------|------|
-| `content/scenario-context.ts` | `DynamicNpcStub` 타입(T1 필드) + scenarioId와 독립된 두 번째 ALS(`currentDynamicNpcs`/`runWithDynamicNpcs`) + spike env 훅(`spikeDynamicNpcs`, `SPIKE_DYN_NPC=1`) |
-| `content/content-loader.service.ts` | `getNpc` 폴백(팩 miss→동적 레지스트리) + `getAllNpcs` 합집합 + `expandDynamicStub`(T1 공급/T2 안전기본값/T3 undefined, signature=[] 불변식41) + `applyDynamicNpcs` 래퍼 |
+| `server/src/content/scenario-context.ts` | `DynamicNpcStub` 타입(T1 필드) + scenarioId와 독립된 두 번째 ALS(`currentDynamicNpcs`/`runWithDynamicNpcs`) + spike env 훅(`spikeDynamicNpcs`, `SPIKE_DYN_NPC=1`) |
+| `server/src/content/content-loader.service.ts` | `getNpc` 폴백(팩 miss→동적 레지스트리) + `getAllNpcs` 합집합 + `expandDynamicStub`(T1 공급/T2 안전기본값/T3 undefined, signature=[] 불변식41) + `applyDynamicNpcs` 래퍼 |
 | `turns/turns.service.ts` · `llm/llm-worker.service.ts` | `enterScenario` 직후 `applyDynamicNpcs()` 배선 (진입점 2곳) |
-| `content/content-loader.dynamic-npc.spec.ts` | seam 5케이스 |
+| `server/src/content/content-loader.dynamic-npc.spec.ts` | seam 5케이스 |
 
 → **해석 심 단 1곳 + ALS.** 나머지 **127 getNpc 소비 지점과 모든 하위 시스템은 코드 무변경**으로 동작.
 

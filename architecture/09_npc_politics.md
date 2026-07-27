@@ -1,6 +1,6 @@
 # 09 — NPC 정치 · 관계 · 행동 상태 시스템
 
-> 원본 참조: `State_Storage_Spec_v1.md`, [[specs/political_narrative_system_v1|political narrative system v1]], [[specs/llm_context_memory_v1_1|llm context memory v1 1]]
+> 원본 참조: `State_Storage_Spec_v1.md`, [[specs/political_narrative_system_v1|political narrative system v1]], [[specs/llm_context_system|llm context system]]
 > 상태: **구현 완료** — NPC 감정 모델, 소개 시스템, TurnOrchestration NPC 주입, posture 계산, PBP, Off-screen Tick, Schedule/Agenda, knownFacts 점진 공개, 퀘스트 Fact 연동 구현됨. Leverage(타입만 정의) 미사용. LocationRuntimeState는 Living World v2(21번)로 대체.
 > 의존: WorldState (구현됨), Reputation (구현됨), TurnOrchestration (구현됨), QuestProgression (구현됨)
 > 마지막 갱신: 2026-04-03 (NPC 대사 품질 개선, 대화 잠금, 프리셋 6종 반영)
@@ -221,7 +221,7 @@ interface Relationship {
 
 ### 2.2 서술적 관계 요약 (LLM 전달)
 
-> 원본: [[specs/llm_context_memory_v1_1|llm context memory v1 1]] §1.2
+> 원본: [[specs/llm_context_system|llm context system]] §1.2
 
 관계는 수치가 아닌 **서술 요약**으로 LLM에 전달:
 - "상인 라비는 당신을 신뢰하기 시작했다."

@@ -98,7 +98,7 @@
 | POST | `/v1/admin/codes` | **admin** | `{ points, maxRedemptions, expiresAt? }` → 코드 발급 |
 | GET | `/v1/admin/codes` | **admin** | 발급 목록 + usedCount |
 
-- **admin 게이트**: `ADMIN_TOKEN` env 헤더 검사 (소수 운영). 병행: `scripts/issue_code.py`로 CLI 발급.
+- **admin 게이트**: `ADMIN_TOKEN` env 헤더 검사 (소수 운영). 병행 계획: `scripts/issue_code.py` CLI 발급 (**미구현 — 잔여**).
 - **redeem 검증**: active·미만료·usedCount<maxRedemptions·유저 미사용 → 통과. 실패 사유별 에러 코드(`CODE_NOT_FOUND`/`CODE_EXPIRED`/`CODE_EXHAUSTED`/`ALREADY_REDEEMED`).
 - **redeem 원자성**: `redeem_codes.usedCount` 증가 + `code_redemptions` insert + `users.points` 증가 + 원장 REDEEM을 **단일 트랜잭션**. unique 충돌 시 롤백.
 
@@ -131,7 +131,7 @@ POINTS_ENABLED=true            # 킬스위치 (false=차감 전면 비활성, �
 | S3 | 차감 배선 — 디스패치 직전 chargeTurn + 거부 throw 환불 + 402 | 서버 중 | ✅ | **버그 수정**: 조기 차감→거부 액션 과금 |
 | S4 | D5 환불 — 워커 FAILED **2경로**(에러결과+예외) refundOnFailure | 서버 소 | ✅ | **버그 수정**: ①경로 누락 |
 | S5 | `PointsController` — redeem/balance/transactions | 서버 소 | ✅ | |
-| S6 | Admin 코드 발급 `/v1/admin/codes` (AdminTokenGuard) | 서버 소 | ✅ | scripts/issue_code.py 잔여 |
+| S6 | Admin 코드 발급 `/v1/admin/codes` (AdminTokenGuard) | 서버 소 | ✅ | `scripts/issue_code.py` 미구현 (잔여) |
 | S7 | 가입 보너스 50p (auth register) | 서버 소 | ✅ | |
 | S8 | env 4종 + POINTS_ENABLED 킬스위치 + 유닛(6 pass) | 테스트 | ✅ | 라이브 E2E 8경로 검증 |
 

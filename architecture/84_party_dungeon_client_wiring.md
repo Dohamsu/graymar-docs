@@ -1,6 +1,6 @@
 # 84. 파티 던전 클라이언트 배선 완성
 
-> 설계 배경: [[24_multiplayer_party_system|multiplayer party system]] · 구현 가이드: [[../guides/08_party_guide|party guide]]
+> 설계 배경: [[24_multiplayer_party_system|multiplayer party system]] · 구현 가이드: [[guides/08_party_guide|party guide]]
 > 작성: 2026-07-22 · 상태: 🚧 구현 중
 
 ## 1. 문제 — "서버는 완성, UI 협동은 미배선"

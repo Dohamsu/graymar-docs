@@ -275,7 +275,7 @@ admin/app/
 스턱 런 배너 각 행에 **강제 종료** 버튼 추가(기존 `POST /v1/admin/runs/:id/abort` 재사용, RUN_ABORTED, reason 2단 확인). 스턱은 정의상 RUN_ACTIVE 라 abort 경로가 그대로 성립.
 
 ### 8.4 LLM 비용 차트 + 원화
-- **차트**: `admin/components/LlmCostChart.tsx` — recharts ComposedChart(일 비용 막대 + 호출 라인 이중축) + **Brush 드래그 확대/축소** + 기간 선택(7/30/90일 refetch). LLM 관제 탭에 배치.
+- **차트**: `admin/components/Charts.tsx` — recharts ComposedChart(일 비용 막대 + 호출 라인 이중축) + **Brush 드래그 확대/축소** + 기간 선택(7/30/90일 refetch). LLM 관제 탭에 배치.
 - **원화 통일**: `admin/lib/format.ts` `USD_TO_KRW=1500`·`usdToKrw`·`fmtKrw`. 어드민의 모든 금액(대시보드 KPI·비용 차트·모델별 비용 테이블)을 ₩ 표기. 환율 1500원/$ 고정(프로젝트 정책).
 
 ### 8.5 버그 리포트 보고자

@@ -197,14 +197,14 @@ server/src/engine/combat/prop-matcher.service.ts   ← 통합 매처
 
 | 파일 | 변경 |
 |------|------|
-| `server/src/engine/input/intent-parser.service.ts` | PropMatcher 호출, ActionPlan에 prop/flags 주입 |
+| `server/src/engine/hub/intent-parser-v2.service.ts` | PropMatcher 호출, ActionPlan에 prop/flags 주입 |
 | `server/src/engine/combat/combat.service.ts` | ActionUnit 실행 시 prop.effects / improvised.effects 반영, oneTimeUse 소모 |
 | `server/src/engine/hub/resolve.service.ts` | 비전투에서도 prop 시각 힌트용 로그 (선택) |
 | `server/src/db/types/action-plan.ts` | `prop?`, `improvised?`, `tier`, `flags` 필드 추가 |
 | `server/src/db/types/server-result.ts` | `flags.propUsed`, `flags.fantasyFlag`, `flags.abstractFlag` 추가 |
 | `server/src/llm/prompts/prompt-builder.service.ts` | Tier별 [프롭]/[재해석]/[허공] 블록 추가 |
 | `server/src/llm/prompts/system-prompts.ts` | 환상 재해석 스타일 가이드 섹션 추가 |
-| `content/graymar_v1/nodes.json` (또는 씬별) | 각 LOCATION 씬에 `environmentProps` 배열 추가 |
+| `content/graymar_v1/graph.json` (또는 씬별) | 각 LOCATION 씬에 `environmentProps` 배열 추가 |
 
 ### 4.3 신규 타입
 

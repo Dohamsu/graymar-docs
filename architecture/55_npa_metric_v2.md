@@ -1,6 +1,6 @@
 # architecture/55 — NPA 메트릭 v2: 다중 NPC 정확 측정
 
-> **상태**: 설계 완료 (구현 대기)
+> **상태**: ✅ 구현됨 (2026-04-29) — utterance 단위 자기 register/호칭 평가 + system 프롬프트 자기모순 정정. 부록 A(2026-07-07): 어미 패턴 '-소' 누락 수정
 > **의존**: architecture/47 (NPA 기반), architecture/51 §A (NPA v2 메트릭)
 > **배경**: A54 작업 중 발견 — NPA가 한 응답에 여러 NPC가 등장할 때 모두 primary NPC register로 측정해 정확도 떨어지는 버그 식별. 또한 system 프롬프트가 실제 NPC unknownAlias를 "금지 예시"로 명시하는 자기모순 발견.
 

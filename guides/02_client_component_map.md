@@ -3,7 +3,7 @@
 > 정본 위치: `client/src/`
 > 최종 갱신: 2026-07-18
 
-## 컴포넌트 구조 (70 components, 5 stores)
+## 컴포넌트 구조 (70 components, 7 stores)
 
 실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **70**).
 영역별: narrative 7 / input 2 / hub 15 / location 5 / screens 11 / side-panel 7 / ui 12 / layout 2 / battle 4 / party 11 / brand 1.
@@ -111,7 +111,7 @@ components/ (70개)
 
 ---
 
-## 상태 관리 (5 stores)
+## 상태 관리 (7 stores)
 
 ```
 store/
@@ -120,6 +120,7 @@ store/
 ├── auth-store.ts          ← JWT 인증 (login/register/hydrate)
 ├── settings-store.ts      ← 텍스트 속도 + 스트리밍 토글 (localStorage)
 ├── party-store.ts         ← 파티 상태 (로비, 채팅, 투표, SSE 구독)
+├── points-store.ts        ← 포인트 잔액·충전 모달·402 유도 (arch/85)
 └── game-selectors.ts      ← Notification 쿼리 셀렉터
 ```
 

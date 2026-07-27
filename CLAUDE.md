@@ -188,13 +188,13 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 > 상세 서비스 맵: [[guides/01_server_module_map|server module map]]
 > 상세 컴포넌트 맵: [[guides/02_client_component_map|client component map]]
 
-### Server — 14 modules, 107 services, 12 controllers
+### Server — 16 modules, 111 services, 19 controllers
 
 | 모듈 | 서비스 수 | 역할 |
 |------|----------|------|
 | common/ | - | Guards, Filters, Pipes, Decorators |
 | auth/ | 1 | JWT 인증 (register/login) |
-| db/ | - | Drizzle ORM (23 tables / 21 schema files, 47 타입 파일) |
+| db/ | - | Drizzle ORM (27 tables / 25 schema files, 47 타입 파일) |
 | content/ | 2 | 게임 콘텐츠 로더 — 멀티 팩(4팩) 캐시 + AsyncLocalStorage 스코프 + scenarios.controller (GET /v1/scenarios, creation-bundle) |
 | engine/rng,stats,status | 3 | RNG, 스탯 계산, 상태효과 |
 | engine/combat | 5 | Hit, Damage, EnemyAI, PropMatcher, CombatService |
@@ -205,12 +205,14 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | engine/planner | 1 | RUN 구조 생성 (RunPlannerService) |
 | runs/ | 2 | RUN 생성/조회 + BugReportService |
 | turns/ | 1 | 턴 제출/조회 |
-| llm/ | 23 | Worker, ContextBuilder, TokenBudget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector, NpcReactionDirector, ChallengeClassifier, ThemeClassifier, DialogueGenerator, LlmStreamBroker, StreamClassifier, FactExtractor, Lorebook, MemoryRenderer, PlotDirector, PlotSeedGenerator, LlmCallLog 외 |
+| llm/ | 24 | Worker, ContextBuilder, TokenBudget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector, NpcReactionDirector, ChallengeClassifier, ThemeClassifier, DialogueGenerator, LlmStreamBroker, StreamClassifier, FactExtractor, Lorebook, MemoryRenderer, PlotDirector, PlotSeedGenerator, LlmCallLog 외 |
 | scene-image/ | 1 | AI 장면 이미지 (Gemini, rate limit) |
 | portrait/ | 1 | 초상화 업로드/생성 (독립 모듈) |
 | campaigns/ | 1 | 캠페인 구조 (독립 모듈) |
 | endings/ | - | 여정 아카이브 조회 (GET /v1/endings, SummaryBuilder는 engine/hub 소속) |
 | party/ | 8 | 파티 시스템 (Party, Chat, Stream, Lobby, PartyTurn, Vote, Reward, RunParticipants) |
+| points/ | 1 | 포인트 차감·환불·충전 코드 (arch/85) |
+| admin/ | 3 | 관제 API — stats/users/runs/llm/health 컨트롤러 5종 + 공개 통계 (arch/87) |
 
 ### HUB 엔진 6 서브시스템 (41 services)
 
@@ -225,7 +227,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 
 > 상세: [[guides/03_hub_engine_guide|hub engine guide]]
 
-### Client — 70 components, 5 stores
+### Client — 70 components, 7 stores
 
 | 영역 | 수 | 핵심 |
 |------|---|------|
@@ -241,7 +243,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | party/ | 11 | PartyHUD, PartyLobby, PartyChatWindow, PartyChatInput, PartyTurnStatus, VoteModal, LootDistribution 외 |
 | brand/ | 1 | 브랜드 로고/타이포 |
 
-Stores: game-store, game-selectors, settings-store, auth-store, party-store.
+Stores: game-store(+game-store.helpers), game-selectors, settings-store, auth-store, party-store, points-store.
 
 ### Key Data Flow
 
@@ -351,7 +353,8 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 
 ## Canonical Enums (정본)
 
-모든 서버 enum의 정본 위치: `server/src/db/types/enums.ts`
+서버 enum 의 기본 정본은 `server/src/db/types/enums.ts` 이지만, **도메인 타입 파일에 붙어 있는 것들이 있다**
+(아래 표의 정본 위치가 실제 선언 파일이다 — `enums.ts` 만 뒤지면 못 찾는다). 경로는 모두 `server/src/db/types/` 기준.
 
 | Enum | 정본 위치 | 값 |
 |------|-----------|-----|
@@ -369,15 +372,15 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 | Distance | `enums.ts` | ENGAGED, CLOSE, MID, FAR, OUT |
 | Angle | `enums.ts` | FRONT, SIDE, BACK |
 | AI Personality | `enums.ts` | AGGRESSIVE, TACTICAL, COWARDLY, BERSERK, SNIPER |
-| IntentActionType | `enums.ts` | INVESTIGATE, PERSUADE, SNEAK, BRIBE, THREATEN, HELP, STEAL, FIGHT, OBSERVE, TRADE, TALK, SEARCH, MOVE_LOCATION, REST, SHOP |
-| HubSafety | `enums.ts` | SAFE, ALERT, DANGER |
-| TimePhase | `enums.ts` | DAY, NIGHT |
+| IntentActionType | `parsed-intent-v2.ts` | INVESTIGATE, PERSUADE, SNEAK, BRIBE, THREATEN, HELP, STEAL, FIGHT, OBSERVE, TRADE, TALK, SEARCH, MOVE_LOCATION, REST, SHOP |
+| HubSafety | `world-state.ts` | SAFE, ALERT, DANGER |
+| TimePhase | `world-state.ts` | DAY, NIGHT |
 | TimePhaseV2 | `world-state.ts` | DAWN, DAY, DUSK, NIGHT |
-| MatchPolicy | `enums.ts` | SUPPORT, BLOCK, NEUTRAL |
-| Affordance | `enums.ts` | INVESTIGATE, PERSUADE, SNEAK, BRIBE, THREATEN, HELP, STEAL, FIGHT, OBSERVE, TRADE, ANY |
-| EventTypeV2 | `enums.ts` | RUMOR, FACTION, ARC_HINT, SHOP, CHECKPOINT, AMBUSH, ENCOUNTER, OPPORTUNITY, FALLBACK |
-| ArcRoute | `enums.ts` | EXPOSE_CORRUPTION, PROFIT_FROM_CHAOS, ALLY_GUARD |
-| NpcPosture | `enums.ts` | FRIENDLY, CAUTIOUS, HOSTILE, FEARFUL, CALCULATING |
+| MatchPolicy | `event-def.ts` | SUPPORT, BLOCK, NEUTRAL |
+| Affordance | `event-def.ts` | INVESTIGATE, PERSUADE, SNEAK, BRIBE, THREATEN, HELP, STEAL, FIGHT, OBSERVE, TRADE, ANY |
+| EventTypeV2 | `event-def.ts` | RUMOR, FACTION, ARC_HINT, SHOP, CHECKPOINT, AMBUSH, ENCOUNTER, OPPORTUNITY, FALLBACK |
+| ArcRoute | `arc-state.ts` | EXPOSE_CORRUPTION, PROFIT_FROM_CHAOS, ALLY_GUARD |
+| NpcPosture | `npc-state.ts` | FRIENDLY, CAUTIOUS, HOSTILE, FEARFUL, CALCULATING |
 | IncidentKind | `incident.ts` | CRIMINAL, POLITICAL, SOCIAL, ECONOMIC, MILITARY |
 | IncidentOutcome | `incident.ts` | CONTAINED, ESCALATED, EXPIRED |
 | SignalChannel | `signal-feed.ts` | RUMOR, SECURITY, NPC_BEHAVIOR, ECONOMY, VISUAL |
@@ -385,34 +388,85 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 | StepStatus | `operation-session.ts` | PENDING, IN_PROGRESS, COMPLETED, SKIPPED |
 | Status ID | [[specs/status_effect_system_v1|status effect system v1]] §10 | BLEED, POISON, STUN, WEAKEN, FORTIFY |
 | ResolveOutcome | `resolve-result.ts` | SUCCESS, PARTIAL, FAIL |
-| Client Phase | `game-store.ts` | TITLE, LOADING, HUB, LOCATION, COMBAT, NODE_TRANSITION, RUN_ENDED, ERROR |
-| StoryMessageType | `game.ts` | SYSTEM, NARRATOR, PLAYER, CHOICE, RESOLVE |
-| CharacterPreset | `presets.json` | DOCKWORKER, DESERTER, SMUGGLER, HERBALIST, FALLEN_NOBLE, GLADIATOR |
-| CharacterTrait | `traits.json` | BATTLE_MEMORY, STREET_SENSE, SILVER_TONGUE, GAMBLER_LUCK, BLOOD_OATH, NIGHT_CHILD |
+| Client Phase | `client/src/store/game-store.ts` | TITLE, LOADING, HUB, LOCATION, COMBAT, NODE_TRANSITION, RUN_ENDED, ERROR |
+| StoryMessageType | `client/src/types/game.ts` | SYSTEM, NARRATOR, PLAYER, CHOICE, RESOLVE |
+| CharacterPreset | `content/<pack>/presets.json` | DOCKWORKER, DESERTER, SMUGGLER, HERBALIST, FALLEN_NOBLE, GLADIATOR |
+| CharacterTrait | `content/<pack>/traits.json` | BATTLE_MEMORY, STREET_SENSE, SILVER_TONGUE, GAMBLER_LUCK, BLOOD_OATH, NIGHT_CHILD |
 | NpcTier | `content.types.ts` | CORE, SUB, BACKGROUND |
 | FactCategory | `world-fact.ts` | PLAYER_ACTION, NPC_ACTION, WORLD_CHANGE, DISCOVERY, RELATIONSHIP |
 | SituationTrigger | `situation-generator.service.ts` | LANDMARK, INCIDENT_DRIVEN, NPC_ACTIVITY, NPC_CONFLICT, ENVIRONMENTAL, CONSEQUENCE, DISCOVERY, OPPORTUNITY, ROUTINE |
 
 ## API Endpoints
 
+실제 라우트 76개 전수 (2026-07-27 컨트롤러 19개 기준). **admin** 표시는 `@AdminEndpoint`
+(x-admin-token OR JWT+users.role, 감사 로그 `admin_audit_logs` — arch/87). 그 외는 JWT 인증,
+`/v1/stats/public` 만 무인증.
+
+### 인증·런·턴
+
 | Method | Path | Purpose |
 |--------|------|---------|
-| POST | `/v1/auth/register` | 회원가입 (email, password, nickname) |
-| POST | `/v1/auth/login` | 로그인 (email, password) → JWT |
-| POST | `/v1/runs` | 새 RUN 생성 (presetId, gender) |
+| POST | `/v1/auth/register` | 회원가입 (email, password, nickname) — 가입 보너스 포인트 지급 |
+| POST | `/v1/auth/login` | 로그인 → JWT |
+| POST | `/v1/runs` | 새 RUN 생성 (presetId, gender, scenarioId) |
 | GET | `/v1/runs` | 활성 RUN 조회 (userId 기반) |
 | GET | `/v1/runs/:runId` | RUN 상태 조회 (turnsLimit 옵션) |
+| POST | `/v1/runs/:runId/abort` | RUN 중단 (RUN_ABORTED) |
+| POST | `/v1/runs/:runId/equip` | 장비 착용 |
+| POST | `/v1/runs/:runId/unequip` | 장비 해제 |
+| POST | `/v1/runs/:runId/use-item` | 소모품 사용 |
 | POST | `/v1/runs/:runId/turns` | 턴 제출 (ACTION/CHOICE, idempotencyKey 필수) |
 | GET | `/v1/runs/:runId/turns/:turnNo` | 턴 상세 (LLM 폴링용, includeDebug 옵션) |
-| POST | `/v1/runs/:runId/turns/:turnNo/retry-llm` | LLM 재시도 (FAILED → PENDING 리셋) |
+| GET | `/v1/runs/:runId/turns/:turnNo/stream` | **SSE** 서술 스트리밍 (arch/35) |
+| POST | `/v1/runs/:runId/turns/:turnNo/retry-llm` | LLM 재시도 (FAILED → PENDING, 무료) |
+| GET | `/v1/runs/:runId/turns/llm-usage` | 런 LLM 사용량·비용 집계 |
+
+### 시나리오·캠페인·엔딩
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/v1/scenarios` | 시나리오(팩) 목록 |
+| GET | `/v1/scenarios/:scenarioId/creation-bundle` | 팩 프리셋·특성 서빙 (arch/71) |
+| POST | `/v1/campaigns` | 캠페인 생성 |
+| GET | `/v1/campaigns` | 활성 캠페인 조회 |
+| GET | `/v1/campaigns/:id` | 캠페인 상세 |
+| GET | `/v1/campaigns/:id/scenarios` | 캠페인 시나리오 진행 상태 (AVAILABLE/IN_PROGRESS/COMPLETED) |
+| GET | `/v1/endings` | 여정 아카이브 목록 |
+| GET | `/v1/endings/:runId` | 여정 요약 상세 |
+
+### 포인트·초상화·버그 리포트
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/v1/points/balance` | 포인트 잔액 |
+| GET | `/v1/points/transactions` | 포인트 원장 조회 |
+| POST | `/v1/points/redeem` | 충전 코드 사용 |
+| POST | `/v1/admin/codes` | **admin** 충전 코드 발급 |
+| GET | `/v1/admin/codes` | **admin** 코드 목록 |
+| POST | `/v1/portrait/generate` | AI 초상화 생성 |
+| POST | `/v1/portrait/upload` | 초상화 업로드 (multipart) |
+| POST | `/v1/runs/:runId/bug-report` | 버그 리포트 생성 (인게임) |
+| GET | `/v1/bug-reports` | **admin** 버그 리포트 목록 (페이징) |
+| GET | `/v1/bug-reports/:id` | **admin** 상세 |
+| PATCH | `/v1/bug-reports/:id` | **admin** 상태 변경 |
+
+### 설정·장면 이미지·시스템
+
+| Method | Path | Purpose |
+|--------|------|---------|
 | GET | `/v1/settings/llm` | LLM 설정 조회 (API 키 마스킹) |
-| PATCH | `/v1/settings/llm` | LLM 설정 변경 (런타임) |
-| POST | `/v1/bug-reports` | 버그 리포트 생성 (runId, turnNo, category, description) |
-| GET | `/v1/bug-reports` | 버그 리포트 목록 조회 (페이징) |
-| GET | `/v1/bug-reports/:id` | 버그 리포트 상세 조회 |
-| PATCH | `/v1/bug-reports/:id` | 버그 리포트 상태 변경 (resolved 등) |
-| POST | `/v1/portrait/generate` | AI 초상화 생성 (presetId, gender, appearanceDescription) |
-| GET | `/v1/version` | 서버 버전 조회 (git hash, startedAt, uptime) |
+| PATCH | `/v1/settings/llm` | **admin** LLM 설정 변경 (런타임) |
+| POST | `/v1/runs/:runId/turns/:turnNo/scene-image` | 장면 이미지 생성 (현재 봉인) |
+| GET | `/v1/scene-images/status` | 이미지 생성 가용 상태 |
+| GET | `/v1/runs/:runId/scene-images` | 런 장면 이미지 목록 |
+| GET | `/v1/version` | 서버 버전 (git hash, startedAt, uptime) |
+| GET | `/v1/stats/public` | **무인증** 공개 통계 (랜딩 LiveStats, 10분 캐시·테스터 제외) |
+| GET | `/` | 헬스 체크 |
+
+### 파티
+
+| Method | Path | Purpose |
+|--------|------|---------|
 | POST | `/v1/parties` | 파티 생성 (name) |
 | GET | `/v1/parties/my` | 내 파티 조회 |
 | GET | `/v1/parties/search` | 파티 검색 (?q=) |
@@ -422,16 +476,37 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 | DELETE | `/v1/parties/:partyId` | 파티 해산 |
 | POST | `/v1/parties/:partyId/messages` | 채팅 전송 (content) |
 | GET | `/v1/parties/:partyId/messages` | 채팅 히스토리 (cursor, limit) |
-| GET | `/v1/parties/:partyId/stream` | SSE 실시간 스트림 (?token=JWT) |
+| GET | `/v1/parties/:partyId/stream` | **SSE** 실시간 스트림 (?token=JWT) |
 | GET | `/v1/parties/:partyId/lobby` | 로비 상태 조회 |
 | POST | `/v1/parties/:partyId/lobby/ready` | 준비 완료 토글 (ready) |
 | POST | `/v1/parties/:partyId/lobby/start` | 던전 시작 (리더 전용) |
-| POST | `/v1/parties/:partyId/runs/:runId/turns` | 파티 행동 제출 (inputType, rawInput, idempotencyKey) |
+| POST | `/v1/parties/:partyId/lobby/invite-run` | 내 세계에 초대 — 리더 솔로 런에 합류 |
+| POST | `/v1/parties/:partyId/runs/:runId/turns` | 파티 행동 제출 |
+| GET | `/v1/parties/:partyId/runs/:runId/state` | 파티 런 상태 (멤버 진입 복원용, arch/84) |
+| GET | `/v1/parties/:partyId/runs/:runId/turns/:turnNo` | 파티 턴 상세 (partyActions + serverResult + llm) |
+| POST | `/v1/parties/:partyId/runs/:runId/leave` | 던전 이탈 (보상 정산 + AI 전환) |
 | POST | `/v1/parties/:partyId/votes` | 이동 투표 제안 (targetLocationId) |
 | POST | `/v1/parties/:partyId/votes/:voteId/cast` | 투표 참여 (choice: yes/no) |
-| POST | `/v1/parties/:partyId/lobby/invite-run` | 내 세계에 초대 — 리더 솔로 런에 합류 (Phase 3) |
-| GET | `/v1/parties/:partyId/runs/:runId/turns/:turnNo` | 파티 턴 상세 조회 (partyActions + serverResult + llm) |
-| POST | `/v1/parties/:partyId/runs/:runId/leave` | 던전 이탈 (보상 정산 + AI 전환) |
+
+### 어드민 (arch/87 — 전부 `@AdminEndpoint`)
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/v1/admin/stats/overview` | KPI 대시보드 (가입·활성·런·턴·포인트, 테스터 제외) |
+| GET | `/v1/admin/stats/llm-cost` | LLM 비용 시계열 |
+| GET | `/v1/admin/stats/points` | 포인트 발행·소비 시계열 |
+| GET | `/v1/admin/stats/cost-reconciliation` | OpenRouter 실과금 대조 (management 키 필요) |
+| GET | `/v1/admin/users` | 유저 검색·목록 |
+| GET | `/v1/admin/users/:id` | 유저 상세 |
+| POST | `/v1/admin/users/:id/points-adjust` | 포인트 조정 |
+| POST | `/v1/admin/users/:id/password` | 비밀번호 재설정 |
+| DELETE | `/v1/admin/users/:id` | 유저 삭제 |
+| GET | `/v1/admin/runs` | 런 목록 |
+| GET | `/v1/admin/runs/stuck` | 스턱 런 조회 |
+| POST | `/v1/admin/runs/:id/abort` | 런 강제 종료 |
+| POST | `/v1/admin/runs/:id/turns/:turnNo/retry-llm` | 턴 LLM 재시도 |
+| GET | `/v1/admin/llm/failures` | LLM 실패 로그 |
+| GET | `/v1/admin/health` | 시스템 헬스 |
 
 ## Environment Variables (`server/.env`)
 
@@ -454,14 +529,49 @@ LLM_DIALOGUE_MODEL=google/gemma-4-26b-a4b-it  # 대사 생성(Stage B+자기소�
 LLM_FIRST_TOKEN_TIMEOUT_MS=5000       # 스트리밍 첫 토큰 타임아웃 — 초과 시 non-stream fallback (arch/62, 0=off)
 LLM_PROVIDER_SORT=throughput          # OpenRouter 라우팅 정렬 — 생성 tok/s 우선 (arch/62)
 LLM_PROVIDER_IGNORE=cloudflare,dekallm  # OpenRouter 배제 provider (저 uptime — arch/62 부록)
-LLM_PROVIDER_ONLY_MAP=google/gemma-4-31b-it=ModelRun|Friendli  # 모델별 프로바이더 allowlist — 31B 풀 불안정(빈 서술) 대응, 해당 모델 호출에만 적용 (arch/25 D-8)
+LLM_PROVIDER_ONLY_MAP=google/gemma-4-31b-it=ModelRun|Friendli|Novita  # 모델별 프로바이더 allowlist — 31B 풀 불안정(빈 서술) 대응. Novita=가용성 백스톱 (arch/25 D-8)
 LLM_FALLBACK_PROVIDER=openai          # fallback: 같은 OpenRouter 경유
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini  # fallback 모델 (이전: Claude Haiku 4.5)
 GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off, DeepSeek는 코드에서 enabled:false 자동 주입)
 LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비호환, false 권장)
 LLM_SHORT_RESPONSE_MIN_TOKENS=150     # ShortResponse 재시도 임계 (기본 200 — 교차 모델 짧은 서술 이중 과금 방지)
 LLM_PROVIDER_REQUIRE_PARAMS=true      # penalty 미지원 프로바이더 배제 (불변식 50 레버 보장, 2026-07-22 채택)
-OPENROUTER_MANAGEMENT_KEY=            # 어드민 실제 과금 대조용 — OpenRouter Activity API. 일반 추론 키는 403, management 키 필요 (arch/87 §9)
+
+# ── 인프라·보안 ──
+PORT=3000                             # 기본 3000 (launchd 상주 서비스가 사용)
+JWT_SECRET=<secret>                   # 토큰 서명 키 — 프로덕션에서 반드시 교체
+CORS_ORIGINS=https://dimtale.com,...  # 콤마 구분 허용 오리진 (클라·어드민·로컬)
+ADMIN_TOKEN=<secret>                  # 어드민 헤더 인증 x-admin-token (arch/87, JWT+users.role 과 OR)
+
+# ── 포인트 (arch/85) ──
+POINTS_ENABLED=true                   # false 면 과금 전면 비활성 (기본 true)
+POINTS_PER_CHAT=5                     # 채팅 1턴 차감 포인트
+SIGNUP_BONUS_POINTS=50                # 가입 보너스
+
+# ── LLM 보조 경로 ──
+CLAUDE_MODEL=claude-haiku-4-5-20251001  # claude provider 사용 시 모델
+GEMINI_MODEL=gemma-4-26b-a4b-it         # gemini provider 사용 시 모델
+LLM_LIGHT_PROVIDER=openai               # nano 계열 provider (기본 openai)
+LLM_MAIN_ALTERNATE_MODEL=              # 메인 교차 모델 오버라이드 (미설정 시 LLM_ALTERNATE_MODEL)
+LLM_DIALOGUE_SPLIT=true                 # 2-Stage 대사 분리 파이프라인 (arch/32)
+LLM_STREAM_CLASSIFIER=true              # 스트림 분류기 (기본 true, 'false' 로 차단)
+LLM_PROVIDER_ORDER=                     # OpenRouter provider 우선순위 (콤마)
+LLM_PROVIDER_MAX_PRICE=                 # provider 단가 상한
+INTENT_LLM_ENABLED=                     # LLM 인텐트 파서 on/off
+INTENT_LLM_PROVIDER=openai              # 인텐트 파서 provider
+INTENT_LLM_MODEL=gpt-4.1-nano           # 인텐트 파서 모델
+
+# ── 킬스위치 (기본 전부 켜짐 — 문제 시 개별 차단) ──
+PLOT_DIRECTOR_DISABLED=                 # '1' 이면 자율 서사 디렉터 정지 (arch/75)
+COMBAT_TACTIC_DISABLED=false            # 'true' 면 전투 기만 평가 정지 (arch/76)
+CHALLENGE_CLASSIFIER_ENABLED=true       # 'false' 면 자유 행동 주사위 스킵 판정 정지
+NPC_REACTION_DIRECTOR_ENABLED=true      # 'false' 면 NPC 반응 사전결정 정지 (arch/56)
+PROPS_TRACE_DISABLED=                   # '1' 이면 흔적(propsState) 추출 정지
+
+# ── 개발·검증 전용 ──
+PROMPT_FIXTURE_CAPTURE=                 # 설정 시 프롬프트 픽스처 덤프
+PLAYTEST_NPC_REACTION=                  # 플레이테스트 NPC 반응 계측 토글
+OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activity API. 일반 추론 키는 403 (arch/87 §9)
 ```
 
 ## Implementation Phase Status (구현 단계)
@@ -619,7 +729,7 @@ OPENROUTER_MANAGEMENT_KEY=            # 어드민 실제 과금 대조용 — Op
 | **밤낮 시스템 재설계 (2026-07-20)** | 이중 시간계 근본 해소 — ① 행동 가중 timeCost(사교 0·이동/휴식 2·기타 1, 기계식 전환 제거) ② 전환 서술 주입(recentPhaseTransition → 전환 턴만 [시간대 전환] 디렉티브, 급전환 방지) ③ 4상 UI 승격(WorldStateUI phaseV2·day, 클라 새벽/낮/황혼/밤, 황혼 오표기 해소) ④ **이중 시간계 통합**(deriveTimePhaseFromV2 — v1 advanceTime 토글 폐지, timePhase = phaseV2 파생 미러, 전투 경로 불일치 해소). 실측 chatty 15턴 전환 5회→1회·brawler 정합. 신규 불변: timePhase = phaseV2 미러 — architecture/81 | ✅ 완료 |
 | **어체 자기모순 교정 (2026-07-20)** | 고정 팩 speechRegister↔speechStyle 모순 3건(펠릭스·라이라·올드릭, 전부 HAPSYO↔하오체 산문) 교정 — 프롬프트 상충 주입이 어체 혼용 유발. 3팩 전수 스캔(금지목록 제거+명칭 우선, 정본 regex 1차 24건 중 21건 FP). field를 산문(정본)에 맞춰 HAOCHE. 실측 펠릭스 순수 하오체·로넨 무피해. content-validator 하드닝은 백로그 — architecture/82 A | ✅ 완료 |
 | **NPC 자연스러움 3종 (2026-07-20)** | 대화 분석(자연스러움·연속성) 도출 — #5 배경 감시자 advance-or-dismiss(정적 "훑어본다" 반복→진전/퇴장 강제) · #6 제스처 앵커 제거 L0+L1(recommendPool 삭제 — 정적 풀=anchor 불변식 41/42 + frequency/presence_penalty 0.4/0.3 미사용 모델 레버 투입, "목덜미" 상투구 0회) · #7 첫 조우 개방 깊이 티어(trust+encounterCount 긍정 프레이밍, 낯선 이 과다 개방 억제). memory feedback_concrete_vocab_anchor 신설 — architecture/82 B |
-| **포인트 시스템 (2026-07-23)** | 소프트 베타 비용 통제 — 코드 발급→충전→채팅 차감(5p/턴, 전 턴 일괄, 다회용 코드, 가입 50p). DB 4종(users.points + point_transactions 원장 + redeem_codes + code_redemptions) + PointsService(원자적 차감/멱등/D5 환불) + `/v1/points/*` + `/v1/admin/codes`(AdminTokenGuard). 차감=디스패치 직전+거부 throw 환불, D5 실패 환불=워커 FAILED 2경로. 클라: points-store + Header 💎 잔액 + PointsModal 충전 + 402 자동 유도. 라이브 8경로 검증·서버lint0·유닛6·클라빌드. **커밋 미완** — architecture/85 | ✅ 완료 |
+| **포인트 시스템 (2026-07-23)** | 소프트 베타 비용 통제 — 코드 발급→충전→채팅 차감(5p/턴, 전 턴 일괄, 다회용 코드, 가입 50p). DB 4종(users.points + point_transactions 원장 + redeem_codes + code_redemptions) + PointsService(원자적 차감/멱등/D5 환불) + `/v1/points/*` + `/v1/admin/codes`(AdminTokenGuard). 차감=디스패치 직전+거부 throw 환불, D5 실패 환불=워커 FAILED 2경로. 클라: points-store + Header 💎 잔액 + PointsModal 충전 + 402 자동 유도. 라이브 8경로 검증·서버lint0·유닛6·클라빌드. server 1db5ce4 배포 — architecture/85 | ✅ 완료 |
 | **자율 디렉터 존재감 튜닝 (2026-07-21)** | arch/75 P8 후속 — 안 A(비트 신선도 stale 2→3턴)+안 C(GRAVITY_NPC 25→30·직전 상호작용 가중 ½→⅔) 구현, 안 B(강제창 4→3) 보류. 채택 0~2→2.0/12턴·keyFact↑·강제 진행 회귀 0 + §11 무명 화자 프레이밍(서술형 소문 우선·익명 마커 ≤1, 무명 12→5·7회) — architecture/83 | ✅ 완료 |
 | **LLM 31B 승격 + 프로바이더 allowlist (2026-07-22)** | 메인 Gemma 26B→31B dense + LLM_PROVIDER_ONLY_MAP 모델별 allowlist(ModelRun·Friendli·Novita — 풀 불안정 빈 서술 3~5/12턴 실측 대응) + 빈 서술 3층 방어(ensureNonEmpty·빈 스트림 throw·워커 FAILED 게이트) + JSON 형태 구제 가드(salvageNarrativeShape) + playtest V11 게이트(빈 서술·raw JSON 하드 FAIL). 3모델 로테이션 실험 기각(26B↔31B 가족 상관 1.76배 실증) · Solar Pro 3 후보 제외 · 턴당 실과금 ₩1.57 — architecture/25 부록 D-8 | ✅ 완료 |
 | **파티 던전 클라이언트 배선 (2026-07-23)** | 파티 던전이 서버 엔진 완성/클라 UI 협동 입력 미배선이던 것 해소(2중 검증 발견). 서버: submitLeaderHubChoice(프롤로그·Heat CHOICE 리더 대표 통과)·가드 화이트리스트·턴 타이머+deadline 수정·멤버 데이터 경로(GET .../runs/:id/state + turnDetail choices). 클라: game-store 파티 분기(리더도 파티 엔드포인트 경유)·applyPartyTurnResult+서사 폴링·멤버 진입 복원(getPartyRunState)·투표 후 재복원. 프롤로그 accept_quest 소프트락 해소(전 팩 신규 파티 진입 불능이던 회귀). arc_commit 파티 투표화는 백로그. 서버 API 2인 협동·솔로 회귀 무 실증 — architecture/84 | ✅ 완료 |
@@ -733,7 +843,7 @@ OPENROUTER_MANAGEMENT_KEY=            # 어드민 실제 과금 대조용 — Op
 | 82_npc_dialogue_naturalness.md | ✅ 구현됨 | NPC 대화 자연스러움 — A 어체 자기모순 3건 교정(speechRegister↔speechStyle) + B 자연스러움 3종(#5 감시자 advance-or-dismiss · #6 제스처 앵커 제거 L0+L1 · #7 첫 조우 개방 깊이 티어). 저모델 반복 억제 원칙 재확인(정적 풀=anchor) (2026-07-20) |
 | 83_director_presence_tuning.md | ✅ 구현됨 | 자율 디렉터 존재감 튜닝 — arch/75 P8 후속. 병목 진단(임계가 아니라 "기회 창(WORLD_EVENT)×신선도(stale 2턴)" 동시 성립) → 안 A(stale 2→3)+C(GRAVITY_NPC 25→30·직전 상호작용 ½→⅔) 구현, 안 B(강제창 4→3)는 보류. 채택 0~2→2.0/12턴·강제 진행 회귀 0 + §11 무명 화자 프레이밍(긴 증언 대신 서술형 소문 우선·익명 마커 ≤1, 무명 12→5·7회) (2026-07-21) |
 | 84_party_dungeon_client_wiring.md | ✅ 구현됨 | 파티 던전 클라이언트 배선 완성 — 서버 엔진 완성/클라 UI 협동 입력 미배선 진단(2중 검증). 서버 submitLeaderHubChoice(프롤로그·Heat CHOICE 리더 대표)·가드 화이트리스트·턴 타이머+deadline·멤버 데이터 경로(GET .../state) + 클라 game-store 파티 분기(리더도 파티 엔드포인트)·applyPartyTurnResult+서사 폴링·멤버 진입 복원. 프롤로그 accept_quest 소프트락 해소(전 팩 신규 파티 진입 불능이던 것). arc_commit 투표화는 백로그. 서버 API 2인 협동·솔로 회귀 무 실증, 2인 실시간 UI는 수동 QA (2026-07-23) |
-| 85_point_system.md | ✅ 구현됨 (미커밋) | 포인트 시스템 — 코드 발급→충전→채팅 5p 차감(전 턴 일괄·다회용·가입 50p). DB 4종 + PointsService + API + 워커 D5 환불 2경로 + 클라(💎 Header·PointsModal·402 유도). 소프트 베타 비용 통제. 라이브 8경로 검증, 커밋 잔여 (2026-07-23) |
+| 85_point_system.md | ✅ 구현·배포됨 | 포인트 시스템 — 코드 발급→충전→채팅 5p 차감(전 턴 일괄·다회용·가입 50p). DB 4종 + PointsService + API + 워커 D5 환불 2경로 + 클라(💎 Header·PointsModal·402 유도). 소프트 베타 비용 통제. 라이브 8경로 검증, server 1db5ce4 커밋 완료 (2026-07-23) |
 | 88_endgame_arc_commit_encounter_fix.md | ✅ 구현됨 | S5 엔딩 동선(arc 커밋) 복구 + encounterCount 추적 수정 — B: star_sand arc_events.json 누락으로 최종 선택 미노출→3루트 엔딩 사장, 콘텐츠 신규 + 종착 상태 거점 복귀 힌트(isTerminalState). 팩 계약: arcRouteEndings 정의 팩은 routeCommitChoices 필수. C: 워커 LockSeed 백필이 encounterCount 게이트 오염→전 NPC 0 고착, nodeInstanceId per-visit 플래그(lastEncounterNodeId)로 교체·관계 깊이 티어링 복원. star_sand 12턴 검증 (2026-07-23) |
 | 89_quest_reward_attribution.md | ✅ 구현됨 | 사례금 귀속 재설계 — 지급 주체 없이 fact 발견 즉시 골드가 솟던 구조를 폐기. C: quest.json `clientNpcId` 계약(3팩) + 이벤트 텍스트 주체 명시 + 프롬프트 적립 이벤트 제외(LLM이 현장 NPC에 임의 귀속 — 실측 72턴 중 35%가 "그 자리 NPC가 돈 주머니를 건넴", THREATEN 턴 포함). B′: `pendingQuestReward` 적립 → 정산 3트리거(의뢰인 대면·거점 복귀·런 종료). 거점 정산이 왕복 강요(불변식 47 충돌)와 미수령 사장을 동시에 막는 안전판. HUD 미정산 표기 (2026-07-25) |
 | 91_player_name_recognition.md | ✅ 구현됨 | 플레이어 이름 인지 — 프롤로그 통성명(A) + 통성명 기반 재회 호명(B). 게이트는 `shouldCallPlayerName`(npc-state.ts) 단일 정본, 주입은 관계 깊이 가이드 1줄. 계측 센서 함정: `llmContext.npcStates`는 턴 시작 스냅샷이라 5.11 CAS 결과가 안 보임 → `newlyIntroducedNpcIds`로 판정 (2026-07-26) |

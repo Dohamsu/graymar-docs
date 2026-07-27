@@ -3,7 +3,7 @@
 > 정본 위치: `server/src/`
 > 최종 갱신: 2026-07-18
 
-## 모듈 구조 (14 modules, 107 services, 12 controllers)
+## 모듈 구조 (16 modules, 111 services, 19 controllers)
 
 ```
 main.ts → AppModule
@@ -58,7 +58,7 @@ main.ts → AppModule
 ├── runs/                ← RUN/버그리포트
 │   ├── runs.controller        ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 │   ├── runs.service
-│   ├── bug-report.controller  ← POST/GET/PATCH /v1/bug-reports
+│   ├── bug-report.controller  ← POST /v1/runs/:runId/bug-report, GET/PATCH /v1/bug-reports (조회·변경은 admin)
 │   └── bug-report.service     ← 버그 리포트 CRUD
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 │   ├── turns.controller
@@ -66,7 +66,7 @@ main.ts → AppModule
 │   ├── npc-agitation.core.ts     ← 감정→세계 행동화 (fear 도주/susp 신고/trust 접근, arch/76 D3)
 │   ├── witness-reaction.core.ts  ← 목격자 반응 posture 우선 trust 밴드 (architecture/72)
 │   └── run-state-apply.core.ts   ← 인벤토리 수량 병합 단일화 순수 함수 (5개 보상 경로 공통, arch/77 P3)
-├── llm/                 ← Async LLM narrative (20 services, 1 controller, 아래 상세)
+├── llm/                 ← Async LLM narrative (24 services, 1 controller, 아래 상세)
 ├── endings/             ← 여정 아카이브 조회
 │   ├── endings.controller     ← GET /v1/endings, GET /v1/endings/:runId
 │   └── endings.module         ← SummaryBuilderService(engine/hub)를 lazy fallback으로 사용
@@ -79,6 +79,17 @@ main.ts → AppModule
 ├── scene-image/         ← NPC/장면 이미지 생성
 │   ├── scene-image.controller ← 씬 이미지 생성 엔드포인트
 │   └── scene-image.service    ← Gemini 이미지 생성, rate limit
+├── points/              ← 포인트 차감·환불·충전 코드 (1 service, arch/85)
+│   ├── points.controller      ← GET /v1/points/{balance,transactions}, POST /v1/points/redeem
+│   │                             + @Controller('v1/admin/codes') 코드 발급/목록 (@AdminEndpoint)
+│   └── points.service         ← 원자적 차감/멱등/환불 2경로
+├── admin/               ← 관제 API (3 services, 6 controllers, arch/87)
+│   ├── admin-stats.controller     ← overview / llm-cost / points / cost-reconciliation
+│   ├── admin-users.controller     ← 검색·상세·포인트 조정·비밀번호·삭제
+│   ├── admin-runs.controller      ← 목록·스턱·abort·retry-llm
+│   ├── admin-llm.controller       ← LLM 실패 로그
+│   ├── admin-health.controller    ← 시스템 헬스
+│   └── public-stats.controller    ← GET /v1/stats/public (무인증, 랜딩 LiveStats)
 └── party/               ← 멀티플레이어 파티 시스템 (8 services, 1 controller)
     ├── party.controller       ← REST + SSE 엔드포인트
     ├── party.service          ← 파티 CRUD + 초대코드

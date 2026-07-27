@@ -397,7 +397,7 @@ GP로 투자 가능한 13종 영구 능력치:
 
 ## 부록 C: Phase별 노드 생성 가중치 상세
 
-> 원본 참조: [[specs/run_planner_v1_1|run planner v1 1]]
+> 원본 참조: [[specs/run_node_planner|run node planner]]
 
 선형 RUN 구조에서의 Phase별 상세 가중치 정책. 현재는 미구현이나 구조화된 미션 모드 도입 시 적용.
 

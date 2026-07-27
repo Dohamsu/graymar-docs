@@ -436,7 +436,7 @@ NPA가 이 필드들을 capture하여 결정 근거의 일관성 검증 가능.
 - [ ] 기존 후처리 분기 정리
 
 ### Phase 4 (~2h) — ContentValidatorService
-- [ ] `content/content-validator.service.ts` 신규
+- [ ] `server/src/content/content-validator.service.ts` 신규
 - [ ] ContentLoader onModuleInit에 validation 추가
 - [ ] CORE NPC roleKeywords 자동 보완 (alias 안전 부분 + role 핵심 명사)
 
