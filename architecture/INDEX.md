@@ -103,6 +103,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/90_landing_page_redesign|landing page redesign]] — 랜딩 리디자인 P1~P4 (2026-07-25~26). 상용 6종+서사 게임 카피 6종 실측 벤치마크 → 카피 톤 원칙 5(§1.2). P1 카피 v2 전면 교체·P2 섹션 재배치+시나리오 카탈로그 4팩·P3 게임플레이 CSS 재현 루프·P4 사회적 증명(`GET /v1/stats/public` + LiveStats ISR). 프로덕션 검증 완료.
 
+- [[architecture/94_mobile_scroll_viewport|mobile scroll viewport]] — 모바일 스크롤·뷰포트 정합 (2026-07-27). 헤드리스 4뷰포트 실런 점검 → 11종 수정: 서술 스크롤 follow 모델(제스처 우선·프로그램 스크롤 창 구분·터치 중 중단), `overscroll-contain` 전면(Android 당겨서 새로고침 차단), 타이틀/로그인 스크롤 구조 전환, 모달 16곳 2패턴, `MOBILE_HEADER_OFFSET` 단일 정본(고정 헤더 81px+safe-area), safe-area 커버리지. 규약 5종은 §5.
+
 ### 7. 멀티플레이
 
 - [[architecture/24_multiplayer_party_system|multiplayer party system]] — 파티 Phase 1+2+3 통합 설계(CRUD/초대/SSE 채팅/로비/동시 턴/통합 판정/3인칭 서술/이동 투표/보상 분배/런 통합). 구현 API는 CLAUDE.md Endpoint 표와 server `party/` 모듈 참조.
