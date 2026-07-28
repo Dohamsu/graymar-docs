@@ -244,7 +244,11 @@ function isTrailingFragment(sentence: string): boolean {
   return /[은는이가을를도만과와랑의]$/.test(sentence);
 }
 
-const PRONOUN_RE = /(그대|자네|당신|너|그쪽|손님|친구)/g;
+// '너'는 word boundary 필수 — "너무"/"너머"/"너희" 오매칭으로 호칭 일관성이
+// 과소측정됨 (2026-07-27 chat-edric 실측: 58% → FP 제거 시 75%).
+// 조사·문장부호·공백이 뒤따르는 경우만 2인칭 호칭으로 인정.
+const PRONOUN_RE =
+  /(그대|자네|당신|너(?=[를는도야의와랑\s"”,.!?…]|한테|에게|$)|그쪽|손님|친구)/g;
 
 function continuityScore(pairs: DialoguePair[]): ContinuityScore {
   const evalPairs = pairs.filter((p) => !p.isSetup);
