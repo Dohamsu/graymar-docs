@@ -205,7 +205,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | engine/planner | 1 | RUN 구조 생성 (RunPlannerService) |
 | runs/ | 2 | RUN 생성/조회 + BugReportService |
 | turns/ | 1 | 턴 제출/조회 |
-| llm/ | 24 | Worker, ContextBuilder, TokenBudget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector, NpcReactionDirector, ChallengeClassifier, ThemeClassifier, DialogueGenerator, LlmStreamBroker, StreamClassifier, FactExtractor, Lorebook, MemoryRenderer, PlotDirector, PlotSeedGenerator, LlmCallLog 외 |
+| llm/ | 23 | Worker, ContextBuilder, TokenBudget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector, NpcReactionDirector, ChallengeClassifier, ThemeClassifier, DialogueGenerator, LlmStreamBroker, StreamClassifier, FactExtractor, Lorebook, MemoryRenderer, PlotDirector, PlotSeedGenerator, LlmCallLog 외 |
 | scene-image/ | 1 | AI 장면 이미지 (Gemini, rate limit) |
 | portrait/ | 1 | 초상화 업로드/생성 (독립 모듈) |
 | campaigns/ | 1 | 캠페인 구조 (독립 모듈) |
@@ -308,7 +308,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 14. **LOCATION 단기기억** — locationSessionTurns(최대 6턴+MidSummary) LLM 전달. 떠날 때 요약 저장.
 15. **NPC 이름 비공개→공개 — 자기소개 사전 확정** — FRIENDLY·FEARFUL 1회 / CAUTIOUS 2회 / CALCULATING·HOSTILE 3회 임계 도달 시 **본인이 직접 자기소개** (전 성향 통일, posture별 톤 차등). nano가 실명 포함 대사를 사전 생성(서버 검증+어체별 템플릿 보장) → 프롬프트 positive 주입 → 미반영 시 그 턴에 별칭 마커로 서버 삽입 (지연 0턴). 성사 판정은 "실명이 따옴표 대사 안에 등장". 2턴 분리는 **마커 표시명** 기준(소개 턴 별칭 마커, 다음 턴부터 실명 — IntroMarkerNorm)이며 본문·대사 실명은 소개 턴부터 허용. 재등장 공개·생성 실패 예외만 외부 경로(제3자 호명/단서) fallback. 미소개 실명 차단·IntroRollback은 유지 — architecture/66.
 16. **장면 연속성 보장** — sceneFrame 3단계 억제 + 씬 이벤트 1턴 유지 + 7개 연속성 규칙.
-17. **Token Budget 2단** — 메모리 블록 2500(블록별 배분·저우선 트리밍) + 프롬프트 총량 백스톱 `GRAND_TOTAL_CHAR_BUDGET` 16,000자(≈9.7k tok — 11k부터 soft 지시 절벽 실측, arch/79). 백스톱은 스냅샷성 블록만 제거, 기억·L0 절대 보호.
+17. **Token Budget 2단** — 메모리 블록 2500(블록별 배분·저우선 트리밍) + 프롬프트 총량 백스톱 `GRAND_TOTAL_CHAR_BUDGET` 16,500자(≈10.06k tok — 11k부터 soft 지시 절벽 실측, 마진 0.9k tok. 2026-07-28 상향은 압축 선행 후에만 허용). 백스톱 제거 순서는 [세계 상태] → [NPC 일상] → 기억 부분 절삭 — 기억·L0 절대 보호. 재비대는 플레이테스트 V12 게이트(발동률 ≤20%·avg ≤15,000자)가 감시 — arch/79 2·3차.
 18. **Procedural Plot Protection** — 동적 이벤트에서 arcRouteTag/commitmentDelta 절대 금지.
 19. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns ≥ 15 이상이어야 발동.
 20. **RUN_ENDED 시 메모리 통합** — go_hub/MOVE_LOCATION 없이 런 종료 시에도 finalizeVisit() 호출.
@@ -673,6 +673,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **장소 배경 지속화 (2026-07-27)** | [arch/93] 대화 중 장면이 없는 구간(중앙값 3턴·최장 23턴)을 배경 레이어로 메움. 헤더 밴드안은 뷰포트 25% 잠식으로 기각 | ✅ 완료 |
 | **회원번호 도입 (2026-07-27)** | 문의·지원에서 부를 수 있는 가입순 정수 식별자 — `users.member_no`(DB 시퀀스 부여, 재사용 없음) + 기존 31명 가입순 백필 + `GET /v1/auth/me` + 설정 모달 "내 계정"에 `#0016` 표시·복사 | ✅ 완료 |
 | **모바일 스크롤·뷰포트 정합 (2026-07-27)** | [arch/94] 헤드리스 4뷰포트 점검으로 11종 수정 — 스크롤 되돌림 follow 모델, overscroll-contain, 타이틀·로그인 스크롤 구조, 모달 16곳, safe-area | ✅ 완료 |
+| **NPC 엔진 분석 + 프롬프트 재비대 2·3차 (2026-07-27~28)** | [arch/79·95] 3주 재비대(백스톱 발동 35%→[NPC 일상] 상시 삭제) 규명·압축 13종·순서 교체·상한 16,500·V12 재비대 게이트. 어미 하락 진범=DeepSeek 교차 실측→비율 5:5→3:7. 역전 설계는 파일럿 실증 후 폐기(arch/95 종결, archive 태그) | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
@@ -799,7 +800,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 
 | 파일 | 내용 |
 |------|------|
-| 01_server_module_map.md | 서버 전체 서비스 맵 (107 services, 47 타입 파일) |
+| 01_server_module_map.md | 서버 전체 서비스 맵 (111 services, 47 타입 파일) |
 | 02_client_component_map.md | 클라이언트 컴포넌트 맵 (70 components, stores, CSS) |
 | 03_hub_engine_guide.md | HUB 엔진 구현 (판정, EventDirector, Narrative, NPC, 평판) |
 | 04_llm_memory_guide.md | LLM 파이프라인, 메모리 L0~L4, Token Budget, Scene Continuity |
