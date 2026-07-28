@@ -783,7 +783,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 92_hub_base_location_collision.md | ✅ 구현됨 | 거점(HUB) ↔ 거점 장소 정체성 충돌 |
 | 93_location_backdrop.md | ✅ 구현됨 | 장소 배경 지속화 |
 | 94_mobile_scroll_viewport.md | ✅ 구현됨 | 모바일 스크롤·뷰포트 정합 |
-| 95_prompt_split_analysis.md | 📎 분석 | 프롬프트 이분할(서술·대사계) 재검토 — 원형 재기각, 역전 설계(대사 선행 주입)만 조건부 후보 |
+| 95_prompt_split_analysis.md | 📎 분석 + 파일럿 실측 | 프롬프트 이분할 재검토 — 원형 재기각. 역전 설계 파일럿(spike/dialogue-precommit) 실증: 어미 94%·채택 94% VERBATIM, 응답률 부작용 보완 전 병합 금지 |
 | 90_landing_page_redesign.md | ✅ 구현됨 | 랜딩 리디자인 P1~P4 |
 | 87_admin_console.md | ✅ 구현됨 | 어드민 콘솔 — users.role+AdminGuard 하이브리드+@AdminEndpoint(감사 로그)+관제… |
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 |
