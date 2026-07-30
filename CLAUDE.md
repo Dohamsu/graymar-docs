@@ -136,7 +136,7 @@ LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 �
 ├── client/              ← Next.js 16 + Zustand + Tailwind v4 프론트엔드
 ├── admin/               ← 어드민 콘솔 (독립 레포 graymar-admin, Vercel 별도 배포 — arch/87)
 ├── specs/               ← 원본 상세 설계 스펙 (17 md, 정본 참조)
-├── architecture/        ← 통합 아키텍처 문서 (83 md + INDEX.md 색인, 실무 참조, archive 4 md)
+├── architecture/        ← 통합 아키텍처 문서 (84 md + INDEX.md 색인, 실무 참조, archive 4 md)
 ├── guides/              ← 코드 구현 지침 (10 md, 서비스맵/컴포넌트맵/구현가이드/팩 에셋·아이템 프롬프트)
 ├── schema/              ← DB 스키마, JSON Schema, OpenAPI (3 files)
 ├── samples/             ← 샘플 페이로드 (JSON, 10 files)
@@ -674,6 +674,8 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **회원번호 도입 (2026-07-27)** | 문의·지원에서 부를 수 있는 가입순 정수 식별자 — `users.member_no`(DB 시퀀스 부여, 재사용 없음) + 기존 31명 가입순 백필 + `GET /v1/auth/me` + 설정 모달 "내 계정"에 `#0016` 표시·복사 | ✅ 완료 |
 | **모바일 스크롤·뷰포트 정합 (2026-07-27)** | [arch/94] 헤드리스 4뷰포트 점검으로 11종 수정 — 스크롤 되돌림 follow 모델, overscroll-contain, 타이틀·로그인 스크롤 구조, 모달 16곳, safe-area | ✅ 완료 |
 | **NPC 엔진 분석 + 프롬프트 재비대 2·3차 (2026-07-27~28)** | [arch/79·95] 3주 재비대(백스톱 발동 35%→[NPC 일상] 상시 삭제) 규명·압축 13종·순서 교체·상한 16,500·V12 재비대 게이트. 어미 하락 진범=DeepSeek 교차 실측→비율 5:5→3:7. 역전 설계는 파일럿 실증 후 폐기(arch/95 종결, archive 태그) | ✅ 완료 |
+| **잡담 화제 시스템 확장 Task#1 A (2026-07-30)** | 4팩 daily_topics 368개 체제 + CORE·SUB 전원 호칭 명시(content 3548eb3) + 화제 소진 폴백·R4 어체 기본 호칭 폴백 + dedup 실동화 — 선택 topicId를 recentTopics에 CAS 역기록, carry-over·매칭 경로 fresh 우선 (server 9e2fb90~edaf2c0) | ✅ 완료 |
+| **재회 빈도·시간 정체 해소 Task#2 (2026-07-30)** | 지연 틱(world-tick) + 아는 NPC 재회 가중(situation-generator) + 의뢰인 보고 동선(time-cost·turns) + 퀘스트 전환 보고 프레이밍 실노출 — go_hub 리라벨 + 워커 보존 (server 38e2d1c·9a10f1b, 배포 확인) | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
@@ -814,3 +816,46 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 ## Working Language
 
 설계 문서와 게임 콘텐츠는 한국어. 기술 식별자(enum, field name, schema key)는 영어.
+
+## GBrain Configuration (configured by /setup-gbrain)
+- Mode: CLI-only (local pglite)
+- Engine: pglite
+- Config file: ~/.gbrain/config.json (mode 0600)
+- Setup date: 2026-07-30
+- MCP registered: **no — 의도적 미등록.** gbrain 0.42.42의 `serve`(MCP stdio)가 PGLite 잠금을
+  쥐면 CLI 쓰기·검색이 `Timed out waiting for PGLite lock`으로 마비된다 (2026-07-30 실측).
+  gstack 통합은 전부 CLI 경로라 CLI-only가 정본. **주의: pkill해도 serve가 계속 되살아나면
+  MCP 등록 시절에 시작된 다른 Claude Code 세션이 MCP 클라이언트로서 자동 재스폰하는 것** —
+  그 세션들을 재시작해야 근절된다 (새 세션은 미등록이라 무해). 일회성 잠금은
+  `pkill -f 'gbrain.*serve'` + `rm -f ~/.gbrain/brain.pglite/.gbrain-lock/lock` 후 재시도.
+- Artifacts sync: off
+- Current repo policy: read-write (270+ pages, embed 100%)
+
+## GBrain Search Guidance (configured by /sync-gbrain)
+<!-- gstack-gbrain-search-guidance:start -->
+
+GBrain is set up on this machine (docs corpus). The agent should prefer gbrain
+over Grep when the question is semantic or when you don't know the exact
+identifier yet. Indexed corpus: **이 레포의 md 문서 전량** (architecture/specs/
+guides/playtest-reports/content 등 208+ pages, embed 100%) via `gbrain import`.
+
+Prefer gbrain when:
+- "어느 문서에서 X를 다뤘지?" / semantic intent, no exact string yet:
+    `gbrain search "<terms>"` (문서 검색이 핵심 용도)
+- "What did we decide?" / past plans, learnings: `gbrain search "<terms>"`
+
+**미가용**: `gbrain code-def`/`code-refs`/`code-callers` 등 코드 심볼 도구는
+이 환경(pglite + v0.42.42)에서 `gbrain sources` 연결 실패로 동작하지 않는다
+(2026-07-30 실측 — `connect timed out`). 코드 탐색은 Grep/Glob을 그대로 사용.
+
+Grep is still right for known exact strings, regex, multiline patterns, and
+file globs. **새 문서 추가 후 재색인은 정본 스크립트 `bash scripts/sync_gbrain_docs.sh`**
+(증분 import → quartz stale 사본 제거 → 변경분 임베딩. 직접 `gbrain import`를 돌리면
+quartz/ 옛 사본이 재유입되므로 스크립트 경유가 정본).
+
+**⚠️ 한국어 질의 결함 (gbrain 0.42.42 실측)**: 순수 한국어 질의는 query 임베딩이
+퇴화해 모든 질의가 동일 결과를 반환한다. **질의에 영문 키워드를 반드시 1개 이상
+섞을 것** (예: `gbrain search "NPC self introduction 자기소개"`). 문서 쪽 임베딩은
+한국어를 정상 처리하므로 영문 혼용 질의로 한국어 문서가 잘 검색된다.
+
+<!-- gstack-gbrain-search-guidance:end -->
