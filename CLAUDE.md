@@ -822,14 +822,15 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 - Engine: pglite
 - Config file: ~/.gbrain/config.json (mode 0600)
 - Setup date: 2026-07-30
-- MCP registered: **no — 의도적 미등록.** gbrain 0.42.42의 `serve`(MCP stdio)가 PGLite 잠금을
-  쥐면 CLI 쓰기·검색이 `Timed out waiting for PGLite lock`으로 마비된다 (2026-07-30 실측).
-  gstack 통합은 전부 CLI 경로라 CLI-only가 정본. **주의: pkill해도 serve가 계속 되살아나면
-  MCP 등록 시절에 시작된 다른 Claude Code 세션이 MCP 클라이언트로서 자동 재스폰하는 것** —
-  그 세션들을 재시작해야 근절된다 (새 세션은 미등록이라 무해). 일회성 잠금은
-  `pkill -f 'gbrain.*serve'` + `rm -f ~/.gbrain/brain.pglite/.gbrain-lock/lock` 후 재시도.
+- MCP registered: **no — 의도적 미등록 (Claude Code 기준).** PGLite는 단일 연결 DB라
+  `serve`(MCP stdio)가 잠금을 쥐면 CLI 전 명령이 `Timed out waiting for PGLite lock`으로
+  마비된다 (2026-07-30 실측). gstack 통합은 전부 CLI 경로라 CLI-only가 정본.
+- **serve 스포너의 정체 = hermes gateway** (`hermes_cli gateway` 데몬이 gbrain serve를
+  MCP 자식으로 상시 스폰 — 의도된 통합, brain에 hermes 페이지 존재). **시분할 운영이 정본**:
+  검색이 잠금으로 막히면 `pkill -f 'gbrain.*serve'` 후 재시도 (hermes는 다음 사용 시
+  lazy 재스폰하므로 무해). 선제 kill은 hermes 쓰기 중일 수 있으니 막혔을 때만.
 - Artifacts sync: off
-- Current repo policy: read-write (270+ pages, embed 100%)
+- Current repo policy: read-write (207 pages, embed 100%)
 
 ## GBrain Search Guidance (configured by /sync-gbrain)
 <!-- gstack-gbrain-search-guidance:start -->
