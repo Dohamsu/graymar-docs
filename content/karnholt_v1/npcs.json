@@ -22,7 +22,7 @@
     "nameStyle": "soft",
     "personality": {
       "core": "남편을 잃고도 무너지지 않으려 이를 악문 강단 있는 여인. 절박하지만 비굴하지 않다.",
-      "speechStyle": "예의 바른 해요체. 감정을 억누른 차분한 어조로 부탁하되, 진실 앞에서는 떨림을 감추지 못한다.",
+      "speechStyle": "예의 바른 해요체. 감정을 억누른 차분한 어조로 부탁하되, 진실 앞에서는 떨림을 감추지 못한다. 상대 호칭은 '당신'.",
       "speechRegister": "HAEYO"
     },
     "castingConstraints": {
@@ -32,7 +32,118 @@
       ],
       "fixedTraits": "남편을 진심으로 걱정하는 의뢰인 — 사건의 피해자 쪽"
     },
-    "speechRegister": "HAEYO"
+    "speechRegister": "HAEYO",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_KH_WD_FIREWOOD",
+        "category": "WORRY",
+        "text": "올겨울 땔감 값이 또 올랐다고 해요. 산 밑 마을인데도 장작 구하기가 해마다 힘들어지네요.",
+        "keywords": [
+          "땔감",
+          "장작",
+          "겨울",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_MENDING",
+        "category": "WORK",
+        "text": "요즘은 광부들 작업복을 꿰매는 삯일을 받아요. 갱도 일이 옷을 어찌나 험하게 만드는지 몰라요.",
+        "keywords": [
+          "삯일",
+          "바느질",
+          "작업복",
+          "꿰매"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_MARKET_PRICE",
+        "category": "WORRY",
+        "text": "검은 시장 감자값이 지난달보다 배는 올랐어요. 국경 도시 물가는 종잡을 수가 없네요.",
+        "keywords": [
+          "감자",
+          "물가",
+          "시장",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_FOG",
+        "category": "OPINION",
+        "text": "산 아래 안개가 이렇게 짙은 해는 처음이에요. 아침엔 문 앞 우물도 안 보일 정도라니까요.",
+        "keywords": [
+          "안개",
+          "아침",
+          "날씨"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_HOMELAND",
+        "category": "PERSONAL",
+        "text": "저는 원래 남쪽 평야 마을에서 자랐어요. 처음 여기 왔을 땐 산이 하늘을 다 가리는 게 낯설었죠.",
+        "keywords": [
+          "고향",
+          "남쪽",
+          "평야",
+          "산"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_BREAD",
+        "category": "PERSONAL",
+        "text": "화덕에 호밀빵을 굽는 날이면 숙소촌 아이들이 담장 너머로 고개를 내밀어요. 한 조각씩 나눠주는 재미로 굽는걸요.",
+        "keywords": [
+          "호밀빵",
+          "화덕",
+          "아이들",
+          "빵"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_WELL",
+        "category": "GOSSIP",
+        "text": "숙소촌 공동 우물이 요즘 자꾸 흐려져요. 아낙들끼리 물 긷는 순서로 실랑이하는 게 하루 일과가 됐죠.",
+        "keywords": [
+          "우물",
+          "숙소촌",
+          "아낙",
+          "물"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_HERBS",
+        "category": "WORK",
+        "text": "기침에 좋다는 산비탈 약초를 말려다 파는 부업을 시작했어요. 광부들 사이에선 제법 찾는 사람이 있어요.",
+        "keywords": [
+          "약초",
+          "기침",
+          "부업",
+          "산비탈"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_FIRST_SNOW",
+        "category": "OPINION",
+        "text": "국경 산마을 첫눈은 늘 이르죠. 올해도 추수가 끝나기 무섭게 봉우리가 하얘졌어요.",
+        "keywords": [
+          "첫눈",
+          "겨울",
+          "봉우리",
+          "추수"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WD_SPINNING",
+        "category": "PERSONAL",
+        "text": "옆집 할머니가 물레질을 가르쳐 주셨어요. 밤이 길어질 땐 실 잣는 소리가 마음을 가라앉혀 줘요.",
+        "keywords": [
+          "물레",
+          "실",
+          "밤",
+          "이웃"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_KH_WARDEN",
@@ -59,7 +170,7 @@
     "nameStyle": "formal",
     "personality": {
       "core": "왕명을 등에 업은 냉정한 관료. 주조소의 모든 저울과 장부를 쥐고 있으며, 자신의 자리를 위협하는 것은 무엇이든 덮는다.",
-      "speechStyle": "격식 있는 합쇼체. 위압적이고 절제된 어조로 거리를 둔다. 아랫사람에겐 명령조, 조사자에겐 방어적.",
+      "speechStyle": "격식 있는 합쇼체. 위압적이고 절제된 어조로 거리를 둔다. 아랫사람에겐 명령조, 조사자에겐 방어적. 상대 호칭은 '당신'.",
       "speechRegister": "HAPSYO"
     },
     "castingConstraints": {
@@ -68,7 +179,117 @@
       ],
       "fixedTraits": "권력을 쥔 감독관 — 부패했을 수도, 억울할 수도 있으나 언제나 무언가를 감춘다"
     },
-    "speechRegister": "HAPSYO"
+    "speechRegister": "HAPSYO",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_KH_WRD_CAPITAL",
+        "category": "PERSONAL",
+        "text": "왕도에서 부임한 지 삼 년째입니다. 이 산바람에는 도무지 정이 붙지 않습니다.",
+        "keywords": [
+          "왕도",
+          "부임",
+          "산바람"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_PAPERWORK",
+        "category": "WORK",
+        "text": "감독청 서류가 하루에 손가락 두 마디 두께로 쌓입니다. 관청 일이란 잉크와 밀랍으로 치르는 전쟁이지요.",
+        "keywords": [
+          "서류",
+          "관청",
+          "잉크",
+          "밀랍"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_SOOT",
+        "category": "WORK",
+        "text": "주조소 화로 곁에 반나절만 서 있어도 관복에 그을음이 뱁니다. 세탁비가 녹봉의 한 자리를 차지할 지경입니다.",
+        "keywords": [
+          "관복",
+          "그을음",
+          "화로",
+          "세탁"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_WINE",
+        "category": "PERSONAL",
+        "text": "이곳 화주는 목이 타는 물건이라, 왕도에서 가져온 포도주를 아껴 마시고 있습니다.",
+        "keywords": [
+          "포도주",
+          "화주",
+          "왕도",
+          "술"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_ROADS",
+        "category": "OPINION",
+        "text": "국경 가도가 험해 왕도행 마차가 열흘은 걸립니다. 공문 하나 오가는 데 계절이 바뀌지요.",
+        "keywords": [
+          "가도",
+          "마차",
+          "공문",
+          "왕도"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_PROTOCOL",
+        "category": "OPINION",
+        "text": "변방일수록 격식이 흐트러지기 쉽습니다. 관등과 절차를 지키는 것이 질서의 시작입니다.",
+        "keywords": [
+          "격식",
+          "절차",
+          "관등",
+          "질서"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_SUPPLY",
+        "category": "WORRY",
+        "text": "겨울이 오면 고개가 눈에 막혀 보급이 끊기곤 합니다. 올해는 장작과 곡물을 일찍 비축하라 일러두었습니다.",
+        "keywords": [
+          "보급",
+          "겨울",
+          "비축",
+          "곡물"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_LETTERS",
+        "category": "PERSONAL",
+        "text": "왕도에 두고 온 가족에게 달마다 서신을 씁니다. 답장이 오기까지 한 달, 그 기다림에는 익숙해지지 않는군요.",
+        "keywords": [
+          "서신",
+          "가족",
+          "왕도",
+          "답장"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_NOISE",
+        "category": "WORRY",
+        "text": "압인기 소리를 종일 듣다 보면 밤에도 귓가에 쇳소리가 울립니다. 관사가 주조소와 너무 가깝습니다.",
+        "keywords": [
+          "압인기",
+          "소음",
+          "관사",
+          "쇳소리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_WRD_TENURE",
+        "category": "PERSONAL",
+        "text": "이번 임기를 무사히 마치면 왕도로 복귀하게 될 겁니다. 그날을 위해 하루하루를 견디는 것이지요.",
+        "keywords": [
+          "임기",
+          "복귀",
+          "왕도"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_KH_GUILDMASTER",
@@ -100,7 +321,119 @@
     "castingConstraints": {
       "fixedTraits": "광부들의 대변자 — 조합의 이익을 위해서라면 회색지대도 넘나든다"
     },
-    "speechRegister": "HAOCHE"
+    "speechRegister": "HAOCHE",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_KH_GLD_YOUNG",
+        "category": "WORK",
+        "text": "요즘 갱도에 들어오는 젊은 형제들은 곡괭이 쥐는 법부터 다시 가르쳐야 하오. 그래도 배우려는 눈빛만은 쓸 만하지.",
+        "keywords": [
+          "젊은이",
+          "곡괭이",
+          "형제",
+          "가르침"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_BACK",
+        "category": "PERSONAL",
+        "text": "삼십 년 갱도 밥을 먹었더니 허리가 날씨보다 먼저 비를 알리오. 오늘은 아침부터 쑤시는 게 눈이 오려나 보오.",
+        "keywords": [
+          "허리",
+          "날씨",
+          "갱도",
+          "세월"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_LAMP_OIL",
+        "category": "WORRY",
+        "text": "등잔 기름값이 올라서 길드 곳간이 빠듯하오. 갱도에서 불빛은 목숨줄인데 아낄 수도 없는 노릇이고.",
+        "keywords": [
+          "등잔",
+          "기름",
+          "길드",
+          "곳간"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_PORRIDGE",
+        "category": "PERSONAL",
+        "text": "숙소촌 공동 솥에서 끓이는 보리죽이 별미라오. 갱도에서 나온 뒤 한 사발이면 하루 피로가 반은 풀리지.",
+        "keywords": [
+          "보리죽",
+          "숙소촌",
+          "솥",
+          "피로"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_SONGS",
+        "category": "PERSONAL",
+        "text": "갱도에서 부르는 노동요는 아버지 대부터 내려온 것이오. 곡괭이 박자가 맞아야 낙반도 피하는 법이지.",
+        "keywords": [
+          "노동요",
+          "노래",
+          "박자",
+          "곡괭이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_GLOVES",
+        "category": "WORK",
+        "text": "좋은 가죽 장갑 한 켤레가 광부한텐 검보다 귀하오. 요즘 시장에 나오는 물건은 세 번 쓰면 터져버리지만.",
+        "keywords": [
+          "장갑",
+          "가죽",
+          "광부",
+          "연장"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_FATHER",
+        "category": "PERSONAL",
+        "text": "내 아버지도, 그 아버지도 이 산에서 곡괭이를 잡았소. 카른홀트 은맥이 우리 집안 족보나 다름없지.",
+        "keywords": [
+          "아버지",
+          "집안",
+          "산",
+          "대물림"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_WINTER",
+        "category": "OPINION",
+        "text": "산바람이 매워지면 갱도 안이 오히려 아늑하오. 광부들이 겨울을 견디는 비결이지.",
+        "keywords": [
+          "산바람",
+          "겨울",
+          "갱도",
+          "아늑"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_DUES",
+        "category": "WORK",
+        "text": "길드 회비 걷는 날이면 형제들 얼굴 보기가 미안하오. 그래도 다친 형제 약값은 길드가 대야 하지 않겠소.",
+        "keywords": [
+          "회비",
+          "길드",
+          "약값",
+          "형제"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_GLD_KIDS",
+        "category": "PERSONAL",
+        "text": "숙소촌 꼬맹이들이 요즘 내 곡괭이를 장난감처럼 탐내오. 크면 다 광부가 되겠다는 게 기특하면서도 짠하지.",
+        "keywords": [
+          "아이들",
+          "숙소촌",
+          "곡괭이",
+          "광부"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_KH_SMUGGLER",
@@ -127,7 +460,7 @@
     "nameStyle": "sharp",
     "personality": {
       "core": "검은 시장을 쥔 영리한 밀수단 두목. 감정보다 이문으로 움직이며, 위조 주화 유통망의 한 축을 쥐고 있다.",
-      "speechStyle": "매끄러운 반말과 존대를 오가는 계산적 어조. 상대의 값을 재며 말하고, 위협에도 웃음을 잃지 않는다.",
+      "speechStyle": "매끄러운 반말과 존대를 오가는 계산적 어조. 상대의 값을 재며 말하고, 위협에도 웃음을 잃지 않는다. 상대 호칭은 '자네'.",
       "speechRegister": "HAEYO"
     },
     "castingConstraints": {
@@ -136,7 +469,118 @@
       ],
       "fixedTraits": "이익으로 움직이는 밀수단 두목 — 위조에 얽혔을 수도, 이용당했을 수도"
     },
-    "speechRegister": "HAECHE"
+    "speechRegister": "HAECHE",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_KH_SMG_SILK",
+        "category": "WORK",
+        "text": "남쪽에서 올라온 비단이 이번 주 물건 중 제일이야. 국경 마을에서 비단 찾는 손이 있냐고? 있으니까 내가 파는 거지.",
+        "keywords": [
+          "비단",
+          "남쪽",
+          "물건",
+          "장사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_TOLL",
+        "category": "OPINION",
+        "text": "초소 검문이 빡빡해질수록 뒷길 값은 오르는 법이지. 장사꾼한텐 그것도 다 시세야.",
+        "keywords": [
+          "초소",
+          "검문",
+          "뒷길",
+          "시세"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_COLD",
+        "category": "PERSONAL",
+        "text": "이 동네 겨울은 손가락 끝부터 갉아먹어. 남쪽 항구가 그리워지는 계절이지.",
+        "keywords": [
+          "겨울",
+          "추위",
+          "항구",
+          "남쪽"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_SPICE",
+        "category": "WORK",
+        "text": "후추 한 줌이 여기선 은화 몇 닢 값이야. 산골 사람들 혀도 호강할 줄은 알거든.",
+        "keywords": [
+          "후추",
+          "향신료",
+          "은화",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_SAILOR",
+        "category": "PERSONAL",
+        "text": "나도 한때는 항구에서 배 타던 몸이야. 뱃멀미가 지긋지긋해서 산으로 왔는데, 여긴 눈멀미가 있더군.",
+        "keywords": [
+          "항구",
+          "배",
+          "과거",
+          "뱃멀미"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_APPRAISAL",
+        "category": "OPINION",
+        "text": "물건이든 사람이든 값은 첫눈에 절반이 정해져. 나머지 절반은 흥정이 만들고.",
+        "keywords": [
+          "값",
+          "흥정",
+          "안목",
+          "장사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_NEWFACES",
+        "category": "GOSSIP",
+        "text": "요즘 검은 시장에 낯선 얼굴이 부쩍 늘었어. 장사꾼이 늘면 파이가 줄지, 안 그래?",
+        "keywords": [
+          "시장",
+          "낯선",
+          "장사꾼",
+          "경쟁"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_LIQUOR",
+        "category": "PERSONAL",
+        "text": "값싼 화주는 안 마셔. 혀가 무뎌지면 물건 값도 못 매기거든.",
+        "keywords": [
+          "화주",
+          "술",
+          "혀",
+          "안목"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_CAT",
+        "category": "PERSONAL",
+        "text": "창고에 고양이 한 마리를 들였어. 쥐 잡는 솜씨가 부하들보다 낫더라고.",
+        "keywords": [
+          "고양이",
+          "창고",
+          "쥐"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_SMG_MULES",
+        "category": "WORK",
+        "text": "짐꾼들이 산길에서 발목 부러지는 게 요즘 골칫거리야. 튼튼한 노새 값이 금값이 됐어.",
+        "keywords": [
+          "짐꾼",
+          "산길",
+          "노새",
+          "운반"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_KH_INNKEEP",
@@ -162,7 +606,7 @@
     "nameStyle": "warm",
     "personality": {
       "core": "카른홀트의 모든 소문이 지나가는 술집의 안주인. 오래 이곳을 지켜본 눈으로 손님을 읽고, 필요한 말만 흘린다.",
-      "speechStyle": "친근한 해요체. 넉살 좋게 잡담을 받아주되, 위험한 화제엔 목소리를 낮추고 눈치를 살핀다.",
+      "speechStyle": "친근한 해요체. 넉살 좋게 잡담을 받아주되, 위험한 화제엔 목소리를 낮추고 눈치를 살핀다. 상대 호칭은 '손님'.",
       "speechRegister": "HAEYO"
     },
     "castingConstraints": {
@@ -171,7 +615,119 @@
       ],
       "fixedTraits": "정보통 안주인 — 거점의 중립적 관찰자, 사건의 배후는 아니다"
     },
-    "speechRegister": "HAOCHE"
+    "speechRegister": "HAOCHE",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_KH_INN_STEW",
+        "category": "WORK",
+        "text": "오늘은 양고기 뼈로 국물을 냈어요. 갱도에서 나온 손님들은 냄새만 맡고도 자리에 앉는다니까요.",
+        "keywords": [
+          "양고기",
+          "국물",
+          "요리",
+          "손님"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_FIREWOOD",
+        "category": "WORRY",
+        "text": "술집 화로가 밤새 꺼지면 안 되니 장작이 얼마나 드는지 몰라요. 겨울엔 술보다 장작값이 더 무섭죠.",
+        "keywords": [
+          "화로",
+          "장작",
+          "겨울",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_REGULARS",
+        "category": "GOSSIP",
+        "text": "단골들 자리는 정해져 있어요. 누가 어느 의자에 앉는지만 봐도 그날 갱도 사정이 보인다니까요.",
+        "keywords": [
+          "단골",
+          "자리",
+          "술집",
+          "광부"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_HUSBAND",
+        "category": "PERSONAL",
+        "text": "이 술집은 돌아가신 바깥양반이 남긴 거예요. 간판의 곡괭이도 그이가 직접 깎았죠.",
+        "keywords": [
+          "남편",
+          "술집",
+          "간판",
+          "곡괭이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_BREWING",
+        "category": "WORK",
+        "text": "화주 담그는 법은 시어머니한테 배웠어요. 도수는 산바람에 맞춰 올리는 거라고 하셨죠.",
+        "keywords": [
+          "화주",
+          "양조",
+          "시어머니",
+          "도수"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_FLOOR",
+        "category": "WORK",
+        "text": "광부 장화에 묻어 오는 석탄재 때문에 바닥 청소가 하루 일과의 반이에요.",
+        "keywords": [
+          "청소",
+          "석탄재",
+          "장화",
+          "바닥"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_MUSIC",
+        "category": "OPINION",
+        "text": "가끔 떠돌이 악사가 들르면 그날 밤은 술이 배로 나가요. 노래 한 자락이 화주보다 독한 법이죠.",
+        "keywords": [
+          "악사",
+          "노래",
+          "술",
+          "밤"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_DAWN",
+        "category": "PERSONAL",
+        "text": "새벽 장 보러 나가는 길에 보는 안개 낀 산이 저는 제일 좋아요. 삼십 년을 봐도 안 질리네요.",
+        "keywords": [
+          "새벽",
+          "안개",
+          "산",
+          "장보기"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_CHEESE",
+        "category": "WORK",
+        "text": "산양 치즈를 들여놨는데 광부들 입엔 아직 낯선가 봐요. 화주 안주론 이만한 게 없는데.",
+        "keywords": [
+          "치즈",
+          "산양",
+          "안주",
+          "메뉴"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_INN_WINTER_TALK",
+        "category": "GOSSIP",
+        "text": "눈이 내리기 시작하면 술집이 꽉 차요. 겨울엔 소문도 술도 빨리 도는 법이거든요.",
+        "keywords": [
+          "겨울",
+          "소문",
+          "술집",
+          "눈"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_KH_ENGRAVER",
@@ -197,12 +753,123 @@
     "nameStyle": "quiet",
     "personality": {
       "core": "주화 각인을 새기는 손재주 좋은 조각공. 말수가 적고 겁이 많으며, 누구보다 주조의 비밀에 가까이 있다.",
-      "speechStyle": "조심스러운 해요체와 말끝 흐림. 겁에 질려 짧게 답하고, 추궁받으면 시선을 피하며 얼버무린다.",
+      "speechStyle": "조심스러운 해요체와 말끝 흐림. 겁에 질려 짧게 답하고, 추궁받으면 시선을 피하며 얼버무린다. 상대 호칭은 '손님'.",
       "speechRegister": "HAEYO"
     },
     "castingConstraints": {
       "fixedTraits": "주조의 비밀에 가장 가까운 조각공 — 공범일 수도, 협박당한 목격자일 수도"
     },
-    "speechRegister": "HAEYO"
+    "speechRegister": "HAEYO",
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_KH_ENG_EYES",
+        "category": "WORRY",
+        "text": "잔글씨를 새기다 보니 눈이 침침해져서요… 등잔을 두 개나 켜 놓고 일해요.",
+        "keywords": [
+          "눈",
+          "등잔",
+          "잔글씨",
+          "시력"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_HANDS",
+        "category": "WORK",
+        "text": "손끝이 트면 각인이 비뚤어져서… 겨울엔 밀랍을 손에 바르고 자요.",
+        "keywords": [
+          "손",
+          "밀랍",
+          "각인",
+          "겨울"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_APPRENTICE",
+        "category": "PERSONAL",
+        "text": "열둘에 스승님 밑에 들어가 끌 잡는 법부터 배웠어요. 처음 삼 년은 숫돌만 갈았죠…",
+        "keywords": [
+          "도제",
+          "스승",
+          "끌",
+          "숫돌"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_BIRDS",
+        "category": "PERSONAL",
+        "text": "작업장 창틀에 오는 산새한테 빵부스러기를 놔줘요. 압인기 소리에도 안 도망가는 녀석이 있어요…",
+        "keywords": [
+          "산새",
+          "창틀",
+          "빵부스러기"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_EARS",
+        "category": "WORRY",
+        "text": "압인기 옆에서 일하다 보면 귀가 멍해져요… 밤에도 그 소리가 들리는 것 같고요.",
+        "keywords": [
+          "압인기",
+          "귀",
+          "소음",
+          "밤"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_TOOLS",
+        "category": "WORK",
+        "text": "끌은 남한테 안 빌려줘요. 손에 익은 연장이 아니면 선이 죽어버려서요…",
+        "keywords": [
+          "끌",
+          "연장",
+          "손",
+          "각인"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_SOUP",
+        "category": "PERSONAL",
+        "text": "점심은 늘 작업장에서 순무 수프로 때워요. 자리를 오래 비우면 마음이 불안해서…",
+        "keywords": [
+          "순무",
+          "수프",
+          "점심",
+          "작업장"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_DRAWING",
+        "category": "PERSONAL",
+        "text": "쉬는 날엔 숯으로 산 그림을 그려요. 주화 말고 큰 걸 새겨보는 게… 오랜 꿈이긴 해요.",
+        "keywords": [
+          "그림",
+          "숯",
+          "꿈",
+          "조각"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_COLD_SHOP",
+        "category": "WORRY",
+        "text": "작업장이 화로에서 멀어서 겨울엔 손이 곱아요. 불 가까이는 금속이 달아서 안 되고… 참 난감하죠.",
+        "keywords": [
+          "작업장",
+          "추위",
+          "손",
+          "화로"
+        ]
+      },
+      {
+        "topicId": "TOPIC_KH_ENG_MASTER",
+        "category": "PERSONAL",
+        "text": "스승님은 각인 하나에 사흘을 쓰셨어요. 요즘은 그런 느긋함이 허락되질 않지만요…",
+        "keywords": [
+          "스승",
+          "각인",
+          "사흘",
+          "솜씨"
+        ]
+      }
+    ]
   }
 ]

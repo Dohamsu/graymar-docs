@@ -92,6 +92,118 @@
     ],
     "linkedIncidents": [
       "INC_SS_COMMON_DREAM"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_IREN_OIL_PRICE",
+        "category": "WORRY",
+        "text": "요즘 고래기름 값이 또 올라서, 등불 심지를 반으로 줄여야 하나 고민이에요.",
+        "keywords": [
+          "고래기름",
+          "기름값",
+          "등불",
+          "심지"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_STEW_POT",
+        "category": "WORK",
+        "text": "오늘은 말린 대구랑 뿌리채소를 넣고 스튜를 끓였어요. 극야엔 뜨거운 국물만 한 게 없죠.",
+        "keywords": [
+          "스튜",
+          "말린 대구",
+          "국물",
+          "요리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_FROSTED_WINDOW",
+        "category": "PERSONAL",
+        "text": "아침마다 성에 낀 창을 닦는 게 제 하루의 시작이에요. 성에 무늬가 매일 조금씩 다르답니다.",
+        "keywords": [
+          "성에",
+          "창문",
+          "아침",
+          "무늬"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_GUEST_TASTE",
+        "category": "GOSSIP",
+        "text": "투숙객마다 술 데우는 온도 취향이 다 달라요. 부두 사람들은 펄펄 끓여 달라고 하죠.",
+        "keywords": [
+          "투숙객",
+          "데운 술",
+          "취향",
+          "부두 사람"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_FUR_DRYING",
+        "category": "WORK",
+        "text": "젖은 모피는 난로에 너무 가까이 대면 냄새가 배요. 여관 일 중에 제일 손이 많이 가는 일이에요.",
+        "keywords": [
+          "모피",
+          "난로",
+          "냄새",
+          "여관 일"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_AURORA_SPOT",
+        "category": "OPINION",
+        "text": "오로라는 여관 뒷마당에서 보는 게 제일 예뻐요. 손님들껜 잘 안 알려드리는 자리지만요.",
+        "keywords": [
+          "오로라",
+          "뒷마당",
+          "구경",
+          "자리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_POLAR_CLOCK",
+        "category": "PERSONAL",
+        "text": "해가 없으니 시간은 등불 기름이 줄어드는 걸로 가늠해요. 몸에 익으면 꽤 정확하답니다.",
+        "keywords": [
+          "극야",
+          "시간",
+          "기름",
+          "가늠"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_MOTHER_RECIPE",
+        "category": "PERSONAL",
+        "text": "이 스튜 간은 어머니한테 배운 그대로예요. 소금 대신 말린 해초를 쓰는 게 비결이에요.",
+        "keywords": [
+          "어머니",
+          "요리법",
+          "해초",
+          "비결"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_FISHMONGER",
+        "category": "GOSSIP",
+        "text": "부두 생선 장수가 요즘 값을 자꾸 올려요. 그래도 이른 박명에 가면 조금 깎아 주더라고요.",
+        "keywords": [
+          "생선 장수",
+          "부두",
+          "흥정",
+          "박명"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_IREN_DAMP_FIREWOOD",
+        "category": "WORRY",
+        "text": "장작이 눅눅해서 불이 잘 안 붙는 날이 많아요. 극야가 길어질수록 땔감 걱정이 늘어요.",
+        "keywords": [
+          "장작",
+          "땔감",
+          "난로",
+          "걱정"
+        ]
+      }
     ]
   },
   {
@@ -130,7 +242,7 @@
         "집요",
         "관찰적"
       ],
-      "speechStyle": "낮고 느린 하오체. 상대의 말을 되묻는 습관이 있다. 금지: 반말, ~해요, ~습니다.",
+      "speechStyle": "낮고 느린 하오체. 상대의 말을 되묻는 습관이 있다. 금지: 반말, ~해요, ~습니다. 상대 호칭은 '그대'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "환자를 구하려는 자비와 그들을 관찰 대상으로 삼는 집착 사이",
       "softSpot": "자신이 구하지 못한 환자의 꿈 기록을 넘길 때",
@@ -189,6 +301,118 @@
     "linkedIncidents": [
       "INC_SS_CONVENT_TRANSFER",
       "INC_SS_HEART_BACKFLOW"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_LUOR_LANTERN_DUTY",
+        "category": "WORK",
+        "text": "수녀원의 등불은 밤새 꺼뜨리지 않는 것이 계율이오. 심지 다듬는 일도 기도의 하나라 배웠소.",
+        "keywords": [
+          "등불",
+          "계율",
+          "심지",
+          "수녀원"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_CLIFF_WIND",
+        "category": "PERSONAL",
+        "text": "절벽 바람이 문틈으로 우는 소리를 내오. 처음엔 무서웠는데, 이제는 그 소리가 없으면 잠이 얕아지오.",
+        "keywords": [
+          "절벽",
+          "바람",
+          "문틈",
+          "소리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_FROZEN_INK",
+        "category": "WORK",
+        "text": "기록용 잉크가 얼어 난로 곁에 두고 쓰오. 그대는 글을 쓰다 손이 곱아 본 적 있소?",
+        "keywords": [
+          "잉크",
+          "기록",
+          "난로",
+          "추위"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_HERB_TEA",
+        "category": "WORK",
+        "text": "환자들에게 마른 약초 차를 끓여 주오. 향이 좋아 나도 한 잔씩 곁들이곤 하오.",
+        "keywords": [
+          "약초",
+          "차",
+          "환자",
+          "향"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_DAWN_PRAYER",
+        "category": "OPINION",
+        "text": "새벽 기도가 가장 고요하오. 극야엔 새벽이라 해도 어둡지만, 어둠이 깊을수록 기도는 맑아지오.",
+        "keywords": [
+          "새벽",
+          "기도",
+          "고요",
+          "어둠"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_NOVICE_DAYS",
+        "category": "PERSONAL",
+        "text": "수련 시절엔 물 긷는 일이 제일 힘들었소. 절벽 계단이 얼면 물통 하나에 반나절이 걸렸지.",
+        "keywords": [
+          "수련",
+          "물 긷기",
+          "계단",
+          "옛날"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_CANDLE_SMELL",
+        "category": "OPINION",
+        "text": "밀랍초보다 고래기름 등불이 오래가오. 다만 그 냄새는, 그대도 익숙해지려면 시간이 걸릴 거요.",
+        "keywords": [
+          "밀랍초",
+          "고래기름",
+          "냄새",
+          "등불"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_PILGRIMS",
+        "category": "GOSSIP",
+        "text": "요즘 순례자가 부쩍 늘었소. 먼 남쪽에서 온 이들은 극야를 처음 보고 한참을 멍하니 서 있곤 하오.",
+        "keywords": [
+          "순례자",
+          "남쪽",
+          "극야",
+          "방문객"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_MENDING",
+        "category": "WORK",
+        "text": "수녀복 깁는 밤이 좋소. 바늘땀을 세다 보면 마음이 가지런해지오.",
+        "keywords": [
+          "수녀복",
+          "바느질",
+          "바늘땀",
+          "밤"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_LUOR_SEA_SOUND",
+        "category": "PERSONAL",
+        "text": "절벽 아래 파도 소리를 들으며 하루를 접소. 그대는 바다 소리가 위로가 되오, 아니면 두려움이 되오?",
+        "keywords": [
+          "파도",
+          "바다 소리",
+          "절벽",
+          "하루"
+        ]
+      }
     ]
   },
   {
@@ -226,7 +450,7 @@
         "탐미",
         "소심"
       ],
-      "speechStyle": "건조한 해체. 감정을 관측 기록처럼 짧게 말한다. 금지: ~하오, ~습니다, ~해요, 긴 문장.",
+      "speechStyle": "건조한 해체. 감정을 관측 기록처럼 짧게 말한다. 금지: ~하오, ~습니다, ~해요, 긴 문장. 상대 호칭은 '자네'.",
       "speechRegister": "HAECHE",
       "innerConflict": "진실을 밝히려는 학자적 양심과 후원이 끊길 두려움 사이",
       "softSpot": "별고래의 눈을 처음 마주친 그 밤을 떠올릴 때",
@@ -284,6 +508,118 @@
     ],
     "linkedIncidents": [
       "INC_SS_REPORT_COVERUP"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_SAEL_LENS_FROST",
+        "category": "WORK",
+        "text": "관측 렌즈에 성에가 앉으면 그날 기록은 끝이야. 입김도 조심해야 해.",
+        "keywords": [
+          "렌즈",
+          "성에",
+          "관측",
+          "입김"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_FROZEN_PEN",
+        "category": "WORK",
+        "text": "탑 꼭대기는 잉크가 금방 얼어. 연필로 쓰고 아래층에서 옮겨 적어.",
+        "keywords": [
+          "잉크",
+          "연필",
+          "탑",
+          "기록"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_STAR_CHART",
+        "category": "PERSONAL",
+        "text": "남쪽 하늘 별 지도는 여기선 반쯤 쓸모없어. 새로 그리는 중이야.",
+        "keywords": [
+          "별 지도",
+          "남쪽 하늘",
+          "제작",
+          "별"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_TEA_RATION",
+        "category": "WORRY",
+        "text": "찻잎 배급이 줄었어. 밤샘 관측에 차가 없으면 곤란한데.",
+        "keywords": [
+          "찻잎",
+          "배급",
+          "밤샘",
+          "관측"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_ACADEMY",
+        "category": "PERSONAL",
+        "text": "남쪽 학회 동기들은 지금쯤 따뜻한 서재에 있겠지. 부럽진 않아. 조금은 부러워.",
+        "keywords": [
+          "학회",
+          "동기",
+          "남쪽",
+          "서재"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_AURORA_COLOR",
+        "category": "OPINION",
+        "text": "오로라 색은 말로 옮기면 절반이 죽어. 그래도 기록은 해야지.",
+        "keywords": [
+          "오로라",
+          "색",
+          "기록",
+          "묘사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_TOWER_STAIRS",
+        "category": "WORK",
+        "text": "탑 계단이 백스물여섯 개야. 하루 네 번 오르내리면 다리가 후들거려.",
+        "keywords": [
+          "탑",
+          "계단",
+          "오르내리기",
+          "다리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_GEAR_OIL",
+        "category": "WORK",
+        "text": "관측기 톱니에 넣는 기름도 얼어붙어. 고래기름이 그나마 버텨.",
+        "keywords": [
+          "관측기",
+          "톱니",
+          "기름",
+          "고래기름"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_SLEEP_CYCLE",
+        "category": "WORRY",
+        "text": "해가 없으니 수면 주기가 엉망이야. 모래시계 두 개로 억지로 맞추고 있어.",
+        "keywords": [
+          "수면",
+          "극야",
+          "모래시계",
+          "주기"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SAEL_DRIED_FISH",
+        "category": "OPINION",
+        "text": "말린 생선은 질렸어. 그래도 관측 중에 씹기엔 그게 제일 나아.",
+        "keywords": [
+          "말린 생선",
+          "음식",
+          "관측",
+          "야식"
+        ]
+      }
     ]
   },
   {
@@ -326,7 +662,7 @@
         "과묵",
         "불안정"
       ],
-      "speechStyle": "짧은 해체 평어. 비유를 싫어하고 위치·거리·흔적만 말한다. 금지: ~하오, ~습니다, ~해요, 긴 비유.",
+      "speechStyle": "짧은 해체 평어. 비유를 싫어하고 위치·거리·흔적만 말한다. 금지: ~하오, ~습니다, ~해요, 긴 비유. 상대 호칭은 '당신'.",
       "speechRegister": "HAECHE",
       "innerConflict": "실종자를 찾으려는 책임과 자신의 그림자만 먼저 돌아왔다는 공포 사이",
       "softSpot": "무음 해변에서 본 것을 누군가 정확히 짚을 때",
@@ -384,6 +720,118 @@
     ],
     "linkedIncidents": [
       "INC_SS_RIB_COLLAPSE"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_MAREK_BOOTS",
+        "category": "WORK",
+        "text": "부츠 밑창을 새로 갈았다. 얼음판에선 밑창이 목숨이야.",
+        "keywords": [
+          "부츠",
+          "밑창",
+          "얼음",
+          "장비"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_ROPE",
+        "category": "WORK",
+        "text": "밧줄은 서른 걸음짜리 두 개를 챙긴다. 하나는 늘 여분이다.",
+        "keywords": [
+          "밧줄",
+          "장비",
+          "여분",
+          "수색"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_TRACK_FADE",
+        "category": "WORK",
+        "text": "눈 위 발자국은 반나절이면 바람에 지워져. 흔적은 신선할 때 읽어야 해.",
+        "keywords": [
+          "발자국",
+          "눈",
+          "바람",
+          "흔적"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_LAMP_FUEL",
+        "category": "WORK",
+        "text": "수색 나갈 땐 기름을 이틀 치 챙긴다. 불 꺼진 랜턴은 짐일 뿐이야.",
+        "keywords": [
+          "기름",
+          "랜턴",
+          "수색",
+          "준비"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_OLD_HUNT",
+        "category": "PERSONAL",
+        "text": "예전엔 물개를 쫓았어. 지금보다 단순한 일이었지.",
+        "keywords": [
+          "물개",
+          "사냥",
+          "옛날",
+          "일"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_INN_MEAL",
+        "category": "OPINION",
+        "text": "여관 스튜는 양이 적어. 맛은 됐고, 양이 문제야.",
+        "keywords": [
+          "여관",
+          "스튜",
+          "양",
+          "식사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_WIND_SIGN",
+        "category": "OPINION",
+        "text": "바람이 북서로 돌면 눈보라다. 그런 날은 밖에 안 나간다.",
+        "keywords": [
+          "바람",
+          "북서",
+          "눈보라",
+          "날씨"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_GLOVES",
+        "category": "WORRY",
+        "text": "장갑 안감이 해졌어. 부두 상인은 부르는 게 값이고.",
+        "keywords": [
+          "장갑",
+          "안감",
+          "부두 상인",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_QUIET_WALK",
+        "category": "PERSONAL",
+        "text": "말 많은 동행은 사절이야. 소리는 흔적을 덮어.",
+        "keywords": [
+          "동행",
+          "침묵",
+          "소리",
+          "흔적"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MAREK_MAP_HABIT",
+        "category": "WORK",
+        "text": "지도엔 거리랑 지형만 적는다. 나머진 머리에 넣는 거야.",
+        "keywords": [
+          "지도",
+          "거리",
+          "지형",
+          "기억"
+        ]
+      }
     ]
   },
   {
@@ -421,7 +869,7 @@
         "위험",
         "통찰"
       ],
-      "speechStyle": "친근한 반말. 중요한 말일수록 가볍게 흘린다. 금지: ~하오, ~습니다, ~해요, ~소.",
+      "speechStyle": "친근한 반말. 중요한 말일수록 가볍게 흘린다. 금지: ~하오, ~습니다, ~해요, ~소. 상대 호칭은 '친구'.",
       "speechRegister": "BANMAL",
       "innerConflict": "돈벌이 본능과 자신도 꿈약에 잠식되고 있다는 자각 사이",
       "softSpot": "하얀 문 너머를 실제로 본 자를 만날 때",
@@ -467,6 +915,118 @@
     ],
     "linkedIncidents": [
       "INC_SS_DREAM_DRUG_RIOT"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_KAILUN_MARKET_SMELL",
+        "category": "OPINION",
+        "text": "이 시장 냄새 어때? 약재 반, 곰팡이 반. 난 이제 향수 같아, 이거.",
+        "keywords": [
+          "시장",
+          "냄새",
+          "약재",
+          "곰팡이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_HAGGLERS",
+        "category": "GOSSIP",
+        "text": "흥정 제일 지독한 건 어부들이야. 뱃사람이 짠 건 바닷물 때문만은 아니라니까.",
+        "keywords": [
+          "흥정",
+          "어부",
+          "뱃사람",
+          "장사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_ICE_TUNNEL",
+        "category": "OPINION",
+        "text": "폐광 쪽 얼음 통로는 지름길인데 미끄러워. 지난주에 나 두 번이나 넘어졌다?",
+        "keywords": [
+          "폐광",
+          "얼음 통로",
+          "지름길",
+          "넘어짐"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_OLD_MORTAR",
+        "category": "WORK",
+        "text": "약절구가 손에 익어서 새 걸로 못 바꿔. 십 년을 같이 갈았는데.",
+        "keywords": [
+          "약절구",
+          "조제",
+          "십 년",
+          "도구"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_SPICE_SHIP",
+        "category": "WORK",
+        "text": "남쪽에서 오는 향신료가 요즘 뜸해. 배가 안 들어오니 값만 올라.",
+        "keywords": [
+          "향신료",
+          "남쪽",
+          "배",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_STEW_PITCH",
+        "category": "GOSSIP",
+        "text": "여관 스튜에 내 가루 하나만 치면 맛이 확 사는데, 이렌이 절대 안 받아 줘.",
+        "keywords": [
+          "여관",
+          "스튜",
+          "가루",
+          "이렌"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_SOUTH_BOY",
+        "category": "PERSONAL",
+        "text": "나 어릴 땐 남쪽 항구에서 컸어. 여기 와서 처음엔 추워서 울 뻔했지. 농담 아니고.",
+        "keywords": [
+          "남쪽",
+          "항구",
+          "어린 시절",
+          "추위"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_BLUE_FLAME",
+        "category": "WORK",
+        "text": "고래기름에 소금 한 꼬집 넣으면 불꽃이 파래져. 손님 끌기엔 그만이야.",
+        "keywords": [
+          "고래기름",
+          "소금",
+          "불꽃",
+          "장사 수완"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_RUMOR_FEE",
+        "category": "OPINION",
+        "text": "소문은 공짜, 확인된 소문은 유료. 이 바닥 철칙이야.",
+        "keywords": [
+          "소문",
+          "공짜",
+          "유료",
+          "철칙"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KAILUN_ICE_BEARD",
+        "category": "GOSSIP",
+        "text": "부두 영감들 수염에 고드름 달린 거 봤어? 난 그거 볼 때마다 웃겨서 혼나.",
+        "keywords": [
+          "부두",
+          "수염",
+          "고드름",
+          "영감"
+        ]
+      }
     ]
   },
   {
@@ -505,7 +1065,7 @@
         "순수",
         "이질적"
       ],
-      "speechStyle": "느린 해체. 1인칭이 흔들려 '나', '우리', '그 고래'를 섞는다. 금지: ~하오, ~습니다, ~해요.",
+      "speechStyle": "느린 해체. 1인칭이 흔들려 '나', '우리', '그 고래'를 섞는다. 금지: ~하오, ~습니다, ~해요. 상대 호칭은 '그대'.",
       "speechRegister": "HAECHE",
       "innerConflict": "인간 나하트로 남으려는 마음과 별고래의 목소리가 되어가는 변화 사이",
       "softSpot": "자신의 잃어버린 본명을 누군가 부를 때",
@@ -563,6 +1123,118 @@
     ],
     "linkedIncidents": [
       "INC_SS_SILENCE_SPREAD"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_NAHAT_SNOW_MELT",
+        "category": "PERSONAL",
+        "text": "눈을 손에 올리면 금방 사라져. 나는... 우리는 그게 아직 신기해.",
+        "keywords": [
+          "눈",
+          "손",
+          "녹음",
+          "신기함"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_LAMP_WARMTH",
+        "category": "PERSONAL",
+        "text": "등불 옆은 따뜻해. 몸이 따뜻한 건 좋은 거라고, 이렌이 알려 줬어.",
+        "keywords": [
+          "등불",
+          "따뜻함",
+          "이렌",
+          "몸"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_HOT_STEW",
+        "category": "PERSONAL",
+        "text": "스튜는 뜨거워서 놀랐어. 두 번째부터는 맛있었어.",
+        "keywords": [
+          "스튜",
+          "뜨거움",
+          "맛",
+          "처음"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_NAME_SOUND",
+        "category": "PERSONAL",
+        "text": "사람들은 서로를 부를 때 소리를 써. 나도 내 소리가 있었을 텐데.",
+        "keywords": [
+          "이름",
+          "소리",
+          "부름",
+          "상실"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_AURORA_STAND",
+        "category": "PERSONAL",
+        "text": "오로라를 보면 오래 서 있게 돼. 발이 시린 것도 잊어버려.",
+        "keywords": [
+          "오로라",
+          "서 있기",
+          "발",
+          "시림"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_FOOTPRINTS",
+        "category": "PERSONAL",
+        "text": "눈 위에 발자국을 남기는 게 좋아. 내가 여기 있었다는 표시니까.",
+        "keywords": [
+          "발자국",
+          "눈",
+          "표시",
+          "존재"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_MITTENS",
+        "category": "PERSONAL",
+        "text": "여관 손님이 벙어리장갑을 줬어. 손가락은 다섯인데 칸은 두 개야. 이상하고 좋아.",
+        "keywords": [
+          "벙어리장갑",
+          "선물",
+          "손가락",
+          "여관"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_TIDE_LINE",
+        "category": "PERSONAL",
+        "text": "물이 왔다 간 자리에 선이 남아. 그 선을 따라 걷는 게 좋아.",
+        "keywords": [
+          "물",
+          "자국",
+          "해안선",
+          "걷기"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_SALT_FISH",
+        "category": "PERSONAL",
+        "text": "부두 사람이 말린 생선을 나눠 줬어. 짰어. 그래도 다 먹었어.",
+        "keywords": [
+          "말린 생선",
+          "부두",
+          "짠맛",
+          "나눔"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_NAHAT_CONVENT_BELL",
+        "category": "OPINION",
+        "text": "수녀원 종소리는 멀리서 들으면 물속에서 듣는 것 같아. 우리는... 나는 그 소리가 좋아.",
+        "keywords": [
+          "수녀원",
+          "종소리",
+          "물속",
+          "울림"
+        ]
+      }
     ]
   },
   {
@@ -595,7 +1267,7 @@
     "personality": {
       "core": "갈비평원 채굴반장 — 두 번째 입구·노동자 실종의 열쇠",
       "traits": [],
-      "speechStyle": "거친 해체. 별고래를 자원으로만 보려 하지만 밤마다 고래 울음에 잠을 못 잔다.",
+      "speechStyle": "거친 해체. 별고래를 자원으로만 보려 하지만 밤마다 고래 울음에 잠을 못 잔다. 상대 호칭은 '그쪽'.",
       "speechRegister": "HAECHE",
       "innerConflict": "",
       "softSpot": "",
@@ -626,7 +1298,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_BRAN_QUOTA",
+        "category": "WORK",
+        "text": "할당량이 또 올랐어. 위에선 뼛가루가 눈처럼 쏟아지는 줄 아나 보지.",
+        "keywords": [
+          "할당량",
+          "채굴",
+          "뼛가루",
+          "윗선"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_BRAN_DULL_PICK",
+        "category": "WORK",
+        "text": "곡괭이 날이 뼈에 닿으면 금방 무뎌져. 대장장이만 신났지.",
+        "keywords": [
+          "곡괭이",
+          "날",
+          "뼈",
+          "대장장이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_BRAN_ROOKIES",
+        "category": "GOSSIP",
+        "text": "신참들은 사흘을 못 버텨. 추위 반, 겁 반이야.",
+        "keywords": [
+          "신참",
+          "사흘",
+          "추위",
+          "겁"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_BRAN_WAGE",
+        "category": "WORRY",
+        "text": "품삯은 그대론데 기름값만 올라. 벌어서 등불에 다 붓는 꼴이야.",
+        "keywords": [
+          "품삯",
+          "기름값",
+          "등불",
+          "살림"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_BRAN_STRONG_DRINK",
+        "category": "PERSONAL",
+        "text": "일 끝나면 독한 술 한 잔이 약이야. 그쪽도 한잔 사 주면 말이 좀 늘겠지.",
+        "keywords": [
+          "술",
+          "퇴근",
+          "한잔",
+          "약"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_BRAN_CALLUSED",
+        "category": "PERSONAL",
+        "text": "손금이 다 굳은살에 묻혔어. 마누라가 있었으면 잔소리깨나 들었을 거다.",
+        "keywords": [
+          "굳은살",
+          "손",
+          "혼잣말",
+          "독신"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_SEFI",
@@ -658,7 +1398,7 @@
     "personality": {
       "core": "어린 순례 안내인 — 수녀원 내부와 숨겨진 기도문",
       "traits": [],
-      "speechStyle": "밝은 해요체. 앞을 보지 못하지만 오로라 색을 냄새로 구분한다고 말한다.",
+      "speechStyle": "밝은 해요체. 앞을 보지 못하지만 오로라 색을 냄새로 구분한다고 말한다. 상대 호칭은 '손님'.",
       "speechRegister": "HAEYO",
       "innerConflict": "",
       "softSpot": "",
@@ -689,7 +1429,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_SEFI_STAIR_COUNT",
+        "category": "PERSONAL",
+        "text": "수녀원 계단은 마흔두 개예요. 저는 안 세고도 알아요. 발이 다 기억하거든요.",
+        "keywords": [
+          "계단",
+          "마흔두 개",
+          "발",
+          "기억"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SEFI_AURORA_SMELL",
+        "category": "OPINION",
+        "text": "오로라가 초록일 땐 풀 냄새 비슷한 게 나요. 다들 안 믿지만 진짜예요.",
+        "keywords": [
+          "오로라",
+          "초록",
+          "냄새",
+          "풀"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SEFI_BELL_ROPE",
+        "category": "WORK",
+        "text": "종 줄 당기는 건 제 일이에요. 힘들지만 종소리가 절벽을 타고 내려가는 게 좋아요.",
+        "keywords": [
+          "종",
+          "줄",
+          "절벽",
+          "종소리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SEFI_HONEY_CANDY",
+        "category": "PERSONAL",
+        "text": "멜라 수녀님이 가끔 꿀사탕을 주세요. 아껴 먹느라 반으로 깨물어요.",
+        "keywords": [
+          "꿀사탕",
+          "멜라 수녀",
+          "간식",
+          "아껴 먹기"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SEFI_FOOTSTEPS",
+        "category": "PERSONAL",
+        "text": "발소리만 들으면 누가 오는지 알아요. 손님 발소리는 처음 듣는 소리네요.",
+        "keywords": [
+          "발소리",
+          "구분",
+          "손님",
+          "귀"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_SEFI_WIND_SONG",
+        "category": "OPINION",
+        "text": "절벽 바람은 노래 같아요. 겨울엔 낮은 소리, 폭풍 전엔 높은 소리를 내요.",
+        "keywords": [
+          "바람",
+          "노래",
+          "절벽",
+          "폭풍"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_ODRIN",
@@ -721,7 +1529,7 @@
     "personality": {
       "core": "관측탑 기록 보조원 — 사엘이 숨긴 원본 기록에 접근 가능",
       "traits": [],
-      "speechStyle": "조심스러운 합쇼체. 사엘을 존경하지만 보고서 조작을 눈치채고 있다.",
+      "speechStyle": "조심스러운 합쇼체. 사엘을 존경하지만 보고서 조작을 눈치채고 있다. 상대 호칭은 '당신'.",
       "speechRegister": "HAPSYO",
       "innerConflict": "",
       "softSpot": "",
@@ -752,7 +1560,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_ODRIN_FILING",
+        "category": "WORK",
+        "text": "관측 일지를 날짜순으로 다시 묶고 있습니다. 종이가 추위에 바스라져서 여간 조심스럽지 않습니다.",
+        "keywords": [
+          "관측 일지",
+          "정리",
+          "종이",
+          "추위"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ODRIN_HANDWRITING",
+        "category": "GOSSIP",
+        "text": "사엘 님 필체는 알아보기가 어렵습니다. 옮겨 적는 게 제 일의 절반입니다.",
+        "keywords": [
+          "사엘",
+          "필체",
+          "필사",
+          "업무"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ODRIN_OLD_STOVE",
+        "category": "WORRY",
+        "text": "탑의 난로가 오래돼서 연기가 샙니다. 기록지에 그을음이 앉을까 늘 걱정입니다.",
+        "keywords": [
+          "난로",
+          "연기",
+          "그을음",
+          "기록지"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ODRIN_HOMELAND",
+        "category": "PERSONAL",
+        "text": "고향은 남쪽 곡창 지대입니다. 어머니 편지가 배편으로 두 달 걸려 도착합니다.",
+        "keywords": [
+          "고향",
+          "남쪽",
+          "어머니",
+          "편지"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ODRIN_SUPPLY_SHIP",
+        "category": "GOSSIP",
+        "text": "보급선이 늦어지고 있다 합니다. 종이와 잉크부터 동나는 게 저희 처지입니다.",
+        "keywords": [
+          "보급선",
+          "종이",
+          "잉크",
+          "부족"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ODRIN_TEA_TIME",
+        "category": "PERSONAL",
+        "text": "박명 무렵에 마시는 차 한 잔이 낙입니다. 탑에 오시면 한 잔 대접하겠습니다.",
+        "keywords": [
+          "차",
+          "박명",
+          "낙",
+          "대접"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_HELUN",
@@ -784,7 +1660,7 @@
     "personality": {
       "core": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
       "traits": [],
-      "speechStyle": "낮은 하오체. 죽은 사람보다 잠든 사람을 더 무서워한다.",
+      "speechStyle": "낮은 하오체. 죽은 사람보다 잠든 사람을 더 무서워한다. 상대 호칭은 '그대'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "",
       "softSpot": "",
@@ -815,7 +1691,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_HELUN_OLD_TRADE",
+        "category": "PERSONAL",
+        "text": "장례 일을 삼십 년 했소. 손이 기억하는 일이란 게 무섭소.",
+        "keywords": [
+          "장례",
+          "삼십 년",
+          "손",
+          "기억"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_HELUN_WOODWORK",
+        "category": "WORK",
+        "text": "요즘은 여관 의자나 고쳐 주며 지내오. 관 짜던 솜씨라 이음새 하나는 자신 있소.",
+        "keywords": [
+          "목공",
+          "의자",
+          "이음새",
+          "솜씨"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_HELUN_NO_WAIL",
+        "category": "OPINION",
+        "text": "북쪽 장례엔 곡소리가 없소. 눈이 소리를 다 삼켜 버리니, 그게 곡이라면 곡이겠지.",
+        "keywords": [
+          "북쪽",
+          "장례",
+          "곡소리",
+          "눈"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_HELUN_WARM_WINE",
+        "category": "PERSONAL",
+        "text": "데운 술에 말린 자두 하나 띄우는 게 내 저녁 의식이오. 그대도 한번 해 보시오.",
+        "keywords": [
+          "데운 술",
+          "말린 자두",
+          "저녁",
+          "의식"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_HELUN_ROOM_THREE",
+        "category": "PERSONAL",
+        "text": "이 여관 삼 호실에 이 년째 묵고 있소. 떠날 이유를 아직 못 찾았소.",
+        "keywords": [
+          "여관",
+          "삼 호실",
+          "장기 투숙",
+          "이 년"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_HELUN_SLOW_WATCH",
+        "category": "WORRY",
+        "text": "내 회중시계가 자꾸 늦소. 해가 없으니 맞출 기준도 마땅찮고.",
+        "keywords": [
+          "회중시계",
+          "시간",
+          "극야",
+          "기준"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_RIVA",
@@ -847,7 +1791,7 @@
     "personality": {
       "core": "검은얼음 시장 운반책 — 불법 부산물 유통 경로",
       "traits": [],
-      "speechStyle": "빠른 반말. 돈을 받으면 누구에게나 충성하나 어린 실종자 사건엔 예민하다.",
+      "speechStyle": "빠른 반말. 돈을 받으면 누구에게나 충성하나 어린 실종자 사건엔 예민하다. 상대 호칭은 '너'.",
       "speechRegister": "BANMAL",
       "innerConflict": "",
       "softSpot": "",
@@ -878,7 +1822,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_RIVA_SLED_BLADE",
+        "category": "WORK",
+        "text": "내 썰매 날 새로 갈았어. 얼음 위에선 내가 이 동네 제일 빨라.",
+        "keywords": [
+          "썰매",
+          "날",
+          "얼음",
+          "속도"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_RIVA_SEWER_PATH",
+        "category": "WORK",
+        "text": "하수로 지름길은 냄새가 좀 나는데 시간이 반이야. 코 막으면 돼.",
+        "keywords": [
+          "하수로",
+          "지름길",
+          "냄새",
+          "시간"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_RIVA_LOW_PAY",
+        "category": "WORRY",
+        "text": "요즘 삯이 짜. 짐은 무거워지는데 값은 그대로면 나보고 어쩌라고.",
+        "keywords": [
+          "삯",
+          "짐",
+          "운반",
+          "불만"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_RIVA_TWO_MITTS",
+        "category": "OPINION",
+        "text": "장갑은 두 켤레 겹쳐 껴. 한 켤레는 멋, 한 켤레는 목숨.",
+        "keywords": [
+          "장갑",
+          "두 켤레",
+          "추위",
+          "요령"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_RIVA_DOCK_FIGHT",
+        "category": "GOSSIP",
+        "text": "부두 어부들 싸움 구경이 제일 재밌어. 어제도 생선값 갖고 둘이 붙었다?",
+        "keywords": [
+          "부두",
+          "어부",
+          "싸움",
+          "생선값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_RIVA_SUGAR_SWEET",
+        "category": "PERSONAL",
+        "text": "남쪽 설탕 과자 먹어 봤어? 나 그거 한 번 먹어 보려고 돈 모으는 중이야.",
+        "keywords": [
+          "설탕 과자",
+          "남쪽",
+          "돈",
+          "소원"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_ABAS",
@@ -910,7 +1922,7 @@
     "personality": {
       "core": "흰숨 부두 별기름 램프 장인 — 별고래 내부 탐험 장비",
       "traits": [],
-      "speechStyle": "느긋한 하오체. 램프 불빛이 가끔 미래를 비춘다고 믿는다.",
+      "speechStyle": "느긋한 하오체. 램프 불빛이 가끔 미래를 비춘다고 믿는다. 상대 호칭은 '손님'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "",
       "softSpot": "",
@@ -941,7 +1953,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_ABAS_WICK_TWIST",
+        "category": "WORK",
+        "text": "심지는 꼬는 힘이 반이오. 너무 조이면 불이 숨을 못 쉬지.",
+        "keywords": [
+          "심지",
+          "꼬기",
+          "불",
+          "요령"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ABAS_LAMP_GLASS",
+        "category": "WORRY",
+        "text": "등피 유리가 귀하오. 남쪽 배가 안 들어오면 깨진 것도 이어 붙여 쓰오.",
+        "keywords": [
+          "등피",
+          "유리",
+          "남쪽 배",
+          "수리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ABAS_OIL_GRADE",
+        "category": "OPINION",
+        "text": "기름은 태워 보면 아오. 좋은 기름은 그을음이 없고 불꽃 끝이 곧소.",
+        "keywords": [
+          "기름",
+          "품질",
+          "그을음",
+          "불꽃"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ABAS_FLAME_GAZE",
+        "category": "PERSONAL",
+        "text": "내 램프 불빛이 가끔 앞일을 비춘다 하면 다들 웃소. 웃으라지. 손님은 불꽃을 오래 들여다본 적 있소?",
+        "keywords": [
+          "램프",
+          "불빛",
+          "앞일",
+          "믿음"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ABAS_NO_HEIR",
+        "category": "WORRY",
+        "text": "제자를 못 구해 걱정이오. 젊은것들은 등불보다 빠른 돈을 좇지.",
+        "keywords": [
+          "제자",
+          "걱정",
+          "젊은이",
+          "기술"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ABAS_DOCK_DAWN",
+        "category": "PERSONAL",
+        "text": "부두의 하루는 등불 켜는 소리로 시작하오. 나는 그 소리가 새벽닭 같소.",
+        "keywords": [
+          "부두",
+          "하루",
+          "등불",
+          "시작"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_MIREN",
@@ -973,7 +2053,7 @@
     "personality": {
       "core": "등불수녀원의 오염 환자·전직 채굴꾼 — 심장 웅덩이 목격자",
       "traits": [],
-      "speechStyle": "떨리는 해체. 자기 손이 아직 별고래 뼈 안에 남아 있다고 주장한다.",
+      "speechStyle": "떨리는 해체. 자기 손이 아직 별고래 뼈 안에 남아 있다고 주장한다. 상대 호칭은 '당신'.",
       "speechRegister": "HAECHE",
       "innerConflict": "",
       "softSpot": "",
@@ -1004,7 +2084,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_MIREN_THIN_BLANKET",
+        "category": "WORRY",
+        "text": "수녀원 담요는 얇아. 세 장을 겹쳐도... 그래도 여관 바닥보단 낫지.",
+        "keywords": [
+          "담요",
+          "수녀원",
+          "추위",
+          "잠자리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MIREN_BLAND_PORRIDGE",
+        "category": "OPINION",
+        "text": "여기 죽은 싱거워. 예전엔 소금 뿌린 생선을 손으로 찢어 먹었는데.",
+        "keywords": [
+          "죽",
+          "싱거움",
+          "생선",
+          "식사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MIREN_OLD_CREW",
+        "category": "PERSONAL",
+        "text": "같이 일하던 놈들이 가끔 문병을 와. 올 때마다 술 냄새를 풍기고... 부럽더라.",
+        "keywords": [
+          "동료",
+          "문병",
+          "술",
+          "그리움"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MIREN_SHAKY_HANDS",
+        "category": "WORRY",
+        "text": "숟가락 들 때 손이 떨려. 곡괭이 잡던 손인데.",
+        "keywords": [
+          "손",
+          "떨림",
+          "숟가락",
+          "곡괭이"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MIREN_COUNT_AURORA",
+        "category": "PERSONAL",
+        "text": "창밖 오로라를 세는 게 하루 일이야. 어제는 초록이 세 번, 보라가 한 번.",
+        "keywords": [
+          "오로라",
+          "창밖",
+          "세기",
+          "하루"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_MIREN_QUIET_ROUNDS",
+        "category": "GOSSIP",
+        "text": "루오르 수녀는 회진 때 발소리가 없어. 문득 고개 들면 곁에 서 있어서... 가끔 놀라.",
+        "keywords": [
+          "루오르",
+          "회진",
+          "발소리",
+          "놀람"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_TOBA",
@@ -1036,7 +2184,7 @@
     "personality": {
       "core": "흰숨 부두 항로 중개인 — 외부 후원 세력·왕실 보고선 정보",
       "traits": [],
-      "speechStyle": "사무적 하오체. 모든 소문을 가격표로 환산한다.",
+      "speechStyle": "사무적 하오체. 모든 소문을 가격표로 환산한다. 상대 호칭은 '당신'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "",
       "softSpot": "",
@@ -1067,7 +2215,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_TOBA_ICE_LANE",
+        "category": "WORK",
+        "text": "얼음이 두꺼워지면 항로가 사흘씩 밀리오. 일정표는 어차피 다시 쓰라고 있는 거요.",
+        "keywords": [
+          "얼음",
+          "항로",
+          "일정",
+          "지연"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_TOBA_LEDGER",
+        "category": "WORK",
+        "text": "장부는 하루 두 번 맞춰 보오. 숫자는 거짓말을 안 하니, 사람보단 상대하기 편하오.",
+        "keywords": [
+          "장부",
+          "숫자",
+          "확인",
+          "일과"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_TOBA_NO_DISCOUNT",
+        "category": "OPINION",
+        "text": "수수료 깎아 달란 소리는 하루 열 번 듣소. 열 번 다 거절하오.",
+        "keywords": [
+          "수수료",
+          "흥정",
+          "거절",
+          "원칙"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_TOBA_SOUTH_CARGO",
+        "category": "GOSSIP",
+        "text": "남쪽 배가 들어오면 부두가 하루 종일 시끄럽소. 설탕이며 천이며, 없는 게 없지.",
+        "keywords": [
+          "남쪽 배",
+          "부두",
+          "설탕",
+          "화물"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_TOBA_OFFICE_COLD",
+        "category": "WORRY",
+        "text": "사무소 잉크가 얼면 그날 장사는 접는 거요. 난로 기름값이 장부 한 줄을 다 차지하오.",
+        "keywords": [
+          "사무소",
+          "잉크",
+          "난로",
+          "기름값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_TOBA_SHORT_SLEEP",
+        "category": "PERSONAL",
+        "text": "배 드나드는 시간에 맞춰 살다 보니 잠이 짧아졌소. 직업병이오.",
+        "keywords": [
+          "배",
+          "시간",
+          "잠",
+          "직업병"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_KASIEN",
@@ -1099,7 +2315,7 @@
     "personality": {
       "core": "해안 사냥꾼 잔족의 장로 — 별고래 전승과 침묵 봉인",
       "traits": [],
-      "speechStyle": "느린 하오체. 별고래를 신도 짐승도 아닌 '길 잃은 항해자'라 부른다.",
+      "speechStyle": "느린 하오체. 별고래를 신도 짐승도 아닌 '길 잃은 항해자'라 부른다. 상대 호칭은 '그대'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "",
       "softSpot": "",
@@ -1130,7 +2346,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_KASIEN_SEAL_WAIT",
+        "category": "PERSONAL",
+        "text": "젊어선 물개 숨구멍 앞에서 한나절을 기다렸소. 기다림이 곧 사냥이었지.",
+        "keywords": [
+          "물개",
+          "숨구멍",
+          "기다림",
+          "사냥"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KASIEN_YOUTH_LEAVE",
+        "category": "WORRY",
+        "text": "잔족의 젊은것들이 하나둘 시장으로 떠나오. 옛 노래를 이어 부를 입이 줄어드오.",
+        "keywords": [
+          "잔족",
+          "젊은이",
+          "시장",
+          "옛 노래"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KASIEN_SNOW_TAN",
+        "category": "WORK",
+        "text": "가죽은 눈으로 문질러 다듬소. 소금보다 눈이 가죽을 부드럽게 하오.",
+        "keywords": [
+          "가죽",
+          "눈",
+          "손질",
+          "기술"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KASIEN_SEA_BOW",
+        "category": "OPINION",
+        "text": "바다에 나갈 땐 먼저 인사를 올리는 법이오. 요즘 사람들은 그 예를 잊었소.",
+        "keywords": [
+          "바다",
+          "인사",
+          "예법",
+          "전통"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KASIEN_CLOUD_READ",
+        "category": "WORK",
+        "text": "구름 밑동이 붉으면 바람이 바뀌오. 하늘은 늘 미리 말해 주는데 듣는 이가 드물 뿐이오.",
+        "keywords": [
+          "구름",
+          "바람",
+          "날씨",
+          "징조"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_KASIEN_FIRE_TALE",
+        "category": "PERSONAL",
+        "text": "모닥불 곁 이야기가 우리 족의 책이오. 그대도 언제 한 자리 끼어 보시오.",
+        "keywords": [
+          "모닥불",
+          "이야기",
+          "전승",
+          "초대"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_YURMA",
@@ -1162,7 +2446,7 @@
     "personality": {
       "core": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
       "traits": [],
-      "speechStyle": "단정한 합쇼체. 수녀원을 믿고 싶어 하지만 동생 기록 은폐를 보고 의심한다.",
+      "speechStyle": "단정한 합쇼체. 수녀원을 믿고 싶어 하지만 동생 기록 은폐를 보고 의심한다. 상대 호칭은 '당신'.",
       "speechRegister": "HAPSYO",
       "innerConflict": "",
       "softSpot": "",
@@ -1193,7 +2477,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_YURMA_BLADE_OIL",
+        "category": "WORK",
+        "text": "칼날에 기름을 먹이는 게 하루의 마지막 일과입니다. 추위에는 쇠도 사람처럼 여윕니다.",
+        "keywords": [
+          "칼날",
+          "기름",
+          "손질",
+          "일과"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_YURMA_LONG_ROAD",
+        "category": "PERSONAL",
+        "text": "여기까지 배 두 번, 썰매 한 번을 갈아탔습니다. 극야를 본 건 이번이 처음입니다.",
+        "keywords": [
+          "여정",
+          "배",
+          "썰매",
+          "극야"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_YURMA_DAILY_PRAYER",
+        "category": "OPINION",
+        "text": "기도는 검 손질과 같습니다. 하루 거르면 이틀 치가 무뎌집니다.",
+        "keywords": [
+          "기도",
+          "검 손질",
+          "수련",
+          "꾸준함"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_YURMA_SOAK_BREAD",
+        "category": "WORK",
+        "text": "말린 빵은 스튜에 불려 먹는 법을 배웠습니다. 순례길이 가르쳐 준 몇 안 되는 요령입니다.",
+        "keywords": [
+          "말린 빵",
+          "스튜",
+          "순례길",
+          "요령"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_YURMA_BREAD_SMELL",
+        "category": "PERSONAL",
+        "text": "동생은 빵 굽는 냄새를 좋아했습니다. ...아, 별 이야기를 다 했습니다.",
+        "keywords": [
+          "동생",
+          "빵",
+          "냄새",
+          "추억"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_YURMA_COLD_STEEL",
+        "category": "WORRY",
+        "text": "갑옷 쇠가 맨살에 닿으면 살이 붙습니다. 여기 겨울은 장비부터 사람을 시험합니다.",
+        "keywords": [
+          "갑옷",
+          "쇠",
+          "맨살",
+          "겨울"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_PENA",
@@ -1225,7 +2577,7 @@
     "personality": {
       "core": "심장 웅덩이 채취 허가관 — 공식 허가·제한 구역 접근",
       "traits": [],
-      "speechStyle": "딱딱한 합쇼체. 원칙적인 척하나 불법 채취량을 몰래 조정해 이익을 얻는다.",
+      "speechStyle": "딱딱한 합쇼체. 원칙적인 척하나 불법 채취량을 몰래 조정해 이익을 얻는다. 상대 호칭은 '당신'.",
       "speechRegister": "HAPSYO",
       "innerConflict": "",
       "softSpot": "",
@@ -1256,7 +2608,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_PENA_TRIPLICATE",
+        "category": "WORK",
+        "text": "허가서는 세 부씩 작성합니다. 원본, 보관본, 송부본. 순서가 틀리면 처음부터 다시입니다.",
+        "keywords": [
+          "허가서",
+          "세 부",
+          "작성",
+          "절차"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_PENA_LONG_QUEUE",
+        "category": "WORRY",
+        "text": "채취 신청 대기 줄이 갈수록 깁니다. 새치기하는 자는 그날 접수 자체를 무효 처리합니다.",
+        "keywords": [
+          "대기 줄",
+          "신청",
+          "새치기",
+          "접수"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_PENA_SEAL_STAMP",
+        "category": "PERSONAL",
+        "text": "관인 도장은 제 손을 떠나지 않습니다. 베개 밑에 두고 잔다는 소문은... 부인하지 않겠습니다.",
+        "keywords": [
+          "관인",
+          "도장",
+          "소문",
+          "애착"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_PENA_OLD_RULES",
+        "category": "OPINION",
+        "text": "규정집 개정판이 배편으로 넉 달째 안 옵니다. 낡은 규정으로 새 문제를 재단하는 게 요즘 고충입니다.",
+        "keywords": [
+          "규정집",
+          "개정판",
+          "배편",
+          "고충"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_PENA_WINDY_BOOTH",
+        "category": "WORK",
+        "text": "접수 창구가 웅덩이 바람을 정면으로 받습니다. 잉크병을 품에 넣고 근무합니다.",
+        "keywords": [
+          "창구",
+          "바람",
+          "잉크병",
+          "근무"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_PENA_TRANSFER",
+        "category": "PERSONAL",
+        "text": "이 오지 근무를 마치면 남부 관청으로 전보 예정입니다. 예정이... 벌써 두 번 밀렸습니다만.",
+        "keywords": [
+          "전보",
+          "남부",
+          "근무",
+          "예정"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_ED",
@@ -1288,7 +2708,7 @@
     "personality": {
       "core": "이름 수집가·떠돌이 서기관 — 이름 잃은 귀환자들의 본명·나하트 추적",
       "traits": [],
-      "speechStyle": "중얼대는 해체. 사람 이름을 적으면 그 사람 꿈 일부를 볼 수 있다고 주장한다.",
+      "speechStyle": "중얼대는 해체. 사람 이름을 적으면 그 사람 꿈 일부를 볼 수 있다고 주장한다. 상대 호칭은 '자네'.",
       "speechRegister": "HAECHE",
       "innerConflict": "",
       "softSpot": "",
@@ -1319,7 +2739,75 @@
       }
     },
     "knownFacts": [],
-    "linkedIncidents": []
+    "linkedIncidents": [],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SS_ED_THREE_NAMES",
+        "category": "WORK",
+        "text": "오늘 새 이름을 셋 적었어. 좋은 이름은... 음, 혀에서 눈 녹는 소리가 나.",
+        "keywords": [
+          "이름",
+          "수집",
+          "기록",
+          "오늘"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ED_SPLIT_QUILL",
+        "category": "WORRY",
+        "text": "깃펜이 얼어서 자꾸 갈라져. 남쪽 종이는 비싸고... 서기관 노릇도 밑천이 드는 일이야.",
+        "keywords": [
+          "깃펜",
+          "종이",
+          "값",
+          "서기"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ED_NAME_ORIGIN",
+        "category": "OPINION",
+        "text": "북쪽 이름엔 바람 소리가 많아. 남쪽 이름엔 곡식 냄새가 나고. 적다 보면 보여.",
+        "keywords": [
+          "이름",
+          "북쪽",
+          "남쪽",
+          "어원"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ED_CORNER_SPOT",
+        "category": "PERSONAL",
+        "text": "시장 구석 내 자리는 외풍이 덜해. 명당은... 조용히 해야지, 뺏기니까.",
+        "keywords": [
+          "시장",
+          "구석",
+          "자리",
+          "외풍"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ED_PORT_CLERK",
+        "category": "PERSONAL",
+        "text": "예전엔 항구 사무소 서기였어. 숫자만 적다가... 이름을 적기 시작한 거야. 이름이 더 정직해.",
+        "keywords": [
+          "항구",
+          "서기",
+          "숫자",
+          "과거"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SS_ED_SHIP_NAMES",
+        "category": "GOSSIP",
+        "text": "부두 사람들은 배에도 이름을 붙여. 마누라 이름을 붙인 배가 제일 오래 뜬다더라... 믿거나 말거나.",
+        "keywords": [
+          "배",
+          "이름",
+          "부두",
+          "미신"
+        ]
+      }
+    ]
   },
   {
     "npcId": "NPC_SS_BG_01",

@@ -35,7 +35,7 @@
         "권위적",
         "방어적"
       ],
-      "speechStyle": "짧고 사무적인 하오체 — 질문에는 절차와 규정을 방패로 세운다",
+      "speechStyle": "짧고 사무적인 하오체 — 질문에는 절차와 규정을 방패로 세운다. 상대 호칭은 '그대'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "덮으라는 지시와 광부들에 대한 오래된 책임감 사이",
       "softSpot": "죽은 광부들의 이름이 하나하나 불릴 때",
@@ -93,6 +93,118 @@
     ],
     "linkedIncidents": [
       "INC_SD_COLLAPSE"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SD_FM_REPORTS",
+        "category": "WORK",
+        "text": "보고서는 매일 세 부씩 쓰오. 회사 사무소, 왕실 감찰, 그리고 보관용 — 관리란 종이로 하는 노역이오.",
+        "keywords": [
+          "보고서",
+          "서류",
+          "회사",
+          "관리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_BOOTS",
+        "category": "WORK",
+        "text": "갱도용 장화는 석 달이면 밑창이 나가오. 감독관이라고 사무실에만 앉아 있는 줄 알면 오산이오.",
+        "keywords": [
+          "장화",
+          "갱도",
+          "현장",
+          "밑창"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_BEER",
+        "category": "PERSONAL",
+        "text": "밤에 여관에서 마시는 흑맥주 한 잔이 하루의 유일한 사치요. 말 붙이지 않아 주면 더 고맙고.",
+        "keywords": [
+          "흑맥주",
+          "여관",
+          "밤",
+          "혼자"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_LADDER",
+        "category": "PERSONAL",
+        "text": "나도 열여섯에 수레꾼부터 시작했소. 장부를 쥐기까지 이십 년이 걸렸지.",
+        "keywords": [
+          "수레꾼",
+          "과거",
+          "이십년",
+          "승진"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_WEATHER",
+        "category": "OPINION",
+        "text": "산 날씨는 장부처럼 정직하지 않소. 아침에 갠 하늘만 믿고 나섰다간 낭패 보기 십상이오.",
+        "keywords": [
+          "날씨",
+          "산",
+          "하늘",
+          "낭패"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_ROUNDS",
+        "category": "WORK",
+        "text": "하루 두 번 갱도 입구부터 창고까지 도는 게 내 일과요. 걸음 수로 치면 마을 순찰대 못지않을 거요.",
+        "keywords": [
+          "일과",
+          "순회",
+          "점검",
+          "창고"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_TOOLS",
+        "category": "WORK",
+        "text": "곡괭이며 수레며, 장비 대장 맞추는 일이 사람 다루는 일보다 편하오. 연장은 거짓말을 안 하니.",
+        "keywords": [
+          "장비",
+          "대장",
+          "곡괭이",
+          "연장"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_HQ",
+        "category": "WORRY",
+        "text": "본사에서 내려오는 지침이 계절마다 바뀌오. 현장을 모르는 자들이 책상에서 쓰는 규정이란 게 그렇소.",
+        "keywords": [
+          "본사",
+          "지침",
+          "규정",
+          "현장"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_SLEEP",
+        "category": "WORRY",
+        "text": "새벽 교대 종보다 먼저 눈이 떠지는 건 직업병이오. 푹 자본 게 언제인지 기억도 안 나오.",
+        "keywords": [
+          "새벽",
+          "잠",
+          "교대",
+          "직업병"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_FM_NOTICE",
+        "category": "OPINION",
+        "text": "광장 게시판 공고문은 내가 직접 쓰오. 글자가 틀리면 마을이 관리를 우습게 보는 법이오.",
+        "keywords": [
+          "게시판",
+          "공고",
+          "광장",
+          "글자"
+        ]
+      }
     ]
   },
   {
@@ -131,7 +243,7 @@
         "끈기",
         "의리"
       ],
-      "speechStyle": "군더더기 없는 하오체 — 감정을 아끼고 사실을 먼저 말한다",
+      "speechStyle": "군더더기 없는 하오체 — 감정을 아끼고 사실을 먼저 말한다. 상대 호칭은 '당신'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "복수심과 남은 가족을 지켜야 한다는 현실 사이",
       "softSpot": "오빠의 이름 '토마스'가 언급될 때",
@@ -190,6 +302,118 @@
     "linkedIncidents": [
       "INC_SD_COLLAPSE",
       "INC_SD_SMUGGLE"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SD_SM_FIRE",
+        "category": "WORK",
+        "text": "화덕 불은 새벽에 붙여야 한낮에 제 온도가 나오. 대장장이 하루는 남들보다 두 시간 일찍 시작되지.",
+        "keywords": [
+          "화덕",
+          "불",
+          "새벽",
+          "대장간"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_FATHER",
+        "category": "PERSONAL",
+        "text": "망치질은 아버지한테 배웠소. 여자 손엔 무겁다던 사람들도 내 낫날을 보곤 입을 다물었지.",
+        "keywords": [
+          "망치",
+          "아버지",
+          "낫",
+          "솜씨"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_PICKAXE",
+        "category": "WORK",
+        "text": "광부들 곡괭이날은 보름이면 무뎌져서 돌아오오. 갈아주는 값은 안 올린 지 삼 년째고.",
+        "keywords": [
+          "곡괭이",
+          "날",
+          "수리",
+          "값"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_SCARS",
+        "category": "PERSONAL",
+        "text": "팔뚝의 흉터는 다 불똥 자국이오. 대장장이한테 흉터는 장부 같은 거지 — 일한 만큼 남으니.",
+        "keywords": [
+          "흉터",
+          "불똥",
+          "팔뚝",
+          "세월"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_CHARCOAL",
+        "category": "WORRY",
+        "text": "숯값이 오르면 대장간부터 휘청하오. 요즘 숯장수가 부르는 값이 영 고약하고.",
+        "keywords": [
+          "숯",
+          "값",
+          "대장간",
+          "숯장수"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_BREAD",
+        "category": "PERSONAL",
+        "text": "아침은 화덕 잔열에 구운 귀리빵 한 덩이면 되오. 쇠 두드리다 보면 점심 종도 못 듣기 일쑤지.",
+        "keywords": [
+          "귀리빵",
+          "아침",
+          "화덕",
+          "끼니"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_HORSESHOE",
+        "category": "WORK",
+        "text": "말편자 주문이 들어오면 반갑소. 광산 장비만 만지다 보면 손이 심심하거든.",
+        "keywords": [
+          "말편자",
+          "주문",
+          "장비",
+          "일"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_RAIN",
+        "category": "OPINION",
+        "text": "비 오는 날 풀무질은 두 배로 힘드오. 젖은 공기는 불을 게으르게 만들지.",
+        "keywords": [
+          "비",
+          "풀무",
+          "불",
+          "날씨"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_CARE",
+        "category": "OPINION",
+        "text": "연장을 함부로 다루는 자는 손님으로 안 치오. 쇠는 아끼는 손을 알아보는 법이오.",
+        "keywords": [
+          "연장",
+          "쇠",
+          "손질",
+          "손님"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_SM_RHYTHM",
+        "category": "PERSONAL",
+        "text": "망치 소리에도 가락이 있소. 옆 대장간 영감과 박자가 맞는 날은 일이 두 배로 나가지.",
+        "keywords": [
+          "망치",
+          "가락",
+          "박자",
+          "대장간"
+        ]
+      }
     ]
   },
   {
@@ -283,6 +507,74 @@
     ],
     "linkedIncidents": [
       "INC_SD_COLLAPSE"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SD_INN_BEER",
+        "category": "WORK",
+        "text": "이번에 들인 흑맥주가 물건입니다. 남쪽 양조장 것보다 거품이 곱지요.",
+        "keywords": [
+          "흑맥주",
+          "양조장",
+          "술",
+          "거품"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_INN_ROOMS",
+        "category": "WORK",
+        "text": "외지 손님이 늘면 다락방까지 내드립니다. 침대보 삶는 날이 곱절로 늘었지만요.",
+        "keywords": [
+          "다락방",
+          "손님",
+          "침대보",
+          "숙박"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_INN_LAMP",
+        "category": "PERSONAL",
+        "text": "간판의 잿빛 램프는 제 할아버지 대부터 걸려 있던 겁니다. 기름때가 삼대째 쌓인 셈이지요.",
+        "keywords": [
+          "램프",
+          "간판",
+          "할아버지",
+          "삼대"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_INN_POT",
+        "category": "WORK",
+        "text": "저녁 솥에 감자와 양고기를 넉넉히 넣습니다. 광부들 허기엔 인심이 최고의 안주거든요.",
+        "keywords": [
+          "감자",
+          "양고기",
+          "저녁",
+          "인심"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_INN_COUNTER",
+        "category": "GOSSIP",
+        "text": "카운터에 서 있으면 마을 이야기가 술잔보다 빨리 돕니다. 절반은 흘려듣는 게 이 장사의 요령이지요.",
+        "keywords": [
+          "카운터",
+          "소문",
+          "마을",
+          "장사"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_INN_CELLAR",
+        "category": "WORRY",
+        "text": "지하 술 창고가 습해서 통이 곰팡이를 먹습니다. 봄이 오면 바닥을 갈아야 할 텐데 큰일입니다.",
+        "keywords": [
+          "창고",
+          "곰팡이",
+          "술통",
+          "수리"
+        ]
+      }
     ]
   },
   {
@@ -319,7 +611,7 @@
         "연민",
         "죄책감"
       ],
-      "speechStyle": "느리고 완곡한 하오체 — 확언을 피하고 비유로 말한다",
+      "speechStyle": "느리고 완곡한 하오체 — 확언을 피하고 비유로 말한다. 상대 호칭은 '그대'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "고해로 들은 진실을 발설할 수 없는 계율",
       "softSpot": "위패 앞에서 우는 유족",
@@ -365,6 +657,74 @@
     ],
     "linkedIncidents": [
       "INC_SD_SMUGGLE"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SD_PR_CANDLES",
+        "category": "WORK",
+        "text": "초가 귀해져서 저녁 미사엔 등잔을 켜오. 빛이란 아껴 쓸수록 귀한 줄 알게 되는 법이지.",
+        "keywords": [
+          "초",
+          "등잔",
+          "미사",
+          "빛"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PR_ROOF",
+        "category": "WORRY",
+        "text": "예배당 지붕이 삭아 비 오는 날엔 성수반에 낙숫물이 듣소. 종루를 고칠 헌금은 아직 멀었고.",
+        "keywords": [
+          "지붕",
+          "예배당",
+          "낙숫물",
+          "헌금"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PR_GARDEN",
+        "category": "PERSONAL",
+        "text": "뒤뜰에 약초와 순무를 조금 기르오. 흙을 만지는 시간이 기도 다음으로 마음을 다스려 주지.",
+        "keywords": [
+          "뒤뜰",
+          "약초",
+          "순무",
+          "흙"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PR_YOUTH",
+        "category": "PERSONAL",
+        "text": "젊어서는 왕도의 큰 성당에서 수련했소. 종소리 하나는 그곳이 웅장했지만, 산마을 새벽 공기는 여기가 낫소.",
+        "keywords": [
+          "왕도",
+          "성당",
+          "수련",
+          "과거"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PR_BELLS",
+        "category": "OPINION",
+        "text": "종은 치는 이의 마음을 닮소. 브루노가 치는 날은 소리가 유난히 차분하지.",
+        "keywords": [
+          "종",
+          "종지기",
+          "브루노",
+          "소리"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PR_WINE",
+        "category": "PERSONAL",
+        "text": "성찬용 포도주를 한 모금 맛보는 게 늙은이의 낙이오. 주님도 이 정도는 눈감아 주시겠지.",
+        "keywords": [
+          "포도주",
+          "성찬",
+          "낙",
+          "늙은이"
+        ]
+      }
     ]
   },
   {
@@ -402,7 +762,7 @@
         "불신",
         "카리스마"
       ],
-      "speechStyle": "거친 반말 — 외지인에게 날이 서 있다",
+      "speechStyle": "거친 반말 — 외지인에게 날이 서 있다. 상대 호칭은 '너'.",
       "speechRegister": "BANMAL",
       "innerConflict": "파업이 남은 광부들의 일자리를 잃게 할 수 있다는 두려움",
       "softSpot": "광부들의 가족 이야기",
@@ -449,6 +809,74 @@
     "linkedIncidents": [
       "INC_SD_STRIKE",
       "INC_SD_COLLAPSE"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SD_UN_GLOVES",
+        "category": "WORK",
+        "text": "회사가 주는 장갑은 한 주면 구멍이 나. 광부들 손가락이 얼마짜린 줄 아나 몰라.",
+        "keywords": [
+          "장갑",
+          "회사",
+          "광부",
+          "손"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_UN_ARMS",
+        "category": "PERSONAL",
+        "text": "이 팔뚝은 열넷부터 수레를 밀어서 생긴 거야. 광산 사람은 몸에 이력이 적히지.",
+        "keywords": [
+          "팔뚝",
+          "수레",
+          "과거",
+          "광산"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_UN_PORRIDGE",
+        "category": "PERSONAL",
+        "text": "교대 끝나고 먹는 뜨거운 보리죽 한 그릇, 그게 광부 하루의 전부일 때가 있어.",
+        "keywords": [
+          "보리죽",
+          "교대",
+          "끼니",
+          "광부"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_UN_KIDS",
+        "category": "PERSONAL",
+        "text": "광부 애들은 아비 장화 소리만 듣고도 교대가 끝난 줄 알아. 광장에서 뛰노는 것들 보면 하루 피로가 풀리지.",
+        "keywords": [
+          "아이들",
+          "광장",
+          "교대",
+          "가족"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_UN_PRICES",
+        "category": "WORRY",
+        "text": "임금은 그대론데 여관 술값이며 빵값은 자꾸 올라. 산수는 광부도 할 줄 알거든.",
+        "keywords": [
+          "임금",
+          "술값",
+          "빵값",
+          "물가"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_UN_OUTSIDERS",
+        "category": "OPINION",
+        "text": "외지인은 산을 구경거리로 보지. 우리한텐 목숨 걸고 파 들어가는 일터야.",
+        "keywords": [
+          "외지인",
+          "산",
+          "일터",
+          "광산"
+        ]
+      }
     ]
   },
   {
@@ -486,7 +914,7 @@
         "겁많음",
         "솔직"
       ],
-      "speechStyle": "빠르고 짧은 해요체 — 겁이 나면 말을 삼킨다",
+      "speechStyle": "빠르고 짧은 해요체 — 겁이 나면 말을 삼킨다. 상대 호칭은 '손님'.",
       "speechRegister": "HAEYO",
       "innerConflict": "입막음 돈과 죽은 동료 광부들에 대한 미안함",
       "softSpot": "안전을 약속받을 때",
@@ -532,6 +960,74 @@
     ],
     "linkedIncidents": [
       "INC_SD_COLLAPSE"
+    ],
+    "daily_topics": [
+      {
+        "topicId": "TOPIC_SD_PIP_SHORTCUT",
+        "category": "WORK",
+        "text": "광장에서 대장간 거리까지 지름길로 가면 백 걸음이면 돼요. 마을 골목은 제가 제일 잘 알아요.",
+        "keywords": [
+          "지름길",
+          "골목",
+          "마을",
+          "걸음"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PIP_TIPS",
+        "category": "WORK",
+        "text": "전갈을 빨리 전하면 동전을 얹어 주는 어른도 있어요. 그런 날은 광장 빵집에서 꿀빵을 사 먹죠.",
+        "keywords": [
+          "전갈",
+          "동전",
+          "꿀빵",
+          "심부름"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PIP_DOG",
+        "category": "PERSONAL",
+        "text": "여관 뒷마당 개랑 친해요. 제가 부엌에서 뼈다귀를 몰래 갖다주거든요.",
+        "keywords": [
+          "개",
+          "여관",
+          "뼈다귀",
+          "뒷마당"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PIP_ATTIC",
+        "category": "PERSONAL",
+        "text": "다락방 창으로 보면 마을 지붕이 다 보여요. 굴뚝 연기만 봐도 누가 저녁을 짓는지 알 수 있어요.",
+        "keywords": [
+          "다락방",
+          "지붕",
+          "굴뚝",
+          "마을"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PIP_BOOTS",
+        "category": "WORRY",
+        "text": "장화가 작아져서 발가락이 아파요. 겨울 오기 전에 새 걸 구해야 하는데…",
+        "keywords": [
+          "장화",
+          "발",
+          "겨울",
+          "걱정"
+        ]
+      },
+      {
+        "topicId": "TOPIC_SD_PIP_BELL",
+        "category": "OPINION",
+        "text": "새벽 종이 울리기 전에 일어나면 심부름 값이 좋아요. 첫 전갈이 제일 비싸거든요.",
+        "keywords": [
+          "새벽",
+          "종",
+          "심부름",
+          "전갈"
+        ]
+      }
     ]
   },
   {
