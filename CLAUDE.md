@@ -790,6 +790,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 93_location_backdrop.md | ✅ 구현됨 | 장소 배경 지속화 |
 | 94_mobile_scroll_viewport.md | ✅ 구현됨 | 모바일 스크롤·뷰포트 정합 |
 | 95_prompt_split_analysis.md | 📜 종결 (폐기) | 프롬프트 이분할·역전 설계 전면 폐기 (2026-07-28 소유자 결정) — 파일럿 실측은 §7 보존 (archive/spike-dialogue-precommit 태그). 잔존: DeepSeek 짝수 턴 어미 열세는 별개 이슈 |
+| 96_inline_image_insertion.md | 📎 설계 (A+C 채택) | 런 중 저장 이미지 인라인 삽입 — Phase A 이벤트 트리거 → 관문 → Phase C nano 문맥 매칭 |
 | 90_landing_page_redesign.md | ✅ 구현됨 | 랜딩 리디자인 P1~P4 |
 | 87_admin_console.md | ✅ 구현됨 | 어드민 콘솔 — users.role+AdminGuard 하이브리드+@AdminEndpoint(감사 로그)+관제… |
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 |
