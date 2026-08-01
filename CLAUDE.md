@@ -678,6 +678,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **잡담 화제 시스템 확장 Task#1 A (2026-07-30)** | 4팩 daily_topics 368개 체제 + CORE·SUB 전원 호칭 명시(content 3548eb3) + 화제 소진 폴백·R4 어체 기본 호칭 폴백 + dedup 실동화 — 선택 topicId를 recentTopics에 CAS 역기록, carry-over·매칭 경로 fresh 우선 (server 9e2fb90~edaf2c0) | ✅ 완료 |
 | **재회 빈도·시간 정체 해소 Task#2 (2026-07-30)** | 지연 틱(world-tick) + 아는 NPC 재회 가중(situation-generator) + 의뢰인 보고 동선(time-cost·turns) + 퀘스트 전환 보고 프레이밍 실노출 — go_hub 리라벨 + 워커 보존 (server 38e2d1c·9a10f1b, 배포 확인) | ✅ 완료 |
 | **레이턴시 롱테일 + 어체 정합 (2026-07-31)** | ① SDK 이중 재시도 제거(openai/claude 클라이언트 maxRetries 0 — nano 5초 컷이 19~40초로 부풀던 원인, llm_call_logs 실측) ② 스트림 정체 타임아웃 신설(무델타 20s 절단→fallback, narrative max 270s 대응) ③ R5v2 하게체·반말 침투 교정 확장(~라네·~더군·~겠나·~이야·~었어 — DeepSeek 잔존 위반 39.7% 대응) + HAEYO 판정 갭 보완(~어요·~거든요 오집계) ④ NPA 자유도 축 chatOnly 시나리오 overall 제외(구조적 캡핑 2.88 해소) | ✅ 완료 |
+| **잡담 응답률 + 파티 2인 QA (2026-08-01)** | ① 잡담 질문 턴 화제 경쟁 해소 — 무매칭 시 새 화제 주입 중단 + 입력 화제어 동적 주입 (응답률 67→83/71%, 어미 81→91/88% 실측, server 24c9a81) ② 파티 2인 실시간 UI QA 9종 전부 PASS + 결함 3건 수정 — 시작 실패 레디 소모(리셋을 런 생성 성공 후로, c010d6c)·로비 에러 무표시(배너)·초상화 404(presetPortraitUrl 정본 헬퍼, client 0ed3d6f). 레이턴시 fix 실측: nano p95 3.4s·max 6.5s(이전 max 40.5s). **잔여 백로그: 신규 유저끼리 파티 던전 시작 불가** — 로비 프리셋 선택 UI 부재, 리더 프리셋은 최근 솔로 런에서만 (동선 신설 필요) | ✅ 완료 (백로그 1) |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
