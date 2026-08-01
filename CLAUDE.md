@@ -293,7 +293,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 ## Critical Design Invariants
 
 1. **Server is Source of Truth** — 모든 수치 계산, 확률 롤, 상태 변경은 서버에서만.
-2. **LLM is narrative-only (하드 상태 한정)** — LLM은 **하드 상태**(HP·골드·인벤토리·questState·판정 결과)를 절대 쓸 수 없다. 실패해도 게임 진행 (턴은 LLM 호출 전에 커밋, llmStatus 게이트 없음). 단 **소프트 상태**는 나노 LLM 출력이 `applyRunStatePatch` CAS(fresh 재조회 + jsonb 낙관적 잠금, llm-worker.service.ts) **경유로만** 역류가 허용된 설계된 회색지대다: NPC 감정 블렌드(emotionalShiftHint, arch/76 D3-b′)·작별 감지(npcFarewell)·소개 성사(NpcAppearance)·테마 기록·nextBeats·propsTrace. 새 역류 경로 추가 시 ① 하드 상태 금지 ② CAS 경유 ③ 이 목록 등재의 3조건을 지킨다.
+2. **LLM is narrative-only (하드 상태 한정)** — LLM은 **하드 상태**(HP·골드·인벤토리·questState·판정 결과)를 절대 쓸 수 없다. 실패해도 게임 진행 (턴은 LLM 호출 전에 커밋, llmStatus 게이트 없음). 단 **소프트 상태**는 나노 LLM 출력이 `applyRunStatePatch` CAS(fresh 재조회 + jsonb 낙관적 잠금, llm-worker.service.ts) **경유로만** 역류가 허용된 설계된 회색지대다: NPC 감정 블렌드(emotionalShiftHint, arch/76 D3-b′)·작별 감지(npcFarewell)·소개 성사(NpcAppearance)·테마 기록·nextBeats·propsTrace·장면 컷 상태(sceneCutState, arch/96). 새 역류 경로 추가 시 ① 하드 상태 금지 ② CAS 경유 ③ 이 목록 등재의 3조건을 지킨다.
 3. **Idempotency** — `(run_id, turn_no)` + `(run_id, idempotency_key)` unique.
 4. **RNG determinism** — `seed + cursor` 저장. COMBAT: hitRoll → varianceRoll → critRoll. LOCATION: EventMatcher(가중치) → ResolveService(1d6).
 5. **Theme memory (L0) 불변** — 토큰 예산 압박에도 삭제 금지.
@@ -569,6 +569,8 @@ COMBAT_TACTIC_DISABLED=false            # 'true' 면 전투 기만 평가 정지
 CHALLENGE_CLASSIFIER_ENABLED=true       # 'false' 면 자유 행동 주사위 스킵 판정 정지
 NPC_REACTION_DIRECTOR_ENABLED=true      # 'false' 면 NPC 반응 사전결정 정지 (arch/56)
 PROPS_TRACE_DISABLED=                   # '1' 이면 흔적(propsState) 추출 정지
+INLINE_IMAGE_MATCH_DISABLED=            # '1' 이면 장면 컷 매칭 정지 (arch/96)
+SCENE_CUT_MIN_CONFIDENCE=0.65           # 장면 컷 nano 판정 채택 임계
 
 # ── 개발·검증 전용 ──
 PROMPT_FIXTURE_CAPTURE=                 # 설정 시 프롬프트 픽스처 덤프
@@ -675,6 +677,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **회원번호 도입 (2026-07-27)** | 문의·지원에서 부를 수 있는 가입순 정수 식별자 — `users.member_no`(DB 시퀀스 부여, 재사용 없음) + 기존 31명 가입순 백필 + `GET /v1/auth/me` + 설정 모달 "내 계정"에 `#0016` 표시·복사 | ✅ 완료 |
 | **모바일 스크롤·뷰포트 정합 (2026-07-27)** | [arch/94] 헤드리스 4뷰포트 점검으로 11종 수정 — 스크롤 되돌림 follow 모델, overscroll-contain, 타이틀·로그인 스크롤 구조, 모달 16곳, safe-area | ✅ 완료 |
 | **NPC 엔진 분석 + 프롬프트 재비대 2·3차 (2026-07-27~28)** | [arch/79·95] 3주 재비대(백스톱 발동 35%→[NPC 일상] 상시 삭제) 규명·압축 13종·순서 교체·상한 16,500·V12 재비대 게이트. 어미 하락 진범=DeepSeek 교차 실측→비율 5:5→3:7. 역전 설계는 파일럿 실증 후 폐기(arch/95 종결, archive 태그) | ✅ 완료 |
+| **장면 컷 시스템 arch/96 (2026-08-01)** | 소유자 사전 제작·태그화 이미지(content/<pack>/assets/scenes/ + sync scenes 확장)를 서술 태그 매칭으로 인라인 삽입 — SceneCutMatcher 3단 게이트(프리필터·렉시컬 프리스크린·nano confidence) + 워커 DONE 직전 ui.sceneCut + sceneCutState CAS + 전달 3경로(스트림·폴링·복원). Phase A(장소·NPC 컷)는 기구현 확인. 실런 E2E 발화·쿨다운·복원 검증, 단위 11케이스 | ✅ 완료 |
 | **잡담 화제 시스템 확장 Task#1 A (2026-07-30)** | 4팩 daily_topics 368개 체제 + CORE·SUB 전원 호칭 명시(content 3548eb3) + 화제 소진 폴백·R4 어체 기본 호칭 폴백 + dedup 실동화 — 선택 topicId를 recentTopics에 CAS 역기록, carry-over·매칭 경로 fresh 우선 (server 9e2fb90~edaf2c0) | ✅ 완료 |
 | **재회 빈도·시간 정체 해소 Task#2 (2026-07-30)** | 지연 틱(world-tick) + 아는 NPC 재회 가중(situation-generator) + 의뢰인 보고 동선(time-cost·turns) + 퀘스트 전환 보고 프레이밍 실노출 — go_hub 리라벨 + 워커 보존 (server 38e2d1c·9a10f1b, 배포 확인) | ✅ 완료 |
 | **레이턴시 롱테일 + 어체 정합 (2026-07-31)** | ① SDK 이중 재시도 제거(openai/claude 클라이언트 maxRetries 0 — nano 5초 컷이 19~40초로 부풀던 원인, llm_call_logs 실측) ② 스트림 정체 타임아웃 신설(무델타 20s 절단→fallback, narrative max 270s 대응) ③ R5v2 하게체·반말 침투 교정 확장(~라네·~더군·~겠나·~이야·~었어 — DeepSeek 잔존 위반 39.7% 대응) + HAEYO 판정 갭 보완(~어요·~거든요 오집계) ④ NPA 자유도 축 chatOnly 시나리오 overall 제외(구조적 캡핑 2.88 해소) | ✅ 완료 |
@@ -790,7 +793,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 93_location_backdrop.md | ✅ 구현됨 | 장소 배경 지속화 |
 | 94_mobile_scroll_viewport.md | ✅ 구현됨 | 모바일 스크롤·뷰포트 정합 |
 | 95_prompt_split_analysis.md | 📜 종결 (폐기) | 프롬프트 이분할·역전 설계 전면 폐기 (2026-07-28 소유자 결정) — 파일럿 실측은 §7 보존 (archive/spike-dialogue-precommit 태그). 잔존: DeepSeek 짝수 턴 어미 열세는 별개 이슈 |
-| 96_inline_image_insertion.md | 📎 설계 (A+C 채택) | 런 중 저장 이미지 인라인 삽입 — Phase A 이벤트 트리거 → 관문 → Phase C nano 문맥 매칭 |
+| 96_inline_image_insertion.md | ✅ 구현됨 | 장면 컷 시스템 — 소유자 태그 풀(assets/scenes) → 렉시컬 프리스크린 + nano 매칭 → 서술 인라인 컷 (A 기구현 확인·C 본체 구현) |
 | 90_landing_page_redesign.md | ✅ 구현됨 | 랜딩 리디자인 P1~P4 |
 | 87_admin_console.md | ✅ 구현됨 | 어드민 콘솔 — users.role+AdminGuard 하이브리드+@AdminEndpoint(감사 로그)+관제… |
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 |

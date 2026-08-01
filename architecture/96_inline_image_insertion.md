@@ -1,7 +1,8 @@
 # 96. 런 중 저장 이미지 인라인 삽입 — A+C 단계 결합 설계
 
-> 상태: 📎 설계 (소유자 승인 대기 → Phase A 구현 → 관문 → Phase C)
-> 작성: 2026-08-01. 소유자 결정: 3안(이벤트 트리거 자동 / 유저 수동 갤러리 / nano 문맥 매칭) 중 **A+C 단계 결합** 채택.
+> 상태: ✅ 구현됨 (2026-08-01 — §7 구현 기록). 소유자 결정: 3안 중 **A+C 단계 결합** 채택.
+> 소유자 비전 확정: "상황 이미지를 미리 생성·태그화해 폴더에 넣으면 서술 태그 매칭으로 자동 삽입" —
+> Phase C의 1급 소스 = **소유자 사전 제작 장면 컷 풀** (`content/<pack>/assets/scenes/`).
 > B(유저 수동 삽입 + 런 갤러리)는 폐기가 아니라 직교 후속 — 과금 부가가치(이미지) 트랙에서 별도 설계.
 
 ## 1. 목표와 비목표
@@ -96,3 +97,31 @@ nano 1콜/삽입 후보 턴 ≈ $0.0002 (~0.3원). 쿨다운 적용 시 런당 3
 - B안(유저 수동 갤러리): 과금 부가가치 트랙에서 별도 설계 — 본 설계의 ui.inlineImages 스키마를 그대로 재사용 가능 (source: 'USER' 확장).
 - scene-image 생성 봉인 해제 여부: Phase C에서 저장분 재사용 효과를 본 뒤 판단.
 - 파티 모드: Phase A는 리더 런 기준 동일 동작 (파티 분기 없음), C는 파티 검증 별도.
+
+## 7. 구현 기록 (2026-08-01)
+
+**Phase A 재정의**: 착수 시 실사에서 장소 진입 컷(`StoryMessage.locationImage` — LOCATION_ENTER 태그)과
+NPC 소개 초상화 카드(`ui.npcPortrait` 워커 reconcile)가 **이미 구현·배포 상태**임을 확인.
+잔여였던 RARE+ 아이템·엔딩 컷은 소음 우려로 보류(후속 판단) — Phase A는 기구현 인정으로 종결.
+
+**Phase C 구현 (본체)**:
+- 투입: `content/<pack>/assets/scenes/` + `sync_pack_assets.py` scenes 카테고리 확장
+  (파일명 토큰 = 태그, day/night → `time` 필드 분리, `SCN_NN` 안정 id, ASCII 슬러그 정규화).
+  graymar_v1에 시드 컷 3장 (장소 이미지 재활용 — 소유자 제작 컷으로 교체 예정).
+- 서버: `SceneCutMatcherService` (llm/) — 3단 게이트:
+  ① 프리필터 (킬스위치·MOVE 턴(LOCATION_ENTER 태그, 클라 locationImage 기준과 동일 신호)·
+  쿨다운 3턴·런 내 usedIds·시간대) ② **렉시컬 프리스크린** (태그가 서술/장소명에 부분 등장하는
+  후보만, 겹침 0이면 nano 미호출 무삽입 — 억지 매칭 차단+비용 절약) ③ nano 판정
+  (`scene-cut-match` 스테이지, confidence ≥ `SCENE_CUT_MIN_CONFIDENCE` 기본 0.65).
+- 워커 배선: DONE 커밋 직전 매칭 → `ui.sceneCut` serverResult UPDATE(npcPortrait reconcile 패턴)
+  → `runState.sceneCutState{lastTurn, usedIds}` CAS (불변식 2 소프트 상태 등재).
+- 전달 3경로: 스트림 done 이벤트 payload / 폴링 turn detail serverResult / 이력 복원
+  (runs.service 턴 프로젝션 `sceneCut` 필드).
+- 클라: `StoryMessage.sceneCut` → StoryBlock NARRATOR 하단 비네팅 컷 렌더 (로드 실패 무해).
+- 검증: 단위 11케이스 (게이트 전수) + 실런 E2E — 시장 소란 서술에서 SCN_02 발화·쿨다운 차단·
+  복원 렌더 스크린샷 확인. 전체 스위트 1,637 통과.
+
+**env**: `INLINE_IMAGE_MATCH_DISABLED=1` (킬스위치) · `SCENE_CUT_MIN_CONFIDENCE` (기본 0.65).
+
+**후속**: ① 소유자 장면 컷 제작 가이드 문서 (guides/ — 고빈도 장면 유형별 태그 규약) ② 오매칭
+계측 센서 (플레이테스트) ③ B안 갤러리 ④ 아이템·엔딩 컷 재검토.

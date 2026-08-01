@@ -108,7 +108,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/93_location_backdrop|location backdrop]] — ✅ 구현됨(2026-07-27, 클라 단독). 장소 배경 지속화: 대화 중 장면 이미지가 한 번도 안 뜨는 구간이 중앙값 3턴·p90 6턴·최장 23턴(2,117턴/532구간 실측) → "부족한 것은 인물이 아니라 장면"이고 공백은 지속으로만 메워진다는 판단으로 서술 패널 뒤 배경 레이어(알파+스크림, 장소·시간대 변경 시에만 교체). 헤더 밴드안은 모바일 뷰포트 25% 잠식(arch/86 서술 영역 반납)으로 기각, orphan `LocationImage.tsx` 는 크로스페이드만 이식 후 삭제. 신규 에셋 0·서술 파이프라인 무접촉. §7 후속: 장소 라벨 정본화.
 
-- [[architecture/96_inline_image_insertion|inline image insertion]] — 📎 설계 (2026-08-01, A+C 단계 결합 채택). 런 중 저장 이미지(팩 에셋·scene_images)를 서술 로그 안에 인라인 컷으로 삽입. Phase A = 이벤트 트리거 결정론(장소 첫 진입/NPC 소개 성사/RARE+ 아이템/엔딩, `ui.inlineImages` — 턴 커밋+워커 2부착점, 턴당 1장·소음 게이트) → 관문(위화감·오귀속 0) → Phase C = nano 문맥 매칭(태그 인덱스+confidence 게이트+쿨다운 3턴, 킬스위치). B안(유저 수동 갤러리)은 과금 부가가치 트랙 후속.
+- [[architecture/96_inline_image_insertion|inline image insertion]] — ✅ 구현됨 (2026-08-01, A+C 단계 결합). 런 중 저장 이미지(팩 에셋·scene_images)를 서술 로그 안에 인라인 컷으로 삽입. Phase A = 이벤트 트리거 결정론(장소 첫 진입/NPC 소개 성사/RARE+ 아이템/엔딩, `ui.inlineImages` — 턴 커밋+워커 2부착점, 턴당 1장·소음 게이트) → 관문(위화감·오귀속 0) → Phase C = nano 문맥 매칭(태그 인덱스+confidence 게이트+쿨다운 3턴, 킬스위치). B안(유저 수동 갤러리)은 과금 부가가치 트랙 후속.
 
 - [[architecture/94_mobile_scroll_viewport|mobile scroll viewport]] — 모바일 스크롤·뷰포트 정합 (2026-07-27). 헤드리스 4뷰포트 실런 점검 → 11종 수정: 서술 스크롤 follow 모델(제스처 우선·프로그램 스크롤 창 구분·터치 중 중단), `overscroll-contain` 전면(Android 당겨서 새로고침 차단), 타이틀/로그인 스크롤 구조 전환, 모달 16곳 2패턴, `MOBILE_HEADER_OFFSET` 단일 정본(고정 헤더 81px+safe-area), safe-area 커버리지. 규약 5종은 §5.
 

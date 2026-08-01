@@ -4,11 +4,16 @@
 사용법: python3 scripts/sync_pack_assets.py <packId>          # 예: karnholt_v1
 
 동작:
-  1. content/<pack>/assets/{portraits,locations}/ 의 이미지(webp/png/jpg) 스캔
-  2. client/public/pack-assets/<pack>/{portraits,locations}/ 로 복사 (URL 서빙용)
+  1. content/<pack>/assets/{portraits,locations,scenes}/ 의 이미지(webp/png/jpg) 스캔
+  2. client/public/pack-assets/<pack>/{portraits,locations,scenes}/ 로 복사 (URL 서빙용)
   3. 매니페스트 생성:
      - content/<pack>/assets.json           (정본 — 서버 ContentLoader가 로드)
      - client/src/data/pack-assets/<pack>.json (클라 사본 — 장소 이미지 리졸버가 번들 import)
+
+scenes/ (arch/96 장면 컷 — 서술 태그 매칭 인라인 삽입):
+  - 파일명 토큰이 곧 태그. 예: 시장_난투_군중_밤.webp → tags [시장, 난투, 군중] + time night
+  - day/night(낮/밤) 토큰은 time 필드로 분리 — 해당 시간대에만 삽입 후보
+  - 태그가 구체적일수록 nano 매칭 정밀도가 올라간다 (장소명·행위·분위기 2~4개 권장)
 
 파일명 규약 (관대):
   - 토큰 구분: '_' 또는 '-' (확장자 제외). 예: f_광부_02.webp → [f, 광부, 02]
@@ -28,6 +33,8 @@ ROOT = Path(__file__).resolve().parent.parent
 EXTS = {".webp", ".png", ".jpg", ".jpeg"}
 MALE = {"m", "male", "남", "남자"}
 FEMALE = {"f", "female", "여", "여자"}
+TIME_DAY = {"day", "낮", "주간"}
+TIME_NIGHT = {"night", "밤", "야간"}
 
 
 def parse_tokens(stem: str):
@@ -71,6 +78,22 @@ def collect(src_dir: Path, dst_dir: Path, url_base: str, kind: str):
         entry = {"url": f"{url_base}/{slug}", "kind": kind, "keywords": keywords}
         if gender and kind == "portrait":
             entry["gender"] = gender
+        if kind == "scene":
+            # 시간대 토큰 분리 (arch/96) — 해당 시간대에만 삽입 후보가 된다
+            time = None
+            remain = []
+            for kw in keywords:
+                low = kw.lower()
+                if low in TIME_DAY:
+                    time = "day"
+                elif low in TIME_NIGHT:
+                    time = "night"
+                else:
+                    remain.append(kw)
+            entry["keywords"] = remain
+            entry["id"] = f"SCN_{i:02d}"
+            if time:
+                entry["time"] = time
         entries.append(entry)
     return entries
 
@@ -89,7 +112,15 @@ def main():
     locations = collect(
         src / "locations", pub / "locations", f"/pack-assets/{pack}/locations", "location"
     )
-    manifest = {"packId": pack, "portraits": portraits, "locations": locations}
+    scenes = collect(
+        src / "scenes", pub / "scenes", f"/pack-assets/{pack}/scenes", "scene"
+    )
+    manifest = {
+        "packId": pack,
+        "portraits": portraits,
+        "locations": locations,
+        "scenes": scenes,
+    }
 
     canon = ROOT / "content" / pack / "assets.json"
     canon.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -97,7 +128,7 @@ def main():
     client_copy.parent.mkdir(parents=True, exist_ok=True)
     client_copy.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    print(f"[sync_pack_assets] {pack}: portraits {len(portraits)} · locations {len(locations)}")
+    print(f"[sync_pack_assets] {pack}: portraits {len(portraits)} · locations {len(locations)} · scenes {len(scenes)}")
     print(f"  정본: {canon.relative_to(ROOT)}")
     print(f"  클라: {client_copy.relative_to(ROOT)} + public/pack-assets/{pack}/")
 

@@ -1,0 +1,46 @@
+{
+  "packId": "graymar_v1",
+  "portraits": [],
+  "locations": [],
+  "scenes": [
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_01.webp",
+      "kind": "scene",
+      "keywords": [
+        "부두",
+        "항만",
+        "안개",
+        "창고",
+        "밀수"
+      ],
+      "id": "SCN_01",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_02.webp",
+      "kind": "scene",
+      "keywords": [
+        "시장",
+        "거리",
+        "소란",
+        "군중",
+        "웅성"
+      ],
+      "id": "SCN_02",
+      "time": "day"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_03.webp",
+      "kind": "scene",
+      "keywords": [
+        "시장",
+        "난투",
+        "소동",
+        "위험",
+        "긴장"
+      ],
+      "id": "SCN_03",
+      "time": "night"
+    }
+  ]
+}
