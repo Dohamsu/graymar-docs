@@ -15,6 +15,7 @@ export const scenario: AuditScenario = {
     "항만에서 CORE NPC 하를런과의 10턴 잡담 — daily_topics 카테고리(WORK/PERSONAL/GOSSIP/OPINION/WORRY) 다양성, 복서 출신 personality 발현, 거친 ~하오 체 유지를 평가",
   preset: "DOCKWORKER",
   gender: "male",
+  chatOnly: true,
   setup: [
     { type: "CHOICE", choiceId: "accept_quest", note: "프롤로그 의뢰 수락" },
     { type: "CHOICE", choiceId: "go_harbor", note: "HUB → 항만 부두 진입" },

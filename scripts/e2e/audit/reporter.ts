@@ -40,7 +40,9 @@ export function renderMarkdown(report: AuditReport): string {
   lines.push("## ⭐ 종합 점수");
   lines.push("");
   lines.push(`- **연결성**:   ${stars(q.continuity.score)} (${q.continuity.score.toFixed(2)} / 5)`);
-  lines.push(`- **자유도**:   ${stars(q.topicFreedom.score)} (${q.topicFreedom.score.toFixed(2)} / 5)`);
+  lines.push(
+    `- **자유도**:   ${stars(q.topicFreedom.score)} (${q.topicFreedom.score.toFixed(2)} / 5)${q.topicFreedom.excludedChatOnly ? " — 잡담 전용 시나리오, overall 제외" : ""}`,
+  );
   lines.push(`- **사람다움**: ${stars(q.humanity.score)} (${q.humanity.score.toFixed(2)} / 5)`);
   lines.push(`- **NPC 차별화**: ${stars(q.npcDistinctness.score)} (${q.npcDistinctness.score.toFixed(2)} / 5)`);
   lines.push(
@@ -100,7 +102,9 @@ export function renderMarkdown(report: AuditReport): string {
   if (q.continuity.notes.length) lines.push(`- 메모: ${q.continuity.notes.join(" · ")}`);
   lines.push("");
 
-  lines.push(`### 자유도 (${q.topicFreedom.score.toFixed(2)} / 5)`);
+  lines.push(
+    `### 자유도 (${q.topicFreedom.score.toFixed(2)} / 5)${q.topicFreedom.excludedChatOnly ? " — overall 제외 (잡담 전용)" : ""}`,
+  );
   const md = q.topicFreedom.modeDistribution;
   lines.push(
     `- 모드 분포: A=${md.A_FACT.toFixed(0)}% / B=${md.B_HANDOFF.toFixed(0)}% / C=${md.C_DEFAULT.toFixed(0)}% / D=${md.D_CHAT.toFixed(0)}%`,

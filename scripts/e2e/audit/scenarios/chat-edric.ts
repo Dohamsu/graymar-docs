@@ -15,6 +15,7 @@ export const scenario: AuditScenario = {
     "시장에서 CORE NPC 에드릭과의 10턴 잡담 — 회계사·도박꾼 personality 발현, 신경질적 ~이오/~하오 체 유지, 도박 빚의 인간미 evaluation",
   preset: "DESERTER",
   gender: "male",
+  chatOnly: true,
   setup: [
     { type: "CHOICE", choiceId: "accept_quest", note: "프롤로그 의뢰 수락" },
     { type: "CHOICE", choiceId: "go_market", note: "HUB → 시장 거리 진입" },

@@ -412,7 +412,10 @@ const IDEAL_MODE_DIST: Record<Exclude<AuditMode, "NONE">, number> = {
   C_DEFAULT: 10,
 };
 
-function topicFreedomScore(pairs: DialoguePair[]): TopicFreedomScore {
+function topicFreedomScore(
+  pairs: DialoguePair[],
+  chatOnly = false,
+): TopicFreedomScore {
   const evalPairs = pairs.filter((p) => !p.isSetup);
   if (evalPairs.length === 0) {
     return {
@@ -423,6 +426,7 @@ function topicFreedomScore(pairs: DialoguePair[]): TopicFreedomScore {
       modeDistribution: { A_FACT: 0, B_HANDOFF: 0, C_DEFAULT: 0, D_CHAT: 0 },
       factOccurrences: {},
       notes: ["평가 턴 = 0"],
+      ...(chatOnly ? { excludedChatOnly: true } : {}),
     };
   }
   // 1) 모드 분포
@@ -484,10 +488,16 @@ function topicFreedomScore(pairs: DialoguePair[]): TopicFreedomScore {
   const score = modeBalance * 2.0 + topicVariety * 1.5 + noFactRepeat * 1.5;
 
   const notes: string[] = [];
-  if (modeDistribution.A_FACT >= 70)
-    notes.push(`fact 모드 ${modeDistribution.A_FACT.toFixed(0)}% — 강제 주입 의심`);
-  if (modeDistribution.D_CHAT < 20 && detectedTotal >= 3)
-    notes.push(`잡담 ${modeDistribution.D_CHAT.toFixed(0)}% — 자연 대화 부족`);
+  if (chatOnly) {
+    notes.push(
+      "잡담 전용 시나리오 — 모드 분포·다양성이 설계상 D 단일이라 자유도 축을 overall에서 제외 (fact 비반복만 참고치)",
+    );
+  } else {
+    if (modeDistribution.A_FACT >= 70)
+      notes.push(`fact 모드 ${modeDistribution.A_FACT.toFixed(0)}% — 강제 주입 의심`);
+    if (modeDistribution.D_CHAT < 20 && detectedTotal >= 3)
+      notes.push(`잡담 ${modeDistribution.D_CHAT.toFixed(0)}% — 자연 대화 부족`);
+  }
   for (const [topic, ts] of repeatedFacts) {
     notes.push(`fact 반복: "${topic}" T${ts.join(",")}`);
   }
@@ -500,6 +510,7 @@ function topicFreedomScore(pairs: DialoguePair[]): TopicFreedomScore {
     modeDistribution,
     factOccurrences,
     notes,
+    ...(chatOnly ? { excludedChatOnly: true } : {}),
   };
 }
 
@@ -888,23 +899,32 @@ function toneMatchScore(pairs: DialoguePair[]): ToneMatchScore {
 // 통합
 // ──────────────────────────────────────────────────────────────
 
-export function computeDialogueQuality(pairs: DialoguePair[]): DialogueQuality {
+export function computeDialogueQuality(
+  pairs: DialoguePair[],
+  opts?: { chatOnly?: boolean },
+): DialogueQuality {
   const c = continuityScore(pairs);
-  const t = topicFreedomScore(pairs);
+  const t = topicFreedomScore(pairs, opts?.chatOnly ?? false);
   const h = humanityScore(pairs);
   const d = npcDistinctnessScore(pairs);
   const tm = toneMatchScore(pairs);
+  // architecture/51 — 5 score 평균.
+  // arch/55 부록 B — 톤 표본 미달 시 제외 (측정 불능을 점수로 섞지 않는다).
+  // chatOnly 시나리오 — 자유도 축 제외 (D 단일 모드 설계라 구조적 캡핑, 2026-07-31).
+  const included = [
+    c.score,
+    ...(t.excludedChatOnly ? [] : [t.score]),
+    h.score,
+    d.score,
+    ...(tm.insufficientSample ? [] : [tm.score]),
+  ];
   return {
     continuity: c,
     topicFreedom: t,
     humanity: h,
     npcDistinctness: d,
     toneMatch: tm,
-    // architecture/51 — 5 score 평균.
-    // arch/55 부록 B — 톤 표본 미달 시 4축 평균 (측정 불능을 점수로 섞지 않는다).
-    overall: tm.insufficientSample
-      ? (c.score + t.score + h.score + d.score) / 4
-      : (c.score + t.score + h.score + d.score + tm.score) / 5,
+    overall: included.reduce((a, b) => a + b, 0) / included.length,
   };
 }
 

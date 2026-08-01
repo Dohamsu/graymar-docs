@@ -16,6 +16,7 @@ export const scenario: AuditScenario = {
     "항만에서 의뢰인 CORE NPC 로넨과의 10턴 잡담 — 초조한 서기관 personality 발현, HAPSYO(~소이다/~습니다) 어체 유지, 노모·고향 그리움 등 인간미 평가",
   preset: "DESERTER",
   gender: "male",
+  chatOnly: true,
   setup: [
     { type: "CHOICE", choiceId: "accept_quest", note: "프롤로그 의뢰 수락" },
     { type: "CHOICE", choiceId: "go_harbor", note: "HUB → 항만 부두 진입" },

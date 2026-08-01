@@ -45,6 +45,12 @@ export interface AuditScenario {
   expectSameNpc?: boolean;
   /** 시나리오별 화이트리스트 (회피 어휘 false positive 회피 등, optional) */
   customWhitelist?: string[];
+  /**
+   * 잡담 전용 시나리오 — 설계상 D_CHAT 단일 모드라 자유도 축(모드 분포·다양성)이
+   * 구조적으로 상한 2.88에 캡핑됨. true면 자유도 축을 overall에서 제외한다
+   * (arch/55 부록 B "측정 불능을 점수로 섞지 않는다" 선례).
+   */
+  chatOnly?: boolean;
 }
 
 export interface PromptBlock {
@@ -122,6 +128,8 @@ export interface TopicFreedomScore {
   /** topicId/factId → 등장 턴 */
   factOccurrences: Record<string, number[]>;
   notes: string[];
+  /** chatOnly 시나리오 — overall 집계에서 제외됨 (구조적 캡핑 방지) */
+  excludedChatOnly?: boolean;
 }
 
 export interface HumanityScore {

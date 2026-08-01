@@ -15,6 +15,7 @@ export const scenario: AuditScenario = {
     "경비대에서 CORE NPC 마이렐과의 10턴 잡담 — 군인 + 부하 복지 집착 personality, 권위적 ~하오/~시오 체 유지, '그대' 호칭 일관성 평가",
   preset: "DESERTER",
   gender: "male",
+  chatOnly: true,
   setup: [
     { type: "CHOICE", choiceId: "accept_quest", note: "프롤로그 의뢰 수락" },
     { type: "CHOICE", choiceId: "go_guard", note: "HUB → 경비대 지구 진입" },

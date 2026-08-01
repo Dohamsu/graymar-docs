@@ -15,6 +15,7 @@ export const scenario: AuditScenario = {
     "빈민가에서 CORE NPC 쥐왕과의 10턴 잡담 — daily_topics 카테고리 다양성, 몰락한 상인 출신 personality 발현, 압도적이고 느린 ~하오 체 유지를 평가",
   preset: "DESERTER",
   gender: "male",
+  chatOnly: true,
   setup: [
     { type: "CHOICE", choiceId: "accept_quest", note: "프롤로그 의뢰 수락" },
     { type: "CHOICE", choiceId: "go_slums", note: "HUB → 빈민가 진입" },

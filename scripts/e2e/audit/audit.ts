@@ -276,7 +276,7 @@ async function main() {
   } catch {}
 
   // ── 분석 ─────────────────────────────────
-  const quality = computeDialogueQuality(pairs);
+  const quality = computeDialogueQuality(pairs, { chatOnly: scenario.chatOnly });
   const findings = verify(scenario, pairs, quality);
   const flow = pairs.map((p) => ({
     turn: p.turn,
