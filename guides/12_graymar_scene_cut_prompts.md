@@ -245,3 +245,168 @@ star_sand_v1은 이렌 54턴·여관 91턴이 최상위 — 착수 시 `이렌_*
 4) 서버 재시작 + client push (public/pack-assets 포함)
 5) 체크리스트 ☑ + 시드 컷 3장은 #3·#14 완성 시점에 일괄 교체
 ```
+
+
+---
+
+# 2차 배치 (#27~44) — 커버리지 확장 (2026-08-01 실측 재분석)
+
+> 1차 26종 투입 후 공백 분석: graymar 잔여 고빈도 소재(종소리 114 · 스튜 37 · 미렐라 40 ·
+> 쪽지 33+인장 22 · 황혼 24 · 무기 21 · 오웬 19)와 **star_sand_v1 최초 세트**
+> (여관 104 · 부두 61 · 얼음 54 · 별빛 50 · 외투 48 · 이렌 54턴).
+>
+> ⚠️ **태그 함정 실측**: '잠긴'은 124회로 최상위지만 대부분 선술집 이름("잠긴 닻")의
+> 일부다 — 태그로 쓰면 선술집 서술마다 오매칭 후보가 된다. 이런 **고유명사 파편 토큰은
+> 태그 금지** (guides/11 §2 원칙 추가 사례).
+
+## 5. 2차 체크리스트
+
+| # | ☐ | 파일명 (= 태그) | 팩 | 유형 | 실측 근거 |
+|---|---|----------------|----|------|----------|
+| 27 | ☐ | `종소리_종탑_항만_황혼.webp` | graymar | 정경 | 종소리 114(항만 종 상용구)+황혼 24 |
+| 28 | ☐ | `쪽지_인장_밀랍_봉인.webp` | graymar | 상황·단서 | 쪽지 33+인장 22 — questReveal 턴 대표 컷 |
+| 29 | ☐ | `미렐라_인자_주름_노련.webp` | graymar | 인물·감정 | 미렐라 40회 — 40년 터줏대감 약초상 |
+| 30 | ☐ | `스튜_김_나무그릇_식사.webp` | graymar | 상황·식사 | 스튜 37 — 선술집·여관 식사 장면 |
+| 31 | ☐ | `오웬_너털웃음_술통_뱃사람.webp` | graymar | 인물·감정 | 오웬 19 — 전직 항해사 선술집 주인 |
+| 32 | ☐ | `무기_단검_뽑아든_위협_night.webp` | graymar | 상황·전투 | 무기 21+THREATEN 16 — 전투·위협 진입 |
+| 33 | ☐ | `항만_밀수_창고_어선_night.webp` | graymar | 상황·밀수 | 밀수 서사 축 (1차 교체로 빠진 밤 부두 복원) |
+| 34 | ☐ | `시장_파장_등불_어스름_night.webp` | graymar | 장소·시장 밤 | 시장 체류 1위인데 밤 컷 부재 (밤 15%) |
+| 35 | ☐ | `비_빗줄기_처마_웅덩이.webp` | graymar | 정경·날씨 | 비 17 — 날씨 전환 턴 |
+| 36 | ☐ | `레닉_능글_귓속말_술잔.webp` | graymar | 인물·감정 | 레닉 10 — 뒷골목의 귀, 소문 거래 |
+| 37 | ☐ | `여관_난로_아늑_목조.webp` | star_sand | 장소·여관 | 여관 104 — 팩 체류 1위(꿈잠 여관) |
+| 38 | ☐ | `이렌_근심_걱정_여관주인.webp` | star_sand | 인물·감정 | 이렌 54턴 — 의뢰인·OPEN_UP 42 |
+| 39 | ☐ | `별빛_모래_해변_밤하늘_night.webp` | star_sand | 정경 | 별빛 50 — 팩 정체성 컷 |
+| 40 | ☐ | `고래_갈비뼈_뼈대_거대.webp` | star_sand | 장소·무덤 | 갈비뼈 14+심장 23 — 별고래의 무덤 |
+| 41 | ☐ | `얼음_부두_어선_그물_day.webp` | star_sand | 장소·부두 | 얼음 54+부두 61 — 흰숨 부두 |
+| 42 | ☐ | `루오르_차분_기록_촛불.webp` | star_sand | 인물·감정 | 루오르 22 — 꿈기록 수녀 |
+| 43 | ☐ | `외투_눈보라_추위_웅크림.webp` | star_sand | 정경·날씨 | 외투 48 — 극지 한기 상용구 |
+| 44 | ☐ | `수녀원_회랑_등불_기도_night.webp` | star_sand | 장소·수녀원 | 등불 39+수녀 11 — 등불수녀원 |
+
+> star_sand 투입 경로: `content/star_sand_v1/assets/scenes/` + `sync_pack_assets.py star_sand_v1`.
+> karnholt_v1은 체류 데이터가 아직 적어(용광로 23턴) 다음 배치에서 — 착수 시 `대장간_모루_불꽃` 계열부터.
+
+## 6. 2차 프롬프트 — graymar (기존 공통 프리픽스 사용)
+
+**#27 종소리_종탑_항만_황혼**
+```
+harbor bell tower silhouetted against amber dusk sky, great bronze bell
+mid-swing, gulls scattering, rooftops and masts below in fading light
+```
+
+**#28 쪽지_인장_밀랍_봉인**
+```
+close-up of a folded secret note with a cracked red wax seal bearing a
+noble crest, held in gloved fingers by candlelight, ominous discovery mood
+```
+
+**#29 미렐라_인자_주름_노련** — 인물 규약(기존 초상 참조·동일 얼굴)
+```
+[미렐라 초상 참조] elderly herbalist woman with kind deep wrinkles and
+knowing eyes, faint warm smile, sorting dried herbs at her stall, decades
+of market wisdom in her bearing
+```
+
+**#30 스튜_김_나무그릇_식사**
+```
+steaming wooden bowl of thick stew on a rough tavern table, torn bread
+beside, spoon resting, hearth glow, humble hearty meal
+```
+
+**#31 오웬_너털웃음_술통_뱃사람**
+```
+[오웬 초상 참조] burly tavern keeper laughing heartily while tapping an ale
+barrel, old sailor's tattoos on forearms, bottles and rope decor behind the
+bar
+```
+
+**#32 무기_단검_뽑아든_위협_night**
+```
+close low-angle of a hand drawing a dagger from a belt sheath in a dim
+alley, blade catching lantern light, confrontation about to break
+```
+
+**#33 항만_밀수_창고_어선_night**
+```
+night harbor backwater, small boat unloading unmarked crates into a
+warehouse side door, hooded figures, single shuttered lantern, smuggling
+tension
+```
+
+**#34 시장_파장_등불_어스름_night**
+```
+market street at closing time after dusk, merchants packing stalls under
+hanging lanterns, long shadows, scattered crates, quiet end-of-day mood
+```
+
+**#35 비_빗줄기_처마_웅덩이**
+```
+rain falling on a medieval street, water streaming off tiled eaves,
+puddles rippling on cobblestone, a figure sheltering under an awning
+```
+
+**#36 레닉_능글_귓속말_술잔**
+```
+[레닉 초상 참조] sly former actor leaning close to whisper over a wine cup,
+theatrical smirk, one eyebrow raised, shadowy tavern corner booth
+```
+
+## 7. 2차 프롬프트 — star_sand (프리픽스 변형)
+
+star_sand 공통 프리픽스 (극야 해안 톤 — graymar 프리픽스 대신 사용):
+```
+Dark fantasy polar-night coastal illustration, painterly digital art, cold
+indigo and bone-white palette with faint starlight glimmer, long polar
+twilight, quiet melancholic wonder, no text, no watermark, cinematic
+composition, 16:9
+```
+
+**#37 여관_난로_아늑_목조**
+```
+cozy timber inn common room in polar night, large stone hearth blazing,
+fur throws on benches, frost-edged windows glowing warm against the dark
+```
+
+**#38 이렌_근심_걱정_여관주인**
+```
+[이렌 초상 참조] middle-aged innkeeper woman pausing mid-work, worried
+distant gaze, wiping hands on apron, firelit common room behind, carrying
+an unspoken burden
+```
+
+**#39 별빛_모래_해변_밤하늘_night**
+```
+vast dark beach of glimmering star-sand under an immense aurora-lit night
+sky, tiny lone figure walking the shoreline, sand sparkling like fallen
+constellations
+```
+
+**#40 고래_갈비뼈_뼈대_거대**
+```
+colossal whale ribcage arching over a snowy shore like a cathedral,
+travelers dwarfed beneath the bleached bones, faint blue glow within
+```
+
+**#41 얼음_부두_어선_그물_day**
+```
+ice-crusted fishing dock in pale polar daylight, boats locked in frost,
+frozen nets and ropes, fishermen in heavy furs breaking ice off moorings
+```
+
+**#42 루오르_차분_기록_촛불**
+```
+[루오르 초상 참조] serene young nun in gray habit writing in a dream-ledger
+by candlelight, calm attentive expression, ink-stained fingertips, stone
+cell with hanging lanterns
+```
+
+**#43 외투_눈보라_추위_웅크림**
+```
+figure hunched in a thick fur coat pushing through a snow squall, scarf
+pulled over face, breath crystallizing, lantern glow barely visible ahead
+```
+
+**#44 수녀원_회랑_등불_기도_night**
+```
+lantern-lined convent cloister at polar night, row of hanging oil lamps
+receding into darkness, a nun kneeling in silent prayer, snow drifting in
+```
