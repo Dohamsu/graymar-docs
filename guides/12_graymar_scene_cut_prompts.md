@@ -414,3 +414,181 @@ pulled over face, breath crystallizing, lantern glow barely visible ahead
 lantern-lined convent cloister at polar night, row of hanging oil lamps
 receding into darkness, a nun kneeling in silent prayer, snow drifting in
 ```
+
+---
+
+# 3차 배치 (#92~109) — 그레이마르 커버리지 확장 (2026-08-02)
+
+> #45~91은 star_sand 3~5차([[13_star_sand_scene_cut_prompts|guides/13]]) — 번호는 전 팩 통합 연번.
+> 근거: graymar_v1 최신 45일 991턴 코퍼스 재실측 + 콘텐츠 주입 어휘(퀘스트 fact·
+> Incident — star_sand 5차와 같은 원리: fact description은 questReveal로, Incident
+> 제목·서술은 발동 시 서술에 확정 등장).
+>
+> - 미커버 실측 상위: 수레 114 · 조작 87 · 필체 63 · 광장 63 · 지붕 58 · 갈매기 55 ·
+>   깃발 50 · 활기 39 · 땀 37 · 지도 36 · 도박 34 · 자루 73 · 짐꾼 21 · 증거 15
+> - NPC 최신 언급: 로넨 357(1위) · 에드릭 298 · 미렐라 42 · 하를런 39 — **미커버**:
+>   밴스 경(CORE 유일 미커버·아크 배후) · 쉐도우(FACT_SHADOW_INTEL 직결) ·
+>   이졸데(귀족 음모 무대) · 토브렌(동부 부두 fact 무대) — 전원 기존 초상화 보유.
+>
+> ⚠️ **태그 함정 추가 실측**: '서리'(99)는 모서리, '다리'(40)는 기다리-, '독'(39)은
+> 유독/지독, '럼'(182)은 그럼 파편 — 태그 금지. '바람'(374)·'발걸음'(203)·'소음'(89)·
+> '고요'(94)는 범용어라 프리스크린 과통과 — 단독 태그 금지.
+
+## 8. 3차 체크리스트
+
+| # | ☐ | 파일명 (= 태그) | 유형 | 근거 |
+|---|---|----------------|------|------|
+| 92 | ☑ | `짐꾼_수레_자루_하역_day.webp` | 상황·항만 노동 | 수레 114·자루 73·짐꾼 21·하역 17 — 미커버 1위 소재군 |
+| 93 | ☑ | `필체_조작_장부_흔적.webp` | 상황·단서 | 조작 87·필체 63 + FACT_TAMPERED_LOGS("다른 필체, 잉크 차이") 시각화 |
+| 94 | ☑ | `로넨_고백_결심_장부.webp` | 인물·감정 | 로넨 357(언급 1위)인데 2컷뿐 — 내부 사정 고백 순간 (기존 불안·안도 대비) |
+| 95 | ☑ | `광장_인파_활기_day.webp` | 장소·광장 | 광장 63·활기 39 — 시장 좌판 컷과 별개의 광각 구도 |
+| 96 | ☑ | `지붕_도주_그림자_night.webp` | 상황·긴박 | 지붕 58 — 골목 추격 컷(#21)의 지붕 위 변주 |
+| 97 | ☑ | `갈매기_항구_하늘_day.webp` | 정경 | 갈매기 55 — 낮 항만 휴지 턴 |
+| 98 | ☑ | `도박_주사위_탁자_night.webp` | 상황·도박 | 도박 34 — 에드릭 도박 빚 서사의 무대 (뒷방 도박판) |
+| 99 | ☑ | `지도_표식_골목_조사.webp` | 상황·조사 | 지도 36 — 도주 경로·밀수로 추적 턴 |
+| 100 | ☑ | `증거_문서_사본_제시.webp` | 상황·담판 | 증거 15·사본 6 — S4~S5 증거 대질·아크 커밋 턴 |
+| 101 | ☑ | `밀회_목격_선술집_night.webp` | 사건·목격 | FACT_MAIREL_GUILD_EVIDENCE("선술집에서 목격") — fact 주입 어휘 선행 |
+| 102 | ☑ | `깃발_함성_부두_파업.webp` | 사건·파업 | Incident SOCIAL '항만 노동자 파업' + 깃발 50 |
+| 103 | ☑ | `역병_기침_격리_빈민가.webp` | 사건·역병 | Incident SOCIAL '빈민가 역병' — 발동 시 확정 어휘 |
+| 104 | ☑ | `진압_봉기_빈민가_night.webp` | 사건·진압 | Incident MILITARY '빈민가 강제 진압'·'빈민가 봉기' 겸용 |
+| 105 | ☑ | `암살_음모_단도_night.webp` | 사건·음모 | Incident POLITICAL '암살 음모' — 무기 컷(#32)과 별개의 잠입 구도 |
+| 106 | ☑ | `쉐도우_브로커_두건_거래.webp` | 인물·감정 | FACT_SHADOW_INTEL 직결 — 실행범·도주 경로 정보의 출처 |
+| 107 | ☑ | `밴스_의원_온화_집무.webp` | 인물·감정 | CORE 유일 미커버 — 온건한 중재자 가면의 배후 |
+| 108 | ☑ | `이졸데_사교_부채_연회.webp` | 인물·감정 | 귀족 음모·사교계 무대 (Incident POLITICAL 연계) |
+| 109 | ☑ | `토브렌_창고_관리자_난처.webp` | 인물·감정 | FACT_ROUTE_TO_EAST_DOCK("동부 부두 3번 창고") 무대의 열쇠 인물 |
+
+> #101~105는 star_sand 5차와 같은 선행 대비 — 해당 fact 공개·Incident 발동 턴에만
+> 뜬다. 잔여 미커버 SUB: 벨론·세라·로자 (저노출 — 체류 데이터 축적 후 다음 배치).
+> 이 배치로 팩 총량 54장 — 쿨다운 3턴·런 내 1회 제한으로 노출 총량 불변.
+
+## 9. 3차 프롬프트 — 상황·정경 (§1 공통 프리픽스 사용)
+
+**#92 짐꾼_수레_자루_하역_day**
+```
+dock laborers heaving grain sacks from a laden handcart onto a gangplank,
+sweat and strain, rope-bound crates queued behind, overseer counting loads,
+gritty working-harbor morning
+```
+
+**#93 필체_조작_장부_흔적**
+```
+extreme close-up of a ledger page under a magnifying lens, two subtly
+different handwritings meeting mid-column, fresher ink glinting over faded
+entries, fingertip pinning the seam of the forgery
+```
+
+**#95 광장_인파_활기_day**
+```
+wide view of the market square from a colonnade, dense crowd currents
+between fountain and stalls, banners strung between buildings, carts
+threading through, city alive under dusty midday light
+```
+
+**#96 지붕_도주_그림자_night**
+```
+cloaked figure leaping a gap between tiled rooftops at night, chimney smoke
+streaking, pursuers' lanterns bobbing in the alley far below, moonlit
+silhouette mid-stride
+```
+
+**#97 갈매기_항구_하늘_day**
+```
+gulls wheeling in a bright cold harbor sky above anchored masts, one
+perched on a mooring post in sharp focus, glittering water and distant
+cargo cranes, breathing-room calm
+```
+
+**#98 도박_주사위_탁자_night**
+```
+smoky backroom gambling table, dice mid-tumble in lantern light, piled
+coins and torn IOU chits, tense ringed fingers gripping the table edge,
+watchers in shadow
+```
+
+**#99 지도_표식_골목_조사**
+```
+city map of harbor district spread on a barrel head, charcoal circles
+marking three alley routes, a knife pinning one corner, gloved hand
+tracing a smuggler's path, lantern glow
+```
+
+**#100 증거_문서_사본_제시**
+```
+document folder slapped open on a polished desk, copied ledger pages and
+sealed testimonies fanned out toward an unseen opponent, accusing hand flat
+beside them, high-stakes confrontation stillness
+```
+
+## 10. 3차 프롬프트 — 사건 컷 (fact·Incident 주입 어휘)
+
+**#101 밀회_목격_선술집_night**
+```
+view between shelf bottles into a tavern's darkest booth, an armored figure
+and a guild merchant leaning close over a slid envelope, the watcher's
+blurred shoulder in frame's edge, caught-secret tension
+```
+
+**#102 깃발_함성_부두_파업**
+```
+dock workers massed behind a hoisted patchwork banner, fists and tools
+raised mid-chant, halted cranes and idle ships behind, foremen facing them
+down, powder-keg morning
+```
+
+**#103 역병_기침_격리_빈민가**
+```
+slum lane strung with warning cloths across doorways, hunched figure
+coughing into a rag, neighbors keeping wide wary distance, smoke of
+cleansing fires drifting, dread quiet
+```
+
+**#104 진압_봉기_빈민가_night**
+```
+line of guards with shields and torches pressing into a slum street,
+thrown debris mid-air, residents scattering between shacks, harsh torchlit
+chaos of a night crackdown
+```
+
+**#105 암살_음모_단도_night**
+```
+moonlit study window easing open from outside, gloved hand and bared
+dagger entering first, sleeping household unaware beyond the curtain,
+coiled lethal patience
+```
+
+## 11. 3차 프롬프트 — 인물 감정 컷 (기존 초상 참조 — 동일 얼굴)
+
+**#94 로넨_고백_결심_장부** — 언급 1위의 3컷째: 겁먹은 서기의 용기
+```
+[로넨 초상 참조] the thin clerk placing both palms flat on a closed ledger,
+jaw set through visible fear, eyes lifted in reluctant resolve to finally
+tell what he knows, harbor office lamplight
+```
+
+**#106 쉐도우_브로커_두건_거래**
+```
+[쉐도우 초상 참조] hooded information broker half-lit in an alley doorway,
+gloved hand extending a folded slip, face mostly shadow except a knowing
+mouth, price-of-secrets poise
+```
+
+**#107 밴스_의원_온화_집무**
+```
+[밴스 초상 참조] silver-haired councilman smiling warmly across his study
+desk, fingers steepled over an unsigned decree, eyes a degree colder than
+the smile, velvet menace of a patient schemer
+```
+
+**#108 이졸데_사교_부채_연회**
+```
+[이졸데 초상 참조] society matriarch behind a half-raised lace fan at a
+candlelit salon, appraising amused gaze over the rim, jewels and murmuring
+nobles blurred behind, secrets traded in glances
+```
+
+**#109 토브렌_창고_관리자_난처**
+```
+[토브렌 초상 참조] weary warehouse manager caught between manifest and
+questioner, rubbing his neck with forced casualness, eyes flicking toward
+warehouse three's sealed door, a family man in too deep
+```
