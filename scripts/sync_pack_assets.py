@@ -24,6 +24,7 @@ scenes/ (arch/96 장면 컷 — 서술 태그 매칭 인라인 삽입):
 
 이미지를 넣거나 뺀 뒤 이 스크립트만 다시 실행하면 매니페스트가 갱신된다.
 """
+import hashlib
 import json
 import shutil
 import sys
@@ -72,7 +73,16 @@ def collect(src_dir: Path, dst_dir: Path, url_base: str, kind: str):
         f for f in src_dir.iterdir() if f.suffix.lower() in EXTS
     )
     for i, f in enumerate(files, 1):
-        slug = f"{kind}_{i:02d}{f.suffix.lower()}"
+        if kind == "scene":
+            # [arch/96 안정 슬러그] 정렬 순번은 파일 추가/삭제 시 전체 번호가 밀려
+            # 과거 턴 로그에 저장된 URL이 다른 이미지를 가리키게 된다 (2026-08-02
+            # 실측: scene_15가 시장 좌판→비명 소동으로 뒤바뀜). 원본 파일명 해시로
+            # URL·id를 영구 고정한다. portraits/locations는 기존 배포 런의 배정
+            # URL 보존을 위해 순번 유지.
+            h = hashlib.sha1(f.stem.encode("utf-8")).hexdigest()[:8]
+            slug = f"scene_{h}{f.suffix.lower()}"
+        else:
+            slug = f"{kind}_{i:02d}{f.suffix.lower()}"
         shutil.copy2(f, dst_dir / slug)
         gender, keywords = parse_tokens(f.stem)
         entry = {"url": f"{url_base}/{slug}", "kind": kind, "keywords": keywords}
@@ -91,7 +101,7 @@ def collect(src_dir: Path, dst_dir: Path, url_base: str, kind: str):
                 else:
                     remain.append(kw)
             entry["keywords"] = remain
-            entry["id"] = f"SCN_{i:02d}"
+            entry["id"] = f"SCN_{slug[6:14]}"  # 해시 재사용 — 파일 증감 무관 고정
             if time:
                 entry["time"] = time
         entries.append(entry)

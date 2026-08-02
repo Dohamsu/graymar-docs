@@ -4,7 +4,7 @@
   "locations": [],
   "scenes": [
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_01.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_3ca7244a.webp",
       "kind": "scene",
       "keywords": [
         "고래",
@@ -12,10 +12,10 @@
         "뼈대",
         "거대"
       ],
-      "id": "SCN_01"
+      "id": "SCN_3ca7244a"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_02.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_639effbb.webp",
       "kind": "scene",
       "keywords": [
         "루오르",
@@ -23,10 +23,10 @@
         "기록",
         "촛불"
       ],
-      "id": "SCN_02"
+      "id": "SCN_639effbb"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_03.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_c4b8f008.webp",
       "kind": "scene",
       "keywords": [
         "별빛",
@@ -34,11 +34,11 @@
         "해변",
         "밤하늘"
       ],
-      "id": "SCN_03",
+      "id": "SCN_c4b8f008",
       "time": "night"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_04.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_83cd2e53.webp",
       "kind": "scene",
       "keywords": [
         "수녀원",
@@ -46,11 +46,11 @@
         "등불",
         "기도"
       ],
-      "id": "SCN_04",
+      "id": "SCN_83cd2e53",
       "time": "night"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_05.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_6c1e847a.webp",
       "kind": "scene",
       "keywords": [
         "얼음",
@@ -58,11 +58,11 @@
         "어선",
         "그물"
       ],
-      "id": "SCN_05",
+      "id": "SCN_6c1e847a",
       "time": "day"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_06.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_552d5fb7.webp",
       "kind": "scene",
       "keywords": [
         "여관",
@@ -70,10 +70,10 @@
         "아늑",
         "목조"
       ],
-      "id": "SCN_06"
+      "id": "SCN_552d5fb7"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_07.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_225a2a36.webp",
       "kind": "scene",
       "keywords": [
         "외투",
@@ -81,10 +81,10 @@
         "추위",
         "웅크림"
       ],
-      "id": "SCN_07"
+      "id": "SCN_225a2a36"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_08.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_7d0ac787.webp",
       "kind": "scene",
       "keywords": [
         "이렌",
@@ -92,7 +92,7 @@
         "걱정",
         "여관주인"
       ],
-      "id": "SCN_08"
+      "id": "SCN_7d0ac787"
     }
   ]
 }
