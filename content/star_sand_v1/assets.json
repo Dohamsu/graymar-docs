@@ -37,6 +37,17 @@
       "id": "SCN_4d0752c2"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_8116e46f.webp",
+      "kind": "scene",
+      "keywords": [
+        "나하트",
+        "잃은",
+        "기억",
+        "허공"
+      ],
+      "id": "SCN_8116e46f"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_65ffaac8.webp",
       "kind": "scene",
       "keywords": [
@@ -70,6 +81,28 @@
       "id": "SCN_639effbb"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_2b938b28.webp",
+      "kind": "scene",
+      "keywords": [
+        "마레크",
+        "수색꾼",
+        "길잡이",
+        "밧줄"
+      ],
+      "id": "SCN_2b938b28"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_071d3a57.webp",
+      "kind": "scene",
+      "keywords": [
+        "명부",
+        "실종",
+        "이름",
+        "촛불"
+      ],
+      "id": "SCN_071d3a57"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_9969d54e.webp",
       "kind": "scene",
       "keywords": [
@@ -91,6 +124,28 @@
       ],
       "id": "SCN_c4b8f008",
       "time": "night"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_44309edf.webp",
+      "kind": "scene",
+      "keywords": [
+        "사엘",
+        "학자",
+        "관측",
+        "기록"
+      ],
+      "id": "SCN_44309edf"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_966e42a0.webp",
+      "kind": "scene",
+      "keywords": [
+        "성에",
+        "창문",
+        "서리",
+        "냉기"
+      ],
+      "id": "SCN_966e42a0"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_0655e747.webp",
@@ -127,6 +182,16 @@
       "id": "SCN_889ea124"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_b0afc73a.webp",
+      "kind": "scene",
+      "keywords": [
+        "아바스",
+        "불꽃",
+        "응시"
+      ],
+      "id": "SCN_b0afc73a"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_c0072317.webp",
       "kind": "scene",
       "keywords": [
@@ -161,6 +226,27 @@
       "id": "SCN_552d5fb7"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_f6dc8dbd.webp",
+      "kind": "scene",
+      "keywords": [
+        "열쇠",
+        "복도",
+        "문틈"
+      ],
+      "id": "SCN_f6dc8dbd",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_19bf0484.webp",
+      "kind": "scene",
+      "keywords": [
+        "오로라",
+        "일렁",
+        "밤하늘"
+      ],
+      "id": "SCN_19bf0484"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_225a2a36.webp",
       "kind": "scene",
       "keywords": [
@@ -183,6 +269,17 @@
       "id": "SCN_2ff2e3bc"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_9c9e182f.webp",
+      "kind": "scene",
+      "keywords": [
+        "유르마",
+        "침통",
+        "울음",
+        "동생"
+      ],
+      "id": "SCN_9c9e182f"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_7d0ac787.webp",
       "kind": "scene",
       "keywords": [
@@ -203,6 +300,17 @@
         "감사"
       ],
       "id": "SCN_0e32a297"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_b37ae196.webp",
+      "kind": "scene",
+      "keywords": [
+        "이렌",
+        "접객",
+        "분주",
+        "손님"
+      ],
+      "id": "SCN_b37ae196"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_361b05b8.webp",
@@ -258,6 +366,72 @@
         "등불"
       ],
       "id": "SCN_48e5ca71"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_35fe0ac4.webp",
+      "kind": "scene",
+      "keywords": [
+        "채굴",
+        "갈비",
+        "등불",
+        "그림자"
+      ],
+      "id": "SCN_35fe0ac4"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_a27483c2.webp",
+      "kind": "scene",
+      "keywords": [
+        "카시엔",
+        "장로",
+        "침묵",
+        "모피"
+      ],
+      "id": "SCN_a27483c2"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_8d998064.webp",
+      "kind": "scene",
+      "keywords": [
+        "카일룬",
+        "능글",
+        "꿈약",
+        "유리병"
+      ],
+      "id": "SCN_8d998064"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_6743e538.webp",
+      "kind": "scene",
+      "keywords": [
+        "토바",
+        "중개인",
+        "계산",
+        "흥정"
+      ],
+      "id": "SCN_6743e538"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_01b42256.webp",
+      "kind": "scene",
+      "keywords": [
+        "투숙객",
+        "술잔",
+        "벽난로",
+        "수군"
+      ],
+      "id": "SCN_01b42256"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_937d5ec5.webp",
+      "kind": "scene",
+      "keywords": [
+        "헬룬",
+        "장례사",
+        "회고",
+        "침묵"
+      ],
+      "id": "SCN_937d5ec5"
     }
   ]
 }

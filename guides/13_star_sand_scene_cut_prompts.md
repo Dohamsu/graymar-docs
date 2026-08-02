@@ -179,3 +179,159 @@ snow sparkling
 4) 서버 재시작 + client push (public/pack-assets 포함)
 5) 체크리스트 ☑ + 유르마·아바스·세피 첫 컷은 얼굴 정본으로 별도 보관
 ```
+
+---
+
+# 4차 배치 (#60~75) — 상황 다변화 + 초상화 배리에이션 (2026-08-02)
+
+> 3차 15종 투입 완료 후 확장: 같은 311턴 코퍼스에서 **미커버 최상위 소재**
+> (냉기 57 · 성에 56 · 손님 63 · 중개인 38 · 응시 33 · 불꽃 31 · 열쇠 31 ·
+> 투숙객 29 · 수군- 29 · 일렁- 25 · 기억 23 · 실종 20 · 잃은 18 · 명부 16)와
+> **CORE 미커버 4인**(카일룬·나하트·사엘·마레크 — 중후반 퀘스트 필수 대면)을 채운다.
+>
+> ⚠️ 이 배치로 팩 총량 39장 — guides/11 권장(12~20장)을 초과하지만, 쿨다운 3턴 +
+> 런 내 1회 제한으로 **노출 총량은 불변, 다양성만 상승**한다 (반복 노출 체감 억제 목적).
+> 태그 함정 추가 실측: '죽'(40)·'개'(233)·'새'(411)는 죽다/지금개/새벽 파편 — 태그 금지.
+> '손끝'(102)은 범용 제스처라 프리스크린 과통과 유발 — 단독 태그 금지.
+
+## 6. 4차 체크리스트
+
+| # | ☐ | 파일명 (= 태그) | 유형 | 실측 근거 |
+|---|---|----------------|------|----------|
+| 60 | ☑ | `성에_창문_서리_냉기.webp` | 정경·한기 | 성에 56·냉기 57 — 미커버 최상위 소재 (여관·수녀원 창가) |
+| 61 | ☑ | `투숙객_술잔_벽난로_수군.webp` | 상황·술자리 | 투숙객 29·벽난로 25·수군- 29 — 여관 밤 사교 무대 |
+| 62 | ☑ | `이렌_접객_분주_손님.webp` | 인물·감정 | 손님 63 — 이렌 일상 환대 배리에이션 (기존 3종: 근심·미소·창백) |
+| 63 | ☑ | `오로라_일렁_밤하늘.webp` | 정경·하늘 | 오로라 14·일렁- 25 — 하늘 정경 (별빛 해변 컷과 별개 구도) |
+| 64 | ☑ | `열쇠_복도_문틈_night.webp` | 상황·잠입 | 열쇠 31·복도 7·문틈 6 — 객실 조사·STEAL 7 |
+| 65 | ☑ | `명부_실종_이름_촛불.webp` | 상황·조사 | 명부 16·실종 20 — 투숙 명부·실종자 대조 (헬룬 서사 연계) |
+| 66 | ☑ | `헬룬_장례사_회고_침묵.webp` | 인물·감정 | 여관 장기 투숙(체류 1위 무대 상주) — 실종자 마지막 말 기록 |
+| 67 | ☑ | `유르마_침통_울음_동생.webp` | 인물·감정 | 울음 10·동생 6 — 결의 컷의 감정 대비(슬픔) |
+| 68 | ☑ | `아바스_불꽃_응시.webp` | 인물·감정 | 응시 33·불꽃 31 — 램프 불빛에서 미래를 읽는 순간 (장인 컷 대비) |
+| 69 | ☑ | `채굴_갈비_등불_그림자.webp` | 상황·채굴 | 갈비평원 체류 3위(33턴)인데 상황 컷 부재 — 채굴 8·그림자 92 |
+| 70 | ☑ | `카일룬_능글_꿈약_유리병.webp` | 인물·CORE 첫 컷 | 카일룬 9 — 검은얼음 시장 조제사, 시장 컷과 세트 |
+| 71 | ☑ | `마레크_수색꾼_길잡이_밧줄.webp` | 인물·CORE 첫 컷 | 수색 16·밧줄 13 — 별고래 내부 진입 동선 필수 대면 |
+| 72 | ☑ | `사엘_학자_관측_기록.webp` | 인물·CORE 첫 컷 | 관측 20·기록 34 — 관측탑 컷과 세트, 기록 조작 서사 |
+| 73 | ☑ | `토바_중개인_계산_흥정.webp` | 인물·감정 | 중개인 38 — 흰숨 부두 정보 판매·왕실 보고선 서사 |
+| 74 | ☑ | `카시엔_장로_침묵_모피.webp` | 인물·감정 | 모피 36·침묵 63 — 전승 봉인 서사 |
+| 75 | ☑ | `나하트_잃은_기억_허공.webp` | 인물·CORE 첫 컷 | 기억 23·잃은 18·허공 10 — 팩 핵심 반전의 얼굴 |
+
+## 7. 4차 프롬프트 — 상황·정경 (공통 프리픽스 §1 동일)
+
+**#60 성에_창문_서리_냉기**
+```
+close-up of a frost-flowered windowpane from inside a warm room, intricate
+ice crystals spreading across dark glass, faint aurora glow bleeding
+through, candle reflection, hush of deep cold pressing in
+```
+
+**#61 투숙객_술잔_벽난로_수군**
+```
+inn common room at night, fur-clad lodgers hunched over mugs around the
+great hearth, heads leaning together in low murmured rumor-trading,
+firelight on worried faces, snow ticking at the windows
+```
+
+**#63 오로라_일렁_밤하늘**
+```
+vast polar night sky filled with rippling green-violet aurora curtains
+folding over themselves, thin snowbound rooftops and lantern dots tiny at
+the frame bottom, silent overwhelming sky
+```
+
+**#64 열쇠_복도_문틈_night**
+```
+dim timber inn corridor at night, a hand slipping an iron key toward a
+door, thin candlelight leaking through the door crack, floorboard shadows
+long, held-breath trespass tension
+```
+
+**#65 명부_실종_이름_촛불**
+```
+worn guest ledger open on a counter, column of handwritten names with
+several struck through or faded, fingertip pausing on a missing lodger's
+line, candle flame, quiet dread of a pattern emerging
+```
+
+**#69 채굴_갈비_등불_그림자**
+```
+miners working inside the colossal whale rib vault, pick strokes echoing,
+hanging oil lamps swaying huge rib shadows across bone walls, dust motes
+in cold light, uneasy industry inside a sacred carcass
+```
+
+## 8. 4차 프롬프트 — 인물 감정 컷
+
+> 얼굴 정본 규칙(§1) 유지: 이렌·유르마·아바스는 기존 컷 참조. 헬룬·카일룬·마레크·
+> 사엘·토바·카시엔·나하트는 **이번이 첫 컷 = 이후 얼굴 정본** — 결과물 보관.
+
+**#62 이렌_접객_분주_손님** — 일상 환대 배리에이션
+```
+[이렌_근심_걱정_여관주인.webp 참조 — 동일 얼굴] the innkeeper mid-bustle,
+balancing steaming bowls along one arm, warm practiced hosting smile that
+doesn't quite reach tired eyes, firelit common room alive behind her
+```
+
+**#66 헬룬_장례사_회고_침묵** — 첫 컷 = 얼굴 정본
+```
+gaunt elderly man in a threadbare formal coat sitting in the inn's darkest
+corner, thin notebook open, gazing past the fire into memory, undertaker's
+composed stillness, faint unease of a man who fears sleepers more than the
+dead
+```
+
+**#67 유르마_침통_울음_동생** — 결의 컷의 감정 대비
+```
+[유르마_순례자_무장_수색.webp 참조 — 동일 얼굴] the armed pilgrim alone at
+night, spear leaned against the wall, pressing the small portrait locket to
+her forehead with both hands, silent tears, grief breaking through armor
+```
+
+**#68 아바스_불꽃_응시** — 장인 컷의 감정 대비
+```
+[아바스_장인_램프_유리.webp 참조 — 동일 얼굴] the lamp craftsman utterly
+still, face lit from below by a single flame, pupils reflecting the fire,
+reading something in the light that isn't there, reverent unease
+```
+
+**#70 카일룬_능글_꿈약_유리병** — 첫 컷 = 얼굴 정본
+```
+lean sly apothecary in a patched fur coat, holding a small glowing vial up
+between two fingers with a playful dangerous grin, teeth showing, black-ice
+market stall clutter blurred behind, charm hiding menace
+```
+
+**#71 마레크_수색꾼_길잡이_밧줄** — 첫 컷 = 얼굴 정본
+```
+weathered blunt-faced tracker coiling a climbing rope across his chest,
+hard practical eyes scanning off-frame, frost in his beard stubble, bone
+cavern mouth blurred behind, a man of distances and traces not words
+```
+
+**#72 사엘_학자_관측_기록** — 첫 컷 = 얼굴 정본
+```
+austere androgynous scholar in a high-collared coat at a chart-strewn desk,
+pen paused mid-entry, gaze caught by something beautiful through the tower
+aperture, cold discipline cracking into wonder, guilt at the edge of it
+```
+
+**#73 토바_중개인_계산_흥정** — 첫 컷 = 얼굴 정본
+```
+sharp-eyed businesslike woman in practical furs at a dockside desk of
+manifests, weighing a coin absently between gloved fingers, appraising
+stare that prices everything, ship masts through frosted glass behind
+```
+
+**#74 카시엔_장로_침묵_모피** — 첫 컷 = 얼굴 정본
+```
+ancient hunter elder wrapped in heavy sea-mammal furs, deep-lined wind-cut
+face, eyes closed mid-refusal as if holding a sealed story, bone charms
+braided in white hair, snowfall settling on his shoulders
+```
+
+**#75 나하트_잃은_기억_허공** — 첫 컷 = 얼굴 정본 (팩 핵심 반전)
+```
+androgynous returnee with an unsettling serene childlike face, hollow eyes
+fixed on empty air slightly above the viewer, faint star-flecks drifting in
+the irises, threadbare blanket around shoulders, presence both small and
+immense
+```
