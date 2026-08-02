@@ -1,0 +1,98 @@
+{
+  "packId": "star_sand_v1",
+  "portraits": [],
+  "locations": [],
+  "scenes": [
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_01.webp",
+      "kind": "scene",
+      "keywords": [
+        "고래",
+        "갈비뼈",
+        "뼈대",
+        "거대"
+      ],
+      "id": "SCN_01"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_02.webp",
+      "kind": "scene",
+      "keywords": [
+        "루오르",
+        "차분",
+        "기록",
+        "촛불"
+      ],
+      "id": "SCN_02"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_03.webp",
+      "kind": "scene",
+      "keywords": [
+        "별빛",
+        "모래",
+        "해변",
+        "밤하늘"
+      ],
+      "id": "SCN_03",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_04.webp",
+      "kind": "scene",
+      "keywords": [
+        "수녀원",
+        "회랑",
+        "등불",
+        "기도"
+      ],
+      "id": "SCN_04",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_05.webp",
+      "kind": "scene",
+      "keywords": [
+        "얼음",
+        "부두",
+        "어선",
+        "그물"
+      ],
+      "id": "SCN_05",
+      "time": "day"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_06.webp",
+      "kind": "scene",
+      "keywords": [
+        "여관",
+        "난로",
+        "아늑",
+        "목조"
+      ],
+      "id": "SCN_06"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_07.webp",
+      "kind": "scene",
+      "keywords": [
+        "외투",
+        "눈보라",
+        "추위",
+        "웅크림"
+      ],
+      "id": "SCN_07"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_08.webp",
+      "kind": "scene",
+      "keywords": [
+        "이렌",
+        "근심",
+        "걱정",
+        "여관주인"
+      ],
+      "id": "SCN_08"
+    }
+  ]
+}

@@ -51,10 +51,10 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_05.webp",
       "kind": "scene",
       "keywords": [
-        "로넨",
-        "불안",
-        "초조",
-        "움찔"
+        "레닉",
+        "능글",
+        "귓속말",
+        "술잔"
       ],
       "id": "SCN_05"
     },
@@ -63,9 +63,9 @@
       "kind": "scene",
       "keywords": [
         "로넨",
-        "안도",
-        "감사",
-        "미소"
+        "불안",
+        "초조",
+        "움찔"
       ],
       "id": "SCN_06"
     },
@@ -73,15 +73,26 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_07.webp",
       "kind": "scene",
       "keywords": [
+        "로넨",
+        "안도",
+        "감사",
+        "미소"
+      ],
+      "id": "SCN_07"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_08.webp",
+      "kind": "scene",
+      "keywords": [
         "마이렐",
         "단호",
         "명령"
       ],
-      "id": "SCN_07",
+      "id": "SCN_08",
       "time": "night"
     },
     {
-      "url": "/pack-assets/graymar_v1/scenes/scene_08.webp",
+      "url": "/pack-assets/graymar_v1/scenes/scene_09.webp",
       "kind": "scene",
       "keywords": [
         "마이렐",
@@ -89,10 +100,33 @@
         "보고서",
         "집무"
       ],
-      "id": "SCN_08"
+      "id": "SCN_09"
     },
     {
-      "url": "/pack-assets/graymar_v1/scenes/scene_09.webp",
+      "url": "/pack-assets/graymar_v1/scenes/scene_10.webp",
+      "kind": "scene",
+      "keywords": [
+        "무기",
+        "단검",
+        "뽑아든",
+        "위협"
+      ],
+      "id": "SCN_10",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_11.webp",
+      "kind": "scene",
+      "keywords": [
+        "미렐라",
+        "인자",
+        "주름",
+        "노련"
+      ],
+      "id": "SCN_11"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_12.webp",
       "kind": "scene",
       "keywords": [
         "부두",
@@ -100,11 +134,11 @@
         "그물",
         "상자"
       ],
-      "id": "SCN_09",
+      "id": "SCN_12",
       "time": "day"
     },
     {
-      "url": "/pack-assets/graymar_v1/scenes/scene_10.webp",
+      "url": "/pack-assets/graymar_v1/scenes/scene_13.webp",
       "kind": "scene",
       "keywords": [
         "브렌",
@@ -112,50 +146,15 @@
         "침통",
         "압박"
       ],
-      "id": "SCN_10"
-    },
-    {
-      "url": "/pack-assets/graymar_v1/scenes/scene_11.webp",
-      "kind": "scene",
-      "keywords": [
-        "비명",
-        "고함",
-        "창문",
-        "소동"
-      ],
-      "id": "SCN_11",
-      "time": "night"
-    },
-    {
-      "url": "/pack-assets/graymar_v1/scenes/scene_12.webp",
-      "kind": "scene",
-      "keywords": [
-        "빈민가",
-        "판자",
-        "그림자",
-        "웅크림"
-      ],
-      "id": "SCN_12"
-    },
-    {
-      "url": "/pack-assets/graymar_v1/scenes/scene_13.webp",
-      "kind": "scene",
-      "keywords": [
-        "새벽",
-        "안개",
-        "항만",
-        "돛대"
-      ],
       "id": "SCN_13"
     },
     {
       "url": "/pack-assets/graymar_v1/scenes/scene_14.webp",
       "kind": "scene",
       "keywords": [
-        "선술집",
-        "에일",
-        "술잔",
-        "난로"
+        "빗줄기",
+        "처마",
+        "웅덩이"
       ],
       "id": "SCN_14"
     },
@@ -163,22 +162,22 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_15.webp",
       "kind": "scene",
       "keywords": [
-        "시장",
-        "좌판",
-        "향신료",
-        "인파"
+        "비명",
+        "고함",
+        "창문",
+        "소동"
       ],
       "id": "SCN_15",
-      "time": "day"
+      "time": "night"
     },
     {
       "url": "/pack-assets/graymar_v1/scenes/scene_16.webp",
       "kind": "scene",
       "keywords": [
-        "약초",
-        "붕대",
-        "치료",
-        "노점"
+        "빈민가",
+        "판자",
+        "그림자",
+        "웅크림"
       ],
       "id": "SCN_16"
     },
@@ -186,10 +185,10 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_17.webp",
       "kind": "scene",
       "keywords": [
-        "에드릭",
-        "경계",
-        "곁눈질",
-        "은밀"
+        "새벽",
+        "안개",
+        "항만",
+        "돛대"
       ],
       "id": "SCN_17"
     },
@@ -197,10 +196,10 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_18.webp",
       "kind": "scene",
       "keywords": [
-        "에드릭",
-        "미간",
-        "신경질",
-        "계산"
+        "선술집",
+        "에일",
+        "술잔",
+        "난로"
       ],
       "id": "SCN_18"
     },
@@ -208,10 +207,9 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_19.webp",
       "kind": "scene",
       "keywords": [
-        "에드릭",
-        "한숨",
-        "피로",
-        "지친"
+        "스튜",
+        "나무그릇",
+        "식사"
       ],
       "id": "SCN_19"
     },
@@ -219,56 +217,56 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_20.webp",
       "kind": "scene",
       "keywords": [
-        "장부",
-        "서류",
-        "잉크",
-        "촛불"
+        "시장",
+        "좌판",
+        "향신료",
+        "인파"
       ],
-      "id": "SCN_20"
+      "id": "SCN_20",
+      "time": "day"
     },
     {
       "url": "/pack-assets/graymar_v1/scenes/scene_21.webp",
       "kind": "scene",
       "keywords": [
-        "쥐왕",
-        "지하",
-        "촛불",
-        "거만"
+        "시장",
+        "파장",
+        "등불",
+        "어스름"
       ],
-      "id": "SCN_21"
+      "id": "SCN_21",
+      "time": "night"
     },
     {
       "url": "/pack-assets/graymar_v1/scenes/scene_22.webp",
       "kind": "scene",
       "keywords": [
-        "창고",
-        "어둠",
-        "등불",
-        "궤짝"
+        "약초",
+        "붕대",
+        "치료",
+        "노점"
       ],
-      "id": "SCN_22",
-      "time": "night"
+      "id": "SCN_22"
     },
     {
       "url": "/pack-assets/graymar_v1/scenes/scene_23.webp",
       "kind": "scene",
       "keywords": [
-        "추격",
-        "도주",
-        "골목",
-        "돌바닥"
+        "에드릭",
+        "경계",
+        "곁눈질",
+        "은밀"
       ],
-      "id": "SCN_23",
-      "time": "night"
+      "id": "SCN_23"
     },
     {
       "url": "/pack-assets/graymar_v1/scenes/scene_24.webp",
       "kind": "scene",
       "keywords": [
-        "펠릭스",
-        "당황",
-        "풋내기",
-        "경례"
+        "에드릭",
+        "미간",
+        "신경질",
+        "계산"
       ],
       "id": "SCN_24"
     },
@@ -276,10 +274,10 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_25.webp",
       "kind": "scene",
       "keywords": [
-        "하를런",
-        "팔짱",
-        "중재",
-        "거친"
+        "에드릭",
+        "한숨",
+        "피로",
+        "지친"
       ],
       "id": "SCN_25"
     },
@@ -287,11 +285,124 @@
       "url": "/pack-assets/graymar_v1/scenes/scene_26.webp",
       "kind": "scene",
       "keywords": [
+        "오웬",
+        "너털웃음",
+        "술통",
+        "뱃사람"
+      ],
+      "id": "SCN_26"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_27.webp",
+      "kind": "scene",
+      "keywords": [
+        "장부",
+        "서류",
+        "잉크",
+        "촛불"
+      ],
+      "id": "SCN_27"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_28.webp",
+      "kind": "scene",
+      "keywords": [
+        "종소리",
+        "종탑",
+        "항만",
+        "황혼"
+      ],
+      "id": "SCN_28"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_29.webp",
+      "kind": "scene",
+      "keywords": [
+        "쥐왕",
+        "지하",
+        "촛불",
+        "거만"
+      ],
+      "id": "SCN_29"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_30.webp",
+      "kind": "scene",
+      "keywords": [
+        "쪽지",
+        "인장",
+        "밀랍",
+        "봉인"
+      ],
+      "id": "SCN_30"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_31.webp",
+      "kind": "scene",
+      "keywords": [
+        "창고",
+        "어둠",
+        "등불",
+        "궤짝"
+      ],
+      "id": "SCN_31",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_32.webp",
+      "kind": "scene",
+      "keywords": [
+        "추격",
+        "도주",
+        "골목",
+        "돌바닥"
+      ],
+      "id": "SCN_32",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_33.webp",
+      "kind": "scene",
+      "keywords": [
+        "펠릭스",
+        "당황",
+        "풋내기",
+        "경례"
+      ],
+      "id": "SCN_33"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_34.webp",
+      "kind": "scene",
+      "keywords": [
+        "하를런",
+        "팔짱",
+        "중재",
+        "거친"
+      ],
+      "id": "SCN_34"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_35.webp",
+      "kind": "scene",
+      "keywords": [
+        "항만",
+        "밀수",
+        "창고",
+        "어선"
+      ],
+      "id": "SCN_35",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_36.webp",
+      "kind": "scene",
+      "keywords": [
         "흥정",
         "금화",
         "주머니"
       ],
-      "id": "SCN_26"
+      "id": "SCN_36"
     }
   ]
 }
