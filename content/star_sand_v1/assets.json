@@ -4,6 +4,17 @@
   "locations": [],
   "scenes": [
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_303cd97b.webp",
+      "kind": "scene",
+      "keywords": [
+        "검은얼음",
+        "시장",
+        "좌판",
+        "지하"
+      ],
+      "id": "SCN_303cd97b"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_3ca7244a.webp",
       "kind": "scene",
       "keywords": [
@@ -15,6 +26,39 @@
       "id": "SCN_3ca7244a"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_4d0752c2.webp",
+      "kind": "scene",
+      "keywords": [
+        "관측탑",
+        "오로라",
+        "금속",
+        "계단"
+      ],
+      "id": "SCN_4d0752c2"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_65ffaac8.webp",
+      "kind": "scene",
+      "keywords": [
+        "램프",
+        "심지",
+        "고래기름",
+        "불빛"
+      ],
+      "id": "SCN_65ffaac8"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_1519e1bf.webp",
+      "kind": "scene",
+      "keywords": [
+        "루오르",
+        "경계",
+        "침묵",
+        "환자"
+      ],
+      "id": "SCN_1519e1bf"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_639effbb.webp",
       "kind": "scene",
       "keywords": [
@@ -24,6 +68,17 @@
         "촛불"
       ],
       "id": "SCN_639effbb"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_9969d54e.webp",
+      "kind": "scene",
+      "keywords": [
+        "무음",
+        "해변",
+        "고래",
+        "얼음"
+      ],
+      "id": "SCN_9969d54e"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_c4b8f008.webp",
@@ -38,6 +93,17 @@
       "time": "night"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_0655e747.webp",
+      "kind": "scene",
+      "keywords": [
+        "세피",
+        "호기심",
+        "안내",
+        "오로라"
+      ],
+      "id": "SCN_0655e747"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_83cd2e53.webp",
       "kind": "scene",
       "keywords": [
@@ -48,6 +114,28 @@
       ],
       "id": "SCN_83cd2e53",
       "time": "night"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_889ea124.webp",
+      "kind": "scene",
+      "keywords": [
+        "심장",
+        "웅덩이",
+        "액체",
+        "빛나는"
+      ],
+      "id": "SCN_889ea124"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_c0072317.webp",
+      "kind": "scene",
+      "keywords": [
+        "아바스",
+        "장인",
+        "램프",
+        "유리"
+      ],
+      "id": "SCN_c0072317"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_6c1e847a.webp",
@@ -84,6 +172,17 @@
       "id": "SCN_225a2a36"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_2ff2e3bc.webp",
+      "kind": "scene",
+      "keywords": [
+        "유르마",
+        "순례자",
+        "무장",
+        "수색"
+      ],
+      "id": "SCN_2ff2e3bc"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_7d0ac787.webp",
       "kind": "scene",
       "keywords": [
@@ -93,6 +192,72 @@
         "여관주인"
       ],
       "id": "SCN_7d0ac787"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_0e32a297.webp",
+      "kind": "scene",
+      "keywords": [
+        "이렌",
+        "미소",
+        "안도",
+        "감사"
+      ],
+      "id": "SCN_0e32a297"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_361b05b8.webp",
+      "kind": "scene",
+      "keywords": [
+        "이렌",
+        "창백",
+        "충격",
+        "떨림"
+      ],
+      "id": "SCN_361b05b8"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_4723f872.webp",
+      "kind": "scene",
+      "keywords": [
+        "잠꼬대",
+        "뒤척",
+        "침상"
+      ],
+      "id": "SCN_4723f872",
+      "time": "night"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_7fbad2bf.webp",
+      "kind": "scene",
+      "keywords": [
+        "절벽",
+        "파도",
+        "바람",
+        "극야"
+      ],
+      "id": "SCN_7fbad2bf"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_10f0af90.webp",
+      "kind": "scene",
+      "keywords": [
+        "주머니",
+        "대가",
+        "건넨",
+        "거래"
+      ],
+      "id": "SCN_10f0af90"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_48e5ca71.webp",
+      "kind": "scene",
+      "keywords": [
+        "지도",
+        "흔적",
+        "수색",
+        "등불"
+      ],
+      "id": "SCN_48e5ca71"
     }
   ]
 }

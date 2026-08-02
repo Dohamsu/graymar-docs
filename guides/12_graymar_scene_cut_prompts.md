@@ -285,6 +285,9 @@ star_sand_v1은 이렌 54턴·여관 91턴이 최상위 — 착수 시 `이렌_*
 > ✅ 2026-08-02 2차 전량(18/18) 제작·투입 완료.
 > star_sand 투입 경로: `content/star_sand_v1/assets/scenes/` + `sync_pack_assets.py star_sand_v1`.
 > karnholt_v1은 체류 데이터가 아직 적어(용광로 23턴) 다음 배치에서 — 착수 시 `대장간_모루_불꽃` 계열부터.
+>
+> **3차 배치(#45~59, star_sand 전용 15종)는 [[13_star_sand_scene_cut_prompts|guides/13]]** —
+> star_sand 311턴 실측 재분석 기반 (2026-08-02).
 
 ## 6. 2차 프롬프트 — graymar (기존 공통 프리픽스 사용)
 

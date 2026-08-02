@@ -149,7 +149,7 @@ LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 �
 ├── admin/               ← 어드민 콘솔 (독립 레포 graymar-admin, Vercel 별도 배포 — arch/87)
 ├── specs/               ← 원본 상세 설계 스펙 (17 md, 정본 참조)
 ├── architecture/        ← 통합 아키텍처 문서 (84 md + INDEX.md 색인, 실무 참조, archive 4 md)
-├── guides/              ← 코드 구현 지침 (12 md, 서비스맵/컴포넌트맵/구현가이드/팩 에셋·아이템·장면 컷 프롬프트)
+├── guides/              ← 코드 구현 지침 (13 md, 서비스맵/컴포넌트맵/구현가이드/팩 에셋·아이템·장면 컷 프롬프트)
 ├── schema/              ← DB 스키마, JSON Schema, OpenAPI (3 files)
 ├── samples/             ← 샘플 페이로드 (JSON, 10 files)
 ├── content/             ← 게임 콘텐츠 시드 데이터 (graymar_v1 + silverdeen_v1 미니 팩 + star_sand_v1 별빛모래 + karnholt_v1 자율 서사 AUTONOMOUS 팩)
@@ -817,7 +817,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | phase_history.md | 📜 이력 | 구현 단계 표 원문 전량 (163 항목) |
 | fixplan_history.md | 📜 아카이브 | 완료된 플레이테스트 패치 내역 (fixplan 3/4/5 통합) |
 
-### guides/ — 코드 구현 지침 (12 md)
+### guides/ — 코드 구현 지침 (13 md)
 
 | 파일 | 내용 |
 |------|------|
@@ -832,7 +832,8 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 09_karnholt_asset_prompts.md | 카른홀트 팩 에셋 생성 프롬프트 (arch/80 팩 에셋 풀용) — 초상화/장소 파일명 짝지은 27종 + 공통 스타일 프리픽스 |
 | 10_star_sand_item_prompts.md | 별빛모래 아이템 이미지 프롬프트(10종) + 아이콘 공통 스타일 + **부록: 새 아이템 추가 3층 프로세스**(서버 `items.json`·클라 `ITEM_CATALOG`·이미지 `client/public/items/itemId소문자.webp` — 팩 에셋 풀과 별개 경로, usableInHub는 effect 기준) |
 | 11_scene_cut_guide.md | 장면 컷 제작·투입 가이드 (arch/96) — 파일명=태그 규약·고빈도 장면 유형·생성 프롬프트 템플릿·운영 튜닝 (인물·장소 자동 편입 포함) |
-| 12_graymar_scene_cut_prompts.md | 그레이마르 장면 컷 프롬프트 26종 — 30일 1,363턴 실측(행동·장소·소재·NPC 반응 빈도) 기반 제작 체크리스트: 상황씬 8 + 장소씬 6 + 인물 감정 컷 12 (기존 초상 참조 동일 얼굴 규약) |
+| 12_graymar_scene_cut_prompts.md | 그레이마르 장면 컷 프롬프트 26종 — 30일 1,363턴 실측(행동·장소·소재·NPC 반응 빈도) 기반 제작 체크리스트: 상황씬 8 + 장소씬 6 + 인물 감정 컷 12 (기존 초상 참조 동일 얼굴 규약) + 2차 배치 18종(#27~44) |
+| 13_star_sand_scene_cut_prompts.md | 별빛모래 장면 컷 3차 배치 15종(#45~59) — star_sand 311턴 실측 기반: 상황씬 4 + 장소·정경 5 + 인물 감정 컷 6 (초상화 풀 부재 → 기존 감정 컷이 얼굴 정본, 유르마·아바스·세피 첫 컷 규약) |
 
 ## Working Language
 
