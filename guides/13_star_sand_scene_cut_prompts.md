@@ -335,3 +335,165 @@ fixed on empty air slightly above the viewer, faint star-flecks drifting in
 the irises, threadbare blanket around shoulders, presence both small and
 immense
 ```
+
+---
+
+# 5차 배치 (#76~91) — 사건(Incident)·퀘스트 후반 무대 + SUB 잔여 (2026-08-02)
+
+> 4차까지로 일상·조사·거점 인물은 대부분 커버 — 5차는 **아직 코퍼스에 없는 장면**을
+> 콘텐츠 정의에서 선행 태깅한다. 근거가 실측 빈도가 아니라 **콘텐츠 주입 어휘**라는
+> 점이 이전 배치와 다르다:
+>
+> - **Incident 10종** (incidents.json): 공통몽 확산·갈비평원 붕괴·심장액 역류·수녀원
+>   강제 이송·꿈약 중독자 폭주·부두 봉쇄·별빛 짐승 출현(MILITARY 전투) 등 — 발동 시
+>   서술이 반드시 그 어휘로 쓰인다 (scene_shells ALERT/DANGER 텍스트도 동일 주입).
+> - **퀘스트 fact 문구** (facts.json): questReveal 이 fact description 을 서술에 동일
+>   주입(불변식 27)하므로 '별소금'·'하얀 문'·'꿈의 닻'·'하늘 바다' 태그는 해당 단계
+>   도달 턴에 확정적으로 등장한다.
+> - 검증 가능한 것은 코퍼스로 재확인: 소금 95 · 걸음 89 · 바다 75 · 내부 26 · 통로 16 ·
+>   잿빛 18 · 열쇠판 11 · 사슬 10 · 하얀 13 · 별소금 3(조기 노출 확인).
+>
+> ⚠️ '닻'·'문'·'눈'은 1글자 토큰이라 태그 불가 — 사슬·통로·눈동자 등 주변어로 우회.
+> 이 배치로 팩 총량 55장 — 노출 총량은 쿨다운으로 불변, 미도달 구간 대비가 목적.
+
+## 9. 5차 체크리스트
+
+| # | ☐ | 파일명 (= 태그) | 유형 | 근거 |
+|---|---|----------------|------|------|
+| 76 | ☑ | `별소금_침상_소금_흔적.webp` | 상황·단서 | FACT_SS_STAR_SALT(S1 초입 fact) — 소금 95·흔적 54, 조기 노출 기대 최상 |
+| 77 | ☑ | `몽유_맨발_눈길_night.webp` | 사건·공통몽 확산 | scene_shells ALERT "맨발로 문을 나서려던 몽유병자" — 주입 어휘 선행 태깅 |
+| 78 | ☑ | `브란_채굴_반장_불면.webp` | 인물·SUB 첫 컷 | 갈비평원(체류 3위) 반장 — 밤마다 고래 울음에 불면 서사 |
+| 79 | ☑ | `꿈약_난동_시장_발광.webp` | 사건·중독 폭주 | Incident CRIMINAL — 꿈약 9·시장 131 |
+| 80 | ☑ | `짐승_별빛_그림자_night.webp` | 사건·전투 | Incident MILITARY '별빛 짐승 출현' — 유일 전투 컷 |
+| 81 | ☑ | `붕괴_갈비_무너진_잔해.webp` | 사건·재해 | Incident '갈비평원 붕괴' — 갈비 20 |
+| 82 | ☑ | `역류_심장_넘치는_액체.webp` | 사건·이변 | Incident '심장액 역류' + FACT_SS_HEART_REFILL |
+| 83 | ☑ | `이송_환자_수레_night.webp` | 사건·수녀원 | Incident POLITICAL '수녀원 강제 이송' — 환자 25·수레 13 |
+| 84 | ☑ | `봉쇄_부두_선박_왕실.webp` | 사건·봉쇄 | Incident ECONOMIC '부두 봉쇄' + 토바 왕실 보고선 서사 |
+| 85 | ☑ | `미렌_환자_떨림_허공.webp` | 인물·SUB 첫 컷 | 심장 웅덩이 목격자 — "손이 아직 뼈 안에 있다" 망상 |
+| 86 | ☑ | `에드_서기관_수첩_이름.webp` | 인물·SUB 첫 컷 | 이름 수집가 — '이름 상실' Incident·나하트 추적 연계 |
+| 87 | ☑ | `오드린_보조원_불안_기록.webp` | 인물·SUB 첫 컷 | 관측 보고서 은폐 Incident 의 내부 고발자 |
+| 88 | ☑ | `하얀_통로_환영_빛무리.webp` | 무대·S2 | FACT_SS_WHITE_DOOR "하얀 문" — 하얀 13·통로 16 ('문' 1글자 우회) |
+| 89 | ☑ | `하늘_바다_기억_유영.webp` | 무대·S3 | S3_INSIDE "하늘 바다의 기억 속에서 실종자를 만난다" — 바다 75·기억 23 |
+| 90 | ☑ | `사슬_실종_붙잡힌.webp` | 무대·S4 | FACT_SS_DREAM_ANCHOR "꿈의 닻" — 사슬 10·실종 20 ('닻' 1글자 우회) |
+| 91 | ☑ | `별고래_눈동자_대면_거대.webp` | 무대·S5 | S5_RESOLVE "별고래의 눈 앞에서 최종 선택" — 별고래 54·눈동자 42 |
+
+> #88~91은 무음 해변 컷(#59)과 같은 선행 대비 성격 — 도달 전엔 조용히 잠들어 있다.
+> 잔여 미커버: 리바·페나 (저노출 SUB — 시장·웅덩이 체류 데이터가 쌓이면 다음 배치).
+
+## 10. 5차 프롬프트 — 사건·단서 (공통 프리픽스 §1 동일)
+
+**#76 별소금_침상_소금_흔적** — S1 핵심 단서의 시각화
+```
+empty inn bed with blankets thrown back, a human-shaped scatter of
+glittering star-salt crystals where the sleeper lay, faint blue shimmer,
+lantern raised over the scene, wrongness made beautiful
+```
+
+**#77 몽유_맨발_눈길_night**
+```
+nightgowned figure walking barefoot away down a snow lane under the polar
+night, arms slack, unhurried trance gait, footprints trailing from an open
+inn door spilling warm light, silent horror
+```
+
+**#79 꿈약_난동_시장_발광**
+```
+underground market chaos, a wild-eyed addict knocking over a stall of
+glowing vials, spilled dream-draught pooling in luminous streaks, traders
+recoiling, scattered wares, jagged panic energy
+```
+
+**#80 짐승_별빛_그림자_night**
+```
+huge indistinct beast of drifting starlight and shadow prowling at the
+snowfield's edge, form flickering like a constellation half-remembered,
+hunters' lanterns tiny before it, dread and awe
+```
+
+**#81 붕괴_갈비_무너진_잔해**
+```
+collapsed section of the great rib vault, splintered bone pillars and
+rubble half-burying mining scaffolds, dust hanging in lantern beams,
+workers scrambling at the edge of the ruin
+```
+
+**#82 역류_심장_넘치는_액체**
+```
+the heart pool overflowing its rim, luminous liquid running in glowing
+rivulets across dark stone toward the viewer, pulsing brighter than it
+should, ritual markers toppled, beautiful and wrong
+```
+
+**#83 이송_환자_수레_night**
+```
+covered cart being loaded with blanketed patients outside the convent gate
+at night, soldiers with lanterns overseeing, a nun protesting with raised
+hand, snow falling on the grim procession
+```
+
+**#84 봉쇄_부두_선박_왕실**
+```
+the frozen dock barred with hasty barricades, an imposing dark ship with
+official banners moored beyond, soldiers turning back fishermen, breath
+fog and simmering resentment in the cold
+```
+
+## 11. 5차 프롬프트 — 퀘스트 후반 무대 (S2~S5)
+
+**#88 하얀_통로_환영_빛무리**
+```
+dreamlike vision of a pale white door standing alone in a dark corridor of
+mist, soft light bleeding through its seams, drifting motes, the viewer's
+reaching hand faintly translucent, threshold of somewhere else
+```
+
+**#89 하늘_바다_기억_유영**
+```
+inverted dream-sea inside the whale's memory, figures drifting weightless
+among schools of light like stars, horizon curving upward into deep indigo
+water-sky, serene and unmoored from reality
+```
+
+**#90 사슬_실종_붙잡힌**
+```
+sleeping figures suspended in dark dream-water, each tethered by a faint
+luminous chain running down into an unseen deep, hair and clothes drifting,
+peaceful faces betraying their captivity, sorrowful stillness
+```
+
+**#91 별고래_눈동자_대면_거대**
+```
+lone tiny figure standing before a colossal ancient eye opening in a wall
+of dark flesh and ice, iris swirling with galaxies, reflected silhouette
+in the vast pupil, the moment before a final answer
+```
+
+## 12. 5차 프롬프트 — 인물 감정 컷 (전원 첫 컷 = 얼굴 정본)
+
+**#78 브란_채굴_반장_불면**
+```
+broad rough foreman slumped on a bone ledge with a cold pipe, deep
+exhausted shadows under bloodshot eyes, jaw tight as if hearing a sound
+no one else does, rib-vault mining site blurred behind
+```
+
+**#85 미렌_환자_떨림_허공**
+```
+gaunt former miner in an infirmary cot, staring at his own trembling
+raised hand as if it belongs elsewhere, sweat-damp hair, lantern-lit
+sickroom blurred, quiet unraveling
+```
+
+**#86 에드_서기관_수첩_이름**
+```
+scruffy wandering scribe hunched over a battered notebook dense with
+crossed-out names, murmuring as he writes, ink-stained fingerless gloves,
+eyes too eager, inn corner table clutter
+```
+
+**#87 오드린_보조원_불안_기록**
+```
+young nervous archivist clutching a folder of original charts to his
+chest, glancing over his shoulder down the tower stairs, torn between
+loyalty and truth, candlelight trembling
+```

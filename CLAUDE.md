@@ -833,7 +833,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 10_star_sand_item_prompts.md | 별빛모래 아이템 이미지 프롬프트(10종) + 아이콘 공통 스타일 + **부록: 새 아이템 추가 3층 프로세스**(서버 `items.json`·클라 `ITEM_CATALOG`·이미지 `client/public/items/itemId소문자.webp` — 팩 에셋 풀과 별개 경로, usableInHub는 effect 기준) |
 | 11_scene_cut_guide.md | 장면 컷 제작·투입 가이드 (arch/96) — 파일명=태그 규약·고빈도 장면 유형·생성 프롬프트 템플릿·운영 튜닝 (인물·장소 자동 편입 포함) |
 | 12_graymar_scene_cut_prompts.md | 그레이마르 장면 컷 프롬프트 26종 — 30일 1,363턴 실측(행동·장소·소재·NPC 반응 빈도) 기반 제작 체크리스트: 상황씬 8 + 장소씬 6 + 인물 감정 컷 12 (기존 초상 참조 동일 얼굴 규약) + 2차 배치 18종(#27~44) |
-| 13_star_sand_scene_cut_prompts.md | 별빛모래 장면 컷 3차 15종(#45~59) + 4차 16종(#60~75) — star_sand 311턴 실측 기반 (초상화 풀 부재 → 기존 감정 컷이 얼굴 정본 규약). 4차는 미커버 최상위 소재(성에·냉기·열쇠·명부) + CORE 미커버 4인(카일룬·나하트·사엘·마레크) 첫 컷 + 이렌·유르마·아바스 감정 배리에이션 |
+| 13_star_sand_scene_cut_prompts.md | 별빛모래 장면 컷 3차 15종(#45~59) + 4차 16종(#60~75) + 5차 16종(#76~91) — 3·4차는 311턴 실측 기반(초상화 풀 부재 → 기존 감정 컷이 얼굴 정본 규약), 5차는 콘텐츠 주입 어휘 선행 태깅(Incident 7종·퀘스트 S2~S5 무대 4·SUB 첫 컷 4 — fact 문구가 questReveal로 서술에 확정 등장하는 원리) |
 
 ## Working Language
 
