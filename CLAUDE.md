@@ -334,7 +334,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 28. **퀘스트 자동 전환** — discoveredQuestFacts 누적 → quest.json stateTransitions 조건 충족 시 questState 자동 전환 (S0→S1→...→S5).
 29. **questFactTrigger SitGen 바이패스** — 미발견 fact 이벤트가 있는 장소에서 매 턴 이벤트 매칭 허용. 이때 SituationGenerator를 건너뛰고 EventDirector로 직행하여 fact 이벤트 매칭을 보장.
 30. **밸런스 상수 외부화** — SitGen 확률, PARTIAL 발견률, weight 부스트 등 핵심 밸런스 상수는 `quest-balance.config.ts`에서 관리. 코드 내 하드코딩 금지.
-31. **보너스 스탯 합계 = 6** — 캐릭터 생성 시 bonusStats 각 값 0~6, 합계 정확히 6. 서버에서 검증.
+31. **bonusStats deprecated + 배경 시그니처 특성 (arch/97, 2026-08-04 개정)** — 생성 간략화로 스탯 +6은 프리셋 stats에 내장, 특성은 `preset.defaultTraitId`를 서버 createRun이 자동 부여(전송 traitId가 우선). bonusStats는 구클라 호환용 optional — 전송 시에만 합계 6 검증. 새 프리셋 추가 시 defaultTraitId 지정 + 배분 +6 내장 필수.
 32. **특성 런타임 효과** — GAMBLER_LUCK(FAIL→50%PARTIAL, 크리티컬 비활성), BLOOD_OATH(저HP 보너스 +2/+3, 치료 50%↓), NIGHT_CHILD(밤+2, 낮-1). traitEffects는 runState에 저장, resolve/combat에서 참조.
 33. **TurnMode 3분류** — PLAYER_DIRECTED(기본값, NPC 지목 시) / CONVERSATION_CONT(대화 연속) / WORLD_EVENT(첫진입/pressure≥70/questFact). determineTurnMode()에서 이벤트 매칭 전 결정.
 34. **NPC 결정 5단계 우선순위** — 텍스트매칭 > IntentV3.targetNpcId > 대화잠금 > NanoEventDirector추천(WORLD_EVENT만) > 이벤트배정. Player-First 원칙. **선행 예외(Step 0/0b)**: CHOICE 선택지의 명시 npcId(arch/65), 그리고 **이벤트 고유 선택지(sourceEventId=매칭 이벤트) 클릭 시 이벤트 primaryNpcId**가 대화잠금보다 우선 (V10-② 2026-07-17 — 심문 이벤트 선택지 응답이 직전 대화 상대로 어긋난 분열 해소).
@@ -806,6 +806,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 94_mobile_scroll_viewport.md | ✅ 구현됨 | 모바일 스크롤·뷰포트 정합 |
 | 95_prompt_split_analysis.md | 📜 종결 (폐기) | 프롬프트 이분할·역전 설계 전면 폐기 (2026-07-28 소유자 결정) — 파일럿 실측은 §7 보존 (archive/spike-dialogue-precommit 태그). 잔존: DeepSeek 짝수 턴 어미 열세는 별개 이슈 |
 | 96_inline_image_insertion.md | ✅ 구현됨 | 장면 컷 시스템 — 소유자 태그 풀(assets/scenes) → 렉시컬 프리스크린 + nano 매칭 → 서술 인라인 컷 (A 기구현 확인·C 본체 구현) |
+| 97_creation_simplification.md | ✅ 구현됨 | 캐릭터 생성 간략화 — 6단계→2단계(배경→마무리), 스탯 +6 프리셋 내장 + defaultTraitId 자동 특성 (4팩 22프리셋) |
 | 90_landing_page_redesign.md | ✅ 구현됨 | 랜딩 리디자인 P1~P4 |
 | 87_admin_console.md | ✅ 구현됨 | 어드민 콘솔 — users.role+AdminGuard 하이브리드+@AdminEndpoint(감사 로그)+관제… |
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 |

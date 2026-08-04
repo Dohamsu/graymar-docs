@@ -10,12 +10,12 @@
     "stats": {
       "MaxHP": 130,
       "MaxStamina": 5,
-      "str": 14,
+      "str": 16,
       "dex": 4,
       "wit": 4,
-      "con": 14,
-      "per": 5,
-      "cha": 5
+      "con": 16,
+      "per": 6,
+      "cha": 6
     },
     "startingGold": 30,
     "startingItems": [
@@ -28,7 +28,8 @@
     "actionBonuses": {
       "FIGHT": 1
     },
-    "hp": 130
+    "hp": 130,
+    "defaultTraitId": "SS_ICE_HARDENED"
   },
   {
     "presetId": "SS_PILGRIM",
@@ -43,10 +44,10 @@
       "MaxStamina": 5,
       "str": 5,
       "dex": 5,
-      "wit": 8,
-      "con": 6,
+      "wit": 10,
+      "con": 8,
       "per": 6,
-      "cha": 14
+      "cha": 16
     },
     "startingGold": 40,
     "startingItems": [
@@ -64,7 +65,8 @@
       "PERSUADE": 1,
       "HELP": 1
     },
-    "hp": 100
+    "hp": 100,
+    "defaultTraitId": "SS_PILGRIM_FAITH"
   },
   {
     "presetId": "SS_SMUGGLER",
@@ -78,11 +80,11 @@
       "MaxHP": 105,
       "MaxStamina": 6,
       "str": 7,
-      "dex": 14,
+      "dex": 16,
       "wit": 6,
       "con": 6,
-      "per": 12,
-      "cha": 5
+      "per": 14,
+      "cha": 7
     },
     "startingGold": 35,
     "startingItems": [
@@ -100,7 +102,8 @@
       "SNEAK": 1,
       "STEAL": 1
     },
-    "hp": 105
+    "hp": 105,
+    "defaultTraitId": "SS_SALT_TONGUE"
   },
   {
     "presetId": "SS_HEALER",
@@ -115,9 +118,9 @@
       "MaxStamina": 5,
       "str": 5,
       "dex": 6,
-      "wit": 13,
-      "con": 8,
-      "per": 8,
+      "wit": 15,
+      "con": 10,
+      "per": 10,
       "cha": 7
     },
     "startingGold": 35,
@@ -140,7 +143,8 @@
       "HELP": 1,
       "INVESTIGATE": 1
     },
-    "hp": 110
+    "hp": 110,
+    "defaultTraitId": "SS_STAR_MARKED"
   },
   {
     "presetId": "SS_OBSERVER",
@@ -154,10 +158,10 @@
       "MaxHP": 100,
       "MaxStamina": 5,
       "str": 4,
-      "dex": 6,
-      "wit": 14,
+      "dex": 8,
+      "wit": 16,
       "con": 5,
-      "per": 13,
+      "per": 15,
       "cha": 6
     },
     "startingGold": 40,
@@ -176,7 +180,8 @@
       "INVESTIGATE": 1,
       "OBSERVE": 1
     },
-    "hp": 100
+    "hp": 100,
+    "defaultTraitId": "SS_LANTERN_EYE"
   },
   {
     "presetId": "SS_SURVIVOR",
@@ -191,9 +196,9 @@
       "MaxStamina": 5,
       "str": 8,
       "dex": 8,
-      "wit": 9,
-      "con": 10,
-      "per": 10,
+      "wit": 11,
+      "con": 12,
+      "per": 12,
       "cha": 6
     },
     "startingGold": 30,
@@ -214,6 +219,7 @@
     "actionBonuses": {
       "OBSERVE": 1
     },
-    "hp": 115
+    "hp": 115,
+    "defaultTraitId": "SS_DREAM_TOUCHED"
   }
 ]

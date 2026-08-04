@@ -10,12 +10,12 @@
     "stats": {
       "MaxHP": 130,
       "MaxStamina": 5,
-      "str": 14,
+      "str": 16,
       "dex": 4,
       "wit": 4,
-      "con": 14,
-      "per": 5,
-      "cha": 5
+      "con": 16,
+      "per": 6,
+      "cha": 6
     },
     "startingGold": 30,
     "startingItems": [
@@ -46,7 +46,8 @@
       "FIGHT": 1,
       "THREATEN": 1
     },
-    "hp": 115
+    "hp": 115,
+    "defaultTraitId": "BLOOD_OATH"
   },
   {
     "presetId": "DESERTER",
@@ -59,10 +60,10 @@
     "stats": {
       "MaxHP": 100,
       "MaxStamina": 5,
-      "str": 11,
-      "dex": 10,
-      "wit": 9,
-      "con": 9,
+      "str": 13,
+      "dex": 12,
+      "wit": 10,
+      "con": 10,
       "per": 8,
       "cha": 6
     },
@@ -94,7 +95,8 @@
     "actionBonuses": {
       "FIGHT": 1,
       "OBSERVE": 1
-    }
+    },
+    "defaultTraitId": "BATTLE_MEMORY"
   },
   {
     "presetId": "SMUGGLER",
@@ -108,11 +110,11 @@
       "MaxHP": 80,
       "MaxStamina": 6,
       "str": 7,
-      "dex": 14,
+      "dex": 16,
       "wit": 6,
       "con": 6,
-      "per": 9,
-      "cha": 12
+      "per": 11,
+      "cha": 14
     },
     "startingGold": 60,
     "startingItems": [
@@ -144,7 +146,8 @@
     "actionBonuses": {
       "SNEAK": 1,
       "BRIBE": 1
-    }
+    },
+    "defaultTraitId": "STREET_SENSE"
   },
   {
     "presetId": "HERBALIST",
@@ -159,9 +162,9 @@
       "MaxStamina": 7,
       "str": 6,
       "dex": 6,
-      "wit": 15,
-      "con": 10,
-      "per": 12,
+      "wit": 17,
+      "con": 12,
+      "per": 14,
       "cha": 5
     },
     "startingGold": 40,
@@ -197,7 +200,8 @@
       "INVESTIGATE": 1,
       "HELP": 1
     },
-    "hp": 105
+    "hp": 105,
+    "defaultTraitId": "NIGHT_CHILD"
   },
   {
     "presetId": "FALLEN_NOBLE",
@@ -212,10 +216,10 @@
       "MaxStamina": 6,
       "str": 5,
       "dex": 5,
-      "wit": 10,
+      "wit": 12,
       "con": 7,
-      "per": 8,
-      "cha": 16
+      "per": 10,
+      "cha": 18
     },
     "startingGold": 80,
     "startingItems": [
@@ -253,7 +257,8 @@
     "actionBonuses": {
       "PERSUADE": 1,
       "TRADE": 1
-    }
+    },
+    "defaultTraitId": "SILVER_TONGUE"
   },
   {
     "presetId": "GLADIATOR",
@@ -266,10 +271,10 @@
     "stats": {
       "MaxHP": 110,
       "MaxStamina": 6,
-      "str": 14,
-      "dex": 12,
+      "str": 16,
+      "dex": 14,
       "wit": 4,
-      "con": 10,
+      "con": 12,
       "per": 4,
       "cha": 6
     },
@@ -301,6 +306,7 @@
     "actionBonuses": {
       "FIGHT": 1,
       "OBSERVE": 1
-    }
+    },
+    "defaultTraitId": "GAMBLER_LUCK"
   }
 ]
