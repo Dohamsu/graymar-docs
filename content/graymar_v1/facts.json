@@ -15,7 +15,7 @@
       ],
       "stage": "S4→S5",
       "discoveryLocations": [
-        "LOC_UPPER",
+        "LOC_NOBLE",
         "LOC_TAVERN"
       ],
       "nextHint": "양쪽의 부패 증거를 모두 손에 넣었다. 이 카드를 어떻게 쓸 것인가 — 최종 선택의 시간이다.",
@@ -47,7 +47,7 @@
       "discoveryLocations": [
         "LOC_GUARD",
         "LOC_MARKET",
-        "LOC_UPPER"
+        "LOC_NOBLE"
       ],
       "nextHint": "내부자의 소행이라면 물건이 어디로 갔는지 추적할 수 있다. 밀수 경로나 비밀 하역 장소를 찾아라. 부두와 창고 쪽을 살펴봐라.",
       "knownBy": [
@@ -230,7 +230,7 @@
       "stage": "S4→S5",
       "discoveryLocations": [
         "LOC_GUARD",
-        "LOC_UPPER"
+        "LOC_NOBLE"
       ],
       "nextHint": "상부가 움직이기 시작했다. 시간이 얼마 남지 않았다. 증거를 정리하고 최종 선택을 준비해야 한다.",
       "knownBy": [

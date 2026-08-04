@@ -121,7 +121,7 @@
       "discoveryLocations": [
         "LOC_GUARD",
         "LOC_MARKET",
-        "LOC_UPPER"
+        "LOC_NOBLE"
       ],
       "primarySources": [
         "NPC_DAME_ISOLDE",
@@ -178,7 +178,7 @@
       "nextHint": "상부가 움직이기 시작했다. 시간이 얼마 남지 않았다. 증거를 정리하고 최종 선택을 준비해야 한다.",
       "discoveryLocations": [
         "LOC_GUARD",
-        "LOC_UPPER"
+        "LOC_NOBLE"
       ],
       "primarySources": [
         "NPC_GUARD_CAPTAIN",
@@ -215,7 +215,7 @@
       "description": "길드 내부 장부 사본 + 경비대 뇌물 수수 기록 — 양쪽 모두의 부패 증거",
       "nextHint": "양쪽의 부패 증거를 모두 손에 넣었다. 이 카드를 어떻게 쓸 것인가 — 최종 선택의 시간이다.",
       "discoveryLocations": [
-        "LOC_UPPER",
+        "LOC_NOBLE",
         "LOC_TAVERN"
       ],
       "primarySources": [
