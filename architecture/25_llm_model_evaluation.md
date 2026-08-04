@@ -214,7 +214,8 @@ v2 평가 결론(Qwen3 235B 메인)이 채택된 후, 운영 환경에서 Gemini
 | Flash 전환 | Gemini 2.5 Flash | GPT-4.1 Mini | Flash Lite 메타서술/영어 누출 해소 |
 | Gemma 복귀 (2026.5) | Gemma 4 26B MoE | GPT-4.1 Mini | 한국어 서술 일관성 + 안정성 |
 | v3 교차 (2026.7) | Gemma 4 26B MoE + DeepSeek V4 Flash 교차 | GPT-4.1 Mini | v3 평가 — 어휘 편향 상쇄 교차 채택 (부록 D) |
-| **현재 (2026.7)** | **Gemma 4 31B dense + DS 교차, 31B allowlist ModelRun\|Friendli** | **GPT-4.1 Mini** | v3.1 — 31B 승격 (풀 불안정은 allowlist로 해소, cerebras는 8배 단가로 미포함 — 부록 D-8) |
+| v3.1 (2026.7) | Gemma 4 31B dense + DS 교차, 31B allowlist ModelRun\|Friendli | GPT-4.1 Mini | 31B 승격 (풀 불안정은 allowlist로 해소, cerebras는 8배 단가로 미포함 — 부록 D-8) |
+| **현재 (2026-08-03)** | **Gemma 4 31B dense + DS Flash 0731 교차 (3:7)** | **GPT-4.1 Mini** | v4 — 교차 모델만 0731 스냅샷 교체 (어미 준수 56.7→79.3% A/B 실측 — 부록 D-9) |
 
 `server/.env` 정본:
 
@@ -223,7 +224,7 @@ LLM_PROVIDER=openai
 OPENAI_MODEL=google/gemma-4-31b-it
 OPENAI_BASE_URL=https://openrouter.ai/api/v1
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini
-LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash   # 짝수 턴 교차 (v3, 부록 D)
+LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash-0731  # 교차 (v3 부록 D, 0731 스냅샷은 부록 D-9)
 LLM_SHORT_RESPONSE_MIN_TOKENS=150                # 교차 이중 과금 방지 (부록 D §4)
 LLM_PROVIDER_REQUIRE_PARAMS=true                 # penalty 레버 보장 (부록 D §5)
 LLM_PROVIDER_IGNORE=cloudflare,dekallm           # 저 uptime 배제 (arch/62)
@@ -398,3 +399,57 @@ retry-llm 보존). 유닛 5케이스 + 실런 스모크(빈 서술 0) 검증.
 FAILED 대신 15초 턴). ⓒ 채택 후 실과금 4런 누적 턴당 $0.001046(≈₩1.57) 안정.
 잔여 감시는 상시 수단(V11 게이트 + FAILED 카운트)으로 이관.
 ④ Solar Pro 3는 penalty 미지원+지시 준수 불안정으로 후보 제외.
+
+### D-9. v4 — 교차 모델 0731 스냅샷 교체 (2026-08-03)
+
+DeepSeek이 2026-07-31 V4 Flash를 프리뷰에서 정식판 `deepseek-v4-flash-0731`로
+승격(동일 284B MoE/13B 활성 아키텍처, **재사후학습(re-post-training)만** 적용).
+OpenRouter에 별도 슬러그로 등재되어 기존 `deepseek/deepseek-v4-flash`는 4월
+가중치에 고정된 상태였다 — 즉 우리는 AA Intelligence Index 기준 10점 낮은
+구 스냅샷을 교차로 쓰고 있었다. A/B 실측 후 **교차 모델만 0731로 교체 확정**.
+
+#### 스냅샷 비교 (OpenRouter API + 외부 벤치, 2026-08-03 조회)
+
+| 항목 | 구판 `deepseek-v4-flash` (2026-04-24) | 신판 `-0731` (2026-07-31) |
+|---|---|---|
+| 가격 ($/1M in/out) | 0.14 / 0.28 | 동일 (DeepInfra 0.09/0.18) |
+| AA Intelligence Index | ~40 (비추론 ~29 — 우리 사용 모드) | 50 (V4 Pro보다 6점 위) |
+| DeepSWE / Terminal Bench 2.1 | 7.3 / 61.8 | 54.4 / 82.7 (벤더 발표) |
+| 프로바이더 수 | 21곳 | 11곳 (본가·Cloudflare·Novita 99.9%+) |
+
+`~deepseek-v4-flash-latest` 별칭(항상 최신 리다이렉트)은 **금지** — 어체 검증
+없이 미래 스냅샷으로 무통보 교체되는 구조라 서술 모델로 부적합. 고정 슬러그 정본.
+
+#### A/B 방법 (2026-08-03)
+
+env `LLM_ALTERNATE_MODEL`만 0731로 교체 후 ① 15턴 플레이테스트 1회(0731 발화
+6턴) ② NPA 감사 chat-edric(0731 발화 3턴). 어미 준수율은 NPA 정본 분류기
+(`scripts/e2e/audit/dialogue-quality.ts` REGISTER_PATTERNS)를 최종 저장 서술에
+적용, 별칭 화자(unknownAlias/shortAlias)까지 npcs.json speechRegister로 귀속.
+대조군은 같은 지표로 **과거 14일 실데이터**(구판 693문장 / Gemma 958문장)를 측정.
+
+#### 결과
+
+| 지표 | 구판 (14일 실측) | 0731 (A/B) | Gemma 31B (참조) |
+|---|---|---|---|
+| 어미 일치율 | 56.7% (393/693) | **79.3% (23/29)** | 83.5~88.6% |
+| narrative 레이턴시 avg/p50 | 6.2s / 5.5s (553건) | 8.4s / 8.3s (9건) | 3.1s / 2.9s (당일) |
+| 평균 출력 토큰 | 336 | 396 | 260 |
+| 호출당 비용 | $0.00114 | $0.00104 | $0.00116 |
+
+- 구판 위반 43.3%는 arch/95 실측(잔존 위반 39.7%)과 정합 — 지표 타당성 교차 확인.
+- **어미 열세(교차 축소 5:5→3:7의 원인)가 대폭 완화**되어 Gemma에 근접. 표본
+  29문장은 소표본이므로 다음 정기 NPA에서 재확인 시 arch/95 잔존 이슈 종결 가능.
+- 품질 게이트 회귀 없음: 플레이테스트 12/13 PASS(V12 프롬프트 재비대 경보는
+  모델 무관 기존 이슈), NPA 종합 4.59/5(톤일치 5.0, ERROR 0).
+- **관찰 항목**: 0731 레이턴시 avg +2.2s(출력 +18% 영향 포함, n=9). 누적 후
+  `llm_call_logs` p95가 10초 전제를 위협하면 재평가.
+
+| 구성 | Run ID |
+|---|---|
+| 15턴 플레이테스트 (0731 교차 6턴, 12/13 PASS) | a513bee7-f28c-45b8-b25f-4950f5e1263a |
+| NPA chat-edric (0731 3턴, 종합 4.59) | 74403cc9-cfbf-4477-b749-0f31a392baef |
+
+반영: `server/.env` `LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash-0731` +
+CLAUDE.md(Tech Stack·env 예시) 동기화. 서버 코드 변경 없음(env만). 메인 31B·
+fallback·nano 라인은 불변.

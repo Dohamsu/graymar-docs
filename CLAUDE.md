@@ -278,7 +278,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | Gemma 4 31B dense (메인, stream:true, provider allowlist ModelRun·Friendli) / DeepSeek V4 Flash (3:7 교차 — 10턴 주기 3회, 2026-07-28) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
+| LLM | Gemma 4 31B dense (메인, stream:true, provider allowlist ModelRun·Friendli) / DeepSeek V4 Flash **0731** (3:7 교차 — 10턴 주기 3회. 2026-08-03 스냅샷 교체: A/B 실측 어미 준수 56.7→79.3%) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
 
 ## LLM 설계 원칙 (필수 참고)
 
@@ -528,7 +528,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 LLM_PROVIDER=openai          # openai | claude | gemini | mock
 OPENAI_API_KEY=sk-...
 OPENAI_MODEL=google/gemma-4-31b-it   # OpenRouter 메인 모델 (Gemma 4 31B dense — 2026-07-22 승격, allowlist 전제. 이전 26B MoE)
-LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash  # 교차 모델 — 10턴 주기 3회(턴%10∈{2,5,8}), 5:5→3:7 축소 (2026-07-28, 어미 열세 완화 arch/95 §7)
+LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash-0731  # 교차 모델 — 10턴 주기 3회(턴%10∈{2,5,8}), 5:5→3:7 축소 (2026-07-28, arch/95 §7). 2026-08-03 0731 스냅샷 교체 (A/B: 어미 준수 56.7→79.3%, 레이턴시 p50 5.5→8.3s 관찰 — 고정 슬러그 유지, ~latest 별칭 금지)
 OPENAI_BASE_URL=https://openrouter.ai/api/v1  # optional, OpenAI-compatible endpoint
 CLAUDE_API_KEY=               # optional
 GEMINI_API_KEY=               # optional
