@@ -31,6 +31,8 @@ parser.add_argument("--agent", default=None, help="에이전트 플레이어 페
 parser.add_argument("--agent-model", default="openai/gpt-4.1-mini", help="에이전트 플레이어 LLM 모델 (OpenRouter)")
 parser.add_argument("--turn-delay", type=float, default=0, help="턴 간 대기 초 (인간 페이스 모사 — AUTONOMOUS 팩 시드/디렉터 검증용)")
 parser.add_argument("--new-account", action="store_true", help="정본 테스터 대신 새 계정 생성 (기본: playtest@test.com 재사용)")
+parser.add_argument("--skip-version-check", action="store_true",
+                    help="preflight 서버 버전 해시 대조 생략 (의도적으로 구버전/원격 빌드를 테스트할 때)")
 args = parser.parse_args()
 
 BASE = args.base
@@ -67,6 +69,49 @@ def api(method, path, body=None):
     except Exception as e:
         print(f"  API error: {e}", flush=True)
         return 0, {}
+
+# ═══════════════════════════════════════
+# 0. Preflight (하네스 보강 #6, 2026-08-05)
+# ═══════════════════════════════════════
+# ③ cwd 자동 교정 — server/ 등에서 실행하면 playtest-reports/ 상대 경로가 깨지던
+#    반복 실측 함정을 스크립트가 스스로 해소한다 (CLAUDE.md 플레이테스트 절).
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if os.getcwd() != _REPO_ROOT:
+    print(f"[preflight] cwd 교정: {os.getcwd()} → {_REPO_ROOT}", flush=True)
+    os.chdir(_REPO_ROOT)
+
+# ② 서버 버전 해시 대조 — "커밋 후 재시작 누락"으로 구버전 서버를 검증하는
+#    false-PASS 방지. 양쪽 다 `git rev-parse --short HEAD` 산출이라 정확 비교.
+#    로컬 서버 대상일 때만 강제 (원격은 HEAD가 다른 게 정상일 수 있음).
+if not args.skip_version_check and ("localhost" in BASE or "127.0.0.1" in BASE):
+    _, _ver = api("GET", "/version")
+    _server_hash = str(_ver.get("server", ""))
+    if not _server_hash:
+        print(f"[preflight] 서버 응답 없음 ({BASE}/version) — 서버 기동을 먼저 확인", flush=True)
+        sys.exit(2)
+    _server_repo = os.path.join(_REPO_ROOT, "server")
+    try:
+        _local_hash = subprocess.run(
+            ["git", "-C", _server_repo, "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, timeout=10,
+        ).stdout.strip()
+    except Exception:
+        _local_hash = ""
+    if _local_hash and _server_hash != _local_hash:
+        print(f"[preflight] 서버 버전 불일치: 기동 중={_server_hash} vs 로컬 HEAD={_local_hash}", flush=True)
+        print("→ cd server && pnpm build && launchctl kickstart -k gui/$(id -u)/com.graymar.server", flush=True)
+        print("→ 의도된 구버전 검증이면 --skip-version-check", flush=True)
+        sys.exit(2)
+    try:
+        _dirty = subprocess.run(
+            ["git", "-C", _server_repo, "status", "--porcelain", "--", "src"],
+            capture_output=True, text=True, timeout=10,
+        ).stdout.strip()
+    except Exception:
+        _dirty = ""
+    if _dirty:
+        print(f"[preflight] 경고: server/src 미커밋 변경 {len(_dirty.splitlines())}건 — 기동 중인 빌드에 미반영일 수 있음", flush=True)
+    print(f"[preflight] OK — 서버 {_server_hash} = 로컬 HEAD", flush=True)
 
 def poll_llm(run_id, turn_no, max_wait=90, expect_choices=False):
     """LLM 폴링: GET /turns/:turnNo → llm.status / llm.output + UI 데이터
