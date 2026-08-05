@@ -68,14 +68,27 @@ def api(method, path, body=None):
         print(f"  API error: {e}", flush=True)
         return 0, {}
 
-def poll_llm(run_id, turn_no, max_wait=90):
-    """LLM 폴링: GET /turns/:turnNo → llm.status / llm.output + UI 데이터"""
+def poll_llm(run_id, turn_no, max_wait=90, expect_choices=False):
+    """LLM 폴링: GET /turns/:turnNo → llm.status / llm.output + UI 데이터
+
+    expect_choices (V13, arch/98): 워커는 DONE 커밋 후 Track2가 llmChoices를
+    쓴다 — DONE 즉시 반환하면 선택지 스냅샷이 빈다. LOCATION 턴은 실제
+    클라이언트도 stream 'done'(Track2 완료 후)에서 선택지를 받으므로,
+    최대 12초까지 선택지 기록을 추가 대기한다.
+    """
     start = time.time()
     while time.time() - start < max_wait:
         _, data = api("GET", f"/runs/{run_id}/turns/{turn_no}")
         llm = data.get("llm", {}) or {}
         status = llm.get("status", "")
         if status == "DONE":
+            if expect_choices and not llm.get("choices"):
+                for _ in range(4):  # 최대 ~12초 추가 대기 (Track2 nano)
+                    time.sleep(3)
+                    _, data = api("GET", f"/runs/{run_id}/turns/{turn_no}")
+                    llm = data.get("llm", {}) or {}
+                    if llm.get("choices"):
+                        break
             ui = data.get("serverResult", {}).get("ui", {})
             return {
                 "output": llm.get("output") or "",
@@ -83,6 +96,8 @@ def poll_llm(run_id, turn_no, max_wait=90):
                 "npcPortrait": ui.get("npcPortrait"),
                 "speakingNpc": ui.get("speakingNpc"),
                 "newsHeadlines": ui.get("newsHeadlines"),
+                # V13 (arch/98): nano 최종 선택지 — 다양성·질문 응답 센서용
+                "choices": llm.get("choices"),
             }
         if status in ("FAILED", "SKIPPED"):
             return {"output": f"[LLM_{status}]", "status": status}
@@ -471,7 +486,9 @@ for turn_i in range(MAX_TURNS):
 
     # Poll LLM
     submitted_turn = resp.get("turnNo", current_turn + 1)
-    llm_result = poll_llm(run_id, submitted_turn)
+    llm_result = poll_llm(
+        run_id, submitted_turn, expect_choices=(node_type == "LOCATION")
+    )
     narrative = llm_result.get("output", "") if isinstance(llm_result, dict) else llm_result
 
     # 카드 정합 분석 (2026-07-11): turnNo 기록이 로컬 카운터라 자동 진입 턴에서
@@ -500,6 +517,8 @@ for turn_i in range(MAX_TURNS):
         "choiceIds": [
             c.get("id", "") for c in (server_result.get("choices") or [])
         ],
+        # V13 (arch/98): nano 최종 선택지 (llm.choices — 없으면 서버 기본 유지 턴)
+        "llmChoices": llm_result.get("choices") if isinstance(llm_result, dict) else None,
     }
     turn_logs.append(log_entry)
 
@@ -977,6 +996,72 @@ else:
     v12_pass = True
     print("  ⚠️ 프롬프트 표본 없음 (includeDebug 미보존?) — 게이트 스킵", flush=True)
 
+# V13: 선택지 다양성 + 질문 응답 (arch/98, 2026-08-05)
+#   배경: 실유저 14일 표본에서 TALK/OBSERVE/INVESTIGATE 91%·적극 축 2% 편중과
+#   NPC 질문 턴 92% 응답 선택지 부재 실측. P1(적극 축 positive 주입)·P2(질문
+#   명시 주입)의 효과를 런 단위로 감시한다.
+#   게이트: 적극 축(소극 3종 외) 비율 ≥15% AND 소극 3종 ≤80%.
+#   질문 응답률은 표본이 작아(런당 질문 턴 1~3) 계측만 — 게이트 제외.
+print("\n[V13] 선택지 다양성·질문 응답 (arch/98):", flush=True)
+PASSIVE_AFFS = {"TALK", "OBSERVE", "INVESTIGATE"}
+_aff_counts = {}
+_q_turns = 0
+_q_answered = 0
+_ANSWER_RE = re.compile(r"답한|답변|대답|들려준|들려주|설명한|설명해|밝힌|말해준|수락|거절|동의|부인|되묻|인정한|털어놓|응한다|^(그렇|아니|맞[다소]|알겠|좋[다소])|(있다|없다|않겠다|하겠다|모른다|싶다)$")
+for t in turn_logs:
+    lcs = t.get("llmChoices") or []
+    # 폴링 스냅샷 race 보정: 워커는 DONE 커밋 후 Track2가 llmChoices를 쓴다 —
+    # DONE 즉시 반환한 poll_llm 스냅샷에는 선택지가 없을 수 있어 재조회한다.
+    if not lcs and t.get("turnNo"):
+        try:
+            time.sleep(0.4)  # 연속 재조회 rate limit(429) 회피 — 2026-08-05 실측
+            _st, _detail = api("GET", f"/runs/{run_id}/turns/{t['turnNo']}")
+            lcs = (_detail.get("llm") or {}).get("choices") or []
+            if not lcs:
+                print(f"  [V13-debug] t{t['turnNo']} 재조회 무선택지 (status={_st})", flush=True)
+        except Exception as _e:
+            print(f"  [V13-debug] t{t.get('turnNo')} 재조회 예외: {_e}", flush=True)
+            lcs = []
+    labels = []
+    for c in lcs:
+        label = c.get("label", "")
+        payload = (c.get("action") or {}).get("payload") or {}
+        if payload.get("returnToHub") or "돌아간다" in label:
+            continue  # go_hub 슬롯 제외
+        labels.append(label)
+        aff = payload.get("affordance")
+        if aff:
+            _aff_counts[aff] = _aff_counts.get(aff, 0) + 1
+    # 질문 응답: 서술이 물음표 대사로 닫힌 턴만
+    narr = (t.get("narrative") or "").rstrip()
+    if labels and re.search(r'[?？]["”]?\s*$', narr):
+        _q_turns += 1
+        if any(_ANSWER_RE.search(l) for l in labels):
+            _q_answered += 1
+_aff_total = sum(_aff_counts.values())
+choice_diversity_metrics = None
+if _aff_total >= 6:  # nano 선택지 2턴분 미만이면 표본 부족
+    _active = sum(n for a, n in _aff_counts.items() if a not in PASSIVE_AFFS)
+    _passive = _aff_total - _active
+    _active_ratio = _active / _aff_total
+    _passive_ratio = _passive / _aff_total
+    v13_pass = _active_ratio >= 0.15 and _passive_ratio <= 0.80
+    choice_diversity_metrics = {
+        "affCounts": _aff_counts,
+        "activeRatio": round(_active_ratio, 3),
+        "questionTurns": _q_turns,
+        "questionAnswered": _q_answered,
+    }
+    _dist = ", ".join(f"{a}:{n}" for a, n in sorted(_aff_counts.items(), key=lambda x: -x[1]))
+    print(f"  affordance 분포: {_dist}", flush=True)
+    print(f"  적극 축 비율: {_active_ratio*100:.0f}% (게이트 ≥15%) · 소극 3종: {_passive_ratio*100:.0f}% (게이트 ≤80%)", flush=True)
+    if _q_turns:
+        print(f"  질문 턴 응답 선택지: {_q_answered}/{_q_turns} (계측 전용 — 목표 70%+)", flush=True)
+    print("  ✅ 다양성 정상" if v13_pass else "  ❌ 편중 경보 — 적극 축 주입(P1) 점검 필요", flush=True)
+else:
+    v13_pass = True
+    print(f"  ⚠️ nano 선택지 표본 부족 ({_aff_total}개) — 게이트 스킵", flush=True)
+
 # Summary
 print("\n" + "=" * 60, flush=True)
 all_checks = {
@@ -999,6 +1084,8 @@ all_checks = {
     "V11_narrative_present": len(v11_issues) == 0,
     # V12 — 프롬프트 예산 재비대 가드 (arch/95 §6): 발동 추정률 ≤20% AND avg ≤15,000자
     "V12_prompt_budget": v12_pass,
+    # V13 — 선택지 다양성 (arch/98): 적극 축 ≥15% AND 소극 3종 ≤80%
+    "V13_choice_diversity": v13_pass,
 }
 passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
