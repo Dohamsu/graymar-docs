@@ -98,10 +98,21 @@ if not args.skip_version_check and ("localhost" in BASE or "127.0.0.1" in BASE):
     except Exception:
         _local_hash = ""
     if _local_hash and _server_hash != _local_hash:
-        print(f"[preflight] 서버 버전 불일치: 기동 중={_server_hash} vs 로컬 HEAD={_local_hash}", flush=True)
-        print("→ cd server && pnpm build && launchctl kickstart -k gui/$(id -u)/com.graymar.server", flush=True)
-        print("→ 의도된 구버전 검증이면 --skip-version-check", flush=True)
-        sys.exit(2)
+        # 해시가 달라도 두 커밋 사이에 코드(src·의존성) 차이가 없으면 통과 —
+        # ci.yml·README 같은 비코드 커밋마다 재시작을 요구하는 false-positive 방지.
+        _code_diff = subprocess.run(
+            ["git", "-C", _server_repo, "diff", "--quiet",
+             f"{_server_hash}..{_local_hash}", "--",
+             "src", "package.json", "pnpm-lock.yaml"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if _code_diff.returncode == 0:
+            pass  # 비코드 커밋 차이 — 아래 OK 라인에서 함께 보고
+        else:
+            print(f"[preflight] 서버 버전 불일치: 기동 중={_server_hash} vs 로컬 HEAD={_local_hash}", flush=True)
+            print("→ cd server && pnpm build && launchctl kickstart -k gui/$(id -u)/com.graymar.server", flush=True)
+            print("→ 의도된 구버전 검증이면 --skip-version-check", flush=True)
+            sys.exit(2)
     try:
         _dirty = subprocess.run(
             ["git", "-C", _server_repo, "status", "--porcelain", "--", "src"],
@@ -111,7 +122,10 @@ if not args.skip_version_check and ("localhost" in BASE or "127.0.0.1" in BASE):
         _dirty = ""
     if _dirty:
         print(f"[preflight] 경고: server/src 미커밋 변경 {len(_dirty.splitlines())}건 — 기동 중인 빌드에 미반영일 수 있음", flush=True)
-    print(f"[preflight] OK — 서버 {_server_hash} = 로컬 HEAD", flush=True)
+    if _server_hash == _local_hash:
+        print(f"[preflight] OK — 서버 {_server_hash} = 로컬 HEAD", flush=True)
+    else:
+        print(f"[preflight] OK — 서버 {_server_hash} ≠ HEAD {_local_hash}지만 코드 차이 없음(비코드 커밋)", flush=True)
 
 def poll_llm(run_id, turn_no, max_wait=90, expect_choices=False):
     """LLM 폴링: GET /turns/:turnNo → llm.status / llm.output + UI 데이터
