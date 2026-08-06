@@ -51,7 +51,10 @@ Gemini·DALL·E·Stable Diffusion·OpenRouter 이미지 모델 등 수단 불문
 ```bash
 cd server && pnpm build && launchctl kickstart -k "gui/$(id -u)/com.graymar.server"
 sleep 5 && curl -s http://localhost:3000/v1/version   # 해시·startedAt 확인
+cd .. && SMOKE_NO_BROWSER=1 npx -y tsx scripts/e2e/smoke.ts   # 기동 스모크 (~30초·3턴) — 실패 시 배포 실패로 간주
 ```
+스모크는 버전 해시가 못 잡는 기동 시점 결함(팩 로드 실패·env 오타·마이그레이션 불일치)을
+잡는다 (하네스 보강 #3, 2026-08-06). 회원가입→런 생성→3턴이 실제로 돌아야 배포 완료.
 
 ### dev watch 모드가 꼭 필요할 때만
 ```bash
