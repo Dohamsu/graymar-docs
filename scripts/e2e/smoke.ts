@@ -63,7 +63,11 @@ async function main() {
     const llm = await api.pollLlm(runId, submitted, 60_000);
     const serverResult = submit.body.serverResult ?? {};
     const events = (serverResult.events ?? []).map((e: any) => e.kind ?? "");
-    const resolve = serverResult.ui?.resolveOutcome ?? null;
+    // FREE(자동 성공) 턴은 resolveOutcome 대신 resolveSkipped가 정본 (2026-08-06
+    // 주사위 8 고정 표시 수정) — 판정 파이프라인 생존 신호로는 둘 다 유효.
+    const resolve =
+      serverResult.ui?.resolveOutcome ??
+      (serverResult.ui?.resolveSkipped ? "FREE_SKIP" : null);
     const nodeOutcome = submit.body.meta?.nodeOutcome ?? "";
     const portrait = serverResult.ui?.npcPortrait ?? null;
     turnLogs.push({
@@ -98,7 +102,7 @@ async function main() {
   const anyEvent = turnLogs.some((t) => t.events.length > 0);
   if (!anyEvent) failures.push("이벤트 전혀 생성 안됨");
   const anyResolve = turnLogs.some((t) => t.resolveOutcome);
-  if (!anyResolve) failures.push("resolveOutcome 전혀 없음");
+  if (!anyResolve) failures.push("판정 신호(resolveOutcome/resolveSkipped) 전혀 없음");
   const latencies = turnLogs.map((t) => t.latencyMs ?? 0).filter((x) => x > 0);
   const avgLatency = latencies.length ? latencies.reduce((a, b) => a + b, 0) / latencies.length : 0;
   if (avgLatency > 10_000) failures.push(`LLM 평균 latency ${Math.round(avgLatency)}ms > 10s`);
