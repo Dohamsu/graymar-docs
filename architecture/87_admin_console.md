@@ -317,3 +317,92 @@ admin/app/
 - CostReconciliation → **"LLM 실제 과금"** 전용(모델별 누적 막대 + 실제 청구 총액 + 모델별 표). 대시보드·LLM 탭 공통. KPI도 "LLM 실제 청구(7일)" 단일.
 - 근거: `llm_call_logs` 측정은 **로그 삭제에 취약**(§9)해 총비용 지표로 부적합. 원래 용도(런별 비용 귀속)는 유효하나 대시보드 총비용에선 뺀다. 서버 endpoint(`cost-reconciliation`)는 measured 필드를 여전히 반환하나 UI는 actual만 사용.
 - 잔여: 오늘 지출은 Activity 정산 지연(완료 UTC일)으로 익일 반영 — 라이브 today 지표가 필요하면 후속.
+
+---
+
+## 11. 게임 진화 대응 정비 (2026-08-07)
+
+**배경**: 어드민은 2026-07-23 이후 정지한 반면 게임은 계속 움직였다(회원번호 도입,
+파티 던전 실운영, 팩 4종, 장면 컷, 모델 교차 3:7). 기능은 전부 살아 있었으나
+**지표가 거짓 신호를 내고 관제 사각지대가 생긴** 상태여서, 소유자 지시로 아래를 정비했다.
+소유자 결정으로 **제외한 2건**: ① LLM 비용 KPI 테스터 제외(비용은 테스터 포함 유지)
+② `admin.dimtale.com` DNS.
+
+### 11.1 스턱 런 = 심각도 분리 (경보 피로 제거)
+`stuckRuns()` 가 `{stuck, stalled, idle}` 로 갈라 반환하고, UI 는 **LLM_STALLED 만
+경고 배너**로 띄운다. IDLE_24H(24h+ 무턴 방치 런)는 기본 접힌 정보 섹션.
+근거: 실측 활성 런 118건 중 102건(86%)이 IDLE_24H 라 배너가 상시 점등돼 신호가 죽었고,
+`scripts/health-monitor.py` 는 이미 "IDLE_24H 는 방치 런이라 정상 — 경보 제외"로
+판정 중이어서 **push 경보와 UI 판정 기준이 어긋나 있었다**. 이제 같은 기준이다.
+stuck 항목에 `email`·`isTester` 추가(runId 축약형만으로는 누구 런인지 알 수 없었음),
+경과는 분 대신 일/시간으로 접어 표기.
+
+### 11.2 회원번호(memberNo) 전 경로 노출
+`users.member_no`(2026-07-27 도입)가 어드민 어디에도 없어 **유저가 부르는 식별자로
+검색이 불가능**했다 — 도입 목적이 어드민에서 미완결. 목록·상세에 `#0015` 표기 추가,
+`q` 가 숫자면 이메일·닉네임 부분일치에 **회원번호 정확일치**를 OR 로 합친다.
+
+### 11.3 테스터 필터 (유저·런)
+`?excludeTester=1` 추가 + 응답에 `isTester` 뱃지. UI 기본값은 **숨김**.
+근거: users 85명 중 64명(75%)이 테스터라 실유저 21명이 목록에서 묻혔다.
+집계 제외(§10.1)와 달리 여기서는 **토글** — 테스터 런 구제도 운영 업무이므로 감춘 게 아니라 접는다.
+
+### 11.4 4팩 인지 (시나리오 이름·필터)
+`listRuns` 가 `scenarioName` 을 파생(`listAvailableScenarios` 1회 캐시)하고,
+`GET /v1/admin/runs/scenarios` 가 필터 드롭다운용 목록을 낸다. 서버는 `scenarioId`
+쿼리를 원래 지원했으나 UI 에 필터가 없었고 표시는 raw ID 였다.
+
+### 11.5 파티 관제 신설 (읽기 전용)
+`GET /v1/admin/parties`(멤버 수·활성 런 수 상관 서브쿼리) + `/:id`(멤버 온라인·레디,
+파티 런 20건). arch/84 로 협동 런이 실운영에 들어왔는데 관제는 런 목록의
+`partyRunMode` 칸 하나뿐이었다. 해산·추방 같은 쓰기는 유저 경로(리더 권한)가 정본이라 두지 않는다.
+
+### 11.6 감사 로그 조회 (`GET /v1/admin/audit-logs`)
+§3.2 가 쌓기만 하고 볼 경로가 없던 `admin_audit_logs`(실측 32건)를 연다.
+action LIKE 필터·페이징·payload 펼침. actor 가 userId 면 이메일로 해석.
+**확인할 수 없는 통제는 통제가 아니다.**
+구현 함정: actor 는 text 라 `'token'` 같은 비-uuid 가 섞인다 — uuid 정규식으로 거르지 않고
+uuid 컬럼과 비교하면 캐스팅 단계에서 터져 **목록 전체가 500** 이 된다(헤드리스 QA 실측).
+
+### 11.7 헬스 = 워커 하트비트 (§4.1 명세 충족)
+`/v1/admin/health` 가 `{ok, db, uptime}` 뿐이라 명세의 "version + LLM 워커 최근 처리 시각"이
+빠져 있었다. `LlmWorkerService.getHeartbeat()`(lastPollAt·lastTurnCompletedAt·
+processedTurnCount) 신설 + version·startedAt(app.controller 정본 재사용) 추가.
+`ok = db && worker`, 폴 정지 60초 초과면 worker=false. 대시보드 상단 밴드로 상시 노출.
+**워커만 죽으면 서버는 200 을 내면서 턴 서술만 조용히 밀린다** — uptime 으로는 구분 불가였다.
+
+### 11.8 런타임 플래그 (`common/runtime-flags.ts`)
+킬스위치 6종(`PLOT_DIRECTOR_DISABLED`·`COMBAT_TACTIC_DISABLED`·
+`CHALLENGE_CLASSIFIER_ENABLED`·`NPC_REACTION_DIRECTOR_ENABLED`·`PROPS_TRACE_DISABLED`·
+`INLINE_IMAGE_MATCH_DISABLED`)·`SCENE_CUT_MIN_CONFIDENCE`·모델 노브 4종
+(`LLM_ALTERNATE_MODEL`·`LLM_MAIN_ALTERNATE_MODEL`·`LLM_DIALOGUE_MODEL`·`LLM_LIGHT_MODEL`)을
+**재빌드 없이** 어드민에서 전환한다. `GET/PATCH /v1/admin/llm/flags`.
+
+- 구조: 오버라이드 맵 → `process.env` 폴백의 얇은 `flagValue()` 만 제공하고, 판정
+  시맨틱(`!== 'false'` / `=== '1'`)은 **소비처에 그대로 남긴다**(읽는 값만 교체 → 동작 불변).
+- 화이트리스트 밖 키는 400 — 임의 env 변조(예: `DATABASE_URL`) 차단.
+- `NpcReactionDirector`·`ChallengeClassifier` 는 생성자에서 `enabled` 를 캐시하고 있어
+  런타임 전환이 먹지 않았다 → **호출 시점 평가**로 변경.
+- 한계: 오버라이드는 **인메모리** — 재시작 시 `.env` 로 원복. UI 가 이 사실을 상단에 명시하고
+  `.env` / 오버라이드 / 적용값 3층을 나눠 보여준다. 영구 변경은 `server/.env`.
+- 기존 `PATCH /v1/settings/llm` 은 레거시 필드(provider·openaiModel·fallback·temperature 등)
+  담당으로 그대로 두고, 신규 노브만 이쪽으로 뺐다.
+
+### 11.9 모델별 호출·레이턴시 (비용 열 없음 — §10.2 존중)
+`GET /v1/admin/stats/llm-cost` 는 서버에만 있고 화면이 쓰지 않았는데, 조사 결과
+**미사용이 아니라 §10.2 에서 의도적으로 폐기**된 것이었다(비용 진실원 = 실제 청구 단일화).
+그 결정은 그대로 두고 **실제 청구(Activity)에 없는 축만** 되살린다 —
+모델별 **호출 비중**(교차 비율 3:7 준수 확인, arch/95 §7)과 **평균 레이턴시**(롱테일 감시).
+비용·비용 비중 열은 넣지 않는다.
+
+### 11.10 cascade 삭제 보정
+`playtest_results` 는 `run_id` 를 갖지만 FK 가 없어 삭제 목록에서 빠져 있었다 →
+유저 하드 삭제 시 고아 행 잔존. 런 자식 목록에 편입.
+
+### 11.11 검증
+서버 build + 유닛 **1,695 전량 통과**(runtime-flags 8케이스 신설) + lint(신규분 0),
+어드민 build·lint 0/0. 라이브 왕복: 신규·변경 엔드포인트 전수 200, 플래그 PATCH
+설정→해제 왕복 + 화이트리스트 밖 키 400 + 감사 로그 자동 기록 확인.
+헤드리스 UI: 7탭 전부 렌더·콘솔 에러 0, 회원번호 검색(`15`→`#0015` 단건)·방치 런 펼침·
+런타임 플래그 3층 표시 실확인. **재시작 스모크 PASS**(3턴, FREE_SKIP 정상 — 킬스위치
+호출 시점 평가 전환이 턴 파이프라인에 무영향임을 실증).
