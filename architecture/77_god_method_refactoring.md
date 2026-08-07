@@ -171,3 +171,73 @@ Phase 5 (클라이언트) — 언제든 병행 가능
 - **2026-07-18 P3.14+P3.15 (P3 소형 잔존 마감)** (server c99ce03): applyTurnStateTransitions(115줄 — Marks 판정→시간/안전도→Deferred→Agenda→Arc→cooldown→자기 정보 축적→행동 이력, 출력 7종 반환) + collectTurnMemory(58줄 — Structured Memory v2 수집, non-fatal). **handleLocationTurnInner 4,440 → 1,937줄 (-56%) — P3 마감**, 잔여는 resolve 게이트·커밋·엔딩 조율 본연 몫. 게이트: chatty 10/10 / weirdo 9/10 — **V2 1건은 weirdo가 12턴 내내 에드릭 단일 NPC에 고착한 플레이 패턴(조우 1명 < 기준 2명)으로, 에드릭 enc=2·intro=True·대화 잠금 9턴 연속 유지가 오히려 추출 이력 기록의 정상 동작 증거. 단축런 특성 flaky(P1.final 전례), 회귀 아님**.
 - **2026-07-18 전투/DAG 트랜치 (C1~C5)** (server 0a75653..16c53e3): **C1 — DAG 골드 무바닥 결함 수정**(P3.X 기록분 해소: LOCATION/COMBAT과 동일한 Math.max(0,…) 0-바닥으로 통일, SHOP 리졸버 잔액 검증은 있으나 타 노드 goldDelta 방어선 부재였음 — 유일한 의도적 동작 변경) / **C2** 전투 입력 파이프라인(105줄, buildCombatActionPlan — RuleParser→Policy DENY 조기 커밋→ActionPlan→PropMatch Tier→기만 전술 nano, usedTactics 제자리 변조) / **C3** 적 스탯 로드(21줄, loadEnemyStatsForBattle 순수) / **C4** 승리 장비 드랍(54줄, applyCombatVictoryDrops — 시드 결정론 유지) / **C5** 패배 엔딩(90줄, handleCombatDefeatEnding). **handleCombatTurn 544 → 319줄 (-41%)**, handleDagNodeTurn은 255줄로 코디네이터 잔존 판정(전이 조율 본연 몫). 게이트: coercer 10/10 / brawler 9/10 — **V9 1건은 COMBAT 0경유 런(HUB 3+LOCATION 9)의 날씨 수식어('젖은') 편중 = 변경 코드 미실행이라 인과 불가, flaky 확정**. 전투 라이브 조우는 트리거 조건(FAIL+BLOCK/CRITICAL) 특성상 미발생 — 유닛(전투 코어 스펙 포함 1,390)·동작 보존 컷-페이스트·tsc로 커버 (COWARDLY 스펙 대체 전례와 동일).
 - **2026-07-18 P3.13 (트랜치 2)** (server 773561c): **Step 1~3 추출 — determineTurnEventAndRouting(473줄)**. 씬 연속성(CHOICE sourceEventId) → IncidentRouter → 턴 모드 3분류(불변식 33·47 가드 일체: 사교/REST 억제·강제창·연속 상호작용 비트 게이트) → 모드별 매칭(비트 채택+동적 NPC 등록/SitGen/EventDirector/Procedural) → FREE 셸 보장. **추출 전 하류 전수 스캔으로 블록 밖 소비가 matchedEvent·routingResult 2종뿐임을 확인** — 나머지 로컬 16종(turnMode·beatAvailable·contextNpcId 등)은 전부 블록 내부 전용이라 경계가 예상보다 깨끗했다. 딥카피 초크포인트(불변식 48)는 의도적으로 호출부(Inner)에 잔존 — "캐시 참조 반환 → 소비 전 클론" 규약이 호출부에서 보이도록. **Inner 4,440 → 2,061줄 (-54%)**. 게이트: 유닛 1,374 green + 재시작(773561c) 후 baseline 동일 3페르소나(coercer/chatty/weirdo) 12턴 — **3런 전부 V1~V10 10/10 PASS·위화감 노트 0, D4-3/3b baseline 범위 내. 손실 없음 판정, revert 불필요**. 잔여: Marks~history(~110줄)·Structured Memory 수집(~58줄)은 코디네이터 잔존 기준으로 보류, 전이·엔딩·커밋 조율 ~2,061줄이 코디네이터 본연 몫.
+
+
+## 18. 파일 분할 (2026-08-07) — 래칫 발화에 대한 대응
+
+### 18.1 발단: 래칫이 설계대로 작동했다
+
+§5 재비대화 래칫(`eslint.config.mjs`, 리팩토링 직후 최대치 직상에 설정)이
+**함수 2,075/2,000 · 파일 9,194/9,000** 으로 발화했다. 초과폭은 3.7%·2.1%로
+작았고, 문서가 미리 정한 대응(**상한을 올리지 말고 분할**)을 그대로 따랐다.
+
+재성장 곡선 — 메서드는 3주간 상한에 붙어 있었다:
+
+| 날짜 | 파일 | handleLocationTurnInner |
+|---|---|---|
+| 07-17 (Phase 3 전) | 7,660 | 4,442 |
+| 07-19 (Phase 3 후) | 8,502 | **1,939** ← 래칫 기준점(여유 3.2%) |
+| 07-24 / 07-28 / 08-02 | 8,806 / 8,928 / 8,993 | 1,991 / 1,924 / 1,959 |
+| 08-08 | 9,194 | **2,075** |
+
+Phase 3 은 **파일이 아니라 메서드**를 줄였다(추출분이 같은 파일에 남아 파일은
+오히려 +842). 이후 파일 증가 +692 는 단일 지배 커밋 없이 기능 누적이었다
+(사례금 귀속 +186 · 판돈 룰 +76 · 실구매 화자 +75 · 재회 빈도 +58 …).
+
+### 18.2 분할이 가능했던 구조 조건 (실측)
+
+| 조건 | 실측 |
+|---|---|
+| 호출 그래프 | 62 메서드·79 엣지, **피호출 대부분 1회** — 웹이 아니라 트리 |
+| 진입점 간 공유 | 헬퍼 **7개 587줄**뿐 (그중 equip/shop 412) |
+| **가변 인스턴스 상태** | **0건** — 클래스 필드는 주입 서비스뿐, `this.x = ...` 대입 없음 |
+
+반대로 `handleLocationTurnInner` **본문** 중간은 손대기 어렵다: 지역 선언 185개
+중 사용 span > 300줄이 68개(`rawInput` 2,010 · `intent` 1,975 · `updatedRunState`
+1,937 …), 최대 중첩 7. 절단 후보 733곳 중 중간 구간은 live 30~65개다. 그래서
+본문은 **양 끝의 저비용 블록 2개만** 떼고, 나머지는 메서드 단위 이사로 처리했다.
+
+### 18.3 실행 (server 28bbb0a)
+
+| 단계 | 산출 | 비고 |
+|---|---|---|
+| 1 | `turn-shared.service.ts` | 진입점 4종 공용 헬퍼 5개 |
+| 2 | `equip-shop-turn.service.ts` | 내부 호출 0·서비스 4개 — 가장 깨끗 |
+| 3 | `dag-turn.service.ts` | DAG 24노드 |
+| 4 | `hub-turn.service.ts` | HUB 턴 + 전용 헬퍼 |
+| 5 | `combat-turn.service.ts` | 전투 트랙 10개 메서드 (서비스 18개) |
+| 6 | private 메서드 2개 | 전투 전이 116줄 · 런 종료 140줄 |
+| + | `turns.core.ts` | 순수 판정 함수·타입 정본 — **순환 임포트 차단용** |
+
+`turns.core.ts` 가 필요한 이유: 서브서비스가 `isShopBuyIntentCore` 등을 쓰는데
+이를 turns.service 에 두면 서브서비스 → turns.service → 서브서비스 순환이 되어
+DI 초기화에서 undefined 위험이 있다. turns.service 는 재수출로 기존 spec import
+경로를 보존한다.
+
+**결과: turns.service 9,194 → 6,864 · handleLocationTurnInner 2,075 → 1,860.**
+
+### 18.4 래칫 재설정
+
+| 규칙 | 이전 | 이후 | 근거 |
+|---|---|---|---|
+| `max-lines-per-function` | 2,000 | **2,000 유지** | 내리면 llm-worker `processTurnInner`(2,147, Phase 4 미착수)가 상시 에러. 올리는 것은 §5 원칙 위반 |
+| `max-lines` | 9,000 | **7,900** | 새 최대치 6,864 + 약 15%. 이전 래칫은 여유 3%뿐이라 3주 만에 상시 경고가 됐고 그 사이 lint 에러 1건이 묻혔다 |
+
+### 18.5 검증
+
+유닛 1,713 passed · 빌드 OK · lint 0 errors · 서버 기동 + 스모크 PASS ·
+플레이테스트 2런(brawler 전투 경로 / chatty 대화 경로) 각 13/14.
+
+brawler 런의 `V5_memory` 실패는 회귀가 아니다 — 그 런은 T3 진입 후 장소를 떠난
+적이 없어(T4~9 전투) `finalizeVisit` 이 발동하지 않았고 visitLog 가 비었다.
+chatty 대조 런에서 visitLog 1·npcJournal 13 으로 정상 확인.
