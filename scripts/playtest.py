@@ -1016,6 +1016,42 @@ PROMPT_AVG_LIMIT = 15000       # 평균 경보선 (2026-07-27 압축 후 실측 
 V12_POOL_RUNS = 3              # 판정 창: 최근 3런 풀링 (n≈50 → 1턴 ≈ 2%p)
 V12_MIN_RUNS = 2               # 이 미만이면 게이트 보류 (참고 수치만)
 V12_LEDGER_KEEP = 20           # 원장 보존 런 수
+# V13 도 같은 병을 앓는다 — 런당 nano 선택지가 27~36개라 1개가 약 3%p.
+# 2026-08-07 실측: 런 단위로는 6/7 FAIL 인데 같은 날 누적은 33/198=16.7% 로
+# 게이트(15%)를 통과했다. 편중이 아니라 표본 크기가 만든 착시였다.
+V13_POOL_RUNS = 3
+V13_MIN_RUNS = 2
+
+
+def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
+    """게이트 원장에 이번 런을 적고 판정 창(최근 pool_runs 런)을 돌려준다.
+
+    런 단위 표본이 작아 노이즈에 뒤집히는 게이트(V12·V13)를 다회 런 누적으로
+    판정하기 위한 공용 IO. 판정식 자체는 호출부가 정한다 — V12 는 가중 평균이
+    추가로 필요해 창을 직접 다룬다.
+
+    원장은 playtest-reports/ 아래 로컬 파일이며 런별 서버 해시를 함께 남긴다.
+    코드 변경을 사이에 둔 창은 해석 시 분리할 것.
+    """
+    path = os.path.join("playtest-reports", ledger_name)
+    ledger = []
+    try:
+        if os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                ledger = json.load(f)
+            if not isinstance(ledger, list):
+                ledger = []
+    except Exception:
+        ledger = []
+    ledger.append(entry)
+    ledger = ledger[-keep:]
+    try:
+        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(ledger, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"  ⚠️ 원장 저장 실패 (판정은 계속): {e}", flush=True)
+    return ledger[-pool_runs:]
 print("\n[V12] 프롬프트 예산 (재비대 가드):", flush=True)
 prompt_sizes = []
 for t in turn_logs:
@@ -1050,34 +1086,19 @@ if prompt_sizes:
     #   → 최근 N런의 **원시 카운트를 풀링**해 판정한다 (rate 평균이 아니라
     #     sum(fired)/sum(turns) — 런별 턴 수 차이를 자동 가중).
     #   표본이 1런뿐이면 참고 표시만 하고 게이트는 통과 처리 (오탐 방지).
-    _ledger_path = os.path.join("playtest-reports", "v12_ledger.json")
-    _ledger = []
-    try:
-        if os.path.exists(_ledger_path):
-            with open(_ledger_path, encoding="utf-8") as _lf:
-                _ledger = json.load(_lf)
-            if not isinstance(_ledger, list):
-                _ledger = []
-    except Exception:
-        _ledger = []
-    _ledger.append({
-        "runId": run_id,
-        "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        # 서버 해시는 preflight 에서만 채워진다 (--skip-version-check 시 빈 값)
-        "server": _SERVER_HASH,
-        "sampleTurns": len(_sizes),
-        "fireProxyCount": len(_fired),
-        "avgChars": _p_avg,
-    })
-    _ledger = _ledger[-V12_LEDGER_KEEP:]
-    try:
-        os.makedirs(os.path.dirname(_ledger_path) or ".", exist_ok=True)
-        with open(_ledger_path, "w", encoding="utf-8") as _lf:
-            json.dump(_ledger, _lf, ensure_ascii=False, indent=2)
-    except Exception as e:
-        print(f"  ⚠️ 원장 저장 실패 (판정은 계속): {e}", flush=True)
-
-    _window = _ledger[-V12_POOL_RUNS:]
+    _window = append_gate_ledger(
+        "v12_ledger.json",
+        {
+            "runId": run_id,
+            "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            # 서버 해시는 preflight 에서만 채워진다 (--skip-version-check 시 빈 값)
+            "server": _SERVER_HASH,
+            "sampleTurns": len(_sizes),
+            "fireProxyCount": len(_fired),
+            "avgChars": _p_avg,
+        },
+        pool_runs=V12_POOL_RUNS,
+    )
     _pool_turns = sum(r.get("sampleTurns", 0) for r in _window)
     _pool_fired = sum(r.get("fireProxyCount", 0) for r in _window)
     _pool_rate = _pool_fired / _pool_turns if _pool_turns else 0.0
@@ -1169,19 +1190,52 @@ if _aff_total >= 6:  # nano 선택지 2턴분 미만이면 표본 부족
     _passive = _aff_total - _active
     _active_ratio = _active / _aff_total
     _passive_ratio = _passive / _aff_total
-    v13_pass = _active_ratio >= 0.15 and _passive_ratio <= 0.80
+
+    # [2026-08-07] V12 와 같은 이유로 다회 런 누적 판정 — 런당 선택지 27~36개라
+    # 1개가 약 3%p 이고, 15% 선에서 ±1개가 통과/실패를 갈랐다.
+    _v13_win = append_gate_ledger(
+        "v13_ledger.json",
+        {
+            "runId": run_id,
+            "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "server": _SERVER_HASH,
+            "affTotal": _aff_total,
+            "activeCount": _active,
+        },
+        pool_runs=V13_POOL_RUNS,
+    )
+    _v13_total = sum(r.get("affTotal", 0) for r in _v13_win)
+    _v13_active = sum(r.get("activeCount", 0) for r in _v13_win)
+    _v13_pool_active = _v13_active / _v13_total if _v13_total else 0.0
+    _v13_pool_passive = 1 - _v13_pool_active
+    _v13_enough = len(_v13_win) >= V13_MIN_RUNS
+    v13_pass = (
+        (_v13_pool_active >= 0.15 and _v13_pool_passive <= 0.80)
+        if _v13_enough else True
+    )
+
     choice_diversity_metrics = {
         "affCounts": _aff_counts,
         "activeRatio": round(_active_ratio, 3),
         "questionTurns": _q_turns,
         "questionAnswered": _q_answered,
+        # 누적 판정 근거 (게이트가 실제로 보는 값)
+        "pooledRuns": len(_v13_win),
+        "pooledAffTotal": _v13_total,
+        "pooledActiveCount": _v13_active,
+        "pooledActiveRatio": round(_v13_pool_active, 3),
+        "gateApplied": _v13_enough,
     }
     _dist = ", ".join(f"{a}:{n}" for a, n in sorted(_aff_counts.items(), key=lambda x: -x[1]))
     print(f"  affordance 분포: {_dist}", flush=True)
-    print(f"  적극 축 비율: {_active_ratio*100:.0f}% (게이트 ≥15%) · 소극 3종: {_passive_ratio*100:.0f}% (게이트 ≤80%)", flush=True)
+    print(f"  이번 런 적극 축: {_active_ratio*100:.0f}% · 소극 3종 {_passive_ratio*100:.0f}%", flush=True)
+    print(f"  누적 판정({len(_v13_win)}런): 적극 {_v13_active}/{_v13_total} ({_v13_pool_active*100:.0f}%, 게이트 ≥15%) · 소극 {_v13_pool_passive*100:.0f}% (≤80%)", flush=True)
     if _q_turns:
         print(f"  질문 턴 응답 선택지: {_q_answered}/{_q_turns} (계측 전용 — 목표 70%+)", flush=True)
-    print("  ✅ 다양성 정상" if v13_pass else "  ❌ 편중 경보 — 적극 축 주입(P1) 점검 필요", flush=True)
+    if not _v13_enough:
+        print(f"  ⚠️ 표본 부족({len(_v13_win)}/{V13_MIN_RUNS}런) — 게이트 보류(통과 처리)", flush=True)
+    else:
+        print("  ✅ 다양성 정상" if v13_pass else "  ❌ 편중 경보 — 적극 축 주입(P1) 점검 필요", flush=True)
 else:
     v13_pass = True
     print(f"  ⚠️ nano 선택지 표본 부족 ({_aff_total}개) — 게이트 스킵", flush=True)
