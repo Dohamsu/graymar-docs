@@ -83,9 +83,11 @@ if os.getcwd() != _REPO_ROOT:
 # ② 서버 버전 해시 대조 — "커밋 후 재시작 누락"으로 구버전 서버를 검증하는
 #    false-PASS 방지. 양쪽 다 `git rev-parse --short HEAD` 산출이라 정확 비교.
 #    로컬 서버 대상일 때만 강제 (원격은 HEAD가 다른 게 정상일 수 있음).
+_SERVER_HASH = ""  # V12 원장 기록용 — preflight 를 건너뛰면 빈 값으로 남는다
 if not args.skip_version_check and ("localhost" in BASE or "127.0.0.1" in BASE):
     _, _ver = api("GET", "/version")
     _server_hash = str(_ver.get("server", ""))
+    _SERVER_HASH = _server_hash
     if not _server_hash:
         print(f"[preflight] 서버 응답 없음 ({BASE}/version) — 서버 기동을 먼저 확인", flush=True)
         sys.exit(2)
@@ -1010,6 +1012,10 @@ if v11_failed_count:
 PROMPT_BUDGET_CAP = 16500      # server token-budget.service.ts GRAND_TOTAL_CHAR_BUDGET
 PROMPT_FIRE_PROXY = 16000      # 발동 추정 임계 (상한의 ~97%)
 PROMPT_AVG_LIMIT = 15000       # 평균 경보선 (2026-07-27 압축 후 실측 avg 12.7k + 18% 여유)
+# [arch/79 §11.3] 다회 런 누적 판정 — 단일 런은 n=14~20이라 발동 1건이 5%p다.
+V12_POOL_RUNS = 3              # 판정 창: 최근 3런 풀링 (n≈50 → 1턴 ≈ 2%p)
+V12_MIN_RUNS = 2               # 이 미만이면 게이트 보류 (참고 수치만)
+V12_LEDGER_KEEP = 20           # 원장 보존 런 수
 print("\n[V12] 프롬프트 예산 (재비대 가드):", flush=True)
 prompt_sizes = []
 for t in turn_logs:
@@ -1036,7 +1042,56 @@ if prompt_sizes:
     _p_max = max(_sizes)
     _fired = [(tt, s) for tt, s in prompt_sizes if s >= PROMPT_FIRE_PROXY]
     _fire_rate = len(_fired) / len(_sizes)
-    v12_pass = _fire_rate <= 0.20 and _p_avg <= PROMPT_AVG_LIMIT
+
+    # [arch/79 §11.3 → 다회 런 누적 판정, 2026-08-07] 단일 런 판정 폐기.
+    #   런당 표본이 14~20턴이라 발동 1건 = 5%p이고, 게이트 20% 선에서 ±1턴이
+    #   통과/실패를 가른다 (run1 대화연속 6턴·발동 2건 vs run3 3턴·발동 4건).
+    #   실제로 무손실 압축 후에도 발동률이 21%로 고정돼 게이트가 신호를 못 냈다.
+    #   → 최근 N런의 **원시 카운트를 풀링**해 판정한다 (rate 평균이 아니라
+    #     sum(fired)/sum(turns) — 런별 턴 수 차이를 자동 가중).
+    #   표본이 1런뿐이면 참고 표시만 하고 게이트는 통과 처리 (오탐 방지).
+    _ledger_path = os.path.join("playtest-reports", "v12_ledger.json")
+    _ledger = []
+    try:
+        if os.path.exists(_ledger_path):
+            with open(_ledger_path, encoding="utf-8") as _lf:
+                _ledger = json.load(_lf)
+            if not isinstance(_ledger, list):
+                _ledger = []
+    except Exception:
+        _ledger = []
+    _ledger.append({
+        "runId": run_id,
+        "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        # 서버 해시는 preflight 에서만 채워진다 (--skip-version-check 시 빈 값)
+        "server": _SERVER_HASH,
+        "sampleTurns": len(_sizes),
+        "fireProxyCount": len(_fired),
+        "avgChars": _p_avg,
+    })
+    _ledger = _ledger[-V12_LEDGER_KEEP:]
+    try:
+        os.makedirs(os.path.dirname(_ledger_path) or ".", exist_ok=True)
+        with open(_ledger_path, "w", encoding="utf-8") as _lf:
+            json.dump(_ledger, _lf, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"  ⚠️ 원장 저장 실패 (판정은 계속): {e}", flush=True)
+
+    _window = _ledger[-V12_POOL_RUNS:]
+    _pool_turns = sum(r.get("sampleTurns", 0) for r in _window)
+    _pool_fired = sum(r.get("fireProxyCount", 0) for r in _window)
+    _pool_rate = _pool_fired / _pool_turns if _pool_turns else 0.0
+    # 가중 평균 — 런별 턴 수로 가중 (단순 평균은 짧은 런을 과대 반영)
+    _pool_avg = (
+        sum(r.get("avgChars", 0) * r.get("sampleTurns", 0) for r in _window) // _pool_turns
+        if _pool_turns else 0
+    )
+    _pooled_enough = len(_window) >= V12_MIN_RUNS
+    v12_pass = (
+        (_pool_rate <= 0.20 and _pool_avg <= PROMPT_AVG_LIMIT)
+        if _pooled_enough else True
+    )
+
     prompt_budget_metrics = {
         "avgChars": _p_avg,
         "maxChars": _p_max,
@@ -1044,10 +1099,20 @@ if prompt_sizes:
         "fireProxyCount": len(_fired),
         "fireProxyRate": round(_fire_rate, 3),
         "capChars": PROMPT_BUDGET_CAP,
+        # 누적 판정 근거 (게이트가 보는 값)
+        "pooledRuns": len(_window),
+        "pooledTurns": _pool_turns,
+        "pooledFireCount": _pool_fired,
+        "pooledFireRate": round(_pool_rate, 3),
+        "pooledAvgChars": _pool_avg,
+        "gateApplied": _pooled_enough,
     }
     print(f"  프롬프트 총량: avg {_p_avg:,}자 / max {_p_max:,}자 (표본 {len(_sizes)}턴, 상한 {PROMPT_BUDGET_CAP:,}자)", flush=True)
-    print(f"  백스톱 발동 추정(≥{PROMPT_FIRE_PROXY:,}자): {len(_fired)}/{len(_sizes)}턴 ({_fire_rate*100:.0f}%)", flush=True)
-    if v12_pass:
+    print(f"  이번 런 발동 추정(≥{PROMPT_FIRE_PROXY:,}자): {len(_fired)}/{len(_sizes)}턴 ({_fire_rate*100:.0f}%)", flush=True)
+    print(f"  누적 판정({len(_window)}런): {_pool_fired}/{_pool_turns}턴 ({_pool_rate*100:.0f}%) · 가중 avg {_pool_avg:,}자", flush=True)
+    if not _pooled_enough:
+        print(f"  ⚠️ 표본 부족({len(_window)}/{V12_MIN_RUNS}런) — 게이트 보류(통과 처리). 참고용 수치만 기록", flush=True)
+    elif v12_pass:
         print("  ✅ 예산 정상 — 재비대 없음", flush=True)
     else:
         print("  ❌ 재비대 경보 — 프롬프트 다이어트 필요 (상한 상향으로 풀지 말 것, arch/95 §6)", flush=True)
