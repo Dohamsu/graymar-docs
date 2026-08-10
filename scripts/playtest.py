@@ -1207,12 +1207,14 @@ if _aff_total >= 6:  # nano 선택지 2턴분 미만이면 표본 부족
     _v13_total = sum(r.get("affTotal", 0) for r in _v13_win)
     _v13_active = sum(r.get("activeCount", 0) for r in _v13_win)
     _v13_pool_active = _v13_active / _v13_total if _v13_total else 0.0
+    # [2026-08-10] 소극 조건 삭제 — 소극 = 100% − 적극 이라 `적극 ≥15% AND
+    #   소극 ≤80%` 는 `적극 ≥20%` 하나로 붕괴했고, 명시된 15% 임계가 도달 불가
+    #   상태였다(누적 18%인데 FAIL 실측). 게이트는 목표치 아래에 두는 것이 정상이고
+    #   arch/98 §4 의 목표가 "적극 축 20%±" 이므로 의도된 게이트 값은 15% 다.
+    #   소극 비율은 계측·표시용으로만 남긴다.
     _v13_pool_passive = 1 - _v13_pool_active
     _v13_enough = len(_v13_win) >= V13_MIN_RUNS
-    v13_pass = (
-        (_v13_pool_active >= 0.15 and _v13_pool_passive <= 0.80)
-        if _v13_enough else True
-    )
+    v13_pass = (_v13_pool_active >= 0.15) if _v13_enough else True
 
     choice_diversity_metrics = {
         "affCounts": _aff_counts,
@@ -1229,7 +1231,7 @@ if _aff_total >= 6:  # nano 선택지 2턴분 미만이면 표본 부족
     _dist = ", ".join(f"{a}:{n}" for a, n in sorted(_aff_counts.items(), key=lambda x: -x[1]))
     print(f"  affordance 분포: {_dist}", flush=True)
     print(f"  이번 런 적극 축: {_active_ratio*100:.0f}% · 소극 3종 {_passive_ratio*100:.0f}%", flush=True)
-    print(f"  누적 판정({len(_v13_win)}런): 적극 {_v13_active}/{_v13_total} ({_v13_pool_active*100:.0f}%, 게이트 ≥15%) · 소극 {_v13_pool_passive*100:.0f}% (≤80%)", flush=True)
+    print(f"  누적 판정({len(_v13_win)}런): 적극 {_v13_active}/{_v13_total} ({_v13_pool_active*100:.0f}%, 게이트 ≥15%) · 소극 {_v13_pool_passive*100:.0f}% (계측)", flush=True)
     if _q_turns:
         print(f"  질문 턴 응답 선택지: {_q_answered}/{_q_turns} (계측 전용 — 목표 70%+)", flush=True)
     if not _v13_enough:

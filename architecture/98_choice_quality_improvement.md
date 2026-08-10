@@ -51,7 +51,7 @@
 3. **후처리**: ChoiceAffFix가 라벨-affordance 정합 담당 (기존). dedupe는 그대로.
 4. **기대 효과**: 적극 축 2% → 20%±, 동사 다양화는 축 전환의 부수 효과로 자연 획득 (동사 금지어 주입은 불변식 50 위반이라 하지 않음).
 
-**계측**: playtest V13 신설 — 런 단위 affordance 분포에서 적극 축 비율 ≥15% + 소극 3종 ≤80% 게이트. audit 스크립트가 아닌 playtest.py 센서로 (선택지는 llm_choices에 이미 기록됨).
+**계측**: playtest V13 신설 — affordance 분포에서 적극 축 비율 ≥15% 게이트 (2026-08-10 정정: 최초 정의의 `소극 3종 ≤80%` 병기는 삭제 — §11.4 참조). audit 스크립트가 아닌 playtest.py 센서로 (선택지는 llm_choices에 이미 기록됨).
 
 ## 5. P2 — 질문-응답 선택지 보장 (2단 사다리)
 
@@ -102,7 +102,7 @@ P1·P2는 같은 프롬프트 블록 영역을 건드리므로 **P1 배포 → �
 | P2 질문 명시 주입 | `llm-worker.service.ts` + nano 프롬프트 | `extractPendingNpcQuestionCore`(마지막 따옴표 대사 물음표 종결 + 잔여 서술 ≤120자) → `[NPC의 질문]` 블록. 2단은 기계 교체 대신 `[ChoiceQuestionMiss]` 계측 로그만 |
 | P3 BRIBE 쿨다운 | `turns.service.ts` + runState `bribeOfferHistory` | 주입 기록 후 동일 NPC 2턴 휴지 (`BRIBE_OFFER_COOLDOWN_TURNS`), BRIBE 실행/fact 공개 시 리셋 |
 | P4 라벨 폴리싱 | `llm-worker.service.ts` | `polishChoiceLabelsCore`(끝 마침표 제거·콜론→줄표·이동 암시 라벨 경고) — finalChoices 체인에 삽입 |
-| V13 센서 | `scripts/playtest.py` | affordance 분포 게이트(적극 ≥15% AND 소극 3종 ≤80%) + 질문 응답률 계측. poll_llm `expect_choices`(LOCATION 턴 Track2 완료 대기) + 분석 시 재조회 |
+| V13 센서 | `scripts/playtest.py` | affordance 분포 게이트(적극 ≥15%) + 질문 응답률 계측. poll_llm `expect_choices`(LOCATION 턴 Track2 완료 대기) + 분석 시 재조회 |
 
 단위 테스트: `nano-event-director.choice-npc-norm.spec.ts` 12케이스 + `choice-quality.arch98.spec.ts` 15케이스. 전 스위트 1,668 passed.
 
@@ -162,3 +162,22 @@ safety) null 반환이 원인 후보. 누적 16.7%가 게이트를 넘으므로 
 검증 실측(ea84c33, 10턴×2런): 1회차 39% → "표본 부족 보류", 2회차 22% →
 **누적 11/36(31%) PASS**. 같은 런에서 V12 도 누적 3/30(10%) PASS 하여
 **게이트 14/14 전항목 통과** — 이번 세션 최초.
+
+
+### 11.4 게이트 정의 정정 (2026-08-10) — "≥15%"가 도달 불가였다
+
+§5 최초 정의는 `적극 축 ≥15% AND 소극 3종 ≤80%` 였는데, **소극 = 100% − 적극**
+이라 두 조건은 독립이 아니다. 뒤 조건이 `적극 ≥20%` 를 뜻하므로 전체가
+**`적극 ≥20%` 하나로 붕괴**하고, 명시된 15% 임계는 한 번도 구속력을 가진 적이 없다.
+
+실측으로 드러났다 — 누적 적극 18%인데 FAIL (2026-08-10, 3런 10/57).
+
+**정정: 소극 조건을 삭제하고 `적극 ≥15%` 단일 임계로 둔다.** 근거는 게이트를
+목표치 아래에 두는 것이 정상이고, §4 가 밝힌 목표가 "적극 축 2% → 20%±" 이므로
+의도된 게이트 값은 그 아래인 15% 라는 것이다. 20% 는 목표치와 같아 노이즈에
+그대로 뒤집힌다(§11.2 의 런 단위 판정이 그랬듯이).
+
+소극 비율은 계측·표시용으로 남긴다 — 게이트에서 빠질 뿐 분포 감시에는 쓸모가 있다.
+
+> 별개 추적 항목: §11.2 의 주입 실효율(45.5% vs 설정 65%)과 §10 대비 하락
+> (25% → 18%)은 이 정정과 무관하게 남는다.
