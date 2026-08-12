@@ -59,9 +59,13 @@ base = f"""WITH p AS (SELECT {QCNT('a.raw_completion')} AS raw_q,
 d = q1(base + " SELECT count(*) FROM p WHERE raw_q > 0;")
 v = q1(base + " SELECT count(*) FROM p WHERE raw_q > 0 AND saved_q < raw_q;")
 lost = q1(base + " SELECT COALESCE(sum(raw_q-saved_q),0) FROM p WHERE saved_q < raw_q;")
-report('대사 소실률', int(v or 0), int(d or 0),
-       f"소실 대사 {lost}건 — 정당한 제3자 끼어들기 차단 포함 (arch/100 §17.2: 정당 57%)",
-       'raw_completion ↔ llm_output 인용문 수', threshold=0.40)
+#   [M2 감사 — 체크리스트 C4] 임계 0.40 은 **계약이 아니라 추세 기준선**이다.
+#   소실의 57% 는 정당한 제3자 끼어들기 차단이라(arch/100 §17.2) "허용 소실률"
+#   같은 설계 약속이 없다. 자동으로 정당/오삭제를 가를 수 없으므로, 실측
+#   기준선 33.7%(2026-08-12) + 마진으로 **급증만** 잡는다. 절대 판정 아님.
+report('대사 소실률 (추세 감시, 기준선 33.7%)', int(v or 0), int(d or 0),
+       f"소실 대사 {lost}건 — 정당한 끼어들기 차단 포함. 계약 아님 (arch/100 §17.2)",
+       'raw_completion ↔ llm_output 인용문 수', threshold=0.44)
 
 # ── C2. 대사 전멸 — 말하는 정황만 남고 말이 없다 ────────────────────
 v2 = q1(base + " SELECT count(*) FROM p WHERE raw_q > 0 AND saved_q = 0;")

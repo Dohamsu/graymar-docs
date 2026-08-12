@@ -8,7 +8,18 @@ CLAUDE.md `Critical Design Invariants` 중 **기계 검증 가능한 것**을 �
 철칙(arch/101 §5): **분모 없는 판정 금지.** 0건은 "그 상태가 N번 있었는데
 0건"일 때만 유효하다. N=0 이면 verdict 는 UNDECIDABLE 이지 OK 가 아니다.
 """
-import json, re, subprocess, sys, pathlib
+import argparse, json, re, subprocess, sys, pathlib
+
+# [M2 감사 2026-08-12 — 체크리스트 C3] 시간 창 정책.
+#   DB 는 과거 코드의 흔적을 계속 들고 있어서, 위반 **건수**를 세는 검사는
+#   창이 없으면 수정해도 숫자가 안 준다 (#9 Heat 가 11 로 고정돼 있었다).
+#   반대로 **희귀 사건**(엔딩)과 **비율** 검사는 표본을 모아야 해서 전 기간이 맞다.
+#   항목마다 어느 쪽인지 명시한다 — 기본값에 맡기지 않는다.
+_ap = argparse.ArgumentParser()
+_ap.add_argument('--days', type=int, default=7, help='위반 건수 검사의 시간 창')
+ARGS = _ap.parse_args()
+WINDOW = f"{ARGS.days} days"
+W = f"AND created_at > now() - interval '{WINDOW}'"
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / 'server' / 'src'
@@ -69,17 +80,16 @@ if rows is not None:
 # ── #6 Action slot cap = 3 ──────────────────────────────────────────
 # [2회차 정정] 1회차는 server_result->state->actionSlots 를 봤으나 분모 0 —
 #   실제 경로는 ui->actionSlots 다 (분모 없는 판정 금지 철칙에 걸려 UNDECIDABLE).
-v, e = one("""SELECT count(*) FROM turns
-  WHERE jsonb_array_length(COALESCE(server_result->'ui'->'actionSlots','[]'::jsonb)) > 3;""")
-d, _ = one("SELECT count(*) FROM turns WHERE server_result->'ui' ? 'actionSlots';")
-report(6, 'Action slot cap ≤ 3', int(v or 0), int(d or 0),
+v, e = one(f"""SELECT count(*) FROM turns
+  WHERE jsonb_array_length(COALESCE(server_result->'ui'->'actionSlots','[]'::jsonb)) > 3 {W};""")
+d, _ = one(f"SELECT count(*) FROM turns WHERE server_result->'ui' ? 'actionSlots' {W};")
+report(6, f'Action slot cap ≤ 3 ({WINDOW})', int(v or 0), int(d or 0),
        repro="server_result->state->actionSlots 길이 > 3")
 
 # ── #9 Heat ±8 clamp / 0~100 ────────────────────────────────────────
 #   [5회차] 시간 창 도입. DB 는 과거 코드의 흔적을 계속 들고 있어서, 수정해도
 #   전 기간 집계는 줄지 않는다 (수정은 앞으로만 유효). 최근 창으로 봐야
 #   "지금 코드가 계약을 지키는가" 를 판정할 수 있다.
-WINDOW = "7 days"
 v, e = one(f"""WITH h AS (
   SELECT run_id, turn_no, (server_result->'ui'->'worldState'->>'hubHeat')::numeric AS heat
   FROM turns WHERE server_result->'ui'->'worldState' ? 'hubHeat'
@@ -106,7 +116,7 @@ d, _ = one("SELECT count(*) FROM turns WHERE llm_prompt IS NOT NULL AND jsonb_ty
 #   best-effort 라 하드 상한이 아니다 (CLAUDE.md 불변식 17 문면도 이번에 정정).
 #   실제 계약은 V12 게이트의 **발동률 ≤20%** 이므로 비율로 판정한다.
 rate = (int(v or 0) / int(d)) if d and int(d) else 0.0
-report(17, '프롬프트 초과 발동률 ≤20% (V12)',
+report(17, '프롬프트 초과 발동률 ≤20% (전 기간·비율)',
        0 if rate <= 0.20 else int(v or 0), int(d or 0),
        f'초과 {v}/{d} = {rate*100:.1f}% (상한 아님 — best-effort 백스톱)',
        'messages[].content 합계 > 16500 비율')
@@ -118,7 +128,7 @@ v, e = one("""SELECT count(*) FROM run_sessions s
     AND (SELECT count(*) FROM turns t WHERE t.run_id=s.id) < 15;""")
 d, _ = one("""SELECT count(*) FROM run_sessions
   WHERE ending_summary IS NOT NULL AND (ending_summary->>'endingType') ILIKE '%ALL_RESOLVED%';""")
-report(19, 'NATURAL 엔딩 ≥ 15턴', int(v or 0), int(d or 0))
+report(19, 'NATURAL 엔딩 ≥ 15턴 (전 기간)', int(v or 0), int(d or 0))
 
 # ── #31 프리셋 defaultTraitId 필수 ──────────────────────────────────
 miss, tot = [], 0
@@ -194,16 +204,16 @@ report(45, '엔진 콘텐츠 ID 리터럴 금지', len(hits), engine_files,
        "실제 팩 ID 와 일치하는 리터럴만 위반 (enum·접두규약 제외)")
 
 # ── #49 timePhase = phaseV2 파생 미러 ───────────────────────────────
-v, e = one("""WITH w AS (
+v, e = one(f"""WITH w AS (
   SELECT server_result->'ui'->'worldState' AS ws FROM turns
   WHERE server_result->'ui'->'worldState' ? 'timePhase'
-    AND server_result->'ui'->'worldState' ? 'phaseV2')
+    AND server_result->'ui'->'worldState' ? 'phaseV2' {W})
 SELECT count(*) FROM w
 WHERE (ws->>'timePhase') <> CASE WHEN ws->>'phaseV2' IN ('NIGHT','DUSK') THEN 'NIGHT' ELSE 'DAY' END;""")
-d, _ = one("""SELECT count(*) FROM turns
+d, _ = one(f"""SELECT count(*) FROM turns
   WHERE server_result->'ui'->'worldState' ? 'timePhase'
-    AND server_result->'ui'->'worldState' ? 'phaseV2';""")
-report(49, 'timePhase = phaseV2 파생 미러', int(v or 0), int(d or 0),
+    AND server_result->'ui'->'worldState' ? 'phaseV2' {W};""")
+report(49, f'timePhase = phaseV2 파생 미러 ({WINDOW})', int(v or 0), int(d or 0),
        repro='timePhase ↔ deriveTimePhaseFromV2(phaseV2) 불일치')
 
 # ── 출력 ────────────────────────────────────────────────────────────

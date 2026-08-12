@@ -21,11 +21,19 @@ SRC = ROOT / 'server' / 'src'
 DB = ['docker', 'exec', 'textRpg-db', 'psql', '-U', 'user', '-d', 'textRpg', '-At', '-c']
 
 
-def stats(jsonb_path, table='run_sessions', unnest=None):
-    """jsonb 경로의 분포 (max·p99·p50·nonzero비율·표본수)."""
+def stats(jsonb_path, table='run_sessions', unnest=None, days=None):
+    """jsonb 경로의 분포 (max·p99·p50·nonzero비율·표본수).
+
+    [M2 감사 2026-08-12 — 체크리스트 C3] days 를 주면 최근 창으로 좁힌다.
+    전 기간 분포는 "설계 임계가 현실과 맞는가" 를 보고, 최근 창은 "축적을
+    고친 효과가 나타나는가" 를 본다. 둘 다 필요하다 — 전 기간만 보면
+    개선이 과거 데이터에 묻히고, 최근만 보면 표본이 얇아 p99 가 요동친다.
+    """
+    win = f"AND s.updated_at > now() - interval '{days} days'" if days else ""
     if unnest:
         sql = f"""WITH v AS (SELECT ({unnest})::numeric AS x FROM {table} s,
-                     jsonb_each(s.run_state->'npcStates') e WHERE {unnest} IS NOT NULL)
+                     jsonb_each(s.run_state->'npcStates') e
+                     WHERE {unnest} IS NOT NULL {win})
         SELECT count(*), max(x),
                percentile_cont(0.99) WITHIN GROUP (ORDER BY x),
                percentile_cont(0.50) WITHIN GROUP (ORDER BY x),
@@ -68,6 +76,7 @@ findings = []
 for label, cname, path in AXES:
     thr = const(cname)
     st = stats(path, unnest=path)
+    st7 = stats(path, unnest=path, days=7)
     if thr is None or st is None:
         findings.append((label, cname, thr, None, 'ERROR', ''))
         continue
@@ -79,9 +88,11 @@ for label, cname, path in AXES:
         v = 'ALWAYS_ON'
     else:
         v = 'OK'
+    recent = (f" | 최근7일 max {st7['max']:.0f} · 0아님 {100*st7['nz']/st7['n']:.1f}% (n={st7['n']})"
+              if st7 else " | 최근7일 표본 없음")
     findings.append((label, cname, thr, st, v,
-                     f"max {st['max']:.0f} · p99 {st['p99']:.0f} · p50 {st['p50']:.0f} · "
-                     f"0아님 {100*st['nz']/st['n']:.1f}% (n={st['n']})"))
+                     f"전기간 max {st['max']:.0f} · p99 {st['p99']:.0f} · p50 {st['p50']:.0f} · "
+                     f"0아님 {100*st['nz']/st['n']:.1f}% (n={st['n']}){recent}"))
 
 MARK = {'UNREACHABLE': '❌', 'NEAR_DEAD': '⚠️ ', 'ALWAYS_ON': '⚠️ ', 'ERROR': '⚠️ ', 'OK': '✅'}
 print('# D족 도달성 — 임계 상수 ↔ 실제 분포\n')

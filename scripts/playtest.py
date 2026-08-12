@@ -37,6 +37,7 @@ args = parser.parse_args()
 
 BASE = args.base
 MAX_TURNS = args.turns
+_run_ended_naturally = False  # [M1] 엔딩 도달 여부 — V0 부분 실행 판정 예외
 # 정본 테스터 계정 재사용 (register 409 → login fallback). --new-account 시에만 새로 생성.
 # 어드민 집계 제외·정리 대상은 테스트 도메인 기준 (server/src/common/tester.util.ts).
 EMAIL = f"playtest_{int(time.time())}@test.com" if args.new_account else "playtest@test.com"
@@ -406,6 +407,7 @@ for turn_i in range(MAX_TURNS):
     run_status = state.get("run", {}).get("status", "")
     if run_status == "RUN_ENDED":
         print(f"  [RUN_ENDED at turn {turn_i}]", flush=True)
+        _run_ended_naturally = True
         break
 
     current_turn = state.get("run", {}).get("currentTurnNo", current_turn)
@@ -593,6 +595,7 @@ for turn_i in range(MAX_TURNS):
 
     if node_outcome == "RUN_ENDED":
         print(f"  [RUN_ENDED]", flush=True)
+        _run_ended_naturally = True
         break
 
     if node_outcome == "NODE_ENDED":
@@ -638,15 +641,29 @@ posture_none = [nid for nid, n in npc_states.items() if n.get("posture") is None
 print(f"\n[V3] NPC posture=None: {len(posture_none)}명", flush=True)
 
 # V4: 감정축
+#   [M1 감사 2026-08-12 — 체크리스트 C8/C2] 기존 판정은 `trust != 0 or fear != 0`
+#   이었으나 **trust 는 콘텐츠 초기값이 있다** (팩별 5~14명, 예: NPC_SS_IREN 30).
+#   프리셋 npcPostureOverrides 의 trustDelta 도 런 시작 시 얹힌다. 그래서 런에서
+#   감정이 **전혀 움직이지 않아도** 게이트가 통과했다 — "감정축이 작동한다" 를
+#   검증한다고 주장하면서 실제로는 "초기값이 0 이 아닌 NPC가 있다" 를 봤다.
+#   판정을 **초기값이 0 인 축(fear·suspicion·attachment·respect)의 실변동**으로
+#   바꾼다. trust 는 초기값 오염이 있어 계측으로만 남긴다.
+#   근거: arch/100 §13 — fear p99 0.0 · suspicion 2.0% 만 0 아님.
 print(f"\n[V4] NPC 감정축:", flush=True)
-emo_active = 0
+ZERO_INIT_AXES = ("fear", "suspicion", "attachment", "respect")
+emo_active = 0          # 게이트 대상 — 초기값 0 축이 움직인 NPC 수
+emo_trust_only = 0      # 계측 — trust 만 0 아님 (초기값일 수 있음)
 for npc_id, npc in npc_states.items():
     emo = npc.get("emotional", {})
-    trust = emo.get("trust", 0)
-    fear = emo.get("fear", 0)
-    if trust != 0 or fear != 0:
+    moved = [a for a in ZERO_INIT_AXES if emo.get(a, 0)]
+    if moved:
         emo_active += 1
-        print(f"  {npc_id}: trust={trust} fear={fear}", flush=True)
+        print(f"  {npc_id}: " + " ".join(f"{a}={emo.get(a)}" for a in moved)
+              + f" (trust={emo.get('trust', 0)})", flush=True)
+    elif emo.get("trust", 0):
+        emo_trust_only += 1
+print(f"  실변동 NPC {emo_active}명 · trust만 0아님 {emo_trust_only}명 "
+      f"(초기값 포함이라 게이트 제외)", flush=True)
 
 # V5: structuredMemory
 structured = memory.get("structuredMemory", None)
@@ -724,6 +741,45 @@ for t in turn_logs:
             found = portrait_name in narr
         if not found and narr and not narr.startswith("[LLM_"):
             v8_issues.append(f"T{t['turn']}: 카드={portrait_name}({portrait_id}) 서술에 없음")
+# [M1 감사 2026-08-12 — 체크리스트 C5] 표시명 → npcId 정규화 맵.
+#   V8 은 화자 라벨과 마커 이름을 **문자열로** 비교해 왔다. 같은 NPC 를 역할명과
+#   실명으로 부르면 불일치로 잡힌다 — 실측: 화자 '책임자' ≠ 마커 '마이렐 단 경'
+#   (둘 다 NPC_MAIREL). arch/66 소개 이후 마커는 실명, 서술은 역할명을 쓰는
+#   정상 동작인데 게이트가 오탐을 냈다. 비교는 반드시 ID 로 정규화 후 한다.
+_v8_name2id = {}
+try:
+    _v8_pack = args.scenario or "graymar_v1"
+    import os as _os8
+    _v8_path = _os8.path.join(_os8.path.dirname(_os8.path.abspath(__file__)),
+                              "..", "content", _v8_pack, "npcs.json")
+    with open(_v8_path, encoding="utf-8") as _f8:
+        _v8_raw = json.load(_f8)
+    _v8_list = _v8_raw if isinstance(_v8_raw, list) else _v8_raw.get("npcs", [])
+    for _n in _v8_list:
+        _nid = _n.get("npcId")
+        if not _nid:
+            continue
+        _cands = [_n.get("name"), _n.get("unknownAlias"), _n.get("shortAlias")]
+        _alias = _n.get("unknownAlias") or ""
+        if len(_alias.split()) > 1:
+            _cands.append(_alias.split()[-1])      # 역할명 (책임자·장교·수녀)
+        _cands += list(_n.get("aliases") or [])
+        for _c in _cands:
+            if isinstance(_c, str) and len(_c) >= 2:
+                _v8_name2id.setdefault(_c, _nid)
+except Exception as _e8:
+    print(f"  ⚠️ V8 npcId 정규화 맵 로드 실패 ({_e8}) — 문자열 비교로 폴백", flush=True)
+
+
+def _v8_same_npc(a: str, b: str) -> bool:
+    """두 표시명이 같은 NPC 를 가리키는가 (ID 정규화 우선, 실패 시 문자열)."""
+    ia, ib = _v8_name2id.get(a), _v8_name2id.get(b)
+    if ia and ib:
+        return ia == ib
+    # 맵에 없으면(동적 NPC·환각 등) 기존 substring 비교로 폴백
+    return a in b or b in a
+
+
     # @마커 NPC가 서술 문맥과 불일치 (화자 이름 ≠ 마커 이름)
     marker_matches = list(re.finditer(r'@\[([^\]|]+)(?:\|[^\]]+)?\]\s*["\u201C\u201D]', narr))
     for mm in marker_matches:
@@ -741,7 +797,7 @@ for t in turn_logs:
             player_refs = {"당신", "그대", "용병", "자네", "이방인", "나그네", "손님", "낯선"}
             if speaker in player_refs:
                 continue
-            if speaker not in marker_name and marker_name not in speaker:
+            if not _v8_same_npc(speaker, marker_name):
                 v8_issues.append(f"T{t['turn']}: 화자={speaker} ≠ 마커={marker_name}")
 if v8_issues:
     for issue in v8_issues[:5]:
@@ -1247,7 +1303,12 @@ print("\n" + "=" * 60, flush=True)
 all_checks = {
     # V0 — 실행 턴 존재 게이트: 턴 0건이면 나머지 검증은 전부 무의미 (포인트
     # 소진·서버 다운 등으로 0턴인데 8/11 PASS 나던 false-PASS 방어, 2026-07-23)
-    "V0_turns_executed": len(turn_logs) > 0,
+    # [M1 감사 2026-08-12 — 체크리스트 C2] 기존은 `> 0` 이라 **부분 실행**을
+    #   못 잡았다. 15턴 요청 → 3턴 사망도 통과하고, 그 얇은 표본으로 나머지
+    #   게이트가 전부 PASS 를 찍는다 (분모가 작으면 위반도 안 나온다).
+    #   엔딩 자연 종료는 정당하므로 예외. 그 외에는 요청 턴의 50% 이상 요구.
+    "V0_turns_executed": len(turn_logs) > 0 and (
+        _run_ended_naturally or len(turn_logs) >= MAX_TURNS * 0.5),
     "V1_incidents": len(incidents) > 0,
     "V2_encounter": enc_pass >= 2,
     "V3_posture": len(posture_none) == 0,
