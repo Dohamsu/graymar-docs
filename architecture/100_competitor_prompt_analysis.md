@@ -855,3 +855,86 @@ V12 는 이 수정과 무관하다 — ① 수정 **전** 런(devotee)에서도 
 일반화하면: **기본값이 있는 옵셔널 필드의 키 오타는 조용히 기능을 끈다.**
 같은 위험이 있는 곳은 `?? 기본값` 으로 읽는 크로스 모듈 payload 전반이다.
 §14.2 처럼 **원값을 로그로 한 번 찍어보는 것**이 유일하게 확실한 확인법이었다.
+
+## 16. payload 키 대조 감사 — 같은 부류 전수 조사 (2026-08-12)
+
+§14 의 `actionType`/`parsedType` 버그가 테스트·게이트·플레이테스트 전부를
+통과한 이유는 **`?? 기본값` 이 문법적으로 정상이고 결과도 그럴듯하기** 때문이다.
+같은 부류가 더 있는지 기계적으로 찾는 방법을 만들었다.
+
+### 16.1 방법 — DB jsonb 를 정답지로 쓴다
+
+모듈 간 payload 는 대부분 `Record<string, unknown>` 캐스팅이라 타입 검사를
+빠져나간다. 그러나 **그 payload 가 DB jsonb 에 그대로 저장**되므로,
+`jsonb_object_keys()` 로 뽑은 실제 키 집합이 정답지가 된다. 코드가 읽는 키가
+정답지에 없으면 그 읽기는 항상 undefined 다.
+
+정본 스크립트: **`scripts/audit_payload_keys.py`**
+
+```bash
+python3 scripts/audit_payload_keys.py --lifetime
+```
+
+감사 대상 4종: `ui.actionContext` · `server_result.ui` ·
+`runState.npcStates[*]` · `runState` 최상위.
+
+**오검출 3종을 반드시 수동 대조**해야 한다 (스크립트 docstring 에도 기재).
+
+1. **폴백 체인은 정상** — `a?.parsedType ?? a?.actionType ?? '기본'` 처럼 정본
+   키를 먼저 보는 방어 코드. 스크립트가 `↩ 폴백체인` 으로 표시해 분리한다.
+2. **희귀 상태의 키는 판정 불가** — 엔딩·레전더리 드랍처럼 드문 경로에서만
+   쓰이는 키는 표본에 없을 뿐이다. 해당 상태의 DB 건수를 함께 봐야 한다.
+3. **변수명 정규식이 거칠다** — `rs` 는 admin/party 의 DB row 와 충돌해
+   `user_id`·`party_id` 를 긁었다. 대상 정규식을 좁혀 해소.
+
+### 16.2 결과 — 확정 사문화 3건
+
+전 기간 표본(런 382 · 턴 3,436)에서, **쓰기 지점이 코드 전체에 존재하지 않는**
+읽기 3건이 확인됐다. 전부 §14 와 같은 부류다.
+
+| # | 읽기 위치 | 키 | 실제 상태 |
+|---|---|---|---|
+| **1** | `context-builder:800~801` | `ui.equipmentTags`<br>`ui.activeSetNames` | **쓰기 지점 0곳.** 항상 `[]` |
+| **2** | `context-builder:2601` | `ui.actionContext.relatedIncidentId` | 이 키는 `notificationAssembler.build()` **인자**로만 쓴다 (`turns.service:2712`). `actionContext` 에 들어간 적 없음 |
+| **3** | `context-builder:922` | `runState.lorebook` | **쓰기 지점 0곳.** 레포 전체에서 이 한 줄만 참조 |
+
+각각의 실제 영향:
+
+1. **장비 서술 태그가 프롬프트에 영구 미출력.** `prompt-builder:218~222` 의
+   `활성 세트: ...` 블록은 `length > 0` 게이트라 **한 번도 렌더된 적이 없다.**
+   arch/12 장비 세트 효과가 수치로는 적용되지만 **서술에는 반영되지 않는다.**
+2. **Incident 기억 선별 경로 하나가 죽어 있다.** 직후 `primaryNpcId` 기반
+   경로가 있어 완전 무력화는 아니나, 사건 연관 기억 주입이 설계보다 좁다.
+3. **로어북 중복 필터 무효.** `discoveredFacts`/`discoveredSecrets` 가 항상 `[]`
+   라 `lorebook.service:183·241` 의 "이미 공개된 항목 건너뛰기"가 동작하지
+   않는다 — 플레이어가 아는 사실을 다시 주입할 수 있다.
+
+### 16.3 판정 보류 3건 (희귀 상태 — 오검출 가능)
+
+| 키 | DB 표본 | 판단 |
+|---|---|---|
+| `ui.endingResult` | RUN_ENDED **1런**(그마저 summary 없음) | 엔딩 자체가 거의 없어 판정 불가. 타입 선언 존재(`server-result.ts:296`) |
+| `runState.dynamicNpcs` | karnholt(AUTONOMOUS) 런 **0건** | 쓰기 지점 존재(`dynamic-npc.ts:81`). 해당 팩 미플레이 |
+| `runState.legendaryRewards` | 레전더리 드랍 시에만 | 쓰기 지점 존재(`turns.service:966`) |
+
+**이 3건은 "버그 없음"이 아니라 "이 데이터로는 확인 불가"다.** 엔딩 런이
+쌓이면 재감사한다.
+
+### 16.4 근본 대책 — 감사보다 타입
+
+이 감사는 **사후 탐지**다. 애초에 못 쓰게 하려면 payload 를 `Record<string,
+unknown>` 으로 캐스팅하지 않아야 한다. `ui.actionContext` 는 이미
+`server-result.ts` 에 타입이 있는데 소비처가 캐스팅으로 우회하고 있다.
+
+- 단기: 이 스크립트를 **엔진 변경 시 수동 실행** (게이트로 묶기엔 오검출이 많다)
+- 중기: `ui.actionContext` 등 고빈도 payload 를 **선언된 타입으로 읽기**
+  (`as Record<string, unknown>` 제거) — 그러면 키 오타가 컴파일 에러가 된다
+- 그때까지의 안전망: **`?? 기본값` 으로 읽는 크로스 모듈 필드는
+  §14.2 처럼 원값을 한 번 로그로 찍어 확인**한다. 이것이 이번 3건을 찾은
+  유일하게 확실한 방법이었다.
+
+### 16.5 수정 여부
+
+**3건 모두 이번에는 고치지 않았다.** 각각 영향 범위가 다르고(프롬프트 블록
+신규 출력 / 기억 주입 확대 / 로어북 필터 활성화), 켜지는 순간 서술 입력이
+바뀌므로 §15 와 같은 전후 계측이 필요하다. **별도 트랙으로 분리한다.**
