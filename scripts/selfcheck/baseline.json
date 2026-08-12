@@ -1,0 +1,27 @@
+{
+  "_doc": "수용된 예외 (arch/101 §4). expires 는 영구 면제가 아니라 유예 — 만료되면 다시 후보로 올라온다.",
+  "entries": [
+    {
+      "id": "E:alias_collision:graymar_v1:장교",
+      "reason": "NPC_CAPTAIN_BREN(단정한 장교)·NPC_GUARD_CAPTAIN(당당한 수비대 장교) 둘 다 SUB 티어 명명 인물이라, 콘텐츠 개명은 캐릭터 정체성 변경이 된다. 다른 충돌(BG 측)과 달리 대사를 하는 인물들이다.",
+      "mitigation": "코드 방어로 대체 — arch/100 §18 모호 라벨 초점 NPC 우선(resolveNpcIdFromAlias preferNpcId). 실제로 전멸 12턴 재생에서 GUARD_CAPTAIN 케이스가 해소됐다.",
+      "evidence": "server/src/llm/npc-dialogue-marker.alias-ambiguity.spec.ts",
+      "accepted": "2026-08-12",
+      "expires": "2026-11-12"
+    },
+    {
+      "id": "A:#19:natural_ending_min_turns",
+      "reason": "분모 0 — DB 에 ALL_RESOLVED 엔딩이 없다. 위반이 없는 게 아니라 판정할 표본이 없다 (arch/101 §5 철칙).",
+      "mitigation": "엔딩 런이 쌓이면 자동 재판정. 그때까지 UNDECIDABLE 표기 유지.",
+      "accepted": "2026-08-12",
+      "expires": "2026-10-12"
+    },
+    {
+      "id": "E:portrait_asset_exists",
+      "reason": "분모 0 — npcs.json 에 portraitUrl/imageUrl 필드가 없다. 초상화는 arch/80 팩 에셋 풀이 파일명 스코어로 동적 배정하므로 정적 참조가 존재하지 않는다.",
+      "mitigation": "디텍터 재설계 필요 — content/<pack>/assets/portraits/ 실파일 ↔ sync 산출물(client/public) 대조로 바꿔야 한다.",
+      "accepted": "2026-08-12",
+      "expires": "2026-09-12"
+    }
+  ]
+}

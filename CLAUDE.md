@@ -323,7 +323,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 14. **LOCATION 단기기억** — locationSessionTurns(최대 6턴+MidSummary) LLM 전달. 떠날 때 요약 저장.
 15. **NPC 이름 비공개→공개 — 자기소개 사전 확정** — FRIENDLY·FEARFUL 1회 / CAUTIOUS 2회 / CALCULATING·HOSTILE 3회 임계 도달 시 **본인이 직접 자기소개** (전 성향 통일, posture별 톤 차등). nano가 실명 포함 대사를 사전 생성(서버 검증+어체별 템플릿 보장) → 프롬프트 positive 주입 → 미반영 시 그 턴에 별칭 마커로 서버 삽입 (지연 0턴). 성사 판정은 "실명이 따옴표 대사 안에 등장". 2턴 분리는 **마커 표시명** 기준(소개 턴 별칭 마커, 다음 턴부터 실명 — IntroMarkerNorm)이며 본문·대사 실명은 소개 턴부터 허용. 재등장 공개·생성 실패 예외만 외부 경로(제3자 호명/단서) fallback. 미소개 실명 차단·IntroRollback은 유지 — architecture/66.
 16. **장면 연속성 보장** — sceneFrame 3단계 억제 + 씬 이벤트 1턴 유지 + 7개 연속성 규칙.
-17. **Token Budget 2단** — 메모리 블록 2500(블록별 배분·저우선 트리밍) + 프롬프트 총량 백스톱 `GRAND_TOTAL_CHAR_BUDGET` 16,500자(≈10.06k tok — 11k부터 soft 지시 절벽 실측, 마진 0.9k tok. 2026-07-28 상향은 압축 선행 후에만 허용). 백스톱 제거 순서는 [세계 상태] → [NPC 일상] → 기억 부분 절삭 — 기억·L0 절대 보호. 재비대는 플레이테스트 V12 게이트(발동률 ≤20%·avg ≤15,000자)가 감시 — arch/79 2·3차.
+17. **Token Budget 2단** — 메모리 블록 2500(블록별 배분·저우선 트리밍) + 프롬프트 총량 백스톱 `GRAND_TOTAL_CHAR_BUDGET` 16,500자(≈10.06k tok — 11k부터 soft 지시 절벽 실측, 마진 0.9k tok. 2026-07-28 상향은 압축 선행 후에만 허용). 백스톱 제거 순서는 [세계 상태] → [NPC 일상] → 기억 부분 절삭 — 기억·L0 절대 보호. **백스톱은 하드 상한이 아니다** — 제거 대상 블록이 없거나 작으면 초과분이 그대로 남는다 (실측 494/2,781턴 = **17.8%가 16,500 초과**, 최대 16,620자. arch/101 자기점검 1회차). 상한처럼 읽고 여유를 계산하면 틀린다. 재비대는 플레이테스트 V12 게이트(발동률 ≤20%·avg ≤15,000자)가 감시 — arch/79 2·3차.
 18. **Procedural Plot Protection** — 동적 이벤트에서 arcRouteTag/commitmentDelta 절대 금지.
 19. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns ≥ 15 이상이어야 발동.
 20. **RUN_ENDED 시 메모리 통합** — go_hub/MOVE_LOCATION 없이 런 종료 시에도 finalizeVisit() 호출.

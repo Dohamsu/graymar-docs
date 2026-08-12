@@ -1,0 +1,92 @@
+[
+  {
+    "inv": 9,
+    "name": "Heat 턴간 변동 ≤ ±8 (7 days)",
+    "violations": 2,
+    "denominator": 541,
+    "verdict": "VIOLATION",
+    "detail": "",
+    "repro": "인접 턴 hubHeat 차 — 시간 창 안"
+  },
+  {
+    "inv": 19,
+    "name": "NATURAL 엔딩 ≥ 15턴",
+    "violations": 0,
+    "denominator": 0,
+    "verdict": "UNDECIDABLE",
+    "detail": "",
+    "repro": ""
+  },
+  {
+    "inv": 3,
+    "name": "Idempotency 유니크 제약",
+    "violations": 0,
+    "denominator": 2,
+    "verdict": "OK",
+    "detail": "(run_id,turn_no)=True (run_id,idempotency_key)=True",
+    "repro": "psql: \\d turns"
+  },
+  {
+    "inv": 6,
+    "name": "Action slot cap ≤ 3",
+    "violations": 0,
+    "denominator": 3520,
+    "verdict": "OK",
+    "detail": "",
+    "repro": "server_result->state->actionSlots 길이 > 3"
+  },
+  {
+    "inv": 9,
+    "name": "Heat 범위 0~100",
+    "violations": 0,
+    "denominator": 541,
+    "verdict": "OK",
+    "detail": "",
+    "repro": ""
+  },
+  {
+    "inv": 17,
+    "name": "프롬프트 초과 발동률 ≤20% (V12)",
+    "violations": 0,
+    "denominator": 2781,
+    "verdict": "OK",
+    "detail": "초과 494/2781 = 17.8% (상한 아님 — best-effort 백스톱)",
+    "repro": "messages[].content 합계 > 16500 비율"
+  },
+  {
+    "inv": 31,
+    "name": "프리셋 defaultTraitId 존재",
+    "violations": 0,
+    "denominator": 22,
+    "verdict": "OK",
+    "detail": "",
+    "repro": "content/*/presets.json"
+  },
+  {
+    "inv": 42,
+    "name": "speechStyle 어구 예시 금지",
+    "violations": 0,
+    "denominator": 103,
+    "verdict": "OK",
+    "detail": "",
+    "repro": "content/*/npcs.json personality.speechStyle"
+  },
+  {
+    "inv": 45,
+    "name": "엔진 콘텐츠 ID 리터럴 금지",
+    "violations": 0,
+    "denominator": 127,
+    "verdict": "OK",
+    "detail": "",
+    "repro": "실제 팩 ID 와 일치하는 리터럴만 위반 (enum·접두규약 제외)"
+  },
+  {
+    "inv": 49,
+    "name": "timePhase = phaseV2 파생 미러",
+    "violations": 0,
+    "denominator": 1429,
+    "verdict": "OK",
+    "detail": "",
+    "repro": "timePhase ↔ deriveTimePhaseFromV2(phaseV2) 불일치"
+  }
+]

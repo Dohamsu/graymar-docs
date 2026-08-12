@@ -1090,7 +1090,7 @@
   {
     "npcId": "NPC_SD_BG_DRUNK",
     "name": "홀거",
-    "unknownAlias": "술에 전 광부",
+    "unknownAlias": "술에 전 주정꾼",
     "role": "술에 전 광부",
     "faction": null,
     "hostile": false,

@@ -1,0 +1,5 @@
+{"cycle":1,"date":"2026-08-12","families":["A"],"candidates":6,"confirmed":1,"false_positive":4,"undecidable":2,"note":"A족 신설. #9 진짜 위반 · #45 전량 오탐 · #17 문서 드리프트 · #6 분모 0"}
+{"cycle":2,"date":"2026-08-12","families":["A"],"candidates":4,"confirmed":1,"false_positive":1,"undecidable":1,"note":"디텍터 1차 정정 — #45 14→5 · #42 4→3 · #6 판정불가 해소"}
+{"cycle":3,"date":"2026-08-12","families":["A"],"candidates":3,"confirmed":1,"false_positive":0,"undecidable":1,"note":"#45 enum 제외 → 5→0. 디텍터 수렴"}
+{"cycle":4,"date":"2026-08-12","families":["A","E"],"candidates":4,"confirmed":2,"false_positive":0,"undecidable":2,"note":"E족 신설 — 화자 후보 이름 충돌 8건(오늘 3종 + 신규 3종)"}
+{"cycle":5,"date":"2026-08-12","families":["A","E"],"candidates":3,"confirmed":3,"false_positive":0,"undecidable":2,"note":"정리 — CLAUDE.md #17 문서 드리프트 정정. #9·#42·E1 은 동작 변경이라 보고만"}

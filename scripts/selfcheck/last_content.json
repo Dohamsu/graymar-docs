@@ -1,0 +1,42 @@
+[
+  {
+    "name": "화자 후보 이름 충돌",
+    "violations": 1,
+    "denominator": 346,
+    "verdict": "VIOLATION",
+    "detail": "graymar_v1:장교←2명(NPC_CAPTAIN_BREN,NPC_GUARD_CAPTAIN)",
+    "repro": "unknownAlias 끝 단어·shortAlias 가 팩 내 유일한가"
+  },
+  {
+    "name": "초상화 에셋 실존",
+    "violations": 0,
+    "denominator": 0,
+    "verdict": "UNDECIDABLE",
+    "detail": "",
+    "repro": "npcs.json portraitUrl ↔ client/public"
+  },
+  {
+    "name": "프리셋 defaultTraitId 참조 실존",
+    "violations": 0,
+    "denominator": 22,
+    "verdict": "OK",
+    "detail": "",
+    "repro": "presets.defaultTraitId ↔ traits.json"
+  },
+  {
+    "name": "questState 명명 규약 S0~S5",
+    "violations": 0,
+    "denominator": 18,
+    "verdict": "OK",
+    "detail": "",
+    "repro": "quest.json questState 명명"
+  },
+  {
+    "name": "NPC tier ∈ CORE/SUB/BACKGROUND",
+    "violations": 0,
+    "denominator": 109,
+    "verdict": "OK",
+    "detail": "",
+    "repro": ""
+  }
+]
