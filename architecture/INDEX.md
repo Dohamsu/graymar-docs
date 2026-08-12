@@ -243,3 +243,5 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 파티 기능                | [[architecture/24_multiplayer_party_system|multiplayer party system]] → server `party/` 모듈                    |
 | 포인트/과금 (소프트 베타) | [[architecture/85_point_system|point system]] → server `points/` 모듈 + `turns.chargeKey`                     |
 | 플레이테스트 이슈 회귀   | [[architecture/fixplan_history|fixplan history]] (중복 확인)                                           |
+
+- **100. 경쟁 프롬프트 분석** — 타 텍스트게임(`천하만리행`) CoT 노출분에서 역추론한 프롬프트 구조·서술 기법. 5단계 사고 파이프라인, 대비축 중심 묘사, 심리 단계 분해. 이식 가능 2건(Narrator quotes·대비축), 결정 대기 2건(문체 샘플 앵커 ↔ 불변식 41·42 / 문단 순서 ↔ 프롬프트 예산), 기각 권고 1건(시점 변경). 상태 갱신을 LLM에 위임하는 그쪽 방식은 불변식 1·2와 상충 — 이식 대상이 아니라 차별점으로 유지.

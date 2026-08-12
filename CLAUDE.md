@@ -819,6 +819,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 87_admin_console.md | ✅ 구현됨 | 어드민 콘솔 — users.role+AdminGuard 하이브리드+@AdminEndpoint(감사 로그)+관제… |
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 |
 | 79_prompt_token_optimization.md | ✅ 구현됨 | 측정 기반 프롬프트 예산 |
+| 100_competitor_prompt_analysis.md | 📎 분석 | 경쟁 텍스트게임 프롬프트 구조 역추론 — 서술 기법 이식 검토 (착수 2·결정대기 2·기각권고 1) |
 | archive/37_streaming_transition_issues.md | 📜 아카이브 | 35+36과 중복 |
 | archive/38_stream_vs_nonstream_comparison.md | 📜 아카이브 | 35와 중복 |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
