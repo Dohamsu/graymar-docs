@@ -3,3 +3,5 @@
 {"cycle":3,"date":"2026-08-12","families":["A"],"candidates":3,"confirmed":1,"false_positive":0,"undecidable":1,"note":"#45 enum 제외 → 5→0. 디텍터 수렴"}
 {"cycle":4,"date":"2026-08-12","families":["A","E"],"candidates":4,"confirmed":2,"false_positive":0,"undecidable":2,"note":"E족 신설 — 화자 후보 이름 충돌 8건(오늘 3종 + 신규 3종)"}
 {"cycle":5,"date":"2026-08-12","families":["A","E"],"candidates":3,"confirmed":3,"false_positive":0,"undecidable":2,"note":"정리 — CLAUDE.md #17 문서 드리프트 정정. #9·#42·E1 은 동작 변경이라 보고만"}
+{"cycle":6,"date":"2026-08-12","families":["A","E","B"],"candidates":11,"confirmed":0,"false_positive":0,"undecidable":2,"note":"수정 배포 후 전 디텍터 재검 — 신규 확정 0. 잔여는 전부 baseline 기지정. 수렴 조건 1/2회 달성"}
+{"cycle":7,"date":"2026-08-12","families":["C","D"],"candidates":9,"confirmed":4,"false_positive":2,"undecidable":0,"note":"C족·D족 신설. C: questReveal 오탐 2회 정정(객체 구조→factId 해석→revealMode 분해) 후 위반 0. D: 감정 임계 4종 전부 NEAR_DEAD 자동 재산출(arch/100 §13 수동 발견을 기계화)"}
