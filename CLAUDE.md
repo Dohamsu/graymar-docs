@@ -281,7 +281,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | Gemma 4 31B dense (메인, stream:true, provider allowlist Friendli·Venice·Novita·CoreWeave) / DeepSeek V4 Flash **0731** (3:7 교차 — 10턴 주기 3회. 2026-08-03 스냅샷 교체: A/B 실측 어미 준수 56.7→79.3%) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
+| LLM | Gemma 4 31B dense (메인, stream:true, provider allowlist Friendli·Venice·Novita·CoreWeave) / **gpt-5.6-luna** (5:5 교차 — 짝수 턴. 2026-08-13 DeepSeek 교체: 어체 위반 43~46%→6.4%, 마커 커버리지 75%→100% 실측) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
 
 ## LLM 설계 원칙 (필수 참고)
 
@@ -531,7 +531,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 LLM_PROVIDER=openai          # openai | claude | gemini | mock
 OPENAI_API_KEY=sk-...
 OPENAI_MODEL=google/gemma-4-31b-it   # OpenRouter 메인 모델 (Gemma 4 31B dense — 2026-07-22 승격, allowlist 전제. 이전 26B MoE)
-LLM_ALTERNATE_MODEL=deepseek/deepseek-v4-flash-0731  # 교차 모델 — 10턴 주기 3회(턴%10∈{2,5,8}), 5:5→3:7 축소 (2026-07-28, arch/95 §7). 2026-08-03 0731 스냅샷 교체 (A/B: 어미 준수 56.7→79.3%, 레이턴시 p50 5.5→8.3s 관찰 — 고정 슬러그 유지, ~latest 별칭 금지)
+LLM_ALTERNATE_MODEL=openai/gpt-5.6-luna  # 교차 모델 — 5:5(턴%10∈{0,2,4,6,8}=짝수). 2026-08-13 DeepSeek→Luna 교체 + 3:7→5:5 복원: 3:7 축소 사유(DeepSeek 어미 열세)가 모델 교체로 소멸. 30일 실측 — 어체 위반 Luna 6.4% / Gemma 14.6% / DeepSeek 43~46%, 마커 커버리지 Luna 100% / Gemma 99.6% / DeepSeek 74.8~77.5%. DeepSeek 무마커 대사는 초상화·화자 표시가 모두 실패(실측 런에서 최대 정보 공개 턴에 4연속 발생). 추론은 LLM_REASONING_EFFORT_MAP 으로 none 고정 필수 — 미지정 시 default_effort=medium 으로 켜져 출력 단가 과금. 계약은 model-alternation.spec.ts 가 고정
 OPENAI_BASE_URL=https://openrouter.ai/api/v1  # optional, OpenAI-compatible endpoint
 CLAUDE_API_KEY=               # optional
 GEMINI_API_KEY=               # optional
