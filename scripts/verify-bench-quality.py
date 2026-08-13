@@ -56,7 +56,11 @@ def load_runs(path=None):
             'docker', 'exec', 'textRpg-db', 'psql', '-U', 'user', '-d', 'textRpg', '-At',
             '-c',
             # JSON 배열로 받아 내부 | 충돌 회피
-            f"SELECT json_agg(json_build_object('turnNo', turn_no, 'text', coalesce(llm_output, '')) ORDER BY turn_no) FROM turns WHERE run_id = '{run_id}'",
+            # [2026-08-13] llm_model_used 를 함께 받는다 — 런 단위로 집계하면
+            # **교차 모델(3:7, 턴%10∈{2,5,8})이 오귀속**된다. 실측: Luna 런의
+            # 무마커 대사 1건이 실은 DeepSeek 턴이라 Luna 가 94.1% 로 저평가됐다
+            # (실제 100%). 모델 비교에서 이 오염은 결론을 뒤집을 수 있다.
+            f"SELECT json_agg(json_build_object('turnNo', turn_no, 'text', coalesce(llm_output, ''), 'model', llm_model_used) ORDER BY turn_no) FROM turns WHERE run_id = '{run_id}'",
         ]).decode('utf-8').strip()
         turns = json.loads(out) if out else []
         results.append({'modelId': model_id, 'runId': run_id, 'turns': turns})
@@ -157,7 +161,11 @@ def analyze(text, turn_no):
         prefix = text[line_start:m.start()]
         if re.search(r'@\[[^\]]+\]\s*$', prefix) or re.search(r'\S\s*:\s*$', prefix):
             marked += 1
-        elif re.search(r'(적혀|쓰여|씌어|적힌|문구|글귀|서명|장부|쪽지|편지)\s*\S{0,8}$', prefix):
+        elif re.search(
+            r'(적혀|쓰여|씌어|적힌|새겨|문구|글귀|글씨|서명|필체|장부|쪽지|편지|영수증|'
+            r'전표|문서|종이|벽보|전단|간판|표지|읽힌다|읽는다|읽어)\s*[^"“]{0,12}$',
+            prefix,
+        ):
             unmarked_doc += 1
         else:
             unmarked_dialogue += 1
@@ -229,9 +237,19 @@ def main():
     runs = load_runs(sys.argv[1] if len(sys.argv) > 1 else None)
     report = {}
     for r in runs:
-        per = [analyze(t['text'], t['turnNo']) for t in r['turns'] if t.get('text')]
-        summary = summarize(per)
-        report[r['modelId']] = {'runId': r['runId'], 'summary': summary, 'perTurn': per}
+        own, other = [], 0
+        for t in r['turns']:
+            if not t.get('text'):
+                continue
+            used = (t.get('model') or '').strip()
+            # 교차 모델 턴은 제외 — 이 런의 "설정 모델"이 실제로 쓴 턴만 센다
+            if used and used != r['modelId']:
+                other += 1
+                continue
+            own.append(analyze(t['text'], t['turnNo']))
+        summary = summarize(own)
+        summary['excludedCrossModelTurns'] = other
+        report[r['modelId']] = {'runId': r['runId'], 'summary': summary, 'perTurn': own}
 
     out_path = 'playtest-reports/bench_quality_verify.json'
     with open(out_path, 'w') as f:
@@ -243,7 +261,8 @@ def main():
     for model, data in report.items():
         s = data['summary']
         rows.append((model, s))
-        print(f"\n[{model}]  turns={s['turns']}")
+        print(f"\n[{model}]  turns={s['turns']}"
+              f"  (교차모델 제외 {s['excludedCrossModelTurns']}턴)")
         print(f"  dialogues={s['dialogueCount_total']}  markers={s['markerCount_total']}")
         print(f"  ★ 마커커버리지={s['markerCoverage_pct']}%  "
               f"(마커 {s['markedDialogue_total']} / 무마커대사 {s['unmarkedDialogue_total']} "
