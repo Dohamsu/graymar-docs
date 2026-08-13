@@ -62,10 +62,37 @@ except ImportError:
 
 session = requests.Session()
 
-def api(method, path, body=None):
-    url = f"{BASE}{path}"
+def _admin_token():
+    """server/.env 의 ADMIN_TOKEN — PATCH /v1/settings/llm 이 @AdminEndpoint (arch/87).
+
+    [2026-08-13] 어드민 가드 도입 이후 JWT 만으로는 403 이라 `--model` 전환이
+    통째로 실패했다. 다행히 호출부가 결과를 검증해 조용히 넘어가진 않았지만
+    (sys.exit(1)), 모델 지정 플레이테스트 자체가 불가능한 상태였다.
+    """
+    # _REPO_ROOT 는 아래 preflight 에서 정의되므로 여기서 직접 계산한다
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    env = os.path.join(root, "server", ".env")
     try:
-        r = session.request(method, url, json=body, timeout=30)
+        with open(env, encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("ADMIN_TOKEN="):
+                    return line.split("=", 1)[1].strip().strip('"')
+    except OSError:
+        pass
+    return None
+
+
+def api(method, path, body=None, admin=False):
+    url = f"{BASE}{path}"
+    headers = {}
+    if admin:
+        at = _admin_token()
+        if not at:
+            print("  [warn] ADMIN_TOKEN 을 server/.env 에서 못 찾음", flush=True)
+        else:
+            headers["x-admin-token"] = at
+    try:
+        r = session.request(method, url, json=body, timeout=30, headers=headers or None)
         return r.status_code, r.json() if r.text else {}
     except Exception as e:
         print(f"  API error: {e}", flush=True)
@@ -179,13 +206,13 @@ def dry_run_setup():
     global _orig_provider
     status, resp = api("GET", "/settings/llm")
     _orig_provider = resp.get("provider", "openai")
-    api("PATCH", "/settings/llm", {"provider": "mock"})
+    api("PATCH", "/settings/llm", {"provider": "mock"}, admin=True)
     print(f"  LLM provider: {_orig_provider} → mock", flush=True)
 
 def dry_run_teardown():
     """원래 LLM provider로 복원"""
     if _orig_provider:
-        api("PATCH", "/settings/llm", {"provider": _orig_provider})
+        api("PATCH", "/settings/llm", {"provider": _orig_provider}, admin=True)
         print(f"  LLM provider 복원: mock → {_orig_provider}", flush=True)
 
 def get_prompt(run_id, turn_no):
@@ -350,7 +377,8 @@ _orig_model = None
 if args.model:
     _, settings = api("GET", "/settings/llm")
     _orig_model = settings.get("openaiModel", "")
-    _, patched = api("PATCH", "/settings/llm", {"openaiModel": args.model})
+    # PATCH 는 @AdminEndpoint — x-admin-token 필요 (GET 은 JWT 로 충분)
+    _, patched = api("PATCH", "/settings/llm", {"openaiModel": args.model}, admin=True)
     if patched.get("openaiModel") != args.model:
         print(f"모델 전환 실패: {patched}", flush=True)
         sys.exit(1)
@@ -1759,8 +1787,19 @@ if args.dry_run:
 
 # 모델 복원
 if _orig_model and args.model:
-    api("PATCH", "/settings/llm", {"openaiModel": _orig_model})
-    print(f"모델 복원: {args.model} → {_orig_model}", flush=True)
+    _, _restored = api(
+        "PATCH", "/settings/llm", {"openaiModel": _orig_model}, admin=True
+    )
+    # 복원 실패를 조용히 넘기면 **프로덕션이 테스트 모델로 남는다**
+    # (launchd 상주 서비스 = api.dimtale.com). 실패 시 눈에 띄게 경고한다.
+    if _restored.get("openaiModel") != _orig_model:
+        print(
+            f"❌ 모델 복원 실패 — 서버가 {args.model} 로 남아 있다. "
+            f"수동 복원 필요: {_orig_model}",
+            flush=True,
+        )
+    else:
+        print(f"모델 복원: {args.model} → {_orig_model}", flush=True)
 
 print(f"=== 플레이테스트 완료 ===", flush=True)
 

@@ -8,7 +8,9 @@
 
 import json
 import re
+import sys
 import subprocess
+from pathlib import Path
 from collections import Counter, defaultdict
 
 
@@ -32,8 +34,20 @@ META_PATTERNS = [
 ]
 
 
-def load_runs():
-    bench = json.load(open('playtest-reports/bench_gemma4_26_vs_31.json'))
+def latest_bench():
+    """가장 최근 bench_*.json — 하드코딩 경로가 stale 이라 기본값을 자동 선택한다."""
+    files = sorted(Path('playtest-reports').glob('bench_*.json'),
+                   key=lambda f: f.stat().st_mtime, reverse=True)
+    files = [f for f in files if 'quality' not in f.name]
+    if not files:
+        raise SystemExit('playtest-reports/bench_*.json 이 없다 — 먼저 bench-models.py 를 돌려라')
+    return files[0]
+
+
+def load_runs(path=None):
+    path = Path(path) if path else latest_bench()
+    print(f'입력: {path}')
+    bench = json.load(open(path))
     results = []
     for m in bench['models']:
         run_id = m['runId']
@@ -130,6 +144,30 @@ def analyze(text, turn_no):
     short_sentences = [l for l in sent_like_lines if len(l) < 80 and re.search(r'[.!?。]\s*$', l.strip())]
     newline_per_sentence_ratio = len(short_sentences) / max(1, len(sent_like_lines))
 
+    # 4.5 [2026-08-13] **마커 커버리지** — 따옴표 대사에 화자 마커가 붙은 비율.
+    #     실제 저장 형식은 `@[이름|/npc-portraits/x.webp] "대사"` (같은 줄 선행).
+    #     마커가 없으면 초상화·화자 표시가 모두 실패해 "누가 말했는지 모르는 대사"가
+    #     된다. DeepSeek 이 73.3% 로 무너져 있던 축이자 모델 교체의 핵심 판정 기준.
+    #     주의: turns 에 raw_completion 이 없어 **서버 후처리 이후** 값이다 —
+    #     모델의 원 형식 준수율이 아니라 플레이어 체감 귀속률을 잰다.
+    #     문서 인용(장부·쪽지)은 대사가 아니므로 분리 집계.
+    marked = unmarked_dialogue = unmarked_doc = 0
+    for m in re.finditer(r'["\u201C]([^"\u201D\n]{4,})["\u201D]', text):
+        line_start = text.rfind('\n', 0, m.start()) + 1
+        prefix = text[line_start:m.start()]
+        if re.search(r'@\[[^\]]+\]\s*$', prefix) or re.search(r'\S\s*:\s*$', prefix):
+            marked += 1
+        elif re.search(r'(적혀|쓰여|씌어|적힌|문구|글귀|서명|장부|쪽지|편지)\s*\S{0,8}$', prefix):
+            unmarked_doc += 1
+        else:
+            unmarked_dialogue += 1
+
+    # 4.6 모더레이션 거부 — is_moderated 모델(OpenAI 계열) 도입 시 필수 감시.
+    #     정치음모 RPG 는 협박·폭력 서술이 정상 경로라 거부가 곧 진행 불능이다.
+    refusal = bool(re.search(
+        r'(죄송(하지만|합니다)|도와드릴 수 없|응답할 수 없|생성할 수 없|정책(에|상) (따라|위배)|'
+        r"I'm sorry|I cannot|can't assist|violates)", text))
+
     # 5. @마커 형식
     marker_all = re.findall(r'@\[([^\]]+)\]', text)
     marker_bad = [m for m in marker_all if '|' in m and '/npc-portraits/' not in m]  # pipe 가 있지만 URL 아님
@@ -146,6 +184,10 @@ def analyze(text, turn_no):
         'sentencePerLineRatio': round(newline_per_sentence_ratio, 2),
         'markerCount': len(marker_all),
         'rawMarkerLeak': len(raw_marker),
+        'markedDialogue': marked,
+        'unmarkedDialogue': unmarked_dialogue,
+        'unmarkedDoc': unmarked_doc,
+        'refusal': refusal,
     }
 
 
@@ -162,8 +204,17 @@ def summarize(per_turn):
             reg_total[k] += v
         for k, v in r['metaHits'].items():
             meta_total[k] += v
+    labeled = sum(r['markedDialogue'] for r in per_turn)
+    unlabeled = sum(r['unmarkedDialogue'] for r in per_turn)
+    docq = sum(r['unmarkedDoc'] for r in per_turn)
+    refusals = sum(1 for r in per_turn if r['refusal'])
     return {
         'turns': len(per_turn),
+        'markedDialogue_total': labeled,
+        'unmarkedDialogue_total': unlabeled,
+        'unmarkedDoc_total': docq,
+        'markerCoverage_pct': round(100 * labeled / max(1, labeled + unlabeled), 1),
+        'refusalTurns': refusals,
         'dialogueCount_total': dialogues,
         'unmatchedQuotes_total': unmatched,
         'markerCount_total': markers,
@@ -175,7 +226,7 @@ def summarize(per_turn):
 
 
 def main():
-    runs = load_runs()
+    runs = load_runs(sys.argv[1] if len(sys.argv) > 1 else None)
     report = {}
     for r in runs:
         per = [analyze(t['text'], t['turnNo']) for t in r['turns'] if t.get('text')]
@@ -194,6 +245,10 @@ def main():
         rows.append((model, s))
         print(f"\n[{model}]  turns={s['turns']}")
         print(f"  dialogues={s['dialogueCount_total']}  markers={s['markerCount_total']}")
+        print(f"  ★ 마커커버리지={s['markerCoverage_pct']}%  "
+              f"(마커 {s['markedDialogue_total']} / 무마커대사 {s['unmarkedDialogue_total']} "
+              f"/ 문서인용 {s['unmarkedDoc_total']})")
+        print(f"  ★ 모더레이션 거부 턴={s['refusalTurns']}/{s['turns']}")
         print(f"  unmatchedQuotes={s['unmatchedQuotes_total']}  rawMarkerLeak={s['rawMarkerLeak_total']}")
         print(f"  registers={s['registerDistribution']}")
         print(f"  metaViolations={s['metaViolations']}")

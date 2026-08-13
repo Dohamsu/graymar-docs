@@ -12,6 +12,7 @@ Gemma 4 모델 비교 벤치마크 — 26b-a4b vs 31b-it (또는 임의 2모델)
 
 import argparse
 import json
+import os
 import sys
 import time
 import uuid
@@ -140,6 +141,34 @@ def register_login():
             "email": email, "password": "Test1234!!",
         })
     return data["token"]
+
+
+def ensure_points(token, needed, code=None):
+    """포인트 프리플라이트 (arch/85).
+
+    [2026-08-13] 벤치가 유저 1명(가입 보너스 50p = 10턴)으로 여러 모델을 돌려서
+    **두 번째 모델이 0턴**으로 끝나고도 비교표가 출력됐다 (실측). 잔액이 모자라면
+    시작 전에 충전하고, 그래도 모자라면 **중단**한다 — 반쪽 데이터로 모델을
+    고르는 것이 가장 위험하다.
+    """
+    bal = api("GET", "/points/balance", token=token).get("points", 0)
+    if bal >= needed:
+        log(f"포인트 잔액 {bal}p (필요 {needed}p)")
+        return bal
+    code = code or os.environ.get("BENCH_REDEEM_CODE")
+    if code:
+        try:
+            api("POST", "/points/redeem", {"code": code}, token=token)
+            bal = api("GET", "/points/balance", token=token).get("points", 0)
+            log(f"충전 완료 → 잔액 {bal}p (필요 {needed}p)")
+        except requests.HTTPError as e:
+            log(f"[warn] 충전 실패: {getattr(e.response, 'text', '')[:200]}")
+    if bal < needed:
+        raise SystemExit(
+            f"포인트 부족: 잔액 {bal}p < 필요 {needed}p. "
+            f"--redeem-code 또는 BENCH_REDEEM_CODE 로 충전 코드를 주거나 --turns 를 줄여라."
+        )
+    return bal
 
 
 def set_model(token, model_id):
@@ -408,6 +437,11 @@ def main():
     ap.add_argument("--models", nargs="+", required=True)
     ap.add_argument("--turns", type=int, default=10)
     ap.add_argument("--output", default=None)
+    ap.add_argument(
+        "--redeem-code",
+        default=None,
+        help="포인트 충전 코드 (미지정 시 env BENCH_REDEEM_CODE)",
+    )
     args = ap.parse_args()
 
     log("OpenRouter 단가 로딩")
@@ -420,6 +454,13 @@ def main():
     log(f"Registering bench user + JWT")
     token = register_login()
     log(f"Token: {token[:20]}...")
+
+    # 전 모델 합계 + 여유 20% (재시도·초기 턴 변동 흡수)
+    ensure_points(
+        token,
+        int(len(args.models) * args.turns * 5 * 1.2),
+        args.redeem_code,
+    )
 
     # 벤치는 **프로덕션 런타임 모델**을 바꾼다 (launchd 상주 서비스 = api.dimtale.com).
     # 끝나면 반드시 되돌린다 — 안 그러면 마지막 후보 모델이 그대로 서비스된다.
