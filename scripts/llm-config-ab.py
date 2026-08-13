@@ -35,10 +35,18 @@ def api_key():
     raise SystemExit("OPENAI_API_KEY 없음")
 
 
-def call(key, model, msgs, max_tokens, effort):
+def call(key, model, msgs, max_tokens, effort, penalty=False, temperature=None):
     body = {"model": model, "messages": msgs, "max_tokens": max_tokens}
     if effort:
         body["reasoning"] = {"effort": effort}
+    # 운영 재현 — 메인 서술은 temperature 0.8 + penalty 0.4/0.3 을 보낸다(불변식 50).
+    # penalty 미지원 모델(GPT-5·Gemini 계열)에 붙이면 무시되거나 라우팅이 막히므로
+    # **지원 모델에만** 켠다. 안 맞추면 반복 지표가 지원 모델에 불리하게 나온다.
+    if temperature is not None:
+        body["temperature"] = temperature
+    if penalty:
+        body["frequency_penalty"] = 0.4
+        body["presence_penalty"] = 0.3
     req = urllib.request.Request(
         URL,
         data=json.dumps(body).encode(),
@@ -107,6 +115,9 @@ def main():
     ap.add_argument("--price", default="0.10,0.60,0.01",
                     help="in,out,cache_read USD/M (분석 단가 — 캐시 순서 오염 보정용)")
     ap.add_argument("--dump", default=None, help="원문 저장 경로 (질적 대조용)")
+    ap.add_argument("--penalty", action="store_true",
+                    help="frequency/presence_penalty 동봉 (penalty 지원 모델만 — 운영 재현)")
+    ap.add_argument("--temperature", type=float, default=None)
     args = ap.parse_args()
     P_IN, P_OUT, P_CACHE = [float(x) for x in args.price.split(",")]
 
@@ -122,7 +133,7 @@ def main():
         res = []
         for i, p in enumerate(prompts):
             for _ in range(args.repeat):
-                r = call(key, args.model, p["msgs"], mt, eff)
+                r = call(key, args.model, p["msgs"], mt, eff, args.penalty, args.temperature)
                 if "error" in r:
                     print(f"  [{cfg}] #{i} ❌ {r['error']}")
                     continue
