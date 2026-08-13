@@ -89,11 +89,35 @@ def log(msg):
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
-def api(method, path, body=None, token=None, timeout=30):
+def admin_token():
+    """server/.env 의 ADMIN_TOKEN — PATCH /v1/settings/llm 이 @AdminEndpoint 라 필요.
+
+    [2026-08-13] 어드민 가드(arch/87) 도입 이후 일반 유저 JWT 로는 403 이 나서
+    모델 전환이 통째로 실패하고 있었다 (실측). 벤치의 존재 이유가 모델 전환이므로
+    이게 막히면 하네스 전체가 무의미하다.
+    """
+    env = Path(__file__).resolve().parent.parent / "server" / ".env"
+    try:
+        for line in env.read_text(encoding="utf-8").splitlines():
+            if line.startswith("ADMIN_TOKEN="):
+                return line.split("=", 1)[1].strip().strip('"')
+    except OSError:
+        pass
+    return None
+
+
+def api(method, path, body=None, token=None, timeout=30, admin=False):
     url = f"{BASE}{path}"
     headers = {"Content-Type": "application/json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
+    if admin:
+        at = admin_token()
+        if not at:
+            raise RuntimeError(
+                "ADMIN_TOKEN 을 server/.env 에서 못 찾았다 — 모델 전환 불가"
+            )
+        headers["x-admin-token"] = at
     r = requests.request(method, url, json=body, headers=headers, timeout=timeout)
     if not r.ok:
         log(f"API {method} {path} → {r.status_code}: {r.text[:400]}")
@@ -119,8 +143,14 @@ def register_login():
 
 
 def set_model(token, model_id):
-    data = api("PATCH", "/settings/llm", {"openaiModel": model_id}, token=token)
-    return data.get("openaiModel") or data.get("model")
+    data = api(
+        "PATCH", "/settings/llm", {"openaiModel": model_id}, token=token, admin=True
+    )
+    applied = data.get("openaiModel") or data.get("model")
+    # 전환 실패를 조용히 넘기면 "두 모델 비교"가 같은 모델 두 번이 된다
+    if applied != model_id:
+        raise RuntimeError(f"모델 전환 실패: 요청 {model_id} → 적용 {applied}")
+    return applied
 
 
 def create_run(token, preset="DESERTER"):
@@ -155,8 +185,13 @@ def submit_choice(token, run_id, expected_next_turn, choice_id):
     }, token=token)
 
 
+# 서술 본문을 실어 나르는 SSE 이벤트 타입. 분류기 on(기본)이면 narration/dialogue,
+# off면 token 이 온다 — 둘 다 TTFT 기준으로 삼는다.
+CONTENT_EVENT_TYPES = {"token", "narration", "dialogue"}
+
+
 def stream_turn(token, run_id, turn_no, timeout=120):
-    """턴 제출 직후 SSE 스트림에 연결, TTFT/TTLT/토큰 수 측정"""
+    """턴 제출 직후 SSE 스트림에 연결, TTFT/TTLT/세그먼트 수 측정"""
     url = f"{BASE}/runs/{run_id}/turns/{turn_no}/stream"
     headers = {"Authorization": f"Bearer {token}", "Accept": "text/event-stream"}
     start = time.perf_counter()
@@ -183,7 +218,12 @@ def stream_turn(token, run_id, turn_no, timeout=120):
                 except json.JSONDecodeError:
                     continue
                 now = (time.perf_counter() - start) * 1000
-                if ev.get("type") == "token":
+                # [2026-08-13] 'token' 만 세던 것 → 콘텐츠 이벤트 전체.
+                # LLM_STREAM_CLASSIFIER 가 기본 켜짐이라 워커는 문장을
+                # narration/dialogue 로 분류해 emit 하고 **'token' 은 아예 안 나온다**
+                # (llm-worker.service.ts:3537~). 그래서 TTFT 가 항상 None 이었다 —
+                # 체감 반응성의 핵심 지표가 조용히 죽어 있었다.
+                if ev.get("type") in CONTENT_EVENT_TYPES:
                     token_count += 1
                     if ttft_ms is None:
                         ttft_ms = now
@@ -358,6 +398,8 @@ def summarize(rows):
         "completionTokens_total": completion_total,
         "costUsd_total": round(cost_total, 6),
         "costUsd_per_turn_avg": round(cost_total / len(rows), 6) if rows else 0,
+        # 단가 미상 턴 수 — 0 이 아니면 위 합계는 **과소집계**다 (조용한 누락 방지)
+        "costUsd_missing": len(rows) - len(pick("costUsd")),
     }
 
 
@@ -379,15 +421,43 @@ def main():
     token = register_login()
     log(f"Token: {token[:20]}...")
 
+    # 벤치는 **프로덕션 런타임 모델**을 바꾼다 (launchd 상주 서비스 = api.dimtale.com).
+    # 끝나면 반드시 되돌린다 — 안 그러면 마지막 후보 모델이 그대로 서비스된다.
+    try:
+        original_model = api("GET", "/settings/llm", token=token).get("openaiModel")
+        log(f"원래 모델: {original_model} (종료 시 복원)")
+    except Exception as e:
+        log(f"[warn] 원래 모델 조회 실패 ({e}) — 종료 후 수동 확인 필요")
+        original_model = None
+
     report = {
         "startedAt": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "turnsPerModel": args.turns,
         "models": [],
     }
 
+    try:
+        bench_models(args, token, report)
+    finally:
+        if original_model:
+            try:
+                set_model(token, original_model)
+                log(f"✅ 모델 복원: {original_model}")
+            except Exception as e:
+                log(f"❌ 모델 복원 실패 ({e}) — **수동 복원 필요**: {original_model}")
+
+    write_report(args, report)
+
+
+def bench_models(args, token, report):
     for model_id in args.models:
         run_id, rows = run_one_model(token, model_id, turns=args.turns)
         summary = summarize(rows)
+        if summary["costUsd_missing"]:
+            log(
+                f"  [warn] {model_id}: 단가 미상 {summary['costUsd_missing']}턴 "
+                f"— costUsd_total 은 과소집계"
+            )
         report["models"].append({
             "modelId": model_id,
             "runId": run_id,
@@ -403,6 +473,7 @@ def main():
             f"cost=${summary['costUsd_total']:.4f}"
         )
 
+def write_report(args, report):
     output = args.output or f"playtest-reports/bench_{int(time.time())}.json"
     Path(output).parent.mkdir(parents=True, exist_ok=True)
     Path(output).write_text(json.dumps(report, ensure_ascii=False, indent=2))
