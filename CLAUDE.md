@@ -281,7 +281,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | Gemma 4 31B dense (메인, stream:true, provider allowlist ModelRun·Friendli) / DeepSeek V4 Flash **0731** (3:7 교차 — 10턴 주기 3회. 2026-08-03 스냅샷 교체: A/B 실측 어미 준수 56.7→79.3%) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
+| LLM | Gemma 4 31B dense (메인, stream:true, provider allowlist Friendli·Venice·Novita·CoreWeave) / DeepSeek V4 Flash **0731** (3:7 교차 — 10턴 주기 3회. 2026-08-03 스냅샷 교체: A/B 실측 어미 준수 56.7→79.3%) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
 
 ## LLM 설계 원칙 (필수 참고)
 
@@ -546,7 +546,10 @@ LLM_FIRST_TOKEN_TIMEOUT_MS=5000       # 스트리밍 첫 토큰 타임아웃 —
 LLM_STREAM_STALL_TIMEOUT_MS=20000     # 스트림 정체 타임아웃 — 첫 토큰 후 무델타 지속 시 절단→non-stream fallback (0=off, narrative max 270s 실측 대응 2026-07-31)
 LLM_PROVIDER_SORT=throughput          # OpenRouter 라우팅 정렬 — 생성 tok/s 우선 (arch/62)
 LLM_PROVIDER_IGNORE=cloudflare,dekallm  # OpenRouter 배제 provider (저 uptime — arch/62 부록)
-LLM_PROVIDER_ONLY_MAP=google/gemma-4-31b-it=ModelRun|Friendli|Novita  # 모델별 프로바이더 allowlist — 31B 풀 불안정(빈 서술) 대응. Novita=가용성 백스톱 (arch/25 D-8)
+LLM_PROVIDER_ONLY_MAP=google/gemma-4-31b-it=Friendli|Venice|Novita|CoreWeave  # 모델별 프로바이더 allowlist — 31B 풀 불안정(빈 서술) 대응 (arch/25 D-8). 2026-08-13 ModelRun 제거: fp4(최저 정밀도)인데 8.89원/턴으로 전 19곳 중 2위 고가였고, throughput 정렬이 이걸 고르면서 실과금이 1.9→6.9원으로 튐. 대체 4곳은 전부 단일 엔드포인트(가격 고정)·3곳 bf16. 교체 후 실측 1.42원/턴(-80%)·서술 6.1s(ModelRun 1.6s)
+LLM_NO_PENALTY_MODELS=                # penalty 미지원 모델 강제 지정 (기본은 코드 판정 — model-capabilities.ts)
+LLM_NO_TEMPERATURE_MODELS=            # temperature 미지원 모델 강제 지정
+LLM_REASONING_EFFORT_MAP=openai/gpt-5.6-luna=none  # GPT-5 계열 추론 강도. Luna는 default_effort=medium 이라 미지정 시 추론이 켜진 채 출력 단가로 과금
 LLM_FALLBACK_PROVIDER=openai          # fallback: 같은 OpenRouter 경유
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini  # fallback 모델 (이전: Claude Haiku 4.5)
 GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off, DeepSeek는 코드에서 enabled:false 자동 주입)
