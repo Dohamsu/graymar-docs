@@ -81,6 +81,38 @@
 
 **재검증(동일 기상천외 6입력, 항만):** ① 마법-as-FIGHT → `plaus=IMPLAUSIBLE phys=false`, 서술 재해석("허세 섞인 몸짓과 헛된 외침"), difficultyMod-2로 FAIL, **불길 흔적 미생성** ② 동료 소환 → NPC 자연 거부("부르짖는다고 나타나지 않소") ③ 간판 뜯어냄(INVESTIGATE 오분류) → `phys=true`로 흔적 추출됨 ④ propsTraces 실저장(흩어진 주사위·영수증 조각). classifier +3, 1285 passed. **트레이드오프**: 도전 행동도 감정 nano 호출(killswitch 유지). **잔여**: 빠른 연속 턴에서 CAS 충돌로 흔적 일부 유실(soft data 허용), intent 오분류 자체는 존속(physicalImpact가 우회).
 
+##### D3-④ 경계 거절(OUT_OF_SCOPE) — 무대 이탈 3층 (2026-08-14, server 295fd34)
+
+**배경 (버그 95db0e75):** "배를타고 다른 대륙으로 떠난다"가 ① 등록 장소 아님 →
+복합감지 미발동 ② 순수 이동 상용구 정규식(장소/곳/데 한정) 미매칭 ③ KW 1-hit
+안전망이 MOVE 제거 → LLM 인텐트 단독 판단 → INVESTIGATE 오분류로 **조용히 무시**
+(실런 재현에서도 TALK 오분류). MOVE로 잡혀도 목적지 미해석 시 거점 복귀가 상한
+("대륙을 떠난다 → 선술집 귀환"). D3-③의 plausibility는 물리 법칙(마법) 기준이라
+**물리적으로 그럴듯한 콘텐츠 경계 이탈**(출항·타국행)은 NORMAL로 통과했다.
+
+**설계 — 치환(D3-③)이 아니라 세계가 가로막는 거절. 추가 LLM 호출 0:**
+- **L1 룰** (`turns/move-boundary.core.ts`): 거시 경계 명사 **positive 목록**
+  (대륙·나라·왕국·타국·왕궁·"다른 도시/마을/땅"·"이 도시" 등) + 이동 동사 인접
+  + 등록 장소 제외. 오탐 방지 3중 — 도구격("칼로 위협") 차단·회상 꼬리 가드
+  (`MAX_TAIL_AFTER_VERB=8`)·팩 실존 장소명이면 미발동. 한글 음절 합성
+  ("떠나"≠"떠난다" prefix) 처리. MOVE 확정 턴은 거점 복귀 대신 **현장 잔류**
+  (INVESTIGATE 강등), 오분류 턴도 challengeDecision 단계에서 룰 우선
+  FREE+OUT_OF_SCOPE로 회수 — **주사위 SUCCESS + 거절 서술 모순 원천 차단**(D2 투명성).
+- **L2 nano**: `Plausibility` 4단계 확장(`OUT_OF_SCOPE`) — 기존 ChallengeClassifier
+  호출에 기준만 추가. L1 명사 목록이 못 잡는 의미적 이탈("배를 타고 출항한다")
+  커버. FREE 강제·physicalImpact false 강제·**ALWAYS_CHALLENGE CHECK 고정 예외**
+  (FIGHT로 표현된 무대 이탈도 FREE — D3-univ의 CHECK 고정과 충돌하던 것 예외 처리).
+- **L3 프롬프트**: `[경계 거절 지시]` 블록 — 세계 안 장애물(인물·제도·상황)로
+  가로막는 장면, 메타 거부·설교·비웃음 금지, 결기는 감정으로 존중, 장면 전환
+  없이 다음 행동 선택 가능 상태로 마무리. `INJECTED_BLOCK_HEADERS` 등재.
+
+**검증:** 유닛 13(코어 11 + classifier 2), 전체 1,930 passed. E2E 실런 재현 —
+인텐트 TALK 오분류에도 L1 회수(`plausibility=OUT_OF_SCOPE`·`resolveSkipped=true`),
+서술 "배는 통행증 없이는 사람을 싣지 않소. 선주들이 낯선 얼굴을 꺼리오"(제도+인물
+장애물) + 현장 잔류 + 다음 행동 유도. **경계(정직):** L1은 좁은 positive 목록이라
+목록 밖 이탈은 L2 nano 품질에 의존, nano 오판 시 정상 행동이 거절될 수 있으나
+룰(L1)이 MOVE 확정 턴을 선점해 정상 이동은 게이트를 타지 않는다.
+
 #### D3-a 흔적(propsState) + B 되짚기 (2026-07-16 구현 · 미커밋)
 
 **출력 측 — 내 행동이 세계에 남는다.** 입력 자유화(위)의 짝. 조사 발견: 세계는 이미 PLAYER_ACTION fact·NpcPersonalMemory로 **기록**은 하나, 물리 흔적은 없고 되짚기는 소극적.
@@ -180,6 +212,7 @@ CLAUDE.md 설계 불변식 인근에 등재 (지금 코드 변경 없음, 미래
 | D3-②diff | difficultyMod — 과감함 보정 clamp[-2,2] | 엔진 소 | ✅ | f7a92b6 |
 | D3-③plaus | plausibility — IMPLAUSIBLE 서술 치환(LOCATION 이식) | 엔진 소 | ✅ | f7a92b6 |
 | D3-univ | 통합 nano 감정 — plausibility·physicalImpact 보편 적용(룰 게이트 우회 해소) | 엔진 소 | ✅ | 0b1424c |
+| D3-④scope | 경계 거절(OUT_OF_SCOPE) — 무대 이탈 3층(룰·nano·프롬프트), 버그 95db0e75 | 엔진 소 | ✅ | 295fd34 |
 | D3-a | 사물 상태 경량(propsState) — nano 추출 흔적 링버퍼 | 엔진 중 | ✅ | f7a92b6·핫픽스 944be95 |
 | D3-B | 되짚기 — 고임팩트 과거 행동 NPC 언급 허용(정보 억제 유지) | 엔진 소 | ✅ | f7a92b6 |
 | D3-b′ | 감정 탈버킷 — socialImpact + shiftHint 배선 (원안 D3-b 폐기·재설계) | 엔진 중 | ✅ | 미커밋 |
