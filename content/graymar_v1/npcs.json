@@ -78,7 +78,7 @@
         {
           "stage": 0,
           "description": "부두 노동자 비밀 결집",
-          "triggerCondition": "day >= 3",
+          "triggerCondition": "globalClock >= 5",
           "onTrigger": {
             "factText": "하를런이 부두 노동자들을 비밀리에 결집시키고 있다",
             "factTags": [
@@ -93,7 +93,7 @@
         {
           "stage": 1,
           "description": "임금 인상 시위 예고",
-          "triggerCondition": "day >= 6 AND security.LOC_HARBOR < 50",
+          "triggerCondition": "globalClock >= 10 AND security.LOC_HARBOR < 50",
           "onTrigger": {
             "factText": "부두 노동자들이 임금 인상을 요구하며 시위를 예고했다",
             "factTags": [
@@ -115,7 +115,7 @@
         {
           "stage": 2,
           "description": "타 장소 노동자 연대 호소",
-          "triggerCondition": "day >= 9",
+          "triggerCondition": "globalClock >= 15",
           "onTrigger": {
             "factText": "하를런이 다른 장소의 노동자들에게도 연대를 호소하고 있다",
             "factTags": [
@@ -384,7 +384,7 @@
         {
           "stage": 0,
           "description": "회계 장부 수상한 수정",
-          "triggerCondition": "day >= 2",
+          "triggerCondition": "globalClock >= 4",
           "onTrigger": {
             "factText": "시장의 회계 장부에서 수상한 수정 흔적이 발견됐다",
             "factTags": [
@@ -399,7 +399,7 @@
         {
           "stage": 1,
           "description": "핵심 증거 반출 시도",
-          "triggerCondition": "day >= 5",
+          "triggerCondition": "globalClock >= 9",
           "onTrigger": {
             "factText": "에드릭이 핵심 증거를 은밀히 반출하려 시도하고 있다",
             "factTags": [
@@ -414,7 +414,7 @@
         {
           "stage": 2,
           "description": "도시 탈출 준비",
-          "triggerCondition": "day >= 8 AND hubHeat >= 40",
+          "triggerCondition": "globalClock >= 14 AND hubHeat >= 40",
           "onTrigger": {
             "factText": "에드릭이 도시를 떠날 준비를 하고 있다는 소문이 돌고 있다",
             "factTags": [
@@ -703,7 +703,7 @@
         {
           "stage": 0,
           "description": "항만 야간 순찰 강화",
-          "triggerCondition": "day >= 3",
+          "triggerCondition": "globalClock >= 5",
           "onTrigger": {
             "factText": "마이렐이 항만 야간 순찰을 강화했다",
             "factTags": [
@@ -718,7 +718,7 @@
         {
           "stage": 1,
           "description": "항만 전면 수색 명령",
-          "triggerCondition": "day >= 5 AND incident.INC_SMUGGLING_RING.stage >= 1",
+          "triggerCondition": "globalClock >= 9 AND incident.INC_SMUGGLING_RING.stage >= 1",
           "onTrigger": {
             "factText": "마이렐이 항만 전면 수색을 명령했다",
             "factTags": [
@@ -740,7 +740,7 @@
         {
           "stage": 2,
           "description": "창고구까지 수색 범위 확대",
-          "triggerCondition": "day >= 8",
+          "triggerCondition": "globalClock >= 14",
           "onTrigger": {
             "factText": "마이렐이 창고구까지 수색 범위를 확대했다",
             "factTags": [
@@ -2299,7 +2299,7 @@
         {
           "stage": 0,
           "description": "귀족가 비밀 모임 주최",
-          "triggerCondition": "day >= 4",
+          "triggerCondition": "globalClock >= 6",
           "onTrigger": {
             "factText": "밴스 경이 귀족가에서 비밀 모임을 주최했다",
             "factTags": [
@@ -2314,7 +2314,7 @@
         {
           "stage": 1,
           "description": "경비대 고위 장교 포섭 시도",
-          "triggerCondition": "day >= 7 AND hubHeat >= 30",
+          "triggerCondition": "globalClock >= 11 AND hubHeat >= 30",
           "onTrigger": {
             "factText": "밴스 경이 경비대 고위 장교에게 접근하고 있다",
             "factTags": [
@@ -2329,7 +2329,7 @@
         {
           "stage": 2,
           "description": "도시 의회 영향력 확대",
-          "triggerCondition": "day >= 10",
+          "triggerCondition": "globalClock >= 16",
           "onTrigger": {
             "factText": "밴스 경의 세력이 도시 의회에서 영향력을 확대하고 있다",
             "factTags": [
@@ -3050,7 +3050,7 @@
         {
           "stage": 0,
           "description": "빈민가 지하 조직 세력 확장",
-          "triggerCondition": "day >= 4",
+          "triggerCondition": "globalClock >= 6",
           "onTrigger": {
             "factText": "빈민가에서 새로운 지하 조직이 세력을 키우고 있다",
             "factTags": [
@@ -3065,7 +3065,7 @@
         {
           "stage": 1,
           "description": "창고구로 영역 확장",
-          "triggerCondition": "day >= 7 AND security.LOC_SLUMS < 30",
+          "triggerCondition": "globalClock >= 11 AND security.LOC_SLUMS < 30",
           "onTrigger": {
             "factText": "쥐왕이 창고구로 영역을 확장하고 있다",
             "factTags": [
@@ -3087,7 +3087,7 @@
         {
           "stage": 2,
           "description": "밀수 루트 장악 시도",
-          "triggerCondition": "day >= 10",
+          "triggerCondition": "globalClock >= 16",
           "onTrigger": {
             "factText": "지하 조직이 밀수 루트를 장악하려 움직이고 있다",
             "factTags": [
@@ -5405,7 +5405,58 @@
       "DAY": "선술집 구석에서 초조하게 대기",
       "NIGHT": "항구 부두 근처를 서성이며 정보를 수집"
     },
-    "longTermAgenda": "장부를 되찾아 길드 상부에 보고하고 해고를 면한다",
+    "longTermAgenda": {
+      "currentGoal": "장부를 되찾아 길드 상부에 보고하고 해고를 면한다",
+      "stages": [
+        {
+          "stage": 0,
+          "description": "로넨이 사비를 털어 부두 정보꾼들에게 장부 ",
+          "triggerCondition": "globalClock >= 4",
+          "onTrigger": {
+            "factText": "로넨이 사비를 털어 부두 정보꾼들에게 장부 행방을 수소문하고 있다",
+            "factTags": [
+              "ledger",
+              "guild",
+              "search"
+            ],
+            "signalText": "길드 서기 하나가 부두를 돌며 무언가를 캐묻고 다닌다",
+            "signalChannel": "RUMOR"
+          }
+        },
+        {
+          "stage": 1,
+          "description": "길드 상부의 감사가 앞당겨져 로넨이 숙소를 ",
+          "triggerCondition": "globalClock >= 9",
+          "onTrigger": {
+            "factText": "길드 상부의 감사가 앞당겨져 로넨이 숙소를 옮겼다",
+            "factTags": [
+              "ledger",
+              "guild",
+              "pressure"
+            ],
+            "signalText": "길드 감사가 예정보다 일찍 내려온다는 말이 돈다",
+            "signalChannel": "ECONOMY"
+          }
+        },
+        {
+          "stage": 2,
+          "description": "로넨이 해고 통보를 받고 마지막으로 장부를 ",
+          "triggerCondition": "globalClock >= 14",
+          "onTrigger": {
+            "factText": "로넨이 해고 통보를 받고 마지막으로 장부를 되찾을 방법을 찾고 있다",
+            "factTags": [
+              "ledger",
+              "guild",
+              "desperate"
+            ],
+            "signalText": "장부를 잃은 서기가 자리에서 밀려났다는 소문이 퍼졌다",
+            "signalChannel": "RUMOR"
+          }
+        }
+      ],
+      "currentStage": 0,
+      "completed": false
+    },
     "gender": "male",
     "knownFacts": [
       {

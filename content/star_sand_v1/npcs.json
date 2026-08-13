@@ -204,7 +204,59 @@
           "걱정"
         ]
       }
-    ]
+    ],
+    "longTermAgenda": {
+      "currentGoal": "공통몽을 꾼 사람들을 모아 무슨 일이 벌어지는지 밝힌다",
+      "stages": [
+        {
+          "stage": 0,
+          "description": "이렌이 같은 꿈을 꾼 손님들의 증언을 여관 ",
+          "triggerCondition": "globalClock >= 4",
+          "onTrigger": {
+            "factText": "이렌이 같은 꿈을 꾼 손님들의 증언을 여관 장부 뒤에 적어 모으고 있다",
+            "factTags": [
+              "dream",
+              "inn",
+              "testimony"
+            ],
+            "signalText": "꿈잠 여관에 밤마다 같은 꿈을 말하는 이들이 모여든다",
+            "signalChannel": "RUMOR"
+          }
+        },
+        {
+          "stage": 1,
+          "description": "이렌이 증언을 들고 등불수녀원에 도움을 청했",
+          "triggerCondition": "globalClock >= 9",
+          "onTrigger": {
+            "factText": "이렌이 증언을 들고 등불수녀원에 도움을 청했다",
+            "factTags": [
+              "dream",
+              "convent",
+              "alliance"
+            ],
+            "signalText": "여관 주인이 수녀원 문을 두드렸다는 말이 돈다",
+            "signalChannel": "NPC_BEHAVIOR"
+          }
+        },
+        {
+          "stage": 2,
+          "description": "이렌이 모은 증언이 서로 어긋나기 시작해 밤",
+          "triggerCondition": "globalClock >= 14",
+          "onTrigger": {
+            "factText": "이렌이 모은 증언이 서로 어긋나기 시작해 밤새 손님과 언성을 높였다",
+            "factTags": [
+              "dream",
+              "inn",
+              "discord"
+            ],
+            "signalText": "꿈잠 여관에서 고성이 오갔다",
+            "signalChannel": "NPC_BEHAVIOR"
+          }
+        }
+      ],
+      "currentStage": 0,
+      "completed": false
+    }
   },
   {
     "npcId": "NPC_SS_LUOR",
@@ -413,7 +465,66 @@
           "하루"
         ]
       }
-    ]
+    ],
+    "longTermAgenda": {
+      "currentGoal": "오염이 어디까지 번졌는지 기록하고 격리 범위를 넓힌다",
+      "stages": [
+        {
+          "stage": 0,
+          "description": "루오르가 오염 환자 기록을 날짜별로 다시 정",
+          "triggerCondition": "globalClock >= 5",
+          "onTrigger": {
+            "factText": "루오르가 오염 환자 기록을 날짜별로 다시 정리하기 시작했다",
+            "factTags": [
+              "contamination",
+              "convent",
+              "record"
+            ],
+            "signalText": "수녀원이 환자 기록을 다시 훑는다는 이야기가 돈다",
+            "signalChannel": "RUMOR"
+          }
+        },
+        {
+          "stage": 1,
+          "description": "루오르가 수녀원 안뜰을 격리 구역으로 나눠 ",
+          "triggerCondition": "globalClock >= 10",
+          "onTrigger": {
+            "factText": "루오르가 수녀원 안뜰을 격리 구역으로 나눠 출입을 통제했다",
+            "factTags": [
+              "contamination",
+              "convent",
+              "quarantine"
+            ],
+            "signalText": "등불수녀원 안뜰 출입이 막혔다",
+            "signalChannel": "SECURITY",
+            "conditionApply": {
+              "targetLocation": "LOC_SS_CONVENT",
+              "condition": "QUARANTINE",
+              "duration": -1,
+              "securityMod": 10,
+              "unrestMod": 10
+            }
+          }
+        },
+        {
+          "stage": 2,
+          "description": "루오르가 격리로도 번지는 것을 막지 못한다고",
+          "triggerCondition": "globalClock >= 15",
+          "onTrigger": {
+            "factText": "루오르가 격리로도 번지는 것을 막지 못한다고 기록에 적었다",
+            "factTags": [
+              "contamination",
+              "convent",
+              "failure"
+            ],
+            "signalText": "수녀원의 격리가 소용없다는 말이 새어 나온다",
+            "signalChannel": "RUMOR"
+          }
+        }
+      ],
+      "currentStage": 0,
+      "completed": false
+    }
   },
   {
     "npcId": "NPC_SS_SAEL",
@@ -620,7 +731,59 @@
           "야식"
         ]
       }
-    ]
+    ],
+    "longTermAgenda": {
+      "currentGoal": "별고래 궤적의 이상을 관측으로 입증한다",
+      "stages": [
+        {
+          "stage": 0,
+          "description": "사엘이 관측탑의 야간 기록 주기를 두 배로 ",
+          "triggerCondition": "globalClock >= 6",
+          "onTrigger": {
+            "factText": "사엘이 관측탑의 야간 기록 주기를 두 배로 늘렸다",
+            "factTags": [
+              "whale",
+              "tower",
+              "observation"
+            ],
+            "signalText": "오로라 관측탑의 불이 밤새 꺼지지 않는다",
+            "signalChannel": "VISUAL"
+          }
+        },
+        {
+          "stage": 1,
+          "description": "사엘의 관측치가 예보와 어긋나 관측탑 안에서",
+          "triggerCondition": "globalClock >= 11",
+          "onTrigger": {
+            "factText": "사엘의 관측치가 예보와 어긋나 관측탑 안에서 언쟁이 있었다",
+            "factTags": [
+              "whale",
+              "tower",
+              "dispute"
+            ],
+            "signalText": "관측탑에서 다툼이 있었다는 말이 돈다",
+            "signalChannel": "NPC_BEHAVIOR"
+          }
+        },
+        {
+          "stage": 2,
+          "description": "사엘이 궤적 이상을 공개하겠다며 기록 사본을",
+          "triggerCondition": "globalClock >= 16",
+          "onTrigger": {
+            "factText": "사엘이 궤적 이상을 공개하겠다며 기록 사본을 만들기 시작했다",
+            "factTags": [
+              "whale",
+              "tower",
+              "disclosure"
+            ],
+            "signalText": "관측관이 무언가를 공개할 작정이라는 소문이 돈다",
+            "signalChannel": "RUMOR"
+          }
+        }
+      ],
+      "currentStage": 0,
+      "completed": false
+    }
   },
   {
     "npcId": "NPC_SS_MAREK",
@@ -1027,7 +1190,67 @@
           "영감"
         ]
       }
-    ]
+    ],
+    "longTermAgenda": {
+      "currentGoal": "금지된 꿈약 부산물의 판로를 넓힌다",
+      "stages": [
+        {
+          "stage": 0,
+          "description": "카일룬이 검은얼음 시장 뒷골목에 새 거래처를",
+          "triggerCondition": "globalClock >= 5",
+          "onTrigger": {
+            "factText": "카일룬이 검은얼음 시장 뒷골목에 새 거래처를 텄다",
+            "factTags": [
+              "dreamdrug",
+              "market",
+              "expansion"
+            ],
+            "signalText": "검은얼음 시장에 못 보던 물건이 돈다",
+            "signalChannel": "ECONOMY"
+          }
+        },
+        {
+          "stage": 1,
+          "description": "카일룬의 물건을 산 이들이 잠에서 깨지 못했",
+          "triggerCondition": "globalClock >= 10",
+          "onTrigger": {
+            "factText": "카일룬의 물건을 산 이들이 잠에서 깨지 못했다는 말이 돌기 시작했다",
+            "factTags": [
+              "dreamdrug",
+              "market",
+              "harm"
+            ],
+            "signalText": "꿈약을 산 사람이 깨어나지 못했다는 소문이 돈다",
+            "signalChannel": "RUMOR"
+          }
+        },
+        {
+          "stage": 2,
+          "description": "카일룬이 단속을 피해 거래를 밤으로만 옮겼다",
+          "triggerCondition": "globalClock >= 16",
+          "onTrigger": {
+            "factText": "카일룬이 단속을 피해 거래를 밤으로만 옮겼다",
+            "factTags": [
+              "dreamdrug",
+              "market",
+              "evasion"
+            ],
+            "signalText": "검은얼음 시장의 거래가 밤으로만 몰린다",
+            "signalChannel": "ECONOMY",
+            "conditionApply": {
+              "targetLocation": "LOC_SS_MARKET",
+              "condition": "BLACK_MARKET",
+              "duration": -1,
+              "securityMod": -10,
+              "prosperityMod": 10,
+              "unrestMod": 5
+            }
+          }
+        }
+      ],
+      "currentStage": 0,
+      "completed": false
+    }
   },
   {
     "npcId": "NPC_SS_NAHAT",

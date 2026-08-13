@@ -205,7 +205,66 @@
           "글자"
         ]
       }
-    ]
+    ],
+    "longTermAgenda": {
+      "currentGoal": "붕괴 사고의 진상을 덮고 광산을 다시 연다",
+      "stages": [
+        {
+          "stage": 0,
+          "description": "베렉이 붕괴 당일의 작업 기록을 다시 쓰게 ",
+          "triggerCondition": "globalClock >= 4",
+          "onTrigger": {
+            "factText": "베렉이 붕괴 당일의 작업 기록을 다시 쓰게 했다",
+            "factTags": [
+              "collapse",
+              "mine",
+              "coverup"
+            ],
+            "signalText": "광산 사무소에서 기록을 고쳐 쓴다는 말이 돈다",
+            "signalChannel": "RUMOR"
+          }
+        },
+        {
+          "stage": 1,
+          "description": "베렉이 갱도 입구에 인부를 세워 출입을 통제",
+          "triggerCondition": "globalClock >= 9",
+          "onTrigger": {
+            "factText": "베렉이 갱도 입구에 인부를 세워 출입을 통제했다",
+            "factTags": [
+              "collapse",
+              "mine",
+              "control"
+            ],
+            "signalText": "은사슴 갱도 입구가 막혔다",
+            "signalChannel": "SECURITY",
+            "conditionApply": {
+              "targetLocation": "LOC_SD_MINE",
+              "condition": "LOCKDOWN",
+              "duration": -1,
+              "securityMod": 15,
+              "unrestMod": 10
+            }
+          }
+        },
+        {
+          "stage": 2,
+          "description": "베렉이 조업 재개 날짜를 광장에 못 박아 붙",
+          "triggerCondition": "globalClock >= 14",
+          "onTrigger": {
+            "factText": "베렉이 조업 재개 날짜를 광장에 못 박아 붙였다",
+            "factTags": [
+              "collapse",
+              "mine",
+              "reopen"
+            ],
+            "signalText": "광장에 조업 재개를 알리는 방이 붙었다",
+            "signalChannel": "ECONOMY"
+          }
+        }
+      ],
+      "currentStage": 0,
+      "completed": false
+    }
   },
   {
     "npcId": "NPC_SD_SMITH",
@@ -414,7 +473,66 @@
           "대장간"
         ]
       }
-    ]
+    ],
+    "longTermAgenda": {
+      "currentGoal": "오빠의 죽음이 사고가 아니었음을 사람들에게 알린다",
+      "stages": [
+        {
+          "stage": 0,
+          "description": "일가가 대장간 앞에 붕괴로 죽은 이들의 이름",
+          "triggerCondition": "globalClock >= 5",
+          "onTrigger": {
+            "factText": "일가가 대장간 앞에 붕괴로 죽은 이들의 이름을 새긴 쇳조각을 걸었다",
+            "factTags": [
+              "collapse",
+              "forge",
+              "memorial"
+            ],
+            "signalText": "대장간 앞에 이름이 새겨진 쇳조각이 걸렸다",
+            "signalChannel": "VISUAL"
+          }
+        },
+        {
+          "stage": 1,
+          "description": "일가가 광장에서 유족들을 모으기 시작했다",
+          "triggerCondition": "globalClock >= 10",
+          "onTrigger": {
+            "factText": "일가가 광장에서 유족들을 모으기 시작했다",
+            "factTags": [
+              "collapse",
+              "square",
+              "organizing"
+            ],
+            "signalText": "광장에 유족들이 모여 웅성인다",
+            "signalChannel": "NPC_BEHAVIOR",
+            "conditionApply": {
+              "targetLocation": "LOC_SD_SQUARE",
+              "condition": "PUBLIC_UNREST",
+              "duration": -1,
+              "unrestMod": 20,
+              "prosperityMod": -10
+            }
+          }
+        },
+        {
+          "stage": 2,
+          "description": "일가가 감독관 앞으로 직접 찾아가겠다고 공언",
+          "triggerCondition": "globalClock >= 15",
+          "onTrigger": {
+            "factText": "일가가 감독관 앞으로 직접 찾아가겠다고 공언했다",
+            "factTags": [
+              "collapse",
+              "confrontation",
+              "escalation"
+            ],
+            "signalText": "대장장이가 감독관을 찾아가겠다고 했다는 말이 돈다",
+            "signalChannel": "RUMOR"
+          }
+        }
+      ],
+      "currentStage": 0,
+      "completed": false
+    }
   },
   {
     "npcId": "NPC_SD_INNKEEP",
