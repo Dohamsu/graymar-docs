@@ -756,7 +756,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 22_dice_roll_animation.md | ✅ 구현됨 | 주사위 판정 애니메이션 |
 | 23_dialogue_ui_redesign.md | ✅ 설계 | 대화 UI 고도화 (메신저 형태) |
 | 24_multiplayer_party_system.md | ✅ 구현됨 | 파티 설계·Phase 1~3 (구현 API는 guides/08) |
-| 25_llm_model_evaluation.md | 📎 참고 | LLM 모델 평가 (v1+v2+v3 통합) + 운영 모델 변천 부록. 현 운영: Gemma 4 31B dense… |
+| 25_llm_model_evaluation.md | ✅ 정본 | LLM 모델 평가 (v1~v5 통합) + 운영 모델 변천. **부록 E(2026-08-13)가 현 구성 정본** — 교차 Luna 5:5·ModelRun 제거·fallback 404 해소·Gemini 보류·검증도구 결함 6종 |
 | 26_narrative_pipeline_v2.md | ✅ 구현됨 | 3-Stage Pipeline + Narrative v2/Event(18/19/20 부록) + AI… |
 | archive/27_image_asset_plan.md | 📜 아카이브 | 에셋 계획 — 부분 구현, content/ 하위 실측 참조 |
 | archive/28_nano_event_director.md | 📜 아카이브 | 34_player_first_event_engine 의 배경 설계 |
