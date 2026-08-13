@@ -24,12 +24,50 @@ except ImportError:
     sys.exit(1)
 
 BASE = "http://localhost:3000/v1"
+OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models"
 
-# OpenRouter 가격표 (USD per 1M tokens) — https://openrouter.ai/google
-PRICE = {
-    "google/gemma-4-26b-a4b-it": {"input": 0.07, "output": 0.40},
-    "google/gemma-4-31b-it": {"input": 0.13, "output": 0.38},
+# 최후 폴백 가격표 (USD per 1M tokens). 평시엔 아래 load_prices() 가 OpenRouter
+# 에서 실시간으로 받아오고, 이 표는 네트워크 실패 시에만 쓴다.
+#
+# [2026-08-13] 하드코딩 표가 stale 이었다 — 31b 를 0.13/0.38 로 적어 뒀지만 실제
+# 리스트 단가는 0.10/0.34 다. 게다가 미등록 모델은 조용히 {0,0} 이 되어 **비용 0**
+# 으로 집계됐다 (신규 모델을 벤치할 때마다 틀린 값이 나온다). 실시간 조회 + 미등록
+# 경고로 전환.
+FALLBACK_PRICE = {
+    "google/gemma-4-26b-a4b-it": {"input": 0.12, "output": 0.40},
+    "google/gemma-4-31b-it": {"input": 0.10, "output": 0.34},
+    "deepseek/deepseek-v4-flash-0731": {"input": 0.08, "output": 0.18},
+    "openai/gpt-5.6-luna": {"input": 0.10, "output": 0.60},
 }
+
+PRICE = dict(FALLBACK_PRICE)
+_UNPRICED_WARNED = set()
+
+
+def load_prices():
+    """OpenRouter 카탈로그에서 단가를 실시간으로 받아 PRICE 를 갱신한다.
+
+    주의: 여기 값은 **리스트 단가**(그 모델의 최저가 엔드포인트)다. provider
+    allowlist 나 sort 설정 때문에 실제 과금은 더 비쌀 수 있다 (실측 2026-08-13:
+    ModelRun 이 gemma-4-31b 를 in $0.75 로 청구 — 리스트의 7.5배). 정확한 실과금은
+    llm_call_logs.calls[].costUsd 를 봐야 한다.
+    """
+    try:
+        r = requests.get(OPENROUTER_MODELS_URL, timeout=15)
+        r.raise_for_status()
+        for m in r.json().get("data", []):
+            p = m.get("pricing") or {}
+            try:
+                PRICE[m["id"]] = {
+                    "input": float(p["prompt"]) * 1_000_000,
+                    "output": float(p["completion"]) * 1_000_000,
+                }
+            except (KeyError, TypeError, ValueError):
+                continue
+        return True
+    except Exception as e:
+        print(f"[warn] OpenRouter 단가 조회 실패 ({e}) — 폴백 표 사용", flush=True)
+        return False
 
 PRESETS = ["DESERTER", "SMUGGLER", "DOCKWORKER"]
 # 실제 유저 플레이 스타일 — 별칭 변형, NPC 지목, 고위험 행동, 긴 문장 포함
@@ -250,8 +288,17 @@ def run_one_model(token, model_id, turns=10):
         completion = stats.get("completion", 0)
         server_latency_ms = stats.get("latencyMs", 0)
 
-        price = PRICE.get(model_id, {"input": 0, "output": 0})
-        cost_usd = (prompt / 1_000_000) * price["input"] + (completion / 1_000_000) * price["output"]
+        price = PRICE.get(model_id)
+        if price is None:
+            # 조용한 0 금지 — 단가를 모르면 그렇게 말한다
+            if model_id not in _UNPRICED_WARNED:
+                _UNPRICED_WARNED.add(model_id)
+                log(f"  [warn] 단가 미상: {model_id} — costUsd 는 None 으로 기록됨")
+            cost_usd = None
+        else:
+            cost_usd = (prompt / 1_000_000) * price["input"] + (
+                completion / 1_000_000
+            ) * price["output"]
 
         row = {
             "turnNo": turn_no,
@@ -263,7 +310,7 @@ def run_one_model(token, model_id, turns=10):
             "promptTokens": prompt,
             "cachedTokens": cached,
             "completionTokens": completion,
-            "costUsd": round(cost_usd, 6),
+            "costUsd": round(cost_usd, 6) if cost_usd is not None else None,
             "narrativeLen": len(narrative),
             "narrativeSample": narrative[:120],
             "error": sse.get("error"),
@@ -320,6 +367,13 @@ def main():
     ap.add_argument("--turns", type=int, default=10)
     ap.add_argument("--output", default=None)
     args = ap.parse_args()
+
+    log("OpenRouter 단가 로딩")
+    if load_prices():
+        for m in args.models:
+            p = PRICE.get(m)
+            log(f"  {m}: in ${p['input']:.3f}/M out ${p['output']:.3f}/M" if p
+                else f"  {m}: 단가 미상 (카탈로그에 없음 — 오타 확인)")
 
     log(f"Registering bench user + JWT")
     token = register_login()
