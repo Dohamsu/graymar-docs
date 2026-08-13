@@ -705,6 +705,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **게이트 누적 판정 전환 (2026-08-07)** | V12·V13 이 런당 표본(14~20턴 / 27~36선택지)에서 1건이 3~5%p 라 노이즈로 뒤집히던 것을 최근 3런 **원시 카운트 풀링**으로 전환 (`append_gate_ledger`, 2런 미만 보류). V12 재초과는 신규 커밋 무관으로 확정(프롬프트 유입 0·CHECK 턴이 FREE 턴보다 작음·발동 다수가 FREE) — 원인은 규칙 28%×대화 컨텍스트 29% 중첩. V13 도 편중 재발이 아니라 표본 착시(당일 누적 16.7% 통과). 전환 후 **게이트 14/14 전항목 통과**. arch/79 §11 · arch/98 §11 | ✅ 완료 |
 | **turns.service 도메인 분할 (2026-08-07)** | arch/77 §5 재비대화 래칫 발화(함수 2,075/2,000·파일 9,194/9,000)에 대응. 상한 상향 없이 분할 — 공용 헬퍼(turn-shared)·장비상점·DAG·HUB·전투 5개 서브서비스 + 순수 코어(turns.core, 순환 임포트 차단) + 본문 블록 2개 private 메서드화. **9,194→6,864줄 · 2,075→1,860줄**, 경고 해소. 래칫 재설정 max-lines 9,000→7,900(새 최대치+15%, 이전 여유 3%는 3주 만에 상시 경고화). 근거: 호출 그래프가 트리(피호출 대부분 1회)·공유 헬퍼 7개·**가변 인스턴스 상태 0건**. arch/77 §18 | ✅ 완료 |
 | **프롬프트 중복·충돌 정리 (2026-08-12)** | ① speechStyle 3중 주입 해소 — `[NPC 대화 자세]`·`[NPC 감정 상태]`·`[이번 턴 NPC 말투]`가 같은 말투를 각각 기술하던 것을 근접 위치 정본 하나로(스냅샷 7종 -131자/프롬프트, 어체 오염 0). ② `[NPC 등장]` 헤더 충돌 — NanoDirector 자유 묘사(①)와 orchestration 등장 선언(②)이 같은 헤더로 서로 다른 인물을 지목하던 것을 ② 우선으로 게이트(실측 1,353턴 중 동시 25턴·인물 모순 7건). **둘 다 측정 가능한 품질 피해는 확인되지 않았고 값은 정합성** — ②는 충돌률 1.8%라 짧은 플레이테스트로 개선 폭 측정이 성립하지 않는다(30턴 관측 확률 43%). arch/79 §11.4.2 · arch/49 부록 | ✅ 완료 |
+| **세계 자율 진행 복구 (2026-08-13)** | "무엇을 해도 세계가 고요하다" 피드백을 30일 실측으로 대조. 원인은 하나가 아니라 **사문 배선 3건**이었고 전부 `actionType`/`parsedType`(arch/100 §14)과 같은 "조용히 꺼진" 부류라 어느 게이트에도 안 걸렸다. ① 엔진은 `longTermAgenda`(구조체)를 읽는데 저작된 건 `agenda`(프롬프트용 동기 **문자열**) — 구조체 보유 5명뿐, NPC_RONEN 은 문자열이라 무시 ② 저작된 15 스테이지가 **전부 `day >= 2~10`** 인데 158런 중 144런(91%)이 day 1 종료(평균 1.10) → `globalClock` 지원 추가 후 재기준화 ③ `conditionApply` 키 불일치(콘텐츠 `targetLocation` ↔ 엔진 `locationId`)로 `addCondition` 항상 false. + 대화 지연 틱 6→2·발효 상한 2(arch/81 3차)·행동화/목격 반응 조사 폴백 `이(가)` 8곳(유저 노출)·흔적 관측 로그. **실측 대비**: worldFact `NPC_ACTION` 30일 전체 10건 → 15턴 한 런에 **8건**(카테고리 비중 0.5%→40%), npcGoals 6명·agenda 시그널 8건. 회귀 0(대화 턴 전환 0건, 불변식 49 유지). 게이트 12/14 — V9·V12 는 변경 **전** 런에서도 동일 실패. **미달 1건**: 시계 실효 0.39→0.43 tick/턴으로 예상(≈0.64)에 못 미침, 단일 런이라 누적 재측정 필요. **잔여**: worldFact `WORLD_CHANGE`/`RELATIONSHIP` 쓰기 지점 0곳 · 시그널 템플릿 14/55 도달 불능(`triggerPressure` 60~85 vs 압력 63%가 ≤10) · karnholt agenda(디렉터 충돌 판단 선행). arch/21 Part 11 · arch/81 3차 | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
@@ -752,7 +753,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 12_equipment_system.md | ✅ 구현됨 | 장비 드랍/착용, 세트효과, Legendary |
 | 14_user_driven_code_bridge.md | ✅ 구현됨 | IntentV3→Incident→Router→Ending |
 | 15_notification_system.md | ✅ 구현됨 | Notification 설계 + UI + 클라이언트 브릿지 (15/16/17 통합) |
-| 21_living_world_redesign.md | ✅ 구현됨 | Living World v2 설계 배경 (구현 API는 guides/07) |
+| 21_living_world_redesign.md | ✅ 구현됨 | Living World v2 설계 배경 (구현 API는 guides/07) + **Part 11 세계 자율 진행 복구**(2026-08-13 — agenda 사문 배선 3건·worldFact NPC_ACTION 부활) |
 | 22_dice_roll_animation.md | ✅ 구현됨 | 주사위 판정 애니메이션 |
 | 23_dialogue_ui_redesign.md | ✅ 설계 | 대화 UI 고도화 (메신저 형태) |
 | 24_multiplayer_party_system.md | ✅ 구현됨 | 파티 설계·Phase 1~3 (구현 API는 guides/08) |
@@ -804,7 +805,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 77_god_method_refactoring.md | ✅ 구현됨 | God method 리팩토링 |
 | 78_narrative_opener_pronoun_cycle.md | ✅ 2차까지 완료 | 개시어·대명사 억제 |
 | 80_pack_asset_pool.md | ✅ 구현됨 | 팩 에셋 풀 — 이미지 폴더 투입→sync(슬러그 정규화)→저작·동적 NPC·장소 자동 매칭 (성별·키워드… |
-| 81_day_night_system.md | ✅ 구현됨 (2차 포함) | 밤낮 시스템 재설계 |
+| 81_day_night_system.md | ✅ 구현됨 (3차 포함) | 밤낮 시스템 재설계 (3차 2026-08-13 — 대화 지연 틱 6→2·발효 상한 2) |
 | 82_npc_dialogue_naturalness.md | ✅ 구현됨 | NPC 대화 자연스러움 |
 | 83_director_presence_tuning.md | ✅ 구현됨 | 자율 디렉터 존재감 튜닝 |
 | 84_party_dungeon_client_wiring.md | ✅ 구현됨 | 파티 던전 클라이언트 배선 완성 |
