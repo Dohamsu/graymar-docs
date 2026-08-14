@@ -303,7 +303,8 @@
     "activityLocations": [
       "LOC_HARBOR",
       "LOC_SLUMS"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/harulun_boss.webp"
   },
   {
     "npcId": "NPC_EDRIC_VEIL",
@@ -601,7 +602,8 @@
     ],
     "activityLocations": [
       "LOC_MARKET"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/edric_veil.webp"
   },
   {
     "npcId": "NPC_MAIREL",
@@ -891,7 +893,8 @@
     ],
     "activityLocations": [
       "LOC_GUARD"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/mairel_dan.webp"
   },
   {
     "npcId": "NPC_TOBREN",
@@ -1056,7 +1059,8 @@
     ],
     "activityLocations": [
       "LOC_HARBOR"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/tobren.webp"
   },
   {
     "npcId": "NPC_MOON_SEA",
@@ -1238,7 +1242,8 @@
     "activityLocations": [
       "LOC_MARKET",
       "LOC_GUARD"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/laira_kestel.webp"
   },
   {
     "npcId": "NPC_MIRELA",
@@ -1419,7 +1424,8 @@
     "activityLocations": [
       "LOC_MARKET",
       "LOC_SLUMS"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/mirela.webp"
   },
   {
     "npcId": "NPC_RENNICK",
@@ -1583,7 +1589,8 @@
     "activityLocations": [
       "LOC_MARKET",
       "LOC_SLUMS"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/rennick.webp"
   },
   {
     "npcId": "NPC_CAPTAIN_BREN",
@@ -1738,7 +1745,8 @@
     "activityLocations": [
       "LOC_HARBOR",
       "LOC_GUARD"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/captain_bren.webp"
   },
   {
     "npcId": "NPC_ROSA",
@@ -1890,7 +1898,8 @@
     "activityLocations": [
       "LOC_SLUMS",
       "LOC_MARKET"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/rosa.webp"
   },
   {
     "npcId": "NPC_INFO_BROKER",
@@ -2059,7 +2068,8 @@
     "activityLocations": [
       "LOC_SLUMS",
       "LOC_HARBOR"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/shadow_broker.webp"
   },
   {
     "npcId": "NPC_GUARD_CAPTAIN",
@@ -2216,7 +2226,8 @@
     ],
     "activityLocations": [
       "LOC_GUARD"
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/captain_bellon.webp"
   },
   {
     "npcId": "NPC_LORD_VANCE",
@@ -2484,7 +2495,8 @@
           "풍경"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/lord_vance.webp"
   },
   {
     "npcId": "NPC_OWEN_KEEPER",
@@ -2644,7 +2656,8 @@
           "가게"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/owen.webp"
   },
   {
     "npcId": "NPC_SERA_DOCKS",
@@ -2796,7 +2809,8 @@
           "갈매기"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/sera.webp"
   },
   {
     "npcId": "NPC_DAME_ISOLDE",
@@ -2948,7 +2962,8 @@
           "손끝"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/dame_isolde.webp"
   },
   {
     "npcId": "NPC_RAT_KING",
@@ -3253,7 +3268,8 @@
           "옛물건"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/rat_king.webp"
   },
   {
     "npcId": "NPC_GUARD_FELIX",
@@ -3403,7 +3419,8 @@
           "안부"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/felix.webp"
   },
   {
     "npcId": "NPC_BG_FISHMONGER",
@@ -3481,7 +3498,8 @@
         ]
       }
     ],
-    "shortAlias": "생선상인"
+    "shortAlias": "생선상인",
+    "portraitUrl": "/npc-portraits/fishmonger.webp"
   },
   {
     "npcId": "NPC_BG_FRUIT_VENDOR",
@@ -3559,7 +3577,8 @@
         ]
       }
     ],
-    "shortAlias": "과일장수"
+    "shortAlias": "과일장수",
+    "portraitUrl": "/npc-portraits/fruit_vendor.webp"
   },
   {
     "npcId": "NPC_BG_ANTIQUE_DEALER",
@@ -3637,7 +3656,8 @@
         ]
       }
     ],
-    "shortAlias": "영감"
+    "shortAlias": "영감",
+    "portraitUrl": "/npc-portraits/old_artificer.webp"
   },
   {
     "npcId": "NPC_BG_SHOE_SHINE",
@@ -3715,7 +3735,8 @@
         ]
       }
     ],
-    "shortAlias": "구두닦이"
+    "shortAlias": "구두닦이",
+    "portraitUrl": "/npc-portraits/shoe_shine.webp"
   },
   {
     "npcId": "NPC_BG_MESSENGER",
@@ -3871,7 +3892,8 @@
         ]
       }
     ],
-    "shortAlias": "무기관리병"
+    "shortAlias": "무기관리병",
+    "portraitUrl": "/npc-portraits/veteran_swordsmith.webp"
   },
   {
     "npcId": "NPC_BG_CLERK",
@@ -4027,7 +4049,8 @@
         ]
       }
     ],
-    "shortAlias": "노선장"
+    "shortAlias": "노선장",
+    "portraitUrl": "/npc-portraits/harbor_captain_pipe.webp"
   },
   {
     "npcId": "NPC_BG_DOCKER",
@@ -4105,7 +4128,8 @@
         ]
       }
     ],
-    "shortAlias": "인부"
+    "shortAlias": "인부",
+    "portraitUrl": "/npc-portraits/docker.webp"
   },
   {
     "npcId": "NPC_BG_ROPE_MAKER",
@@ -4261,7 +4285,8 @@
         ]
       }
     ],
-    "shortAlias": "세관원"
+    "shortAlias": "세관원",
+    "portraitUrl": "/npc-portraits/customs.webp"
   },
   {
     "npcId": "NPC_BG_HERB_CRONE",
@@ -4339,7 +4364,8 @@
         ]
       }
     ],
-    "shortAlias": "약초 노파"
+    "shortAlias": "약초 노파",
+    "portraitUrl": "/npc-portraits/herb_crone.webp"
   },
   {
     "npcId": "NPC_BG_STREET_KID",
@@ -4417,7 +4443,8 @@
         ]
       }
     ],
-    "shortAlias": "골목 아이"
+    "shortAlias": "골목 아이",
+    "portraitUrl": "/npc-portraits/street_kid.webp"
   },
   {
     "npcId": "NPC_BG_VAGRANT",
@@ -4495,7 +4522,8 @@
         ]
       }
     ],
-    "shortAlias": "떠돌이"
+    "shortAlias": "떠돌이",
+    "portraitUrl": "/npc-portraits/vagrant.webp"
   },
   {
     "npcId": "NPC_BG_BEGGAR",
@@ -4573,7 +4601,8 @@
         ]
       }
     ],
-    "shortAlias": "걸인"
+    "shortAlias": "걸인",
+    "portraitUrl": "/npc-portraits/beggar.webp"
   },
   {
     "npcId": "NPC_BG_BUTLER",
@@ -4885,7 +4914,8 @@
         ]
       }
     ],
-    "shortAlias": "음유시인"
+    "shortAlias": "음유시인",
+    "portraitUrl": "/npc-portraits/tavern_bard.webp"
   },
   {
     "npcId": "NPC_BG_COOK",
@@ -4963,7 +4993,8 @@
         ]
       }
     ],
-    "shortAlias": "요리사"
+    "shortAlias": "요리사",
+    "portraitUrl": "/npc-portraits/tavern_cook.webp"
   },
   {
     "npcId": "NPC_BG_BARMAID",
@@ -5041,7 +5072,8 @@
         ]
       }
     ],
-    "shortAlias": "서빙꾼"
+    "shortAlias": "서빙꾼",
+    "portraitUrl": "/npc-portraits/barmaid.webp"
   },
   {
     "npcId": "NPC_BG_DRUNK",
@@ -5119,7 +5151,8 @@
         ]
       }
     ],
-    "shortAlias": "취객"
+    "shortAlias": "취객",
+    "portraitUrl": "/npc-portraits/drunk.webp"
   },
   {
     "npcId": "NPC_BG_WAREHOUSE_GUARD",
@@ -5197,7 +5230,8 @@
         ]
       }
     ],
-    "shortAlias": "경비"
+    "shortAlias": "경비",
+    "portraitUrl": "/npc-portraits/milo.webp"
   },
   {
     "npcId": "NPC_BG_DOG_HANDLER",
@@ -5592,6 +5626,7 @@
           "고민"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/ronen.webp"
   }
 ]

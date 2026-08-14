@@ -256,7 +256,8 @@
       ],
       "currentStage": 0,
       "completed": false
-    }
+    },
+    "portraitUrl": "/npc-portraits/star_sand_v1/warm_winter_woman.webp"
   },
   {
     "npcId": "NPC_SS_LUOR",
@@ -524,7 +525,8 @@
       ],
       "currentStage": 0,
       "completed": false
-    }
+    },
+    "portraitUrl": "/npc-portraits/star_sand_v1/mystic_night_priestess.webp"
   },
   {
     "npcId": "NPC_SS_SAEL",
@@ -783,7 +785,8 @@
       ],
       "currentStage": 0,
       "completed": false
-    }
+    },
+    "portraitUrl": "/npc-portraits/star_sand_v1/winter_navigator_mechanism.webp"
   },
   {
     "npcId": "NPC_SS_MAREK",
@@ -995,7 +998,8 @@
           "기억"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/lonely_frozen_warrior.webp"
   },
   {
     "npcId": "NPC_SS_KAILUN",
@@ -1250,7 +1254,8 @@
       ],
       "currentStage": 0,
       "completed": false
-    }
+    },
+    "portraitUrl": "/npc-portraits/star_sand_v1/dark_market_mage.webp"
   },
   {
     "npcId": "NPC_SS_NAHAT",
@@ -1458,7 +1463,8 @@
           "울림"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/starlit_sea_guardian.webp"
   },
   {
     "npcId": "NPC_SS_BRAN",
@@ -1589,7 +1595,8 @@
           "독신"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/dark_harbor_warrior.webp"
   },
   {
     "npcId": "NPC_SS_SEFI",
@@ -1720,7 +1727,8 @@
           "폭풍"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/young_pilgrim_guide.webp"
   },
   {
     "npcId": "NPC_SS_ODRIN",
@@ -1851,7 +1859,8 @@
           "대접"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/observatory_scribe.webp"
   },
   {
     "npcId": "NPC_SS_HELUN",
@@ -1982,7 +1991,8 @@
           "기준"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/old_undertaker_lodger.webp"
   },
   {
     "npcId": "NPC_SS_RIVA",
@@ -2113,7 +2123,8 @@
           "소원"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/black_ice_courier.webp"
   },
   {
     "npcId": "NPC_SS_ABAS",
@@ -2244,7 +2255,8 @@
           "시작"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/whaleoil_lamp_artisan.webp"
   },
   {
     "npcId": "NPC_SS_MIREN",
@@ -2375,7 +2387,8 @@
           "놀람"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/afflicted_ex_miner.webp"
   },
   {
     "npcId": "NPC_SS_TOBA",
@@ -2506,7 +2519,8 @@
           "직업병"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/harbor_route_broker.webp"
   },
   {
     "npcId": "NPC_SS_KASIEN",
@@ -2637,7 +2651,8 @@
           "초대"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/coast_hunter_elder.webp"
   },
   {
     "npcId": "NPC_SS_YURMA",
@@ -2768,7 +2783,8 @@
           "겨울"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/armed_pilgrim_seeker.webp"
   },
   {
     "npcId": "NPC_SS_PENA",
@@ -2899,7 +2915,8 @@
           "예정"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/heart_pool_licensor.webp"
   },
   {
     "npcId": "NPC_SS_ED",
@@ -3030,7 +3047,8 @@
           "미신"
         ]
       }
-    ]
+    ],
+    "portraitUrl": "/npc-portraits/star_sand_v1/wandering_name_scribe.webp"
   },
   {
     "npcId": "NPC_SS_BG_01",

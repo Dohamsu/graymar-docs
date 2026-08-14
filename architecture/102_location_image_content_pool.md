@@ -1,4 +1,4 @@
-# 102. 장소 이미지 콘텐츠 승격 — location_images.json (2026-08-14)
+# 102. 이미지 정본 단일화 — 장소 이미지 콘텐츠 승격 + 초상화 E-1~E-3 (2026-08-14)
 
 ## 문제
 
@@ -44,11 +44,35 @@
 
 검증: 매처 스펙 17케이스 (신규 2 — 콘텐츠 경로 후보·안전도 변형/폴백), 서버 전체 1,961 PASS.
 
-## 남긴 것 (2차 — E와 함께)
+## 2차 — 초상화 정본 단일화 E-1~E-3 (2026-08-14 같은 날 구현)
 
-- **URL 결정의 완전 서버 이관**: 서버가 매 턴 `ui`에 resolved URL을 내려주고 클라 리졸버(`location-images.ts`)를 소비 전용으로 축소. 지금 안 한 이유 — 구 턴 복원(저장된 serverResult에 URL 없음)과의 호환 때문에 클라 리졸버를 legacy fallback으로 유지해야 해서, 마커 URL 임베드 정리(E)와 함께 설계하는 게 이중화 기간을 최소화한다.
+### E-1. NPC_PORTRAITS 정적 맵 콘텐츠 외부화
+
+- graymar 35 + star_sand 18의 초상화 경로를 `npcs.json`의 `portraitUrl` 필드로 이전 (불변식 45 정합). 서버 `db/types/npc-portraits.ts`(정적 맵)와 미러 스펙, **클라 미러 맵 `data/npc-portraits.ts`까지 삭제** — 수동 이중 유지보수 소멸.
+- 통합 리졸버 `getNpcPortraitUrl/Map` 1순위가 콘텐츠(`npcDef.portraitUrl`)로 교체. 맵이 팩 스코프로 한정되는 부수 정화 포함 (구 정적 맵은 전 팩 혼재).
+- 도감(NpcDossierTab)은 서버가 `npcEmotional[].imageUrl`(통합 리졸버 결과)을 실어줘 소비 전용화 — **karnholt 풀·동적 NPC도 도감에 얼굴이 생긴다** (구 정적 맵엔 부재).
+
+### E-2. 마커 와이어 포맷 npcId 전환
+
+`@[표시명|URL]` → `@[표시명|npcId]`. URL이 서술 텍스트에 실려 다니던 구조가 별칭 치환 안전망의 URL 오염(2026-07-19 실측 404)·슬러그 변경 시 과거 턴 박제 문제의 근원이었다.
+
+- **사전 전수 조사 결론**: URL은 100% 서버(워커 Step B 등)가 붙인다 — LLM은 URL 작성이 금지돼 있어 프롬프트 변경 0. 서버 regex 30여 개 중 2번째 필드 내용을 실제로 읽는 곳은 1.5곳뿐.
+- 삽입 8곳 전환: Step B-1/B-1.5(URL→npcId 역해석, 실패 시 URL 유지)/콜론 승격/B-2×2/B-2.5 + Step F 교정 + 자기소개 삽입 + DialogueAppend.
+- 소비 1곳(reconcile speakingNpc): 신 포맷 직해석 + 구 포맷 URL 역매핑 병행.
+- **혼재 허용 설계**: 클라 `DialogueBubble.resolvePortraitRef` 단일 지점이 `/`·`http` 시작이면 URL(구 턴·스트림 npcImage), 아니면 npcId로 `npcPortraitMap` 조회. DB 과거 턴의 URL 마커는 영구 렌더 가능.
+- **portraitMap 전달 3채널**: ① 턴 `ui.portraitMap`(npcStates 한정 — 유계) ② 런 복원 페이로드 `portraitMap` ③ 워커 reconcile 보충(커밋 시점 npcStates에 없던 첫 등장 BG NPC). 클라는 병합 축적 + speakingNpc·소개 카드 쌍도 흡수.
+- 부수 이득: 미닫힘 마커 31자 제거 규칙(`@\[[^\]]{31,}`)과 URL 마커의 잠재 충돌이 npcId 단축으로 자연 해소. nano 선택지 npcId 오염 방어(normalizeChoiceNpcIdCore)는 오염이 정답이 되어 무해화.
+
+### E-3. 장소 이미지 URL 서버 이관
+
+- 서버 `resolveLocationImageForDisplay`(콘텐츠 체인 → karnholt 풀 스코어링 — `poolLocationImage`를 클라와 동일 djb2 결정론으로 포팅)가 정본. `ui.worldState.locationImageUrl`로 전달 — 장소 진입(node-transition 2곳)·FREE 턴·이력 복원 `locationEnter.imageUrl`(구 턴 소급).
+- 클라 진입 컷·배경(LocationBackdrop)·복원이 서버 URL 우선, 부재 시(구 서버·구 턴) 레거시 리졸버 fallback.
+
+## 남긴 것
+
+- **클라 레거시 리졸버(`location-images.ts`) 최종 삭제**: 구 턴/구 서버 fallback 기간이 지나면 (배포 후 신규 런 위주가 되면) `getLocationImagePath`·팩별 정적 맵 제거 가능. 시나리오 배너(`getScenarioBannerImage`)는 별도 존치.
 - **HUB(장소 미지정) 배경의 팩 인지**: `packFor(null)`이 GRAYMAR를 반환해 비-graymar 팩 HUB에서 graymar 전경이 뜰 수 있는 의심 경로 — worldState의 currentLocationId 유지 정책 확인 후 처리.
-- location_images.json의 클라 소비 (정적 맵 대체) — 2차 이관 시 번들 import로 전환.
+- **E-2 실런 검증**: 마커 시스템은 회귀 잦은 부분 — 배포 후 10턴 플레이테스트로 ① 신 포맷 마커 초상 렌더 ② 구 런 이어하기 URL 마커 렌더 ③ 소개 카드 정합(V8 센서)을 확인할 것.
 
 ## 관련
 
