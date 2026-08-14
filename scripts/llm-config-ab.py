@@ -9,9 +9,19 @@
 측정: 레이턴시 · 추론/출력 토큰 · 실과금 · finish_reason(length=절단) ·
       라벨 준수(`별칭: "대사"` — 시스템 프롬프트 P0-B) · 합쇼체 누출(P0-A 위반)
 
+표본: 기본 **15건**(`--limit`). 2026-08-13 평가는 40건으로 돌렸고 그 수치가 arch/25
+부록 E 에 남아 있다 — 15건과 직접 비교할 때는 표본 차이를 감안한다.
+15건에서 잡히는 것과 못 잡는 것:
+  - 잡힘: 형식 결함률 ~15% 이상(기대 2건+), 절단(finish=length), 추론 토큰량,
+          레이턴시 중앙값, 단가 — 모두 건별 신호가 크다
+  - 못 잡음: 한 자릿수 % 차이. 예로 gemini 라벨 준수 89.9%(40건 중 4건 미준수)는
+          15건이면 기댓값 1.5건이라 0건이 나올 확률이 ~19% 다. 미세 차이 판정은
+          3층(프로덕션 `llm_speech_audit` 누적)의 몫이고 이 층은 **선별용**이다.
+
 사용법:
   python3 scripts/llm-config-ab.py --model openai/gpt-5.6-luna \
       --prompts /tmp/prompts.json --configs 1024:none 2048:medium
+  python3 scripts/llm-config-ab.py ... --limit 40   # 정밀 판정이 필요할 때만
 """
 
 import argparse
@@ -112,6 +122,12 @@ def main():
         help="max_tokens:effort (예: 1024:none 2048:medium)",
     )
     ap.add_argument("--repeat", type=int, default=1)
+    ap.add_argument(
+        "--limit",
+        type=int,
+        default=15,
+        help="재생할 프롬프트 수 (기본 15, 0=전량). 파일에 몇 건이 들었든 여기서 자른다",
+    )
     ap.add_argument("--price", default="0.10,0.60,0.01",
                     help="in,out,cache_read USD/M (분석 단가 — 캐시 순서 오염 보정용)")
     ap.add_argument("--dump", default=None, help="원문 저장 경로 (질적 대조용)")
@@ -123,7 +139,15 @@ def main():
 
     key = api_key()
     prompts = json.load(open(args.prompts, encoding="utf-8"))
-    print(f"프롬프트 {len(prompts)}건 × 설정 {len(args.configs)}종 × {args.repeat}회\n")
+    total = len(prompts)
+    if args.limit and args.limit > 0:
+        prompts = prompts[: args.limit]
+    calls = len(prompts) * len(args.configs) * args.repeat
+    print(
+        f"프롬프트 {len(prompts)}건"
+        + (f" (파일 {total}건 중)" if len(prompts) < total else "")
+        + f" × 설정 {len(args.configs)}종 × {args.repeat}회 = 요청 {calls}건\n"
+    )
 
     rows = {}
     for cfg in args.configs:
