@@ -497,3 +497,396 @@ young nervous archivist clutching a folder of original charts to his
 chest, glancing over his shoulder down the tower stairs, torn between
 loyalty and truth, candlelight trembling
 ```
+
+---
+
+# 6차 배치 (#110~142) — 인물 감정 3종 체제 (2026-08-14)
+
+> 목표: **CORE·SUB 18명 전원이 감정 컷 최소 3종**을 갖게 한다. 5차까지는 대부분
+> 1종(직능 소개 컷)이라, 그 인물이 나오는 턴이면 관계·국면과 무관하게 늘 같은 얼굴이
+> 떴다. 이번 배치로 star_sand 인물 컷은 22장 → **55장**이 된다.
+>
+> 근거 데이터: star_sand_v1 실런 서술 코퍼스 **355턴 / 176,741자** (2026-07-14 ~ 08-12, DB 실측).
+> 5차 작성 시점(311턴) 대비 +44턴이며 인물 노출 순위는 변동 없다.
+
+## 13. 왜 3종인가 — 매칭 엔진이 감정을 고르는 실제 원리
+
+`SceneCutMatcher` 의 렉시컬 프리스크린은 **태그가 서술에 몇 개나 등장하는지(hits)를
+세어 많은 순으로 정렬**하고, 상위 후보만 nano 판정에 넘긴다
+(`scene-cut-matcher.service.ts` — `narrative.includes(kw)` / `sort(b.hits - a.hits)`).
+
+여기서 이 배치의 설계 규칙이 나온다.
+
+1. **첫 토큰 = 실명**. 그 인물이 서술에 등장한 턴에만 후보가 되고(hits ≥ 1), 다른
+   인물 턴에는 아예 안 걸린다. 인물 컷의 진입권이자 오귀속 방지선이다.
+2. **같은 인물의 컷끼리 감정 토큰이 겹치면 안 된다.** 겹치면 세 컷이 모두 hits=1로
+   동률이 되고, 동률은 `runId+turnNo` 시드 셔플로 갈린다 — 즉 **감정과 무관한 무작위
+   선택**이 된다. 토큰을 달리 배분해야 "창백" 이 쓰인 턴엔 창백 컷이 hits=2로 이긴다.
+3. **감정 토큰은 실측 상위 어휘에서 고른다.** 코퍼스에 안 나오는 낱말(`분노` 1 ·
+   `공포` 0 · `발작` 0)로 태그하면 그 컷은 영원히 hits=1이라 2번의 이점을 못 받는다.
+
+### 이 팩의 감정 어휘 실측 (355턴)
+
+| 사용 가능 (2글자+·중빈도) | 회 | | 회 | | 회 |
+|---|---:|---|---:|---|---:|
+| 침묵 | 72 | 창백 | 53 | 응시 | 35 |
+| 흔들 | 64 | 경계 | 46 | 고요 | 27 |
+| 정적 | 60 | 끄덕 | 44 | 떨리(떨림 17) | 26 |
+| 눈빛 | 59 | 입술 | 36 | 움츠 | 19 |
+| 미소 | 57 | 물러 | 36 | 불안 | 15 |
+
+| 상황 어휘 | 회 | | 회 | | 회 |
+|---|---:|---|---:|---|---:|
+| 금기 | 76 | 명부 | 25 | 밧줄 | 14 |
+| 긴장 | 75 | 속삭 | 22 | 매달 | 13 |
+| 골목 | 47 | 손짓 | 21 | 수레 | 13 |
+| 모피 | 42 | 옷자락 | 20 | 발견 | 12 |
+| 허가 | 39 | 수첩 | 20 | 서류 · 은밀 | 11 |
+| 운반 | 33 | 계단 | 18 | 울음 · 움켜 | 10 |
+| 짐꾼 | 27 | 기도 | 14 | 잠들 | 9 |
+
+⚠️ **태그 금지어 (이번에 확인)**: `등불`(200) · `목소리`(191) · `고개`(169) ·
+`시선`(194) · `손끝`(118) · `낮은`(98) · `다가`(128) 는 사실상 전 턴 등장이라
+hits 를 무의미하게 부풀린다. `분노`·`공포`·`거절`·`항의`·`발작`·`원본`·`밀수`·
+`붕괴`·`동행`·`추격`은 **0~1회**라 태그로서 죽은 낱말이다.
+
+### 인물 노출 실측 (서술 내 실명 등장, 355턴)
+
+| 인물 | 회 | 보유 컷 | 인물 | 회 | 보유 컷 |
+|---|---:|---:|---|---:|---:|
+| 이렌 | 357 | 4 ✔ | 카일룬 | 9 | 1 |
+| 유르마 | 44 | 2 | 토바 | 9 | 1 |
+| 루오르 | 43 | 2 | 리바 | 6 | **0** |
+| 아바스 | 30 | 2 | 에드 | 6 | 1 |
+| 세피 | 14 | 1 | 사엘·마레크·나하트·브란·오드린·헬룬·미렌·카시엔·페나 | 0 | 1 (페나 0) |
+
+> 하위 9명이 0회인 것은 컷이 필요 없다는 뜻이 아니라 **플레이테스트 단축런(10~15턴)이
+> 중후반 동선에 도달하지 못한다**는 뜻이다 (5차에서 이미 확인된 패턴). 이렌만 4종을
+> 갖춘 현 상태는 실유저 장기런에서 "이렌 외 전원은 표정이 하나"로 체감된다.
+
+## 14. 6차 체크리스트 (노출 실측 우선순위순)
+
+| # | ☐ | 파일명 (= 태그) | 감정 국면 | 태그 근거 (실측 회) |
+|---|---|----------------|----------|-------------------|
+| 110 | ☑ | `유르마_경계_긴장_움켜.webp` | 전투 경계 | 경계46·긴장75·움켜10 (기존 수색·침통과 무겹침) |
+| 111 | ☑ | `루오르_흔들_명부_봉인.webp` | 은폐가 흔들림 | 흔들64·명부25·봉인5 |
+| 112 | ☑ | `아바스_창백_경고_두려움.webp` | 불길한 예감 | 창백53·경고3·두려움7 |
+| 113 | ☑ | `세피_옷자락_매달_불안.webp` | 아이의 매달림 | 옷자락20·매달13·불안15 |
+| 114 | ☑ | `세피_기도_회랑_고요.webp` | 기도 중 정적 | 기도14·회랑4·고요27 |
+| 115 | ☑ | `카일룬_속삭_경고_은밀.webp` | 농담 뒤 진담 | 속삭22·경고3·은밀11 |
+| 116 | ☑ | `카일룬_물러_긴장_골목.webp` | 발뺌·도주 | 물러36·긴장75·골목47 |
+| 117 | ☑ | `토바_긴장_보고선_눈빛.webp` | 왕실 압박 | 긴장75·보고선6·눈빛59 |
+| 118 | ☑ | `토바_은밀_속삭_서류.webp` | 정보 매매 | 은밀11·속삭22·서류11 |
+| 119 | ☑ | `에드_발견_명부_움켜.webp` | 이름 발견 | 발견12·명부25·움켜10 |
+| 120 | ☑ | `에드_창백_잠들_두려움.webp` | 수집의 대가 | 창백53·잠들9·두려움7 |
+| 121 | ☑ | `리바_운반_수레_밧줄.webp` | **첫 컷 = 정본** | 운반33·수레13·밧줄14 |
+| 122 | ☑ | `리바_긴장_골목_물러.webp` | 단속 회피 | 긴장75·골목47·물러36 |
+| 123 | ☑ | `리바_은밀_손짓_창백.webp` | 발각 직전 | 은밀11·손짓21·창백53 |
+| 124 | ☑ | `사엘_흔들_침묵_계단.webp` | 진실 앞 주저 | 흔들64·침묵72·계단18 |
+| 125 | ☑ | `사엘_응시_창가_고요.webp` | 미(美)에 굴복 | 응시35·창가6·고요27 |
+| 126 | ☑ | `마레크_침묵_굳어_잠들.webp` | 꿈 얘기에 굳음 | 침묵72·굳어4·잠들9 |
+| 127 | ☑ | `마레크_결심_움켜_긴장.webp` | 진입 결단 | 결심5·움켜10·긴장75 |
+| 128 | ☑ | `나하트_미소_고요_눈빛.webp` | 아이 같은 평온 | 미소57·고요27·눈빛59 |
+| 129 | ☑ | `나하트_정적_움츠_속삭.webp` | 거대한 것이 말함 | 정적60·움츠19·속삭22 |
+| 130 | ☑ | `브란_긴장_움켜_경고.webp` | 갱도 위험 경고 | 긴장75·움켜10·경고3 |
+| 131 | ☑ | `브란_창백_울음_침묵.webp` | 고래 울음에 질림 | 창백53·울음10·침묵72 |
+| 132 | ☑ | `오드린_결심_내밀_계단.webp` | 내부 고발 | 결심5·내밀9·계단18 |
+| 133 | ☑ | `오드린_창백_멈칫_긴장.webp` | 들킬 뻔함 | 창백53·멈칫6·긴장75 |
+| 134 | ☑ | `헬룬_수첩_유언_속삭.webp` | 마지막 말 기록 | 수첩20·유언1·속삭22 |
+| 135 | ☑ | `헬룬_경고_잠들_두려움.webp` | 잠들지 말라 | 경고3·잠들9·두려움7 |
+| 136 | ☑ | `미렌_비명_침상_움켜.webp` | 발작 | 비명2·침상6·움켜10 |
+| 137 | ☑ | `미렌_고요_창가_끄덕.webp` | 드문 맑은 순간 | 고요27·창가6·끄덕44 |
+| 138 | ☑ | `카시엔_금기_경고_봉인.webp` | 전승 봉인 | **금기76**·경고3·봉인5 |
+| 139 | ☑ | `카시엔_기도_고요_정적.webp` | 침묵의 의례 | 기도14·고요27·정적60 |
+| 140 | ☑ | `페나_허가_서류_봉인.webp` | **첫 컷 = 정본** | 허가39·서류11·봉인5 |
+| 141 | ☑ | `페나_경계_금기_물러.webp` | 규정 방패 | 경계46·금기76·물러36 |
+| 142 | ☑ | `페나_은밀_움츠_눈빛.webp` | 묵인·뒷거래 | 은밀11·움츠19·눈빛59 |
+
+> 이렌(4종)은 이번 배치 제외 — 이미 근심·미소·창백·접객으로 4국면을 덮는다.
+> 이 배치로 팩 총량 88장. 쿨다운 3턴 + 런 내 1회 제한이라 **노출 총량은 불변**이고
+> 같은 인물을 다시 만났을 때 표정이 달라질 확률만 오른다.
+
+## 15. 공통 스타일 프리픽스 (§1과 동일 — 모든 프롬프트 앞에 붙임)
+
+```
+Dark fantasy polar-night coastal illustration, painterly digital art, cold
+indigo and bone-white palette with faint starlight glimmer, long polar
+twilight, quiet melancholic wonder, no text, no watermark, cinematic
+composition, 16:9
+```
+
+**얼굴 정본 규칙 (§1 연장)** — star_sand 는 초상화 풀이 비어 있어 기존 컷이 얼굴
+정본이다. 아래 15명은 대괄호의 참조 파일을 반드시 함께 넣어 같은 얼굴을 유지한다.
+**리바·페나는 이번이 첫 컷 = 이후 얼굴 정본**이므로 결과물을 따로 보관할 것.
+
+## 16. 6차 프롬프트 — 상위 노출 인물 (유르마·루오르·아바스·세피)
+
+**#110 유르마_경계_긴장_움켜**
+```
+[유르마_순례자_무장_수색.webp 참조 — 동일 얼굴] the armed pilgrim in a low
+ready stance, short spear gripped across her body, weight shifted back,
+eyes tracking something beyond the frame, jaw set, snow-blurred rocks behind
+```
+
+**#111 루오르_흔들_명부_봉인**
+```
+[루오르_차분_기록_촛불.webp 참조 — 동일 얼굴] the gray-habited nun standing
+over a closed dream-ledger with a wax seal, one hand half-lifted toward it
+and stopped, composure cracking at the mouth, candle guttering, the moment
+a keeper doubts her own keeping
+```
+
+**#112 아바스_창백_경고_두려움**
+```
+[아바스_장인_램프_유리.webp 참조 — 동일 얼굴] the lamp craftsman drawn back
+from his workbench, face bloodless in the flame light, one hand raised in
+warning toward the viewer, the other still holding the lamp, dread of
+something he has just understood
+```
+
+**#113 세피_옷자락_매달_불안**
+```
+[세피_호기심_안내_오로라.webp 참조 — 동일 얼굴] the small blind girl guide
+clutching a fistful of an adult's coat hem, pressed close to their side,
+head turned away listening hard, brows drawn with worry, dim convent
+corridor behind
+```
+
+**#114 세피_기도_회랑_고요**
+```
+[세피_호기심_안내_오로라.webp 참조 — 동일 얼굴] the blind girl kneeling
+alone in a lantern-lit cloister walk, small hands folded, lips barely
+moving in a memorized prayer, dust and snow motes hanging still in the
+lamp beams, deep hush
+```
+
+## 17. 6차 프롬프트 — 중간 노출 인물 (카일룬·토바·에드·리바)
+
+**#115 카일룬_속삭_경고_은밀**
+```
+[카일룬_능글_꿈약_유리병.webp 참조 — 동일 얼굴] the sly apothecary leaning
+in close, hand cupped beside his mouth, the playful grin gone flat as he
+says something true for once, eyes hard and level, black-ice stall shadows
+swallowing the rest
+```
+
+**#116 카일룬_물러_긴장_골목**
+```
+[카일룬_능글_꿈약_유리병.webp 참조 — 동일 얼굴] the apothecary backing away
+down a narrow ice-walled alley, palms raised in mock surrender, smile
+stretched too thin, coat already turning for flight, lantern light
+receding behind him
+```
+
+**#117 토바_긴장_보고선_눈빛**
+```
+[토바_중개인_계산_흥정.webp 참조 — 동일 얼굴] the dockside broker standing
+at a frosted window, watching an official dark-hulled ship at the quay,
+manifest forgotten in her hand, calculation hardening into unease behind
+her eyes
+```
+
+**#118 토바_은밀_속삭_서류**
+```
+[토바_중개인_계산_흥정.webp 참조 — 동일 얼굴] the broker sliding a folded
+paper across a plank desk with two fingers, chin tipped low, speaking
+without moving her lips, eyes flicking to the door, transaction that is
+not on any manifest
+```
+
+**#119 에드_발견_명부_움켜**
+```
+[에드_서기관_수첩_이름.webp 참조 — 동일 얼굴] the wandering scribe seizing
+an open guest ledger with both hands, finger jabbed onto a struck-through
+name, mouth open mid-exclamation, eyes lit with unwholesome delight,
+candle knocked askew
+```
+
+**#120 에드_창백_잠들_두려움**
+```
+[에드_서기관_수첩_이름.webp 참조 — 동일 얼굴] the scribe awake at a dark
+table refusing to sleep, notebook shut under white knuckles, deep hollows
+under his eyes, staring at nothing, a man who has collected one name too
+many
+```
+
+**#121 리바_운반_수레_밧줄** — 첫 컷 = 이후 얼굴 정본
+```
+wiry young female runner in a patched hooded coat, hauling a rope-lashed
+handcart of covered crates over packed snow, breath fogging, quick
+practical eyes, black-ice market tunnel mouth blurred behind
+```
+
+**#122 리바_긴장_골목_물러**
+```
+[리바_운반_수레_밧줄.webp 참조 — 동일 얼굴] the runner flattened against an
+alley wall of black ice, cart abandoned mid-frame, head turned toward
+approaching lantern glow, body coiled to bolt, held breath
+```
+
+**#123 리바_은밀_손짓_창백**
+```
+[리바_운반_수레_밧줄.webp 참조 — 동일 얼굴] the runner making a small
+covert hand sign to someone off-frame, hood pushed back from a
+blood-drained face, crate lid ajar with faint glow leaking out, caught
+between delivering and confessing
+```
+
+## 18. 6차 프롬프트 — 중후반 동선 인물 (사엘·마레크·나하트·브란·오드린)
+
+**#124 사엘_흔들_침묵_계단**
+```
+[사엘_학자_관측_기록.webp 참조 — 동일 얼굴] the scholar halted on the iron
+tower stair, one hand on the frozen rail, a sealed chart tube held against
+the chest, looking back up toward the aperture in silence, courage failing
+at the step
+```
+
+**#125 사엘_응시_창가_고요**
+```
+[사엘_학자_관측_기록.webp 참조 — 동일 얼굴] the scholar at the great
+aperture with aurora light washing over an upturned face, pen and record
+forgotten at the side, cold discipline dissolved into pure wonder,
+absolute stillness
+```
+
+**#126 마레크_침묵_굳어_잠들**
+```
+[마레크_수색꾼_길잡이_밧줄.webp 참조 — 동일 얼굴] the tracker gone rigid
+mid-motion at a mention he did not want, rope half-coiled in frozen hands,
+stare fixed on the middle distance, the practical man briefly somewhere
+else entirely
+```
+
+**#127 마레크_결심_움켜_긴장**
+```
+[마레크_수색꾼_길잡이_밧줄.webp 참조 — 동일 얼굴] the tracker cinching a
+harness strap tight with a fist, chin down, shoulders squared toward a
+dark bone-cavern mouth, resignation hardened into go-now resolve
+```
+
+**#128 나하트_미소_고요_눈빛**
+```
+[나하트_잃은_기억_허공.webp 참조 — 동일 얼굴] the nameless returnee smiling
+with uncomplicated childlike delight at something small, head tilted,
+star-flecks drifting slow in the irises, blanket slipping from one
+shoulder, disarming warmth
+```
+
+**#129 나하트_정적_움츠_속삭**
+```
+[나하트_잃은_기억_허공.webp 참조 — 동일 얼굴] the returnee curled small with
+knees drawn up, mouth moving in a near-soundless murmur, the air around the
+figure oddly still as if the room is listening, something vast speaking
+through something tiny
+```
+
+**#130 브란_긴장_움켜_경고**
+```
+[브란_채굴_반장_불면.webp 참조 — 동일 얼굴] the mining foreman gripping a
+worker's arm to haul them back, other hand thrown out toward a fissured
+rib-wall, shout half-formed, lamp swinging wild shadows
+```
+
+**#131 브란_창백_울음_침묵**
+```
+[브란_채굴_반장_불면.webp 참조 — 동일 얼굴] the foreman frozen with one
+palm flat against the bone wall, head bowed close to it, face drained
+white as he listens to a sound in the rib, the whole dig gone silent
+behind him
+```
+
+**#132 오드린_결심_내밀_계단**
+```
+[오드린_보조원_불안_기록.webp 참조 — 동일 얼굴] the young archivist thrusting
+a folder of charts forward into the viewer's space at the foot of the tower
+stair, arms locked straight, terrified and committed at once
+```
+
+**#133 오드린_창백_멈칫_긴장**
+```
+[오드린_보조원_불안_기록.webp 참조 — 동일 얼굴] the archivist stopped dead
+halfway through a doorway with papers clutched to his chest, head snapped
+toward a sound above, all color gone from his face, caught
+```
+
+## 19. 6차 프롬프트 — 여관·수녀원·허가 인물 (헬룬·미렌·카시엔·페나)
+
+**#134 헬룬_수첩_유언_속삭**
+```
+[헬룬_장례사_회고_침묵.webp 참조 — 동일 얼굴] the gaunt undertaker bent
+close over his thin notebook, pencil moving, lips shaping the words he is
+copying down from memory, hearth light barely reaching him, reverence for
+last sentences
+```
+
+**#135 헬룬_경고_잠들_두려움**
+```
+[헬룬_장례사_회고_침묵.webp 참조 — 동일 얼굴] the old undertaker gripping the
+viewer's forearm across a table, notebook shut and pushed aside, eyes wide
+and urgent, warning someone not to sleep tonight
+```
+
+**#136 미렌_비명_침상_움켜**
+```
+[미렌_환자_떨림_허공.webp 참조 — 동일 얼굴] the contaminated patient bolting
+upright in the infirmary cot mid-cry, fists knotted in the blankets, cords
+standing in his neck, nun's lantern swinging into frame at the edge
+```
+
+**#137 미렌_고요_창가_끄덕**
+```
+[미렌_환자_떨림_허공.webp 참조 — 동일 얼굴] the patient sitting calm by a
+frosted infirmary window in a rare lucid hour, blanket around his
+shoulders, giving a small slow nod, exhausted clarity in his eyes
+```
+
+**#138 카시엔_금기_경고_봉인**
+```
+[카시엔_장로_침묵_모피.webp 참조 — 동일 얼굴] the hunter elder holding up a
+flat forbidding palm, other hand closed over the bone charms at his
+throat, deep-lined face set in refusal, firelight from below, a door
+closing on a story
+```
+
+**#139 카시엔_기도_고요_정적**
+```
+[카시엔_장로_침묵_모피.webp 참조 — 동일 얼굴] the elder seated cross-legged
+before low embers with eyes closed and head bowed, breath fog rising slow,
+furs heavy with settled snow, the whole camp silent around him
+```
+
+**#140 페나_허가_서류_봉인** — 첫 컷 = 이후 얼굴 정본
+```
+brisk middle-aged female permit officer in a fur-lined official coat at a
+field desk, pressing a seal onto a harvest permit, stacked forms weighted
+with a stone, ledger discipline in a place that deserves awe, heart-pool
+glow faint behind
+```
+
+**#141 페나_경계_금기_물러**
+```
+[페나_허가_서류_봉인.webp 참조 — 동일 얼굴] the permit officer stepping into
+the path with an arm barred across it, permit board held like a shield,
+flat unmoved stare, refusing passage to restricted ground
+```
+
+**#142 페나_은밀_움츠_눈빛**
+```
+[페나_허가_서류_봉인.webp 참조 — 동일 얼굴] the officer half-turned away with
+shoulders drawn in, pocketing something small without looking at it, gaze
+sliding sideways to check who saw, official rectitude quietly for sale
+```
+
+## 20. 투입 절차 (§5와 동일)
+
+```
+1) 생성 → webp 변환 → 체크리스트의 파일명 그대로 저장
+2) content/star_sand_v1/assets/scenes/ 에 넣기 (몇 장씩 나눠 넣어도 됨)
+3) python3 scripts/sync_pack_assets.py star_sand_v1
+4) 서버 재시작 + client push (public/pack-assets 포함)
+5) 체크리스트 ☑ + 리바·페나 첫 컷은 얼굴 정본으로 별도 보관
+```
+
+> 부분 투입해도 안전하다 — 한 인물의 3종 중 1장만 넣으면 그 컷만 후보에 오르고
+> 나머지는 조용히 없는 상태로 동작한다 (§13의 hits 규칙은 존재하는 컷끼리만 겨룬다).

@@ -48,6 +48,17 @@
       "id": "SCN_a3362dc8"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_75005a1c.webp",
+      "kind": "scene",
+      "keywords": [
+        "나하트",
+        "미소",
+        "고요",
+        "눈빛"
+      ],
+      "id": "SCN_75005a1c"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_8116e46f.webp",
       "kind": "scene",
       "keywords": [
@@ -57,6 +68,17 @@
         "허공"
       ],
       "id": "SCN_8116e46f"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_907ac1a5.webp",
+      "kind": "scene",
+      "keywords": [
+        "나하트",
+        "정적",
+        "움츠",
+        "속삭"
+      ],
+      "id": "SCN_907ac1a5"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_65ffaac8.webp",
@@ -92,6 +114,61 @@
       "id": "SCN_639effbb"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_e4573343.webp",
+      "kind": "scene",
+      "keywords": [
+        "루오르",
+        "흔들",
+        "명부",
+        "봉인"
+      ],
+      "id": "SCN_e4573343"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_1629c9d4.webp",
+      "kind": "scene",
+      "keywords": [
+        "리바",
+        "긴장",
+        "골목",
+        "물러"
+      ],
+      "id": "SCN_1629c9d4"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_75eb09ad.webp",
+      "kind": "scene",
+      "keywords": [
+        "리바",
+        "운반",
+        "수레",
+        "밧줄"
+      ],
+      "id": "SCN_75eb09ad"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_a4900944.webp",
+      "kind": "scene",
+      "keywords": [
+        "리바",
+        "은밀",
+        "손짓",
+        "창백"
+      ],
+      "id": "SCN_a4900944"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_2dc3847c.webp",
+      "kind": "scene",
+      "keywords": [
+        "마레크",
+        "결심",
+        "움켜",
+        "긴장"
+      ],
+      "id": "SCN_2dc3847c"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_2b938b28.webp",
       "kind": "scene",
       "keywords": [
@@ -101,6 +178,17 @@
         "밧줄"
       ],
       "id": "SCN_2b938b28"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_b897354b.webp",
+      "kind": "scene",
+      "keywords": [
+        "마레크",
+        "침묵",
+        "굳어",
+        "잠들"
+      ],
+      "id": "SCN_b897354b"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_071d3a57.webp",
@@ -134,6 +222,28 @@
         "얼음"
       ],
       "id": "SCN_9969d54e"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_d227c12b.webp",
+      "kind": "scene",
+      "keywords": [
+        "미렌",
+        "고요",
+        "창가",
+        "끄덕"
+      ],
+      "id": "SCN_d227c12b"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_ed48334f.webp",
+      "kind": "scene",
+      "keywords": [
+        "미렌",
+        "비명",
+        "침상",
+        "움켜"
+      ],
+      "id": "SCN_ed48334f"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_c9e12e2e.webp",
@@ -203,6 +313,28 @@
       "id": "SCN_00ab7399"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_e810528a.webp",
+      "kind": "scene",
+      "keywords": [
+        "브란",
+        "긴장",
+        "움켜",
+        "경고"
+      ],
+      "id": "SCN_e810528a"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_8fb65d5e.webp",
+      "kind": "scene",
+      "keywords": [
+        "브란",
+        "창백",
+        "울음",
+        "침묵"
+      ],
+      "id": "SCN_8fb65d5e"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_8bb91f19.webp",
       "kind": "scene",
       "keywords": [
@@ -224,6 +356,17 @@
       "id": "SCN_661cd323"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_ac88141e.webp",
+      "kind": "scene",
+      "keywords": [
+        "사엘",
+        "응시",
+        "창가",
+        "고요"
+      ],
+      "id": "SCN_ac88141e"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_44309edf.webp",
       "kind": "scene",
       "keywords": [
@@ -235,6 +378,17 @@
       "id": "SCN_44309edf"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_862813e7.webp",
+      "kind": "scene",
+      "keywords": [
+        "사엘",
+        "흔들",
+        "침묵",
+        "계단"
+      ],
+      "id": "SCN_862813e7"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_966e42a0.webp",
       "kind": "scene",
       "keywords": [
@@ -244,6 +398,28 @@
         "냉기"
       ],
       "id": "SCN_966e42a0"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_a45e391c.webp",
+      "kind": "scene",
+      "keywords": [
+        "세피",
+        "기도",
+        "회랑",
+        "고요"
+      ],
+      "id": "SCN_a45e391c"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_a5f92626.webp",
+      "kind": "scene",
+      "keywords": [
+        "세피",
+        "옷자락",
+        "매달",
+        "불안"
+      ],
+      "id": "SCN_a5f92626"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_0655e747.webp",
@@ -301,6 +477,17 @@
       "id": "SCN_c0072317"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_d76134ba.webp",
+      "kind": "scene",
+      "keywords": [
+        "아바스",
+        "창백",
+        "경고",
+        "두려움"
+      ],
+      "id": "SCN_d76134ba"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_6c1e847a.webp",
       "kind": "scene",
       "keywords": [
@@ -313,6 +500,17 @@
       "time": "day"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_01c6d67f.webp",
+      "kind": "scene",
+      "keywords": [
+        "에드",
+        "발견",
+        "명부",
+        "움켜"
+      ],
+      "id": "SCN_01c6d67f"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_0121fd2d.webp",
       "kind": "scene",
       "keywords": [
@@ -322,6 +520,17 @@
         "이름"
       ],
       "id": "SCN_0121fd2d"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_0a19ece5.webp",
+      "kind": "scene",
+      "keywords": [
+        "에드",
+        "창백",
+        "잠들",
+        "두려움"
+      ],
+      "id": "SCN_0a19ece5"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_552d5fb7.webp",
@@ -357,6 +566,17 @@
       "time": "night"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_276fcd9f.webp",
+      "kind": "scene",
+      "keywords": [
+        "오드린",
+        "결심",
+        "내밀",
+        "계단"
+      ],
+      "id": "SCN_276fcd9f"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_e1e03910.webp",
       "kind": "scene",
       "keywords": [
@@ -366,6 +586,17 @@
         "기록"
       ],
       "id": "SCN_e1e03910"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_ccbf7d9f.webp",
+      "kind": "scene",
+      "keywords": [
+        "오드린",
+        "창백",
+        "멈칫",
+        "긴장"
+      ],
+      "id": "SCN_ccbf7d9f"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_19bf0484.webp",
@@ -387,6 +618,17 @@
         "웅크림"
       ],
       "id": "SCN_225a2a36"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_e1181a1f.webp",
+      "kind": "scene",
+      "keywords": [
+        "유르마",
+        "경계",
+        "긴장",
+        "움켜"
+      ],
+      "id": "SCN_e1181a1f"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_2ff2e3bc.webp",
@@ -532,6 +774,28 @@
       "id": "SCN_35fe0ac4"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_97291332.webp",
+      "kind": "scene",
+      "keywords": [
+        "카시엔",
+        "금기",
+        "경고",
+        "봉인"
+      ],
+      "id": "SCN_97291332"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_e9ed19a5.webp",
+      "kind": "scene",
+      "keywords": [
+        "카시엔",
+        "기도",
+        "고요",
+        "정적"
+      ],
+      "id": "SCN_e9ed19a5"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_a27483c2.webp",
       "kind": "scene",
       "keywords": [
@@ -552,6 +816,50 @@
         "유리병"
       ],
       "id": "SCN_8d998064"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_2874e04d.webp",
+      "kind": "scene",
+      "keywords": [
+        "카일룬",
+        "물러",
+        "긴장",
+        "골목"
+      ],
+      "id": "SCN_2874e04d"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_68a2c796.webp",
+      "kind": "scene",
+      "keywords": [
+        "카일룬",
+        "속삭",
+        "경고",
+        "은밀"
+      ],
+      "id": "SCN_68a2c796"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_234c2f3c.webp",
+      "kind": "scene",
+      "keywords": [
+        "토바",
+        "긴장",
+        "보고선",
+        "눈빛"
+      ],
+      "id": "SCN_234c2f3c"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_e50122c2.webp",
+      "kind": "scene",
+      "keywords": [
+        "토바",
+        "은밀",
+        "속삭",
+        "서류"
+      ],
+      "id": "SCN_e50122c2"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_6743e538.webp",
@@ -576,6 +884,39 @@
       "id": "SCN_01b42256"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_85a3f6df.webp",
+      "kind": "scene",
+      "keywords": [
+        "페나",
+        "경계",
+        "금기",
+        "물러"
+      ],
+      "id": "SCN_85a3f6df"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_5e683d1e.webp",
+      "kind": "scene",
+      "keywords": [
+        "페나",
+        "은밀",
+        "움츠",
+        "눈빛"
+      ],
+      "id": "SCN_5e683d1e"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_32b720d3.webp",
+      "kind": "scene",
+      "keywords": [
+        "페나",
+        "허가",
+        "서류",
+        "봉인"
+      ],
+      "id": "SCN_32b720d3"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_81aec9a8.webp",
       "kind": "scene",
       "keywords": [
@@ -596,6 +937,28 @@
         "빛무리"
       ],
       "id": "SCN_b52a88dc"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_8583f069.webp",
+      "kind": "scene",
+      "keywords": [
+        "헬룬",
+        "경고",
+        "잠들",
+        "두려움"
+      ],
+      "id": "SCN_8583f069"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_446037c4.webp",
+      "kind": "scene",
+      "keywords": [
+        "헬룬",
+        "수첩",
+        "유언",
+        "속삭"
+      ],
+      "id": "SCN_446037c4"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_937d5ec5.webp",
