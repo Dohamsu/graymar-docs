@@ -26,12 +26,16 @@ scenes/ (arch/96 장면 컷 — 서술 태그 매칭 인라인 삽입):
 """
 import hashlib
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 EXTS = {".webp", ".png", ".jpg", ".jpeg"}
+# 구 순번 슬러그 (portrait_01.webp 등) — 해시 슬러그 전환(2026-08-14) 이전 배포분.
+# runState에 영속된 구 런의 배정 URL이 계속 열리도록 삭제하지 않고 동결 보존한다.
+LEGACY_NUM_SLUG = re.compile(r"^(portrait|location)_\d+\.[a-z]+$")
 MALE = {"m", "male", "남", "남자"}
 FEMALE = {"f", "female", "여", "여자"}
 TIME_DAY = {"day", "낮", "주간"}
@@ -65,29 +69,31 @@ def collect(src_dir: Path, dst_dir: Path, url_base: str, kind: str):
     if not src_dir.is_dir():
         return entries
     dst_dir.mkdir(parents=True, exist_ok=True)
-    # 삭제 반영: 대상 디렉토리를 소스 기준으로 재구성
+    # 삭제 반영: 대상 디렉토리를 소스 기준으로 재구성.
+    # 단 구 순번 슬러그는 동결 보존 (구 런 runState의 배정 URL 404 방지)
     for old in dst_dir.iterdir():
-        if old.suffix.lower() in EXTS:
+        if old.suffix.lower() in EXTS and not LEGACY_NUM_SLUG.match(old.name):
             old.unlink()
     files = sorted(
         f for f in src_dir.iterdir() if f.suffix.lower() in EXTS
     )
-    for i, f in enumerate(files, 1):
-        if kind == "scene":
-            # [arch/96 안정 슬러그] 정렬 순번은 파일 추가/삭제 시 전체 번호가 밀려
-            # 과거 턴 로그에 저장된 URL이 다른 이미지를 가리키게 된다 (2026-08-02
-            # 실측: scene_15가 시장 좌판→비명 소동으로 뒤바뀜). 원본 파일명 해시로
-            # URL·id를 영구 고정한다. portraits/locations는 기존 배포 런의 배정
-            # URL 보존을 위해 순번 유지.
-            h = hashlib.sha1(f.stem.encode("utf-8")).hexdigest()[:8]
-            slug = f"scene_{h}{f.suffix.lower()}"
-        else:
-            slug = f"{kind}_{i:02d}{f.suffix.lower()}"
+    for f in files:
+        # [안정 슬러그 — scenes 2026-08-02, portraits/locations 확대 2026-08-14]
+        # 정렬 순번은 파일 추가/삭제 시 전체 번호가 밀려 과거 턴 로그·runState에
+        # 저장된 URL이 다른 이미지를 가리키게 된다 (2026-08-02 실측: scene_15가
+        # 시장 좌판→비명 소동으로 뒤바뀜 — 초상화라면 다른 얼굴로 무증상 교체).
+        # 원본 파일명 해시로 URL·id를 영구 고정한다.
+        h = hashlib.sha1(f.stem.encode("utf-8")).hexdigest()[:8]
+        slug = f"{kind}_{h}{f.suffix.lower()}"
         shutil.copy2(f, dst_dir / slug)
         gender, keywords = parse_tokens(f.stem)
         entry = {"url": f"{url_base}/{slug}", "kind": kind, "keywords": keywords}
         if gender and kind == "portrait":
             entry["gender"] = gender
+        if kind == "location":
+            # 장면 컷 매처의 런 내 중복 방지 키 — 배열 인덱스(LOCIMG_1)는 파일
+            # 증감 시 다른 이미지를 뜻하게 되므로 해시 기반 안정 id로 대체
+            entry["id"] = f"LOCIMG_{h}"
         if kind == "scene":
             # 시간대 토큰 분리 (arch/96) — 해당 시간대에만 삽입 후보가 된다
             time = None
