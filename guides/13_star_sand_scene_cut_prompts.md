@@ -890,3 +890,205 @@ sliding sideways to check who saw, official rectitude quietly for sale
 
 > 부분 투입해도 안전하다 — 한 인물의 3종 중 1장만 넣으면 그 컷만 후보에 오르고
 > 나머지는 조용히 없는 상태로 동작한다 (§13의 hits 규칙은 존재하는 컷끼리만 겨룬다).
+
+---
+
+# 7차 배치 (#143~152) — 감정 축 편중 해소 + 죽은 태그 리네임 (2026-08-14)
+
+> 6차는 **개수**를 채웠다(18명 전원 3종). 7차는 **국면**을 채운다. 55장의 인물 컷을
+> 감정 축으로 분류해 보면 경계·긴장 / 창백·두려움 두 축에 쏠려 있고, 실제 서술에
+> 자주 등장하는 **우호·적대·거래** 국면에는 컷이 거의 없다.
+>
+> 근거 데이터: star_sand_v1 실런 서술 코퍼스 **395턴 / 193,649자** (DB 실측, 6차 대비 +40턴).
+
+## 21. 무엇이 비어 있나 — 감정 축 커버리지 실측
+
+인물 컷 55장을 NPC posture 5축으로 분류한 결과다.
+
+| 감정 축 | 보유 컷 | 코퍼스 어휘 (등장 턴 수 / 395) |
+|---|---|---|
+| 경계·긴장 (CAUTIOUS) | 다수 | 긴장 84 · 침묵 78 · 경계 47 |
+| 공포 (FEARFUL) | 다수 | 창백 49 · 떨림 17 · 두려움 7 |
+| **우호 (FRIENDLY)** | **이렌 1장** | **미소 63 · 부드럽 26 · 따뜻 19 · 웃음 13** |
+| **적대 (HOSTILE)** | **0장** | **차갑 28 · 거칠 14 · 내뱉 12 · 불쾌 5** |
+| **거래·계산 (CALCULATING)** | **토바 1장** | **대가 34 · 값 11 · 거래 9 · 계산 8 · 흥정 8** |
+
+즉 어휘는 서술에 살아 있는데 받아줄 컷이 없다. 특히 **기본 태도가 FRIENDLY 인 4명**
+(이렌·세피·아바스·유르마) 중 3명이 우호 컷 0장이고, **CALCULATING 5명**
+(사엘·카일룬·리바·토바·페나) 중 리바는 밀수 운반책이면서 거래 컷이 없다.
+
+### 인물별 빈 국면 (노출 실측순)
+
+| 인물 | 기본 태도 | 등장턴 | 그 턴들의 실측 감정 | 이번에 채우는 것 |
+|---|---|---:|---|---|
+| 이렌 | FRIENDLY | 155 | 우호 68 · 공포 50 · **적대 21 · 계산 15** | 적대 + 계산 |
+| 루오르 | CAUTIOUS | 15 | 공포 8 · 계산 6 · 우호 4 | (8차 이월) |
+| 아바스 | FRIENDLY | 12 | **우호 5 · 계산 3** | 우호 + 거래 |
+| 유르마 | FRIENDLY | 11 | **우호 3 · 적대 3** | 우호 + 적대 |
+| 세피 | FRIENDLY | 5 | **우호 3** | 우호 |
+| 카일룬 | CALCULATING | 3 | 우호 3 | 리네임으로 흡수 (미소) |
+| 에드 | CAUTIOUS | 3 | **적대 2** | 적대 |
+| 리바 | CALCULATING | 2 | (표본 부족) | 거래 |
+| 카시엔 | CAUTIOUS | 0 | — | 적대 (금기 침범 축출) |
+
+> ⚠️ 교차 집계 한계: "그 인물이 등장한 턴에 그 감정어가 있었다"이지 감정의 주체가
+> 그 인물이라는 보증은 아니다. 이렌 155턴은 전체의 39%라 특히 과대계상 여지가 있다.
+> 노출 0턴 9명은 단축런이 중후반 동선에 도달하지 못한 것이므로 우선순위만 뒤로 미룬다.
+
+## 22. 7차 체크리스트 — 신규 10장
+
+§13의 3규칙(첫 토큰=실명 / 형제 컷끼리 감정 토큰 무겹침 / 실측 상위 어휘만)을 그대로 적용했다.
+
+| # | ☐ | 파일명 (= 태그) | 감정 국면 | 태그 근거 (등장 턴) |
+|---|---|----------------|----------|-------------------|
+| 143 | ☐ | `이렌_차갑_입술_물러.webp` | 선을 긋는 냉대 | 차갑28·입술41·물러33 |
+| 144 | ☐ | `이렌_대가_거래_계산.webp` | 셈을 하는 주인 | 대가34·거래9·계산8 |
+| 145 | ☐ | `아바스_미소_따뜻_부드럽.webp` | 장인의 호의 | 미소63·따뜻19·부드럽26 |
+| 146 | ☐ | `아바스_대가_값_흥정.webp` | 값 흥정 | 대가34·값11·흥정8 |
+| 147 | ☐ | `유르마_미소_끄덕_따뜻.webp` | 동행 신뢰 | 미소63·끄덕47·따뜻19 |
+| 148 | ☐ | `유르마_거칠_내뱉_불쾌.webp` | 분노·의심 | 거칠14·내뱉12·불쾌5 |
+| 149 | ☐ | `세피_미소_웃음_끄덕.webp` | 아이의 웃음 | 미소63·웃음13·끄덕47 |
+| 150 | ☐ | `에드_차갑_내뱉_입술.webp` | 거래 거절 | 차갑28·내뱉12·입술41 |
+| 151 | ☐ | `카시엔_차갑_거칠_물러.webp` | 금기 침범 축출 | 차갑28·거칠14·물러33 |
+| 152 | ☐ | `리바_대가_값_주머니.webp` | 대금 흥정 | 대가34·값11·주머니63 |
+
+**태그로 쓰면 안 되는 낱말 (이번에 재확인)** — `거절` 0 · `갱도` 0 · `등돌` 0 · `한발` 0 ·
+`지친` 2 · `한숨` 3 · `돌아서` 3. 6차 금지어(`등불` 200 · `시선` 194 · `목소리` 191 ·
+`고개` 169 · `다가` 128 · `손끝` 118 · `낮은` 98)도 그대로 유효하다. 참고로 `어깨` 66 ·
+`손님` 66 · `주머니` 63 은 17% 수준이라 허용 범위다.
+
+## 23. 태그 리네임 8장 — 이미지 재생성 없음
+
+6차의 "실측 상위 어휘로만 태그" 원칙이 5차 이전 컷에는 적용되지 않았다. 아래 8장은
+**코퍼스 0턴 태그**를 포함해, 실명 + `charCutOwner` 보정(+2)만으로 형제 컷과 동률이 되고
+**시드 셔플로 감정과 무관하게 뽑힌다**. 이미지는 그대로 두고 파일명만 바꾼다
+(각 컷의 실제 그림을 확인하고 맞춘 태그다).
+
+| 현재 파일명 | 죽은 태그 | → 새 파일명 | 그림 근거 |
+|---|---|---|---|
+| `이렌_접객_분주_손님` | 접객0·분주2 | `이렌_손님_난로_분주` | 국그릇 나르는 홀, 난로 불빛 |
+| `이렌_미소_안도_감사` | 안도0·감사3 | `이렌_미소_건넨_따뜻` | 두 손으로 그릇을 건넴 |
+| `이렌_근심_걱정_여관주인` | 근심0 | `이렌_걱정_불안_눈빛` | 행주 쥔 채 근심 어린 눈 |
+| `카일룬_능글_꿈약_유리병` | 능글0 | `카일룬_미소_꿈약_유리병` | 웃으며 발광 유리병 들어 보임 |
+| `오드린_보조원_불안_기록` | 보조원0 | `오드린_불안_기록_촛불` | 기록 뭉치 껴안고 돌아봄, 촛불 |
+| `유르마_침통_울음_동생` | 침통0 | `유르마_울음_동생_떨림` | 로켓을 이마에 대고 눈물 |
+| `헬룬_장례사_회고_침묵` | 회고0·장례사1 | `헬룬_침묵_기억_난로` | 수첩 든 노인, 난로 곁 응시 |
+| `브란_채굴_반장_불면` | 불면0·반장3 | `브란_채굴_모피_눈빛` | 모피 코트·파이프, 갈비평원 |
+
+```bash
+cd content/star_sand_v1/assets/scenes
+mv 이렌_접객_분주_손님.webp        이렌_손님_난로_분주.webp
+mv 이렌_미소_안도_감사.webp        이렌_미소_건넨_따뜻.webp
+mv 이렌_근심_걱정_여관주인.webp    이렌_걱정_불안_눈빛.webp
+mv 카일룬_능글_꿈약_유리병.webp    카일룬_미소_꿈약_유리병.webp
+mv 오드린_보조원_불안_기록.webp    오드린_불안_기록_촛불.webp
+mv 유르마_침통_울음_동생.webp      유르마_울음_동생_떨림.webp
+mv 헬룬_장례사_회고_침묵.webp      헬룬_침묵_기억_난로.webp
+mv 브란_채굴_반장_불면.webp        브란_채굴_모피_눈빛.webp
+cd - && python3 scripts/sync_pack_assets.py star_sand_v1
+```
+
+> ⚠️ **부작용 1건**: `sync_pack_assets.py` 는 컷 id 를 **원본 파일명 stem 의 sha1 앞 8자**로
+> 만든다(스크립트 85~110행). 리네임하면 id 가 바뀌므로 **진행 중인 런의
+> `sceneCutState.usedIds` 에 있던 기록이 무효화**되어, 그 8장은 해당 런에서 한 번 더
+> 뜰 수 있다. 런 내 1회 제한이 리셋되는 것뿐이라 피해는 경미하고 신규 런은 무관하다.
+
+## 24. 7차 프롬프트 (공통 프리픽스 §1·§15 동일)
+
+**#143 이렌_차갑_입술_물러**
+```
+[이렌_손님_난로_분주.webp 참조 — 동일 얼굴] the innkeeper straightened behind
+her counter, cloth set down, lips pressed to a thin line, all warmth gone
+from her eyes, taking one deliberate step back from the guest, hearth glow
+behind her reading cold
+```
+
+**#144 이렌_대가_거래_계산**
+```
+[이렌_손님_난로_분주.webp 참조 — 동일 얼굴] the innkeeper counting coins into
+a row on the counter, one flat palm covering the rest, weighing what the
+request is worth, tally sticks and a ledger beside the lamp, businesslike
+rather than unkind
+```
+
+**#145 아바스_미소_따뜻_부드럽**
+```
+[아바스_장인_램프_유리.webp 참조 — 동일 얼굴] the lamp artisan holding out a
+finished whale-oil lamp with both hands, deep crinkled smile, workshop glow
+warm on his face, offering it like a gift rather than goods
+```
+
+**#146 아바스_대가_값_흥정**
+```
+[아바스_장인_램프_유리.webp 참조 — 동일 얼굴] the artisan rapping a lamp's
+brass fitting with one knuckle, other hand raised naming a price on his
+fingers, eyebrows up in cheerful haggling, unsold lamps ranked on the bench
+behind him
+```
+
+**#147 유르마_미소_끄덕_따뜻**
+```
+[유르마_순례자_무장_수색.webp 참조 — 동일 얼굴] the armed pilgrim giving a
+short firm nod of agreement, spear butt resting on the ice, a rare warm
+smile breaking through the hard face, shoulder turned to make room for
+someone to walk beside her
+```
+
+**#148 유르마_거칠_내뱉_불쾌**
+```
+[유르마_순례자_무장_수색.webp 참조 — 동일 얼굴] the pilgrim rounding hard on
+someone, jaw set, words thrown out sharp, gloved hand shoved flat against a
+chest to push them back, breath steaming in the cold
+```
+
+**#149 세피_미소_웃음_끄덕**
+```
+[세피_호기심_안내_오로라.webp 참조 — 동일 얼굴] the young guide laughing
+openly with her head tipped back, nodding yes with her whole body, mittened
+hands clasped together, cloister lanterns warm behind her
+```
+
+**#150 에드_차갑_내뱉_입술**
+```
+[에드_서기관_수첩_이름.webp 참조 — 동일 얼굴] the wandering scribe snapping
+his notebook shut against his chest, mouth a flat line, cold refusal in the
+eyes, already half-turned away from whoever asked
+```
+
+**#151 카시엔_차갑_거칠_물러**
+```
+[카시엔_장로_침묵_모피.webp 참조 — 동일 얼굴] the elder risen to full height,
+fur mantle hanging straight, one weathered hand out flat commanding a stop,
+cold finality in the face, driving an outsider back off the shrine ground
+```
+
+**#152 리바_대가_값_주머니**
+```
+[리바_운반_수레_밧줄.webp 참조 — 동일 얼굴] the courier weighing a small coin
+pouch in her palm, her other hand still resting on the crate she has not
+handed over yet, price named and waiting, stacked alley crates behind her
+```
+
+## 25. 투입 절차 (§20과 동일 + 리네임)
+
+```
+1) §23 의 mv 8줄 먼저 실행 (이미지 생성 불필요 — 즉시 효과)
+2) #143~152 생성 → webp 변환 → 체크리스트의 파일명 그대로 저장
+3) content/star_sand_v1/assets/scenes/ 에 넣기 (몇 장씩 나눠 넣어도 됨)
+4) python3 scripts/sync_pack_assets.py star_sand_v1
+5) 서버 재시작 + client push (public/pack-assets 포함)
+6) 체크리스트 ☑
+```
+
+투입 후 팩 총량은 88 → **98장**, 인물 컷은 55 → **65장**이 된다. 쿨다운 3턴 + 런 내
+1회 제한이라 노출 총량은 불변이고, "같은 인물을 다시 만났을 때 그 순간의 감정에 맞는
+얼굴이 뜰 확률"만 오른다.
+
+### 8차 이월 (지금은 안 만드는 것)
+
+- **루오르 공포·우호 2장** — 실측 공포 8턴/15턴으로 근거는 있으나 6차 3종이 막 투입돼
+  실발화 이력이 0건이다. 며칠 쌓고 재측정 후 판단.
+- **노출 0턴 9명**(사엘·마레크·나하트·브란·오드린·헬룬·미렌·카시엔·페나)의 우호 축 —
+  단축런이 중후반 동선에 도달하지 못해 실측 근거가 없다. 장기런 코퍼스가 쌓이면 착수.
+- **적대 축 확대** — 7차 3장(이렌·유르마·에드·카시엔)이 실제로 발화되는지부터 확인.
+  `차갑`/`거칠`/`내뱉` 이 NPC 발화인지 환경 묘사인지 구분이 안 된 상태의 추정이다.

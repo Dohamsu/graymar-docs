@@ -335,15 +335,15 @@
       "id": "SCN_8fb65d5e"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_8bb91f19.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_18dc9a1b.webp",
       "kind": "scene",
       "keywords": [
         "브란",
         "채굴",
-        "반장",
-        "불면"
+        "모피",
+        "눈빛"
       ],
-      "id": "SCN_8bb91f19"
+      "id": "SCN_18dc9a1b"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_661cd323.webp",
@@ -577,15 +577,15 @@
       "id": "SCN_276fcd9f"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_e1e03910.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_43a4b293.webp",
       "kind": "scene",
       "keywords": [
         "오드린",
-        "보조원",
         "불안",
-        "기록"
+        "기록",
+        "촛불"
       ],
-      "id": "SCN_e1e03910"
+      "id": "SCN_43a4b293"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_ccbf7d9f.webp",
@@ -642,48 +642,48 @@
       "id": "SCN_2ff2e3bc"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_9c9e182f.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_342dc2c9.webp",
       "kind": "scene",
       "keywords": [
         "유르마",
-        "침통",
         "울음",
-        "동생"
+        "동생",
+        "떨림"
       ],
-      "id": "SCN_9c9e182f"
+      "id": "SCN_342dc2c9"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_7d0ac787.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_241da1c6.webp",
       "kind": "scene",
       "keywords": [
         "이렌",
-        "근심",
         "걱정",
-        "여관주인"
+        "불안",
+        "눈빛"
       ],
-      "id": "SCN_7d0ac787"
+      "id": "SCN_241da1c6"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_0e32a297.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_ef6abdbe.webp",
       "kind": "scene",
       "keywords": [
         "이렌",
         "미소",
-        "안도",
-        "감사"
+        "건넨",
+        "따뜻"
       ],
-      "id": "SCN_0e32a297"
+      "id": "SCN_ef6abdbe"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_b37ae196.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_9fcdaaab.webp",
       "kind": "scene",
       "keywords": [
         "이렌",
-        "접객",
-        "분주",
-        "손님"
+        "손님",
+        "난로",
+        "분주"
       ],
-      "id": "SCN_b37ae196"
+      "id": "SCN_9fcdaaab"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_361b05b8.webp",
@@ -807,17 +807,6 @@
       "id": "SCN_a27483c2"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_8d998064.webp",
-      "kind": "scene",
-      "keywords": [
-        "카일룬",
-        "능글",
-        "꿈약",
-        "유리병"
-      ],
-      "id": "SCN_8d998064"
-    },
-    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_2874e04d.webp",
       "kind": "scene",
       "keywords": [
@@ -827,6 +816,17 @@
         "골목"
       ],
       "id": "SCN_2874e04d"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_bce033cb.webp",
+      "kind": "scene",
+      "keywords": [
+        "카일룬",
+        "미소",
+        "꿈약",
+        "유리병"
+      ],
+      "id": "SCN_bce033cb"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_68a2c796.webp",
@@ -961,15 +961,15 @@
       "id": "SCN_446037c4"
     },
     {
-      "url": "/pack-assets/star_sand_v1/scenes/scene_937d5ec5.webp",
+      "url": "/pack-assets/star_sand_v1/scenes/scene_fe06cff9.webp",
       "kind": "scene",
       "keywords": [
         "헬룬",
-        "장례사",
-        "회고",
-        "침묵"
+        "침묵",
+        "기억",
+        "난로"
       ],
-      "id": "SCN_937d5ec5"
+      "id": "SCN_fe06cff9"
     }
   ]
 }
