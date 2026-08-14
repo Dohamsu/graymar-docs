@@ -1,0 +1,38 @@
+{
+  "packId": "star_sand_v1",
+  "_comment": "arch/102 — 장소 이미지 콘텐츠 정본. 극야해안은 장소당 1장 (day_safe 단일 키가 전 시간/안전 조합을 fallback 커버). keywords는 장면 컷 렉시컬 프리스크린용.",
+  "locations": {
+    "LOC_SS_INN": {
+      "keywords": ["여관", "꿈잠"],
+      "variants": { "day_safe": "/locations/star_sand_v1/dream_inn.webp" }
+    },
+    "LOC_SS_DOCK": {
+      "keywords": ["부두", "흰숨"],
+      "variants": { "day_safe": "/locations/star_sand_v1/winter_harbor_ghost_whale.webp" }
+    },
+    "LOC_SS_RIB": {
+      "keywords": ["갈비평원", "고래뼈"],
+      "variants": { "day_safe": "/locations/star_sand_v1/ancient_whale_bone_altar.webp" }
+    },
+    "LOC_SS_HEART": {
+      "keywords": ["웅덩이", "심장"],
+      "variants": { "day_safe": "/locations/star_sand_v1/eldritch_ritual_laboratory.webp" }
+    },
+    "LOC_SS_CONVENT": {
+      "keywords": ["수녀원", "절벽"],
+      "variants": { "day_safe": "/locations/star_sand_v1/frozen_cliff_ritual_procession.webp" }
+    },
+    "LOC_SS_MARKET": {
+      "keywords": ["시장", "검은얼음"],
+      "variants": { "day_safe": "/locations/star_sand_v1/ice_black_market_deal.webp" }
+    },
+    "LOC_SS_TOWER": {
+      "keywords": ["관측탑", "오로라"],
+      "variants": { "day_safe": "/locations/star_sand_v1/frozen_sea_observatory.webp" }
+    },
+    "LOC_SS_BEACH": {
+      "keywords": ["해변", "무음"],
+      "variants": { "day_safe": "/locations/star_sand_v1/frozen_ritual_worship.webp" }
+    }
+  }
+}

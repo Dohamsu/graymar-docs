@@ -1,0 +1,57 @@
+{
+  "packId": "graymar_v1",
+  "_comment": "arch/102 — 장소 이미지 콘텐츠 정본. 변형 키는 <day|night>_<safe|alert|danger>. URL은 클라 public 서빙 경로. keywords는 장면 컷 렉시컬 프리스크린용 (서술 본문 등장 토큰).",
+  "locations": {
+    "LOC_MARKET": {
+      "keywords": ["시장", "장터", "좌판"],
+      "variants": {
+        "day_safe": "/locations/market_day_safe.webp",
+        "day_alert": "/locations/market_day_alert.webp",
+        "day_danger": "/locations/market_day_danger.webp",
+        "night_safe": "/locations/market_night_safe.webp",
+        "night_alert": "/locations/market_night_alert.webp",
+        "night_danger": "/locations/market_night_danger.webp"
+      }
+    },
+    "LOC_GUARD": {
+      "keywords": ["경비대", "초소", "위병"],
+      "variants": {
+        "day_safe": "/locations/guard_day_safe.webp",
+        "day_alert": "/locations/guard_day_alert.webp",
+        "day_danger": "/locations/guard_day_danger.webp",
+        "night_safe": "/locations/guard_night_safe.webp",
+        "night_alert": "/locations/guard_night_alert.webp",
+        "night_danger": "/locations/guard_night_danger.webp"
+      }
+    },
+    "LOC_HARBOR": {
+      "keywords": ["항구", "부두", "항만"],
+      "variants": {
+        "day_safe": "/locations/harbor_day_safe.webp",
+        "day_alert": "/locations/harbor_day_alert.webp",
+        "day_danger": "/locations/harbor_day_danger.webp",
+        "night_safe": "/locations/harbor_night_safe.webp",
+        "night_alert": "/locations/harbor_night_alert.webp",
+        "night_danger": "/locations/harbor_night_danger.webp"
+      }
+    },
+    "LOC_SLUMS": {
+      "keywords": ["빈민가", "뒷골목"],
+      "variants": {
+        "day_safe": "/locations/slums_day_safe.webp",
+        "day_alert": "/locations/slums_day_alert.webp",
+        "day_danger": "/locations/slums_day_danger.webp",
+        "night_safe": "/locations/slums_night_safe.webp",
+        "night_alert": "/locations/slums_night_alert.webp",
+        "night_danger": "/locations/slums_night_danger.webp"
+      }
+    },
+    "LOC_TAVERN": {
+      "keywords": ["선술집", "주점", "술청"],
+      "variants": {
+        "day_safe": "/locations/tavern_day_safe.webp",
+        "night_safe": "/locations/tavern_night_safe.webp"
+      }
+    }
+  }
+}
