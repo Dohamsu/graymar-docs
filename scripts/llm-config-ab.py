@@ -37,16 +37,58 @@ KRW = 1500  # 환율 고정 (memory feedback_exchange_rate)
 URL = "https://openrouter.ai/api/v1/chat/completions"
 
 
+def _env(name):
+    path = Path(__file__).resolve().parent.parent / "server" / ".env"
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith(f"{name}="):
+            val = line.split("=", 1)[1]
+            # server/.env 는 값 뒤에 ` # 설명` 을 붙여 쓴다. 안 떼면 프로바이더 이름에
+            # 주석이 통째로 붙어 allowlist 가 깨진 채 요청이 나간다(2026-08-14 실측).
+            if not val.lstrip().startswith(('"', "'")):
+                val = val.split(" #", 1)[0]
+            return val.strip().strip("\"'")
+    return None
+
+
 def api_key():
-    env = Path(__file__).resolve().parent.parent / "server" / ".env"
-    for line in env.read_text(encoding="utf-8").splitlines():
-        if line.startswith("OPENAI_API_KEY="):
-            return line.split("=", 1)[1].strip().strip('"')
-    raise SystemExit("OPENAI_API_KEY 없음")
+    key = _env("OPENAI_API_KEY")
+    if not key:
+        raise SystemExit("OPENAI_API_KEY 없음")
+    return key
 
 
-def call(key, model, msgs, max_tokens, effort, penalty=False, temperature=None):
+def provider_routing(model):
+    """운영과 동일한 OpenRouter provider 라우팅을 server/.env 에서 재현한다.
+
+    [2026-08-14] 이게 없어서 **레이턴시가 계속 과대 측정**됐다. 운영은
+    `LLM_PROVIDER_ONLY_MAP` 으로 Gemma 31B 를 Friendli|Venice|Novita|CoreWeave 로
+    묶고 `sort=throughput` 으로 고르는데, 하네스는 아무 제약 없이 쏴서 느린
+    프로바이더에 붙었다. 같은 모델을 같은 기간에 재도:
+        하네스 p50 8,378ms / p90 18,618ms   vs   운영 p50 3,165 / p90 11,049
+    라우팅을 안 맞추면 allowlist 가 걸린 모델(Gemma)만 불리해져, 신규 후보와의
+    속도 비교가 통째로 기운다.
+    """
+    routing = {}
+    sort = _env("LLM_PROVIDER_SORT")
+    if sort:
+        routing["sort"] = sort
+    ignore = _env("LLM_PROVIDER_IGNORE")
+    if ignore:
+        routing["ignore"] = [s.strip() for s in ignore.split(",") if s.strip()]
+    raw = _env("LLM_PROVIDER_ONLY_MAP") or ""
+    for entry in raw.split(";"):
+        k, _, v = entry.partition("=")
+        if k.strip() == model and v.strip():
+            routing["only"] = [s.strip() for s in v.split("|") if s.strip()]
+    return routing
+
+
+def call(
+    key, model, msgs, max_tokens, effort, penalty=False, temperature=None, routing=None
+):
     body = {"model": model, "messages": msgs, "max_tokens": max_tokens}
+    if routing:
+        body["provider"] = routing
     if effort:
         body["reasoning"] = {"effort": effort}
     # 운영 재현 — 메인 서술은 temperature 0.8 + penalty 0.4/0.3 을 보낸다(불변식 50).
@@ -134,10 +176,16 @@ def main():
     ap.add_argument("--penalty", action="store_true",
                     help="frequency/presence_penalty 동봉 (penalty 지원 모델만 — 운영 재현)")
     ap.add_argument("--temperature", type=float, default=None)
+    ap.add_argument(
+        "--no-routing",
+        action="store_true",
+        help="server/.env 의 provider 라우팅(only/sort/ignore) 재현을 끈다 (기본은 켬)",
+    )
     args = ap.parse_args()
     P_IN, P_OUT, P_CACHE = [float(x) for x in args.price.split(",")]
 
     key = api_key()
+    routing = None if args.no_routing else provider_routing(args.model)
     prompts = json.load(open(args.prompts, encoding="utf-8"))
     total = len(prompts)
     if args.limit and args.limit > 0:
@@ -146,8 +194,10 @@ def main():
     print(
         f"프롬프트 {len(prompts)}건"
         + (f" (파일 {total}건 중)" if len(prompts) < total else "")
-        + f" × 설정 {len(args.configs)}종 × {args.repeat}회 = 요청 {calls}건\n"
+        + f" × 설정 {len(args.configs)}종 × {args.repeat}회 = 요청 {calls}건"
     )
+    # 라우팅을 찍어 둔다 — 이걸 안 맞추면 레이턴시 비교가 통째로 기운다.
+    print(f"provider 라우팅: {routing or '(없음)'}\n")
 
     rows = {}
     for cfg in args.configs:
@@ -157,7 +207,10 @@ def main():
         res = []
         for i, p in enumerate(prompts):
             for _ in range(args.repeat):
-                r = call(key, args.model, p["msgs"], mt, eff, args.penalty, args.temperature)
+                r = call(
+                    key, args.model, p["msgs"], mt, eff,
+                    args.penalty, args.temperature, routing,
+                )
                 if "error" in r:
                     print(f"  [{cfg}] #{i} ❌ {r['error']}")
                     continue
