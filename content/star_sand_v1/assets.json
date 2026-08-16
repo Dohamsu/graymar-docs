@@ -136,6 +136,16 @@
       "id": "SCN_1629c9d4"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_0c25a08f.webp",
+      "kind": "scene",
+      "keywords": [
+        "리바",
+        "대가",
+        "주머니"
+      ],
+      "id": "SCN_0c25a08f"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_75eb09ad.webp",
       "kind": "scene",
       "keywords": [
@@ -411,6 +421,17 @@
       "id": "SCN_a45e391c"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_f8e8ad96.webp",
+      "kind": "scene",
+      "keywords": [
+        "세피",
+        "미소",
+        "웃음",
+        "끄덕"
+      ],
+      "id": "SCN_f8e8ad96"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_a5f92626.webp",
       "kind": "scene",
       "keywords": [
@@ -454,6 +475,27 @@
         "빛나는"
       ],
       "id": "SCN_889ea124"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_939736ff.webp",
+      "kind": "scene",
+      "keywords": [
+        "아바스",
+        "대가",
+        "흥정"
+      ],
+      "id": "SCN_939736ff"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_a94e1c85.webp",
+      "kind": "scene",
+      "keywords": [
+        "아바스",
+        "미소",
+        "따뜻",
+        "부드럽"
+      ],
+      "id": "SCN_a94e1c85"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_b0afc73a.webp",
@@ -520,6 +562,17 @@
         "이름"
       ],
       "id": "SCN_0121fd2d"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_3184ad1e.webp",
+      "kind": "scene",
+      "keywords": [
+        "에드",
+        "차갑",
+        "내뱉",
+        "입술"
+      ],
+      "id": "SCN_3184ad1e"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_0a19ece5.webp",
@@ -620,6 +673,17 @@
       "id": "SCN_225a2a36"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_2631d899.webp",
+      "kind": "scene",
+      "keywords": [
+        "유르마",
+        "거칠",
+        "내뱉",
+        "불쾌"
+      ],
+      "id": "SCN_2631d899"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_e1181a1f.webp",
       "kind": "scene",
       "keywords": [
@@ -629,6 +693,17 @@
         "움켜"
       ],
       "id": "SCN_e1181a1f"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_353b7c79.webp",
+      "kind": "scene",
+      "keywords": [
+        "유르마",
+        "미소",
+        "끄덕",
+        "따뜻"
+      ],
+      "id": "SCN_353b7c79"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_2ff2e3bc.webp",
@@ -664,6 +739,17 @@
       "id": "SCN_241da1c6"
     },
     {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_ed372cca.webp",
+      "kind": "scene",
+      "keywords": [
+        "이렌",
+        "대가",
+        "거래",
+        "계산"
+      ],
+      "id": "SCN_ed372cca"
+    },
+    {
       "url": "/pack-assets/star_sand_v1/scenes/scene_ef6abdbe.webp",
       "kind": "scene",
       "keywords": [
@@ -684,6 +770,17 @@
         "분주"
       ],
       "id": "SCN_9fcdaaab"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_360e8ebe.webp",
+      "kind": "scene",
+      "keywords": [
+        "이렌",
+        "차갑",
+        "입술",
+        "물러"
+      ],
+      "id": "SCN_360e8ebe"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_361b05b8.webp",
@@ -805,6 +902,17 @@
         "모피"
       ],
       "id": "SCN_a27483c2"
+    },
+    {
+      "url": "/pack-assets/star_sand_v1/scenes/scene_687031e3.webp",
+      "kind": "scene",
+      "keywords": [
+        "카시엔",
+        "차갑",
+        "거칠",
+        "물러"
+      ],
+      "id": "SCN_687031e3"
     },
     {
       "url": "/pack-assets/star_sand_v1/scenes/scene_2874e04d.webp",
