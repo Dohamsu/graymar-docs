@@ -1,12 +1,12 @@
 # 클라이언트 컴포넌트 맵
 
 > 정본 위치: `client/src/`
-> 최종 갱신: 2026-07-18
+> 최종 갱신: 2026-08-16
 
-## 컴포넌트 구조 (70 components, 7 stores)
+## 컴포넌트 구조 (71 components, 7 stores)
 
-실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **70**).
-영역별: narrative 7 / input 2 / hub 15 / location 5 / screens 11 / side-panel 7 / ui 12 / layout 2 / battle 4 / party 11 / brand 1.
+실측 기준 (`find client/src/components -name '*.tsx' | wc -l` = **71**).
+영역별: narrative 6 / input 2 / hub 8 / location 5 / screens 11 / side-panel 7 / ui 14 / layout 1 / battle 4 / party 12 / brand 1.
 
 ```
 app/
@@ -26,15 +26,15 @@ app/
     ├── FeatureCard.tsx ← 랜딩 섹션 카드
     └── MobileNav.tsx   ← 랜딩 모바일 네비
 
-components/ (70개)
-├── narrative/          ← 메시지 표시 (7)
+components/ (71개)
+├── narrative/          ← 메시지 표시 (6)
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
 │   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑, 보정치 뱃지, 대사/서술 혼합 — arch/77 P5c로 -45%)
 │   ├── StreamingBlock.tsx    ← 스트리밍 중 실시간 렌더링 (SSE 토큰 → 점진적 텍스트)
 │   ├── DialogueBubble.tsx    ← NPC 대사 말풍선 (어체·speechRegister별 색조, 초상화 썸네일; 무명 인물=물음표·흐림 / BACKGROUND 단역=실루엣·역할명, arch/86)
 │   ├── NpcPortraitCard.tsx   ← NPC 초상화 카드 (StoryBlock에서 분리, arch/77 P5c)
-│   ├── SceneImageButton.tsx  ← 장면 이미지 버튼+로딩 (StoryBlock에서 분리, arch/77 P5c)
-│   └── narrative-text.tsx    ← 서술 텍스트 렌더 유틸 정본 (마커 정리·세그먼트 파싱 — StreamTyper/TypewriterText/StreamingBlock 공유)
+│   ├── narrative-text.tsx    ← 서술 텍스트 렌더 유틸 정본 (마커 정리·세그먼트 파싱 — StreamTyper/TypewriterText/StreamingBlock 공유)
+│   └── compact-dialogue.ts   ← 연속 대사 초상화 생략 규칙 정본 (tsx 아님, 컴포넌트 수 제외) — 한 메시지 내 같은 화자 연속 대사만 compact, 서술 개입·무명 인물·메시지 경계에서 리셋. 4개 렌더 경로(NarratorContent/TypewriterText/StreamTyper/StreamingBlock) 공유 + 유닛 테스트
 ├── input/              ← 입력 처리 (2)
 │   ├── InputSection.tsx      ← 텍스트 입력 + 퀵 액션 (LOCATION 전용)
 │   └── QuickActionButton.tsx ← 빠른 행동 버튼
@@ -44,11 +44,11 @@ components/ (70개)
 │   ├── TimePhaseIndicator.tsx     ← DAWN/DAY/DUSK/NIGHT 표시 (Header 사용)
 │   ├── TimePhaseTransition.tsx    ← DAY↔NIGHT 전환 알림
 │   ├── LocationHeader.tsx         ← 지역 헤더
-│   ├── ResolveOutcomeBanner.tsx   ← 판정 결과 배너 (순차 fade-in 공식)
-│   ├── ResolveOutcomeBanner.backup.tsx ← 레거시 백업 (미사용, 참고용)
-│   └── DiceFace.tsx               ← 주사위 눈 SVG (1~6, 판정 애니메이션)
+│   ├── ResolveOutcomeBanner.tsx   ← 판정 결과 배너 (순차 fade-in 공식 — 스탯 원값+보정 병기 `재치 4 (+1)`, 첫 판정 시 sessionStorage 1회 규칙 안내. 구 backup.tsx는 삭제)
+│   ├── DiceFace.tsx               ← 주사위 눈 SVG (1~6, 판정 애니메이션)
+│   └── Dice3D.tsx                 ← 3D 큐브 주사위 굴림 연출 — preserve-3d CSS 변환만, 구 유니코드 flicker(DiceRolling) 대체 (2026-08-06 소유자 A안)
 ├── location/           ← LOCATION 알림/배경 (5)
-│   ├── LocationImage.tsx          ← 장소 배경 이미지 (켄 번스 페이드)
+│   ├── LocationBackdrop.tsx       ← 장소 배경 지속화 — 현 장소 이미지를 서술 패널 뒤에 옅게 유지, 앵커는 worldState 하드 상태만 (arch/93)
 │   ├── TurnResultBanner.tsx       ← 판정 결과 배너 (5초 자동 해제)
 │   ├── LocationToastLayer.tsx     ← 플로팅 토스트 (3초 페이드)
 │   ├── DeadlineBanner.tsx         ← Soft Deadline 상단 배너 (D-3/2/1/0/초과)
@@ -71,7 +71,7 @@ components/ (70개)
 │   ├── SetBonusDisplay.tsx        ← 장비 세트 보너스 시각화
 │   ├── NpcDossierTab.tsx          ← NPC 관계/호감도 상세 (초상화, 공개된 knownFacts)
 │   └── QuestTab.tsx               ← 퀘스트 진행(S0~S5) + 발견된 fact 목록
-├── ui/                 ← 공통 UI (12)
+├── ui/                 ← 공통 UI (14)
 │   ├── ErrorBanner.tsx            ← 에러 표시
 │   ├── NetworkStatus.tsx          ← 오프라인 감지 + 재연결 UI
 │   ├── PageTransition.tsx         ← 페이지 전환 애니메이션 (7종)
@@ -83,9 +83,11 @@ components/ (70개)
 │   ├── NewsModal.tsx              ← 그레이마르 호외 (양피지 모달 + nano 기사)
 │   ├── PortraitCropModal.tsx      ← 초상화 크롭 (react-easy-crop, 4:5)
 │   ├── BugReportButton.tsx        ← 인게임 버그 리포트 트리거 버튼
-│   └── BugReportModal.tsx         ← 버그 리포트 + 클라 스냅샷/DOM 요약 전송
+│   ├── BugReportModal.tsx         ← 버그 리포트 + 클라 스냅샷/DOM 요약 전송
+│   ├── PointsModal.tsx            ← 포인트 충전 모달 — 코드 입력, modalReason='insufficient' 시 잔액 부족 안내 (arch/85 §6)
+│   └── HpReadout.tsx              ← 공유 HP 표시 (라벨+바+수치) — Header 데스크톱/모바일/HudBar·EnemyCard·PartyHUD·PartyMemberCard 5곳 중복 통합, 사이즈 xs/sm/md + 톤 vital/party/enemy
 ├── layout/             ← 레이아웃 (1)
-│   └── Header.tsx                 ← 데스크톱 HUD + 모바일 MobileHeader 햄버거 탭 메뉴 (자동 숨김)
+│   └── Header.tsx                 ← 데스크톱 HUD + 모바일 MobileHeader 햄버거 탭 메뉴 (자동 숨김, 딤 오버레이+불투명 패널) — 헤더·모바일 상태줄에 현재 턴 번호 상시 표시
 ├── battle/             ← 전투 화면 (4)
 │   ├── BattlePanel.tsx            ← 전투 패널 컨테이너 (적 카드 + 액션 바)
 │   ├── EnemyCard.tsx              ← 적 카드 (HP, 상태효과, 거리/각도, 클릭 타겟)
@@ -93,7 +95,7 @@ components/ (70개)
 │   └── CombatItemPickerModal.tsx  ← 전투 중 아이템 사용 모달
 ├── brand/              ← 브랜드 (1)
 │   └── DimtaleLogoAnimated.tsx    ← 브랜드 로고 애니메이션
-└── party/              ← 파티 시스템 (11)
+└── party/              ← 파티 시스템 (12)
     ├── PartyMainScreen.tsx        ← 파티 메인 (내 파티 + 검색)
     ├── PartyCreateModal.tsx       ← 파티 생성 모달
     ├── PartyJoinModal.tsx         ← 초대코드 가입 모달
@@ -104,10 +106,11 @@ components/ (70개)
     ├── PartyChatInput.tsx         ← 채팅 입력
     ├── PartyTurnStatus.tsx        ← 4인 동시 턴 제출 상태 + 카운트다운
     ├── VoteModal.tsx              ← 이동 투표 제안/참여
+    ├── LobbyLoadoutPicker.tsx     ← 로비 배경(프리셋) 직접 선택 — 솔로 이력 없는 신규 유저끼리도 던전 시작 가능, 로비 선택이 최근 런보다 우선 (arch/84 후속, 2026-08-07)
     └── LootDistribution.tsx       ← 던전 종료 보상 분배 화면
 ```
 
-> StoryBlock 렌더 정책: `StreamTyper` once-guard (StreamTyper→onComplete 중복 방지 + 멱등성), 공통 `font-narrative` 부모 래퍼 통일, `data-dialogue-bubble` DOM 스캔으로 대사/서술 영역 분리. 렌더 유틸·NPC 카드·장면 이미지는 arch/77 P5c에서 narrative-text.tsx / NpcPortraitCard / SceneImageButton으로 분리 (동작 보존).
+> StoryBlock 렌더 정책: `StreamTyper` once-guard (StreamTyper→onComplete 중복 방지 + 멱등성), 공통 `font-narrative` 부모 래퍼 통일, `data-dialogue-bubble` DOM 스캔으로 대사/서술 영역 분리. 렌더 유틸·NPC 카드는 arch/77 P5c에서 narrative-text.tsx / NpcPortraitCard로 분리 (동작 보존 — 당시 함께 분리된 SceneImageButton은 장면 컷 시스템 전환으로 이후 제거, arch/96).
 
 ---
 

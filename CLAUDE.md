@@ -151,8 +151,8 @@ LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 �
 ├── client/              ← Next.js 16 + Zustand + Tailwind v4 프론트엔드
 ├── admin/               ← 어드민 콘솔 (독립 레포 graymar-admin, Vercel 별도 배포 — arch/87)
 ├── specs/               ← 원본 상세 설계 스펙 (17 md, 정본 참조)
-├── architecture/        ← 통합 아키텍처 문서 (84 md + INDEX.md 색인, 실무 참조, archive 4 md)
-├── guides/              ← 코드 구현 지침 (13 md, 서비스맵/컴포넌트맵/구현가이드/팩 에셋·아이템·장면 컷 프롬프트)
+├── architecture/        ← 통합 아키텍처 문서 (91 md + INDEX.md 색인, 실무 참조, archive 4 md)
+├── guides/              ← 코드 구현 지침 (14 md, 서비스맵/컴포넌트맵/구현가이드/팩 에셋·아이템·장면 컷·주사위 프롬프트)
 ├── schema/              ← DB 스키마, JSON Schema, OpenAPI (3 files)
 ├── samples/             ← 샘플 페이로드 (JSON, 10 files)
 ├── content/             ← 게임 콘텐츠 시드 데이터 (graymar_v1 + silverdeen_v1 미니 팩 + star_sand_v1 별빛모래 + karnholt_v1 자율 서사 AUTONOMOUS 팩)
@@ -203,13 +203,13 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 > 상세 서비스 맵: [[guides/01_server_module_map|server module map]]
 > 상세 컴포넌트 맵: [[guides/02_client_component_map|client component map]]
 
-### Server — 16 modules, 111 services, 19 controllers
+### Server — 16 modules, 117 services, 21 controllers
 
 | 모듈 | 서비스 수 | 역할 |
 |------|----------|------|
 | common/ | - | Guards, Filters, Pipes, Decorators |
 | auth/ | 1 | JWT 인증 (register/login) |
-| db/ | - | Drizzle ORM (27 tables / 25 schema files, 47 타입 파일) |
+| db/ | - | Drizzle ORM (27 tables / 25 schema files, 45 타입 파일) |
 | content/ | 2 | 게임 콘텐츠 로더 — 멀티 팩(4팩) 캐시 + AsyncLocalStorage 스코프 + scenarios.controller (GET /v1/scenarios, creation-bundle) |
 | engine/rng,stats,status | 3 | RNG, 스탯 계산, 상태효과 |
 | engine/combat | 5 | Hit, Damage, EnemyAI, PropMatcher, CombatService |
@@ -219,15 +219,15 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 | engine/hub | 41 | HUB 엔진 6 서브시스템 (아래 참조) |
 | engine/planner | 1 | RUN 구조 생성 (RunPlannerService) |
 | runs/ | 2 | RUN 생성/조회 + BugReportService |
-| turns/ | 1 | 턴 제출/조회 |
-| llm/ | 23 | Worker, ContextBuilder, TokenBudget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector, NpcReactionDirector, ChallengeClassifier, ThemeClassifier, DialogueGenerator, LlmStreamBroker, StreamClassifier, FactExtractor, Lorebook, MemoryRenderer, PlotDirector, PlotSeedGenerator, LlmCallLog 외 |
+| turns/ | 6 | 턴 제출/조회 + 도메인 분할 서브서비스 5종 (TurnShared·EquipShopTurn·DagTurn·HubTurn·CombatTurn — arch/77 §18) |
+| llm/ | 24 | Worker, ContextBuilder, TokenBudget, Prompt, NpcDialogueMarker, NanoDirector, NanoEventDirector, NpcReactionDirector, ChallengeClassifier, ThemeClassifier, DialogueGenerator, LlmStreamBroker, StreamClassifier, SceneCutMatcher, FactExtractor, Lorebook, MemoryRenderer, PlotDirector, PlotSeedGenerator, LlmCallLog 외 |
 | scene-image/ | 1 | AI 장면 이미지 (Gemini, rate limit) |
 | portrait/ | 1 | 초상화 업로드/생성 (독립 모듈) |
 | campaigns/ | 1 | 캠페인 구조 (독립 모듈) |
 | endings/ | - | 여정 아카이브 조회 (GET /v1/endings, SummaryBuilder는 engine/hub 소속) |
 | party/ | 8 | 파티 시스템 (Party, Chat, Stream, Lobby, PartyTurn, Vote, Reward, RunParticipants) |
 | points/ | 1 | 포인트 차감·환불·충전 코드 (arch/85) |
-| admin/ | 3 | 관제 API — stats/users/runs/llm/health 컨트롤러 5종 + 공개 통계 (arch/87) |
+| admin/ | 3 | 관제 API — stats/users/runs/llm/health/audit/parties 컨트롤러 7종 + 공개 통계 (arch/87) |
 
 ### HUB 엔진 6 서브시스템 (41 services)
 
@@ -242,20 +242,20 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 
 > 상세: [[guides/03_hub_engine_guide|hub engine guide]]
 
-### Client — 70 components, 7 stores
+### Client — 71 components, 7 stores
 
 | 영역 | 수 | 핵심 |
 |------|---|------|
-| narrative/ | 7 | NarrativePanel, StoryBlock, StreamingBlock, DialogueBubble, NpcPortraitCard, SceneImageButton, narrative-text |
+| narrative/ | 6 | NarrativePanel, StoryBlock, StreamingBlock, DialogueBubble, NpcPortraitCard, narrative-text(+compact-dialogue 연속 대사 초상화 생략 규칙) |
 | input/ | 2 | InputSection, QuickActionButton |
-| hub/ | 8 | HeatGauge, TimePhaseIndicator/Transition, LocationHeader, ResolveOutcomeBanner, DiceFace, PackMeterGauge (HUB 본체는 GameClient/NarrativePanel 렌더) |
-| location/ | 5 | TurnResultBanner, LocationToastLayer, LocationImage 외 |
+| hub/ | 8 | HeatGauge, TimePhaseIndicator/Transition, LocationHeader, ResolveOutcomeBanner, DiceFace, Dice3D, PackMeterGauge (HUB 본체는 GameClient/NarrativePanel 렌더) |
+| location/ | 5 | TurnResultBanner, LocationToastLayer, LocationBackdrop(장소 배경 지속화 arch/93), DeadlineBanner, EquipmentDropToast |
 | screens/ | 11 | StartScreen(+start-screen/ 하위 5), EndingScreen, RunEndScreen, NodeTransitionScreen 외 |
 | side-panel/ | 7 | SidePanel, CharacterTab, InventoryTab, EquipmentTab, SetBonusDisplay, NpcDossierTab, QuestTab |
-| ui/ | 12 | ErrorBanner, LlmFailureModal, BugReportButton, BugReportModal, NetworkStatus, PageTransition, SplashScreen, InstallPrompt, NewsModal, PortraitCropModal |
+| ui/ | 14 | ErrorBanner, LlmFailureModal, BugReportButton, BugReportModal, NetworkStatus, PageTransition, SplashScreen, InstallPrompt, NewsModal, PortraitCropModal, PointsModal, HpReadout |
 | layout/ | 1 | Header (데스크톱 HUD + 모바일 MobileHeader 햄버거 탭 메뉴, 자동 숨김) |
 | battle/ | 4 | BattlePanel 외 (창의 전투 버튼 폼 + 적 카드 + 펼침 + 아이템 모달) |
-| party/ | 11 | PartyHUD, PartyLobby, PartyChatWindow, PartyChatInput, PartyTurnStatus, VoteModal, LootDistribution 외 |
+| party/ | 12 | PartyHUD, PartyLobby, LobbyLoadoutPicker, PartyChatWindow, PartyChatInput, PartyTurnStatus, VoteModal, LootDistribution 외 |
 | brand/ | 1 | 브랜드 로고/타이포 |
 
 Stores: game-store(+game-store.helpers), game-selectors, settings-store, auth-store, party-store, points-store.
@@ -413,7 +413,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 
 ## API Endpoints
 
-실제 라우트 77개 전수 (2026-07-27 컨트롤러 19개 기준). **admin** 표시는 `@AdminEndpoint`
+실제 라우트 84개 전수 (2026-08-14 컨트롤러 21개 기준, SSE 2 포함). **admin** 표시는 `@AdminEndpoint`
 (x-admin-token OR JWT+users.role, 감사 로그 `admin_audit_logs` — arch/87). 그 외는 JWT 인증,
 `/v1/stats/public` 만 무인증.
 
@@ -494,6 +494,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 | GET | `/v1/parties/:partyId/messages` | 채팅 히스토리 (cursor, limit) |
 | GET | `/v1/parties/:partyId/stream` | **SSE** 실시간 스트림 (?token=JWT) |
 | GET | `/v1/parties/:partyId/lobby` | 로비 상태 조회 |
+| POST | `/v1/parties/:partyId/lobby/loadout` | 로비 배경(프리셋) 선택 — 솔로 이력 없는 신규 유저 시작 지원 (2026-08-07) |
 | POST | `/v1/parties/:partyId/lobby/ready` | 준비 완료 토글 (ready) |
 | POST | `/v1/parties/:partyId/lobby/start` | 던전 시작 (리더 전용) |
 | POST | `/v1/parties/:partyId/lobby/invite-run` | 내 세계에 초대 — 리더 솔로 런에 합류 |
@@ -518,10 +519,16 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 | POST | `/v1/admin/users/:id/password` | 비밀번호 재설정 |
 | DELETE | `/v1/admin/users/:id` | 유저 삭제 |
 | GET | `/v1/admin/runs` | 런 목록 |
+| GET | `/v1/admin/runs/scenarios` | 시나리오 필터 옵션 목록 |
 | GET | `/v1/admin/runs/stuck` | 스턱 런 조회 |
 | POST | `/v1/admin/runs/:id/abort` | 런 강제 종료 |
 | POST | `/v1/admin/runs/:id/turns/:turnNo/retry-llm` | 턴 LLM 재시도 |
 | GET | `/v1/admin/llm/failures` | LLM 실패 로그 |
+| GET | `/v1/admin/llm/flags` | 런타임 킬스위치 플래그 조회 (비영속) |
+| PATCH | `/v1/admin/llm/flags` | 런타임 킬스위치 플래그 변경 (비영속) |
+| GET | `/v1/admin/parties` | 파티 목록 |
+| GET | `/v1/admin/parties/:id` | 파티 상세 |
+| GET | `/v1/admin/audit-logs` | 어드민 감사 로그 조회 (admin_audit_logs) |
 | GET | `/v1/admin/health` | 시스템 헬스 |
 
 ## Environment Variables (`server/.env`)
@@ -707,6 +714,10 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **프롬프트 중복·충돌 정리 (2026-08-12)** | ① speechStyle 3중 주입 해소 — `[NPC 대화 자세]`·`[NPC 감정 상태]`·`[이번 턴 NPC 말투]`가 같은 말투를 각각 기술하던 것을 근접 위치 정본 하나로(스냅샷 7종 -131자/프롬프트, 어체 오염 0). ② `[NPC 등장]` 헤더 충돌 — NanoDirector 자유 묘사(①)와 orchestration 등장 선언(②)이 같은 헤더로 서로 다른 인물을 지목하던 것을 ② 우선으로 게이트(실측 1,353턴 중 동시 25턴·인물 모순 7건). **둘 다 측정 가능한 품질 피해는 확인되지 않았고 값은 정합성** — ②는 충돌률 1.8%라 짧은 플레이테스트로 개선 폭 측정이 성립하지 않는다(30턴 관측 확률 43%). arch/79 §11.4.2 · arch/49 부록 | ✅ 완료 |
 | **nano 엔진 점검 후속 4종 (2026-08-13~14)** | nano 전수 점검(정합 ✅·하드 결함 0) 후 실효 상위 항목 일괄: ① **NanoEventDirector Track 다이어트** — T1 선택지(T2가 상시 덮어씀)·T2 연출 필드(소비처 없음)의 이중 풀 출력을 outputMode 분리(direction/choices/full)로 제거, T1 maxTokens 430→240 (서술 크리티컬 패스 단축, 비스트리밍은 full 보험 유지) + **R2 반복 가드 배선**(applyR2Guard가 caller 0곳으로 영구 무발동이던 것을 llmNpcReaction 계측 컬럼 복원으로 연결) e5cf111 ② **경계 거절 3층**(버그 95db0e75 "다른 대륙으로 떠난다" 무시) — L1 룰(move-boundary.core, 거시 경계 명사 positive)·L2 nano(Plausibility 4단계 OUT_OF_SCOPE, FREE 강제)·L3 [경계 거절 지시](세계 내 장애물로 가로막기), E2E 실증 295fd34 · arch/76 D3-④ ③ **쓰레기 토큰 새니타이즈**(Luna·Gemma ~1% 디제너레이션: 한자 뭉치·`/en-thought` 토큰·고립 라틴 대문자) stripModelJunkCore 5.10.11 2b88ea4 ④ **V12 다이어트 5차** — 658턴 해부로 PLAYER_DIRECTED 50% 발동·구제곡선(-500~700자면 해소) 규명 → NPC 지시 스택 표적 압축 -598자/프롬프트, 게이트 24%→11% 복귀·14/14 PASS db73039 · arch/79 §12. 잔여 백로그: fire-and-forget nano 로그 유실(계측)·factRevealed 게이트·감정 이중 채널 계측 | ✅ 완료 |
 | **세계 자율 진행 복구 (2026-08-13)** | "무엇을 해도 세계가 고요하다" 피드백을 30일 실측으로 대조. 원인은 하나가 아니라 **사문 배선 3건**이었고 전부 `actionType`/`parsedType`(arch/100 §14)과 같은 "조용히 꺼진" 부류라 어느 게이트에도 안 걸렸다. ① 엔진은 `longTermAgenda`(구조체)를 읽는데 저작된 건 `agenda`(프롬프트용 동기 **문자열**) — 구조체 보유 5명뿐, NPC_RONEN 은 문자열이라 무시 ② 저작된 15 스테이지가 **전부 `day >= 2~10`** 인데 158런 중 144런(91%)이 day 1 종료(평균 1.10) → `globalClock` 지원 추가 후 재기준화 ③ `conditionApply` 키 불일치(콘텐츠 `targetLocation` ↔ 엔진 `locationId`)로 `addCondition` 항상 false. + 대화 지연 틱 6→2·발효 상한 2(arch/81 3차)·행동화/목격 반응 조사 폴백 `이(가)` 8곳(유저 노출)·흔적 관측 로그. **실측 대비**: worldFact `NPC_ACTION` 30일 전체 10건 → 15턴 한 런에 **8건**(카테고리 비중 0.5%→40%), npcGoals 6명·agenda 시그널 8건. 회귀 0(대화 턴 전환 0건, 불변식 49 유지). 게이트 12/14 — V9·V12 는 변경 **전** 런에서도 동일 실패. **미달 1건**: 시계 실효 0.39→0.43 tick/턴으로 예상(≈0.64)에 못 미침, 단일 런이라 누적 재측정 필요. **잔여**: worldFact `WORLD_CHANGE`/`RELATIONSHIP` 쓰기 지점 0곳 · 시그널 템플릿 14/55 도달 불능(`triggerPressure` 60~85 vs 압력 63%가 ≤10) · karnholt agenda(디렉터 충돌 판단 선행). arch/21 Part 11 · arch/81 3차 | ✅ 완료 |
+| **선택지 품질 개선 (2026-08-04~05)** | [arch/98] 실유저 503개 선택지 표본에서 결함 5건 확정 — npcId 오염(2.1%)·TALK/OBSERVE/INVESTIGATE 91% 편중·질문 턴 응답 부재 92%·BRIBE 5턴 연속. P0~P4 구현 + V13 센서 신설, 적극 축 2%→25% 실측. §11 누적 게이트 전환은 별도 항목 참조 | ✅ 완료 |
+| **퀘스트탭 실효성 (2026-08-05)** | [arch/99] 활성 목표 데드코드·HUB 턴 quest 번들 미부착(arc 커밋 직후 스테일)·요약 중복·팩 격차(karnholt D-14 오정보)·배지 부재 5건 — 서버 attachQuestUiBundle 6곳 + hasArcCommit, 클라 섹션 정리·AUTONOMOUS 시한 게이팅·단서 발견 점 배지 | ✅ 완료 |
+| **자기점검 하네스 (2026-08-12)** | [arch/101] "전 게이트 통과한 채 조용히 꺼진" 결함 7건에서 역설계한 코드·문서·DB 3소스 교차 대조 루프 — 디텍터 5족(`scripts/selfcheck/` + ledger.jsonl) + 검증 사다리(정적→과거 원문 재생→런 5회 예산) + 오탐 통제(분모 강제·baseline expires). 1회차 수행 산출물이 불변식 17의 백스톱 초과 17.8% 실측 | ✅ 완료 |
+| **이미지 정본 단일화 (2026-08-14)** | [arch/102] 장소 이미지 결정이 100% 클라 하드코딩이라 장면 컷 장소 후보가 graymar·star_sand에서 영구 0이던 결함 해소 — location_images.json 콘텐츠 승격(URL 불변, 매처 스펙 17케이스) + 초상화 npcs.json portraitUrl 외부화(클라 미러 맵 삭제) + 마커 와이어 포맷 URL→npcId 전환(혼재 허용) + 장소 이미지 URL 서버 이관. 잔여: 클라 레거시 리졸버 최종 삭제·E-2 실런 검증 10턴 | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
@@ -733,7 +744,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | input_processing_pipeline_v1.md | ⚠️ 부분 | 전투 입력만 구현 |
 | node_routing_v2.md | ✅ 구현됨 | DAG 24노드 + 조건부 분기 |
 
-### architecture/ — 통합 아키텍처 (84 md + INDEX)
+### architecture/ — 통합 아키텍처 (91 md + INDEX)
 
 > 아래는 **파일명·상태·한 줄 성격**만. 도메인별 1~2문단 요약과 상호 참조 맵은
 > [[architecture/INDEX|INDEX]] 가 정본이다 (같은 설명을 두 곳에 두지 않는다).
@@ -825,6 +836,10 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 86_pack_parity_mobile_ux.md | ✅ 구현됨 | 비-graymar 팩 정합 + 모바일 UX 마감 |
 | 79_prompt_token_optimization.md | ✅ 구현됨 | 측정 기반 프롬프트 예산 |
 | 100_competitor_prompt_analysis.md | 📎 분석 | 경쟁 텍스트게임 프롬프트 구조 역추론 — 서술 기법 이식 검토 (착수 2·결정대기 2·기각권고 1) |
+| 98_choice_quality_improvement.md | ✅ 구현됨 | 선택지 품질 개선 — ChoiceNpcIdNorm·적극 축 주입(2%→25%)·질문 응답 보장·BRIBE 쿨다운 + V13 누적 게이트(≥15% 단일 임계, §11) |
+| 99_quest_tab_effectiveness.md | ✅ 구현됨 | 퀘스트탭 실효성 — 죽은 섹션 제거·HUB 턴 quest UI 부착(hasArcCommit)·AUTONOMOUS 시한 게이팅·단서 발견 배지 |
+| 101_selfcheck_loop.md | ✅ 구현됨 | 자기개선 하네스 — 코드·문서·DB 3소스 정합 감사 디텍터 5족(`scripts/selfcheck/`) + 검증 사다리·런 예산 5회 (문서 헤더 "미구현"은 스테일) |
+| 102_location_image_content_pool.md | ✅ 구현됨 | 이미지 정본 단일화 — location_images.json 콘텐츠 승격 + 초상화 npcs.json portraitUrl 외부화 + 마커 npcId 전환 + 장소 URL 서버 이관 (잔여: 클라 레거시 리졸버 삭제·실런 10턴) |
 | archive/37_streaming_transition_issues.md | 📜 아카이브 | 35+36과 중복 |
 | archive/38_stream_vs_nonstream_comparison.md | 📜 아카이브 | 35와 중복 |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
@@ -832,12 +847,12 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | phase_history.md | 📜 이력 | 구현 단계 표 원문 전량 (163 항목) |
 | fixplan_history.md | 📜 아카이브 | 완료된 플레이테스트 패치 내역 (fixplan 3/4/5 통합) |
 
-### guides/ — 코드 구현 지침 (13 md)
+### guides/ — 코드 구현 지침 (14 md)
 
 | 파일 | 내용 |
 |------|------|
-| 01_server_module_map.md | 서버 전체 서비스 맵 (111 services, 47 타입 파일) |
-| 02_client_component_map.md | 클라이언트 컴포넌트 맵 (70 components, stores, CSS) |
+| 01_server_module_map.md | 서버 전체 서비스 맵 (117 services, 45 타입 파일) |
+| 02_client_component_map.md | 클라이언트 컴포넌트 맵 (71 components, stores, CSS) |
 | 03_hub_engine_guide.md | HUB 엔진 구현 (판정, EventDirector, Narrative, NPC, 평판) |
 | 04_llm_memory_guide.md | LLM 파이프라인, 메모리 L0~L4, Token Budget, Scene Continuity |
 | 05_runstate_constants.md | RunState JSONB 구조, 핵심 상수, Content Data |
@@ -849,6 +864,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 11_scene_cut_guide.md | 장면 컷 제작·투입 가이드 (arch/96) — 파일명=태그 규약·고빈도 장면 유형·생성 프롬프트 템플릿·운영 튜닝 (인물·장소 자동 편입 포함) |
 | 12_graymar_scene_cut_prompts.md | 그레이마르 장면 컷 프롬프트 — 1차 26종 + 2차 18종(#27~44) + 3차 18종(#92~109, 45일 991턴 재실측: 수레·필체 조작·광장·지붕 + fact·Incident 선행 태깅 + 미커버 인물 밴스·쉐도우·이졸데·토브렌·로넨 3컷째) |
 | 13_star_sand_scene_cut_prompts.md | 별빛모래 장면 컷 3차 15종(#45~59) + 4차 16종(#60~75) + 5차 16종(#76~91) — 3·4차는 311턴 실측 기반(초상화 풀 부재 → 기존 감정 컷이 얼굴 정본 규약), 5차는 콘텐츠 주입 어휘 선행 태깅(Incident 7종·퀘스트 S2~S5 무대 4·SUB 첫 컷 4 — fact 문구가 questReveal로 서술에 확정 등장하는 원리) + **6차 33종(#110~142) — CORE·SUB 18명 전원 감정 컷 3종 체제**(355턴 실측, 리바·페나 첫 컷). 태그 규칙: 첫 토큰=실명(진입권) · **같은 인물 컷끼리 감정 토큰 겹침 금지**(겹치면 hits 동률 → 감정 무관 무작위 선택) · 감정어는 코퍼스 실측 상위에서만 |
+| 14_dice_face_prompts.md | 주사위 면 텍스처 이미지 프롬프트 (Dice3D Tier 2) — 판정 연출 6면을 소유자 제작 이미지로 교체하기 위한 배리에이션 3종(ivory/obsidian/bronze) 프롬프트 + `client/public/dice/<배리에이션>/` 파일 규약. 이미지 투입 후 CSS 배선(`globals.css .dice3d-face`)은 별도 진행 |
 
 ## Working Language
 
