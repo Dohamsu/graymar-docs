@@ -1,9 +1,9 @@
 # 서버 모듈/서비스 맵
 
 > 정본 위치: `server/src/`
-> 최종 갱신: 2026-07-18
+> 최종 갱신: 2026-08-14
 
-## 모듈 구조 (16 modules, 111 services, 19 controllers)
+## 모듈 구조 (16 modules, 117 services, 21 controllers)
 
 ```
 main.ts → AppModule
@@ -21,8 +21,8 @@ main.ts → AppModule
 │   ├── auth.service     ← JWT 세션 관리
 │   └── auth.dto         ← 인증 DTO
 ├── db/                  ← Drizzle ORM
-│   ├── schema/          ← 20 파일 / 22 pgTable (아래 참조)
-│   └── types/           ← TypeScript types (47 파일, 아래 참조)
+│   ├── schema/          ← 25 파일 / 27 pgTable (아래 참조)
+│   └── types/           ← TypeScript types (45 파일, 아래 참조)
 ├── content/             ← 게임 콘텐츠 로더 (멀티 팩)
 │   ├── content-loader.service  ← 팩별 JSON 로드 + ContentPackState 캐시 (graymar/silverdeen/karnholt)
 │   ├── content.types            ← NpcDefinition.unknownAlias/shortAlias, NpcTier 포함
@@ -30,6 +30,7 @@ main.ts → AppModule
 │   ├── event-content.provider   ← 이벤트 콘텐츠 프로바이더
 │   ├── scenarios.controller     ← GET /v1/scenarios, GET /v1/scenarios/:id/creation-bundle (architecture/63⑥, 71)
 │   ├── scenario-context.ts      ← AsyncLocalStorage 시나리오 스코프 (ensureScenario/enterScenario — architecture/63①)
+│   ├── content-validator.service ← 콘텐츠 정합성 빌드 시점 자동 검증 (speechRegister↔speechStyle, roleKeywords 등 — NPA 사후 검출 전 사전 차단, architecture/49 Phase 4)
 │   └── dynamic-npc.ts           ← 동적 NPC stub 검증·등록 (자율 서사 P1 — architecture/75 §4.1)
 ├── engine/              ← Core game logic (65 services)
 │   ├── rng/             ← Deterministic RNG (splitmix64, seed+cursor)
@@ -62,7 +63,13 @@ main.ts → AppModule
 │   └── bug-report.service     ← 버그 리포트 CRUD
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 │   ├── turns.controller
-│   ├── turns.service    ← 턴 파이프라인 조율 (arch/77 P3: Inner 4,440→1,937줄, 추출 메서드 다수)
+│   ├── turns.service    ← 턴 파이프라인 조율 (arch/77 §18 도메인 분할: 9,194→6,864줄, 아래 서브서비스 5종으로 분해)
+│   ├── turn-shared.service       ← 분할 공용 헬퍼 — 턴 레코드 커밋·SYSTEM 결과 조립·퀘스트 UI 번들·캠페인 결과 저장 (arch/77 §18, 2026-08-07)
+│   ├── equip-shop-turn.service   ← 장비 장착/해제 + 상점 구매 턴 처리 (arch/77 §18)
+│   ├── dag-turn.service          ← DAG 노드(COMBAT/EVENT/REST/SHOP/EXIT) 턴 처리 (arch/77 §18)
+│   ├── hub-turn.service          ← HUB 턴 처리 (CHOICE → moveToLocation, packMeters UI — arch/77 §18)
+│   ├── combat-turn.service       ← 전투 ActionPlan 빌드·승리 드랍·패배 엔딩 (arch/77 §18)
+│   ├── turns.core.ts             ← 순수 코어 함수 (순환 임포트 차단, arch/77 §18)
 │   ├── npc-agitation.core.ts     ← 감정→세계 행동화 (fear 도주/susp 신고/trust 접근, arch/76 D3)
 │   ├── witness-reaction.core.ts  ← 목격자 반응 posture 우선 trust 밴드 (architecture/72)
 │   └── run-state-apply.core.ts   ← 인벤토리 수량 병합 단일화 순수 함수 (5개 보상 경로 공통, arch/77 P3)
@@ -83,13 +90,18 @@ main.ts → AppModule
 │   ├── points.controller      ← GET /v1/points/{balance,transactions}, POST /v1/points/redeem
 │   │                             + @Controller('v1/admin/codes') 코드 발급/목록 (@AdminEndpoint)
 │   └── points.service         ← 원자적 차감/멱등/환불 2경로
-├── admin/               ← 관제 API (3 services, 6 controllers, arch/87)
+├── admin/               ← 관제 API (3 services, 8 controllers, arch/87)
 │   ├── admin-stats.controller     ← overview / llm-cost / points / cost-reconciliation
 │   ├── admin-users.controller     ← 검색·상세·포인트 조정·비밀번호·삭제
 │   ├── admin-runs.controller      ← 목록·스턱·abort·retry-llm
 │   ├── admin-llm.controller       ← LLM 실패 로그
 │   ├── admin-health.controller    ← 시스템 헬스
-│   └── public-stats.controller    ← GET /v1/stats/public (무인증, 랜딩 LiveStats)
+│   ├── admin-audit.controller     ← GET /v1/admin/audit-logs — admin_audit_logs 조회 (arch/87 §3.2)
+│   ├── admin-parties.controller   ← GET /v1/admin/parties — 파티 런 관제 조회 (쓰기는 유저 경로가 정본, arch/84 후속)
+│   ├── public-stats.controller    ← GET /v1/stats/public (무인증, 랜딩 LiveStats)
+│   ├── admin-ops.service          ← 운영 액션 + 유저/런 조회 (쓰기 감사 로그는 AdminAuditInterceptor 일괄, arch/87 §4)
+│   ├── admin-stats.service        ← 대시보드 집계 — 요청 시 SQL 집계 (사전 집계 테이블 없음, arch/87 §4.1)
+│   └── admin-openrouter.service   ← OpenRouter Activity API 실과금 대조 (management 키 전용, 10분 캐시 — arch/87 §9)
 └── party/               ← 멀티플레이어 파티 시스템 (8 services, 1 controller)
     ├── party.controller       ← REST + SSE 엔드포인트
     ├── party.service          ← 파티 CRUD + 초대코드
@@ -181,7 +193,7 @@ main.ts → AppModule
 
 ---
 
-## LLM 모듈 서비스 (23 services, 1 controller)
+## LLM 모듈 서비스 (24 services, 1 controller)
 
 `server/src/llm/`
 
@@ -210,6 +222,7 @@ main.ts → AppModule
 | LlmCallLogService | llm-call-log.service.ts | 턴당 LLM 호출 실측 로그 — llm_call_logs 테이블 배치(1행) 기록 (turn-context ALS와 연동) |
 | PlotDirectorService | plot-director.service.ts | 자율 서사 Emergent Director — 비트 후보 2~3개 nano 선계산 → nextBeatCandidates 저장 (architecture/75 §5, AUTONOMOUS 전용) |
 | PlotSeedGeneratorService | plot-seed-generator.service.ts | Plot Seed 생성 — nano 진상 생성 + validatePlotSeedCore 검증/재롤 + 결정론 폴백 (architecture/75 §3, createRun 백그라운드) |
+| SceneCutMatcherService | scene-cut-matcher.service.ts | 장면 컷 매칭 — 소유자 태그 풀(scene/portrait/location)에서 3단 게이트(프리필터→렉시컬 프리스크린→nano confidence)로 서술과 맞는 1장 선정, ui.sceneCut 표시 전용 (architecture/96) |
 | LlmSettingsController | llm-settings.controller.ts | GET/PATCH /v1/settings/llm (런타임 설정) |
 
 **순수 모듈/유틸 (서비스 아님):**
@@ -219,7 +232,7 @@ main.ts → AppModule
 - `npc-utterance.util.ts` — @마커에서 특정 NPC 발화 추출
 
 **하위 모듈:**
-- `providers/` — OpenAI(OpenRouter 경유), Claude, Gemini, Mock (4 providers) + LlmProviderRegistryService
+- `providers/` — OpenAI(OpenRouter 경유), Claude, Gemini, Mock (4 providers) + LlmProviderRegistryService (프로바이더 이름별 등록/조회 레지스트리 — LlmConfig 기반 활성 프로바이더 해석)
 - `prompts/` — PromptBuilder + system-prompts + intent-system-prompt + speech-register(어체 규칙) + intro-directive(자기소개 디렉티브, arch/66) + injected-block-headers(주입 블록 헤더 정본)
 - `types/` — LLM 공급자 인터페이스 타입
 
@@ -236,7 +249,7 @@ main.ts → AppModule
 
 ---
 
-## DB 스키마 (21 파일, 23 pgTable)
+## DB 스키마 (25 파일, 27 pgTable)
 
 `server/src/db/schema/`
 
@@ -265,10 +278,14 @@ main.ts → AppModule
 | party_turn_actions | 파티 턴 행동 (partyId, runId, turnNo, userId, inputType, rawInput) |
 | party_votes | 이동 투표 (partyId, proposerId, targetLocationId, status) |
 | run_participants | 런 참여자 (runId, userId, joinedAt, leftAt, isAi) |
+| point_transactions | 포인트 원장 — 차감/환불/충전 트랜잭션 (arch/85) |
+| redeem_codes | 충전 코드 (다회용, 발급은 admin) (arch/85) |
+| code_redemptions | 코드 사용 기록 — (codeId, userId) 멱등 (arch/85) |
+| admin_audit_logs | 어드민 쓰기 액션 감사 로그 (@AdminEndpoint 일괄 기록, arch/87) |
 
 ---
 
-## DB 타입 파일 (47 파일)
+## DB 타입 파일 (45 파일)
 
 `server/src/db/types/`
 
@@ -376,3 +393,12 @@ main.ts → AppModule
 - **arch/76 D3 (탈버킷)**: turns/npc-agitation.core(감정→행동화) · witness-reaction.core(architecture/72) · combat/combat-tactic.core(전투 기만) 순수 모듈.
 - **arch/77 God method 리팩토링**: turns.service Inner -56% · llm-worker Inner -50%(금지선 4곳 마킹) · prompt-builder -62% · context-builder -64% · Combat -41%. narrative-filter.core.ts(후처리 필터 정본) · run-state-apply.core.ts(인벤토리 병합) 신설. 파일 구조는 동일, 메서드가 다수의 private 메서드/순수 모듈로 분해됨.
 - **합계**: 104 → 107 services, 11 → 12 controllers, DB 타입 43 → 45 파일.
+
+## 최근 추가/변경 요약 (2026-08-14 동기화)
+
+- **turns 도메인 분할 (arch/77 §18, 2026-08-07)**: turns.service 9,194→6,864줄 — turn-shared·equip-shop-turn·dag-turn·hub-turn·combat-turn 5개 서브서비스 + turns.core 순수 코어 신설.
+- **admin 모듈 확장 (arch/87)**: 3 services(admin-ops·admin-stats·admin-openrouter) + 8 controllers — admin-audit(감사 로그 조회)·admin-parties(파티 런 관제) 추가.
+- **LLM 확장**: 23 → 24 services. SceneCutMatcher(장면 컷 매칭, arch/96) 추가. providers/에 LlmProviderRegistry 상주.
+- **content 확장**: ContentValidator(콘텐츠 정합성 빌드 시점 검증, architecture/49 Phase 4) 추가.
+- **포인트·감사 DB (arch/85·87)**: point_transactions·redeem_codes·code_redemptions·admin_audit_logs — 스키마 25 파일 / 27 pgTable.
+- **합계**: 111 → 117 services, 19 → 21 controllers, DB 타입 45 파일.

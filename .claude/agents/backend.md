@@ -21,7 +21,7 @@ model: inherit
 |------|------|------|
 | NestJS | 11.0 | 프레임워크 (모듈, DI, Guard, Interceptor, Pipe) |
 | TypeScript | strict | 전체 코드 |
-| Drizzle ORM | 0.45 | PostgreSQL 접근 (18 tables, 42 타입 파일) |
+| Drizzle ORM | 0.45 | PostgreSQL 접근 (27 tables, 45 타입 파일) |
 | Zod | 4.3 | 입력 검증, runtime 타입 가드 |
 | OpenAI / Gemini / Claude / Mock | multi-provider (OpenRouter) | LLM 서술 생성 |
 | SSE (Nest EventEmitter) | - | LLM 스트리밍 브로커, 파티 실시간 채널 |
@@ -33,7 +33,8 @@ model: inherit
 ```
 server/src/
 ├── turns/
-│   └── turns.service.ts            ← 6,022줄. 턴 파이프라인 최상위 오케스트레이터
+│   ├── turns.service.ts            ← 7,046줄. 턴 파이프라인 최상위 오케스트레이터 (arch/77 §18 도메인 분할)
+│   └── (서브서비스 5종)            ← turn-shared / equip-shop-turn / dag-turn / hub-turn / combat-turn (2026-08-07 분할)
 ├── runs/
 │   ├── runs.service.ts             ← RUN 생성/조회/상태 관리
 │   ├── bug-report.service.ts       ← 인게임 버그 리포트 저장/조회
@@ -46,14 +47,15 @@ server/src/
 │   ├── rewards/                    ← 보상, 인벤토리, 장비, 접미사, Legendary (5)
 │   ├── planner/                    ← RunPlannerService (1)
 │   ├── rng/ · stats/ · status/     ← 결정론 RNG, 스탯, 상태이상 (3)
-├── llm/                            ← 23 services (아래 상세)
+├── llm/                            ← 24 services (아래 상세)
 ├── party/                          ← 8 services + DTO + controller
-├── content/                        ← ContentLoader (graymar_v1 JSON 27개)
+├── content/                        ← ContentLoader + ContentValidator (멀티 팩 4종: graymar/silverdeen/star_sand/karnholt)
 ├── scene-image/ · portrait/        ← AI 초상화/장소 이미지 생성 (Gemini)
+├── admin/ · points/ · endings/     ← 관제 API 3 services·8 controllers (arch/87), 포인트 (arch/85), 여정 아카이브
 ├── campaigns/ · auth/ · common/    ← 캠페인, JWT 인증, Guards/Filters/Pipes
 └── db/
-    ├── schema/                     ← 20 스키마 파일 / 22 pgTable
-    └── types/                      ← 43 타입 파일 (정본: enums.ts)
+    ├── schema/                     ← 25 스키마 파일 / 27 pgTable
+    └── types/                      ← 45 타입 파일 (정본: enums.ts)
 ```
 
 `turns.service.ts`는 길기 때문에 수정 전 반드시 해당 구간만 Read하여 경계와 호출 순서를 확인한다.
@@ -71,7 +73,7 @@ server/src/
 
 상세 API: `guides/03_hub_engine_guide.md`, Living World는 `guides/07_living_world_guide.md`.
 
-## LLM 모듈 — 23 서비스
+## LLM 모듈 — 24 서비스
 
 | 서비스 | 역할 |
 |--------|------|
@@ -89,6 +91,7 @@ server/src/
 | NpcReactionDirectorService | nano 사전결정: NPC 반응 7종 + 즉시목표 + 추상 톤 3축 (A56) |
 | ChallengeClassifierService | 자유 행동 주사위 스킵 — 룰 게이트 + 회색지대 nano 분류 (A56) |
 | ThemeClassifierService | NPC 대사 의미 테마 분류 — 크로스 NPC 주제 반복 해소 (architecture/44) |
+| SceneCutMatcherService | 장면 컷 매칭 — 태그 풀에서 렉시컬 프리스크린 + nano confidence로 인라인 컷 선정 (arch/96) |
 | LlmCallerService · MemoryRendererService · FactExtractorService · MidSummaryService · AiTurnLogService · LlmConfigService | 공급자 호출 래퍼 / 메모리 v4 / 요약 / 런타임 설정 / 디버그 로그 |
 
 LLM Provider는 `llm/providers/`에 openai / claude / gemini / mock 4종 + registry. OpenRouter를 공용 엔드포인트로 사용.
@@ -189,7 +192,7 @@ COMBAT 공식은 `specs/combat_system.md` — `hitRoll → varianceRoll → crit
 | Living World v2 API | `guides/07_living_world_guide.md` |
 | 파티 시스템 API | `guides/08_party_guide.md` |
 | 모든 enum 정본 | `server/src/db/types/enums.ts` |
-| 콘텐츠 데이터 | `content/graymar_v1/` (24 JSON) |
+| 콘텐츠 데이터 | `content/<pack>/` (4팩: graymar_v1, silverdeen_v1, star_sand_v1, karnholt_v1) |
 
 ## 작업 시 주의
 

@@ -36,13 +36,15 @@ client/src/
 │   ├── error.tsx / global-error.tsx
 │   ├── robots.ts / sitemap.ts
 │   └── globals.css             ← 디자인 토큰, Tailwind v4
-├── components/                 ← 40+ TSX 컴포넌트 (아래 표 참조)
-├── store/                      ← Zustand 스토어 4종
-│   ├── game-store.ts           ← 메인 게임 상태 (1,862 줄)
+├── components/                 ← 71 TSX 컴포넌트 (아래 표 참조)
+├── store/                      ← Zustand 스토어 7 파일 (+ helpers)
+│   ├── game-store.ts           ← 메인 게임 상태 (1,258 줄 — arch/77 P5b 분할 후)
+│   ├── game-store.helpers.ts   ← 상태 매핑 + 내러티브 flush/poll/stream (store 아님)
 │   ├── game-selectors.ts       ← 셀렉터 분리
 │   ├── auth-store.ts
 │   ├── settings-store.ts
-│   └── party-store.ts          ← 파티 상태 (575 줄)
+│   ├── points-store.ts         ← 포인트 잔액·충전 모달·402 유도 (arch/85)
+│   └── party-store.ts          ← 파티 상태 (601 줄)
 ├── lib/                        ← 유틸리티 (10 files)
 │   ├── api-client.ts           ← fetch 래퍼 (request 래핑 + network-logger 훅)
 │   ├── api-errors.ts           ← 에러 타입
@@ -64,20 +66,21 @@ client/src/
     └── llm-pricing.ts
 ```
 
-## 컴포넌트 영역 (40+)
+## 컴포넌트 영역 (71)
 
 | 영역 | 수 | 주요 컴포넌트 |
 |------|---|---------------|
-| `narrative/` | 4 | NarrativePanel, StoryBlock, StreamingBlock, DialogueBubble |
+| `narrative/` | 6 | NarrativePanel, StoryBlock, StreamingBlock, DialogueBubble, NpcPortraitCard, narrative-text |
 | `input/` | 2 | InputSection, QuickActionButton |
-| `hub/` | 13 | HubScreen, LocationHeader, HeatGauge, IncidentTracker, SignalFeedPanel, NpcRelationshipCard, HubNotificationList, PinnedAlertStack, WorldDeltaSummaryCard, ResolveOutcomeBanner, DiceFace, TimePhaseIndicator, TimePhaseTransition |
-| `location/` | 3 | LocationImage, TurnResultBanner, LocationToastLayer |
-| `screens/` | 4 | StartScreen, EndingScreen, RunEndScreen, NodeTransitionScreen |
+| `hub/` | 9 | HeatGauge, PackMeterGauge, TimePhaseIndicator, TimePhaseTransition, LocationHeader, ResolveOutcomeBanner(+backup), DiceFace, Dice3D |
+| `location/` | 5 | LocationBackdrop(arch/93), TurnResultBanner, LocationToastLayer, DeadlineBanner, EquipmentDropToast |
+| `screens/` | 11 | StartScreen(+start-screen/ 하위 5), EndingScreen, RunEndScreen, NodeTransitionScreen, EndingsListScreen, JourneySummaryScreen |
 | `side-panel/` | 7 | SidePanel, CharacterTab, InventoryTab, EquipmentTab, NpcDossierTab, QuestTab, SetBonusDisplay |
-| `ui/` | 12 | ErrorBanner, LlmFailureModal, LlmSettingsModal, BugReportButton, BugReportModal, NewsModal, NetworkStatus, PageTransition, SplashScreen, StatTooltip, InstallPrompt, PortraitCropModal |
-| `layout/` | 2 | Header (자동 숨김), MobileBottomNav (햄버거 메뉴) |
-| `battle/` | 1 | BattlePanel |
-| `party/` | 11 | PartyMainScreen, PartyHUD, PartyLobby, PartyMemberCard, PartyCreateModal, PartyJoinModal, PartyChatWindow, PartyChatInput, PartyTurnStatus, VoteModal, LootDistribution |
+| `ui/` | 13 | ErrorBanner, LlmFailureModal, LlmSettingsModal, BugReportButton, BugReportModal, NewsModal, NetworkStatus, PageTransition, SplashScreen, StatTooltip, InstallPrompt, PortraitCropModal, PointsModal(arch/85) |
+| `layout/` | 1 | Header (데스크톱 HUD + 모바일 MobileHeader 햄버거 탭 메뉴, 자동 숨김) |
+| `battle/` | 4 | BattlePanel, EnemyCard, CombatActionBar, CombatItemPickerModal |
+| `party/` | 12 | PartyMainScreen, PartyHUD, PartyLobby, PartyMemberCard, PartyCreateModal, PartyJoinModal, PartyChatWindow, PartyChatInput, PartyTurnStatus, VoteModal, LobbyLoadoutPicker(2026-08-07 로비 배경 선택), LootDistribution |
+| `brand/` | 1 | DimtaleLogoAnimated |
 
 ## 게임 Phase (Client State Machine)
 
@@ -180,7 +183,7 @@ GET  /v1/runs/:runId/turns/:turnNo/stream  // SSE (LLM 스트리밍)
 
 ## 작업 시 주의
 
-- `game-store.ts`가 1,862줄로 매우 큼 — 수정 전 해당 영역 Read 필수
+- `game-store.ts`가 1,258줄 (+ game-store.helpers.ts) — 수정 전 해당 영역 Read 필수
 - `StreamTyper` 수정 시 onComplete 멱등성 가드 유지 (제거 금지)
 - 폰트 통일 원칙: 타이핑 중/완료 동일 폰트, 동일 line-height
 - 클라이언트 시작: `cd client && pnpm dev -- --port 3001` (기존 :3001 정리 후)

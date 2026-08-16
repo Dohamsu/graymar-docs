@@ -20,17 +20,18 @@
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | Gemma 4 26B MoE (메인) / GPT-4.1 Mini (fallback) / Gemini | OpenRouter Multi-provider |
+| LLM | Gemma 4 31B dense (메인) + gpt-5.6-luna (5:5 교차) / GPT-4.1 Mini (fallback) / gpt-4.1-nano (경량) | OpenRouter Multi-provider |
 
 ## Project Structure
 
 ```
-├── server/              ← NestJS 백엔드 (12 modules, 95 services, 22 tables)
-├── client/              ← Next.js 16 프론트엔드 (60+ components, 5 stores)
-├── content/             ← 게임 콘텐츠 시드 데이터 (24 JSON, 43 NPC, 7 locations, 123 events)
+├── server/              ← NestJS 백엔드 (16 modules, 117 services, 27 tables)
+├── client/              ← Next.js 16 프론트엔드 (71 components, 7 stores)
+├── admin/               ← 어드민 콘솔 (독립 레포 graymar-admin, Vercel 별도 배포)
+├── content/             ← 게임 콘텐츠 시드 데이터 (4팩: graymar_v1 / silverdeen_v1 / star_sand_v1 / karnholt_v1)
 ├── specs/               ← 상세 설계 스펙 (17 md)
-├── architecture/        ← 통합 아키텍처 문서 (40+ md + INDEX)
-├── guides/              ← 코드 구현 지침 (8 md)
+├── architecture/        ← 통합 아키텍처 문서 (91 md + INDEX)
+├── guides/              ← 코드 구현 지침 (14 md)
 ├── schema/              ← DB 스키마, JSON Schema, OpenAPI
 ├── samples/             ← 샘플 페이로드 (JSON)
 ├── scripts/             ← 자동화 스크립트 (playtest, e2e, audit_quality)
@@ -73,6 +74,17 @@ pnpm dev -- --port 3001       # http://localhost:3001
 HUB (도시 거점) → 7 LOCATION 탐험 → COMBAT (턴제 전투) → HUB (순환)
 ```
 
+### 시나리오 팩 4종
+
+| 팩 | 성격 |
+|----|------|
+| graymar_v1 | 정본 시나리오 — 항만 도시 그레이마르 정치 음모 |
+| silverdeen_v1 | 미니 팩 (멀티 시나리오 디커플링 검증) |
+| star_sand_v1 | 별빛모래 — 사막 여관 무대 |
+| karnholt_v1 | AUTONOMOUS — 진상 선확정 디렉터 모드 자율 서사 팩 |
+
+아래 프리셋·장소·NPC 수치는 정본 팩 graymar_v1 기준이다 (팩별 상이).
+
 ### 캐릭터 프리셋 6종
 
 | ID | 이름 | 컨셉 |
@@ -97,7 +109,7 @@ HUB (도시 거점) → 7 LOCATION 탐험 → COMBAT (턴제 전투) → HUB (�
 
 ### 캐릭터 생성
 
-이름 입력 → 프리셋 선택 → 특성 선택 → 보너스 스탯 +6 배분 → AI 초상화 생성 (Gemini)
+2단계 (배경 선택 → 마무리) — 스탯 +6은 프리셋에 내장, 특성은 `preset.defaultTraitId` 자동 부여 (arch/97). AI 초상화 생성/업로드 선택 가능.
 
 ### 7개 탐험 장소
 
@@ -141,32 +153,41 @@ NanoDirector → Stage A(서술 LLM) → dialogue_slot → Stage B(대사 LLM) �
 | LLM 스트리밍 | OpenRouter stream:true + SSE + 2-Phase 렌더링 |
 | 엔딩 연출 | Part B MIN_TURNS 가드 + arcRoute 12분기 에필로그 + personalClosing + DeadlineBanner |
 | 여정 아카이브 | ending_summary 캐시 + EndingsListScreen + JourneySummaryScreen 양피지 스타일 |
+| 포인트 시스템 | 채팅 1턴 = 5p 종량제 (충전 코드 → 차감, 실패 턴 환불, 가입 보너스 50p) — arch/85 |
+| 파티 던전 | 파티 CRUD + SSE 실시간 채팅 + 동시 턴 제출·통합 판정 + 투표·보상 분배 — arch/24·84 |
+| 장면 컷 시스템 | 사전 제작 태그 이미지를 서술 태그 매칭(nano confidence)으로 인라인 삽입 — arch/96 |
+| 어드민 콘솔 | 관제 API 15종 + AdminGuard 하이브리드 인증 + 감사 로그, 별도 레포/배포 — arch/87 |
+| 자율 서사 팩 | Plot Seed 선확정 + 비트 선계산·의도 정합 채택 디렉터 (karnholt_v1 AUTONOMOUS) — arch/75 |
 
-## API Endpoints
+## API Endpoints (주요 — 전체 82 routes)
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| POST | `/v1/auth/register` | 회원가입 |
+| POST | `/v1/auth/register` | 회원가입 (가입 보너스 포인트) |
 | POST | `/v1/auth/login` | 로그인 → JWT |
-| POST | `/v1/runs` | 새 RUN 생성 |
+| GET | `/v1/scenarios` | 시나리오(팩) 목록 + creation-bundle |
+| POST | `/v1/runs` | 새 RUN 생성 (presetId, gender, scenarioId) |
 | GET | `/v1/runs` | 활성 RUN 조회 |
 | GET | `/v1/runs/:runId` | RUN 상태 조회 |
 | POST | `/v1/runs/:runId/turns` | 턴 제출 |
 | GET | `/v1/runs/:runId/turns/:turnNo` | 턴 상세 (LLM 폴링) |
-| POST | `/v1/runs/:runId/turns/:turnNo/retry-llm` | LLM 재시도 |
+| GET | `/v1/runs/:runId/turns/:turnNo/stream` | SSE 서술 스트리밍 |
+| POST | `/v1/runs/:runId/turns/:turnNo/retry-llm` | LLM 재시도 (무료) |
 | GET | `/v1/settings/llm` | LLM 설정 조회 |
-| PATCH | `/v1/settings/llm` | LLM 설정 변경 |
-| POST | `/v1/bug-reports` | 버그 리포트 생성 |
-| GET | `/v1/bug-reports` | 버그 리포트 목록 |
-| GET | `/v1/bug-reports/:id` | 버그 리포트 상세 |
-| PATCH | `/v1/bug-reports/:id` | 버그 리포트 상태 변경 |
+| PATCH | `/v1/settings/llm` | LLM 설정 변경 (admin) |
+| POST | `/v1/runs/:runId/bug-report` | 버그 리포트 생성 (인게임) |
+| GET | `/v1/bug-reports` | 버그 리포트 목록 (admin) |
 | POST | `/v1/portrait/generate` | AI 초상화 생성 |
 | GET | `/v1/version` | 서버 버전 조회 |
+| GET | `/v1/stats/public` | 공개 통계 (무인증) |
 | GET | `/v1/endings` | 완료된 엔딩 요약 목록 (여정 아카이브) |
 | GET | `/v1/endings/:runId` | 특정 엔딩 상세 (JourneySummary) |
-| POST | `/v1/runs/:runId/items/equip` | 장비 장착 (슬롯 자동 배치) |
-| POST | `/v1/runs/:runId/items/unequip` | 장비 해제 |
-| POST | `/v1/runs/:runId/items/use` | 소모품 사용 (HEAL_HP / RESTORE_STAMINA) |
+| POST | `/v1/runs/:runId/equip` | 장비 장착 (슬롯 자동 배치) |
+| POST | `/v1/runs/:runId/unequip` | 장비 해제 |
+| POST | `/v1/runs/:runId/use-item` | 소모품 사용 (HEAL_HP / RESTORE_STAMINA) |
+| GET | `/v1/points/balance` | 포인트 잔액 · `/redeem` 충전 코드 사용 |
+| POST | `/v1/parties` | 파티 생성 (+ 채팅/로비/투표/파티 턴 21 routes) |
+| GET | `/v1/admin/stats/overview` | 어드민 관제 (users/runs/llm/health 15 routes) |
 
 ## Design Invariants
 
@@ -177,7 +198,7 @@ NanoDirector → Stage A(서술 LLM) → dialogue_slot → Stage B(대사 LLM) �
 5. **Theme memory (L0) 불변** — 토큰 예산 압박에도 삭제 금지
 6. **Action slot cap = 3** — Base 2 + Bonus 1
 7. **HUB Heat +-8 clamp** — 한 턴에 Heat 변동 제한
-8. **Token Budget 2500** — 블록별 예산 배분
+8. **Token Budget 2단** — 메모리 블록 2500 tok + 프롬프트 총량 백스톱 16,500자
 9. **Procedural Plot Protection** — 동적 이벤트에 arcRouteTag/commitmentDelta 불포함
 10. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns >= 15
 
@@ -186,8 +207,8 @@ NanoDirector → Stage A(서술 LLM) → dialogue_slot → Stage B(대사 LLM) �
 | 폴더 | 내용 |
 |------|------|
 | `specs/` | 전투, 노드, LLM, API 등 상세 스펙 17편 |
-| `architecture/` | 통합 아키텍처 문서 40+ 편 + `INDEX.md` 도메인 색인 |
-| `guides/` | 서버 모듈맵, 클라이언트 컴포넌트맵, HUB 엔진 가이드 등 8편 |
+| `architecture/` | 통합 아키텍처 문서 91편 + `INDEX.md` 도메인 색인 (archive 4편) |
+| `guides/` | 서버 모듈맵, 클라이언트 컴포넌트맵, HUB 엔진 가이드, 팩 에셋·장면 컷 프롬프트 등 14편 |
 | `CLAUDE.md` | 프로젝트 작업 가이드라인 + LLM 설계 원칙 + 40+ Invariant |
 | `portfolio.md` | 프로젝트 포트폴리오 (기술 하이라이트·아키텍처·회고) |
 

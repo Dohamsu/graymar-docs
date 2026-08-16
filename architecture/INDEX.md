@@ -49,6 +49,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/77_god_method_refactoring|god method refactoring]] — 대형 파일 구조 개선(✅ 전 Phase 완료 2026-07-18). P1 prompt-builder -62% · P2 context-builder -64% · P3 turns.service Inner -56% · P4 llm-worker Inner -50%(금지선 4곳 마킹) · 전투/DAG -41%(골드 무바닥 수정) · P5 클라 3파일 -26~-45%. 매 스텝 유닛 green + playtest/E2E 게이트, 회귀 0. §9 진행 로그가 정본. 잔여: §5 재비대화 래칫(ESLint max-lines warn)만.
 - [[architecture/10_region_economy|region economy]] — 리전별 경제(골드 유동성, 상점 물가)와 장비/세트 연계. 장비 드랍은 완성, 리전별 동적 경제는 부분.
 - [[architecture/87_admin_console|admin console]] — ✅ 구현됨(2026-07-23). 어드민 콘솔: 서버 `admin/` 모듈 관제 API 12종(overview KPI·llm-cost·points 시계열·유저 조정·런 스턱/abort/retry·failures·health) + 하이브리드 AdminGuard(x-admin-token OR JWT+users.role) + `@AdminEndpoint` 정본(가드+감사 로그 `admin_audit_logs`) + 별도 앱 graymar-admin(4번째 레포·Vercel). **보안 결함 2건 봉쇄**: settings/llm PATCH·bug-reports 목록/상세/PATCH 가 일반 유저에게 열려 있었다. QA 함정은 §9(raw SQL timestamp 문자열·llmError jsonb 렌더·빈 쿼리 422).
+- [[architecture/85_point_system|point system]] — ✅ 구현·배포됨(2026-07-23). 포인트 시스템: 충전 코드 발급(`POST /v1/admin/codes`)→redeem→채팅 1턴 `POINTS_PER_CHAT`(5p) 차감. 차감은 디스패치 직전·실패 턴 환불 2경로(`retry-llm` 무료)·가입 보너스 50p. 클라 잔액 표시·충전 모달·402 유도. 채팅 과금 정식 모델(2026-07-23 결정, CLAUDE.md 과금 원칙)의 구현체 — server `points/` 모듈 + DB 4종.
+- [[architecture/102_location_image_content_pool|location image content pool]] — ✅ 구현됨(2026-08-14). 이미지 정본 단일화: 100% 클라 하드코딩이던 장소 이미지 매핑을 팩 콘텐츠 `location_images.json` 으로 승격(불변식 45 정합 — 파일·URL 은 불변, 메타데이터만 이동). 이로써 장면 컷(96) 장소 후보가 graymar·star_sand 에서 영구 0이던 결함과 미등록 신규 팩의 조용한 graymar 폴백 구멍을 봉쇄. **2차 E-1~E-3(같은 날)**: NPC 초상화 정적 맵을 `npcs.json portraitUrl` 로 외부화(클라 미러 맵 삭제, karnholt 동적 NPC 도감 얼굴 획득) + 마커 와이어 포맷 `@[표시명|URL]`→`@[표시명|npcId]` 전환(혼재 허용, portraitMap 전달 3채널 — URL 오염 404·과거 턴 박제의 근원 제거) + 장소 이미지 URL 서버 이관(`ui.worldState.locationImageUrl`, 클라는 fallback). karnholt 는 arch/80 sync 매니페스트 경로 유지.
 
 ### 4. 진행·라우팅
 
@@ -85,6 +87,8 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/59_fact_dialogue_followup_plan|fact dialogue followup plan]] — 58 검증 실측 3건 수정: 판정 NPC = 서술 NPC 정합(부분 이름 매칭) + [단서 방향] nextHint ui 전달 복구 + HINT_MODES off-by-one. ✅ 구현됨.
 - [[architecture/60_clue_flow_tuning|clue flow tuning]] — 흐름 점검 4건: LLM 워커 runState lost update 해소(P0, fresh 부분 패치) + 주제 불일치 fallback 금지(인계 양보) + [단서 방향] 공개 턴 이월 + 비주제 공개 확률 게이트. ✅ 구현됨.
 - [[architecture/61_choice_recommendation_tuning|choice recommendation tuning]] — 선택지 추천 점검 P1~P6: nano 미리보기 머리150+꼬리350(끝 NPC 질문 반영) + dialogueAct 전달(작별 턴 자기모순 차단) + 직전 라벨 반복 금지 + go_hub 라벨-결과 정합 + modifier/hint 복원 + "~한다" 문체 통일. ✅ 구현됨 (2026-07-09).
+- [[architecture/98_choice_quality_improvement|choice quality improvement]] — ✅ 구현됨(2026-08-04~05, 61 후속). 선택지 품질 개선: 실유저 14일 503개 표본 점검 → P0 ChoiceNpcIdNorm(`choices[].npcId` 무검증으로 초상화 URL·"null"·slug 유출 2.1% — 정규화 코어 + 라벨 ID 토큰 치환, 회귀로 검증 목록 presentNpcs→knownNpcs 확장) + P1 적극 축 positive 주입(TALK/OBSERVE/INVESTIGATE 91% 편중 — 서버가 매 턴 PERSUADE·TRADE·HELP 등 1축 선정·확률 게이트 65%·최근 2축 회전, 적극 2%→25%) + P2 질문-응답 보장(`[NPC의 질문]` 명시 주입 — 기계 교체 대신 계측 감시, 질문 종결 턴 92% 미준수이던 것 해소) + P3 BRIBE 쿨다운(동일 NPC 2턴 휴지 — 최장 5턴 연속 노출 해소) + P4 라벨 폴리싱 + V13 센서. **§11**: 런 단위 게이트가 표본 노이즈(런당 선택지 27~36개 = 1개 3%p)를 신호로 읽던 것을 최근 3런 원시 카운트 풀링(`append_gate_ledger`)으로 전환 + 게이트 정의 `적극 ≥15%` 단일 임계 정정(2026-08-10 — 병기된 소극 ≤80% 조건이 사실상 ≥20% 로 붕괴하던 자기모순 제거).
+- [[architecture/100_competitor_prompt_analysis|competitor prompt analysis]] — 📎 분석. 타 텍스트게임(천하만리행) CoT 노출분에서 역추론한 프롬프트 구조·서술 기법 — 5단계 사고 파이프라인, 대비축 중심 묘사, 심리 단계 분해. 이식 가능 2건(Narrator quotes·대비축), 결정 대기 2건(문체 샘플 앵커 ↔ 불변식 41·42 / 문단 순서 ↔ 프롬프트 예산), 기각 권고 1건(시점 변경). 상태 갱신을 LLM 에 위임하는 그쪽 방식은 불변식 1·2와 상충 — 이식 대상이 아니라 차별점으로 유지.
 - [[architecture/62_latency_optimization|latency optimization]] — LLM 턴 레이턴시 최적화 4건: Track1∥NpcReaction 병렬 + Challenge∥이벤트매칭 병렬 + 워커 즉시 킥(wake) + 첫 토큰 타임아웃(LLM_FIRST_TOKEN_TIMEOUT_MS→non-stream fallback). 부록 A: OpenRouter provider sort/ignore. 병목은 nano 직렬 체인. ✅ 구현됨 (2026-07-09).
 - [[architecture/78_narrative_opener_pronoun_cycle|narrative opener pronoun cycle]] — 서술 개시어·대명사 편중 억제: D5 센서 + 임계 3→2 + 대명사 12종 합산(1차 -20.2%) + **2차 [서술 지칭 규칙] 디렉티브**(대화 턴 상시·주어 생략 기본·별칭 문단 1회 — 풍선효과 방어 3반복 튜닝). 대화 턴 29~35%→18.8% (chatty 10.0%, devotee 단일 NPC 잠금은 잔존 — 후처리 옵션만 남음). 즉흥 별칭 가설 실측 기각. ✅ 2차까지 완료 (2026-07-19).
 - [[architecture/79_prompt_token_optimization|prompt token optimization]] — ✅ P3~P4 완료. 측정 기반 프롬프트 예산: P1 회고 1,556턴(hard 규칙 15k 강건/soft 문체 11k 절벽) → 예산 10k → 실행 4파트(재시도 스킵 16.5%→0 · 시스템 -62% · NPC 클러스터 압축 · 총량 백스톱 16,000자). 최종 avg 7,495tok(-31%)·절벽 턴 0%·게이트 7런 10/10·회귀 0. 대화 턴 대명사 기저는 크기 무관 확정(교란 재해석 §9.1) — arch/78 백로그 이관 (2026-07-19). **§10 2·3차 재압축(2026-07-27~28)**: 3주 재비대(발동 35%·[NPC 일상] 상시 삭제) → 압축 13종+백스톱 순서 교체+상한 16,500자+V12 재비대 게이트 — 발동 8%·D 삭제 0건·시스템 5,542자.
@@ -112,6 +116,12 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/94_mobile_scroll_viewport|mobile scroll viewport]] — 모바일 스크롤·뷰포트 정합 (2026-07-27). 헤드리스 4뷰포트 실런 점검 → 11종 수정: 서술 스크롤 follow 모델(제스처 우선·프로그램 스크롤 창 구분·터치 중 중단), `overscroll-contain` 전면(Android 당겨서 새로고침 차단), 타이틀/로그인 스크롤 구조 전환, 모달 16곳 2패턴, `MOBILE_HEADER_OFFSET` 단일 정본(고정 헤더 81px+safe-area), safe-area 커버리지. 규약 5종은 §5.
 
+- [[architecture/86_pack_parity_mobile_ux|pack parity mobile ux]] — ✅ 구현됨(2026-07-23). 비-graymar 팩 정합 + 모바일 UX 마감: 팩 스코프 누락(enterScenario)으로 별빛모래 런이 고유 아이템을 못 쓰던 결함 + 팩 프리셋 초상화 미표시(PRESET_PORTRAITS 통합맵) + 아이템 3층 프로세스 정식화(서버 items.json·클라 ITEM_CATALOG·이미지 — guides/10 부록이 정본) + 모바일 서술 스크롤 `min-h-0` 회귀 수정.
+
+- [[architecture/97_creation_simplification|creation simplification]] — ✅ 구현됨(2026-08-04, 설계 당일 확정·즉시 구현). 캐릭터 생성 간략화 — 배경 1택 체제: 6단계(출신→초상→이름→스탯→특성→확인)를 **2단계(배경 선택 → 마무리 `CHARACTER_FINISH`)** 로 축소. 스탯 +6 은 4팩 22프리셋 `stats` 에 상수 내장(밸런스 중립), 특성은 `preset.defaultTraitId` 를 createRun 이 자동 부여(전송 traitId 우선), `bonusStats` 는 deprecated optional(불변식 31 개정 — 전송 시에만 합계 6 검증). StartScreen -437줄. 파티 로비 배경 선택(신규 유저 파티 시작 불가 백로그 해소, 2026-08-07)의 전제.
+
+- [[architecture/99_quest_tab_effectiveness|quest tab effectiveness]] — ✅ 구현됨(2026-08-05). 퀘스트탭 실효성 개선: 데이터 연결 전수 점검으로 결함 5건 — "활성 목표" 섹션이 호출처 0의 도달 불능 데드코드(D1), HUB 턴에 quest UI 번들 미부착이라 정작 노선 확정(arc_commit) 직후 탭이 스테일(D2), "현재 상황" 요약 완전 중복(D3), 팩 격차(AUTONOMOUS karnholt 에 무의미한 D-14 시한·"노선 미정" 영구 노출, D4), 발견성 부재(D5). P1 `attachQuestUiBundle` HUB 4경로 부착 + `hasArcCommit` 게이팅 신호 / P2 죽은 섹션 제거 + 노선·시한 팩 게이팅 / P3 단서 발견·단계 전환 시 퀘스트 탭 점 배지(데스크톱 SidePanel + 모바일 햄버거).
+
 ### 7. 멀티플레이
 
 - [[architecture/24_multiplayer_party_system|multiplayer party system]] — 파티 Phase 1+2+3 통합 설계(CRUD/초대/SSE 채팅/로비/동시 턴/통합 판정/3인칭 서술/이동 투표/보상 분배/런 통합). 구현 API는 CLAUDE.md Endpoint 표와 server `party/` 모듈 참조.
@@ -124,6 +134,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 ### 9. 소지품·아이템
 
+- [[architecture/12_equipment_system|equipment system]] — ✅ 구현됨. 장비 시스템 정본: 드랍/착용/해제, 접미사, 세트효과, Legendary. 리전 경제 연계는 [[architecture/10_region_economy|region economy]] 참조(부분 구현).
 - [[architecture/40_inventory_item_integrity|inventory item integrity]] — 소지품 UX 개선(교체 확인 모달, USABLE_ITEMS 동적화 via `usableInHub`, EquipmentDropToast, 에러 한국어화 10종) + LLM-실획득 아이템 정합성(시스템 프롬프트 구체 증여 금지 규칙 + `[이번 턴 획득 아이템]` 블록 + `EventItemReward` payload 경로) + 콘텐츠 매핑(KEY_ITEM 3종 + 희귀 장비 2종).
 
 ### 10. 기타
@@ -133,6 +144,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/fixplan_history|fixplan history]] — 완료된 플레이테스트 패치 내역(기존 `fixplan3/4/5` 통합). 히스토리 참조용이며, 신규 이슈는 본 히스토리와 중복되지 않도록 확인 필요.
 - [[architecture/76_market_alignment_direction|market alignment direction]] — 시장 조사 대응 방향: AI 텍스트 RPG 이용자 긍/부정 요인 ↔ 현 구조 대조 + D1(의도 존중 가드=불변식 47)·D2(판정 투명성 UI)·D3(actionType 탈버킷+감정 행동화)·D4(반복 계측)·D5(과금 3원칙) ✅ 구현. 잔여는 D6(저작 도구)뿐. §5 진행 체크리스트.
 - [[architecture/36_llm_pipeline_changelog_20260417|llm pipeline changelog 20260417]] — 📜 이력. 2026-04-17 LLM 파이프라인·렌더링·품질 수정 Before/After 정리.
+- [[architecture/101_selfcheck_loop|selfcheck loop]] — ✅ 구현됨(2026-08-12, `scripts/selfcheck/` — 문서 상단 "설계 미구현" 표기는 설계 시점 스테일, 커밋 0f153b4·957c13f 로 5족 구현 + 회차 수행). 자기개선 하네스 루프: 플레이테스트·유닛·게이트를 전부 통과한 채 "조용히 꺼진" 결함 7건(키 불일치·사문 배선·도달 불능 임계·대사 소실 등) 실증에서 역설계 — **코드·문서·DB 3소스 교차 대조** 디텍터 5족(A 불변식 감시 / B 배선 감사 / C 파이프라인 손실 / D 도달성 / E 콘텐츠 정합) + 검증 사다리(정적 대조 → 과거 원문 재생 → 단기 런, 런은 회차당 5회 예산·배정 게이트) + 오탐 통제(분모 없는 판정 금지·baseline `expires` 유예). 배포 게이트로는 쓰지 않는다 — 확정·회귀 테스트 붙은 항목만 V0~V13 에 개별 승격.
 
 ---
 
@@ -164,7 +176,14 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
     ├─► 32 (대사 분리)
     ├─► 33 (로어북)
     └─► 34 (Player-First 이벤트)
+61 (선택지 튜닝) ─► 98 (선택지 품질 — 적극 축·질문 응답·V13 누적 게이트)
 archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
+
+[에셋·이미지]
+80 (팩 에셋 풀) ─► 96 (장면 컷) ─► 102 (이미지 정본 단일화 — 콘텐츠 승격·마커 npcId)
+
+[품질 하네스]
+101 (selfcheck 3소스 정합 감사) ─► scripts/selfcheck/ (게이트 V0~V13 과 상보 — 실행 검증이 못 잡는 사문 배선 담당)
 
 [UI]
 15 (알림)   ─► guides/02 (client component map)
@@ -176,7 +195,7 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-07-27)
+## 도메인별 최신 업데이트 기준 (2026-08-14)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
@@ -184,14 +203,14 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 전투         | 02, 08, **41, 42**                 | 구현됨 (창의 Tier + 버튼 UI + arch/76 전투 기만) |
 | HUB/진행     | 03, 07, 14, **70, 71, 92**         | 구현됨 (07 부분 업데이트 필요, 캠페인은 71이 정본, 거점 명명은 92) |
 | Living World | 21                                 | 구현됨              |
-| 서버/데이터  | 04, 10, 12, **77, 87**             | 구현됨 (10 리전 경제 부분, 77 God method 완료, 87 어드민 콘솔·보안 게이트) |
+| 서버/데이터  | 04, 10, 12, **77, 85, 87, 102**    | 구현됨 (10 리전 경제 부분, 77 God method 완료, 85 포인트, 87 어드민 콘솔, 102 이미지 정본 단일화) |
 | LLM 서술     | 05, 11, 26, 35, **62**             | 구현됨 (스트리밍 + 레이턴시 최적화) |
 | 모델 평가    | 25                                 | 참고                |
 | 메모리       | 31                                 | 구현됨 (v4)         |
-| 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝 + nano 감사) |
+| 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67, 98** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝·품질(98) + nano 감사) |
 | 이벤트 엔진  | 34, **43, 46**                     | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체, 28은 archive 배경) |
 | NPC 결정/품질 | **48, 49, 51, 47, 55, 72**        | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭 + 반응 권한 통합, 50은 폐기) |
-| UI/클라      | 15, 23, **42, 68, 90, 93, 94**     | 구현됨 (UI/UX 실사 리뷰 + 랜딩 리디자인 + 장소 배경 + 모바일 스크롤 정합) |
+| UI/클라      | 15, 23, **42, 68, 86, 90, 93, 94, 97, 99** | 구현됨 (UI/UX 실사 리뷰 + 팩 정합·모바일 + 랜딩 + 장소 배경 + 스크롤 정합 + 생성 간략화(97) + 퀘스트탭(99)) |
 | 파티         | 24, **84**                         | 구현됨 (Phase 1~3 + 클라 배선 완성) |
 | 주사위/UX    | 22                                 | 구현됨              |
 | 엔딩/아카이브 | 39, **88**                        | 구현됨 (Phase 1 + arc 커밋 동선 복구) |
@@ -200,6 +219,8 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 자율 서사    | **74(논의), 75(설계·P0~P8)**       | 구현됨·프로덕션 (karnholt_v1, P7/P8 후속 대기) |
 | 시장 대응    | **76**                             | 구현됨 (D6 저작 도구만 잔여) |
 | 컨텍스트 일관성 | Context Coherence Reinforcement | 적용됨              |
+| 자기점검 하네스 | **101**                          | 구현됨 (3소스 정합 감사 scripts/selfcheck/, 게이트와 상보) |
+| 경쟁 분석    | **100**                            | 분석 (이식 2·대기 2·기각 1) |
 | 플레이테스트 | fixplan_history                    | 히스토리            |
 
 ---
@@ -217,7 +238,8 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
   · `archive/37_streaming_transition_issues.md` — 36과 중복
   · `archive/38_stream_vs_nonstream_comparison.md` — 35와 중복
 - 폐기됨(이미 파일 없음): `specs/combat_resolve_engine_v1.md` — floor 미적용 오류 버전. 정본은 [[specs/combat_system|combat system]] + [[architecture/02_combat_system|combat system]].
-- 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(78~)를 사용.
+- 번호 공백(13, 27, 28, 29, 37, 38, 52~54 등)은 합쳐졌거나 아카이브된 문서의 흔적 — 신규 문서는 빈 번호 대신 마지막 번호 이후(103~)를 사용.
+- [[architecture/101_selfcheck_loop|selfcheck loop]] 문서 상단 상태 표기("📎 설계 미구현 · 결정 대기 3건")는 설계 시점 스테일 — 실제는 `scripts/selfcheck/` 5족 디텍터 구현 + 회차 수행 완료 (커밋 0f153b4·957c13f, ledger.jsonl 기록).
 - **57번 문서 부재**: server 코드/커밋(`focused 모드 보조 NPC strip`, `익명 배경 인물 신원 hard 차단`)이 `architecture/57`을 참조하나 문서 파일이 레포에 없음 — 작성 필요.
 
 ---
@@ -243,5 +265,4 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 파티 기능                | [[architecture/24_multiplayer_party_system|multiplayer party system]] → server `party/` 모듈                    |
 | 포인트/과금 (소프트 베타) | [[architecture/85_point_system|point system]] → server `points/` 모듈 + `turns.chargeKey`                     |
 | 플레이테스트 이슈 회귀   | [[architecture/fixplan_history|fixplan history]] (중복 확인)                                           |
-
-- **100. 경쟁 프롬프트 분석** — 타 텍스트게임(`천하만리행`) CoT 노출분에서 역추론한 프롬프트 구조·서술 기법. 5단계 사고 파이프라인, 대비축 중심 묘사, 심리 단계 분해. 이식 가능 2건(Narrator quotes·대비축), 결정 대기 2건(문체 샘플 앵커 ↔ 불변식 41·42 / 문단 순서 ↔ 프롬프트 예산), 기각 권고 1건(시점 변경). 상태 갱신을 LLM에 위임하는 그쪽 방식은 불변식 1·2와 상충 — 이식 대상이 아니라 차별점으로 유지.
+| 정합 감사(코드·문서·DB)  | [[architecture/101_selfcheck_loop|selfcheck loop]] → `scripts/selfcheck/`                              |

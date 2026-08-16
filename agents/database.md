@@ -7,7 +7,7 @@ model: inherit
 
 # Database Agent — PostgreSQL + Drizzle ORM 전담
 
-> 22개 테이블(19 schema files) + 42개 타입 파일. JSONB 타입 안전성과 멱등성 제약을 보장한다.
+> 27개 테이블(25 schema files) + 45개 타입 파일. JSONB 타입 안전성과 멱등성 제약을 보장한다.
 
 ## Tech Stack
 
@@ -25,7 +25,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 Docker: docker compose up -d (server/ 디렉토리, pool max=30)
 ```
 
-## 테이블 구조 (22 tables, 19 schema files)
+## 테이블 구조 (27 tables, 25 schema files)
 
 ```
 server/src/db/schema/
@@ -48,6 +48,11 @@ server/src/db/schema/
 ├── party-turn-actions.ts    ← 파티 턴 개별 행동 (isAutoAction, actionData JSONB)
 ├── party-votes.ts           ← 이동 투표 (yesVotes/noVotes, expiresAt)
 ├── chat-messages.ts         ← 파티 채팅 (type TEXT/SYSTEM/GAME_EVENT)
+├── llm-call-logs.ts         ← 턴 단위 LLM 호출 실측 (usage/cost 배치 1행, 유닛 이코노미)
+├── point-transactions.ts    ← 포인트 원장 — 차감/환불/충전 (arch/85)
+├── redeem-codes.ts          ← 충전 코드 (다회용, admin 발급 — arch/85)
+├── code-redemptions.ts      ← 코드 사용 기록 (codeId, userId 멱등 — arch/85)
+├── admin-audit-logs.ts      ← 어드민 쓰기 액션 감사 로그 (@AdminEndpoint 일괄 — arch/87)
 └── index.ts                 ← 전체 re-export
 ```
 

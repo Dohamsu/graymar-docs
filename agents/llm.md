@@ -14,17 +14,17 @@ model: inherit
 
 | 기술 | 용도 |
 |------|------|
-| OpenRouter (OpenAI-compatible) | 메인 LLM 호출 (Gemini 2.5 Flash) |
+| OpenRouter (OpenAI-compatible) | 메인 LLM 호출 (Gemma 4 31B dense ⇄ gpt-5.6-luna 5:5 교차 — arch/25 부록 E) |
 | GPT-4.1 Mini | Fallback 모델 |
 | GPT-4.1-nano | 경량 보조 (NanoDirector, NanoEventDirector, FactExtractor, DialogueMarker) |
 | SSE (Server-Sent Events) | 실시간 스트리밍 |
 
-## LLM 모듈 구조 (18 services, 4 providers)
+## LLM 모듈 구조 (24 services, 4 providers + registry)
 
 ```
 server/src/llm/
-├── llm-worker.service.ts          ← 105K. 메인 서술 생성 오케스트레이터 (DB Polling, BullMQ 아님)
-├── context-builder.service.ts     ← 76K. LLM 컨텍스트 조립 (L0~L4 + 선별 주입)
+├── llm-worker.service.ts          ← 5,947줄. 메인 서술 생성 오케스트레이터 (DB Polling, BullMQ 아님)
+├── context-builder.service.ts     ← 3,092줄. LLM 컨텍스트 조립 (L0~L4 + 선별 주입)
 ├── prompts/
 │   ├── prompt-builder.service.ts  ← 시스템/유저 프롬프트 생성
 │   ├── system-prompts.ts          ← 시스템 프롬프트 템플릿
@@ -43,6 +43,13 @@ server/src/llm/
 ├── llm-config.service.ts          ← 런타임 설정 (provider, model, temperature)
 ├── llm-stream-broker.service.ts   ← SSE 브로커 (턴별 스트림 관리)
 ├── ai-turn-log.service.ts         ← 턴별 LLM 호출 로그/비용 추적
+├── llm-call-log.service.ts        ← 턴 단위 호출 실측 배치 기록 (llm_call_logs, turn-context ALS 연동)
+├── npc-reaction-director.service.ts ← nano 사전결정: NPC 반응 7종 + 즉시목표 + 추상 톤 3축 (A56)
+├── challenge-classifier.service.ts  ← 자유 행동 주사위 스킵 판정 — 룰 게이트 + 회색지대 nano (FREE/CHECK)
+├── theme-classifier.service.ts    ← NPC 대사 의미 테마 분류 (크로스 NPC 반복 해소, architecture/44)
+├── plot-director.service.ts       ← 자율 서사 비트 후보 nano 선계산 (AUTONOMOUS 전용, arch/75)
+├── plot-seed-generator.service.ts ← Plot Seed 진상 생성 + 검증/재롤 (createRun 백그라운드, arch/75)
+├── scene-cut-matcher.service.ts   ← 장면 컷 매칭 — 태그 풀 렉시컬 프리스크린 + nano confidence (arch/96)
 ├── providers/
 │   ├── openai.provider.ts         ← OpenAI/OpenRouter 프로바이더
 │   ├── claude.provider.ts         ← Anthropic Claude 프로바이더
@@ -177,8 +184,8 @@ server/src/llm/
 
 ## 작업 시 주의
 
-- `llm-worker.service.ts`가 **105K**(2,500줄+)로 가장 큼 — 수정 전 해당 영역만 Read
-- `context-builder.service.ts`가 **76K**(1,800줄+) — 블록 추가/수정 시 토큰 예산 영향 확인
+- `llm-worker.service.ts`가 **5,947줄**로 가장 큼 — 수정 전 해당 영역만 Read
+- `context-builder.service.ts`가 **3,092줄** — 블록 추가/수정 시 토큰 예산 영향 확인
 - 프롬프트 변경 시 **반드시 플레이테스트로 검증** — 프롬프트 미세 변경이 서술 품질에 큰 영향
 - 새 nano 호출 추가 시 레이턴시 영향 측정 (목표: 턴 응답 10초 미만)
 - provider 추가/변경 시 `llm-provider-registry.service.ts` 등록 확인
