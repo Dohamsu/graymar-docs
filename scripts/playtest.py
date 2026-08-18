@@ -606,6 +606,9 @@ for turn_i in range(MAX_TURNS):
         #   legacy actionType 필드는 항상 null 이므로 parsedType 이 정본이다
         #   (arch/100 §14 사문 배선 — 실측 확인).
         "parsedType": action_ctx.get("parsedType"),
+        # V14-b: 순수 사교 발화(GREETING/WELLBEING/THANKS/FAREWELL). 잡담 게이트는
+        #   actionType 이 TALK 이 아니어도 사교 발화면 허용하므로 함께 봐야 한다.
+        "dialogueAct": action_ctx.get("dialogueAct"),
         # V10 정밀화(2026-07-17): 분열은 이벤트 고유 선택지가 실제 노출됐을 때만
         # 플레이어 대면 — EventChoiceGate 폐기 턴을 FP로 세지 않기 위해
         # 이번 턴 응답(server_result)의 선택지 id를 기록
@@ -1402,10 +1405,15 @@ for t in turn_logs:
         continue
     _chat_turns += 1
     _act = t.get("parsedType") or ""
-    # 화이트리스트: TALK 또는 순수 사교 발화(프롬프트의 [대화 행위] 블록으로 근사)
-    _social = "[대화 행위]" in _txt and ("인사" in _txt or "안부" in _txt)
-    if _act != "TALK" and not _social:
-        _chat_violations.append((t.get("turn"), _act or "(없음)"))
+    # 화이트리스트: TALK 또는 순수 사교 발화(GREETING/WELLBEING).
+    #   [2026-08-18] 초판은 프롬프트에서 "[대화 행위]" 를 찾았으나 실제 블록은
+    #   "[대화 행위: 안부]" 처럼 콜론이 붙어 매칭이 **항상 실패**했다. 그 결과
+    #   "잘 지내셨어요?"(parsedType=PERSUADE · dialogueAct=WELLBEING) 같은
+    #   정상 허용 턴을 위반으로 오탐한다. ui.actionContext.dialogueAct 가
+    #   그대로 노출되므로 문자열 매칭 대신 필드를 직접 읽는다.
+    _dact = t.get("dialogueAct") or ""
+    if _act != "TALK" and _dact not in ("GREETING", "WELLBEING"):
+        _chat_violations.append((t.get("turn"), f"{_act or '(없음)'}/{_dact or '-'}"))
 
 # ── c) 연속 화자 구간의 선택지 다양성 ──
 _lock_choices, _lock_other = 0, 0
