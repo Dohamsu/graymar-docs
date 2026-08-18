@@ -24,7 +24,7 @@ main.ts → AppModule
 │   ├── schema/          ← 25 파일 / 27 pgTable (아래 참조)
 │   └── types/           ← TypeScript types (45 파일, 아래 참조)
 ├── content/             ← 게임 콘텐츠 로더 (멀티 팩)
-│   ├── content-loader.service  ← 팩별 JSON 로드 + ContentPackState 캐시 (graymar/silverdeen/karnholt)
+│   ├── content-loader.service  ← 팩별 JSON 로드 + ContentPackState 캐시 (graymar/star_sand/karnholt)
 │   ├── content.types            ← NpcDefinition.unknownAlias/shortAlias, NpcTier 포함
 │   ├── content.module
 │   ├── event-content.provider   ← 이벤트 콘텐츠 프로바이더

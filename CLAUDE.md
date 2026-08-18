@@ -179,7 +179,7 @@ LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 �
 ├── guides/              ← 코드 구현 지침 (14 md, 서비스맵/컴포넌트맵/구현가이드/팩 에셋·아이템·장면 컷·주사위 프롬프트)
 ├── schema/              ← DB 스키마, JSON Schema, OpenAPI (3 files)
 ├── samples/             ← 샘플 페이로드 (JSON, 10 files)
-├── content/             ← 게임 콘텐츠 시드 데이터 (graymar_v1 + silverdeen_v1 미니 팩 + star_sand_v1 별빛모래 + karnholt_v1 자율 서사 AUTONOMOUS 팩)
+├── content/             ← 게임 콘텐츠 시드 데이터 (graymar_v1 + star_sand_v1 별빛모래 + karnholt_v1 자율 서사 AUTONOMOUS 팩 (silverdeen_v1 은 2026-08-18 제거))
 ├── agents/              ← 에이전트 역할 정의서 (5 md)
 ├── scripts/             ← 플레이테스트 등 자동화 스크립트 (playtest.py, audit_quality.py, audit_content.py 외)
 ├── playtest-reports/    ← 플레이테스트 분석 리포트
@@ -353,7 +353,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 20. **RUN_ENDED 시 메모리 통합** — go_hub/MOVE_LOCATION 없이 런 종료 시에도 finalizeVisit() 호출.
 21. **MOVE_LOCATION fallback** — 목표 장소 불명확 시 HUB 복귀 처리 (이동 의도 무시 방지). KW MOVE_LOCATION은 장소명+이동접미사 복합감지 시에만 LLM보다 우선. 단순 키워드 1-hit은 LLM 신뢰.
 22. **Living World 초기화** — createRun 시 locationDynamicStates(팩의 locations 전체), worldFacts(빈 배열), npcLocations, playerGoals 초기화 필수.
-23. **NPC 3계층** — CORE 우선 상황 생성, BACKGROUND 배경만, SUB 일반 (수치는 팩별 — graymar 6/25/12, silverdeen 2/6/4). **화자 결정 단계에도 적용(arch/104)** — BACKGROUND 는 대화 잠금 대상에서 제외한다. 명시 지목 턴에는 그 턴 화자로 설 수 있으나 붙잡히지는 않는다. 과거 이 규칙이 상황 생성에만 걸려 있어 배경 NPC 가 17턴 주 화자로 눌러앉은 실측이 있다.
+23. **NPC 3계층** — CORE 우선 상황 생성, BACKGROUND 배경만, SUB 일반 (수치는 팩별 — graymar 6/25/12). **화자 결정 단계에도 적용(arch/104)** — BACKGROUND 는 대화 잠금 대상에서 제외한다. 명시 지목 턴에는 그 턴 화자로 설 수 있으나 붙잡히지는 않는다. 과거 이 규칙이 상황 생성에만 걸려 있어 배경 NPC 가 17턴 주 화자로 눌러앉은 실측이 있다.
 24. **선별 주입(Selective Injection)** — LLM 컨텍스트에 메모리를 주입할 때, 전체가 아닌 현재 턴에 관련된 것만 선별: NpcPersonalMemory는 등장 NPC만, LocationMemory는 현재 장소만, IncidentMemory는 관련 사건만, ItemMemory는 장착/획득(RARE 이상) 아이템만.
 25. **프리셋 배경 참조** — 프리셋별 npcPostureOverrides(NPC 초기 태도 오버라이드), actionBonuses(행동 보너스), LLM 배경 텍스트가 게임 메카닉과 서술 모두에 반영.
 26. **대화 잠금(Conversation Lock) — 3상태 + streak 상한 (arch/104, 2026-08-18 개정)** — 판정 정본은 `engine/hub/conversation-lock.core.ts` 단일 순수 함수이며, 접근은 `NpcResolverService.getLockState()` 하나뿐이다(구 `findLockFromHistory`/`findConversationLock` 복제 제거). 행동을 3분류한다: **RENEW**(TALK/PERSUADE/BRIBE/THREATEN/HELP — 유지 + streak +1) · **HOLD**(OBSERVE/INVESTIGATE/SEARCH/TRADE/REST — 유지하되 streak 불변) · **BREAK**(FIGHT/STEAL/SNEAK/MOVE_LOCATION 등 + 미상 행동 — 해제). 상한은 CORE·SUB 4턴, **BACKGROUND 0(잠금 대상 제외 — 불변식 23)**. 상한 도달은 소프트 해제(배제 아님). 작별(dialogueAct=FAREWELL 또는 워커 마킹 npcFarewell) 이후 해제, 무화자 턴은 `ANCHOR_WINDOW`=4턴까지만 건너뛴다. 상태를 저장하지 않고 매 턴 재계산한다. **배경**: 구 구현은 화자 있는 첫 이력에서 즉시 return/break 해 연속 카운터가 없었고, 갱신 집합에 OBSERVE·INVESTIGATE·TRADE 가 포함돼 혼자 서류를 보는 턴이 "대화"로 집계됐다 — BACKGROUND NPC 가 17턴 독점(그 구간 대화 행동 2턴)·fact 획득 0 실측.
@@ -744,6 +744,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **이미지 정본 단일화 (2026-08-14)** | [arch/102] 장소 이미지 결정이 100% 클라 하드코딩이라 장면 컷 장소 후보가 graymar·star_sand에서 영구 0이던 결함 해소 — location_images.json 콘텐츠 승격(URL 불변, 매처 스펙 17케이스) + 초상화 npcs.json portraitUrl 외부화(클라 미러 맵 삭제) + 마커 와이어 포맷 URL→npcId 전환(혼재 허용) + 장소 이미지 URL 서버 이관. 잔여: 클라 레거시 리졸버 최종 삭제·E-2 실런 검증 10턴 | ✅ 완료 |
 | **아크 종반부 3막 (2026-08-18)** | [arch/103] 버그 3c501bf7("커밋 후 어떻게 끝나는지 모르겠다") 근본 해소 — ① 사문이던 arc 스테이지 이벤트(`getArcEvents` 소비 0곳, 2026-02-18 이래) 배선: 커밋 후 전용 발화·판정형(FAIL 2회 후 자동 PARTIAL)·순차 완료만 강제 ② stage 3 완료 → "결말을 맞이한다"(`arc_finale`) 상시 선택지 → 기존 ALL_RESOLVED 엔딩 직행 ③ S5+5 안전망 타이머 코어 추출 + HUB 배선(마킹+선택지 노출, 자동 종료 아님) ④ 커밋 턴 힌트·nextObjectives 공백 봉합. 코어 스펙 18케이스 + E2E 전항목 PASS(ALLY_GUARD 3막 완주→"질서의 수호자" 엔딩, HUB 타이머 경로). 잔여: 실LLM 서술 품질 1런 | ✅ 완료 |
 | **NPC 대화 게이트 재설계 (2026-08-18)** | [arch/104] 정성 리뷰(3런 70턴 전문 정독)에서 출발 — "로봇 같다/대화가 안 이어진다/맥락을 못 잡는다/같은 대사 반복" 4개 증상이 **두 게이트에서 갈라진 같은 뿌리**임을 규명. 둘 다 "문서에 있는 규칙이 구현에 없다" 부류. ① **잡담 게이트**가 의도가 아니라 "fact 4종 부재"라는 부산물을 신호로 써, TALK 에서만 성립하는 프록시가 조사·잠입·협박 턴에 항상 참이 됨(69% 주입·사교 발화 턴 0건). 화이트리스트로 반전 + 소진 폴백 제거(프롬프트가 예시한 "몸 상태·날씨 체감"이 그대로 출력되던 증폭기) + 원문 인용 금지 ② **대화 잠금**에 연속 카운터가 없고(화자 있는 첫 이력에서 즉시 return) 갱신 집합에 OBSERVE·INVESTIGATE·TRADE 가 포함돼, BACKGROUND NPC 가 **17턴 독점**(그 구간 대화 행동 2턴·fact 획득 0). RENEW/HOLD/BREAK 3상태 + streak 상한(CORE 4·BACKGROUND 0) + 복제 drift 차단(getLockState 단일 접근) ③ `[NPC 고정]`이 else-if 첫 가지라 기존 `[NPC 피로]`가 영원히 도달 못하던 **자기강화 루프** 차단(전환 예고 병기). 실측: 잡담 50%→TALK 전용(위반 0/40턴)·BACKGROUND 화자 17턴→0·화자 2명 32턴→5명 분산·게이트 14/14·NPC 점프 회귀 0. 신규 스펙 39. 잔여: daily_topics 소재어 축약(368개)·되묻기 억제·미완결 등장 | ✅ 완료 |
+| **silverdeen_v1 팩 제거 (2026-08-18)** | 소유자 지시로 미니 팩 완전 제거. 서버 프로덕션 코드 참조는 **전부 주석**이었다(불변식 45 준수 덕에 로직 분기 0) — 팩 탐색이 `readdir` 기반이라 폴더 삭제만으로 반영. 테스트 5종은 계약을 잃지 않도록 대체: 멀티팩 격리→star_sand, 팩 계약→**karnholt**(`arc_events.json` 부재라 "아크 자산 없는 팩 = 커밋 선택지 미노출" 계약을 그대로 검증), 팩 수 하한 4→3. 클라 카탈로그·프리셋 치환·이미지 분기 제거. DB 런 2건(RUN_ABORTED)은 보존하고 팩 부재 상태 조회 정상 확인. **부수 발견(미수정)**: karnholt 8개 장소 전부 `ambushEncounterId=enc_generic` 인데 encounters 에 부재 → 매복 조우 영구 미발동, audit_content 에 ambush 규칙도 없음 | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.

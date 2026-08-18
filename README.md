@@ -28,7 +28,7 @@
 ├── server/              ← NestJS 백엔드 (16 modules, 117 services, 27 tables)
 ├── client/              ← Next.js 16 프론트엔드 (71 components, 7 stores)
 ├── admin/               ← 어드민 콘솔 (독립 레포 graymar-admin, Vercel 별도 배포)
-├── content/             ← 게임 콘텐츠 시드 데이터 (4팩: graymar_v1 / silverdeen_v1 / star_sand_v1 / karnholt_v1)
+├── content/             ← 게임 콘텐츠 시드 데이터 (3팩: graymar_v1 / star_sand_v1 / karnholt_v1)
 ├── specs/               ← 상세 설계 스펙 (17 md)
 ├── architecture/        ← 통합 아키텍처 문서 (91 md + INDEX)
 ├── guides/              ← 코드 구현 지침 (14 md)
@@ -79,7 +79,6 @@ HUB (도시 거점) → 7 LOCATION 탐험 → COMBAT (턴제 전투) → HUB (�
 | 팩 | 성격 |
 |----|------|
 | graymar_v1 | 정본 시나리오 — 항만 도시 그레이마르 정치 음모 |
-| silverdeen_v1 | 미니 팩 (멀티 시나리오 디커플링 검증) |
 | star_sand_v1 | 별빛모래 — 사막 여관 무대 |
 | karnholt_v1 | AUTONOMOUS — 진상 선확정 디렉터 모드 자율 서사 팩 |
 

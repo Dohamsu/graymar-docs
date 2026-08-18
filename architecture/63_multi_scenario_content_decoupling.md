@@ -341,3 +341,44 @@ scenario.json 확장 (graymar_v1 값 = 현행 하드코딩 그대로):
 - ContentValidator onModuleInit이 로더 init 순서에 따라 빈 팩을 검증할 수 있음 —
   구 구조와 동일 동작이나, 검증을 ensurePack 직후로 옮기는 개선 후보.
 - 팩 캐시 무효화(콘텐츠 파일 변경 시 리로드)는 없음 — 콘텐츠 수정 후엔 재시작 (기존 동일).
+
+---
+
+## 부록 Z — silverdeen_v1 팩 제거 (2026-08-18)
+
+이 문서가 신설한 `silverdeen_v1` 미니 팩을 **소유자 지시로 완전히 제거**했다.
+본문의 서술은 당시 사실이므로 그대로 두고, 여기에 제거 사실만 남긴다.
+(이후 문서에서 silverdeen 을 만나면 이 부록을 먼저 볼 것.)
+
+**제거 범위**
+
+| 대상 | 처리 |
+|---|---|
+| `content/silverdeen_v1/` (18파일) | 삭제 |
+| 서버 프로덕션 코드 | 참조가 **전부 주석**이었다 — 불변식 45(엔진 코드 콘텐츠 ID 리터럴 금지)가 지켜진 덕에 로직 분기 0. 문면만 정리 |
+| 서버 테스트 5종 | 다른 팩으로 대체 (아래) |
+| 클라이언트 | `ScenarioCatalog` 카탈로그 항목 · `presets.ts` 치환 로직 · `location-images.ts` 팩 분기 · `SCENARIO_META`/`SCENARIO_BANNERS` 엔트리 제거 |
+| DB 런 2건 | **보존** (소유자 계정, 둘 다 `RUN_ABORTED`). 팩 부재 상태에서 어드민 조회 정상 확인 |
+| 이력 문서 | 보존 — 과거 결정의 근거를 지우지 않는다 |
+
+**테스트 대체 판단**
+
+- `content-loader.multipack.spec` (멀티팩 격리 계약) → **star_sand_v1**.
+  이 계약은 arch/63 ①의 핵심이라 삭제 불가.
+- `content-loader.scenario.spec` (팩 계약) → **karnholt_v1**.
+  star_sand 가 아니라 karnholt 를 고른 이유: 소규모 팩이고 `arc_events.json` 이 없어
+  *"아크 자산 없는 팩 — 커밋 선택지 미노출"*(arch/68 부록 F) 계약을 그대로 검증할 수 있다.
+  star_sand 는 아크 자산이 있어 그 계약의 검증 대상이 되지 못한다.
+- `quest-progression.rewards.spec` → star_sand (실팩 3종 → 2종).
+- `content-schema.spec` 팩 수 하한 4 → 3.
+
+**이 과정에서 드러난 별건 결함 (미수정)**
+
+`karnholt_v1` 은 8개 장소 전부 `ambushEncounterId: "enc_generic"` 인데 `encounters.json`
+에 그 ID 가 없다 → **이 팩에서 매복 조우가 영구히 발생하지 않는다.** silverdeen 자리를
+karnholt 로 옮기면서 참조 무결성 테스트가 잡아냈다. 어느 조우를 매복으로 쓸지는 콘텐츠
+저작 판단이라 여기서 고치지 않고, 해당 테스트를 `it.skip` + 사유 주석으로 가시화했다.
+`scripts/audit_content.py` 에도 ambush 참조 규칙이 없어 감사에서 잡히지 않는다 — 규칙 추가 후보.
+
+**검증**: 서버 빌드 OK · 유닛 2024 passed(스킵 2) · lint 0 error · 클라 빌드 OK ·
+`audit_content` 전 팩 ERROR 0 · 기동 스모크 PASS · `/v1/scenarios` = graymar/karnholt/star_sand.

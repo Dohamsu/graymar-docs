@@ -49,7 +49,7 @@ server/src/
 │   ├── rng/ · stats/ · status/     ← 결정론 RNG, 스탯, 상태이상 (3)
 ├── llm/                            ← 24 services (아래 상세)
 ├── party/                          ← 8 services + DTO + controller
-├── content/                        ← ContentLoader + ContentValidator (멀티 팩 4종: graymar/silverdeen/star_sand/karnholt)
+├── content/                        ← ContentLoader + ContentValidator (멀티 팩 3종: graymar/star_sand/karnholt)
 ├── scene-image/ · portrait/        ← AI 초상화/장소 이미지 생성 (Gemini)
 ├── admin/ · points/ · endings/     ← 관제 API 3 services·8 controllers (arch/87), 포인트 (arch/85), 여정 아카이브
 ├── campaigns/ · auth/ · common/    ← 캠페인, JWT 인증, Guards/Filters/Pipes
@@ -192,7 +192,7 @@ COMBAT 공식은 `specs/combat_system.md` — `hitRoll → varianceRoll → crit
 | Living World v2 API | `guides/07_living_world_guide.md` |
 | 파티 시스템 API | `guides/08_party_guide.md` |
 | 모든 enum 정본 | `server/src/db/types/enums.ts` |
-| 콘텐츠 데이터 | `content/<pack>/` (4팩: graymar_v1, silverdeen_v1, star_sand_v1, karnholt_v1) |
+| 콘텐츠 데이터 | `content/<pack>/` (3팩: graymar_v1, star_sand_v1, karnholt_v1) |
 
 ## 작업 시 주의
 
