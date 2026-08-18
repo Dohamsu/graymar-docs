@@ -325,7 +325,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 16. **장면 연속성 보장** — sceneFrame 3단계 억제 + 씬 이벤트 1턴 유지 + 7개 연속성 규칙.
 17. **Token Budget 2단** — 메모리 블록 2500(블록별 배분·저우선 트리밍) + 프롬프트 총량 백스톱 `GRAND_TOTAL_CHAR_BUDGET` 16,500자(≈10.06k tok — 11k부터 soft 지시 절벽 실측, 마진 0.9k tok. 2026-07-28 상향은 압축 선행 후에만 허용). 백스톱 제거 순서는 [세계 상태] → [NPC 일상] → 기억 부분 절삭 — 기억·L0 절대 보호. **백스톱은 하드 상한이 아니다** — 제거 대상 블록이 없거나 작으면 초과분이 그대로 남는다 (실측 494/2,781턴 = **17.8%가 16,500 초과**, 최대 16,620자. arch/101 자기점검 1회차). 상한처럼 읽고 여유를 계산하면 틀린다. 재비대는 플레이테스트 V12 게이트(발동률 ≤20%·avg ≤15,000자)가 감시 — arch/79 2·3차.
 18. **Procedural Plot Protection** — 동적 이벤트에서 arcRouteTag/commitmentDelta 절대 금지.
-19. **NATURAL 엔딩 최소 15턴** — ALL_RESOLVED 엔딩은 totalTurns ≥ 15 이상이어야 발동.
+19. **NATURAL 엔딩 최소 15턴 (자동 발동 한정 — arch/103 개정)** — ALL_RESOLVED 엔딩의 **자동 발동**(S5+5 타이머·incident 자연 해소)은 totalTurns ≥ 15 이상이어야 한다. 명시 결말 선택(`arc_finale` — 커밋+스테이지 완주 후)은 이 가드의 예외.
 20. **RUN_ENDED 시 메모리 통합** — go_hub/MOVE_LOCATION 없이 런 종료 시에도 finalizeVisit() 호출.
 21. **MOVE_LOCATION fallback** — 목표 장소 불명확 시 HUB 복귀 처리 (이동 의도 무시 방지). KW MOVE_LOCATION은 장소명+이동접미사 복합감지 시에만 LLM보다 우선. 단순 키워드 1-hit은 LLM 신뢰.
 22. **Living World 초기화** — createRun 시 locationDynamicStates(팩의 locations 전체), worldFacts(빈 배열), npcLocations, playerGoals 초기화 필수.
@@ -718,6 +718,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **퀘스트탭 실효성 (2026-08-05)** | [arch/99] 활성 목표 데드코드·HUB 턴 quest 번들 미부착(arc 커밋 직후 스테일)·요약 중복·팩 격차(karnholt D-14 오정보)·배지 부재 5건 — 서버 attachQuestUiBundle 6곳 + hasArcCommit, 클라 섹션 정리·AUTONOMOUS 시한 게이팅·단서 발견 점 배지 | ✅ 완료 |
 | **자기점검 하네스 (2026-08-12)** | [arch/101] "전 게이트 통과한 채 조용히 꺼진" 결함 7건에서 역설계한 코드·문서·DB 3소스 교차 대조 루프 — 디텍터 5족(`scripts/selfcheck/` + ledger.jsonl) + 검증 사다리(정적→과거 원문 재생→런 5회 예산) + 오탐 통제(분모 강제·baseline expires). 1회차 수행 산출물이 불변식 17의 백스톱 초과 17.8% 실측 | ✅ 완료 |
 | **이미지 정본 단일화 (2026-08-14)** | [arch/102] 장소 이미지 결정이 100% 클라 하드코딩이라 장면 컷 장소 후보가 graymar·star_sand에서 영구 0이던 결함 해소 — location_images.json 콘텐츠 승격(URL 불변, 매처 스펙 17케이스) + 초상화 npcs.json portraitUrl 외부화(클라 미러 맵 삭제) + 마커 와이어 포맷 URL→npcId 전환(혼재 허용) + 장소 이미지 URL 서버 이관. 잔여: 클라 레거시 리졸버 최종 삭제·E-2 실런 검증 10턴 | ✅ 완료 |
+| **아크 종반부 3막 (2026-08-18)** | [arch/103] 버그 3c501bf7("커밋 후 어떻게 끝나는지 모르겠다") 근본 해소 — ① 사문이던 arc 스테이지 이벤트(`getArcEvents` 소비 0곳, 2026-02-18 이래) 배선: 커밋 후 전용 발화·판정형(FAIL 2회 후 자동 PARTIAL)·순차 완료만 강제 ② stage 3 완료 → "결말을 맞이한다"(`arc_finale`) 상시 선택지 → 기존 ALL_RESOLVED 엔딩 직행 ③ S5+5 안전망 타이머 코어 추출 + HUB 배선(마킹+선택지 노출, 자동 종료 아님) ④ 커밋 턴 힌트·nextObjectives 공백 봉합. 코어 스펙 18케이스 + E2E 전항목 PASS(ALLY_GUARD 3막 완주→"질서의 수호자" 엔딩, HUB 타이머 경로). 잔여: 실LLM 서술 품질 1런 | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
@@ -840,6 +841,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 99_quest_tab_effectiveness.md | ✅ 구현됨 | 퀘스트탭 실효성 — 죽은 섹션 제거·HUB 턴 quest UI 부착(hasArcCommit)·AUTONOMOUS 시한 게이팅·단서 발견 배지 |
 | 101_selfcheck_loop.md | ✅ 구현됨 | 자기개선 하네스 — 코드·문서·DB 3소스 정합 감사 디텍터 5족(`scripts/selfcheck/`) + 검증 사다리·런 예산 5회 (문서 헤더 "미구현"은 스테일) |
 | 102_location_image_content_pool.md | ✅ 구현됨 | 이미지 정본 단일화 — location_images.json 콘텐츠 승격 + 초상화 npcs.json portraitUrl 외부화 + 마커 npcId 전환 + 장소 URL 서버 이관 (잔여: 클라 레거시 리졸버 삭제·실런 10턴) |
+| 103_arc_endgame_stages.md | ✅ 구현됨 | 아크 종반부 3막 — 사문이던 arc 스테이지 이벤트(getArcEvents 소비 0곳) 배선 + 결말 선택지(arc_finale) + S5+5 안전망 HUB 확장 + 커밋 후 안내 (버그 3c501bf7, 잔여: 실LLM 서술 품질 1런) |
 | archive/37_streaming_transition_issues.md | 📜 아카이브 | 35+36과 중복 |
 | archive/38_stream_vs_nonstream_comparison.md | 📜 아카이브 | 35와 중복 |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
