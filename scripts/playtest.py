@@ -11,7 +11,7 @@
 /playtest 커맨드에서 호출됨.
 """
 
-import json, time, uuid, random, sys, argparse, os, subprocess, re
+import json, time, uuid, random, sys, argparse, os, subprocess, re, glob
 
 # --- CLI 인자 ---
 parser = argparse.ArgumentParser(description="Playtest runner")
@@ -602,6 +602,10 @@ for turn_i in range(MAX_TURNS):
         "rawInput": body.get("input", {}).get("text", ""),
         # V10: 서술 화자(NpcResolver 최종) — 이벤트 정의 NPC와 대조용
         "primaryNpcId": action_ctx.get("primaryNpcId"),
+        # V14 (arch/104): IntentActionType — 잡담 게이트 정합 판정용.
+        #   legacy actionType 필드는 항상 null 이므로 parsedType 이 정본이다
+        #   (arch/100 §14 사문 배선 — 실측 확인).
+        "parsedType": action_ctx.get("parsedType"),
         # V10 정밀화(2026-07-17): 분열은 이벤트 고유 선택지가 실제 노출됐을 때만
         # 플레이어 대면 — EventChoiceGate 폐기 턴을 FP로 세지 않기 위해
         # 이번 턴 응답(server_result)의 선택지 id를 기록
@@ -1105,6 +1109,19 @@ V12_LEDGER_KEEP = 20           # 원장 보존 런 수
 # 게이트(15%)를 통과했다. 편중이 아니라 표본 크기가 만든 착시였다.
 V13_POOL_RUNS = 3
 V13_MIN_RUNS = 2
+# V14 (arch/104): NPC 대화 게이트 정합. 런당 15턴이라 1건이 6.7%p — 같은 이유로 누적.
+V14_POOL_RUNS = 3
+V14_MIN_RUNS = 2
+V14_STREAK_MAX = 4       # 불변식 26 — CORE·SUB 연속 화자 상한
+# BACKGROUND 는 잠금 대상이 아니므로(불변식 23) 연속은 이벤트 반복 배정뿐이다.
+# 2턴까지는 자연 발생 여지를 두고, 그 이상은 고착 신호로 본다.
+V14_BG_STREAK_MAX = 2
+# [강등] 연속 화자 구간 선택지의 "화자 외 대상" 비율 — 계측 전용.
+#   수정 전(a90e 27%)과 수정 후(25%)가 구분되지 않아 게이트로 쓸 변별력이 없다.
+#   sourceNpcId 는 nano 가 채우는 값이고, arch/104 의 근거였던 "4개 중 3개가 같은
+#   NPC"는 라벨 의미 기준이라 축이 다르다. 대체 지표 확보 전까지 참고 수치.
+V14_LOCK_OTHER_MIN = 0.25
+V14_LOCK_MIN_SAMPLE = 12
 
 
 def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
@@ -1138,6 +1155,8 @@ def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
     return ledger[-pool_runs:]
 print("\n[V12] 프롬프트 예산 (재비대 가드):", flush=True)
 prompt_sizes = []
+# V14-b 재사용 캐시 — 같은 프롬프트를 두 번 받아오지 않는다 (turnNo → 합친 본문)
+prompt_texts = {}
 for t in turn_logs:
     _tn = t.get("turnNo")
     if not _tn:
@@ -1151,6 +1170,10 @@ for t in turn_logs:
     _msgs = _p if isinstance(_p, list) else [_p]
     _total = sum(
         len((m or {}).get("content") or "") if isinstance(m, dict) else len(str(m))
+        for m in _msgs
+    )
+    prompt_texts[_tn] = "\n".join(
+        ((m or {}).get("content") or "") if isinstance(m, dict) else str(m)
         for m in _msgs
     )
     if _total > 0:
@@ -1326,6 +1349,148 @@ else:
     v13_pass = True
     print(f"  ⚠️ nano 선택지 표본 부족 ({_aff_total}개) — 게이트 스킵", flush=True)
 
+# ═══════════════════════════════════════
+# V14: NPC 대화 게이트 정합 (arch/104, 2026-08-18)
+# ═══════════════════════════════════════
+#   arch/104 로 고친 두 게이트를 지키는 안전망. 셋 다 "조용히 꺼져도 아무도 모르는"
+#   부류라 계측이 없으면 재발을 못 본다 (arch/79 §11 이 V12 에서 겪은 것과 동일).
+#     a) 단일 NPC 연속 화자 턴 — 불변식 26(CORE 4턴) / 23(BACKGROUND 는 잠기지 않음)
+#     b) 잡담 주입 턴의 행동 정합 — 불변식 44 화이트리스트(TALK·사교 발화만)
+#     c) 연속 화자 구간의 선택지 다양성 — 자기강화 루프 재발 감시
+#   V12·V13 과 같은 이유로 다회 런 누적 판정한다 (런당 15턴은 1건이 6.7%p).
+print("\n[V14] NPC 대화 게이트 정합 (arch/104):", flush=True)
+
+# npcId → tier (전 팩 로드 — 런의 시나리오와 무관하게 동작)
+_npc_tier = {}
+try:
+    for _npcs_path in glob.glob(os.path.join("content", "*", "npcs.json")):
+        with open(_npcs_path, encoding="utf-8") as f:
+            for _n in json.load(f) or []:
+                if isinstance(_n, dict) and _n.get("npcId"):
+                    _npc_tier[_n["npcId"]] = _n.get("tier")
+except Exception as _e:
+    print(f"  ⚠️ tier 로드 실패 (BACKGROUND 판정 생략): {_e}", flush=True)
+
+# ── a) 최장 연속 화자 턴 ──
+_streaks = []           # (npcId, 연속 턴 수)
+_cur_npc, _cur_len = None, 0
+for t in turn_logs:
+    _npc = t.get("primaryNpcId")
+    if _npc and _npc == _cur_npc:
+        _cur_len += 1
+    else:
+        if _cur_npc:
+            _streaks.append((_cur_npc, _cur_len))
+        _cur_npc, _cur_len = _npc, (1 if _npc else 0)
+if _cur_npc:
+    _streaks.append((_cur_npc, _cur_len))
+
+_max_streak = max((n for _, n in _streaks), default=0)
+_max_npc = next((i for i, n in _streaks if n == _max_streak), "-")
+# BACKGROUND 는 잠기지 않으므로 연속 2턴을 넘으면 이상 신호 (이벤트 반복 배정 등)
+_bg_over = [(i, n) for i, n in _streaks if _npc_tier.get(i) == "BACKGROUND" and n > V14_BG_STREAK_MAX]
+_core_over = [
+    (i, n) for i, n in _streaks
+    if _npc_tier.get(i) != "BACKGROUND" and n > V14_STREAK_MAX
+]
+
+# ── b) 잡담 주입 턴의 행동 정합 ──
+_chat_turns, _chat_violations = 0, []
+for t in turn_logs:
+    _txt = prompt_texts.get(t.get("turnNo")) or ""
+    if "[NPC 일상" not in _txt:
+        continue
+    _chat_turns += 1
+    _act = t.get("parsedType") or ""
+    # 화이트리스트: TALK 또는 순수 사교 발화(프롬프트의 [대화 행위] 블록으로 근사)
+    _social = "[대화 행위]" in _txt and ("인사" in _txt or "안부" in _txt)
+    if _act != "TALK" and not _social:
+        _chat_violations.append((t.get("turn"), _act or "(없음)"))
+
+# ── c) 연속 화자 구간의 선택지 다양성 ──
+_lock_choices, _lock_other = 0, 0
+_prev_npc = None
+for t in turn_logs:
+    _npc = t.get("primaryNpcId")
+    _in_lock = bool(_npc) and _npc == _prev_npc
+    _prev_npc = _npc
+    if not _in_lock:
+        continue
+    for _c in (t.get("llmChoices") or []):
+        if not isinstance(_c, dict):
+            continue
+        _lock_choices += 1
+        # sourceNpcId 는 action.payload 안에 있다 — 최상위에서 읽으면 항상 None 이라
+        # "화자 외 100%"로 고정돼 게이트가 영구 통과한다 (2026-08-18 실측으로 발견).
+        _src = (
+            ((_c.get("action") or {}).get("payload") or {}).get("sourceNpcId")
+            if isinstance(_c.get("action"), dict) else None
+        )
+        if _src != _npc:   # 다른 인물·무주체(장소/행동) 선택지
+            _lock_other += 1
+
+_v14_entry = {
+    "runId": run_id,
+    "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
+    "server": _SERVER_HASH,
+    "turns": len(turn_logs),
+    "maxStreak": _max_streak,
+    "bgOver": len(_bg_over),
+    "coreOver": len(_core_over),
+    "chatTurns": _chat_turns,
+    "chatViolations": len(_chat_violations),
+    "lockChoices": _lock_choices,
+    "lockOther": _lock_other,
+}
+_v14_win = append_gate_ledger("v14_ledger.json", _v14_entry, V14_POOL_RUNS)
+_v14_enough = len(_v14_win) >= V14_MIN_RUNS
+
+_w_bg = sum(e.get("bgOver", 0) for e in _v14_win)
+_w_core = sum(e.get("coreOver", 0) for e in _v14_win)
+_w_chat = sum(e.get("chatTurns", 0) for e in _v14_win)
+_w_chat_v = sum(e.get("chatViolations", 0) for e in _v14_win)
+_w_lc = sum(e.get("lockChoices", 0) for e in _v14_win)
+_w_lo = sum(e.get("lockOther", 0) for e in _v14_win)
+_w_max = max((e.get("maxStreak", 0) for e in _v14_win), default=0)
+
+print(f"  a) 최장 연속 화자: {_max_streak}턴 ({_max_npc}) · 누적 최대 {_w_max}턴"
+      f" · 상한 초과 CORE {_w_core}건 / BACKGROUND {_w_bg}건", flush=True)
+if _chat_turns:
+    print(f"  b) 잡담 주입 {_chat_turns}턴 · 비사교 위반 {len(_chat_violations)}건"
+          f"{' → ' + str(_chat_violations[:4]) if _chat_violations else ''}", flush=True)
+else:
+    print("  b) 잡담 주입 0턴 (이번 런에 대화 턴 없음 — 계측만)", flush=True)
+_lock_rate = (_w_lo / _w_lc) if _w_lc else None
+print(f"  c) 연속 화자 구간 선택지 {_w_lc}개 중 화자 외 대상 {_w_lo}개"
+      f" ({_lock_rate*100:.0f}%)" if _lock_rate is not None
+      else "  c) 연속 화자 구간 선택지 표본 없음 (계측만)", flush=True)
+print(f"  누적 판정({len(_v14_win)}런): 잡담 위반 {_w_chat_v}/{_w_chat}"
+      f" · 화자 외 선택지 {(_lock_rate*100 if _lock_rate is not None else 0):.0f}% (계측 전용)",
+      flush=True)
+
+if not _v14_enough:
+    v14_pass = True
+    print(f"  ⚠️ 표본 부족({len(_v14_win)}/{V14_MIN_RUNS}런) — 게이트 보류(통과 처리)", flush=True)
+else:
+    # a·b 만 게이트한다 (위반 0 = 하드 계약).
+    # c 는 **계측 전용으로 강등**했다 — sourceNpcId 기준으로는 수정 전(a90e 27%)과
+    # 수정 후(25%)가 구분되지 않아 변별력이 없다. arch/104 가 근거로 삼은
+    # "선택지 4개 중 3개가 같은 NPC"는 **라벨 의미** 기준이었고, nano 가 채우는
+    # sourceNpcId 와는 다른 축이다. 자동 판정 가능한 대체 지표를 찾기 전까지
+    # 게이트로 쓰지 않는다 (변별 못 하는 지표로 게이트를 만들면 신호가 죽는다).
+    v14_pass = (_w_core == 0) and (_w_bg == 0) and (_w_chat_v == 0)
+    if v14_pass:
+        print("  ✅ 대화 게이트 정합", flush=True)
+    else:
+        _why = []
+        if _w_core:
+            _why.append(f"CORE 연속 상한 초과 {_w_core}건")
+        if _w_bg:
+            _why.append(f"BACKGROUND 화자 고착 {_w_bg}건")
+        if _w_chat_v:
+            _why.append(f"비사교 턴 잡담 {_w_chat_v}건")
+        print(f"  ❌ {' · '.join(_why)} — arch/104 회귀 점검 필요", flush=True)
+
 # Summary
 print("\n" + "=" * 60, flush=True)
 all_checks = {
@@ -1355,6 +1520,9 @@ all_checks = {
     "V12_prompt_budget": v12_pass,
     # V13 — 선택지 다양성 (arch/98): 적극 축 ≥15% AND 소극 3종 ≤80%
     "V13_choice_diversity": v13_pass,
+    # V14 — NPC 대화 게이트 정합 (arch/104): 연속 화자 상한 · 잡담 화이트리스트 ·
+    #        연속 구간 선택지 다양성. 전부 누적 판정(최근 3런 원시 카운트 풀링).
+    "V14_dialogue_gate": v14_pass,
 }
 passed = sum(1 for v in all_checks.values() if v)
 print(f"종합: {passed}/{len(all_checks)} PASS", flush=True)
