@@ -2074,7 +2074,7 @@
   {
     "npcId": "NPC_GUARD_CAPTAIN",
     "name": "벨론 대위",
-    "unknownAlias": "당당한 수비대 장교",
+    "unknownAlias": "당당한 수비대장",
     "role": "그레이마르 수비대 대위. 마이렐의 상관으로 체스 애호가답게 모든 일에 수를 두듯 접근한다.",
     "faction": "CITY_GUARD",
     "hostile": false,
@@ -2150,7 +2150,7 @@
     "linkedIncidents": [
       "INC_GUARD_CORRUPTION"
     ],
-    "shortAlias": "수비대 장교",
+    "shortAlias": "수비대장",
     "daily_topics": [
       {
         "topicId": "TOPIC_BELLON_CHESS",
