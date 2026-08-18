@@ -140,6 +140,30 @@ lsof -ti:3000 | xargs kill -9 2>/dev/null   # launchd가 자동 재기동함 (�
 2. `audit_quality.py` 의 `META_NARR_FORBID` / `EASTERN_FORBID` / `CURRENCY_FORBID` 딕셔너리에 word boundary 포함한 regex로 추가
 3. `check_prompt_explicit()` 로 프롬프트 대조 가능한지 검증
 
+## 콘텐츠 정합성 감사 (필수 — 팩 편집 시)
+
+콘텐츠 팩(`content/<pack>/`)을 편집·추가했으면 **정본 스크립트 `scripts/audit_content.py`** 를 돌린다.
+서술 품질을 보는 `audit_quality.py` 와 역할이 다르다 — 이쪽은 **파일 간 참조와 도달성**을 본다.
+서버 부팅 시 도는 `ContentValidatorService` 는 NPC 단위 4개 룰만 보므로 이걸 대체하지 않는다.
+
+```bash
+python3 scripts/audit_content.py                 # 전 팩 (ERROR 있으면 종료코드 1)
+python3 scripts/audit_content.py star_sand_v1    # 단일 팩
+python3 scripts/audit_content.py --json          # 기계 판독
+```
+
+3계층: **L1 참조 무결성**(모든 ID 참조가 실제 정의로 해소되는가) · **L2 팩 계약**(불변식 45 questState
+명명·`resolutionConditions`·`payload.tags`, 불변식 31 `defaultTraitId`, ArcRoute enum) · **L3 심층 점검**
+(획득 불가 fact → 도달 불가 questState 전환 → 엔딩 차단, 도달 불가 장소, 사문 배선 스키마).
+
+- **확인됨(ack)**: 오탐·의도된 항목은 `--ack '<KEY>' --note '사유'` 로 `content/<pack>/.audit-ack.json`
+  에 등록하면 다음 실행부터 억제된다 (`--show-acked` 로 확인, `--unack` 로 해제). 반복 오탐이 신호를
+  덮는 걸 막는 장치이므로, **끄기 전에 반드시 원문을 대조**한다.
+- **사문 배선(silently-dead) 검출이 핵심 값어치**: `NPC_SCHEDULE_SHAPE` 는 콘텐츠가 엔진이 못 읽는
+  모양으로 저작돼 조용히 무시되는 경우를 잡는다 (arch/21 Part 11 의 `agenda` vs `longTermAgenda` 부류).
+  새 콘텐츠 필드를 엔진에 추가하면 **여기에 모양 검사를 같이 넣는다.**
+- 규칙 추가는 정본에 반영한다. 임시 스크립트를 새로 만들지 않는다.
+
 ## Repository Overview
 
 LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 용병이 왕국의 권력 투쟁을 거쳐 성장한다. 서버가 모든 게임 로직을 결정론적으로 처리하고, LLM은 내러티브 텍스트만 생성한다.
@@ -157,7 +181,7 @@ LLM-powered turn-based text RPG — **정치 음모 RPG**에서 이름 없는 �
 ├── samples/             ← 샘플 페이로드 (JSON, 10 files)
 ├── content/             ← 게임 콘텐츠 시드 데이터 (graymar_v1 + silverdeen_v1 미니 팩 + star_sand_v1 별빛모래 + karnholt_v1 자율 서사 AUTONOMOUS 팩)
 ├── agents/              ← 에이전트 역할 정의서 (5 md)
-├── scripts/             ← 플레이테스트 등 자동화 스크립트 (playtest.py, audit_quality.py 외)
+├── scripts/             ← 플레이테스트 등 자동화 스크립트 (playtest.py, audit_quality.py, audit_content.py 외)
 ├── playtest-reports/    ← 플레이테스트 분석 리포트
 └── CLAUDE.md
 ```
