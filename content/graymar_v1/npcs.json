@@ -5436,8 +5436,28 @@
       "speechRegister": "HAPSYO"
     },
     "schedule": {
-      "DAY": "선술집 구석에서 초조하게 대기",
-      "NIGHT": "항구 부두 근처를 서성이며 정보를 수집"
+      "default": {
+        "DAWN": {
+          "locationId": "LOC_TAVERN",
+          "activity": "선술집 뒷방에서 눈을 붙이지 못한 채 장부 사본을 되짚는다",
+          "interactable": false
+        },
+        "DAY": {
+          "locationId": "LOC_TAVERN",
+          "activity": "선술집 구석 자리에서 초조하게 인기척을 살피며 기다린다",
+          "interactable": true
+        },
+        "DUSK": {
+          "locationId": "LOC_HARBOR",
+          "activity": "부두 하역 인부들 틈에 섞여 길드 동향을 살핀다",
+          "interactable": true
+        },
+        "NIGHT": {
+          "locationId": "LOC_HARBOR",
+          "activity": "항구 부두 근처를 서성이며 정보를 수집한다",
+          "interactable": true
+        }
+      }
     },
     "longTermAgenda": {
       "currentGoal": "장부를 되찾아 길드 상부에 보고하고 해고를 면한다",

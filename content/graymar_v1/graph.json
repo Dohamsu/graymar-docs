@@ -170,7 +170,7 @@
     "nodeId": "guild_shop",
     "nodeType": "SHOP",
     "nodeMeta": {
-      "shopId": "SHOP_GUILD_ARMS"
+      "shopId": "SHOP_GUILD_TRADER"
     },
     "environmentTags": [
       "INDOOR",
@@ -294,7 +294,7 @@
     "nodeId": "guard_shop",
     "nodeType": "SHOP",
     "nodeMeta": {
-      "shopId": "SHOP_GUARD_SUPPLY"
+      "shopId": "SHOP_HARBOR_ARMORY"
     },
     "environmentTags": [
       "INDOOR",
@@ -454,7 +454,7 @@
     "nodeId": "solo_shop",
     "nodeType": "SHOP",
     "nodeMeta": {
-      "shopId": "SHOP_BLACK_MARKET"
+      "shopId": "SHOP_SLUMS_BLACK_MARKET"
     },
     "environmentTags": [
       "NARROW",

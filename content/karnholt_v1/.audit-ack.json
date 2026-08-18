@@ -1,0 +1,53 @@
+{
+  "_comment": "audit_content.py 확인됨(ack) 목록. 오탐이거나 의도된 항목만 등록한다.",
+  "acknowledged": [
+    {
+      "key": "DANGLING_REF:items.json:[0].factKey",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[11].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[12].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[13].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[14].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[15].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[16].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[1].factKey",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[23].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[24].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[25].setId",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    },
+    {
+      "key": "DANGLING_REF:items.json:[2].factKey",
+      "note": "items.json 이 graymar_v1 복사본(md5 동일). setDefinitions 가 비어 세트 보너스·factKey 모두 미발동이나 플레이어 노출 없음. graymar 항만 세트를 이식하면 세계관 혼입이라 이식하지 않는다 — 팩 고유 아이템 저작 시 해소(arch/86 후속)."
+    }
+  ]
+}

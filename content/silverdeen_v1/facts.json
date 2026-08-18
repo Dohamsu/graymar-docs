@@ -46,8 +46,7 @@
       ],
       "stage": "S1→S2",
       "discoveryLocations": [
-        "LOC_SD_FORGE",
-        "LOC_SD_MINE"
+        "LOC_SD_FORGE"
       ],
       "nextHint": "누가 폭파를 지시했는가. 회사 내부의 서류와 지시 계통을 캐야 한다.",
       "knownBy": [
@@ -132,8 +131,7 @@
       ],
       "stage": "S2→S3",
       "discoveryLocations": [
-        "LOC_SD_FORGE",
-        "LOC_SD_SQUARE"
+        "LOC_SD_FORGE"
       ],
       "nextHint": "장부 밖 은괴를 사는 자가 있다. 마을에 머무는 외지 매입자를 찾아라.",
       "knownBy": [
@@ -159,8 +157,7 @@
       ],
       "stage": "S3→S4",
       "discoveryLocations": [
-        "LOC_SD_CHAPEL",
-        "LOC_SD_INN"
+        "LOC_SD_CHAPEL"
       ],
       "nextHint": "매입자와 회사 사이의 거래 — 숨긴 은맥의 존재가 이 음모의 핵심이다.",
       "knownBy": [

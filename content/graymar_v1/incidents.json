@@ -1842,7 +1842,7 @@
       },
       "relatedNpcIds": [
         "NPC_LORD_VANCE",
-        "NPC_PARK_SUNWOO"
+        "NPC_GUARD_CAPTAIN"
       ],
       "tags": [
         "NOBLE",
@@ -2055,7 +2055,7 @@
       },
       "relatedNpcIds": [
         "NPC_RAT_KING",
-        "NPC_HAN_SOOYEON"
+        "NPC_MIRELA"
       ],
       "tags": [
         "SLUMS",
@@ -2258,7 +2258,7 @@
         "mutuallyExclusive": []
       },
       "relatedNpcIds": [
-        "NPC_PARK_SUNWOO",
+        "NPC_LORD_VANCE",
         "NPC_DAME_ISOLDE"
       ],
       "tags": [
@@ -2471,7 +2471,7 @@
         "mutuallyExclusive": []
       },
       "relatedNpcIds": [
-        "NPC_KIM_JIHOON",
+        "NPC_INFO_BROKER",
         "NPC_OWEN_KEEPER"
       ],
       "tags": [

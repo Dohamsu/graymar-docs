@@ -90,7 +90,7 @@
       "stage": "S3→S4 (보조)",
       "discoveryLocations": [
         "LOC_TAVERN",
-        "LOC_DOCKS_WAREHOUSE"
+        "LOC_HARBOR"
       ],
       "nextHint": "이 내용을 어떻게 활용할지가 결정 분기점이다. 공개해 정의를 외칠지, 거래 카드로 쓸지, 묻어둘지.",
       "knownBy": [
@@ -262,7 +262,7 @@
       "stage": "S3→S4",
       "discoveryLocations": [
         "LOC_HARBOR",
-        "LOC_WAREHOUSE"
+        "LOC_DOCKS_WAREHOUSE"
       ],
       "nextHint": "하역 장소를 알았다. 이제 물건이 어떤 경로로 시장에 풀리는지, 그리고 이 배후에 누가 있는지 밝혀야 한다. 흑막을 대면할 증거가 필요하다.",
       "knownBy": [
@@ -325,8 +325,7 @@
       "stage": "S3→S4",
       "discoveryLocations": [
         "LOC_HARBOR",
-        "LOC_MARKET",
-        "LOC_WAREHOUSE"
+        "LOC_DOCKS_WAREHOUSE"
       ],
       "nextHint": "밀수 경로의 전체 그림이 보이기 시작한다. 이제 이 네트워크를 운영하는 자의 정체를 밝힐 결정적 증거가 필요하다.",
       "knownBy": [

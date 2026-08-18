@@ -1,0 +1,9 @@
+{
+  "_comment": "audit_content.py 확인됨(ack) 목록. 오탐이거나 의도된 항목만 등록한다.",
+  "acknowledged": [
+    {
+      "key": "DANGLING_REF:npcs.json:[15].combatProfile.enemyRef",
+      "note": "combatProfile 은 content.types.ts 에서 unknown 타입이고 엔진 소비처 0곳(사문 필드). 전투 미연결이므로 적 정의를 새로 만들지 않는다."
+    }
+  ]
+}
