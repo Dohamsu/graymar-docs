@@ -584,7 +584,7 @@ LLM_REASONING_EFFORT_MAP=openai/gpt-5.6-luna=none  # GPT-5 계열 추론 강도.
 LLM_FALLBACK_PROVIDER=openai          # fallback: 같은 OpenRouter 경유
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini  # fallback 모델 (이전: Claude Haiku 4.5)
 GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off, DeepSeek는 코드에서 enabled:false 자동 주입)
-LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비호환, false 권장)
+LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비호환, false 권장). false 는 2-Stage 대사 분리를 무력화한다는 부작용이 있다 — arch/104 §P2-4
 LLM_SHORT_RESPONSE_MIN_TOKENS=150     # ShortResponse 재시도 임계 (기본 200 — 교차 모델 짧은 서술 이중 과금 방지)
 LLM_PROVIDER_REQUIRE_PARAMS=true      # penalty 미지원 프로바이더 배제 (불변식 50 레버 보장, 2026-07-22 채택)
 
@@ -604,7 +604,7 @@ CLAUDE_MODEL=claude-haiku-4-5-20251001  # claude provider 사용 시 모델
 GEMINI_MODEL=gemma-4-26b-a4b-it         # gemini provider 사용 시 모델
 LLM_LIGHT_PROVIDER=openai               # nano 계열 provider (기본 openai)
 LLM_MAIN_ALTERNATE_MODEL=              # 메인 교차 모델 오버라이드 (미설정 시 LLM_ALTERNATE_MODEL)
-LLM_DIALOGUE_SPLIT=true                 # 2-Stage 대사 분리 파이프라인 (arch/32)
+LLM_DIALOGUE_SPLIT=true                 # 2-Stage 대사 분리 (arch/32) — ⚠️ **LLM_JSON_MODE=true 가 전제**. 현재 JSON 모드가 false 라 이 설정과 LLM_DIALOGUE_MODEL 은 사문이며, 대사는 메인 서술 LLM 이 직접 생성해 어체 검증(validateSpeechRegister+재시도)을 타지 않는다. JSON 모드는 스트리밍과 비호환(arch/35)이라 되돌릴 수 없어, 어체 정합은 사후 교정(R5v2)이 담당 — arch/104 §P2-4. 부팅 시 무효 조합 경고 있음
 LLM_STREAM_CLASSIFIER=true              # 스트림 분류기 (기본 true, 'false' 로 차단)
 LLM_PROVIDER_ORDER=                     # OpenRouter provider 우선순위 (콤마)
 LLM_PROVIDER_MAX_PRICE=                 # provider 단가 상한
