@@ -195,11 +195,11 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-08-18)
+## 도메인별 최신 업데이트 기준 (2026-08-19)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
-| 세계/NPC     | 01, 06, 09, **63, 64, 66, 69, 91** | 구현됨 (멀티 시나리오 + 이름 공개 무결성 + 자기소개 + Living Presence + 플레이어 이름 인지) |
+| 세계/NPC     | 01, 06, 09, **63, 64, 66, 69, 91, 105** | 구현됨 (멀티 시나리오 + 이름 공개 무결성 + 자기소개 + Living Presence + 플레이어 이름 인지 + **세계 경계 3부류·분위기 탈주사위·시그널 자가오염(105)**) |
 | 전투         | 02, 08, **41, 42**                 | 구현됨 (창의 Tier + 버튼 UI + arch/76 전투 기만) |
 | HUB/진행     | 03, 07, 14, **70, 71, 92**         | 구현됨 (07 부분 업데이트 필요, 캠페인은 71이 정본, 거점 명명은 92) |
 | Living World | 21                                 | 구현됨              |
@@ -207,9 +207,9 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | LLM 서술     | 05, 11, 26, 35, **62**             | 구현됨 (스트리밍 + 레이턴시 최적화) |
 | 모델 평가    | 25                                 | 참고                |
 | 메모리       | 31                                 | 구현됨 (v4)         |
-| 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67, 98, 104** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝·품질(98) + nano 감사 + **대화 게이트 재설계(104)**) |
+| 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67, 98, 104, 105** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝·품질(98) + nano 감사 + **대화 게이트 재설계(104)** + **프롬프트 완성 문장 예시 제거·선택지 라벨 정규화(105)**) |
 | 이벤트 엔진  | 34, **43, 46**                     | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체, 28은 archive 배경) |
-| NPC 결정/품질 | **48, 49, 51, 47, 55, 72, 104**   | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭 + 반응 권한 통합 + **잠금 3상태·streak·BACKGROUND 제외(104)**, 50은 폐기) |
+| NPC 결정/품질 | **48, 49, 51, 47, 55, 72, 104, 105**   | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭 + 반응 권한 통합 + **잠금 3상태·streak·BACKGROUND 제외(104)** + **실명 치환 정본 수렴·소재 안내 자기모순(105)**, 50은 폐기) |
 | UI/클라      | 15, 23, **42, 68, 86, 90, 93, 94, 97, 99** | 구현됨 (UI/UX 실사 리뷰 + 팩 정합·모바일 + 랜딩 + 장소 배경 + 스크롤 정합 + 생성 간략화(97) + 퀘스트탭(99)) |
 | 파티         | 24, **84**                         | 구현됨 (Phase 1~3 + 클라 배선 완성) |
 | 주사위/UX    | 22                                 | 구현됨              |
@@ -266,3 +266,5 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 포인트/과금 (소프트 베타) | [[architecture/85_point_system|point system]] → server `points/` 모듈 + `turns.chargeKey`                     |
 | 플레이테스트 이슈 회귀   | [[architecture/fixplan_history|fixplan history]] (중복 확인)                                           |
 | 정합 감사(코드·문서·DB)  | [[architecture/101_selfcheck_loop|selfcheck loop]] → `scripts/selfcheck/`                              |
+| 실명/별칭 치환 추가      | [[architecture/105_run_review_defect_fixes|run review defect fixes]] §2 (정본 `maskHiddenNpcNames` 만 — 불변식 51) |
+| 세계 밖 입력 거절        | [[architecture/105_run_review_defect_fixes|run review defect fixes]] §5 + [[architecture/76_market_alignment_direction|market alignment]] D3-④ |
