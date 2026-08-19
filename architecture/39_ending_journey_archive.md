@@ -117,3 +117,30 @@
 - ending_summary가 NULL이면 조회 시 lazy 생성 + 캐시 (과거 런 호환)
 - StartScreen "여정 기록" 버튼은 `endingsCount === 0` 일 때 **완전히 숨김** (UI 군더더기 방지)
 - `EndingResult.arcRewards`는 UI 표시용. 실제 gold/reputation 지급은 현 단일 런 구조상 의미 없어 구현 보류 (다중 런/캠페인 구조로 확장 시 재검토)
+
+---
+
+## 6. 마지막 장면 서술 미노출 수정 (2026-08-19)
+
+**결함**: 엔딩 턴 응답 수신 즉시 클라가 `phase: RUN_ENDED`로 전환해 EndingScreen이
+게임 화면을 대체했는데, `[마지막 장면]` LLM 서술은 그 뒤 폴링/스트리밍으로 도착했다.
+EndingScreen은 `messages`를 렌더하지 않으므로 **종결 서술이 생성·과금되면서도 유저에게
+한 번도 노출되지 않았다** (DB 실측: 실런 엔딩 턴 783자 DONE + arch/103 E2E는 전부
+skipLlm이라 디렉티브 실출력을 본 유저가 0명이었음).
+
+**수정 (A안 — 전환 지연)**: `game-store`에 `pendingRunEnd` 보류 상태 신설.
+- 엔딩 턴에서 LLM PENDING이면 즉시 전환하지 않고 게임 화면에서 서술 타이핑을 끝까지 표시
+- 타이핑 완료(`flushPending`) 후 여운 `ENDING_FLIP_GRACE_MS`(1.5s) 두고 RUN_ENDED 전환
+- 보류 중 `isNarrating` 유지로 입력 차단, `scheduled` 가드로 타이머 중복 예약 방지, `reset()` 시 취소
+- LLM 없는 엔딩(SKIPPED)·실패 시 "건너뛰기" 경로는 기존과 동일하게 동작
+
+**부수 수정**: EndingScreen 보상 뱃지가 팩션 ID를 원시 노출("CITY_GUARD +15")하던 것을
+서버 `ending-generator.localizeArcRewards()`가 콘텐츠 `factions.json` 표시명(shortName→name→id)
+으로 치환해 "경비대 +15"로 표시 (불변식 45 방향 — 클라 하드코딩 배제).
+
+**검증**: 실브라우저 E2E — 기존 테스트 런에 `finaleReady` DB 패치로 지름길을 만들어
+"결말을 맞이한다" 클릭 → 게임 화면 유지+서술 타이핑 → EndingScreen 자동 전환 확인
+(콘솔 에러 0). 단위: ending-generator 스펙 계약 갱신 포함 52/52.
+
+**잔여**: ① 파티 경로(`applyPartyTurnResult`)는 여전히 즉시 전환 — SSE 전달 구조가 달라
+별도 작업 필요 ② 엔딩 화면→아카이브 직행 동선 부재 ③ arcRewards 실지급 보류(§5)는 유지.
