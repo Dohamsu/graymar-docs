@@ -15,6 +15,7 @@
 """
 
 import json, time, uuid, random, sys, argparse, re
+from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 
 parser = argparse.ArgumentParser(description="Party playtest — 2 players, 실측 서사 검증")
 parser.add_argument("--base", default="http://localhost:3000/v1", help="서버 URL")
@@ -81,9 +82,9 @@ class Player:
             return 0, {}
 
     def register(self):
-        s, r = self.api("POST", "/auth/register", {
-            "email": self.email, "password": PASSWORD, "nickname": self.nickname,
-        })
+        s, r = self.api("POST", "/auth/register", add_invite_code(
+            {"email": self.email, "password": PASSWORD, "nickname": self.nickname},
+            BASE, "party-playtest"))
         if s != 201:
             # 정본 계정 재사용 — 이미 존재하면 login fallback
             s, r = self.api("POST", "/auth/login", {

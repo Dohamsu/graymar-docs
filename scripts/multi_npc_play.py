@@ -18,6 +18,7 @@ import re
 from typing import Optional
 
 import requests
+from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 
 # ── CLI ───────────────────────────────────────────────────────────
 parser = argparse.ArgumentParser()
@@ -131,7 +132,8 @@ def poll_llm(run_id: str, turn_no: int, max_wait: int = 90) -> dict:
 def auth_and_run() -> tuple[str, str, int]:
     email = f"npc_play_{uuid.uuid4().hex[:8]}@test.com"
     password = "Test1234!!"
-    status, resp = api("POST", "/auth/register", {"email": email, "password": password, "nickname": "Tester"})
+    status, resp = api("POST", "/auth/register", add_invite_code(
+        {"email": email, "password": password, "nickname": "Tester"}, BASE, "multi_npc_play"))
     if status != 201:
         status, resp = api("POST", "/auth/login", {"email": email, "password": password})
     token = resp.get("token")

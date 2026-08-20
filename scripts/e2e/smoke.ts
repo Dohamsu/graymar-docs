@@ -4,9 +4,10 @@
  * 목적: PR / 배포 직후 기본 정상 동작 검증.
  * 범위:
  *  1. API 헬스 + 서버 버전 확인
- *  2. 회원가입 → 로그인 → 런 생성 → 3턴 실행
- *  3. 서술/이벤트/판정 최소 1건 이상 생성되는지 확인
- *  4. (선택) 브라우저 진입 · 타이틀 렌더 · 버튼 가시성
+ *  2. 초대 게이트 계약 (arch/107 §8) — ON 이면 코드 없는 가입이 거절되는지
+ *  3. 회원가입 → 로그인 → 런 생성 → 3턴 실행
+ *  4. 서술/이벤트/판정 최소 1건 이상 생성되는지 확인
+ *  5. (선택) 브라우저 진입 · 타이틀 렌더 · 버튼 가시성
  *
  * 실행:
  *   pnpm exec tsx scripts/e2e/smoke.ts
@@ -34,7 +35,41 @@ async function main() {
   if (!version) throw new Error("서버 버전 조회 실패");
   console.log(`✅ 서버: ${version.server} · uptime ${version.uptime}s`);
 
-  // 2. 신규 회원가입 → 런 생성
+  // 2. 초대 게이트 계약 (arch/107 §8)
+  //
+  // 게이트를 우회해서 가입만 하고 넘어가면, "비공개 테스트가 조용히 풀린" 상태를
+  // 아무도 못 잡는다 — 스모크가 담당하는 기동 시점 결함(env 오타·마이그레이션
+  // 불일치)이 정확히 이 부류다. 그래서 여기서 계약을 직접 찌른다:
+  //   게이트 ON  → 코드 없는 가입은 반드시 거절돼야 한다
+  //   게이트 OFF → 실패시키지 않되 눈에 띄게 경고 (의도적으로 껐을 수 있음)
+  const gateFailures: string[] = [];
+  const gateStatus = await fetch(`${SERVER_BASE}/auth/invite-status`)
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null);
+  if (!gateStatus) {
+    gateFailures.push("초대 게이트 상태 조회 실패 (GET /auth/invite-status)");
+  } else if (gateStatus.required) {
+    const probe = await fetch(`${SERVER_BASE}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: `smoke_gate_${Date.now()}@test.com`,
+        password: "Test1234!!",
+      }),
+    });
+    const probeBody = await probe.json().catch(() => ({}));
+    if (probe.ok) {
+      gateFailures.push(
+        "초대 게이트가 required=true 인데 코드 없는 가입이 통과했다 (게이트 무력화)",
+      );
+    } else {
+      console.log(`✅ 초대 게이트: ON · 코드 없는 가입 거절 (${probeBody.code})`);
+    }
+  } else {
+    console.log("⚠️  초대 게이트: OFF — 누구나 가입 가능한 상태입니다 (INVITE_CODE_REQUIRED)");
+  }
+
+  // 3. 신규 회원가입 → 런 생성 (게이트가 켜져 있으면 코드를 발급받아 통과)
   const api = new ApiClient();
   const email = `smoke_${Date.now()}@test.com`;
   await api.register(email);
@@ -95,7 +130,7 @@ async function main() {
   }
 
   // 4. 필수 조건 assert
-  const failures: string[] = [];
+  const failures: string[] = [...gateFailures];
   if (turnLogs.length < 3) failures.push(`턴 수 부족: ${turnLogs.length}/3`);
   const anyNarrative = turnLogs.some((t) => t.narrative && t.narrative.length > 50);
   if (!anyNarrative) failures.push("서술 전혀 생성 안됨");

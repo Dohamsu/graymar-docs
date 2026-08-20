@@ -2,12 +2,20 @@
 
 이전 26개 `scripts/e2e-*.ts`를 4개 정본으로 통합. 레거시는 `scripts/_e2e-legacy/`.
 
+> ⚠️ **초대 게이트 (arch/107 §8)** — 비공개 테스트 중이라 신규 가입에 초대 코드가 필요하다.
+> 정본 스크립트는 `ApiClient.register()` 가 어드민 API 로 1회용 코드를 자동 발급하므로
+> **`ADMIN_TOKEN` 만 환경에 있으면 된다** (없으면 `server/.env` 에서 읽는다).
+> 서버에 "테스터 도메인 예외" 같은 구멍을 두지 않은 이유는 그러면 게이트 자체가
+> 무의미해지기 때문이다. Python 쪽 정본은 `scripts/invite_util.py`.
+> **레거시(`_e2e-legacy/`)는 배선하지 않았다** — 되살려 쓸 일이 있으면 register 바디에
+> `inviteCode` 를 직접 넣어야 한다.
+
 ## 파일
 
 | 파일 | 소요 | 목적 |
 |---|---|---|
 | `_helpers.ts` | — | ApiClient · Playwright 유틸 · V1~V9 검증 라이브러리 |
-| `smoke.ts` | ~2분 | 회원가입 → 3턴 → API 기본 플로우 검증 (+ 선택적 브라우저 렌더) |
+| `smoke.ts` | ~2분 | 초대 게이트 계약 → 회원가입 → 3턴 → API 기본 플로우 검증 (+ 선택적 브라우저 렌더) |
 | `full-run.ts` | ~10분 | 35턴 풀 엔딩 런 + V1~V9 assert + 성능 메트릭 + JSON 저장 |
 | `perf.ts` | ~3분 | 10턴 LLM latency 분포 (p50/p75/p95) + 10초 기준 검사 |
 | `regression.ts` | ~1분 | UI 회귀 (타이틀 오프닝 세션 1회 / 프롬프트 누출 / 뎁스 전환) |

@@ -18,6 +18,7 @@
 """
 
 import json, time, uuid, sys, argparse
+from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 
 parser = argparse.ArgumentParser(description="Party system E2E test")
 parser.add_argument("--base", default="http://localhost:3000/v1", help="서버 URL")
@@ -57,11 +58,9 @@ class UserSession:
             return 0, {}
 
     def register_or_login(self):
-        status, resp = self.api("POST", "/auth/register", {
-            "email": self.email,
-            "password": PASSWORD,
-            "nickname": self.nickname,
-        })
+        status, resp = self.api("POST", "/auth/register", add_invite_code(
+            {"email": self.email, "password": PASSWORD, "nickname": self.nickname},
+            BASE, "party-test"))
         if status == 201:
             self.token = resp.get("token", "")
             self.user_id = resp.get("user", {}).get("id", "")

@@ -5,6 +5,7 @@
 """
 
 import json, time, uuid, sys, requests
+from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 
 BASE = "http://localhost:3000/v1"
 EMAIL = f"speedrun_{int(time.time())}@test.com"
@@ -79,7 +80,8 @@ def submit_turn(run_id, turn_no, input_data):
 print("=== 엔딩 스피드런 시작 ===", flush=True)
 
 # 1. 회원가입 + 로그인
-api("POST", "/auth/register", {"email": EMAIL, "password": PASSWORD, "nickname": "SpeedRunner"})
+api("POST", "/auth/register", add_invite_code(
+    {"email": EMAIL, "password": PASSWORD, "nickname": "SpeedRunner"}, BASE, "speedrun"))
 login = api("POST", "/auth/login", {"email": EMAIL, "password": PASSWORD})
 if not login or "token" not in login:
     print("로그인 실패", flush=True)

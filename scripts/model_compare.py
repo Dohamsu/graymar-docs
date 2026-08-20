@@ -5,6 +5,7 @@
 """
 
 import json, time, uuid, sys, requests
+from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 
 BASE = "http://localhost:3000/v1"
 PRESET = "DESERTER"
@@ -50,7 +51,8 @@ def poll_llm(session, run_id, turn_no, max_wait=120):
 def create_session(tag):
     s = requests.Session()
     email = f"compare_{tag}_{int(time.time())}@test.com"
-    status, resp = api(s, "POST", "/auth/register", {"email": email, "password": "Test1234!!", "nickname": f"Cmp_{tag}"})
+    status, resp = api(s, "POST", "/auth/register", add_invite_code(
+        {"email": email, "password": "Test1234!!", "nickname": f"Cmp_{tag}"}, BASE, "model_compare"))
     if status != 201:
         status, resp = api(s, "POST", "/auth/login", {"email": email, "password": "Test1234!!"})
     token = resp.get("token", "")

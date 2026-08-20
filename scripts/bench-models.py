@@ -17,6 +17,7 @@ import sys
 import time
 import uuid
 from pathlib import Path
+from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 
 try:
     import requests
@@ -133,9 +134,8 @@ def get_run(token, run_id):
 def register_login():
     email = f"bench_{int(time.time())}_{uuid.uuid4().hex[:6]}@test.com"
     try:
-        data = api("POST", "/auth/register", {
-            "email": email, "password": "Test1234!!", "nickname": "Bench",
-        })
+        data = api("POST", "/auth/register", add_invite_code(
+            {"email": email, "password": "Test1234!!", "nickname": "Bench"}, BASE, "bench-models"))
     except requests.HTTPError:
         data = api("POST", "/auth/login", {
             "email": email, "password": "Test1234!!",

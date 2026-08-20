@@ -143,6 +143,29 @@ DB 로 확인한 것이 아니다. GRAC 등급분류 DB 는 ASP.NET postback 이
 | 스키마 | `invite_codes` + `users.invited_by_code` (`drizzle/0005_add_invite_codes.sql`) |
 | 클라 입력 | `AuthForm` 초대 코드 필드 · `auth-store.inviteRequired` |
 | 랜딩 안내 | `client/src/app/landing/InviteRequest.tsx` |
+| 검증 스크립트 발급 | `scripts/invite_util.py` (Python 정본) · `e2e/_helpers.ts` `mintInviteCode()` |
+
+### 검증 스크립트 배선
+가입을 시도하는 스크립트가 **9곳**이라, 게이트를 켜면 전부 400 으로 막힌다. 서버에
+"테스터 도메인은 예외" 같은 구멍을 두면 게이트 자체가 무의미해지므로, 대신 스크립트가
+로컬 `ADMIN_TOKEN` 으로 1회용 코드를 발급받는다.
+
+- Python 정본 `scripts/invite_util.py` — `add_invite_code(body, BASE, note)`.
+  스크립트마다 `api()` 시그니처가 제각각이라(반환이 dict / (status, dict) / None)
+  각자의 api 를 쓰지 않고 `requests` 로 직접 호출한다.
+- 배선 완료: `playtest` · `speedrun` · `multi_npc_play` · `model_compare` ·
+  `bench-models` · `inspect-streaming-leaks` · `party-test` · `party-playtest`
+- TS 정본: `e2e/_helpers.ts` `ApiClient.mintInviteCode()` (smoke/full/perf/regression 공유)
+- **`_e2e-legacy/` 2건은 배선하지 않았다** — 명시적 레거시(26개 → 4개 정본 통합)라
+  되살릴 때 `inviteCode` 를 직접 넣는다. `scripts/e2e/README.md` 에 명시.
+
+### 스모크가 게이트를 검증한다
+우회만 하고 넘어가면 **"비공개 테스트가 조용히 풀린" 상태를 아무도 못 잡는다** — 스모크가
+담당하는 기동 시점 결함(env 오타·마이그레이션 불일치)이 정확히 이 부류다(arch/101 이
+반복 지적한 "조용히 꺼진" 결함군). `smoke.ts` 는 계약을 직접 찌른다:
+
+- 게이트 ON → **코드 없는 가입이 반드시 거절**돼야 한다. 통과하면 스모크 실패
+- 게이트 OFF → 실패시키지 않되 경고 (의도적으로 껐을 수 있음)
 
 - **fail-closed**: `INVITE_CODE_REQUIRED` 는 `false` 를 **명시해야만** 게이트가 열린다.
   env 누락이 게이트를 여는 쪽으로 기울면 안 된다 (인증 우회 fail-open 회귀와 같은 부류,
