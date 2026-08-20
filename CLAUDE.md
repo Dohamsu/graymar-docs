@@ -390,6 +390,8 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 
 54. **플레이어 행동은 소문이 되지 않는다 (조용한 행동 한정)** — `SignalFeedService.generateFromActionResult` 는 플레이어 자신의 행동을 익명 제3자 목격담으로 세계 배경에 되먹인다. 조사·관찰·대화까지 전부 소문이 되면 `"누군가 무언가를 조사하고 있었다."`(=플레이어)가 매 턴 쌓이고, 만료가 clock 기반이라 대화 턴(불변식 49 시간 정지)에는 줄지도 않는다(11턴에 17건 중 8건 실측). 눈에 띄는 행동(FIGHT·THREATEN·STEAL) 또는 **실패**만 시그널화하고, 동일 문구는 중복 적재하지 않는다 — architecture/105.
 
+55. **입력 콘텐츠 세이프티는 경계 거절의 4번째 부류** — 유해 입력(성적 노골·미성년/약자 폭력·자해) 방어의 정본은 `turns/content-safety.core.ts`이며, world-boundary(불변식 52)와 같은 L1 룰 + L2 nano(ChallengeClassifier `contentSafety` 축) + L3 서술 지시 3층이다. 감지 시 `ChallengeDecision.refused` → `resolve.forceRefusal`(주사위 스킵 + **모든 델타 0**)로 처리한다 — 유해 행동에 `FREE`를 주면 `forceAutoSuccess`(불변식 40)로 **자동 성공**이 되는 함정을 피하려 REFUSED 경로를 따로 둔다. **REDIRECT**(대부분)는 `[유해 행동 제지 지시]`로 세계가 제지하는 서술, **HARD_REFUSE**(MINOR_HARM 등 절대선)는 LLM 미호출 + 서버 고정 문안(`commitTurnRecord` narrativeOverride). 유해 거절 턴은 무과금(refund). MVP 4종 활성(HATE 정의만 비활성). 오탐 통제는 **조합 게이트 우선**(대상×행위 동시) — 일반 전투·선의·비속어 단독은 통과. 킬스위치 `CONTENT_SAFETY_ENABLED` — architecture/106.
+
 ## 과금 원칙 (채팅 과금 채택 — 2026-07-23 결정)
 
 **결정 (2026-07-23)**: 초기 시장조사 잠정 결론 "정상 작동에는 과금하지 않는다"(arch/76 D5, 봉인)를 **폐기**하고, **채팅 1턴 = 5p 과금을 정식 모델로 픽스**한다. 비율(`POINTS_PER_CHAT`, 현 5p)은 운영 상황을 보며 조정한다. arch/85 포인트 시스템이 이 모델의 구현체이며, 아래가 구 3원칙을 대체한다.
@@ -879,7 +881,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 103_arc_endgame_stages.md | ✅ 구현됨 | 아크 종반부 3막 — 사문이던 arc 스테이지 이벤트(getArcEvents 소비 0곳) 배선 + 결말 선택지(arc_finale) + S5+5 안전망 HUB 확장 + 커밋 후 안내 (버그 3c501bf7, 잔여: 실LLM 서술 품질 1런) |
 | 104_npc_dialogue_gate_rework.md | ✅ 구현됨 | NPC 대화 게이트 재설계 — 잡담 주입 화이트리스트 전환(small-talk-gate.core)·소진 폴백 제거 + 대화 잠금 3상태/streak 상한/BACKGROUND 제외(conversation-lock.core)·자기강화 루프 차단. 불변식 23·26·44·50 개정 (잔여: daily_topics 축약·되묻기 억제·P2 5종) |
 | 105_run_review_defect_fixes.md | ✅ 구현됨 | 실런 1개 전문 정독에서 나온 결함 8건 — 실명 치환 substring 오염(정본 수렴)·소재 안내 자기모순·프롬프트 완성 문장 예시 복제·세계 밖 요청(META/ANACHRONISM) 무처리·미완결 등장·선택지 라벨·toneHint 탈주사위·시그널 자가오염. 불변식 51~54 신설 (잔여: npcLocations desync 근본 수정·장소 고정 실효 측정) |
-| 106_input_content_safety_gate.md | 📎 설계(제안) | 입력 콘텐츠 세이프티 게이트 — 유해 입력(성적 노골·미성년/약자 폭력·혐오·자해) 방어. 현 방어는 LLM 세계관 흡수 + provider 세이프티 우연 의존뿐(실측: 3프로브 전부 미차단, 유해 행동 SUCCESS 판정). world-boundary 3부류에 4번째 부류 편입(L1 룰+L2 nano 축+L3 서술 지시), FREE≠자동성공 문제를 REFUSED 판정 경로로 해결(forceRefusal·상태 델타 0). 구현 시 불변식 55 신설 |
+| 106_input_content_safety_gate.md | ✅ 구현됨 | 입력 콘텐츠 세이프티 게이트 — 유해 입력(성적 노골·미성년/약자 폭력·자해) 방어. world-boundary 3부류에 4번째 부류 편입(`content-safety.core` L1 룰+nano contentSafety 축+L3 [유해 행동 제지 지시]). refused→forceRefulsal(델타 0)로 FREE≠자동성공 함정 회피. REDIRECT=제지 서술 / HARD_REFUSE=고정 문안(LLM 미호출)·무과금. MVP 4종 활성(HATE 비활성). 불변식 55 신설. 실측: 미성년 폭력 SUCCESS→HARD_REFUSE, 비속어 오탐 0 (잔여: HATE 활성화·오탐 baseline 계측·어드민 flagged 집계) |
 | archive/37_streaming_transition_issues.md | 📜 아카이브 | 35+36과 중복 |
 | archive/38_stream_vs_nonstream_comparison.md | 📜 아카이브 | 35와 중복 |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |

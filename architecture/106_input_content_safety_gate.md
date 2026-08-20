@@ -1,6 +1,6 @@
 # 106 — 입력 콘텐츠 세이프티 게이트
 
-> 상태: 📎 설계(제안) · 2026-08-20
+> 상태: ✅ 구현됨 · 2026-08-20 (server 5e70166)
 > 관련: [[105_run_review_defect_fixes|arch/105]] (world-boundary 3부류 경계 거절) ·
 > [[76_market_alignment_direction|arch/76]] D3 (ChallengeClassifier nano 감정) ·
 > 불변식 40(자유 행동 주사위 스킵) · 52(경계 거절 3부류) · 53(toneHint)
