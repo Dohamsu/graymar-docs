@@ -879,6 +879,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 103_arc_endgame_stages.md | ✅ 구현됨 | 아크 종반부 3막 — 사문이던 arc 스테이지 이벤트(getArcEvents 소비 0곳) 배선 + 결말 선택지(arc_finale) + S5+5 안전망 HUB 확장 + 커밋 후 안내 (버그 3c501bf7, 잔여: 실LLM 서술 품질 1런) |
 | 104_npc_dialogue_gate_rework.md | ✅ 구현됨 | NPC 대화 게이트 재설계 — 잡담 주입 화이트리스트 전환(small-talk-gate.core)·소진 폴백 제거 + 대화 잠금 3상태/streak 상한/BACKGROUND 제외(conversation-lock.core)·자기강화 루프 차단. 불변식 23·26·44·50 개정 (잔여: daily_topics 축약·되묻기 억제·P2 5종) |
 | 105_run_review_defect_fixes.md | ✅ 구현됨 | 실런 1개 전문 정독에서 나온 결함 8건 — 실명 치환 substring 오염(정본 수렴)·소재 안내 자기모순·프롬프트 완성 문장 예시 복제·세계 밖 요청(META/ANACHRONISM) 무처리·미완결 등장·선택지 라벨·toneHint 탈주사위·시그널 자가오염. 불변식 51~54 신설 (잔여: npcLocations desync 근본 수정·장소 고정 실효 측정) |
+| 106_input_content_safety_gate.md | 📎 설계(제안) | 입력 콘텐츠 세이프티 게이트 — 유해 입력(성적 노골·미성년/약자 폭력·혐오·자해) 방어. 현 방어는 LLM 세계관 흡수 + provider 세이프티 우연 의존뿐(실측: 3프로브 전부 미차단, 유해 행동 SUCCESS 판정). world-boundary 3부류에 4번째 부류 편입(L1 룰+L2 nano 축+L3 서술 지시), FREE≠자동성공 문제를 REFUSED 판정 경로로 해결(forceRefusal·상태 델타 0). 구현 시 불변식 55 신설 |
 | archive/37_streaming_transition_issues.md | 📜 아카이브 | 35+36과 중복 |
 | archive/38_stream_vs_nonstream_comparison.md | 📜 아카이브 | 35와 중복 |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
