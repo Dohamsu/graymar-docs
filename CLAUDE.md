@@ -881,7 +881,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 103_arc_endgame_stages.md | ✅ 구현됨 | 아크 종반부 3막 — 사문이던 arc 스테이지 이벤트(getArcEvents 소비 0곳) 배선 + 결말 선택지(arc_finale) + S5+5 안전망 HUB 확장 + 커밋 후 안내 (버그 3c501bf7, 잔여: 실LLM 서술 품질 1런) |
 | 104_npc_dialogue_gate_rework.md | ✅ 구현됨 | NPC 대화 게이트 재설계 — 잡담 주입 화이트리스트 전환(small-talk-gate.core)·소진 폴백 제거 + 대화 잠금 3상태/streak 상한/BACKGROUND 제외(conversation-lock.core)·자기강화 루프 차단. 불변식 23·26·44·50 개정 (잔여: daily_topics 축약·되묻기 억제·P2 5종) |
 | 105_run_review_defect_fixes.md | ✅ 구현됨 | 실런 1개 전문 정독에서 나온 결함 8건 — 실명 치환 substring 오염(정본 수렴)·소재 안내 자기모순·프롬프트 완성 문장 예시 복제·세계 밖 요청(META/ANACHRONISM) 무처리·미완결 등장·선택지 라벨·toneHint 탈주사위·시그널 자가오염. 불변식 51~54 신설 (잔여: npcLocations desync 근본 수정·장소 고정 실효 측정) |
-| 106_input_content_safety_gate.md | ✅ 구현됨 | 입력 콘텐츠 세이프티 게이트 — 유해 입력(성적 노골·미성년/약자 폭력·자해) 방어. world-boundary 3부류에 4번째 부류 편입(`content-safety.core` L1 룰+nano contentSafety 축+L3 [유해 행동 제지 지시]). refused→forceRefulsal(델타 0)로 FREE≠자동성공 함정 회피. REDIRECT=제지 서술 / HARD_REFUSE=고정 문안(LLM 미호출)·무과금. MVP 4종 활성(HATE 비활성). 불변식 55 신설. 실측: 미성년 폭력 SUCCESS→HARD_REFUSE, 비속어 오탐 0 (잔여: HATE 활성화·오탐 baseline 계측·어드민 flagged 집계) |
+| 106_input_content_safety_gate.md | ✅ 구현됨 | 입력 콘텐츠 세이프티 게이트 — 유해 입력(성적 노골·미성년/약자 폭력·자해) 방어. world-boundary 3부류에 4번째 부류 편입(`content-safety.core` L1 룰+nano contentSafety 축+L3 [유해 행동 제지 지시]). refused→forceRefulsal(델타 0)로 FREE≠자동성공 함정 회피. REDIRECT=제지 서술 / HARD_REFUSE=고정 문안(LLM 미호출)·무과금. MVP 4종 활성(HATE 비활성). 불변식 55 신설. 실측: 미성년 폭력 SUCCESS→HARD_REFUSE, 비속어 오탐 0, L1 오탐 baseline 1,201턴 전수=정상 입력 오탐 0% (잔여: HATE 활성화·L2 nano 오탐 샘플·어드민 flagged 집계) |
 | archive/37_streaming_transition_issues.md | 📜 아카이브 | 35+36과 중복 |
 | archive/38_stream_vs_nonstream_comparison.md | 📜 아카이브 | 35와 중복 |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |
