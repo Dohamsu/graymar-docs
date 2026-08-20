@@ -269,3 +269,4 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 실명/별칭 치환 추가      | [[architecture/105_run_review_defect_fixes|run review defect fixes]] §2 (정본 `maskHiddenNpcNames` 만 — 불변식 51) |
 | 세계 밖 입력 거절        | [[architecture/105_run_review_defect_fixes|run review defect fixes]] §5 + [[architecture/76_market_alignment_direction|market alignment]] D3-④ |
 | 유해 입력 콘텐츠 방어    | [[architecture/106_input_content_safety_gate|input content safety gate]] (📎 설계 — L1 룰+L2 nano 축+L3 서술 지시, REFUSED 판정 경로) |
+| 법적 고지·규제 준수      | [[architecture/107_legal_compliance|legal compliance]] (약관·개인정보처리방침·`operator.ts` 정본 · 초대 코드 가입 게이트 · 게임산업법 제21·25조 미해결) |

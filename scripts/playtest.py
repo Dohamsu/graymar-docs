@@ -345,7 +345,42 @@ def agent_decide(persona_key, node_type, choices, last_narr, last_action, hp, lo
 # ═══════════════════════════════════════
 print(f"=== 플레이테스트 시작 ({MAX_TURNS}턴, {args.preset}, {args.gender}, choice_rate={args.choice_rate}) ===", flush=True)
 
-status, resp = api("POST", "/auth/register", {"email": EMAIL, "password": PASSWORD, "nickname": NICKNAME})
+# 비공개 테스트 가입 게이트(arch/107 §8) — 정본 테스터 계정은 이미 있어 login 으로
+# 빠지지만, --new-account 는 초대 코드가 필요하다. 서버에 예외를 두는 대신 로컬
+# ADMIN_TOKEN 으로 1회용 코드를 발급받는다(없으면 코드 없이 시도 → 서버가 거절).
+def _mint_invite_code():
+    try:
+        _, st = api("GET", "/auth/invite-status")
+        if not st.get("required"):
+            return None
+        admin_token = os.environ.get("ADMIN_TOKEN", "")
+        if not admin_token:
+            env_path = os.path.join(os.path.dirname(__file__), "..", "server", ".env")
+            with open(env_path, encoding="utf-8") as f:
+                for line in f:
+                    if line.startswith("ADMIN_TOKEN="):
+                        admin_token = line.split("=", 1)[1].strip()
+                        break
+        if not admin_token:
+            print("⚠️  초대 게이트가 켜져 있는데 ADMIN_TOKEN 을 못 찾았습니다.", flush=True)
+            return None
+        r = session.post(
+            f"{BASE}/admin/invite-codes",
+            json={"maxUses": 1, "note": "playtest 자동 발급"},
+            headers={"x-admin-token": admin_token},
+            timeout=10,
+        )
+        return r.json().get("code") if r.ok else None
+    except Exception as e:
+        print(f"⚠️  초대 코드 발급 실패: {e}", flush=True)
+        return None
+
+
+_register_body = {"email": EMAIL, "password": PASSWORD, "nickname": NICKNAME}
+_invite = _mint_invite_code()
+if _invite:
+    _register_body["inviteCode"] = _invite
+status, resp = api("POST", "/auth/register", _register_body)
 if status != 201:
     status, resp = api("POST", "/auth/login", {"email": EMAIL, "password": PASSWORD})
 token = resp.get("token", "")

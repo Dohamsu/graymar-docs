@@ -458,6 +458,10 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 | POST | `/v1/auth/register` | 회원가입 (email, password, nickname) — 회원번호 자동 부여 + 가입 보너스 포인트 |
 | POST | `/v1/auth/login` | 로그인 → JWT |
 | GET | `/v1/auth/me` | 현재 로그인 유저 (회원번호 `memberNo` 포함) |
+| GET | `/v1/auth/invite-status` | **무인증** 가입에 초대 코드가 필요한지 (arch/107 §8) |
+| POST | `/v1/admin/invite-codes` | **admin** 초대 코드 발급 |
+| GET | `/v1/admin/invite-codes` | **admin** 초대 코드 목록 |
+| POST | `/v1/admin/invite-codes/deactivate` | **admin** 초대 코드 회수 |
 | POST | `/v1/runs` | 새 RUN 생성 (presetId, gender, scenarioId) |
 | GET | `/v1/runs` | 활성 RUN 조회 (userId 기반) |
 | GET | `/v1/runs/:runId` | RUN 상태 조회 (turnsLimit 옵션) |
@@ -603,6 +607,9 @@ PORT=3000                             # 기본 3000 (launchd 상주 서비스가
 JWT_SECRET=<secret>                   # 토큰 서명 키 — 프로덕션에서 반드시 교체
 CORS_ORIGINS=https://dimtale.com,...  # 콤마 구분 허용 오리진 (클라·어드민·로컬)
 ADMIN_TOKEN=<secret>                  # 어드민 헤더 인증 x-admin-token (arch/87, JWT+users.role 과 OR)
+
+# ── 비공개 테스트 (arch/107 §8) ──
+INVITE_CODE_REQUIRED=true             # 가입 초대 코드 게이트. **fail-closed** — 'false' 를 명시해야만 공개 가입이 열린다(미설정·오타는 게이트 유지). 로그인은 무관. 코드 발급은 POST /v1/admin/invite-codes
 
 # ── 포인트 (arch/85) ──
 POINTS_ENABLED=true                   # false 면 과금 전면 비활성 (기본 true)
@@ -756,6 +763,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | **NPC 대화 게이트 재설계 (2026-08-18)** | [arch/104] 정성 리뷰(3런 70턴 전문 정독)에서 출발 — "로봇 같다/대화가 안 이어진다/맥락을 못 잡는다/같은 대사 반복" 4개 증상이 **두 게이트에서 갈라진 같은 뿌리**임을 규명. 둘 다 "문서에 있는 규칙이 구현에 없다" 부류. ① **잡담 게이트**가 의도가 아니라 "fact 4종 부재"라는 부산물을 신호로 써, TALK 에서만 성립하는 프록시가 조사·잠입·협박 턴에 항상 참이 됨(69% 주입·사교 발화 턴 0건). 화이트리스트로 반전 + 소진 폴백 제거(프롬프트가 예시한 "몸 상태·날씨 체감"이 그대로 출력되던 증폭기) + 원문 인용 금지 ② **대화 잠금**에 연속 카운터가 없고(화자 있는 첫 이력에서 즉시 return) 갱신 집합에 OBSERVE·INVESTIGATE·TRADE 가 포함돼, BACKGROUND NPC 가 **17턴 독점**(그 구간 대화 행동 2턴·fact 획득 0). RENEW/HOLD/BREAK 3상태 + streak 상한(CORE 4·BACKGROUND 0) + 복제 drift 차단(getLockState 단일 접근) ③ `[NPC 고정]`이 else-if 첫 가지라 기존 `[NPC 피로]`가 영원히 도달 못하던 **자기강화 루프** 차단(전환 예고 병기). 실측: 잡담 50%→TALK 전용(위반 0/40턴)·BACKGROUND 화자 17턴→0·화자 2명 32턴→5명 분산·게이트 14/14·NPC 점프 회귀 0. 신규 스펙 39. 잔여: daily_topics 소재어 축약(368개)·되묻기 억제·미완결 등장 | ✅ 완료 |
 | **silverdeen_v1 팩 제거 (2026-08-18)** | 소유자 지시로 미니 팩 완전 제거. 서버 프로덕션 코드 참조는 **전부 주석**이었다(불변식 45 준수 덕에 로직 분기 0) — 팩 탐색이 `readdir` 기반이라 폴더 삭제만으로 반영. 테스트 5종은 계약을 잃지 않도록 대체: 멀티팩 격리→star_sand, 팩 계약→**karnholt**(`arc_events.json` 부재라 "아크 자산 없는 팩 = 커밋 선택지 미노출" 계약을 그대로 검증), 팩 수 하한 4→3. 클라 카탈로그·프리셋 치환·이미지 분기 제거. DB 런 2건(RUN_ABORTED)은 보존하고 팩 부재 상태 조회 정상 확인. **부수 발견(미수정)**: karnholt 8개 장소 전부 `ambushEncounterId=enc_generic` 인데 encounters 에 부재 → 매복 조우 영구 미발동, audit_content 에 ambush 규칙도 없음 | ✅ 완료 |
 | **실런 리뷰 결함 수정 (2026-08-19)** | [arch/105] arch/104 배포 확인차 **런 하나(`6dc4880d`, 11턴)를 전문 정독**했더니 아래 층에서 8건이 나왔다. 전부 게이트 14개를 통과한 상태였다. **P0-1 실명 치환 substring 오염** — 미소개 `브렌`이 공개된 `토브렌 하위크` 내부를 때려 프롬프트 15곳이 `토단정한 장교 하위크`로 파손, 서술이 6턴 동안 창고 관리인을 "단정한 장교"로 호칭(마커·초상화는 토브렌 → 카드/본문 불일치). **골든 스냅샷 8건에 이미 박제**돼 있었다 — 스냅샷은 "안 바뀜"만 보증한다. naive `replaceAll` 3곳 + 복제본 1곳을 `maskHiddenNpcNames` 정본으로 수렴, Phase A 어절 토큰 보호 추가(단 **미공개 패턴이 진부분문자열일 때만** — 무조건 보호는 `대위` 공용어를 잠가 역회귀). 전 팩 충돌 5쌍(star_sand `귀환자⊃환자`·`멜라/오벨 수녀⊃수녀`). **P0-2 소재 안내 자기모순** — 같은 프롬프트가 "토브렌이 중심이어야"와 "'수상한 관리인'은 부재/화자 금지"를 동시 지시(둘 다 NPC_TOBREN, npcLocations desync). 현재 장면 인물 제외 + 소개 후 실명. **P0-3 프롬프트 완성 문장 예시** — DB 4,145턴 전수로 복제 실적 확인(관찰 예시 40턴·간접 흘림 21턴·인계 5턴), 3곳 모두 구성 요소 지시로 교체. **P0-4 세계 밖 요청 무처리** — 경계 거절 3층이 이동 전용이라 "스마트폰으로 사진 찍고 스탯 100" 이 SUCCESS로 서술됨. `world-boundary.core` 신설(META→OUT_OF_SCOPE+주사위 스킵, ANACHRONISM→IMPLAUSIBLE) + L2 루브릭 확장. **P1** 미완결 등장(대사 금지+등장 허용의 어긋난 조합)·선택지 라벨(대명사 20/32·화폐 기계어·환각)·장소 데스싱크. **P2** toneHint 탈주사위(30일 2,162턴 중 triumph 57%, tense/calm/mysterious **0회**)·시그널 자가오염(11턴에 17건 중 8건이 플레이어 자신). **철회 1건**: "토브렌 어체 혼용"은 오판 — 59문장 실측 전부 낮춤이고 콘텐츠 정의대로였다. 신규 스펙 43·전체 2,122 passed·게이트 15/15. **검증 한계**: P0-1·P0-2는 실런에서 조건 미성립(공허한 통과, 근거는 스냅샷 diff+단위 스펙)·실유저 런 0건 | ✅ 완료 |
+| **상품화 점검 + 법적 고지·비공개 전환 (2026-08-20)** | [arch/107] 상품화 준비도를 실측으로 점검. **실유저 18명(오너 제외)·재방문 1명·엔딩 도달 0명·17일째 신규 0** — 병목은 콘텐츠가 아니라 유입과 리텐션이고, 인프라는 개인 Mac(launchd+cloudflared+로컬 Docker PG, **백업 0**)·PG 미연동·법적 고지 0건이었다. **P0-2 수행**: 이용약관·개인정보처리방침 신설(`/terms`·`/privacy`) + 표시사항 정본 `operator.ts`(리터럴 금지, 불변식 45 와 같은 이유) + 가입 필수 동의. 방침 전 항목을 코드·DB 로 실측해 작성 — **쿠키 0건**·localStorage 5종·`turns.raw_input` 의 **국외 이전**(OpenRouter→Friendli·Venice·Novita·CoreWeave, Vercel, Cloudflare)이 핵심 고지. **비공개 테스트 전환**: 초대 코드 가입 게이트(`invite.core`/`invite.service`, `INVITE_CODE_REQUIRED` **fail-closed** — 명시적 false 만 개방, 코드 클레임+유저 생성 단일 트랜잭션으로 코드 유실 차단) + 랜딩 초대 요청 동선. **색인 차단은 착수했다가 철회** — 등급분류 기준은 "유통·이용 제공"이고 시험용 게임물 제도도 기간(60일)·인원(2만)으로 규정할 뿐 색인을 보지 않는다. 실질 방어는 게이트 하나이며, 유입이 0인 상황에서 색인을 닫으면 초대 요청 리드 채널만 잃는다. `/play` 만 차단 유지 + 메타 카피를 초대제로 정렬. **함정 2건**: page metadata 는 layout 을 **덮어써서**(병합 아님) 전역 noindex 가 정작 유일한 색인 페이지인 랜딩에 안 걸림 / 게이트가 스모크·플레이테스트의 신규 계정 생성을 막아 **서버 예외 대신 스크립트가 ADMIN_TOKEN 으로 1회용 코드를 발급**하도록 수정. **규제 검토**: 게임제작업 등록(제25조, 미등록 = **2년 이하 징역 또는 2천만원 이하 벌금**)·게임물 등급분류(제21조)가 앱인토스 진입의 하드 게이트이자 현재 미준수. §7 유사 서비스 실측 — GPTRPG·프론티아·크랙·제타 **전원 등급분류 미표시**, "엔터테인먼트 카테고리 + 자체 심의 규정"이 de facto 표준. 다만 게임위가 든 게임성 요소(유료 재화·확률·획득/손실)를 dimtale 은 전부 갖춰 캐릭터챗보다 먼저 걸리는 쪽. **검증**: 서버 2,194 passed·스모크 PASS·게이트 거절 3종 실측·색인 정책 4라우트 확인. **잔여(§9 TODO)**: `operator.ts` contactEmail 공란(랜딩 CTA 비활성)·구청 자택 등록 가능 확인·사업자등록→게임제작업·회원 탈퇴 기능 | ✅ 완료 |
 ## Document Status (설계 문서 현황)
 
 > **중간 색인**: [[architecture/INDEX|INDEX]] — 도메인별 1문단 요약 + 상호 참조 맵. 상세 문서 진입 전 확인 권장.
@@ -882,6 +890,7 @@ OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activit
 | 104_npc_dialogue_gate_rework.md | ✅ 구현됨 | NPC 대화 게이트 재설계 — 잡담 주입 화이트리스트 전환(small-talk-gate.core)·소진 폴백 제거 + 대화 잠금 3상태/streak 상한/BACKGROUND 제외(conversation-lock.core)·자기강화 루프 차단. 불변식 23·26·44·50 개정 (잔여: daily_topics 축약·되묻기 억제·P2 5종) |
 | 105_run_review_defect_fixes.md | ✅ 구현됨 | 실런 1개 전문 정독에서 나온 결함 8건 — 실명 치환 substring 오염(정본 수렴)·소재 안내 자기모순·프롬프트 완성 문장 예시 복제·세계 밖 요청(META/ANACHRONISM) 무처리·미완결 등장·선택지 라벨·toneHint 탈주사위·시그널 자가오염. 불변식 51~54 신설 (잔여: npcLocations desync 근본 수정·장소 고정 실효 측정) |
 | 106_input_content_safety_gate.md | ✅ 구현됨 | 입력 콘텐츠 세이프티 게이트 — 유해 입력(성적 노골·미성년/약자 폭력·자해) 방어. world-boundary 3부류에 4번째 부류 편입(`content-safety.core` L1 룰+nano contentSafety 축+L3 [유해 행동 제지 지시]). refused→forceRefulsal(델타 0)로 FREE≠자동성공 함정 회피. REDIRECT=제지 서술 / HARD_REFUSE=고정 문안(LLM 미호출)·무과금. MVP 4종 활성(HATE 비활성). 불변식 55 신설. 실측: 미성년 폭력 SUCCESS→HARD_REFUSE, 비속어 오탐 0, L1 오탐 baseline 1,201턴 전수=정상 입력 오탐 0% (잔여: HATE 활성화·L2 nano 오탐 샘플·어드민 flagged 집계) |
+| 107_legal_compliance.md | ⚠️ 부분 구현 | 법적 고지·규제 준수(상품화 P0-2) — 이용약관·개인정보처리방침 신설(`/terms`·`/privacy`, 표시사항 정본 `operator.ts`)·가입 동의 게이트 + **비공개 테스트 초대 코드 게이트**(`invite.core`/`invite.service`, fail-closed·원자적 클레임, `INVITE_CODE_REQUIRED`). 국외 이전(OpenRouter·Vercel·Cloudflare) 고지가 핵심. §7 유사 서비스 실측(GPTRPG·프론티아·크랙·제타 — 전원 등급분류 미표시), §9 TODO. **미해결: 게임제작업 등록(제25조, 미등록 = 2년/2천만원)·게임물 등급분류(제21조)·회원 탈퇴 기능·`operator.ts` contactEmail 공란** |
 | archive/37_streaming_transition_issues.md | 📜 아카이브 | 35+36과 중복 |
 | archive/38_stream_vs_nonstream_comparison.md | 📜 아카이브 | 35와 중복 |
 | Context Coherence Reinforcement.md | ✅ 구현됨 | 컨텍스트 일관성 강화 |

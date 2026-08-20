@@ -20,6 +20,13 @@ export const HEADLESS = process.env.HEADLESS !== "false";
 export const VIEWPORT = { width: 1440, height: 900 };
 export const DEFAULT_PASSWORD = "Test1234!!";
 export const DEFAULT_NICKNAME = "E2ETester";
+/**
+ * 비공개 테스트 가입 게이트(arch/107 §8) 대응. 검증 스크립트는 매 실행 새 계정을
+ * 만들므로 초대 코드가 필요하다. 게이트를 우회하는 예외를 서버에 두는 대신,
+ * 로컬 어드민 토큰으로 그때그때 코드를 발급받아 쓴다 — 게이트 자체는 그대로 둔다.
+ * ADMIN_TOKEN 이 없거나 게이트가 꺼져 있으면 조용히 건너뛴다.
+ */
+export const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "";
 
 // ──────────────────────────────────────────────────────────────
 // 타입
@@ -74,8 +81,42 @@ export class ApiClient {
   private token: string | null = null;
   constructor(private base: string = SERVER_BASE) {}
 
+  /**
+   * 게이트가 켜져 있으면 어드민 API 로 1회용 초대 코드를 발급받는다.
+   * 실패하면 null — 호출부는 코드 없이 진행하고 서버 거절 메시지를 그대로 노출한다.
+   */
+  private async mintInviteCode(): Promise<string | null> {
+    try {
+      const status = await this.request("GET", "/auth/invite-status");
+      if (status.body?.required !== true) return null;
+      if (!ADMIN_TOKEN) {
+        console.warn("⚠️  초대 게이트가 켜져 있는데 ADMIN_TOKEN 이 없습니다 — 가입이 거절됩니다.");
+        return null;
+      }
+      const r = await fetch(`${this.base}/admin/invite-codes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token": ADMIN_TOKEN,
+        },
+        body: JSON.stringify({ maxUses: 1, note: "e2e 자동 발급" }),
+      });
+      if (!r.ok) return null;
+      const body = (await r.json()) as { code?: string };
+      return body.code ?? null;
+    } catch {
+      return null;
+    }
+  }
+
   async register(email: string, password = DEFAULT_PASSWORD, nickname = DEFAULT_NICKNAME) {
-    const r = await this.request("POST", "/auth/register", { email, password, nickname });
+    const inviteCode = await this.mintInviteCode();
+    const r = await this.request("POST", "/auth/register", {
+      email,
+      password,
+      nickname,
+      ...(inviteCode ? { inviteCode } : {}),
+    });
     if (r.status === 201 || r.status === 200) {
       this.token = r.body.token;
     } else {
