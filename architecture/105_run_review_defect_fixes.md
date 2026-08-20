@@ -505,3 +505,36 @@ NPC_BG_DOCKER          shortAlias = "인부"
   에 '삼엄한 경계' -1 (`RESOLVE_BALANCE` config 외부화 — 불변식 30). 보정 +2 도
   DANGER 에선 FAIL 17% 부활. 임계 상향(②)은 저스탯 캐릭터 과벌로 기각.
   실효 관측(DANGER 구간 FAIL 발생)은 다음 플레이테스트에서.
+
+---
+
+## 13. 부록 2 — 버그 02337e51: stale 자동 발견의 무주입 단서 (2026-08-20, server ad56a29)
+
+유저 리포트(star_sand 턴 7): "단서를 얻었는데 어디서 얻었는지 모르겠어요.
+대화로서는 이게 그 단서인지 모르겠어요."
+
+**근본 원인** — stale 자동 발견(체류 5턴 + 힌트 3회 → fact 자동 등재,
+`turns.service` processQuestProgression)이 `questReveal` 을 세팅하지 않아
+**불변식 27(기록 fact = 서술 fact)을 우회하는 세 번째 경로**였다. 실측:
+`FACT_SS_FIRST_DREAM`(보유자 이렌·발견 장소 여관)이 부두의 BG NPC 대화 턴에
+무주입 발견 — 기록엔 단서, 서술은 그 fact 를 모르는 잡담, 출처 표기 없음.
+
+**수정 (A+B)**:
+- **B 장소 게이트**: `discoveryLocations` 저작 fact 는 그 장소에서만 자동 발견.
+- **A rumor 모드**: `QuestRevealUI.revealMode 'rumor'`(npcId null) 신설 —
+  자동 발견도 서술 주입 계약을 탄다. `[단서] 오가며 주워들은 이야기가 하나로
+  맞춰진다` 이벤트 + 프롬프트 `[이번 턴 플레이어가 깨닫는 정보]` 블록(출처
+  없는 내적 서술 지시, 현장 NPC 귀속 금지 — §arch/89 임의 귀속 함정 차단).
+  같은 턴 NPC 정상 공개가 있으면 rumor 는 양보한다.
+- **부수 결함**: context-builder fact 주입의 outcome(SUCCESS/PARTIAL) 게이트가
+  FREE 턴 자동 발견을 걸렀다 — rumor 는 판정 무관이라 게이트 밖으로 이동.
+  E2E 1차에서 프롬프트 블록 누락으로 실측해 잡음.
+
+**검증** — 실런 E2E(star_sand 신규 런): 부두 미발동(B) → 여관 이렌 direct
+정상 공개(rumor 양보) → 수녀원·갈비평원 rumor 발동 + 실서술 "그간 부두와
+여관에서 주워 들었던 파편 같은 이야기들이 하나로 맞물린다" (fact 핵심 전달,
+현장 NPC 무귀속). 전체 2,150 passed.
+
+**교훈(§11 연장)** — 진행 보장 장치(자동 발견)가 정합 계약 밖에서 조용히
+작동하고 있었다. 발견 경로를 새로 추가하면 ① questReveal 주입 ② 출처 표기
+③ 장소 정합의 3조건을 함께 배선한다.
