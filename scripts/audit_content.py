@@ -357,6 +357,57 @@ def check_l2_contract(pack):
                 )
             )
 
+    # arch/108 — 자연스러운 장비 획득 필드 모양 검사 (사문 배선 방지).
+    # 새 콘텐츠 필드는 엔진이 못 읽는 모양으로 저작되면 조용히 무시된다 — 필수 검사.
+    item_ids = {
+        i.get("itemId") for i in pack.items if isinstance(i, dict)
+    } - {None}
+    loc_ids = {
+        l.get("locationId") for l in pack.locations if isinstance(l, dict)
+    } - {None}
+    for n in pack.npcs:
+        if not isinstance(n, dict):
+            continue
+        nid = n.get("npcId", "?")
+        gift = n.get("gift")
+        if gift is not None:
+            if not isinstance(gift, dict) or not gift.get("itemId"):
+                f.append(Finding("ERROR", "NATURAL_ACQ_SHAPE", f"npcs.json:{nid}",
+                                 "gift 는 {itemId[, trustMin, note]} 객체여야 함 (arch/108)"))
+            elif gift["itemId"] not in item_ids:
+                f.append(Finding("ERROR", "NATURAL_ACQ_REF", f"npcs.json:{nid}",
+                                 f'gift.itemId "{gift["itemId"]}" 미정의 — 지급이 조용히 무시됨'))
+            elif "trustMin" in gift and not isinstance(gift["trustMin"], (int, float)):
+                f.append(Finding("ERROR", "NATURAL_ACQ_SHAPE", f"npcs.json:{nid}",
+                                 "gift.trustMin 은 수치여야 함"))
+        pt = n.get("personalTrade")
+        if pt is not None:
+            if not isinstance(pt, dict) or not pt.get("itemId"):
+                f.append(Finding("ERROR", "NATURAL_ACQ_SHAPE", f"npcs.json:{nid}",
+                                 "personalTrade 는 {itemId, price} 객체여야 함 (arch/108)"))
+            elif pt["itemId"] not in item_ids:
+                f.append(Finding("ERROR", "NATURAL_ACQ_REF", f"npcs.json:{nid}",
+                                 f'personalTrade.itemId "{pt["itemId"]}" 미정의'))
+            elif not isinstance(pt.get("price"), (int, float)) or pt["price"] <= 0:
+                f.append(Finding("ERROR", "NATURAL_ACQ_SHAPE", f"npcs.json:{nid}",
+                                 "personalTrade.price 는 양수여야 함 (0 이하는 엔진이 무동작)"))
+    for fid, fact in (pack.facts or {}).items():
+        if not isinstance(fact, dict):
+            continue
+        cache = fact.get("cache")
+        if cache is None:
+            continue
+        if not isinstance(cache, dict) or not cache.get("itemId") or not cache.get("locationId"):
+            f.append(Finding("ERROR", "NATURAL_ACQ_SHAPE", f"facts.json:{fid}",
+                             "cache 는 {itemId, locationId} 객체여야 함 (arch/108)"))
+        else:
+            if cache["itemId"] not in item_ids:
+                f.append(Finding("ERROR", "NATURAL_ACQ_REF", f"facts.json:{fid}",
+                                 f'cache.itemId "{cache["itemId"]}" 미정의'))
+            if cache["locationId"] not in loc_ids:
+                f.append(Finding("ERROR", "NATURAL_ACQ_REF", f"facts.json:{fid}",
+                                 f'cache.locationId "{cache["locationId"]}" 미정의 — 도달 불가 은닉처'))
+
     # 불변식 31 — defaultTraitId 실존 + 스탯 배분
     trait_ids = set()
     for t in pack.traits:

@@ -304,7 +304,12 @@
       "LOC_HARBOR",
       "LOC_SLUMS"
     ],
-    "portraitUrl": "/npc-portraits/harulun_boss.webp"
+    "portraitUrl": "/npc-portraits/harulun_boss.webp",
+    "gift": {
+      "itemId": "EQ_DOCK_VEST",
+      "trustMin": 30,
+      "note": "형제단의 인정 — 부두에서 몸을 지키라는 뜻"
+    }
   },
   {
     "npcId": "NPC_EDRIC_VEIL",
@@ -894,7 +899,12 @@
     "activityLocations": [
       "LOC_GUARD"
     ],
-    "portraitUrl": "/npc-portraits/mairel_dan.webp"
+    "portraitUrl": "/npc-portraits/mairel_dan.webp",
+    "gift": {
+      "itemId": "EQ_PATROL_ARMOR",
+      "trustMin": 35,
+      "note": "군인의 인정 — 쉽게 주는 것이 아니다"
+    }
   },
   {
     "npcId": "NPC_TOBREN",
@@ -1590,7 +1600,11 @@
       "LOC_MARKET",
       "LOC_SLUMS"
     ],
-    "portraitUrl": "/npc-portraits/rennick.webp"
+    "portraitUrl": "/npc-portraits/rennick.webp",
+    "personalTrade": {
+      "itemId": "EQ_SCOUTS_GOGGLES",
+      "price": 25
+    }
   },
   {
     "npcId": "NPC_CAPTAIN_BREN",

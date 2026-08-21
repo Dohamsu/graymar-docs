@@ -1,6 +1,9 @@
 # 108 — 자연스러운 장비 획득 경로
 
-> 상태: 📎 설계 → 구현 진행 · 2026-08-21
+> 상태: ✅ 구현됨 · 2026-08-21 (server 커밋 예정)
+> 실증: A 관계 선물(하를런 trust 40 → TALK 턴 방수 조끼 지급, npcGifts 1회) · B 단서
+> 은닉(FACT_SHADOW_INTEL 발견 → 빈민가 조사 성공 시 그림자 망토, claimedFactCaches 1회,
+> FAIL 턴은 재시도 가능) · C 코어 스펙 23건 · HELP 드랍 제거 · audit_content 모양 검사 통과
 > 관련: [[65_economy_loop_v1|arch/65]] (bribeOpportunity·사례금) · [[89_quest_reward_attribution|arch/89]]
 > (지급 주체 원칙) · [[40_inventory_item_integrity|arch/40]] ([이번 턴 획득 아이템] 정합) ·
 > 불변식 1(서버 정본) · 44(사교 발화 게이트) · 45(콘텐츠 ID 외부화)

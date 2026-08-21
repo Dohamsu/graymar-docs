@@ -277,7 +277,11 @@
       "primarySources": [
         "NPC_HARLUN",
         "NPC_RAT_KING"
-      ]
+      ],
+      "cache": {
+        "itemId": "EQ_SMUGGLER_DAGGER",
+        "locationId": "LOC_DOCKS_WAREHOUSE"
+      }
     },
     "FACT_SHADOW_INTEL": {
       "factId": "FACT_SHADOW_INTEL",
@@ -309,7 +313,11 @@
       "primarySources": [
         "NPC_INFO_BROKER",
         "NPC_RAT_KING"
-      ]
+      ],
+      "cache": {
+        "itemId": "EQ_SHADOW_CLOAK",
+        "locationId": "LOC_SLUMS"
+      }
     },
     "FACT_SMUGGLE_ROUTE_GUILD": {
       "factId": "FACT_SMUGGLE_ROUTE_GUILD",
