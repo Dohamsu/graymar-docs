@@ -9,6 +9,9 @@
  * 모든 정본 e2e 스크립트(smoke/full/perf/regression)가 이 모듈을 참조한다.
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 
 // ──────────────────────────────────────────────────────────────
@@ -25,8 +28,26 @@ export const DEFAULT_NICKNAME = "E2ETester";
  * 만들므로 초대 코드가 필요하다. 게이트를 우회하는 예외를 서버에 두는 대신,
  * 로컬 어드민 토큰으로 그때그때 코드를 발급받아 쓴다 — 게이트 자체는 그대로 둔다.
  * ADMIN_TOKEN 이 없거나 게이트가 꺼져 있으면 조용히 건너뛴다.
+ *
+ * process.env 에 없으면 server/.env 를 폴백으로 읽는다 — 루트/e2e 어디서 tsx 를
+ * 실행하든 토큰을 확보한다(스크립트는 server/.env 를 자동 로드하지 않으므로,
+ * 이게 없으면 루트 실행 스모크가 CODE_REQUIRED 로 깨진다 — playtest.py 와 동일 폴백).
  */
-export const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "";
+function loadAdminToken(): string {
+  if (process.env.ADMIN_TOKEN) return process.env.ADMIN_TOKEN;
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  for (const rel of ["../../server/.env", "../server/.env", "server/.env"]) {
+    try {
+      const txt = fs.readFileSync(path.resolve(here, rel), "utf-8");
+      const m = txt.match(/^ADMIN_TOKEN=(.*)$/m);
+      if (m?.[1]) return m[1].trim();
+    } catch {
+      /* try next candidate */
+    }
+  }
+  return "";
+}
+export const ADMIN_TOKEN = loadAdminToken();
 
 // ──────────────────────────────────────────────────────────────
 // 타입
