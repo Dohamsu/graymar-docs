@@ -136,6 +136,7 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 
 - [[architecture/12_equipment_system|equipment system]] — ✅ 구현됨. 장비 시스템 정본: 드랍/착용/해제, 접미사, 세트효과, Legendary. 리전 경제 연계는 [[architecture/10_region_economy|region economy]] 참조(부분 구현).
 - [[architecture/40_inventory_item_integrity|inventory item integrity]] — 소지품 UX 개선(교체 확인 모달, USABLE_ITEMS 동적화 via `usableInHub`, EquipmentDropToast, 에러 한국어화 10종) + LLM-실획득 아이템 정합성(시스템 프롬프트 구체 증여 금지 규칙 + `[이번 턴 획득 아이템]` 블록 + `EventItemReward` payload 경로) + 콘텐츠 매핑(KEY_ITEM 3종 + 희귀 장비 2종).
+- [[architecture/108_natural_equipment_acquisition|natural equipment acquisition]] — 📎 설계→구현. 대화·조사 플레이(61%)가 장비 획득에서 배제되던 역설 해소(드랍 자격 턴 9.4% 실측). A 관계 선물(trust≥30, npcs.json `gift`) · B 단서 연계 은닉 장비(facts.json `cache`) · C NPC 개인 거래(`personalTrade`, bribeOpportunity 미러) 3경로 + 대화 턴 랜덤 드랍 제거(`EQUIPMENT_DROP_ACTIONS`에서 HELP 제외, 골드 사례는 유지). 4계약: 서버 결정론·런당 1회·획득 블록 서술 정합·콘텐츠 저작.
 
 ### 10. 기타
 
