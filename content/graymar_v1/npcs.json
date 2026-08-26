@@ -608,7 +608,10 @@
     "activityLocations": [
       "LOC_MARKET"
     ],
-    "portraitUrl": "/npc-portraits/edric_veil.webp"
+    "portraitUrl": "/npc-portraits/edric_veil.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_MAIREL",
@@ -1070,7 +1073,10 @@
     "activityLocations": [
       "LOC_HARBOR"
     ],
-    "portraitUrl": "/npc-portraits/tobren.webp"
+    "portraitUrl": "/npc-portraits/tobren.webp",
+    "relationProfile": {
+      "romanceable": false
+    }
   },
   {
     "npcId": "NPC_MOON_SEA",
@@ -1253,7 +1259,10 @@
       "LOC_MARKET",
       "LOC_GUARD"
     ],
-    "portraitUrl": "/npc-portraits/laira_kestel.webp"
+    "portraitUrl": "/npc-portraits/laira_kestel.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_MIRELA",
@@ -1604,6 +1613,9 @@
     "personalTrade": {
       "itemId": "EQ_SCOUTS_GOGGLES",
       "price": 25
+    },
+    "relationProfile": {
+      "romanceable": true
     }
   },
   {
@@ -1760,7 +1772,10 @@
       "LOC_HARBOR",
       "LOC_GUARD"
     ],
-    "portraitUrl": "/npc-portraits/captain_bren.webp"
+    "portraitUrl": "/npc-portraits/captain_bren.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_ROSA",
@@ -1913,7 +1928,10 @@
       "LOC_SLUMS",
       "LOC_MARKET"
     ],
-    "portraitUrl": "/npc-portraits/rosa.webp"
+    "portraitUrl": "/npc-portraits/rosa.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_INFO_BROKER",
@@ -2824,7 +2842,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/sera.webp"
+    "portraitUrl": "/npc-portraits/sera.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_DAME_ISOLDE",
@@ -3434,7 +3455,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/felix.webp"
+    "portraitUrl": "/npc-portraits/felix.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_BG_FISHMONGER",

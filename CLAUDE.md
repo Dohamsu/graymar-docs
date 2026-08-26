@@ -338,7 +338,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 ## Critical Design Invariants
 
 1. **Server is Source of Truth** — 모든 수치 계산, 확률 롤, 상태 변경은 서버에서만.
-2. **LLM is narrative-only (하드 상태 한정)** — LLM은 **하드 상태**(HP·골드·인벤토리·questState·판정 결과)를 절대 쓸 수 없다. 실패해도 게임 진행 (턴은 LLM 호출 전에 커밋, llmStatus 게이트 없음). 단 **소프트 상태**는 나노 LLM 출력이 `applyRunStatePatch` CAS(fresh 재조회 + jsonb 낙관적 잠금, llm-worker.service.ts) **경유로만** 역류가 허용된 설계된 회색지대다: NPC 감정 블렌드(emotionalShiftHint, arch/76 D3-b′)·작별 감지(npcFarewell)·소개 성사(NpcAppearance)·테마 기록·nextBeats·propsTrace·장면 컷 상태(sceneCutState, arch/96). 새 역류 경로 추가 시 ① 하드 상태 금지 ② CAS 경유 ③ 이 목록 등재의 3조건을 지킨다.
+2. **LLM is narrative-only (하드 상태 한정)** — LLM은 **하드 상태**(HP·골드·인벤토리·questState·판정 결과)를 절대 쓸 수 없다. 실패해도 게임 진행 (턴은 LLM 호출 전에 커밋, llmStatus 게이트 없음). 단 **소프트 상태**는 나노 LLM 출력이 `applyRunStatePatch` CAS(fresh 재조회 + jsonb 낙관적 잠금, llm-worker.service.ts) **경유로만** 역류가 허용된 설계된 회색지대다: NPC 감정 블렌드(emotionalShiftHint, arch/76 D3-b′)·작별 감지(npcFarewell)·소개 성사(NpcAppearance)·테마 기록·nextBeats·propsTrace·장면 컷 상태(sceneCutState, arch/96)·관계 신호(relationSignal, arch/109 — nano 는 신호 감지만, 전이 판정은 `relationship-kind.core.ts` 순수 함수·수락 조건은 서버 임계+콘텐츠 romanceable). 새 역류 경로 추가 시 ① 하드 상태 금지 ② CAS 경유 ③ 이 목록 등재의 3조건을 지킨다.
 3. **Idempotency** — `(run_id, turn_no)` + `(run_id, idempotency_key)` unique.
 4. **RNG determinism** — `seed + cursor` 저장. COMBAT: hitRoll → varianceRoll → critRoll. LOCATION: EventMatcher(가중치) → ResolveService(1d6).
 5. **Theme memory (L0) 불변** — 토큰 예산 압박에도 삭제 금지.

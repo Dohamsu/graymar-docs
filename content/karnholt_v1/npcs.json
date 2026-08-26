@@ -143,7 +143,10 @@
           "이웃"
         ]
       }
-    ]
+    ],
+    "relationProfile": {
+      "romanceable": false
+    }
   },
   {
     "npcId": "NPC_KH_WARDEN",
@@ -580,7 +583,10 @@
           "운반"
         ]
       }
-    ]
+    ],
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_KH_INNKEEP",
@@ -727,7 +733,10 @@
           "눈"
         ]
       }
-    ]
+    ],
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_KH_ENGRAVER",
@@ -870,6 +879,9 @@
           "솜씨"
         ]
       }
-    ]
+    ],
+    "relationProfile": {
+      "romanceable": true
+    }
   }
 ]

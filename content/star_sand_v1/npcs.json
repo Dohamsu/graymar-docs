@@ -257,7 +257,10 @@
       "currentStage": 0,
       "completed": false
     },
-    "portraitUrl": "/npc-portraits/star_sand_v1/warm_winter_woman.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/warm_winter_woman.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_SS_LUOR",
@@ -526,7 +529,10 @@
       "currentStage": 0,
       "completed": false
     },
-    "portraitUrl": "/npc-portraits/star_sand_v1/mystic_night_priestess.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/mystic_night_priestess.webp",
+    "relationProfile": {
+      "romanceable": false
+    }
   },
   {
     "npcId": "NPC_SS_SAEL",
@@ -999,7 +1005,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/star_sand_v1/lonely_frozen_warrior.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/lonely_frozen_warrior.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_SS_KAILUN",
@@ -1255,7 +1264,10 @@
       "currentStage": 0,
       "completed": false
     },
-    "portraitUrl": "/npc-portraits/star_sand_v1/dark_market_mage.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/dark_market_mage.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_SS_NAHAT",
@@ -1728,7 +1740,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/star_sand_v1/young_pilgrim_guide.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/young_pilgrim_guide.webp",
+    "relationProfile": {
+      "romanceable": false
+    }
   },
   {
     "npcId": "NPC_SS_ODRIN",
@@ -2124,7 +2139,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/star_sand_v1/black_ice_courier.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/black_ice_courier.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_SS_ABAS",
@@ -2520,7 +2538,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/star_sand_v1/harbor_route_broker.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/harbor_route_broker.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_SS_KASIEN",
@@ -2784,7 +2805,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/star_sand_v1/armed_pilgrim_seeker.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/armed_pilgrim_seeker.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_SS_PENA",
@@ -2916,7 +2940,10 @@
         ]
       }
     ],
-    "portraitUrl": "/npc-portraits/star_sand_v1/heart_pool_licensor.webp"
+    "portraitUrl": "/npc-portraits/star_sand_v1/heart_pool_licensor.webp",
+    "relationProfile": {
+      "romanceable": true
+    }
   },
   {
     "npcId": "NPC_SS_ED",

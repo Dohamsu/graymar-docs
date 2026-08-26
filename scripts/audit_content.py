@@ -391,6 +391,22 @@ def check_l2_contract(pack):
             elif not isinstance(pt.get("price"), (int, float)) or pt["price"] <= 0:
                 f.append(Finding("ERROR", "NATURAL_ACQ_SHAPE", f"npcs.json:{nid}",
                                  "personalTrade.price 는 양수여야 함 (0 이하는 엔진이 무동작)"))
+        # arch/109 R1 — 관계 성향 모양 검사. romanceable 이 bool 이 아니면
+        # 엔진(=== true 판정)이 조용히 false 취급 — 저작 의도가 사문화된다.
+        rp = n.get("relationProfile")
+        if rp is not None:
+            if not isinstance(rp, dict):
+                f.append(Finding("ERROR", "RELATION_PROFILE_SHAPE", f"npcs.json:{nid}",
+                                 "relationProfile 은 {romanceable: bool} 객체여야 함 (arch/109)"))
+            elif "romanceable" in rp and not isinstance(rp["romanceable"], bool):
+                f.append(Finding("ERROR", "RELATION_PROFILE_SHAPE", f"npcs.json:{nid}",
+                                 'relationProfile.romanceable 은 true/false 여야 함 — '
+                                 '문자열 "true" 는 엔진이 false 취급 (arch/109)'))
+            else:
+                unknown = set(rp.keys()) - {"romanceable"}
+                if unknown:
+                    f.append(Finding("WARN", "RELATION_PROFILE_SHAPE", f"npcs.json:{nid}",
+                                     f'relationProfile 미지원 키 {sorted(unknown)} — 엔진이 읽지 않음 (arch/109)'))
     for fid, fact in (pack.facts or {}).items():
         if not isinstance(fact, dict):
             continue
