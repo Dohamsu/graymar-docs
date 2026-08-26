@@ -1268,7 +1268,12 @@
     "portraitUrl": "/npc-portraits/star_sand_v1/dark_market_mage.webp",
     "relationProfile": {
       "romanceable": true
-    }
+    },
+    "roleKeywords": [
+      "조제사",
+      "밀매상",
+      "약장수"
+    ]
   },
   {
     "npcId": "NPC_SS_NAHAT",
