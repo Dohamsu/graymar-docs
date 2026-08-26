@@ -107,6 +107,20 @@ relationKindLabel(연인/벗/막역한 벗/맞수/원한)·relationMilestones �
 **주의(기술부채)**: turns.service 파일 래칫(max-lines 7,900) 이 R1~R4 누적으로
 8,131 초과 — arch/77 §18 원칙대로 다음 정리 사이클에서 분할 대상.
 
+**R4 실런 게이트 (2026-08-26, run bf90c097 T17~T26) — PASS:**
+
+- **거절 경로 (이렌 — 연인·companionable 미저작)**: `DECLINED
+  (not-companionable)` DB 기록 + "저도 정말 그러고 싶어요. 하지만 저는
+  이곳에 남아서 …자리를 지켜야만 해요" — 애정 유지 + 책무 사유, 설계 그대로.
+- **수락 경로 (유르마 — 친분 3턴에 trust 10→37·attach 0→14 = CLOSE)**:
+  `ACCEPTED` + "기꺼이 동행하겠습니다".
+- **이동 추종 (핵심)**: 흰숨 부두 이동 턴에 `npcLocations.NPC_SS_YURMA` 가
+  스케줄(갈비평원 4상 상주)을 무시하고 `LOC_SS_DOCK` 으로 추종 — 서술에서도
+  유르마가 부두 장면에 함께 등장해 경계·수색을 수행. 후속 일반 턴 UI 에
+  `companion: true` 배지 정상.
+- 관찰: 이동 턴(T24) serverResult 는 npcEmotional 자체를 싣지 않는 기존
+  경로라 배지는 다음 일반 턴부터 — 결함 아님.
+
 ## 1. 배경 — 무엇이 되고 무엇이 안 되나 (2026-08-26 실측)
 
 이날 구축·실증된 기반:
