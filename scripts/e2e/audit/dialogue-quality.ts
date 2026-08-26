@@ -45,7 +45,7 @@ interface NpcContentSnapshot {
   signatureKeywords: Set<string>;
   /** architecture/51 — distinct 시그니처 풀 (signature + traits + roleKeywords + alias) */
   distinctPool: Set<string>;
-  speechRegister: "HAOCHE" | "HAEYO" | "BANMAL" | "HAPSYO" | "HAECHE";
+  speechRegister: "HAOCHE" | "HAEYO" | "BANMAL" | "HAPSYO" | "HAECHE" | "GYUSU" | "KKOMA";
   /** architecture/51 §A — NPC baseline tone (personality에서 추론). 사용자 casual 입력에
    *  NPC가 baseline보다 *더* 무겁게 응답하면 mismatch로 판정. dark NPC가 dark로 답하는
    *  건 자연스러우니 mismatch 아님. */
@@ -232,6 +232,10 @@ const REGISTER_PATTERNS: Record<string, RegExp[]> = {
   ],
   BANMAL: [new RegExp(`(?:[가-힣]야|[가-힣]지|[가-힣]거든|[가-힣]어|[가-힣]아)${SENT_END}`)],
   HAPSYO: [new RegExp(`(?:습니다|입니다|십시오|니까|[가-힣]니다)${SENT_END}`)],
+  // 규수체 (2026-08-26 신설) — 합쇼체 서술 + 지요계 의문·권유
+  GYUSU: [new RegExp(`(?:[가-힣]니다|[가-힣]지요|랍니다|답니다)${SENT_END}`)],
+  // 꼬마체 (2026-08-26 신설) — 아이 반말. 반말 패턴 + 아이 특유 종결
+  KKOMA: [new RegExp(`(?:[가-힣]야|[가-힣]지|[가-힣]거든|[가-힣]어|[가-힣]아|할래|줄게|맞지)${SENT_END}`)],
   HAECHE: [new RegExp(`(?:했다|하다|[가-힣]는다|[가-힣]ㄴ다|[가-힣]다)${SENT_END}`)],
 };
 

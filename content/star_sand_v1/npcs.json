@@ -295,8 +295,8 @@
         "집요",
         "관찰적"
       ],
-      "speechStyle": "낮고 느린 하오체. 상대의 말을 되묻는 습관이 있다. 금지: 반말, ~해요, ~습니다. 상대 호칭은 '그대'.",
-      "speechRegister": "HAOCHE",
+      "speechStyle": "낮고 차분한 규수체. 즉답을 피하고 뜸을 들인 뒤 신중하게 답한다. 의문은 ~인지요, 권유는 ~시지요. 금지: 반말, ~하오, ~세요. 상대 호칭은 '당신'.",
+      "speechRegister": "GYUSU",
       "innerConflict": "환자를 구하려는 자비와 그들을 관찰 대상으로 삼는 집착 사이",
       "softSpot": "자신이 구하지 못한 환자의 꿈 기록을 넘길 때",
       "signature": []
@@ -2684,8 +2684,8 @@
     "personality": {
       "core": "실종된 동생을 찾는 무장 순례자 — 동행·전투 보조",
       "traits": [],
-      "speechStyle": "단정한 합쇼체. 수녀원을 믿고 싶어 하지만 동생 기록 은폐를 보고 의심한다. 상대 호칭은 '당신'.",
-      "speechRegister": "HAPSYO",
+      "speechStyle": "단정한 규수체. 수녀원을 믿고 싶어 하지만 동생 기록 은폐를 보고 의심한다. 상대 호칭은 '당신'.",
+      "speechRegister": "GYUSU",
       "innerConflict": "",
       "softSpot": "",
       "signature": []
@@ -3962,7 +3962,7 @@
       "core": "환자 침상 담당",
       "traits": [],
       "speechStyle": "환자 침상 담당다운 말투.",
-      "speechRegister": "HAOCHE",
+      "speechRegister": "GYUSU",
       "innerConflict": "",
       "softSpot": "",
       "signature": []
@@ -4080,7 +4080,7 @@
       "core": "견습 수녀",
       "traits": [],
       "speechStyle": "견습 수녀다운 말투.",
-      "speechRegister": "HAOCHE",
+      "speechRegister": "GYUSU",
       "innerConflict": "",
       "softSpot": "",
       "signature": []
