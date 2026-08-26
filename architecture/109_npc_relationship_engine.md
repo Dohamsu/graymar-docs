@@ -23,8 +23,32 @@
 - **콘텐츠 저작**: 3팩 `relationProfile.romanceable` — true 17명(graymar 7·star_sand 7·karnholt 3),
   명시 false 4명(토브렌·메린=기혼, 루오르=성직, 세피=미성년). 미저작 기본 false.
   `audit_content.py` 에 `RELATION_PROFILE_SHAPE` 모양 검사 추가 (사문 배선 방지).
-- 검증: 서버 2,311 passed·스냅샷 17 불변·audit_content ERROR 0. **실런 게이트(§7) 미수행** —
-  배포 후 고백→수락→세션 재개 재회 확인 필요.
+- 검증: 서버 2,321 passed·스냅샷 17 불변·audit_content ERROR 0.
+
+### 0.1 실런 게이트 결과 (2026-08-26, run bf90c097 — star_sand 이렌)
+
+**PASS.** 호감 8턴(trust 30→100·attach 0→54, BONDED 도달) → 고백 →
+`[RelationSignal] confession-accepted (kind=ROMANCE)` + `CONFESSION_ACCEPTED`
+마일스톤 DB 기록 → 세션 재개 재회 턴에서 상태 그대로 복원 + 연인 톤
+("카일, 그렇게 다정하게 웃어주시니 제 마음까지 다 훈훈해지네요").
+
+1차 시도에서 잡은 결함 2건 (둘 다 게이트 없었으면 사문화됐을 부류):
+
+- **고백 THREATEN 오분류 + nano NONE 이중 소실** (d7746ad) — "나와 연인이
+  되어 주겠소?" 의 요구형 어미를 intent 파서가 협박으로 읽어 fear 테이블
+  급증(1→34)·DISMISS 반응, nano relationSignal 도 그 맥락에 눌려 NONE.
+  BONDED 충족 상태에서 고백이 통째로 증발했다. 해소는 L1+L2 층위
+  (world-boundary 관례): `detectConfessionIntentL1` 명시 문형 결정론 감지
+  → intent THREATEN→TALK 강등 가드 + 워커 신호 L1 폴백. 재시도에서 nano 는
+  여전히 NONE 이었고 **L1 폴백이 실제 성사 경로**였다 — nano 단독 의존이면
+  이 기능은 죽어 있었다.
+- **연인 재회에 "손님" 호칭** (640e336) — R4 권장 호칭(speechStyle 최빈
+  "손님")이 관계를 몰라 kind=ROMANCE 재회에도 "어서 오세요, 손님".
+  ROMANCE+통성명이면 R4 줄을 이름 호명 지시로 값 교체.
+
+미수행: 거절·romanceable=false 경로의 실런 (판정은 코어 스펙 22케이스로
+검증 — 실런은 호감 축적 비용 대비 실익 낮아 보류). CAS 충돌 재시도 시
+`[RelationSignal]` 로그가 2회 찍힐 수 있으나 최종 상태는 단일 기록 — 무해.
 
 ## 1. 배경 — 무엇이 되고 무엇이 안 되나 (2026-08-26 실측)
 
