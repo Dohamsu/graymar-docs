@@ -1007,7 +1007,8 @@
     ],
     "portraitUrl": "/npc-portraits/star_sand_v1/lonely_frozen_warrior.webp",
     "relationProfile": {
-      "romanceable": true
+      "romanceable": true,
+      "companionable": true
     }
   },
   {
@@ -2807,7 +2808,8 @@
     ],
     "portraitUrl": "/npc-portraits/star_sand_v1/armed_pilgrim_seeker.webp",
     "relationProfile": {
-      "romanceable": true
+      "romanceable": true,
+      "companionable": true
     }
   },
   {

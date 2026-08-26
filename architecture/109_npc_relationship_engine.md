@@ -76,6 +76,37 @@ relationKindLabel(연인/벗/막역한 벗/맞수/원한)·relationMilestones �
 잔여(후속 후보): SummaryBuilder 여정 아카이브 관계 요약 1줄 · GRUDGE/RIVAL
 실런 · daily_topics 와 관계 소재의 경합 관측.
 
+### 0.3 R4 — 동행(companion) MVP (2026-08-26 구현)
+
+**구조 판단**: "지금 구조상 동행이 가능한가"에 대한 답은 **가능** — 존재감의
+정본이 `worldState.npcLocations` 동적 오버라이드(스케줄을 이김)이고, 도주
+`npcFleeOverrides`(arch/76)가 같은 패턴의 선례라서, 오버라이드 한 지점이면
+장면 인물·소재 안내·의도 파서·whereabouts 가 전부 따라온다. 유르마는 role 이
+"동행·전투 보조"로 이미 저작돼 있었다 (콘텐츠 의도 선행).
+
+- **상태**: `worldState.companionNpcId`(+sinceTurn, 1명 한정) — 런 영속.
+  전이 이벤트는 `lastCompanionEvent{type,npcId,turnNo}` (소비처가 turnNo
+  일치 시에만 사용 — recentPhaseTransition 패턴).
+- **판정 정본**: `engine/hub/companion.core.ts` — L1 문형 감지(요청/해산,
+  강압 토큰 제외) + `decideCompanionRequestCore`(수락 = companionable +
+  CLOSE 이상(또는 kind FRIEND/CONFIDANT/ROMANCE) + fear<40 + 빈 자리).
+  거절은 사유별 연출 힌트 동반. 스펙 23케이스.
+- **위치 동기**: `npc-schedule.getNpcLocation` 이 동행자를 플레이어 현재
+  위치로 반환 (우선순위: 도주 > 동행 > 스케줄). HUB(currentLocationId=null)
+  는 스킵 — 다음 LOCATION 진입 시 자동 재합류.
+- **훅**: turns.service NPC 확정 직후 — 요청 대상은 그 턴의 eventPrimaryNpc.
+- **프롬프트**: 전이 턴 `[동행 성립/거절/해산]` 디렉티브(헤더 등재) + 상시
+  1줄("동행 중 — …매 턴 대화를 주도할 필요는 없다" — 화자 독점 억제 명시).
+- **UI**: npcEmotional `companion: true` → 인물 탭 "동행 중" 배지.
+- **콘텐츠**: companionable 4명 — 유르마·마레크(star_sand), 레닉·펠릭스
+  (graymar). 이동형·호위형 역할만 (자리 지킴이 직업인 제외). audit 모양 검사
+  키 확장.
+- **비범위**: COMBAT 노드 참전(아군 유닛)·동행 NPC 판정 보너스 — 별도 트랙.
+  동행 중 SitGen/EventMatcher 반복 지목 위험은 배포 후 관측 항목.
+
+**주의(기술부채)**: turns.service 파일 래칫(max-lines 7,900) 이 R1~R4 누적으로
+8,131 초과 — arch/77 §18 원칙대로 다음 정리 사이클에서 분할 대상.
+
 ## 1. 배경 — 무엇이 되고 무엇이 안 되나 (2026-08-26 실측)
 
 이날 구축·실증된 기반:

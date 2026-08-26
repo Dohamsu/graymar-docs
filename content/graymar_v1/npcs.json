@@ -1615,7 +1615,8 @@
       "price": 25
     },
     "relationProfile": {
-      "romanceable": true
+      "romanceable": true,
+      "companionable": true
     }
   },
   {
@@ -3457,7 +3458,8 @@
     ],
     "portraitUrl": "/npc-portraits/felix.webp",
     "relationProfile": {
-      "romanceable": true
+      "romanceable": true,
+      "companionable": true
     }
   },
   {
