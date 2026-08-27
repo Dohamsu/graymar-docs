@@ -87,6 +87,18 @@ check("6회 2종은 PASS (만성 baseline)", failed is False, f"severe={severe} 
 check("임계 경계 5종은 PASS", rc.evaluate_gate([rc.Hit(f"w{i}", 5, i) for i in range(rc.MAX_DISTINCT)])[0] is False)
 check("빈 입력 PASS", rc.evaluate_gate([])[0] is False)
 
+print("\n[주제어] extract_fact_keywords — 팩 fact 키워드 파생 (arch/110 ③)")
+_facts = {"facts": {"F1": {"keywords": ["이름", "첫 공통몽", "꿈"]}, "F2": {"keywords": None}}}
+_kw = rc.extract_fact_keywords(_facts)
+check("단일어·복합어 토큰화 (1글자 '꿈'은 detect 대상 밖이라 제외)", "이름" in _kw and "공통몽" in _kw and "꿈" not in _kw)
+check("리스트형 입력도 허용", "이름" in rc.extract_fact_keywords([{"keywords": ["이름"]}]))
+check("빈 입력 무동작", rc.extract_fact_keywords({}) == set())
+_n, _t = turns_of("이름 이름 이름 이름 이름 이름을 물었다.", "조용하다.", "바람이 분다.")
+check(
+    "주제어는 stopwords 합류 시 게이트 미적중",
+    rc.detect(_n, _t, rc.build_stopwords(_kw), [])[0] == [],
+)
+
 print("\n[경계] 짧은 런 — 윈도우보다 턴이 적으면 무동작")
 n, t = turns_of("찻잔 찻잔 찻잔 찻잔 찻잔 찻잔.", "조용하다.")
 check("2턴 런에서 예외 없이 0건", rc.detect(n, t, rc.build_stopwords(), [])[0] == [])

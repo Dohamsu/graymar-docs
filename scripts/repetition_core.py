@@ -85,6 +85,26 @@ def extract_place_words(locations_json) -> set:
     return out
 
 
+def extract_fact_keywords(facts_json) -> set:
+    """facts.json 에서 팩 주제어를 뽑는다 (arch/110 ③ — V9 준오탐 억제).
+
+    퀘스트 소재어('이름'·'꿈' 등)는 대화가 그 주제를 도는 동안 구조적으로
+    밀도가 높다 (별빛모래 '이름'×16 → V9 FAIL 실측 — 팩 퀘스트 소재 자체가
+    이름). NPC 실명·별칭과 같은 원칙: **게이트에서만 제외**하고 계측
+    리포트에는 남긴다.
+    """
+    out = set()
+    facts = facts_json.get("facts") if isinstance(facts_json, dict) else facts_json
+    vals = facts.values() if isinstance(facts, dict) else (facts or [])
+    for f in vals:
+        for kw in f.get("keywords") or []:
+            if not isinstance(kw, str):
+                continue
+            for tok in re.findall(r"[가-힣]{2,8}", kw):
+                out.add(stem_word(tok))
+    return out
+
+
 def detect(narratives: list, turns: list, stopwords: set, alias_pool: Iterable[str] = ()):
     """
     3턴 윈도우 반복 감지. `narratives[i]` 는 `turns[i]` 턴의 서술.

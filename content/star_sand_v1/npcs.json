@@ -1913,7 +1913,7 @@
     "personality": {
       "core": "꿈잠 여관 장기 투숙객·전직 장례사 — 실종자의 마지막 말 기록",
       "traits": [],
-      "speechStyle": "낮은 하오체. 죽은 사람보다 잠든 사람을 더 무서워한다. 상대 호칭은 '그대'.",
+      "speechStyle": "낮은 하오체. 잠든 자 이야기가 나오면 목소리가 낮아지고 말수가 준다. 상대 호칭은 '그대'.",
       "speechRegister": "HAOCHE",
       "innerConflict": "",
       "softSpot": "",

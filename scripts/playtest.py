@@ -975,6 +975,13 @@ try:
         _REP_PLACE_WORDS = _rep.extract_place_words(json.load(_lf))
 except Exception:
     pass  # 로드 실패 시 지명이 반복으로 잡힐 수 있음 (보수적)
+# [arch/110 ③] 팩 주제어(fact keywords)도 게이트에서 제외 — 별빛모래 '이름'×16
+# 실측처럼 퀘스트 소재어는 구조적으로 밀도가 높다. 계측 리포트에는 남는다.
+try:
+    with open(_os.path.join(_CONTENT_DIR, "facts.json"), encoding="utf-8") as _ff:
+        _REP_PLACE_WORDS |= _rep.extract_fact_keywords(json.load(_ff))
+except Exception:
+    pass
 
 _rep_hits, _rep_alias_hits = _rep.detect(
     [t.get("narrative", "") for t in turn_logs],
