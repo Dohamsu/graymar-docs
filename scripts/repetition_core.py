@@ -31,6 +31,9 @@ FUNCTION_WORDS = {
     "당신", "자신", "있다", "없다", "있었", "하고", "이다", "했다", "하는", "것이", "있는",
     "위에", "앞에", "속에", "안에", "뒤에", "사이", "동안", "때문", "같은", "같이", "다시",
     "아직", "이미", "다른", "어떤", "무언", "그것", "이것", "저것", "하나", "여전",
+    # [arch/110 ③] 접속사 스템 — '하지만'이 stem_word 조사 절단으로 '하지'가
+    # 되어 게이트에 걸리던 준오탐 (run baa9eeee '하지'×5 실측)
+    "하지", "그러", "그래", "그런데",
 }
 
 # 조사·어미 — 긴 것부터 시도해야 한다 ('으로'를 '로'보다 먼저).
@@ -82,6 +85,23 @@ def extract_place_words(locations_json) -> set:
         for kw in (loc.get("moveKeywords") or []):
             if isinstance(kw, str) and len(kw) >= 2:
                 out.add(stem_word(kw))
+    return out
+
+
+def extract_address_terms(npcs_json) -> set:
+    """npcs.json speechStyle 에서 저작된 상대 호칭을 뽑는다 (arch/110 ③).
+
+    "상대 호칭은 '자네'" 처럼 콘텐츠가 지정한 호칭은 연속 대화 턴에서
+    구조적으로 밀도가 높다 (실측 run baa9eeee: 에드 5턴 대화에 '자네'×5 →
+    V9 too_many 성분). 하드코딩 대신 콘텐츠 파생(불변식 45 정신) —
+    게이트에서만 제외하고 계측 리포트에는 남긴다.
+    """
+    out = set()
+    npcs = npcs_json if isinstance(npcs_json, list) else (npcs_json or {}).get("npcs", [])
+    for n in npcs or []:
+        style = ((n.get("personality") or {}).get("speechStyle")) or ""
+        for m in re.finditer(r"호칭은\s*'([^']{2,8})'", style):
+            out.add(stem_word(m.group(1)))
     return out
 
 

@@ -982,6 +982,12 @@ try:
         _REP_PLACE_WORDS |= _rep.extract_fact_keywords(json.load(_ff))
 except Exception:
     pass
+# [arch/110 ③ 2차] 저작 호칭("상대 호칭은 '자네'")도 제외 — 연속 대화 턴 필연 밀도
+try:
+    with open(_os.path.join(_CONTENT_DIR, "npcs.json"), encoding="utf-8") as _nf:
+        _REP_PLACE_WORDS |= _rep.extract_address_terms(json.load(_nf))
+except Exception:
+    pass
 
 _rep_hits, _rep_alias_hits = _rep.detect(
     [t.get("narrative", "") for t in turn_logs],

@@ -99,6 +99,20 @@ check(
     rc.detect(_n, _t, rc.build_stopwords(_kw), [])[0] == [],
 )
 
+print("\n[호칭] extract_address_terms — speechStyle 저작 호칭 파생 (arch/110 ③)")
+_npcs = [
+    {"personality": {"speechStyle": "건조한 해체. 상대 호칭은 '자네'."}},
+    {"personality": {"speechStyle": "낮은 하오체. 상대 호칭은 '그대'."}},
+    {"personality": {"speechStyle": "호칭 지정 없음."}},
+]
+_addr = rc.extract_address_terms(_npcs)
+check("자네·그대 추출", _addr == {"자네", "그대"})
+check("dict 래핑({'npcs':...})도 허용", rc.extract_address_terms({"npcs": _npcs}) == {"자네", "그대"})
+check("빈 입력 무동작", rc.extract_address_terms([]) == set())
+_n2, _t2 = turns_of("자네 자네 자네 자네 자네 말일세.", "조용하다.", "바람이 분다.")
+check("호칭은 stopwords 합류 시 게이트 미적중", rc.detect(_n2, _t2, rc.build_stopwords(_addr), [])[0] == [])
+check("접속사 스템 '하지'는 기본 기능어", "하지" in rc.FUNCTION_WORDS)
+
 print("\n[경계] 짧은 런 — 윈도우보다 턴이 적으면 무동작")
 n, t = turns_of("찻잔 찻잔 찻잔 찻잔 찻잔 찻잔.", "조용하다.")
 check("2턴 런에서 예외 없이 0건", rc.detect(n, t, rc.build_stopwords(), [])[0] == [])
