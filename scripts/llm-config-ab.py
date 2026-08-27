@@ -177,6 +177,13 @@ def main():
                     help="frequency/presence_penalty 동봉 (penalty 지원 모델만 — 운영 재현)")
     ap.add_argument("--temperature", type=float, default=None)
     ap.add_argument(
+        "--only",
+        default=None,
+        help="프로바이더 allowlist 를 이 값으로 덮어쓴다 (`A|B`). 같은 모델도 "
+        "프로바이더에 따라 단가가 2배·속도가 6배 갈리므로(GLM 5.3 Flash 실측), "
+        "'모델이 느린가 프로바이더가 느린가'를 가를 때 쓴다. --price 도 같이 바꿀 것",
+    )
+    ap.add_argument(
         "--no-routing",
         action="store_true",
         help="server/.env 의 provider 라우팅(only/sort/ignore) 재현을 끈다 (기본은 켬)",
@@ -186,6 +193,9 @@ def main():
 
     key = api_key()
     routing = None if args.no_routing else provider_routing(args.model)
+    if args.only:
+        routing = dict(routing or {})
+        routing["only"] = [s.strip() for s in args.only.split("|") if s.strip()]
     prompts = json.load(open(args.prompts, encoding="utf-8"))
     total = len(prompts)
     if args.limit and args.limit > 0:
