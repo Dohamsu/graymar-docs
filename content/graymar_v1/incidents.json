@@ -23,7 +23,7 @@
             "SNEAK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "부두 한켠에 표식 없는 화물 상자들이 쌓여 있다. 인부들이 서둘러 옮기고 있다.",
@@ -67,7 +67,7 @@
             "FIGHT"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlReward": 20,
           "controlPenalty": 8,
           "sceneFrame": "시장에서 출처 불명의 물건들이 거래되고 있다. 상인들이 수군거린다.",
@@ -104,7 +104,7 @@
             "THREATEN"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 7,
+          "pressurePerTick": 13,
           "controlReward": 25,
           "controlPenalty": 10,
           "sceneFrame": "밀수 조직의 거점을 찾아냈다. 무장한 인부들이 경계하고 있다.",
@@ -127,7 +127,7 @@
             "PERSUADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlThresholdForNext": 50,
           "keywords": [
             "유통",
@@ -148,7 +148,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80,
           "keywords": [
             "경로",
@@ -184,7 +184,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -262,7 +262,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 2,
+          "pressurePerTick": 6,
           "controlReward": 12,
           "controlPenalty": 4,
           "sceneFrame": "경비대 지구에서 병사들이 낮은 목소리로 속삭이고 있다. 불만이 가득한 표정이다.",
@@ -299,7 +299,7 @@
             "BRIBE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlReward": 18,
           "controlPenalty": 7,
           "sceneFrame": "경비대 사무실에서 수상한 장부가 발견되었다는 소문이 돌고 있다.",
@@ -322,7 +322,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlReward": 22,
           "controlPenalty": 10,
           "sceneFrame": "부패한 장교가 기록을 불태우려 하고 있다. 시간이 얼마 남지 않았다."
@@ -337,7 +337,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlThresholdForNext": 50,
           "keywords": [
             "증거",
@@ -358,7 +358,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -386,7 +386,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 60
+        "deadlineTicks": 24
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -471,7 +471,7 @@
             "HELP"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 12,
           "controlPenalty": 5,
           "sceneFrame": "부두 노동자들이 삼삼오오 모여 낮은 목소리로 이야기하고 있다.",
@@ -514,7 +514,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlReward": 16,
           "controlPenalty": 7,
           "sceneFrame": "노동자들이 공개적으로 모이기 시작했다. 경비대가 주시하고 있다.",
@@ -550,7 +550,7 @@
             "THREATEN"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 7,
+          "pressurePerTick": 13,
           "controlReward": 20,
           "controlPenalty": 10,
           "sceneFrame": "부두 입구에서 노동자들과 경비대원들이 대치하고 있다. 돌멩이가 날아다닌다."
@@ -565,7 +565,7 @@
             "TRADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlThresholdForNext": 50,
           "keywords": [
             "지도부",
@@ -585,7 +585,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 7,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -620,7 +620,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 36
+        "deadlineTicks": 16
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -703,7 +703,7 @@
             "PERSUADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 2,
+          "pressurePerTick": 6,
           "controlReward": 10,
           "controlPenalty": 4,
           "sceneFrame": "시장에서 같은 물건의 가격이 가게마다 크게 다르다. 상인들이 서로를 경계하고 있다."
@@ -718,7 +718,7 @@
             "HELP"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlReward": 15,
           "controlPenalty": 6,
           "sceneFrame": "시장 한편에서 고함 소리가 들린다. 상인들의 하인들이 주먹을 쥐고 있다."
@@ -733,7 +733,7 @@
             "FIGHT"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlThresholdForNext": 50
         },
         {
@@ -746,7 +746,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlThresholdForNext": 80
         }
       ],
@@ -767,7 +767,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -839,7 +839,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlReward": 14,
           "controlPenalty": 5,
           "sceneFrame": "빈민가 골목에서 기침 소리가 끊이지 않는다. 약냄새가 진동한다."
@@ -854,7 +854,7 @@
             "TRADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlReward": 20,
           "controlPenalty": 8,
           "sceneFrame": "오염된 우물 주변에 병자들이 누워 있다. 누군가 약을 가져와야 한다."
@@ -869,7 +869,7 @@
             "PERSUADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 50
         },
         {
@@ -882,7 +882,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -910,7 +910,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 36
+        "deadlineTicks": 16
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -982,7 +982,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlReward": 18,
           "controlPenalty": 6,
           "sceneFrame": "빈민가 뒷골목에서 복면을 쓴 인물들이 밀담을 나누고 있다.",
@@ -1005,7 +1005,7 @@
             "HELP"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlReward": 25,
           "controlPenalty": 12,
           "sceneFrame": "암살이 임박했다. 대상을 보호하든 방관하든, 결정해야 한다."
@@ -1020,7 +1020,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 50
         },
         {
@@ -1033,7 +1033,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 12,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -1054,7 +1054,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 24
+        "deadlineTicks": 16
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -1133,7 +1133,7 @@
             "FIGHT"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 2,
+          "pressurePerTick": 6,
           "controlReward": 10,
           "controlPenalty": 3,
           "sceneFrame": "상인이 도둑을 쫓으며 소리를 지르고 있다. 시장 통이 어수선하다.",
@@ -1154,7 +1154,7 @@
             "THREATEN"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "좁은 골목 끝에 절도단의 은신처가 있다.",
@@ -1176,7 +1176,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlThresholdForNext": 50,
           "keywords": [
             "범인",
@@ -1196,7 +1196,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlThresholdForNext": 80
         }
       ],
@@ -1217,7 +1217,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 36
+        "deadlineTicks": 16
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -1291,7 +1291,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlReward": 15,
           "controlPenalty": 6,
           "sceneFrame": "경비대 지구에서 무장한 병사들이 집결하고 있다. 빈민가를 향한 지도가 펼쳐져 있다."
@@ -1306,7 +1306,7 @@
             "THREATEN"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 7,
+          "pressurePerTick": 13,
           "controlReward": 22,
           "controlPenalty": 10,
           "sceneFrame": "내일이면 진압이 시작된다. 빈민가 주민들은 아직 모르고 있다."
@@ -1321,7 +1321,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 50
         },
         {
@@ -1334,7 +1334,7 @@
             "SNEAK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 10,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -1362,7 +1362,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 30
+        "deadlineTicks": 16
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -1443,7 +1443,7 @@
             "PERSUADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 12,
           "controlPenalty": 5,
           "sceneFrame": "시장의 곡물 가격이 하루 사이에 두 배로 뛰었다. 소상인들이 한숨을 쉬며 빈 가판대를 바라보고 있다.",
@@ -1478,7 +1478,7 @@
             "HELP"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlReward": 18,
           "controlPenalty": 8,
           "sceneFrame": "시장 거리 절반의 가판대가 비었다. 남은 상인들이 모여 대책을 논의하지만 표정이 어둡다.",
@@ -1507,7 +1507,7 @@
             "BRIBE"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 7,
+          "pressurePerTick": 13,
           "controlReward": 24,
           "controlPenalty": 10,
           "sceneFrame": "대형 상단의 깡패들이 마지막 독립 상점을 위협하고 있다. 시장 거리에 긴장감이 흐른다."
@@ -1522,7 +1522,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlThresholdForNext": 50
         },
         {
@@ -1535,7 +1535,7 @@
             "FIGHT"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -1563,7 +1563,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 42
+        "deadlineTicks": 17
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -1645,7 +1645,7 @@
             "PERSUADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 6,
           "sceneFrame": "밴스 경의 저택에서 밤마다 마차들이 드나든다. 하인들이 입을 굳게 다물고 있다.",
@@ -1688,7 +1688,7 @@
             "STEAL"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlReward": 20,
           "controlPenalty": 9,
           "sceneFrame": "경비대 지구에서 귀족 가문의 전령이 자주 목격된다. 일부 장교들의 표정이 달라졌다.",
@@ -1724,7 +1724,7 @@
             "HELP"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlReward": 28,
           "controlPenalty": 12,
           "sceneFrame": "도시 전체에 긴장감이 감돈다. 귀족 저택에서 무장한 사병들이 모이고 있다."
@@ -1739,7 +1739,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlThresholdForNext": 50,
           "keywords": [
             "증거",
@@ -1759,7 +1759,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -1787,7 +1787,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -1874,7 +1874,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlReward": 14,
           "controlPenalty": 6,
           "sceneFrame": "빈민가 골목에서 고함이 들리고 상점 유리창이 깨지는 소리가 울린다. 주민들이 거리로 쏟아져 나오고 있다.",
@@ -1909,7 +1909,7 @@
             "SNEAK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlReward": 20,
           "controlPenalty": 9,
           "sceneFrame": "빈민가 주요 골목이 뒤집힌 수레와 가구로 막혀있다. 주민들이 돌과 막대기를 들고 경비대를 경계하고 있다.",
@@ -1938,7 +1938,7 @@
             "HELP"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlReward": 25,
           "controlPenalty": 12,
           "sceneFrame": "빈민가에서 화염이 오르고 있다. 무장한 주민들과 경비대가 대치 중이다. 누군가 결단을 내려야 한다."
@@ -1953,7 +1953,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 7,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 50
         },
         {
@@ -1966,7 +1966,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 9,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -2001,7 +2001,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 30
+        "deadlineTicks": 16
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -2086,7 +2086,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 14,
           "controlPenalty": 5,
           "sceneFrame": "밤마다 상류 거리의 한 저택 지하에서 기묘한 빛이 새어나온다. 근처를 지나는 사람들이 두통을 호소한다.",
@@ -2121,7 +2121,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlReward": 20,
           "controlPenalty": 8,
           "sceneFrame": "상류 거리의 정원에서 식물이 기형적으로 자라고, 가축이 이상 행동을 보인다. 하인들이 원인 모를 병에 걸리고 있다.",
@@ -2150,7 +2150,7 @@
             "THREATEN"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 8,
+          "pressurePerTick": 13,
           "controlReward": 26,
           "controlPenalty": 12,
           "sceneFrame": "지하 실험실에서 에너지 파동이 뿜어져 나오고 있다. 저택 벽에 균열이 생기고, 거리의 등불이 깜빡인다."
@@ -2164,7 +2164,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlThresholdForNext": 50
         },
         {
@@ -2176,7 +2176,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 10,
+          "pressurePerTick": 13,
           "controlThresholdForNext": 80
         }
       ],
@@ -2211,7 +2211,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 36
+        "deadlineTicks": 16
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -2291,7 +2291,7 @@
             "TALK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 2,
+          "pressurePerTick": 6,
           "controlReward": 12,
           "controlPenalty": 4,
           "sceneFrame": "선술집에 낯선 얼굴들이 늘었다. 평소보다 조용히 술을 마시며 주위를 살피는 사람들이 눈에 띈다.",
@@ -2334,7 +2334,7 @@
             "FIGHT"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 4,
+          "pressurePerTick": 9,
           "controlReward": 18,
           "controlPenalty": 7,
           "sceneFrame": "선술집 2층에서 고성이 들렸다. 누군가가 이중 첩자로 밝혀져 쫓기고 있다. 오웬이 인상을 찌푸리고 있다.",
@@ -2363,7 +2363,7 @@
             "THREATEN"
           ],
           "matchPolicy": "NEUTRAL",
-          "pressurePerTick": 6,
+          "pressurePerTick": 13,
           "controlReward": 22,
           "controlPenalty": 10,
           "sceneFrame": "도시의 방어 배치도가 외부 세력에 넘어가려 하고 있다. 선술집이 최후의 거래 장소로 지목되었다."
@@ -2378,7 +2378,7 @@
             "TALK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlThresholdForNext": 50
         },
         {
@@ -2391,7 +2391,7 @@
             "BRIBE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 5,
+          "pressurePerTick": 11,
           "controlThresholdForNext": 80
         }
       ],
@@ -2426,7 +2426,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 42
+        "deadlineTicks": 17
       },
       "impactOnResolve": {
         "CONTAINED": {

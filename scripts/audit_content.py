@@ -408,6 +408,27 @@ def check_l2_contract(pack):
                 if unknown:
                     f.append(Finding("WARN", "RELATION_PROFILE_SHAPE", f"npcs.json:{nid}",
                                      f'relationProfile 미지원 키 {sorted(unknown)} — 엔진이 읽지 않음 (arch/109)'))
+    # [arch/111] INCIDENT_PACING — 시간 상수가 시계 실효(0.4 tick/턴)에 맞는가.
+    # 30일 실측: pressure 95 도달 32tick(80턴)·deadline 48tick(120턴)으로 저작돼
+    # 자동 해소(ESCALATED·EXPIRED)가 554건 중 0건인 사문이었다 (arch/81 밤낮
+    # 재설계 후 재기준화 누락 — arch/21 Part 11 아젠다 day>=2 와 같은 부류).
+    # 새 incident 저작 시 같은 함정을 막는다.
+    for inc in (pack.incidents or []):
+        if not isinstance(inc, dict):
+            continue
+        iid = inc.get("incidentId", "?")
+        stages = inc.get("stages") or []
+        if stages and isinstance(stages[0], dict):
+            ppt = stages[0].get("pressurePerTick")
+            if isinstance(ppt, (int, float)) and ppt < 6:
+                f.append(Finding("WARN", "INCIDENT_PACING", f"incidents.json:{iid}",
+                                 f"stage0 pressurePerTick={ppt} < 6 — 시계 실효 0.4tick/턴에서 "
+                                 f"방치 폭발(ESCALATED)까지 {round(95/max(ppt,1)/0.4)}턴+ 소요, 사실상 사문 (arch/111)"))
+        rc = inc.get("resolutionConditions") or {}
+        dt = rc.get("deadlineTicks")
+        if isinstance(dt, (int, float)) and dt > 30:
+            f.append(Finding("WARN", "INCIDENT_PACING", f"incidents.json:{iid}",
+                             f"deadlineTicks={dt} > 30 (={round(dt/0.4)}턴) — 실플레이 도달 불가 (arch/111)"))
     for fid, fact in (pack.facts or {}).items():
         if not isinstance(fact, dict):
             continue

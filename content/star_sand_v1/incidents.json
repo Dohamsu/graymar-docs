@@ -23,7 +23,7 @@
             "TALK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "여관 공용 홀, 눈을 뜬 채 잠든 손님들이 낮게 같은 말을 되뇐다.",
@@ -40,7 +40,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "부두와 갈비평원에서도 같은 꿈을 꿨다는 사람들이 술렁인다.",
@@ -52,7 +52,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -114,7 +114,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "늑골 안쪽 통로가 어제와 다르게 뒤틀려 있다.",
@@ -131,7 +131,7 @@
             "HELP"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "채굴반장이 통제선 안으로 사람을 더 밀어 넣는다.",
@@ -143,7 +143,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -199,7 +199,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "웅덩이 표면이 심장박동처럼 진동하며 조금씩 넘친다.",
@@ -216,7 +216,7 @@
             "BRIBE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "허가관이 채취량을 몰래 올린 흔적이 보인다.",
@@ -228,7 +228,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -284,7 +284,7 @@
             "PERSUADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "수녀원 문 앞에 이송될 자들의 명단이 붙는다.",
@@ -301,7 +301,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "환자 보호자들이 수녀원 문을 막아선다.",
@@ -313,7 +313,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -369,7 +369,7 @@
             "TALK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "관측탑 보조원들이 원본과 다른 보고서를 두고 수군거린다.",
@@ -386,7 +386,7 @@
             "BRIBE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "탑 경비가 방문자의 동선을 기록하기 시작한다.",
@@ -398,7 +398,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -454,7 +454,7 @@
             "TALK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "시장 구석에서 꿈약에 취한 자들이 '하얀 문'을 중얼거린다.",
@@ -471,7 +471,7 @@
             "THREATEN"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "취한 무리가 무음 해변 쪽으로 비틀거리며 향한다.",
@@ -483,7 +483,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -539,7 +539,7 @@
             "TALK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "귀환한 자가 자기 이름을 묻는 질문에 낯선 이름을 답한다.",
@@ -555,7 +555,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "서로를 다른 이름으로 부르는 사람들이 늘어난다.",
@@ -567,7 +567,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -623,7 +623,7 @@
             "TALK"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "항로 중개인이 외부 압력에 대해 목소리를 낮춘다.",
@@ -639,7 +639,7 @@
             "BRIBE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "얼어붙은 잔교에 검문이 서고 배가 묶인다.",
@@ -651,7 +651,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -707,7 +707,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "파도 소리가 닿지 않는 영역이 조금씩 마을 쪽으로 번진다.",
@@ -723,7 +723,7 @@
             "PERSUADE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "부두 끝자락에서 말소리가 삼켜지기 시작한다.",
@@ -735,7 +735,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
@@ -791,7 +791,7 @@
             "INVESTIGATE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "갈비뼈 그늘에서 별빛으로 빚어진 짐승의 형체가 어른거린다.",
@@ -808,7 +808,7 @@
             "OBSERVE"
           ],
           "matchPolicy": "SUPPORT",
-          "pressurePerTick": 3,
+          "pressurePerTick": 7,
           "controlReward": 15,
           "controlPenalty": 5,
           "sceneFrame": "별빛 짐승이 채굴꾼을 향해 소리 없이 다가선다.",
@@ -820,7 +820,7 @@
       "resolutionConditions": {
         "controlThreshold": 80,
         "pressureThreshold": 95,
-        "deadlineTicks": 48
+        "deadlineTicks": 19
       },
       "impactOnResolve": {
         "CONTAINED": {
