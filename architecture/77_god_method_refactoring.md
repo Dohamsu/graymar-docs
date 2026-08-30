@@ -241,3 +241,36 @@ DI 초기화에서 undefined 위험이 있다. turns.service 는 재수출로 �
 brawler 런의 `V5_memory` 실패는 회귀가 아니다 — 그 런은 T3 진입 후 장소를 떠난
 적이 없어(T4~9 전투) `finalizeVisit` 이 발동하지 않았고 visitLog 가 비었다.
 chatty 대조 런에서 visitLog 1·npcJournal 13 으로 정상 확인.
+
+## 19. 파일 분할 2차 (2026-08-31) — arch/109 재비대화 대응
+
+### 19.1 발단
+
+§18 분할(9,194→6,864) 후 3주 만에 래칫 재발화 — 파일 8,306/7,900·함수
+`handleLocationTurnInner` 2,416/2,000. 증가분 +1,615줄의 주 기여는 arch/109
+관계 엔진(R1~R4+양다리) 훅이 수렴점에 직접 쌓인 것. §18 이 경고한 재비대화
+패턴 그대로다 — **새 도메인이 생기면 수렴점에 집을 지어줘야 한다**.
+
+### 19.2 절단면 (전부 동작 보존 컷-페이스트)
+
+| 이동분 | 목적지 | 크기 |
+|--------|--------|------|
+| 고백 THREATEN 강등·동행 요청/해산·양다리 폭로·관계/동행 알림 | **relation-turn.service.ts 신설** (316줄) — arch/109 후속 성장(R5+·소문 확장)의 집 | ~225줄 |
+| Ending 조건 체크(AUTONOMOUS 대체 판정 포함)·ConsequenceProcessor·PlayerGoal·offscreen drift·factId 역보충·go_hub 게이팅·choiceNpcContext | turn-shared.service.ts (242→584줄) | ~250줄 |
+| pipelineLog·actionTypeToKorean·고집/골드 이벤트·summaryText | turns.core.ts (순수 함수) | ~110줄 |
+
+결과: **파일 8,306→7,837 (마진 63) · 함수 2,416→2,000 이하 (경고 소멸)**.
+래칫 상한은 §18 교훈("새 최대치+15% 상향이 3주 만에 상시 경고화")대로
+**유지** — 상향 대신 코드 축소.
+
+### 19.3 함정 기록
+
+- 이동 중 `detectImplicitGoals` 호출을 4인자→2인자로 잘못 축약할 뻔 —
+  Read 범위가 잘린 원문을 기억으로 복원하다 생긴 것. **이동 전 원본을
+  git show 로 재대조**하는 것이 동작 보존의 검증 절차다.
+- 섹션 지도의 "+492 선택지 modifier"는 오측정 — 그 섹션은 이미 호출
+  한 줄로 추출돼 있었고 거리 측정이 후속 잡블록을 합산한 것. 절단면
+  선정은 헤더 거리가 아니라 **블록 원문 확인** 후에.
+
+잔여: llm-worker `processTurnInner` 2,462/2,000 경고는 별개 파일 — 다음
+재비대화 대응 후보.
