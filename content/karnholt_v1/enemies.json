@@ -23,7 +23,7 @@
   },
   {
     "enemyId": "ENEMY_HARBOR_WATCHMAN",
-    "name": "항만 경비병",
+    "name": "길드 경비병",
     "description": "상인 길드가 고용한 정규 경비. 방패와 곤봉으로 무장.",
     "faction": "MERCHANT_CONSORTIUM",
     "hp": 25,
@@ -182,8 +182,8 @@
   },
   {
     "enemyId": "ENEMY_SLUM_THUG",
-    "name": "빈민가 건달",
-    "description": "빈민가 뒷골목을 근거지로 삼는 좀도둑 겸 건달. 녹슨 칼과 주먹을 사용.",
+    "name": "숙소촌 건달",
+    "description": "광부 숙소촌 뒷골목을 근거지로 삼는 좀도둑 겸 건달. 녹슨 칼과 주먹을 사용.",
     "faction": null,
     "hp": 14,
     "stats": {
@@ -205,7 +205,7 @@
   {
     "enemyId": "ENEMY_SLUM_KNIFE",
     "name": "칼잡이",
-    "description": "빈민가에서 삯을 받고 움직이는 칼잡이. 빠른 단검 공격이 특기.",
+    "description": "삯을 받고 움직이는 뒷골목 칼잡이. 빠른 단검 공격이 특기.",
     "faction": null,
     "hp": 18,
     "stats": {
@@ -227,7 +227,7 @@
   {
     "enemyId": "ENEMY_MARKET_ENFORCER",
     "name": "시장 강제징수원",
-    "description": "시장 구역에서 보호비를 뜯는 불량배. 곤봉으로 무장.",
+    "description": "검은 시장에서 보호비를 뜯는 불량배. 곤봉으로 무장.",
     "faction": "MERCHANT_CONSORTIUM",
     "hp": 16,
     "stats": {
@@ -248,8 +248,8 @@
   },
   {
     "enemyId": "ENEMY_HARBOR_PIRATE",
-    "name": "항만 해적",
-    "description": "정박 중인 선박을 노리는 소규모 해적. 커틀라스와 권총 소지.",
+    "name": "폐갱 무법자",
+    "description": "폐광에 숨어들어 은맥 부스러기를 긁어모으는 무법자. 곡괭이 자루와 단검 소지.",
     "faction": null,
     "hp": 20,
     "stats": {

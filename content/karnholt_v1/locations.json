@@ -30,7 +30,7 @@
       "무너진 곡괭이",
       "거점"
     ],
-    "ambushEncounterId": "enc_generic"
+    "ambushEncounterId": "enc_slum_gang"
   },
   {
     "locationId": "LOC_KH_FOUNDRY",
@@ -61,7 +61,7 @@
       "화로",
       "압인기"
     ],
-    "ambushEncounterId": "enc_generic",
+    "ambushEncounterId": "enc_guard_ambush",
     "hubAccessible": true,
     "hubHint": "왕국 주화가 찍히는 주조소. 감독관과 은괴가 오간다"
   },
@@ -94,7 +94,7 @@
       "은광",
       "광산"
     ],
-    "ambushEncounterId": "enc_generic",
+    "ambushEncounterId": "enc_harbor_pirates",
     "hubAccessible": true,
     "hubHint": "은맥을 캐는 갱도. 광부들의 불만과 실종의 현장"
   },
@@ -127,7 +127,7 @@
       "판잣집",
       "광부촌"
     ],
-    "ambushEncounterId": "enc_generic",
+    "ambushEncounterId": "enc_slum_gang",
     "hubAccessible": true,
     "hubHint": "광부들이 모여 사는 숙소촌. 소문과 원성이 고인 곳"
   },
@@ -160,7 +160,7 @@
       "관청",
       "감독관"
     ],
-    "ambushEncounterId": "enc_generic",
+    "ambushEncounterId": "enc_guard_ambush",
     "hubAccessible": true,
     "hubHint": "왕립 주조 감독청. 장부와 권위의 중심"
   },
@@ -194,7 +194,7 @@
       "검은 시장",
       "뒷골목"
     ],
-    "ambushEncounterId": "enc_generic",
+    "ambushEncounterId": "enc_market_thugs",
     "hubAccessible": true,
     "hubHint": "온갖 것이 거래되는 검은 시장. 위조 주화가 먼저 도는 곳"
   },
@@ -227,7 +227,7 @@
       "국경",
       "검문소"
     ],
-    "ambushEncounterId": "enc_generic",
+    "ambushEncounterId": "enc_guard_ambush",
     "hubAccessible": true,
     "hubHint": "왕국 끝을 지키는 국경 초소. 뇌물과 밀수가 오간다"
   },
@@ -259,7 +259,7 @@
       "버려진 갱도",
       "심층"
     ],
-    "ambushEncounterId": "enc_generic",
+    "ambushEncounterId": "enc_harbor_pirates",
     "hubAccessible": true,
     "hubHint": "버려진 폐갱 심층. 사람이 가지 않는 어둠"
   }

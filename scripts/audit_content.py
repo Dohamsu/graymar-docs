@@ -149,6 +149,7 @@ class Pack:
         self.incidents = as_list(self.raw.get("incidents.json"), "incidents")
         self.items = as_list(self.raw.get("items.json"), "items")
         self.enemies = as_list(self.raw.get("enemies.json"), "enemies")
+        self.encounters = as_list(self.raw.get("encounters.json"), "encounters")
         self.sets = as_list(self.raw.get("sets.json"), "sets")
         self.shops = as_list(self.raw.get("shops.json"), "shops")
         self.presets = as_list(self.raw.get("presets.json"), "presets")
@@ -301,6 +302,31 @@ def check_l1_references(pack):
                 + ("  ※ 자유 문자열 필드라 치명은 아님" if soft else ""),
             )
         )
+
+    # ── 매복 조우 참조 (AMBUSH_ENC_REF) ──
+    # encounterId 는 소문자 관례(enc_*)가 섞여 있어 접두 기반 walk_refs 그물을
+    # 빠져나간다 — karnholt 8개 장소 전부 미정의 enc_generic 을 가리킨 채 로더
+    # fallback(팩의 첫 encounter)으로 조용히 쏠리던 실측(2026-08-31). 명시된
+    # ambushEncounterId 는 반드시 팩 encounters 에 실재해야 한다.
+    enc_ids = {
+        e.get("encounterId")
+        for e in pack.encounters
+        if isinstance(e, dict) and e.get("encounterId")
+    }
+    for loc in pack.locations:
+        if not isinstance(loc, dict):
+            continue
+        amb = loc.get("ambushEncounterId")
+        if amb and amb not in enc_ids:
+            findings.append(
+                Finding(
+                    "ERROR",
+                    "AMBUSH_ENC_REF",
+                    f'locations.json:{loc.get("locationId", "?")}.ambushEncounterId',
+                    f'"{amb}" 이 encounters.json 에 없음 — 로더가 팩의 첫 조우로 '
+                    "조용히 fallback 하여 장소 테마와 무관한 매복이 발생한다",
+                )
+            )
     return findings
 
 

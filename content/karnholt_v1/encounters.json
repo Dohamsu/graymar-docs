@@ -226,8 +226,8 @@
   },
   {
     "encounterId": "enc_slum_gang",
-    "name": "빈민가 건달 패거리",
-    "description": "빈민가 뒷골목에서 건달 패거리에게 둘러싸인다.",
+    "name": "숙소촌 건달 패거리",
+    "description": "광부 숙소촌 뒷골목에서 건달 패거리에게 둘러싸인다.",
     "questState": null,
     "nodeType": "COMBAT",
     "nodeMeta": { "isBoss": false },
@@ -247,8 +247,8 @@
   },
   {
     "encounterId": "enc_market_thugs",
-    "name": "시장 불량배 습격",
-    "description": "시장 골목에서 보호비를 뜯는 불량배들과 충돌한다.",
+    "name": "검은 시장 불량배 습격",
+    "description": "검은 시장 골목에서 보호비를 뜯는 불량배들과 충돌한다.",
     "questState": null,
     "nodeType": "COMBAT",
     "nodeMeta": { "isBoss": false },
@@ -266,8 +266,8 @@
   },
   {
     "encounterId": "enc_guard_ambush",
-    "name": "경비대 지구 매복",
-    "description": "경비대 구역에서 의심을 받아 매수된 수비대원에게 붙잡힌다.",
+    "name": "매수된 수비대 매복",
+    "description": "길목에서 의심을 산 끝에 매수된 수비대원에게 붙잡힌다.",
     "questState": null,
     "nodeType": "COMBAT",
     "nodeMeta": { "isBoss": false },
@@ -286,8 +286,8 @@
   },
   {
     "encounterId": "enc_harbor_pirates",
-    "name": "항만 해적 조우",
-    "description": "밤중 부두에서 밀수품을 하역하던 해적과 마주친다.",
+    "name": "폐갱 무법자 습격",
+    "description": "갱도 어둠 속에 숨어 있던 무법자들이 튀어나온다.",
     "questState": null,
     "nodeType": "COMBAT",
     "nodeMeta": { "isBoss": false },
@@ -298,7 +298,7 @@
       { "enemyRef": "ENEMY_HARBOR_PIRATE", "instance": 0, "distance": "CLOSE", "angle": "FRONT" },
       { "enemyRef": "ENEMY_HARBOR_PIRATE", "instance": 1, "distance": "MID", "angle": "SIDE" }
     ],
-    "envTags": ["OPEN", "COVER_CRATE"],
+    "envTags": ["NARROW", "COVER_CRATE"],
     "toneHint": "tense",
     "timePhase": "NIGHT",
     "rewards": { "gold": "15-35", "xp": 0 }
