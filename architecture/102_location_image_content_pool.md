@@ -68,11 +68,22 @@
 - 서버 `resolveLocationImageForDisplay`(콘텐츠 체인 → karnholt 풀 스코어링 — `poolLocationImage`를 클라와 동일 djb2 결정론으로 포팅)가 정본. `ui.worldState.locationImageUrl`로 전달 — 장소 진입(node-transition 2곳)·FREE 턴·이력 복원 `locationEnter.imageUrl`(구 턴 소급).
 - 클라 진입 컷·배경(LocationBackdrop)·복원이 서버 URL 우선, 부재 시(구 서버·구 턴) 레거시 리졸버 fallback.
 
-## 남긴 것
+## 남긴 것 (→ 2026-08-31 전부 마감)
 
-- **클라 레거시 리졸버(`location-images.ts`) 최종 삭제**: 구 턴/구 서버 fallback 기간이 지나면 (배포 후 신규 런 위주가 되면) `getLocationImagePath`·팩별 정적 맵 제거 가능. 시나리오 배너(`getScenarioBannerImage`)는 별도 존치.
-- **HUB(장소 미지정) 배경의 팩 인지**: `packFor(null)`이 GRAYMAR를 반환해 비-graymar 팩 HUB에서 graymar 전경이 뜰 수 있는 의심 경로 — worldState의 currentLocationId 유지 정책 확인 후 처리.
-- **E-2 실런 검증**: 마커 시스템은 회귀 잦은 부분 — 배포 후 10턴 플레이테스트로 ① 신 포맷 마커 초상 렌더 ② 구 런 이어하기 URL 마커 렌더 ③ 소개 카드 정합(V8 센서)을 확인할 것.
+- ~~**클라 레거시 리졸버(`location-images.ts`) 최종 삭제**~~ ✅ **완료 (2026-08-31)**:
+  최근 14일 실측 LOCATION 턴 767/767 = 100% 서버 URL 커버리지 확인 후 삭제.
+  단 **HUB 턴 324건은 커버 0** 이었다 — 서버 리졸버가 `!locationId → null` 이라
+  HUB 전경(`graymar_overview`)은 여전히 클라 담당이던 것. `location_images.json`
+  에 `hubImage` 필드 신설(graymar 만 등재) + `resolveLocationImageForDisplay`
+  HUB 분기 추가로 서버 정본화 후 클라를 잘랐다. `location-images.ts` 는 시나리오
+  배너(`getScenarioBannerImage`) 전용으로 축소 — 배너는 게임 진입 전 화면이라
+  turn 응답이 없어 클라 존치가 맞다. 구 턴(URL 부재) 이력 복원은 이미지 생략
+  (우아한 열화). 스펙: multipack HUB 전경 격리 2케이스.
+- ~~**HUB(장소 미지정) 배경의 팩 인지**~~ ✅ **위 삭제로 동시 해소**: 의심이
+  실재였다 — 구 클라 `packFor(null)` = GRAYMAR 라 star_sand HUB 에서도 graymar
+  전경이 떴다. 서버는 팩 스코프(AsyncLocalStorage) 해석이라 hubImage 미지정
+  팩은 null(배경 생략) — 세계관 오염 종결.
+- **E-2 실런 검증**: 마커 시스템은 회귀 잦은 부분 — 배포 후 10턴 플레이테스트로 ① 신 포맷 마커 초상 렌더 ② 구 런 이어하기 URL 마커 렌더 ③ 소개 카드 정합(V8 센서)을 확인할 것. (이후 수십 실런 무이상 — 사실상 종결)
 
 ## 관련
 
