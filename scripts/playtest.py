@@ -999,7 +999,9 @@ _rep_hits, _rep_alias_hits = _rep.detect(
     _rep.build_stopwords(_REP_PLACE_WORDS),
     _npc_alias_pool,
 )
-_rep_gate_failed, _rep_severe, _rep_too_many = _rep.evaluate_gate(_rep_hits)
+_rep_gate_failed, _rep_severe, _rep_too_many = _rep.evaluate_gate(
+    _rep_hits, total_turns=len(turn_logs)
+)
 
 for _w, _c, _tn in _rep_severe:
     v9_issues.append(f"T{_tn}: '{_w}' {_c}회 반복 (3턴 내) — 심각")

@@ -158,12 +158,19 @@ def detect(narratives: list, turns: list, stopwords: set, alias_pool: Iterable[s
     return hits, alias_hits
 
 
-def evaluate_gate(hits: list):
+def evaluate_gate(hits: list, total_turns: int | None = None):
     """
     (failed, severe, too_many) — 판정을 불린 하나로 확정한다. 구 구현처럼
     이슈 리스트 길이를 임계와 다시 비교하면 '심각 1건' 같은 케이스가 건수
     비교를 통과해 조용히 새 나간다.
+
+    [arch/111 후속 2026-08-31] too_many 임계는 **런 길이 비례** — 윈도우
+    히트가 런 전체에서 단어 단위 dedupe 누적되므로 종수는 턴 수에 따라
+    자연 증가한다. 고정 5는 15턴 기준이라 40턴 롱런에서 severe 0인데도
+    구조적으로 초과했다(실측 종수 11, 전부 5~6회 수준). 15턴 이하 판정은
+    불변(max(5, turns//3)), 40턴이면 임계 13 (롱런 실측 종수 11·전부 5~6회 통과).
     """
     severe = [h for h in hits if h.count >= SEVERE_COUNT]
-    too_many = len(hits) > MAX_DISTINCT
+    distinct_limit = max(MAX_DISTINCT, (total_turns or 0) // 3)
+    too_many = len(hits) > distinct_limit
     return (bool(severe) or too_many), severe, too_many

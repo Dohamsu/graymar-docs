@@ -117,6 +117,14 @@ print("\n[경계] 짧은 런 — 윈도우보다 턴이 적으면 무동작")
 n, t = turns_of("찻잔 찻잔 찻잔 찻잔 찻잔 찻잔.", "조용하다.")
 check("2턴 런에서 예외 없이 0건", rc.detect(n, t, rc.build_stopwords(), [])[0] == [])
 
+
+print("\n[게이트] 턴 비례 임계 (arch/111 후속 — 40턴 롱런 준오탐)")
+_hits11=[rc.Hit(f"w{i}",5,i) for i in range(11)]
+check("40턴 런: 종수 11은 PASS (임계 13)", rc.evaluate_gate(_hits11, total_turns=40)[0] is False)
+check("15턴 런: 종수 11은 여전히 FAIL (판정 불변)", rc.evaluate_gate(_hits11, total_turns=15)[0] is True)
+check("턴 수 미전달 시 기존 동작(임계 5)", rc.evaluate_gate(_hits11)[0] is True)
+check("severe 는 턴 수와 무관", rc.evaluate_gate([rc.Hit("w",9,3)], total_turns=40)[0] is True)
+
 print("\n" + "=" * 52)
 if _fails:
     print(f"실패 {len(_fails)}건: {', '.join(_fails)}")
