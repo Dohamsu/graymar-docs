@@ -398,6 +398,12 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 
 55. **입력 콘텐츠 세이프티는 경계 거절의 4번째 부류** — 유해 입력(성적 노골·미성년/약자 폭력·자해) 방어의 정본은 `turns/content-safety.core.ts`이며, world-boundary(불변식 52)와 같은 L1 룰 + L2 nano(ChallengeClassifier `contentSafety` 축) + L3 서술 지시 3층이다. 감지 시 `ChallengeDecision.refused` → `resolve.forceRefusal`(주사위 스킵 + **모든 델타 0**)로 처리한다 — 유해 행동에 `FREE`를 주면 `forceAutoSuccess`(불변식 40)로 **자동 성공**이 되는 함정을 피하려 REFUSED 경로를 따로 둔다. **REDIRECT**(대부분)는 `[유해 행동 제지 지시]`로 세계가 제지하는 서술, **HARD_REFUSE**(MINOR_HARM 등 절대선)는 LLM 미호출 + 서버 고정 문안(`commitTurnRecord` narrativeOverride). 유해 거절 턴은 무과금(refund). MVP 4종 활성(HATE 정의만 비활성). 오탐 통제는 **조합 게이트 우선**(대상×행위 동시) — 일반 전투·선의·비속어 단독은 통과. 킬스위치 `CONTENT_SAFETY_ENABLED` — architecture/106.
 
+56. **NPC 관계는 3층 — kind(사건 전이)·tier(파생)·감정 5축, 신호는 L1 우선 (arch/109)** — 관계 유형(FRIEND/CONFIDANT/ROMANCE/RIVAL/GRUDGE)의 전이 정본은 `engine/hub/relationship-kind.core.ts` 순수 함수뿐이며, nano `relationSignal` 은 감지만 하고 쓰기는 워커 CAS 단일 지점(불변식 2 등재). tier 는 저장하지 않고 매 턴 재계산(`relationship-tier.core.ts`). **실측 3회에서 nano 는 고백·직접 공격 모두 NONE** — 명시 문형/행동 신호는 L1 결정론(`detectConfessionIntentL1`, FIGHT actionType)이 실제 성사 경로다. 새 관계 신호 추가 시 L1 부터. 수락 조건은 서버 임계(BONDED+fear<40+susp<50)+콘텐츠 `relationProfile.romanceable`(기혼·성직·미성년은 명시 false), 거절 쿨다운 5턴.
+
+57. **동행은 1명·위치 오버라이드는 도주>동행>스케줄 (arch/109 R4)** — 판정 정본 `engine/hub/companion.core.ts`(수락 = companionable+CLOSE 이상(또는 kind FRIEND/CONFIDANT/ROMANCE)+fear<40), 동행 상태는 `worldState.companionNpcId` 하나이며 `npc-schedule.service.getNpcLocation` 이 스케줄보다 우선 반영한다. 해산 경로 3종 — 플레이어 해산(L1), 도주(agitation FLEE), 관계 파탄(GRUDGE/RIVAL 전이·양다리 폭로 시 BROKEN). 동행자는 타 NPC 대화에 개입하지 않으며(존재감 0 은 관측 중 — arch/109 §0.6) 무화자 턴 화자 흡인→LockSeed 체인은 허용된 동작이다. 전이 연출은 `lastCompanionEvent`(turnNo 게이트 transient) 로만 전달.
+
+58. **복수 연인은 금지하지 않는다 — 들키면 대가 (arch/109 §0.5, 소유자 결정)** — 동시 ROMANCE 를 서버가 막지 않는다. 들킴은 전부 결정론 3경로(`engine/hub/affair.core.ts`): ① 애정 표현 턴에 다른 연인이 같은 장소(직접 목격) ② 제3자(소개된 CORE/SUB) 목격 → 소문 적재(TTL 24tick) ③ 소문 생존 중 다른 연인 대면. 폭로 = 기존 배신 경로 재사용(BETRAYED+GRUDGE) + 감정 타격(trust−35/attach−15/susp+30) + 동행 파탄. **연인 1명이면 완전 무동작** — 애정 표현마다 소문·판정을 만들면 노이즈다(불변식 54 와 같은 교훈). 관련 턴 훅은 `turns/relation-turn.service.ts` 로 수렴(arch/77 §19).
+
 ## 과금 원칙 (채팅 과금 채택 — 2026-07-23 결정)
 
 **결정 (2026-07-23)**: 초기 시장조사 잠정 결론 "정상 작동에는 과금하지 않는다"(arch/76 D5, 봉인)를 **폐기**하고, **채팅 1턴 = 5p 과금을 정식 모델로 픽스**한다. 비율(`POINTS_PER_CHAT`, 현 5p)은 운영 상황을 보며 조정한다. arch/85 포인트 시스템이 이 모델의 구현체이며, 아래가 구 3원칙을 대체한다.

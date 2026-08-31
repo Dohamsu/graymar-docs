@@ -47,7 +47,12 @@ PASSWORD = "Test1234!!"
 NICKNAME = "Tester"
 
 # tavern 포함 — 거점 사랑방(arch/68 부록 B) 자유 대화 경로도 완주 회귀에 포함
-LOCATIONS = ["market", "guard", "tavern", "harbor", "slums"]
+# [arch/110 후속 2026-08-31] 구 LOCATIONS 하드코딩 폐기 — graymar 장소명
+# 로테이션이 star_sand 에서 전부 매칭 실패 → fallback "첫 go_* 선택지"로
+# 수렴해 여관 3회 루프·동일 fact 재발견을 만들었다 (20턴 런 실측 — 불변식
+# 45 부류가 테스트 도구에서 재발). HUB 이동은 실제 선택지에서 **미방문
+# go_* 우선** 라운드로빈으로 결정한다 (팩 무관).
+visited_go_choices = []  # 선택 순서 보존 (라운드로빈 커서 겸용)
 ACTIONS = [
     "주변을 살펴본다", "수상한 곳을 조사한다", "사람들에게 말을 건다",
     "조심스럽게 잠입한다", "거래를 시도한다", "도움을 준다",
@@ -418,7 +423,6 @@ print(f"Run: {run_id}, nodeType: {node_type}, HP: {init_hp}, Gold: {init_gold}",
 # 3. Turn Loop
 # ═══════════════════════════════════════
 turn_logs = []
-loc_idx = 0
 loc_turns = 0
 last_narrative = ""   # 에이전트 모드 — 직전 턴 서술 (위화감 판정·행동 결정 입력)
 last_input_desc = ""
@@ -473,31 +477,35 @@ for turn_i in range(MAX_TURNS):
         bought_items.add(shop_target["itemId"])
     # Determine input
     elif node_type == "HUB":
-        loc_name = LOCATIONS[loc_idx % len(LOCATIONS)]
         target = None
-        # 1) 장소명 매칭
+        # 1) accept_quest / arc 커밋류 우선 (프롤로그·진행 게이트)
         for c in choices:
             cid = c.get("id", "")
-            if loc_name in cid.lower() or f"loc_{loc_name}" in cid.lower():
+            if "accept" in cid.lower() or "quest" in cid.lower():
                 target = c
                 break
-        # 2) accept_quest
+        # 2) 이동 선택지 — 미방문 go_* 우선, 전부 방문했으면 라운드로빈
         if not target:
-            for c in choices:
-                cid = c.get("id", "")
-                if "accept" in cid.lower() or "quest" in cid.lower():
-                    target = c
-                    break
-        # 3) go_ / loc_ 아무거나
-        if not target:
-            for c in choices:
-                cid = c.get("id", "")
-                if "go_" in cid.lower() or "loc_" in cid.lower():
-                    target = c
-                    break
-        # 4) 첫 번째 선택지 fallback
+            go_choices = [
+                c for c in choices
+                if "go_" in c.get("id", "").lower() or "loc_" in c.get("id", "").lower()
+            ]
+            if go_choices:
+                unvisited = [c for c in go_choices if c.get("id") not in visited_go_choices]
+                if unvisited:
+                    target = unvisited[0]
+                else:
+                    # 라운드로빈 — 가장 오래전에 방문한 곳부터
+                    order = {cid: i for i, cid in enumerate(visited_go_choices)}
+                    target = min(go_choices, key=lambda c: order.get(c.get("id"), -1))
+        # 3) 첫 번째 선택지 fallback
         if not target and choices:
             target = choices[0]
+        if target and ("go_" in target.get("id", "").lower() or "loc_" in target.get("id", "").lower()):
+            tid = target.get("id")
+            if tid in visited_go_choices:
+                visited_go_choices.remove(tid)
+            visited_go_choices.append(tid)  # 최근 방문을 뒤로 (라운드로빈 순서)
 
         if target:
             body = {"input": {"type": "CHOICE", "choiceId": target.get("id", "")}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
@@ -640,10 +648,6 @@ for turn_i in range(MAX_TURNS):
 
     if node_outcome == "NODE_ENDED":
         loc_turns = 0
-        # HUB에서 go_X 선택 시 NODE_ENDED는 loc_idx 증가하지 않음 (장소 이동 자체)
-        # LOCATION에서 move_location 시 NODE_ENDED만 loc_idx 증가
-        if node_type != "HUB":
-            loc_idx += 1
 
 # ═══════════════════════════════════════
 # 4. Final State & Verification

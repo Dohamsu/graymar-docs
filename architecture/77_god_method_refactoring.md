@@ -274,3 +274,12 @@ chatty 대조 런에서 visitLog 1·npcJournal 13 으로 정상 확인.
 
 잔여: llm-worker `processTurnInner` 2,462/2,000 경고는 별개 파일 — 다음
 재비대화 대응 후보.
+
+### 19.4 llm-worker 분할 (2026-08-31, 같은 날 후속)
+
+`processTurnInner` 2,462/2,000 — 레포 마지막 래칫. 파일 상한 여유
+(6,275/7,900)가 있어 **파일 이동 없이 private 메서드 추출 9건**: 관계
+도메인 2(전이 판정+CAS·shiftHint), 방어·계측 5(ShortResponse·작별 마킹·
+재탕/실명 센서·소개 마커 정규화), 대형 분기 2(장면 컷 병렬 발화·JSON 모드
+사문 경로 265줄). SSoT 금지선(DONE 커밋+finalChoices)은 불변. 결과:
+**레포 lint 경고 0** (파일·함수 래칫 전소멸).
