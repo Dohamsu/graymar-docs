@@ -779,6 +779,48 @@ def check_l3_deep(pack):
                     )
                 )
 
+    # ⑧ 일반명사 충돌 별칭 (2026-09-01 QC13) — 실명 토큰을 포함한 별칭·이름
+    #    토큰이 일상 어휘와 같으면, 미소개 마스킹(replaceAll 계열)이 평범한
+    #    문장을 때려 산문이 파손된다. 실측 2건: '피로 단'의 별칭 "피로" →
+    #    "형언할 수 없는 피로감이" → "…금지 약초상감이" (run ad6e16ae T7),
+    #    '에드릭 베일'의 별칭 "베일" → "베일에 싸인" 관용구 잠재 충돌.
+    #    엔진 접두 경계(QC8)로도 못 막는 부류 — 어절 첫머리가 곧 일상어라서다.
+    #    목록은 실측·고빈도 위주 curated (전수 사전은 없다 — 새 사례 발견 시 추가).
+    COMMON_WORD_ALIASES = {
+        "피로", "베일", "보스", "마나", "안개", "바람", "바다", "시장",
+        "장부", "명부", "열쇠", "새벽", "침묵", "어둠", "소문", "그늘",
+        "모래", "얼음", "소금", "은혜", "불안", "긴장", "희망", "절망",
+    }
+    for n in pack.npcs:
+        nid = n.get("npcId")
+        name = n.get("name") or ""
+        name_toks = [t for t in name.split() if len(t) >= 2]
+        # 치환 대상이 되는 패턴만 검사: 실명 토큰 포함 별칭(aliasLeaksName 재현)
+        for a in n.get("aliases") or []:
+            if not isinstance(a, str) or len(a) < 2:
+                continue
+            if any(t in a for t in name_toks) and a in COMMON_WORD_ALIASES:
+                f.append(
+                    Finding(
+                        "WARN",
+                        "ALIAS_COMMON_WORD",
+                        f"npcs.json:{nid}:aliases:{a}",
+                        f'별칭 "{a}" 가 일상 어휘와 동일 — 미소개 마스킹이 '
+                        f"일반 문장을 때려 산문 파손 위험 (단독 별칭 제거 또는 "
+                        f"개명 권장, 불변식 51)",
+                    )
+                )
+        # 실명 자체가 단일 일상어인 경우 (한 어절 이름)
+        if name in COMMON_WORD_ALIASES:
+            f.append(
+                Finding(
+                    "WARN",
+                    "ALIAS_COMMON_WORD",
+                    f"npcs.json:{nid}:name",
+                    f'실명 "{name}" 이 일상 어휘와 동일 — 개명 권장 (불변식 51)',
+                )
+            )
+
     # ⑤ quest.facts 목록과 facts.json 불일치
     q_facts = set(pack.quest.get("facts") or [])
     if q_facts:
