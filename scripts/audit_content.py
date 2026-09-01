@@ -705,6 +705,49 @@ def check_l3_deep(pack):
                 )
             )
 
+    # ⑥ fact 키워드 ↔ 보유 NPC 표시명 충돌 (버그 8db24757, 2026-09-01)
+    #    엔진 매칭은 "입력 토큰이 fact 키워드를 포함"(content-loader
+    #    getFactsByKeywords)이라, 키워드가 보유자(knownBy) 자신의 표시명·별칭
+    #    어절과 겹치면 그 NPC를 지칭하기만 해도 주제 매칭이 성립한다 —
+    #    star_sand "이름" 키워드 × "이름 수집가"가 S3 종반부 단서를 5턴에
+    #    발화시킨 실측. 지칭은 주제가 아니므로 홀더 본인 이름과의 충돌만 본다
+    #    (타 NPC 이름 키워드는 정당한 주제 — 예: 레닉에게 '마이렐'을 묻기).
+    npc_display = {}
+    for n in pack.npcs:
+        nid = n.get("npcId")
+        if not nid:
+            continue
+        toks = set()
+        for field in ("name", "unknownAlias", "shortAlias", "title"):
+            v = n.get(field)
+            if isinstance(v, str):
+                toks.update(v.split())
+        for v in n.get("aliases") or []:
+            if isinstance(v, str):
+                toks.update(v.split())
+        npc_display[nid] = toks
+    for fid, fact in pack.facts.items():
+        if not isinstance(fact, dict):
+            continue
+        for kw in fact.get("keywords") or []:
+            if not isinstance(kw, str) or len(kw) < 2:
+                continue
+            for holder in fact.get("knownBy") or []:
+                hit = sorted(
+                    t for t in npc_display.get(holder, ()) if kw in t
+                )
+                if hit:
+                    f.append(
+                        Finding(
+                            "WARN",
+                            "FACT_KEYWORD_HOLDER_COLLISION",
+                            f"facts.json:{fid}:keywords:{kw}",
+                            f'키워드 "{kw}" 가 보유 NPC {holder} 의 표시명 어절 '
+                            f"{hit} 과 겹침 — 지칭만으로 주제 매칭 발화 "
+                            f"(구체어로 교체 권장)",
+                        )
+                    )
+
     # ⑤ quest.facts 목록과 facts.json 불일치
     q_facts = set(pack.quest.get("facts") or [])
     if q_facts:
