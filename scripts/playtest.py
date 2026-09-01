@@ -1121,12 +1121,18 @@ if v11_failed_count:
 #   0%→35%로 자랐는데 감시 지표가 없어 아무도 못 봤다 — 그 부작용이 [NPC 일상]
 #   잡담 화제 블록 상시 삭제(D 블록 미주입 버그)였다. 턴별 최종 프롬프트
 #   (includeDebug llmPrompt, 백스톱 절삭 후) 총 문자수를 집계해 게이트한다.
-#   - 발동 추정: 절삭 후에도 ≥16,000자에 남는 턴 — 백스톱이 스냅샷 제거로도 상한
-#     (GRAND_TOTAL 16,500자)을 못 맞춘 턴의 근사치. 정밀 판정은 서버 [GrandBudget] 로그.
+#   - 발동 추정: 절삭 후에도 발동 프록시 이상에 남는 턴 — 백스톱이 스냅샷 제거로도
+#     상한을 못 맞춘 턴의 근사치. 정밀 판정은 서버 [GrandBudget] 로그 +
+#     llm_token_stats.budgetTrimmed (2026-09-01 텔레메트리).
 #   - FAIL 시 대응은 프롬프트 다이어트가 정본 — 상한 상향으로 풀지 말 것 (arch/95 §6).
-PROMPT_BUDGET_CAP = 16500      # server token-budget.service.ts GRAND_TOTAL_CHAR_BUDGET
-PROMPT_FIRE_PROXY = 16000      # 발동 추정 임계 (상한의 ~97%)
+#   [2026-09-01] 상한 16,500→20,000 상향(소유자 결정, 감시 조건부 — 30일 실측 구간별
+#   어체 위반율 평탄 근거). avg 경보선 15,000은 유지한다 — 상향이 조용한 재비대
+#   면허가 되지 않도록. 신규 개방 밴드(>16,500자)는 참고 지표로 계측하고, 밴드
+#   품질(모델별 어체 위반율)은 scripts/prompt_budget_monitor.py 가 정본.
+PROMPT_BUDGET_CAP = 20000      # server token-budget.service.ts GRAND_TOTAL_CHAR_BUDGET
+PROMPT_FIRE_PROXY = 19500      # 발동 추정 임계 (상한의 ~97%)
 PROMPT_AVG_LIMIT = 15000       # 평균 경보선 (2026-07-27 압축 후 실측 avg 12.7k + 18% 여유)
+PROMPT_WATCH_BAND = 16500      # 구 상한 = 신규 개방 밴드 시작 (server GRAND_TOTAL_WATCH_CHARS)
 # [arch/79 §11.3] 다회 런 누적 판정 — 단일 런은 n=14~20이라 발동 1건이 5%p다.
 V12_POOL_RUNS = 3              # 판정 창: 최근 3런 풀링 (n≈50 → 1턴 ≈ 2%p)
 V12_MIN_RUNS = 2               # 이 미만이면 게이트 보류 (참고 수치만)
@@ -1212,6 +1218,8 @@ if prompt_sizes:
     _p_max = max(_sizes)
     _fired = [(tt, s) for tt, s in prompt_sizes if s >= PROMPT_FIRE_PROXY]
     _fire_rate = len(_fired) / len(_sizes)
+    # [2026-09-01] 신규 개방 밴드(구 상한 16,500 초과) 점유율 — 참고 지표 (게이트 아님)
+    _watch_band = [(tt, s) for tt, s in prompt_sizes if s > PROMPT_WATCH_BAND]
 
     # [arch/79 §11.3 → 다회 런 누적 판정, 2026-08-07] 단일 런 판정 폐기.
     #   런당 표본이 14~20턴이라 발동 1건 = 5%p이고, 게이트 20% 선에서 ±1턴이
@@ -1220,8 +1228,10 @@ if prompt_sizes:
     #   → 최근 N런의 **원시 카운트를 풀링**해 판정한다 (rate 평균이 아니라
     #     sum(fired)/sum(turns) — 런별 턴 수 차이를 자동 가중).
     #   표본이 1런뿐이면 참고 표시만 하고 게이트는 통과 처리 (오탐 방지).
+    # [2026-09-01] 원장 v2 전환 — 발동 프록시 임계가 16,000→19,500 으로 바뀌어
+    # 구 원장(fireProxyCount 의 분모 의미가 다름)과 풀링하면 판정이 오염된다.
     _window = append_gate_ledger(
-        "v12_ledger.json",
+        "v12_ledger_v2.json",
         {
             "runId": run_id,
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
@@ -1229,6 +1239,7 @@ if prompt_sizes:
             "server": _SERVER_HASH,
             "sampleTurns": len(_sizes),
             "fireProxyCount": len(_fired),
+            "watchBandCount": len(_watch_band),
             "avgChars": _p_avg,
         },
         pool_runs=V12_POOL_RUNS,
@@ -1253,6 +1264,7 @@ if prompt_sizes:
         "sampleTurns": len(_sizes),
         "fireProxyCount": len(_fired),
         "fireProxyRate": round(_fire_rate, 3),
+        "watchBandCount": len(_watch_band),
         "capChars": PROMPT_BUDGET_CAP,
         # 누적 판정 근거 (게이트가 보는 값)
         "pooledRuns": len(_window),
@@ -1264,6 +1276,7 @@ if prompt_sizes:
     }
     print(f"  프롬프트 총량: avg {_p_avg:,}자 / max {_p_max:,}자 (표본 {len(_sizes)}턴, 상한 {PROMPT_BUDGET_CAP:,}자)", flush=True)
     print(f"  이번 런 발동 추정(≥{PROMPT_FIRE_PROXY:,}자): {len(_fired)}/{len(_sizes)}턴 ({_fire_rate*100:.0f}%)", flush=True)
+    print(f"  신규 밴드(>{PROMPT_WATCH_BAND:,}자) 점유: {len(_watch_band)}/{len(_sizes)}턴 — 품질 판정은 prompt_budget_monitor.py", flush=True)
     print(f"  누적 판정({len(_window)}런): {_pool_fired}/{_pool_turns}턴 ({_pool_rate*100:.0f}%) · 가중 avg {_pool_avg:,}자", flush=True)
     if not _pooled_enough:
         print(f"  ⚠️ 표본 부족({len(_window)}/{V12_MIN_RUNS}런) — 게이트 보류(통과 처리). 참고용 수치만 기록", flush=True)

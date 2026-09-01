@@ -65,7 +65,7 @@ CLAUDE.md `Critical Design Invariants` 50개 중 **기계 검증 가능한 것**
 | #6 Action slot cap = 3 | `actionSlots > 3` 인 턴 수 = 0 |
 | #9 Heat ±8 clamp | 인접 턴 heat 차 `> 8` 인 구간 = 0 |
 | #12 판정 공식 | `resolveBreakdown` 재계산 ↔ 저장 outcome 일치 |
-| #17 Token Budget | 프롬프트 문자수 > 16,500 인 턴 (arch/100 §10.1 실측 경로) |
+| #17 Token Budget | 프롬프트 문자수 > 20,000 인 턴 (arch/100 §10.1 실측 경로 — 2026-09-01 상한 상향 arch/79 §13 반영) |
 | #19 NATURAL 엔딩 ≥15턴 | `totalTurns < 15` 인 ALL_RESOLVED 엔딩 = 0 |
 | **#41 signature 노출 금지** | 프롬프트 픽스처에 `personality.signature` 어구 등장 = 0 |
 | **#42 speechStyle 어구 예시 금지** | 콘텐츠 `speechStyle` 안 따옴표 인용 = 0 |

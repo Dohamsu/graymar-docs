@@ -106,11 +106,15 @@ v2, _ = one("""SELECT count(*) FROM turns
   WHERE (server_result->'ui'->'worldState'->>'hubHeat')::numeric NOT BETWEEN 0 AND 100;""")
 report(9, 'Heat 범위 0~100', int(v2 or 0), int(d or 0))
 
-# ── #17 Token Budget — 프롬프트 총량 백스톱 16,500 ───────────────────
+# ── #17 Token Budget — 프롬프트 총량 백스톱 20,000 ───────────────────
+#   [2026-09-01] 상한 16,500→20,000 상향 (CLAUDE.md 불변식 17 개정) 반영.
+#   전 기간 집계라 상향 전 턴(구 상한 기준 초과 16.5k~20k)이 섞이지만,
+#   신 상한 초과만 세므로 방향은 보수적(과소 아님). 밴드 품질 감시의 정본은
+#   scripts/prompt_budget_monitor.py — 이 디텍터는 발동률 계약만 본다.
 v, e = one("""WITH p AS (
   SELECT (SELECT sum(length(m->>'content')) FROM jsonb_array_elements(llm_prompt) m) AS c
   FROM turns WHERE llm_prompt IS NOT NULL AND jsonb_typeof(llm_prompt)='array')
-SELECT count(*) FROM p WHERE c > 16500;""")
+SELECT count(*) FROM p WHERE c > 20000;""")
 d, _ = one("SELECT count(*) FROM turns WHERE llm_prompt IS NOT NULL AND jsonb_typeof(llm_prompt)='array';")
 #   [5회차] 판정 기준 정정. enforceGrandTotal 은 특정 블록만 제거하는
 #   best-effort 라 하드 상한이 아니다 (CLAUDE.md 불변식 17 문면도 이번에 정정).
@@ -119,7 +123,7 @@ rate = (int(v or 0) / int(d)) if d and int(d) else 0.0
 report(17, '프롬프트 초과 발동률 ≤20% (전 기간·비율)',
        0 if rate <= 0.20 else int(v or 0), int(d or 0),
        f'초과 {v}/{d} = {rate*100:.1f}% (상한 아님 — best-effort 백스톱)',
-       'messages[].content 합계 > 16500 비율')
+       'messages[].content 합계 > 20000 비율')
 
 # ── #19 NATURAL 엔딩 최소 15턴 ──────────────────────────────────────
 v, e = one("""SELECT count(*) FROM run_sessions s
