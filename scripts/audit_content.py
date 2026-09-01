@@ -748,6 +748,37 @@ def check_l3_deep(pack):
                         )
                     )
 
+    # ⑦ NPC knownFacts.keywords ↔ facts.json keywords drift (2026-09-01 QC)
+    #    같은 factId 의 키워드가 두 파일에 이중 정의되어 있고 소비처가 다르다 —
+    #    facts.json 은 공개 매칭(selectRevealableFact), npcs.json 사본은
+    #    로어북 주입(lorebook.service matchNpcFacts). 한쪽만 고치면 다른
+    #    파이프라인이 옛 키워드로 발화한다 (그레이마르 8건 실측 — 충돌 제거가
+    #    facts.json 에만 반영되어 로어북은 '노동/선술집/경비'로 계속 매칭).
+    for n in pack.npcs:
+        nid = n.get("npcId")
+        for kf in n.get("knownFacts") or []:
+            if not isinstance(kf, dict):
+                continue
+            fid = kf.get("factId")
+            fdef = pack.facts.get(fid)
+            if not isinstance(fdef, dict):
+                continue
+            nkw = set(k for k in (kf.get("keywords") or []) if isinstance(k, str))
+            fkw = set(k for k in (fdef.get("keywords") or []) if isinstance(k, str))
+            if nkw and fkw and nkw != fkw:
+                only_n = sorted(nkw - fkw)
+                only_f = sorted(fkw - nkw)
+                f.append(
+                    Finding(
+                        "WARN",
+                        "KNOWN_FACTS_KEYWORD_DRIFT",
+                        f"npcs.json:{nid}:knownFacts:{fid}",
+                        f"키워드가 facts.json 과 불일치 — npcs만: {only_n} / "
+                        f"facts만: {only_f} (로어북·공개 매칭이 서로 다른 "
+                        f"키워드로 발화, 동기화 필요)",
+                    )
+                )
+
     # ⑤ quest.facts 목록과 facts.json 불일치
     q_facts = set(pack.quest.get("facts") or [])
     if q_facts:
