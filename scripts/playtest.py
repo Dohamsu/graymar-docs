@@ -628,6 +628,11 @@ for turn_i in range(MAX_TURNS):
         "choiceIds": [
             c.get("id", "") for c in (server_result.get("choices") or [])
         ],
+        # [2026-09-01] V9 입력 어휘 제외용 — 서버 선택지 라벨 (id 만으로는
+        # followup 캐묻기 라벨('열쇠 하나에 대해…')의 어휘를 복원할 수 없다)
+        "choiceLabels": [
+            c.get("label", "") for c in (server_result.get("choices") or [])
+        ],
         # V13 (arch/98): nano 최종 선택지 (llm.choices — 없으면 서버 기본 유지 턴)
         "llmChoices": llm_result.get("choices") if isinstance(llm_result, dict) else None,
     }
@@ -664,9 +669,29 @@ print("=" * 60, flush=True)
 
 # V1: Incidents
 incidents = world_state.get("activeIncidents", [])
+# [2026-09-01 QC 시리즈] AUTONOMOUS 팩(incidents.json 없음 — 디렉터가 서사를
+# 소유)은 V1 구조적 FAIL — 15회 사이클 중 karnholt 5회 전부 노이즈였다.
+# 모드를 읽어 게이트에서 면제하고, 대신 비트 채택 여부를 계측으로 보고한다.
+import os as _os_v1
+_narrative_mode = ""
+try:
+    with open(
+        _os_v1.path.join(
+            _os_v1.path.dirname(_os_v1.path.abspath(__file__)),
+            "..", "content", args.scenario or "graymar_v1", "scenario.json",
+        ),
+        encoding="utf-8",
+    ) as _sf:
+        _narrative_mode = (json.load(_sf).get("narrativeMode") or "").upper()
+except Exception:
+    pass
+_autonomous_pack = _narrative_mode == "AUTONOMOUS"
+
 print(f"\n[V1] Incidents: {len(incidents)}개 활성", flush=True)
 for inc in incidents:
     print(f"  - {inc.get('incidentId', '?')} stage={inc.get('stage', '?')} control={inc.get('control', '?')} pressure={inc.get('pressure', '?')}", flush=True)
+if _autonomous_pack and not incidents:
+    print("  · AUTONOMOUS 팩 — incidents 부재는 구조적 (게이트 면제, 디렉터 비트가 서사 소유)", flush=True)
 print(f"  hubHeat: {world_state.get('hubHeat', '?')}", flush=True)
 
 # V2: NPC encounterCount
@@ -992,6 +1017,22 @@ try:
         _REP_PLACE_WORDS |= _rep.extract_address_terms(json.load(_nf))
 except Exception:
     pass
+# [2026-09-01 QC 시리즈] 플레이어 입력·노출 선택지 어휘 제외 — V9 FAIL 4회
+# 전부 입력/선택지가 어휘를 잠근 주제 집중 오탐('소리'·'명부'·'열쇠'·'상자').
+# 라벨은 id 로만 기록되는 턴이 있어(서버 기본 선택지) 노출된 llmChoices 의
+# label·hint 전체를 포함한다 — 화면에 노출된 저작·nano 텍스트의 어휘가
+# 서술에 반복되는 것은 주제 일관성이지 밋밋함이 아니다. 입력·선택지에 없는
+# 어휘의 반복(진짜 LLM 밋밋함)은 종전대로 게이트에 걸린다.
+_input_texts = [t.get("rawInput") or "" for t in turn_logs] + [
+    t.get("input") or "" for t in turn_logs
+]
+for _t in turn_logs:
+    for _c in _t.get("llmChoices") or []:
+        if isinstance(_c, dict):
+            _input_texts.append(str(_c.get("label") or ""))
+            _input_texts.append(str(_c.get("hint") or ""))
+    _input_texts.extend(str(x) for x in _t.get("choiceLabels") or [])
+_REP_PLACE_WORDS |= _rep.extract_player_input_words(_input_texts)
 
 _rep_hits, _rep_alias_hits = _rep.detect(
     [t.get("narrative", "") for t in turn_logs],
@@ -1547,7 +1588,8 @@ all_checks = {
     #   엔딩 자연 종료는 정당하므로 예외. 그 외에는 요청 턴의 50% 이상 요구.
     "V0_turns_executed": len(turn_logs) > 0 and (
         _run_ended_naturally or len(turn_logs) >= MAX_TURNS * 0.5),
-    "V1_incidents": len(incidents) > 0,
+    # [2026-09-01] AUTONOMOUS 팩은 incidents 부재가 구조적 — 게이트 면제
+    "V1_incidents": len(incidents) > 0 or _autonomous_pack,
     "V2_encounter": enc_pass >= 2,
     "V3_posture": len(posture_none) == 0,
     "V4_emotion": emo_active > 0,

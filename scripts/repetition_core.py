@@ -125,6 +125,24 @@ def extract_fact_keywords(facts_json) -> set:
     return out
 
 
+def extract_player_input_words(input_texts: Iterable[str]) -> set:
+    """플레이어 입력(자유 텍스트·선택지 라벨)의 어절 — V9 게이트 제외.
+
+    [2026-09-01 QC 시리즈] 15회 사이클에서 V9 FAIL 4회('소리'·'명부'·'열쇠'·
+    '상자')가 전부, 플레이어가 직전 턴 단서 어휘를 그대로 되물어 서술이 주제에
+    잠긴 정상 대화 역학이었다. 입력에 등장한 어휘의 서술 반복은 의도 존중이지
+    밋밋함이 아니다 — fact keywords 제외(arch/110 ③)와 같은 원칙으로 게이트에서
+    뺀다. 입력에 없는 어휘의 반복(진짜 LLM 밋밋함)은 종전대로 잡힌다.
+    """
+    out = set()
+    for txt in input_texts or ():
+        if not isinstance(txt, str):
+            continue
+        for tok in re.findall(r"[가-힣]{2,8}", txt):
+            out.add(stem_word(tok))
+    return out
+
+
 def detect(narratives: list, turns: list, stopwords: set, alias_pool: Iterable[str] = ()):
     """
     3턴 윈도우 반복 감지. `narratives[i]` 는 `turns[i]` 턴의 서술.

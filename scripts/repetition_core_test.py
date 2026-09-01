@@ -125,6 +125,26 @@ check("15턴 런: 종수 11은 여전히 FAIL (판정 불변)", rc.evaluate_gate
 check("턴 수 미전달 시 기존 동작(임계 5)", rc.evaluate_gate(_hits11)[0] is True)
 check("severe 는 턴 수와 무관", rc.evaluate_gate([rc.Hit("w",9,3)], total_turns=40)[0] is True)
 
+print("\n[입력 어휘] 플레이어 입력·선택지 라벨 제외 (2026-09-01 QC 시리즈)")
+_pw = rc.extract_player_input_words(
+    ["소리가 오는 물목을 짚는다", "이렌에게 열쇠 하나에 대해 더 캐묻는다", None, 123]
+)
+check("입력 어절 스템 추출 (소리·열쇠·물목)", {"소리", "열쇠", "물목"} <= _pw)
+check("빈 입력 무동작", rc.extract_player_input_words([]) == set())
+_n3, _t3 = turns_of(
+    "열쇠 열쇠가 열쇠를 열쇠의 열쇠 홈이 보인다.",
+    "열쇠 열쇠가 다시 보인다.",
+    "조용하다.",
+)
+check(
+    "입력 어휘 stopword 합류 시 게이트 미적중",
+    rc.detect(_n3, _t3, rc.build_stopwords(_pw), [])[0] == [],
+)
+check(
+    "입력에 없는 어휘 반복은 종전대로 검출",
+    rc.detect(_n3, _t3, rc.build_stopwords(), [])[0] != [],
+)
+
 print("\n" + "=" * 52)
 if _fails:
     print(f"실패 {len(_fails)}건: {', '.join(_fails)}")
