@@ -298,7 +298,7 @@
     "npcId": "NPC_KH_GUILDMASTER",
     "name": "토르그",
     "unknownAlias": "굳은살 박인 손",
-    "shortAlias": "손",
+    "shortAlias": "길드장",
     "aliases": [
       "토르그",
       "길드장",
@@ -742,7 +742,7 @@
     "npcId": "NPC_KH_ENGRAVER",
     "name": "옌",
     "unknownAlias": "잉크 밴 손가락",
-    "shortAlias": "손가락",
+    "shortAlias": "각인공",
     "aliases": [
       "옌",
       "조각공",
