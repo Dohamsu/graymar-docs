@@ -107,6 +107,7 @@ lsof -ti:3000 | xargs kill -9 2>/dev/null   # launchd가 자동 재기동함 (�
 - **테스터 계정 = 정본 재사용 (수집+제외, 삭제 금지)**: `playtest.py`는 정본 `playtest@test.com`을 register-or-login 재사용(`--new-account` 시에만 신규). 테스터 로그는 **보존**하되 어드민 대시보드가 도메인 기반으로 실유저 집계(가입·활성·런·턴·포인트)에서 제외한다(`server/src/common/tester.util.ts`). **테스터 대량 삭제 금지** — arch/87 §10.
 - **초대 게이트 (arch/107 §8)**: 비공개 테스트 중이라 신규 가입에 초대 코드가 필요하다. 정본 테스터 계정은 이미 있어 login fallback 으로 빠지지만 `--new-account` 는 코드가 필요하다. 발급 정본은 **`scripts/invite_util.py`** (`add_invite_code(body, BASE)`) — 가입을 시도하는 모든 스크립트가 이걸 쓴다. `ADMIN_TOKEN` 은 env 또는 `server/.env` 에서 읽는다. **서버에 테스터 예외를 두지 않는다** (구멍을 만들면 게이트가 무의미).
 - **커맨드**: `/playtest` (`.claude/commands/playtest.md`)
+- **품질 사이클**: `/quality-cycle` (`.claude/skills/quality-cycle`) — 런→정독 분석→근본 수정→표적 재검증 사이클 정본 (2026-09-01 실증 세션에서 저작). 게이트가 못 보는 정성 층(단서 이해 가능성·톤 분포·전환 중복) 담당. `/loop` 연계는 report-only 모드만.
 - **기본 턴 수 = 10~15턴** (2026-07-13 지시): 일반 테스트는 `--turns 10`~`15`로 짧게 실행한다. 40턴 같은 롱런은 **엔딩 완주·롱런 검증 등 별도 명시 지시가 있을 때만**. 표본이 더 필요하면 40턴 단회 대신 10~15턴 **다회 누적**으로 축적한다 (키 한도·시간 비용 절감).
 - **API 필드 확인**: 플레이테스트 스크립트 수정 시, 파싱 로직 작성 전에 API 응답 필드명을 정확히 확인하라 (예: `id` vs `choiceId`). 실제 API 응답 구조를 샘플 호출로 먼저 확인하라.
 - **실행 경로 주의**: 반드시 레포 루트(`/Users/dohamsu/Workspace/graymar`)에서 실행. 서버 커밋 작업 후 shell cwd가 `server/`에 남아 `scripts/playtest.py`를 못 찾는 함정이 반복 실측됨 — 절대 경로 또는 `cd` 명시.
