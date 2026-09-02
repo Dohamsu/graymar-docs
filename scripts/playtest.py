@@ -422,6 +422,25 @@ print(f"Run: {run_id}, nodeType: {node_type}, HP: {init_hp}, Gold: {init_gold}",
 # ═══════════════════════════════════════
 # 3. Turn Loop
 # ═══════════════════════════════════════
+def resolve_choice_surface(state):
+    """선택 후보 = 실클라이언트와 같은 우선순위 (2026-09-02, QC 종합 §5 하네스 관찰).
+
+    클라는 마지막 턴이 DONE 이고 워커 확정 nano 선택지(llmChoices)가 있으면 그것을,
+    없으면 서버 기본 선택지(lastResult.choices)를 렌더한다 (game-store.helpers 1105,
+    라이브는 stream done 이 같은 목록을 실어 옴). 구 하네스는 항상 서버 목록에서만
+    골라 30일 실측이 뒤집혀 있었다 — 실유저 nano 63%·서버 31% vs 테스터 nano 4%·
+    서버 94%, 캐묻기(npc_followup) 클릭 실유저 0 / 테스터 103. nano 표면 결함
+    (버그 5ae9b872 이동 라벨 TALK)은 하네스가 4% 확률로만 밟았다.
+    반환: (choices, surface) — surface ∈ {"nano", "server"}.
+    """
+    server_choices = (state.get("lastResult") or {}).get("choices", []) or []
+    turns = state.get("turns") or []          # turnNo desc — [0] 이 최신
+    last = turns[0] if turns else {}
+    nano = last.get("llmChoices") if last.get("llmStatus") == "DONE" else None
+    if nano:
+        return list(nano), "nano"
+    return list(server_choices), "server"
+
 turn_logs = []
 loc_turns = 0
 last_narrative = ""   # 에이전트 모드 — 직전 턴 서술 (위화감 판정·행동 결정 입력)
@@ -449,7 +468,7 @@ for turn_i in range(MAX_TURNS):
 
     current_turn = state.get("run", {}).get("currentTurnNo", current_turn)
     node_type = state.get("currentNode", {}).get("nodeType", "")
-    choices = state.get("lastResult", {}).get("choices", [])
+    choices, choice_surface = resolve_choice_surface(state)
     hp = state.get("runState", {}).get("hp", "?")
     gold = state.get("runState", {}).get("gold", 0) or 0
 
@@ -635,6 +654,8 @@ for turn_i in range(MAX_TURNS):
         ],
         # V13 (arch/98): nano 최종 선택지 (llm.choices — 없으면 서버 기본 유지 턴)
         "llmChoices": llm_result.get("choices") if isinstance(llm_result, dict) else None,
+        # [2026-09-02] 이번 턴 입력을 고른 선택지 표면 — 실유저 비율(nano 6:4 서버) 대조용
+        "choiceSurface": choice_surface,
     }
     turn_logs.append(log_entry)
 
@@ -1633,6 +1654,12 @@ for _tk in _tokens:
     _freq[_tk] = _freq.get(_tk, 0) + 1
 _top = sorted(_freq.items(), key=lambda x: -x[1])[:5]
 print("\n어휘 반복 톱5 (계측):", ", ".join(f"{w}×{c}" for w, c in _top), flush=True)
+# [2026-09-02] 선택지 표면 분포 — CHOICE 제출 턴만. 실유저 30일 기준 nano 63% : 서버 31%
+_surf = {}
+for _t in turn_logs:
+    if str(_t.get("input", "")).startswith(("CHOICE:", "AGENT:")) and _t.get("nodeType") == "LOCATION":
+        _surf[_t.get("choiceSurface") or "?"] = _surf.get(_t.get("choiceSurface") or "?", 0) + 1
+print("선택지 표면 (LOCATION CHOICE/AGENT 턴):", ", ".join(f"{k}={v}" for k, v in sorted(_surf.items())) or "없음", flush=True)
 
 # ── 에이전트 플레이어 위화감 노트 (--agent 모드) ──
 if args.agent:
