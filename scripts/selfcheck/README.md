@@ -8,6 +8,7 @@ python3 scripts/selfcheck/content_consistency.py # E족 — 콘텐츠 정합
 python3 scripts/audit_payload_keys.py --lifetime # B족 — 배선 감사 (arch/100 §16)
 python3 scripts/selfcheck/pipeline_loss.py       # C족 — 파이프라인 손실 (--days N)
 python3 scripts/selfcheck/reachability.py        # D족 — 임계 도달성
+python3 scripts/selfcheck/wiring.py              # W족 — 배선 정합 (arch/112 P3-C, DB 불필요)
 ```
 
 ## 판정 규약
@@ -33,9 +34,24 @@ python3 scripts/selfcheck/reachability.py        # D족 — 임계 도달성
 | 5 | #17 프롬프트 | 전량 | 백스톱을 하드 상한으로 오판 → V12 발동률 ≤20% 로 기준 정정 |
 | 7 | C4 questReveal | 30/30 | `ui.questReveal` 을 문자열로 봄 → 실제는 객체, `factId` 해석 필요 |
 | 7 | C4 questReveal | 10/30 | 모든 revealMode 를 같은 기준으로 판정 → `direct` 만 게이트, indirect/observe 는 계측 |
+| 9 | W1b 캐스트 계측 | 0/60 (전량 누락) | 정규식 끝 `\b` 가 `>)` 사이에서 불성립 → 후행 경계 제거 (C6 극단값 0% 는 검사기 의심) |
+| 9 | W2 상태형 필드 | `avoid` 오탐 | `Id$` 를 대소문자 무시로 두어 "avo**id**" 매칭 → `[a-z]Id$` 대소문자 구분 |
+| 9 | W2 검증 참조 | 4/5 오탐 | 변수명을 `result|parsed` 로 한정 + 검증 창 ±3줄 → 임의 변수(`guarded`)·6줄 뒤 clamp 를 놓침. 창 −3~+8 |
+| 9 | W3 커밋 판정 | 1/3 오탐 | 삼항 연속행이 앞줄의 `isArcCommitted` 를 못 봄 → 앞 2줄 창 |
 
 디텍터 수정 시 이 표에 추가한다. **오탐을 못 줄이면 루프는 노이즈 생성기가 된다**
 (arch/101 §5).
+
+## W족 판정 규약 (arch/112 P3-C)
+
+| 항목 | 위반 뜻 | 정본 |
+|---|---|---|
+| W1 | `result.ui.X =` 부착 필드가 `UIBundle` 에 없음 — 소비자가 캐스트로만 읽는 "조용히 꺼진 배선" 후보 | `db/types/server-result.ts UIBundle` |
+| W1b | 계측 — 타입 있는 필드를 `ui as Record/any` 로 우회하는 읽기·쓰기 수 (0 이 목표, 증가는 회귀) | — |
+| W2 | 프롬프트가 소비하는 nano JSON 필드 중 상태를 이름하는 것(fact·npc·Id·signal·shift·level·type…)에 director 검증/정규화 참조가 없음 — 결함 B(`factRevealed` 무대조 승격) 부류 | director 검증 블록·`normalize*Core` |
+| W3 | 조건식이 `arcState.currentRoute` 를 커밋 신호로 씀 — ARC_HINT 이벤트가 커밋 전에도 채우는 필드 (결함 A 부류) | `arc-stage.core isArcCommitted` |
+
+DB 를 쓰지 않으므로 `--days` 창이 없다. 수용 예외는 `baseline.json` 의 `W…` id.
 
 ## D족 판정 규약
 

@@ -1,7 +1,7 @@
 # 112. turns.service 3차 재비대 대응 — LOCATION 턴 서비스 분리 설계·계획
 
 - 작성: 2026-09-02 (30턴 롱런 분석 직후, arch/77 §18·§19 의 후속)
-- 상태: ✅ Phase 0~2 구현 완료 · Phase 3 진행 중 — P3-A 완료(§10.1), 다음 P3-C 정적층 → P3-B ctx
+- 상태: ✅ Phase 0~2 구현 완료 · Phase 3 진행 중 — P3-A(§10.1)·P3-C 정적층(§10.2) 완료, 다음 P3-B ctx
 - 대상: `server/src/turns/turns.service.ts` (7,975줄 · `handleLocationTurnInner` 2,047줄)
 
 ## 0. 결정 요약
@@ -279,4 +279,27 @@ type LocationTurnCtx = {
   3. 기존 타입 필드(`actionContext`·`resolveOutcome`·`speakingNpc`)의 레거시 캐스트 읽기가 llm-worker 26·context-builder 21·prompt-builder 8 남아 있다.
      동작엔 무관하나 "타입이 있는데 우회"라 W1 디텍터가 잡을 대상.
   4. `location-result` 의 비-UI `as any` 4곳(`event.payload`·`resolveOutcome as any`·`npcEmotionalDelta`·`kind: 'NPC' as any`)은 이번 범위 밖.
-- 다음: P3-C 정적층(`scripts/selfcheck/wiring.py`) → P3-B ctx.
+
+### 10.2 P3-C 정적층 `scripts/selfcheck/wiring.py` — 완료 (2026-09-02)
+
+W1(ui 부착↔UIBundle)·W1b(캐스트 우회 계측)·W2(nano 상태형 필드↔검증)·W3(currentRoute 커밋 오용) 4항목.
+DB 불필요, 실행 1초. README 판정 규약·오탐 이력 등재, ledger cycle 9.
+
+**W3 가 실결함 2곳을 잡았다** (검사기 첫 실행에서, 원문 대조 후 확인):
+1. `scene-shell.service.ts buildHubChoices` — 결심 선택지 노출 조건이 `!arcState.currentRoute`. ARC_HINT 이벤트가 currentRoute 를
+   채우면 **결심 선택지가 영영 숨어** S5+5 타이머 무커밋 엔딩으로만 끝났다. 결함 A(커밋 없이 3막 진행)의 반대편 증상 —
+   같은 필드 오용의 두 얼굴. 30일 route-only 런 5건이 이 경로.
+2. `location-quest.service.ts` — 종착 상태 "거점으로 돌아가 최종 선택" 안내도 같은 조건. 힌트 루트 런은 안내조차 못 받았다.
+3. `location-turn.service.ts` 스테이지 목록 로드는 `getActiveArcStage` 가 이미 정본을 보므로 무해했으나 정본 단일성으로 정리.
+
+수정: 세 곳 모두 `isArcCommitted` 정본으로. 스펙 `scene-shell.arc-commit-gate.spec.ts` 3건(route-only 노출·committedAt/레거시 숨김·
+S3 미만 미노출). 2,527 passed · 스냅샷 불변 · 스모크 PASS.
+
+**소유자 판단 대기(수정 안 함)**: 힌트로 currentRoute 가 채워진 런이 다른 루트로 결심하면 `switchRoute` 가 `betrayalCount+1`
+을 센다(구현: `currentRoute !== null` 이면 배신). 힌트는 결심이 아니므로 배신으로 세는 것이 맞는지 — 세지 않으려면
+`switchRoute` 의 배신 판정도 `isArcCommitted` 로 바꾸면 된다(1줄). 엔딩 12분기 중 배신 분기 빈도에 영향.
+
+**검사기 오탐 이력(README 표에 등재)**: W1b 정규식 경계 `\b` 가 `>)` 에서 불성립(0%→60곳) · W2 `Id$` 대소문자 무시로 "avoid" 매칭 ·
+W2 검증 창 ±3줄이 6줄 뒤 clamp 를 놓침 · W3 삼항 연속행. 극단값(0%·100%)은 검사기부터 의심한다는 M0 규칙 그대로였다.
+
+- 다음: P3-B `LocationTurnContext` (헬퍼 단위 커밋) → 테스트베드 스파이크.
