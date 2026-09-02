@@ -526,6 +526,67 @@ def check_l2_contract(pack):
                              f"activityLocations {sorted(act - sched_locs)} 가 schedule 장소 {sorted(sched_locs)} 밖 — "
                              f"주입 시 소재 desync (arch/105 §9 계열)"))
 
+    # ── FACT_KEYWORD_NPC_ALIAS_COLLISION (2026-09-02, INFO) ──
+    # fact 키워드가 비보유 NPC 의 별칭 어절과 겹치면, 그 NPC 를 별칭으로 부르는 입력만으로
+    # 키워드 매칭(인계·보류 가이드)이 발동한다. 실명 충돌은 FACT_KEYWORD_HOLDER_COLLISION 이
+    # 다루므로 별칭(unknownAlias·shortAlias·aliases)만 본다.
+    alias_tokens = {}
+    for n in pack.npcs:
+        if not isinstance(n, dict):
+            continue
+        for a in [n.get("unknownAlias"), n.get("shortAlias"), *(n.get("aliases") or [])]:
+            if not isinstance(a, str):
+                continue
+            for t in a.split():
+                if len(t) >= 2 and t != n.get("name"):
+                    alias_tokens.setdefault(t, set()).add(n.get("npcId"))
+    for fid, fact in (pack.facts or {}).items():
+        if not isinstance(fact, dict):
+            continue
+        holders = {n.get("npcId") for n in pack.npcs if isinstance(n, dict)
+                   and any((kf.get("factId") if isinstance(kf, dict) else kf) == fid for kf in (n.get("knownFacts") or []))}
+        for kw in (fact.get("keywords") or []):
+            if not isinstance(kw, str) or len(kw) < 2:
+                continue
+            hits = {nid for t, ids in alias_tokens.items() if (kw in t or t in kw) for nid in ids} - holders
+            if hits:
+                f.append(Finding("INFO", "FACT_KEYWORD_NPC_ALIAS_COLLISION", f"facts.json:{fid}:keywords:{kw}",
+                                 f'키워드 "{kw}" 가 비보유 NPC 별칭 어절과 겹침 {sorted(hits)} — 별칭 호명만으로 주제 매칭 발동'))
+
+    # ── KNOWN_BY_KNOWN_FACTS_DRIFT (2026-09-02, WARN) ──
+    # facts.json knownBy(주제 매칭 공개·인계 대상)와 npcs.json knownFacts(순서 공개·빈손 판정)는
+    # 같은 사실을 두 곳에 적는다. knownBy 에만 있으면 그 NPC 는 주제를 정확히 맞출 때만 공개하고
+    # 그 외엔 "빈손"으로 판정된다 — star_sand 7건 실측(헬룬·브란·미렌·에드·카시엔, versions 저작됨).
+    for fid, fact in (pack.facts or {}).items():
+        if not isinstance(fact, dict):
+            continue
+        for nid in (fact.get("knownBy") or []):
+            npc = next((n for n in pack.npcs if isinstance(n, dict) and n.get("npcId") == nid), None)
+            if npc is None:
+                continue
+            ids = {(k.get("factId") if isinstance(k, dict) else k) for k in (npc.get("knownFacts") or [])}
+            if fid not in ids:
+                f.append(Finding("WARN", "KNOWN_BY_KNOWN_FACTS_DRIFT", f"facts.json:{fid}:knownBy:{nid}",
+                                 f"{nid} 가 knownBy 에 있으나 npcs.json knownFacts 에 없음 — 순서 공개·빈손 판정 경로가 보유를 모름 (동기화 필요)"))
+
+    # ── SUB_ROLE_WITHOUT_FACT (2026-09-02, INFO) ──
+    # role 문구가 단서를 약속("열쇠·기록·목격자·정보·접근…")하는 CORE/SUB 가 knownFacts 0 이면
+    # 그 NPC 와의 대화는 구조적으로 빈손이다 — 롱런 5e3e639b: 20턴 대화 상대 3명 전원 knownFacts 0,
+    # 30일 대화 턴 43% 가 빈손 화자. 엔진은 빈손 대화 가드(empty-handed-hint.core)로 인계하지만
+    # 근본은 저작 배정. AUTONOMOUS 팩(동적 fact)은 제외.
+    if (pack.raw.get("scenario.json") or {}).get("narrativeMode") != "AUTONOMOUS":
+        CLUE_ROLE_RE = re.compile(r"열쇠|기록|목격|정보|접근|경로|전승|비밀|본명|추적|숨긴|숨겨진|증언|장부|명부")
+        for n in pack.npcs:
+            if not isinstance(n, dict) or n.get("tier") not in ("CORE", "SUB"):
+                continue
+            if n.get("knownFacts"):
+                continue
+            role = str(n.get("role") or "")
+            if CLUE_ROLE_RE.search(role):
+                f.append(Finding("INFO", "SUB_ROLE_WITHOUT_FACT", f"npcs.json:{n.get('npcId')}",
+                                 f"role \"{role[:40]}\" 이 단서를 약속하지만 knownFacts 0 — 대화가 구조적으로 빈손 "
+                                 f"(fact versions 부분 보유 배정 검토)"))
+
     # 불변식 31 — defaultTraitId 실존 + 스탯 배분
     trait_ids = set()
     for t in pack.traits:

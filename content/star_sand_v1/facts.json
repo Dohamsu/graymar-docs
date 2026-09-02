@@ -73,10 +73,12 @@
       ],
       "nextHint": "몸이 아니라 꿈이 옮겨졌다. 꿈으로 들어가는 길을 아는 자를 찾아라 — 검은얼음 시장의 꿈약 조제사가 그 문을 다룬다.",
       "knownBy": [
-        "NPC_SS_LUOR"
+        "NPC_SS_LUOR",
+        "NPC_SS_SEFI"
       ],
       "versions": {
-        "NPC_SS_LUOR": "환자들이 사라진 자리마다 젖은 별소금이 남는 것을 기록해 두었소"
+        "NPC_SS_LUOR": "환자들이 사라진 자리마다 젖은 별소금이 남는 것을 기록해 두었소",
+        "NPC_SS_SEFI": "사라진 침상 옆을 지나면 바닷물 냄새가 아니라 별소금 냄새가 나요, 손님. 젖은 소금이 이불 밑에 남아 있어요"
       },
       "rumored": [],
       "primarySources": [
@@ -99,10 +101,12 @@
       ],
       "nextHint": "길이 매일 바뀐다면 길잡이 없이는 들어갈 수 없다. 갈비평원의 수색꾼이 매일 통로를 다시 그린다 — 그의 표식과 도면을 얻어라.",
       "knownBy": [
-        "NPC_SS_MAREK"
+        "NPC_SS_MAREK",
+        "NPC_SS_YURMA"
       ],
       "versions": {
-        "NPC_SS_MAREK": "어제 표시한 통로가 오늘은 없다. 사체 안은 매일 다른 길이다"
+        "NPC_SS_MAREK": "어제 표시한 통로가 오늘은 없다. 사체 안은 매일 다른 길이다",
+        "NPC_SS_YURMA": "동생이 남긴 쪽지에 어제의 길이 오늘은 없다고 적혀 있었어요. 갈비평원 안이 매일 바뀐다는 뜻이겠지요"
       },
       "rumored": [],
       "primarySources": [
@@ -157,10 +161,12 @@
       ],
       "nextHint": "경계가 얇아지는 순간이 꿈으로 드는 창이다. 오로라 관측탑의 관측관에게 스펙트럼 기록으로 그 시각을 짚어 달라 하라.",
       "knownBy": [
-        "NPC_SS_SAEL"
+        "NPC_SS_SAEL",
+        "NPC_SS_ODRIN"
       ],
       "versions": {
-        "NPC_SS_SAEL": "오로라 스펙트럼이 부패가 아니야. 기억이 새는 거야. 데이터가 그렇게 말해"
+        "NPC_SS_SAEL": "오로라 스펙트럼이 부패가 아니야. 기억이 새는 거야. 데이터가 그렇게 말해",
+        "NPC_SS_ODRIN": "오로라가 짙어진 밤의 원본 수치는 사엘 님의 보고서와 다릅니다. 부패 곡선이 아니라 무언가 밖으로 새어 나가는 곡선입니다"
       },
       "rumored": [],
       "primarySources": [
@@ -183,10 +189,12 @@
       ],
       "nextHint": "하얀 문 앞에서 실종자를 만날 수 있다. 검은얼음 시장에서 꿈약을 구해 문을 직접 볼지, 심장 웅덩이의 통로를 쓸지 정하라.",
       "knownBy": [
-        "NPC_SS_KAILUN"
+        "NPC_SS_KAILUN",
+        "NPC_SS_RIVA"
       ],
       "versions": {
-        "NPC_SS_KAILUN": "약 먹은 놈들, 하나같이 하얀 문 얘길 해. 그 뒤에 뭐가 있는지는… 값을 더 쳐야 말해주지"
+        "NPC_SS_KAILUN": "약 먹은 놈들, 하나같이 하얀 문 얘길 해. 그 뒤에 뭐가 있는지는… 값을 더 쳐야 말해주지",
+        "NPC_SS_RIVA": "꿈약 먹은 애들이 죄다 하얀 문 얘길 해. 그 뒤에 뭐가 있는진 나도 몰라, 조제사한테 물어"
       },
       "rumored": [],
       "primarySources": [
@@ -210,11 +218,13 @@
       "nextHint": "웅덩이가 꿈 안쪽과 이어진 통로다. 밤에 심장 웅덩이로 가서 액체를 되돌려 붓는 자가 누구인지 지켜봐라.",
       "knownBy": [
         "NPC_SS_LUOR",
-        "NPC_SS_MIREN"
+        "NPC_SS_MIREN",
+        "NPC_SS_PENA"
       ],
       "versions": {
         "NPC_SS_LUOR": "액체가 줄지 않소. 밤마다 누군가 되돌려 붓는 것처럼",
-        "NPC_SS_MIREN": "밤에 봤소. 웅덩이에… 누가 액체를 붓고 있었소"
+        "NPC_SS_MIREN": "밤에 봤소. 웅덩이에… 누가 액체를 붓고 있었소",
+        "NPC_SS_PENA": "채취 장부상 액체는 줄어야 정상입니다. 그런데 아침 수위가 전날보다 높은 날이 있습니다. 누군가 밤에 되붓지 않고서야"
       },
       "rumored": [],
       "primarySources": [

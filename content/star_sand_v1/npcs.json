@@ -1545,7 +1545,20 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_SECOND_ENTRANCE",
+        "detail": "그 입구 얘긴 하지 마시오. 회사가 알면 내 목이 날아가오",
+        "importance": 0.8,
+        "keywords": [
+          "두 번째 입구",
+          "숨긴",
+          "비공식",
+          "깊은 곳"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -1677,7 +1690,20 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_STAR_SALT",
+        "detail": "사라진 침상 옆을 지나면 바닷물 냄새가 아니라 별소금 냄새가 나요, 손님. 젖은 소금이 이불 밑에 남아 있어요",
+        "importance": 0.8,
+        "keywords": [
+          "별소금",
+          "침상",
+          "소금",
+          "흔적"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -1812,7 +1838,20 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_AURORA_LEAK",
+        "detail": "오로라가 짙어진 밤의 원본 수치는 사엘 님의 보고서와 다릅니다. 부패 곡선이 아니라 무언가 밖으로 새어 나가는 곡선입니다",
+        "importance": 0.8,
+        "keywords": [
+          "오로라",
+          "기억 누출",
+          "새어",
+          "하늘"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -1944,7 +1983,20 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_SAME_WORDS",
+        "detail": "장례사로서 수많은 마지막 말을 적었지만, 이렇게 똑같은 문장은 처음이다",
+        "importance": 0.8,
+        "keywords": [
+          "같은 문장",
+          "눈",
+          "바다",
+          "남긴 말"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -2076,7 +2128,20 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_WHITE_DOOR",
+        "detail": "꿈약 먹은 애들이 죄다 하얀 문 얘길 해. 그 뒤에 뭐가 있는진 나도 몰라, 조제사한테 물어",
+        "importance": 0.8,
+        "keywords": [
+          "하얀 문",
+          "꿈약",
+          "삼킨 것",
+          "문 너머"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -2343,7 +2408,32 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_SECOND_ENTRANCE",
+        "detail": "내 손이 아직 그 입구 안에 남아 있소… 두 번째 입구 말이오",
+        "importance": 0.8,
+        "keywords": [
+          "두 번째 입구",
+          "숨긴",
+          "비공식",
+          "깊은 곳"
+        ],
+        "minTrust": 20
+      },
+      {
+        "factId": "FACT_SS_HEART_REFILL",
+        "detail": "밤에 봤소. 웅덩이에… 누가 액체를 붓고 있었소",
+        "importance": 0.8,
+        "keywords": [
+          "심장 웅덩이",
+          "되붓",
+          "역류",
+          "밤마다"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -2610,7 +2700,32 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_WHALE_RETURN",
+        "detail": "전승에 있소. 별고래는 예전에도 이곳에 왔소. 길 잃은 항해자가 아니라, 무언가를 묻으러",
+        "importance": 0.8,
+        "keywords": [
+          "스스로 내려",
+          "피해",
+          "추락 아님",
+          "봉인지"
+        ],
+        "minTrust": 20
+      },
+      {
+        "factId": "FACT_SS_SILENCE_SEAL",
+        "detail": "소리가 사라지는 건 방어요. 안의 것을 깨우지 않으려는",
+        "importance": 0.8,
+        "keywords": [
+          "침묵",
+          "봉인",
+          "저주 아님",
+          "깨어나지"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -2742,7 +2857,20 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_SHIFTING_PATH",
+        "detail": "동생이 남긴 쪽지에 어제의 길이 오늘은 없다고 적혀 있었어요. 갈비평원 안이 매일 바뀐다는 뜻이겠지요",
+        "importance": 0.8,
+        "keywords": [
+          "길이 바뀐",
+          "내부",
+          "미궁",
+          "매일"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -2878,7 +3006,20 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_HEART_REFILL",
+        "detail": "채취 장부상 액체는 줄어야 정상입니다. 그런데 아침 수위가 전날보다 높은 날이 있습니다. 누군가 밤에 되붓지 않고서야",
+        "importance": 0.8,
+        "keywords": [
+          "심장 웅덩이",
+          "되붓",
+          "역류",
+          "밤마다"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
@@ -3013,7 +3154,21 @@
         }
       }
     },
-    "knownFacts": [],
+    "knownFacts": [
+      {
+        "factId": "FACT_SS_NAHAT_MISSING",
+        "detail": "그 귀환자의 본명을 적어봤소. 실종자 명단에 있던 이름이었소",
+        "importance": 0.8,
+        "keywords": [
+          "나하트",
+          "실종자였",
+          "본명",
+          "명단",
+          "대가"
+        ],
+        "minTrust": 20
+      }
+    ],
     "linkedIncidents": [],
     "daily_topics": [
       {
