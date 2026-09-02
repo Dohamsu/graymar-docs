@@ -936,6 +936,25 @@ def check_l3_deep(pack):
                 )
             )
 
+    # ⑨ speechStyle 어구 예시 리터럴 (2026-09-02 롱런 분석 C) — 불변식 42 는
+    #    따옴표 인용 예시만 막았는데, 괄호 슬래시 나열 "(삼할/두 자루/엿새 전 등)"
+    #    은 그물 밖이었다. 30일 에드릭 화자 352턴 중 "삼할" 165턴(47%) 축자 복제.
+    #    범주 나열(인사·날씨·도박)·호칭 지정('당신')은 가운뎃점·따옴표라 걸리지 않는다.
+    _LITERAL_EXAMPLE_RE = re.compile(r"\(([^()]*?/[^()]*?)\s*등\)")
+    for n in pack.npcs:
+        nid = n.get("npcId")
+        style = ((n.get("personality") or {}).get("speechStyle")) or ""
+        for m in _LITERAL_EXAMPLE_RE.finditer(style):
+            f.append(
+                Finding(
+                    "WARN",
+                    "SPEECHSTYLE_LITERAL_EXAMPLE",
+                    f"npcs.json:{nid}:personality.speechStyle",
+                    f'어구 예시 "({m.group(1)} 등)" — 저모델이 예시를 축자 복제 '
+                    f"(불변식 42·50). 값 대신 구성 요소(비율·개수·날짜 등)로 지시",
+                )
+            )
+
     # ⑤ quest.facts 목록과 facts.json 불일치
     q_facts = set(pack.quest.get("facts") or [])
     if q_facts:

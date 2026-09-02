@@ -135,3 +135,25 @@ export type ArcStageProgress = {
   유실**된다 (E2E 실측). 갱신은 반드시 `newArcState` 경유 — 코드 주석에 명시.
 - 잔여: 실LLM 플레이테스트에서 스테이지 이벤트 서술 품질([이번 턴 사건] 경유)
   확인 1런 — 후속.
+
+## 6. 결함 수정 — 무커밋 진행·안내 턴 즉시 완수 (2026-09-02, 30턴 롱런 분석)
+
+**증상**: run 792a8c98(graymar·chatty) 이 커밋 0회인데 T21·T28·T29 에 stage 1·2·3 이
+각각 안내와 완수를 같은 턴에 처리하고 T30 `arc_finale` 로 RUN_ENDED — questState S1,
+장부 미해결, 로넨 보고 0. 30일 DB: ARC_STAGE 발화 11런 중 **commitment 0 진행 5런**
+(turn 5 에 stage 1 완수 3런 + S1·S3 미완 엔딩 2런).
+
+**원인 2겹**: ① `getNextArcStage` 가 "커밋"을 `currentRoute != null` 로 근사했는데,
+그 필드는 ARC_HINT 이벤트(`arcRouteTag`, turns.service 4091)가 커밋 전에도 채우는 성향
+추적 필드다(EVT_HARBOR_ARC_HINT 매칭 = commitment 0 세팅). 실제 커밋(hub-turn
+`arc_commit_*`)의 신호는 `progressCommitment(+2)` 였다. ② 대화 계열이면 진행 가능 +
+SUCCESS/PARTIAL 즉시 완료라 **도착 안내 턴의 성공 판정이 곧 완수** — 안내문 전문이
+`[이번 턴 사건]` 으로 실려 같은 턴 대사로 낭독됐다(T28 쉐도우, 불변식 50).
+
+**수정**: `ArcState.committedAt`(커밋 턴 번호) 신설 + `isArcCommitted`(committedAt
+또는 레거시 `commitment ≥ 2`) 가 스테이지·S5 타이머 finaleReady 의 유일한 게이트.
+`isArcStageAnnounced` — announcedStages 미등재 턴은 `arcStageProgressTurn=false`(안내만).
+ARC_HINT 의 currentRoute 세팅은 유지. 스펙 +4(무커밋 route-only 닫힘·committedAt 우선·
+레거시 판정·안내 턴 신호). 실런 프로브(run 8e5158b8, 부두): route-only → arc 이벤트 0 /
+committedAt 부여 후 첫 턴 ARC_STAGE_INTRO 만 / 둘째 턴 PARTIAL 완수.
+

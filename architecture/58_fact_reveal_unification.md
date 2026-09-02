@@ -92,6 +92,25 @@ mode B(인계)/C(default)/D(잡담)는 기존 유지.
 
 ## 5. 비변경 (스코프 밖)
 
-- 경로 1/3 (이벤트 discoverableFact SUCCESS/PARTIAL) — 이벤트 자체가 주제 컨텍스트라 데스싱크 없음
+- ~~경로 1/3 (이벤트 discoverableFact SUCCESS/PARTIAL) — 이벤트 자체가 주제 컨텍스트라 데스싱크 없음~~
+  → **2026-09-02 배선** (`setEventPathReveal`, turns.service 경로 1·3): 실측(run bcaab205 T4)
+  FREE 턴 자동 SUCCESS 로 FACT_LEDGER_EXISTS 가 기록됐는데 프롬프트 어디에도 없었다 —
+  이벤트 컨텍스트만으로는 서술이 그 단서를 말하지 않는다. 이벤트 primaryNpc 가 있으면
+  `revealMode: 'observe'`, 없으면 `'rumor'` 프레이밍으로 `ui.questReveal` 을 세운다
+  (NPC 경로 2 가 뒤에서 자기 fact 로 덮는 것은 유지).
+
+## 6. nano `[정보 전달]` 지시 정규화 (2026-09-02, 30턴 롱런 분석 B)
+
+prompt-builder 의 `[정보 전달] …중요한 단서가 드러납니다` 는 NanoEventDirector 가 JSON 으로
+답한 `fact/factRevealed` 만 보고 붙었다. 인터페이스 주석 "서버 RNG로 최종 확정"에 해당하는
+대조는 구현된 적이 없었고, nano 의 `availableFacts` 는 주제·확률 게이트를 모르는 장소
+미발견 fact 전부(rate 1)라 거의 항상 "드러난다"가 나왔다. 30일: questReveal 없는 LOCATION
+턴 2,016 중 **676턴(34%)** 주입(FAIL 턴 36%), 주입 턴 단서형 어휘율 29% vs 미주입 12% —
+범인 마이렐이 첫 만남에 종반부 증거(순찰표 누락)를 창작 발화(run 792a8c98 T12).
+정본: `llm/nano-fact-reveal.core.ts normalizeNanoFactRevealCore` — 워커가 프롬프트 빌드
+직전에 `ui.questReveal.factId` 로 정렬(없으면 지시 제거, 있으면 서버 factId 로 교체).
+로그 `[NanoFactRevealNorm]`. 스펙 5. 실런 프로브: 무공개 턴 지시 제거·공개 턴 서버 factId 정렬
+(nano 가 다른 fact 를 답한 2턴 모두 교정).
+
 - INFO_ACTIONS 축소 (원인 3) — 플레이 데이터 실측 후 별도 판단
 - nextHint 연출 빈도 완화 (원인 3) — 후속 개선 후보
