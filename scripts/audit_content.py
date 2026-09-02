@@ -472,6 +472,60 @@ def check_l2_contract(pack):
                 f.append(Finding("ERROR", "NATURAL_ACQ_REF", f"facts.json:{fid}",
                                  f'cache.locationId "{cache["locationId"]}" 미정의 — 도달 불가 은닉처'))
 
+    # ── FACT_KEYWORD_GENERIC (2026-09-02 QC22) ──
+    # fact.keywords 는 플레이어 입력·선택지 라벨과 substring 매칭돼 questReveal(matchedByTopic)
+    # 을 발화시킨다. 행동 동사 어간('접근'·'조사')이 키워드면 ('뇌물' 은 사건 주제 명사이자 BRIBE 면제라 제외) 기본 선택지
+    # ("경비병에게 접근한다")·장소 지시만으로 fact 가 열린다 — 30일 실측: FACT_INSIDE_JOB(S2→S3)
+    # 주제 매칭 15건 중 12건이 첫 접촉 라벨 '경비병에게 접근한다'. 키워드는 사건 고유 명사여야 한다.
+    GENERIC_ACTION_STEMS = {
+        "접근", "조사", "관찰", "대화", "탐색", "수색", "설득", "거래", "이동", "휴식",
+        "질문", "확인", "살핀", "살피", "찾아", "뒤지", "감시", "부탁", "요청", "도움",
+        "협박", "위협", "공격", "훔치", "매수", "흥정", "이야기", "인사", "안부",
+        "정보", "소문", "주변", "사람", "물어", "묻는", "말",
+    }
+    loc_keywords = {}
+    for loc in pack.locations:
+        if not isinstance(loc, dict):
+            continue
+        for kw in (loc.get("moveKeywords") or []):
+            if isinstance(kw, str) and kw:
+                loc_keywords[kw] = loc.get("locationId")
+    for fid, fact in (pack.facts or {}).items():
+        if not isinstance(fact, dict):
+            continue
+        for kw in (fact.get("keywords") or []):
+            if not isinstance(kw, str):
+                continue
+            if kw in GENERIC_ACTION_STEMS:
+                f.append(Finding("WARN", "FACT_KEYWORD_GENERIC", f"facts.json:{fid}:keywords:{kw}",
+                                 f'키워드 "{kw}" 는 행동 동사 어간 — 기본 선택지·일반 행동 입력만으로 '
+                                 f"fact 가 열린다 (사건 고유 명사로 교체)"))
+            elif kw in loc_keywords:
+                # 장소명은 플레이어가 그 장소를 화제로 물은 정당한 매칭일 수 있어 INFO 로만 노출
+                f.append(Finding("INFO", "FACT_KEYWORD_GENERIC", f"facts.json:{fid}:keywords:{kw}",
+                                 f'키워드 "{kw}" 는 장소 {loc_keywords[kw]} 의 moveKeyword — 장소 언급만으로도 '
+                                 f"fact 가 열릴 수 있음 (의도 여부 확인)"))
+
+    # ── NPC_ACTIVITY_SCHEDULE_MISMATCH (2026-09-02 QC22, INFO) ──
+    # activityLocations 는 TurnOrchestration NPC 주입 후보의 유일한 소스인데 schedule(소재 정본,
+    # 불변식 57)과 독립 저작된다. schedule 에 없는 장소가 activityLocations 에 있으면 그 NPC 가
+    # 소재와 다른 장소에 "우연히 마주침"으로 주입된다 (run f7a9b0c3: 시장 상주 라이라가 경비대
+    # 지구 T12·T15 등장). 엔진이 schedule 필터를 갖기 전까지 INFO 로 노출.
+    for n in pack.npcs:
+        if not isinstance(n, dict):
+            continue
+        act = set(n.get("activityLocations") or [])
+        sched_locs = set()
+        for _k, v in (n.get("schedule") or {}).items():
+            if isinstance(v, dict):
+                for _ph, e in v.items():
+                    if isinstance(e, dict) and e.get("locationId"):
+                        sched_locs.add(e["locationId"])
+        if act and sched_locs and not act <= sched_locs:
+            f.append(Finding("INFO", "NPC_ACTIVITY_SCHEDULE_MISMATCH", f"npcs.json:{n.get('npcId')}",
+                             f"activityLocations {sorted(act - sched_locs)} 가 schedule 장소 {sorted(sched_locs)} 밖 — "
+                             f"주입 시 소재 desync (arch/105 §9 계열)"))
+
     # 불변식 31 — defaultTraitId 실존 + 스탯 배분
     trait_ids = set()
     for t in pack.traits:
