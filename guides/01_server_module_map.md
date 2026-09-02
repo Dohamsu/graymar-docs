@@ -63,8 +63,11 @@ main.ts → AppModule
 │   └── bug-report.service     ← 버그 리포트 CRUD
 ├── turns/               ← POST/GET /v1/runs/:runId/turns, POST retry-llm
 │   ├── turns.controller
-│   ├── turns.service    ← 턴 파이프라인 조율 (arch/77 §18 도메인 분할: 9,194→6,864줄, 아래 서브서비스 5종으로 분해)
-│   ├── turn-shared.service       ← 분할 공용 헬퍼 — 턴 레코드 커밋·SYSTEM 결과 조립·퀘스트 UI 번들·캠페인 결과 저장 (arch/77 §18, 2026-08-07)
+│   ├── turns.service    ← 진입 라우터 587줄 — submitTurn·노드별 위임·handleLocationTurn 래퍼(runInTurnContext 경계)·arc finale·조회·재시도 (arch/77 §18 → arch/112 2026-09-02)
+│   ├── location-turn.service     ← LOCATION 턴 오케스트레이터(handleLocationTurnInner 1,620줄) + 라우팅·판정·NPC·보상·전이 헬퍼 (arch/112 Phase 1·2)
+│   ├── location-quest.service    ← 퀘스트 진행 도메인 — fact 발견·단계 전환·아크 스테이지·사례금 적립·전진 선택지·빈손 가드·pendingQuestHint (arch/112 Phase 2)
+│   ├── location-result.service   ← 결과 조립 도메인 — 이벤트·UI 번들·선택지 배지·호외·기억 수집·정산 이벤트. `as any` UI 부착 집결지(Phase 3 타입화 표적) (arch/112 Phase 2)
+│   ├── turn-shared.service       ← 분할 공용 헬퍼 — 턴 레코드 커밋·SYSTEM 결과 조립·퀘스트 UI 번들·캠페인 결과 저장·Player-First NPC 추출 (arch/77 §18, 2026-08-07 · arch/112)
 │   ├── equip-shop-turn.service   ← 장비 장착/해제 + 상점 구매 턴 처리 (arch/77 §18)
 │   ├── dag-turn.service          ← DAG 노드(COMBAT/EVENT/REST/SHOP/EXIT) 턴 처리 (arch/77 §18)
 │   ├── hub-turn.service          ← HUB 턴 처리 (CHOICE → moveToLocation, packMeters UI — arch/77 §18)
@@ -397,6 +400,7 @@ main.ts → AppModule
 ## 최근 추가/변경 요약 (2026-08-14 동기화)
 
 - **turns 도메인 분할 (arch/77 §18, 2026-08-07)**: turns.service 9,194→6,864줄 — turn-shared·equip-shop-turn·dag-turn·hub-turn·combat-turn 5개 서브서비스 + turns.core 순수 코어 신설.
+- **LOCATION 턴 서비스 분리 (arch/112, 2026-09-02)**: 3차 재비대(7,975/7,900·함수 2,047/2,000)에 대응해 LOCATION 파이프라인을 location-turn(5,171)으로 통째 이관하고 location-quest(1,108)·location-result(1,289)를 떼어냄. turns.service 는 587줄 라우터. 래칫 상한 불변, 레포 lint 경고 0. 미사용 주입 10개·사문 메서드 1개 제거.
 - **admin 모듈 확장 (arch/87)**: 3 services(admin-ops·admin-stats·admin-openrouter) + 8 controllers — admin-audit(감사 로그 조회)·admin-parties(파티 런 관제) 추가.
 - **LLM 확장**: 23 → 24 services. SceneCutMatcher(장면 컷 매칭, arch/96) 추가. providers/에 LlmProviderRegistry 상주.
 - **content 확장**: ContentValidator(콘텐츠 정합성 빌드 시점 검증, architecture/49 Phase 4) 추가.
