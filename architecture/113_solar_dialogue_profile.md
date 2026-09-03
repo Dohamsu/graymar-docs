@@ -84,3 +84,31 @@ decideSoleSpeakerContinuityCore({ before, markerSeen, lastMatchedNpcId, primaryN
    - 지연 p50(벤치와 겹치지 않는 시간) — Gemma 대비 배율
    - 게이트 15종, NpcMismatch·MarkerCollision 로그 0
 4. 병합 판단은 소유자: 라벨·무명·어체 세 지표가 J-5 보다 개선되고 회귀 0 이면 병합, 채택(교차 슬롯 투입)은 별도 결정.
+
+## 4. 구현·검증 결과 (2026-09-03, server 브랜치 `feat/solar-dialogue-profile` 7bd30cc)
+
+구현: `llm/model-prompt-profile.core.ts`(해석·덧씌우기) · `llm/speaker-continuity.core.ts`(연속 귀속) · 워커(교차 결정 상향·프로파일
+적용·분류기 옵션) · StreamClassifier(옵션·4단계 훅). 스펙 +8, 2,542 passed, 골든 스냅샷 17 불변, 빌드·스모크 PASS.
+
+실런 15턴 × 2 (graymar·SMUGGLER / star_sand·SS_SURVIVOR, chatty, 교차 슬롯 Solar, 벤치 부하 없음) — **J-5 동일 조건 런과 짝 비교**:
+
+| 지표 (Solar 짝수 턴) | J-5 프로파일 없음 | **arch/113 프로파일** | 같은 런 Gemma |
+|---|---:|---:|---:|
+| 원문 라벨 준수 | 70.3% | **81.6%** | 100% |
+| 어체 위반 | 6/36 (16.7%) | **3/37 (8.1%)** | 0/20 (J-5 2/19) |
+| 저장본 무라벨 대사 줄 | 3 | **0** | 0 |
+| 라틴 누출 | 1 | **0** | 0 |
+| 대명사 개시어 | 8.2% | 9.2% | 5.1% |
+| narrative p50 (llm_call_logs) | 4,920ms(부하)·3,482ms(무부하) | **3,640ms** | 2,752ms → 1.32배 |
+| 본문 | 638자 | 556자 | 603자 |
+| 게이트 / 마커 로그 | 15·15 | **15·15, NpcMismatch·MarkerCollision·ShortResponse 0** | |
+| 비용 | 표준가 ≈2.9원 (프로모 0.27) | 동일 | 1.60원 |
+
+프로파일 적용은 프롬프트 원문으로 확인(Solar 턴만 접두·접미 존재, Gemma 턴 없음). 남은 어체 위반 3건은 하오체 NPC 의 `~요` 혼용
+(이렌 해요체 NPC 의 `~소` 역방향 1건 포함)으로 R5v2 교정 범위.
+
+**판정**: 목표(§3) — 라벨 ≥80% ✓ · 무명/무라벨 감소 ✓(3→0) · 어체 개선 ✓(16.7→8.1, Gemma J-5 10.5 이하) · 회귀 0 ✓. 지연은 1.32배로
+조건 ③(1.2배) 근접 미달. **병합 가능 상태**이며, 병합·교차 슬롯 투입(비용 1.5배)은 소유자 결정. 병합 후 프로파일이 켜지는 조건은
+`LLM_ALTERNATE_MODEL=upstage/solar-pro4` + `LLM_PROVIDER_ONLY_MAP` 등재뿐이라, 병합만으로는 운영 동작이 바뀌지 않는다.
+
+잔여: 대명사 개시어(9%, arch/78 축)·화폐 규칙은 프로파일 범위 밖 — 채택 시 Solar 전용 후처리 후보.
