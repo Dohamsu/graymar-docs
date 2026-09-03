@@ -960,3 +960,274 @@ Novita 하나만 남는데 그게 16~18초다. BaseTen 이면 속도·라벨은 
 **표본 한계**: 재생 15건(BaseTen 은 429 로 5~8건)·라이브 파이프라인 미검증. 이 벤치는
 오프라인 프롬프트 재생이라 스트리밍 분류기·마커 파이프라인·R5v2 후처리를 통과한 뒤의
 실품질은 보지 않았다. 상세는 `playtest-reports/bench_glm_5_3_flash_20260827.md`.
+
+## 부록 H. Gemini 3.8 Flash 조사 — 채택 불가 (2026-09-03, 문헌 조사·미실측)
+
+> **결론**: 서술 모델로 쓸 수 없다. 3.6 Flash 를 탈락시킨 결격(F-4 "추론을 끌 수 없다")이
+> 그대로이고, 여기에 **temperature 폐지**와 **단가 2배 예고**가 더해진다. 파생 모델 중
+> 대안도 없다. 재생·실런은 돌리지 않았다 — 구조적 결격이 문헌만으로 확정되므로.
+
+### H-1. 팩트 (출처는 H-5)
+
+| 항목 | 값 |
+|---|---|
+| 출시 | 2026-09-02 (3.7 Flash 8/13 출시 3주 뒤). model id `gemini-3.8-flash` |
+| 가격 (표준 티어) | **인트로 $0.75 / $3.75 (in/out, 1M) — 2026-12-31 까지** → 2027-01-01 부터 **$1.50 / $7.50**. 캐시 입력 $0.075→$0.15. flex/batch 는 절반, priority 는 1.8배. **추론 토큰은 출력 단가로 과금** |
+| 추론 | `thinking_level` low/medium/high, 기본 medium, **`minimal` 미지원(에러)** — 끌 수 없다. 3.7 Flash 도 동일("minimal 이 사라졌다") |
+| 샘플링 | 마이그레이션 가이드: **`temperature`·`top_p`·`top_k` 폐지(deprecated) 제거** — 우리 0.8 이 무효. frequency/presence penalty 는 원래 미지원 |
+| 컨텍스트 | 1M 입력 · 64k 출력 |
+| OpenRouter | 4 엔드포인트 — AI Studio Flex $0.75/$3.75 · AI Studio $1.50/$7.50 · Vertex $1.50/$7.50 · Priority $2.70/$13.50 (부록 F-2 와 같은 Vertex 혼재 함정) |
+| 파생 | **3.8 Flash Cyber**(취약점 탐지 전용, Fairwind 신뢰 테스터 한정 — 해당 없음) · **3.8 Flash-Lite 는 없다**. 형제: 3.7 Flash(동일 가격·동일 추론 강제, 독립 측정 환각률 64.5% vs 3.6 의 55.6%) · 3.6 Flash(3.7 과 동일 가격으로 조정) · 3.5 Flash-Lite(추론 off 가능, flex $0.15/$1.25 — F-8 보류 상태 유지) |
+
+### H-2. 원/턴 환산 (30일 실측 토큰량 × 공시 단가, 환율 1,500)
+
+우리 서술 호출 실측(llm_call_logs 30일): 입력 ≈ 6,800~7,200 tok · 가시 출력 ≈ 250~290 tok. 추론 토큰은
+3.8 실측이 없어 **3.6 Flash `low` 실측 1,423 tok(F-4)을 대입**했다(가정 — 3.8 에서 다를 수 있음).
+
+| 구성 | 인트로(~12/31) | 표준(2027~) | 현행 |
+|---|---:|---:|---:|
+| 입력 7,000 + 출력 270 + 추론 1,400 | **≈17원** | **≈35원** | Gemma 1.79원 · Luna 1.98원 |
+| 같은 구성 + 캐시 히트 50% 가정 | ≈14원 | ≈28원 | |
+| (가상) 추론 0 | ≈9원 | ≈19원 | |
+
+가장 낙관적인 셀(인트로·캐시·추론 0)도 현행의 **5배**, 현실적 셀은 **8~10배**, 4개월 뒤 **17~20배**.
+채팅 1턴 5p 모델(arch/85)에서 성립하지 않는다 — F-4 의 "13.8배" 판정이 더 나빠진 셈이다.
+
+### H-3. 서술 모델 적합성 판정
+
+| 축 | 판정 | 근거 |
+|---|---|---|
+| 추론 제어 | ✗ 결격 | minimal 없음·off 불가. 3.6 에서 출력의 87% 가 추론이었고 p50 12초(F-4) |
+| 샘플링 레버 | ✗ 결격 | temperature 폐지 — 불변식 50 의 모델 레버(penalty)에 이어 온도까지 잃는다. 반복 억제 수단이 프롬프트뿐이 된다 |
+| 비용 | ✗ | H-2. 인트로는 4개월 할인이고 표준가는 현행의 17~20배 |
+| 레이턴시 | ? 미실측 | 3.7 Flash 는 340 tps 로 1위(Artificial Analysis)이나 추론이 붙은 실 p50 은 미상. 3.6 은 12초였다 |
+| 품질 | ? 미실측 | 벤치는 코딩·에이전트 축(Terminal-Bench 90.8·SWE-Bench Pro 61.6). 한국어 서술·하오체·마커 준수는 문헌 없음 |
+| 파생 대안 | ✗ | Cyber 는 접근 불가·용도 불일치, Lite 부재. 3.5 Flash-Lite 만 남는데 그건 F-8 보류 그대로 |
+
+**결론: 채택 불가.** 재검토 조건은 F-9 와 동일하되 하나가 추가된다 — ④ Google 이 3.x Flash 계열에
+`minimal`/off 를 복원하거나 3.8 **Flash-Lite** 를 내놓을 때. 그 전에는 재생도 돌리지 않는다(15건 재생
+≈ 300원·30분이지만 결과가 추론 비율로 사실상 결정돼 있다).
+
+### H-4. 나노 역할 대체 가능성 (부수)
+
+nano(gpt-4.1-nano) 호출은 0.10~0.43원/호출이다. 추론 강제 모델은 나노 자리에도 못 들어간다.
+나노 대체를 본다면 3.5 Flash-Lite(추론 off, flex $0.15/$1.25)가 후보이나 이번 조사 범위 밖.
+
+### H-5. 출처
+
+- 9to5Google 출시 기사: https://9to5google.com/2026/09/02/gemini-3-8-flash-launch/
+- Google AI for Developers — 가격표: https://ai.google.dev/gemini-api/docs/pricing
+- Google AI for Developers — 3.8 Flash 신기능·마이그레이션(temperature 폐지, minimal 미지원): https://ai.google.dev/gemini-api/docs/latest-model
+- Google AI for Developers — Thinking 문서: https://ai.google.dev/gemini-api/docs/thinking
+- OpenRouter 모델 페이지(엔드포인트별 단가·컨텍스트): https://openrouter.ai/google/gemini-3.8-flash
+- DataCamp(벤치마크·가격): https://www.datacamp.com/blog/gemini-3-8-flash-cyber
+- eesel — 3.7 Flash 리뷰(minimal 제거·환각률·가격): https://www.eesel.ai/blog/gemini-3-7-flash-review
+- Google Cloud 문서 — 3.8 Flash 개발자 가이드: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-8-flash
+
+## 부록 I. 서술 후보 모델 탐색 (2026-09-03, 문헌 조사·미실측)
+
+> 목적: Gemini 3.8 Flash 탈락(부록 H) 뒤 "다음에 재생을 돌릴 가치가 있는 후보"를 추리는 것.
+> 테스트는 하지 않았다. 원/턴은 30일 실측 서술 호출량(입력 ≈7,000 tok · 가시 출력 ≈280 tok)에
+> 공시 단가를 곱한 값이며 환율 1,500. 현행 기준선: Gemma 4 31B **1.79원** · Luna **1.98원** (llm_call_logs 30일).
+
+### I-1. 선별 기준 (기존 평가에서 굳어진 것)
+
+| 축 | 기준 | 근거 |
+|---|---|---|
+| 추론 | **끌 수 있어야** 한다 | F-4·G-2 — 추론 강제 모델은 비용·절단·지연 3중 결격 |
+| 샘플링 | `temperature` + `frequency/presence_penalty` | 불변식 50 의 반복 억제 레버. `LLM_PROVIDER_REQUIRE_PARAMS=true` 가 penalty 미지원 엔드포인트를 걷어낸다 |
+| 비용 | ≤ 2.5원/턴 | 채팅 1턴 5p(arch/85) |
+| 프로바이더 | OpenRouter 에 2곳 이상, bf16/fp8 명시 | D-8·G-3 — 프로바이더가 속도·품질을 가른다 |
+| 형식 | 라벨 준수 ≥ 90% · 어체 위반 < 10% | E-6(3.1-flash-lite 89.9% 탈락)·부록 D(DeepSeek 43~46% 탈락) |
+| 길이·지연 | 본문 ≥ 450자 · p50 < 5s | F-8(lite 350자 열세)·10초 원칙 |
+
+### I-2. 후보표
+
+| 모델 (id) | 크기 | 단가 in/out ($/M) | **원/턴** | 추론 off | temp·penalty | 프로바이더 | 비고 |
+|---|---|---:|---:|---|---|---|---|
+| **MiniMax M3** `minimax/minimax-m3` | 428B MoE / 23B active | 0.23 / 0.96 (CoreWeave) | **2.8** | ✓ 선택 | ✓ (CoreWeave·Venice·Novita·DeepInfra — **현행 allowlist 와 겹침**) | 11곳 | 5/31 출시. 1M ctx. OpenRouter 평: "verbose, reasoning-heavy" — 추론 off 로 실측 필요. 한국어 미상 |
+| **Mistral Small 4** `mistralai/mistral-small-2603` | 미공개(Small 계열) | 0.15 / 0.60 | **1.8** | ✓ (`reasoning` 파라미터) | ✓ 전 엔드포인트 | Mistral 1st-party 3 + Venice fp8 | 3/16 출시. 262k ctx. 현행과 동가. 한국어는 Mistral 계열 전통 약점 — 실측 필수 |
+| **Nemotron 3 Super** `nvidia/nemotron-3-super-120b-a12b` | 120B MoE / 12B active | 0.085 / 0.40 (DeepInfra bf16) | **1.1** | ✓ 선택 | ✓ (DeepInfra) / DigitalOcean 은 penalty 없음 | **2곳** | 3/11 출시. 현행의 60%. 하이브리드 Mamba. 프로바이더 얇음(단일 의존 위험). 한국어 미상 |
+| Qwen3.8 27B `qwen/qwen3.8-27b` | 27B dense | 0.32 / 2.50 (Parasail 0.25/2.20) | 4.4 | ✓ 선택 | ✓ 공통 | 12곳 (Novita·Venice·CoreWeave 포함) | 8/14 출시. 현행 동급 dense. 다국어 테스트 리뷰에서 **타 언어 출력에 한글 스크립트 누출** 보고 — 한국어 서술에서의 역방향(한자·영문 누출) 실측 필요. 비용 2.5배 |
+| Qwen3.7 Plus `qwen/qwen3.7-plus` | 비공개 | 0.32 / 1.28 | 3.9 | ✓ | temp·presence 만 (**frequency 없음**) | Alibaba 단일 | REQUIRE_PARAMS 게이트에 걸린다. 후순위 |
+| EXAONE 4.5 33B (LG) | 33B dense (VLM) | FriendliAI 서버리스 **현재 $0**(프로모션) | — | 비추론 변형 있음 | 미상 | **OpenRouter 없음**, AA 벤치 프로바이더 0 | 한국어 네이티브가 유일한 강점. 직접 연동(별도 base URL) 코드 필요 → 조건부 |
+| K-EXAONE 236B-A23B | 236B MoE | 0.60 / 1.00 (FriendliAI) | 6.7 | 미상 | 미상 | FriendliAI | 비용 탈락 |
+| GPT-5.4 nano `openai/gpt-5.4-nano` | 소형 | 0.20 / 1.25 (flex 0.10/0.625) | 2.6 (flex 1.4) | `reasoning_effort` | **temperature·penalty 없음** | OpenAI·Azure | 샘플링 레버 전무 — 불변식 50 위반. 후순위 |
+| GPT-5.4 mini | 소형 | 0.75 / 4.50 | 9.8 | 동상 | 없음 | | 비용 탈락 |
+
+### I-3. 제외 (재검토 불필요)
+
+| 모델 | 사유 |
+|---|---|
+| Gemini 3.8 / 3.7 / 3.6 Flash | 추론 off 불가 + temperature 폐지 (부록 H) |
+| Gemini 3.5 Flash-Lite | F-8 보류 유지(길이 -24%·비용 +47%) |
+| DeepSeek V4 Flash(-0731) | 부록 D — 어체 위반 43~46%·마커 74~77% 로 이미 탈락. 신판도 같은 계열 |
+| GLM 5.2 / 5.3 Flash | 추론 강제(5.2) · 라벨 66~76%(5.3, 부록 G) |
+| Kimi K3 | $2.55 / $12.75 → ≈21원/턴 |
+| Nemotron 3.5 Lightning 30B-A3B | 무료 티어 전용·3B active — 서술 길이 기대 불가 |
+| Claude Haiku 4.5 | $1 / $5 → ≈12원. 구 fallback 이었던 이유(비용)로 제자리 |
+| Llama 5 · Cohere Command A 2026 · Grok 소형 | 검색에서 2026 출시·단가 확인 안 됨 — 조사 범위 밖 |
+
+### I-4. 권고 순서 (테스트 착수 시)
+
+1. **Mistral Small 4** — 현행과 동가·파라미터 완비·1st-party 엔드포인트. 한국어가 유일한 물음표라 재생 15건이면 결정된다.
+2. **MiniMax M3** — 프로바이더가 현행 allowlist 와 겹쳐 라우팅 함정이 적다. "reasoning-heavy" 평은 off 상태 실측으로 반증해야 한다. 2.8원은 5p 안.
+3. **Nemotron 3 Super** — 가장 싸지만 프로바이더 2곳(bf16 은 DeepInfra 하나). 1·2 가 떨어질 때의 보험.
+4. Qwen3.8 27B — 비용 2.5배라 위 셋이 전부 떨어져야 볼 가치가 생긴다.
+5. EXAONE 4.5 33B — 한국어 네이티브를 사려면 직접 연동 비용(프로바이더 레지스트리 확장)을 먼저 치러야 한다. 프로모션 $0 는 단가 판단 근거가 못 된다.
+
+절차는 부록 G 와 동일: `extract-bench-prompts.py` 15건 → `llm-config-ab.py --only` 로 프로바이더 고정 → 라벨·어체·길이·p50·원/턴. 15건은 "미준수율 15% 미만"만 보증하므로(F-8) 통과 시 40건·실런 2회.
+
+### I-5. 출처
+
+- OpenRouter 엔드포인트 API: `openrouter.ai/api/v1/models/<id>/endpoints` — qwen3.8-27b · qwen3.7-plus · minimax-m3 · mistral-small-2603 · nemotron-3-super-120b-a12b · gpt-5.4-nano · deepseek-v4-flash
+- OpenRouter 블로그 "The Open Weight Models that Matter: June 2026": https://openrouter.ai/blog/insights/the-open-weight-models-that-matter-june-2026/
+- OpenRouter 모델 페이지: https://openrouter.ai/qwen/qwen3.8-27b · https://openrouter.ai/minimax/minimax-m3 · https://openrouter.ai/mistralai/mistral-small-2603 · https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b · https://openrouter.ai/moonshotai/kimi-k3
+- Qwen3.8 27B 다국어 리뷰(한글 스크립트 누출): https://www.mindstudio.ai/blog/qwen3-8-27b-vision-multilingual-test
+- FriendliAI K-EXAONE: https://friendli.ai/blog/k-exaone-on-serverless · EXAONE 4.5: https://huggingface.co/LGAI-EXAONE/EXAONE-4.5-33B · AA 프로바이더(0곳): https://artificialanalysis.ai/models/exaone-4-5-33b-non-reasoning/providers
+- OpenAI GPT-5.4/5.6 가격: https://www.finout.io/blog/gpt-5.6-pricing-2026-sol-terra-and-luna-tiers-explained · https://www.cloudzero.com/blog/openai-pricing/
+- Claude 가격: https://platform.claude.com/docs/en/about-claude/pricing · Nemotron 3.5 Lightning: https://www.datacamp.com/blog/nemotron-3-5-lightning
+
+### I-6. 상한을 10원/턴으로 올리면 (2026-09-03 추가 조사)
+
+같은 환산식(입력 7,000 · 출력 280 tok · 환율 1,500). **가장 큰 소득은 I-2 에서 놓쳤던 Upstage Solar Pro 3/4 —
+한국어 네이티브인데 OpenRouter 에 있고 2.5원 상한 안에도 든다.**
+
+| 모델 (id) | 단가 in/out ($/M) | **원/턴** | 추론 off | temp·penalty | 프로바이더 | 비고 |
+|---|---:|---:|---|---|---|---|
+| **Solar Pro 4** `upstage/solar-pro4` (8/10 출시) | 0.30 / 1.20 (**현재 프로모 0.03 / 0.12**) | **3.7** (프로모 0.4) | ✓ `reasoning` 선택 | ✓ | Upstage 2 엔드포인트(단일 프로바이더) | 한국어 네이티브, 524k ctx, AA Intelligence 42(Pro 3 은 14). 비공개 가중치. 프로모 종료일 미공시 → 단가는 표준가로 판단 |
+| **Solar Pro 3** `upstage/solar-pro-3` | 0.15 / 0.60 | **1.8** | ✓ 선택 | ✓ | Upstage | 102B MoE / 12B active, 128k. 현행과 동가·한국어 네이티브 — **I-2 누락분** |
+| **Kimi K2.6** `moonshotai/kimi-k2.6` (4/20) | 0.60 / 2.52 (StreamLake fp8) ~ 0.70 / 3.50 (Crusoe bf16) | **7.3 ~ 8.8** | ✓ 선택 | ✓ 대부분 | 20곳(CoreWeave·Venice·Novita 포함) | 상위권 범용 모델 — "품질 상향" 후보. 프로바이더가 넓어 라우팅 안전 |
+| Kimi K2.5 `moonshotai/kimi-k2.5` | 0.45 / 2.25 | 5.7 | ✓ | ✓ | 다수 | K2.6 의 전 세대 |
+| Nemotron 3 Ultra `nvidia/nemotron-3-ultra-550b-a55b` | 0.50 / 2.20 (fp4) ~ 0.625 / 3.125 (Venice fp8) | 6.2 ~ 7.9 | ✓ 선택 | ✓ | 3곳(DeepInfra·BaseTen fp4, Venice fp8) | 550B/55B active. bf16 없음 |
+| Mistral Medium 3.1 `mistralai/mistral-medium-3.1` | 0.40 / 2.00 | 5.0 | 비추론 | ✓ | Mistral 1st-party 3 | 2025 모델, 128k. Small 4 의 상위 |
+| K-EXAONE 236B-A23B (FriendliAI 직접) | 0.60 / 1.00 | 6.7 | 미상 | 미상 | OpenRouter 없음 | 한국어 네이티브 대형. 직접 연동 코드 필요 |
+| DeepSeek V4 Pro `deepseek/deepseek-v4-pro` | 0.87 / 1.74 (DigitalOcean, 양자화 미상) ~ 1.04 / 2.08 (fp8) | **9.9 ~ 11.8** (경계) | 추론 파라미터 상시 | ✓ | 6곳 | 1.6T/49B. Flash 계열이 어체·마커로 탈락한 이력 — 같은 계열 리스크 |
+| GPT-5.4 mini | 0.75 / 4.50 | 9.8 (경계) | `reasoning_effort` | **없음** | OpenAI·Azure | 샘플링 레버 전무 |
+
+10원에도 못 드는 것: Claude Haiku 4.5 12.6 · Qwen3.7 Max 17 · Mistral Medium 3.5 19 · Gemini 3.5 Flash 19.5 · Gemini 3.8 Flash 17+ ·
+Kimi K3 21 · Qwen3.8 Max 23.5 · Grok 4.6 23.5 (전부 원/턴). GLM 5.2 는 단가(6원)보다 추론 강제가 결격.
+
+**상한 확장의 실익**: 후보가 ≈3개(I-4)에서 ≈9개로 늘고, 특히 두 종류가 새로 들어온다 —
+① **한국어 네이티브**(Solar Pro 4·K-EXAONE) ② **품질 상향형 대형**(Kimi K2.6·Nemotron Ultra). 현행(1.8~2.0원)의
+4~5배를 쓸 의향이 있다면 "형식 준수 동률·길이/반복 열세"로 끝난 부록 F 의 교착을 깰 축이 생긴다.
+
+**권고 순서 (10원 상한)**: ① Solar Pro 3 → ② Solar Pro 4 → ③ Kimi K2.6 → ④ Mistral Small 4 / MiniMax M3(I-4) → ⑤ Nemotron Ultra.
+Solar 둘은 한국어 네이티브라 재생 15건의 라벨·어체 결과가 곧 답이고, 단일 프로바이더(Upstage) 의존은 uptime(30분 99.8%)과
+Gemma allowlist 병행(교차 슬롯)으로 상쇄한다. 프로모 90% 는 판단에서 제외한다(표준가 3.7원으로 본다).
+
+추가 출처: https://openrouter.ai/upstage/solar-pro4 · https://openrouter.ai/upstage/solar-pro-3 · https://www.orcarouter.ai/blog/solar-pro-4-release ·
+https://openrouter.ai/moonshotai/kimi-k2.6 · https://openrouter.ai/deepseek/deepseek-v4-pro/pricing · https://openrouter.ai/mistralai/mistral-medium-3.1 ·
+https://openrouter.ai/x-ai/grok-4.6 · https://openrouter.ai/google/gemini-3.5-flash · https://openrouter.ai/qwen/qwen3.8-max
+
+## 부록 J. Solar Pro 3 / Pro 4 재생 15건 (2026-09-03) — Pro 3 탈락 · Pro 4 다음 단계 진행 가치 있음
+
+> 절차: `extract-bench-prompts.py --limit 15`(LOCATION 실프롬프트, 중앙값 13,823자) → `llm-config-ab.py --only Upstage --penalty --temperature 0.8`
+> → 같은 세션 Gemma 31B 대조군(운영 allowlist 라우팅). 분석단가는 표준가(Pro 3 0.15/0.60 · Pro 4 0.30/1.20 · Gemma 0.10/0.30 — Gemma 실단가는
+> allowlist 4곳 0.12~0.14/0.36~0.40 이라 표의 0.81 은 ≈1.05 로 읽는다). Pro 4 의 실과금 0.28 은 **90% 프로모** — 판단에서 제외.
+
+### J-1. 표
+
+| 모델 · 설정 | p50 / p90 ms | 추론 tok | 본문 자 | 분석단가 원 | 라벨% | 합쇼체 | 따옴표 밖 하오체 | 대명사 개시 | 기타 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| Gemma 31B(대조) | 5,277 / 7,549 | 0 | 431 | 0.81(≈1.05) | **100** | 0 | 0 | **0** | — |
+| Solar Pro 3 `2048:-` | 2,203 / 3,194 | 0 | 438 | 0.86 | **14.3** | 0 | 4 | — | 지시문 에코 1 |
+| Solar Pro 3 `2048:none` | 2,011 / 3,286 | 0 | 395 | 1.07 | **0.0** | 0 | 9 | — | `</s>` 누출 1 · 2인칭 '너' 1 |
+| **Solar Pro 4 `2048:-`** | **2,884 / 4,784** | 0 | **533** | 2.79 | **94.9** | 0 | 0 | **16 / 15건** | 라틴 누출 1("…가장자리에briefly 걸쳐") |
+| Solar Pro 4 `2048:none` | 4,361 / 11,616 | 0 | 547 | 2.92 | 72.7 | 0 | 2 | 12 | `none` 을 붙이면 라벨·지연 모두 악화 — 기본값으로 쓴다 |
+
+### J-2. Solar Pro 3 — 탈락
+
+라벨 0~14% 는 검사기 오류가 아니다(원문 대조): 15건 전부 `별칭: "대사"` 라벨 없이 큰따옴표만 쓰거나, 아예 따옴표 없이 하오체 문장을
+서술에 인라인한다(prompt #2: "그대는 내부자의 움직임에 대해 물었소" 가 지문). DeepSeek V4 Flash(부록 D)·GLM 5.3 Flash(부록 G)와 **같은
+실패 양상**이다 — 화자 없는 대사는 초상화·화자 표시가 전부 죽는다. 덤으로 `</s>` 토큰 누출, 프롬프트 규칙 문장 에코("[CHOICES] 태그
+생성 금지"), 2인칭 '너'. 한국어 자체는 자연스럽지만 형식 계약을 못 지키므로 재검토 없음.
+
+### J-3. Solar Pro 4 — 형식은 통과, 대명사 개시어가 약점
+
+- **형식**: 라벨 94.9%(15건 중 미준수 4/78 대사), 합쇼체 0, 하오체 어미 정확, 에코·`</s>`·2인칭 0. Gemma 100% 에는 못 미치나 3.1-flash-lite
+  탈락선(89.9%) 위이고, 서버 후처리(무명화·화자 교정)가 받아낼 범위다. 40건에서 다시 봐야 한다(15건은 15% 미만만 보증 — F-8).
+- **길이·속도**: 본문 533자(Gemma 431, +24%), p50 2.9초(Gemma 하네스 5.3초 — 운영 p50 3.2초와 동급). 부록 F 의 "짧고 빠름" 교환이 아니라
+  **길고 빠름**이다.
+- **약점 1 — 대명사 개시어**: 15건에 "그는/그가" 문장 개시 16회(Gemma 0). arch/78 이 억제하던 축이 프롬프트 지시로는 안 먹힌다.
+  운영 D5 지표(개시어율 ≈1.7~16%)로 환산하면 상위 밴드. 서버 후처리(대명사 개시어 교정)가 있는지 확인, 없으면 채택 시 비용.
+- **약점 2 — 라틴 누출** 1/15("briefly"). Qwen3.8 리뷰의 "스크립트 누출"과 같은 부류. `stripModelJunkCore` 가 고립 라틴을 걷어내는지 확인.
+- **비용**: 표준가 2.79원 — Gemma(≈1.05)의 2.7배, Luna(1.98)의 1.4배. 프로모 중엔 0.28원.
+- **프로바이더**: Upstage 단일(엔드포인트 2). uptime 30분 99.8%. 교차 슬롯(짝수 턴)으로 넣으면 단일 의존이 완화된다.
+
+### J-4. 다음 단계 (착수 전 확인)
+
+1. 40건 재생 + `--repeat 2` 로 라벨 준수 신뢰구간 확보(15건은 선별용).
+2. 대명사 개시어·라틴 누출 후처리 존재 여부 확인 → 없으면 Solar 전용 후처리 2건 비용 산정.
+3. 실런 15턴 × 2 — `LLM_ALTERNATE_MODEL=upstage/solar-pro4`(Luna 자리 교차) + `LLM_PROVIDER_ONLY_MAP` 에 `upstage/solar-pro4=Upstage` 추가,
+   `LLM_REASONING_EFFORT_MAP` 에 **넣지 않는다**(`none` 이 오히려 악화). 게이트 15종 + `llm_speech_audit` + 마커 커버리지 + 대명사 개시어율.
+4. 채택 판단은 소유자 — 비용 2.7배를 "길이 +24%·속도 동급·한국어 네이티브"와 바꿀 것인가.
+
+### J-5. Solar Pro 4 정밀 테스트 (2026-09-03) — 보류 (형식·어체 열세, 비용은 통과)
+
+절차: ① 재생 40건 × 2회(80 호출, Upstage 고정, temp 0.8 + penalty) + 같은 세션 Gemma 40건 대조 ② 교차 슬롯 실런 15턴 × 2
+(`LLM_ALTERNATE_MODEL=upstage/solar-pro4`, allowlist `upstage/solar-pro4=Upstage`, 추론 맵 미등록 — 짝수 턴 Solar / 홀수 턴 Gemma 로
+**같은 런 안에서 짝 비교**. graymar·SMUGGLER / star_sand·SS_SURVIVOR, chatty). 테스트 후 env 원복·재기동·스모크 PASS.
+실런 A 는 재생 벤치와 시간이 겹쳐 Upstage 단일 엔드포인트에 부하가 실렸다 — 지연은 런 B 를 본다.
+
+| 지표 | Solar Pro 4 | Gemma 31B(같은 런 홀수 턴) | 판정 |
+|---|---:|---:|---|
+| 재생 40×2 라벨 준수(원문) | **57.0%** (미준수 프롬프트 20/40, 0% 인 프롬프트 6) | 100% | ✗ — 15건의 94.9% 는 표본 착시(F-8 경고 그대로). 실패형: 줄머리 무라벨 큰따옴표, 한 줄 두 대사 중 둘째 무라벨, 군중 수군거림 |
+| 실런 라벨 준수(원문 raw_completion) | 70.3% | 100% | ✗ (서버 후처리 뒤 마커 커버리지는 100% — 무명화·재귀속이 받아냄) |
+| 어체 위반 (`llm_speech_audit`) | **6/36 (16.7%)** | 2/19 (10.5%) · 30일 Luna 6.4% | ✗ — "~부류요"·"흘러갔는**소**"(문법 파손)·"paperwork"(영어)·"기억나는가"(하게체)·쉼표 끝 대사 조각 |
+| 대명사 개시어 | 1.07/턴 · 문장의 8.2% | 0.38/턴 · 3.8% | ✗ 2배 |
+| 본문 길이 | 638자 (재생 553) | 581자 (재생 377) | ✓ +10~24% |
+| 지연 narrative p50/p90 (런 B) | 3,482 / 7,801 ms | 2,205 / 4,352 | ✗ 1.6배 느림 — 재생 하네스의 "더 빠름"은 라이브(스트리밍·단일 엔드포인트)에서 뒤집힘 |
+| 비용 | 실과금 0.27원(프로모) · **표준가 ≈2.9원**(입력 5,380 tok — Solar 토크나이저가 Gemma 7,072 보다 적게 셈) | 1.62원 | △ Luna(1.98)의 1.5배 |
+| 게이트 | 15/15 · 15/15 | | ✓ 회귀 없음 |
+| 기타 | 라틴 누출 1턴, 한자 0, 합쇼체 0, 재시도 0 | | |
+
+**판정: 보류.** 형식 준수가 표본이 커질수록 떨어지고(95→57%), 어체 위반이 Gemma 보다 높으며 지연은 라이브에서 1.6배다. 얻는 것은
+길이와 한국어의 자연스러움뿐인데, 부록 F-9 의 교착("형식 동률·길이/반복 열세")을 깨려면 형식·어체가 최소 동률이어야 한다.
+비용(표준가 2.9원)은 10원 상한 안이라 결격이 아니다.
+
+**재검토 조건**: ① Solar 전용 프롬프트 실험 1회 — 라벨 규칙을 P0 최상단 재강조(예시 문장 없이, 불변식 42)한 40건 재생에서 원문 라벨
+≥90% ② 어체 위반 ≤ Gemma ③ 라이브 p50 ≤ Gemma×1.2. 셋 중 ①이 실패하면 종결. 프로모(90%)는 판단에서 계속 제외.
+
+**부수 소득**: 재생 하네스가 실런 지연을 예측하지 못한 사례 하나 추가(F-7·G-3 연장) — 후보 판정에서 "속도"는 실런 짝 비교로만 말한다.
+
+### J-6. Solar Pro 4 재검토 (2026-09-03) — 라벨 재강조 80.4% · 마커 구조 변경은 역효과 · 서술 품질 대조
+
+**실험** (재생 40건, Upstage 고정, temp 0.8 + penalty):
+
+| 변형 | 원문 라벨 준수 | 미라벨 프롬프트 | 비고 |
+|---|---:|---:|---|
+| 기본 (J-5) | 57.0% (80건) | 29/80 | |
+| **V1 라벨 재강조** — 시스템 최상단에 "대사는 독립 줄 `별칭: "대사"`, 한 줄 한 대사, 군중도 별칭+콜론" + 유저 말미 자기점검 (예시 문장 없음) | **80.4%** | 8/40 | 조건 ①(≥90%) 미달. 지문 뒤 같은 줄 대사·군중 조각·분리 대사가 잔존 |
+| V2 와이어 마커 — 모델이 `@[별칭] "대사"` 를 직접 쓰게 | 와이어 10 · 콜론 46 · 무라벨 34 | 25/40 | **역효과**. 모델은 콜론 라벨 습관을 고수하고 무라벨만 늘었다 — 실패 원인은 라벨 *문법*이 아니라 "대사를 지문에 인라인하는 산문 습관" |
+
+**무라벨 대사의 정체** (서버 귀속 가능성): V1 잔존 18건 = 군중·무명 8(무명화로 OK) · 단일 화자 턴 5(잠금 화자로 귀속 가능) · 라벨 0 이나
+지문에 별칭 언급 1(별칭 귀속) · 모호 4. 즉 **서버가 "단일 화자 턴의 무라벨 큰따옴표는 잠금 화자에게 귀속" 규칙 하나를 두면 실효
+준수율 ≈ 95%** 가 된다(Solar 는 한 턴 화자 ≤2 규칙을 Gemma 보다 잘 지킨다 — D 위반 0~1 vs Gemma 4/40 — 그래서 이 귀속이 안전하다).
+소유자가 제기한 "마커 구조를 바꾼다"의 실현 가능한 형태는 **모델 측 문법 변경(V2, 실패)이 아니라 서버 측 귀속 규칙**이다.
+
+**서술 품질 대조** (재생 40건 원문 기준, Solar 는 ×2):
+
+| 축 | Solar Pro 4 | Gemma 31B | 해석 |
+|---|---:|---:|---|
+| 본문 길이 | 553자 | 377자 | Solar +47% — 감각 묘사·행동 지문이 촘촘 |
+| P0-E 첫 문장 '당신은' | 0 | 0 | 동률 |
+| P0-D 한 턴 화자 >2 | 1/80 | **4/40** | **Solar 우위** — Gemma 는 잠금 중에도 단정한 장교가 끼어든다 |
+| P0-I 태그·마크다운 | 0 | 0 | 동률 |
+| P0-J 영어 혼용 | 2/80 ("reports", "loyalty") | 0 | Solar 열세 (소량) |
+| P0-K 화폐 | **7/80** (동전·닢·은화) | 0 | Solar 열세 — 규칙을 읽고도 습관이 이김 |
+| 지문 합쇼체 | 0 | 0 | 동률 |
+| 대명사 문장 개시 | 0.56~0.88/턴 | 0.03/턴 | Solar 열세 (arch/78 축) |
+| 되묻기(마지막 대사 질문) | 6% | 15% | **Solar 우위** — 질문으로 넘기는 습관이 적다 |
+| 상투구 앵커 | "수레바퀴가 돌길을 긁는" 4/80 | "갓 구운 빵의 고소한" 6/40 | 둘 다 있음, Gemma 쪽이 짙다 |
+| 어체(라이브 audit, J-5) | 16.7% | 10.5% | Solar 열세 — 다만 위반 6건 중 2건이 분리 대사 조각(쉼표 끝)이라 V1 의 "한 줄 한 대사"로 줄 여지 |
+| 문법 파손 | "흘러갔는**소**" 1건 | 0 | Solar 열세 |
+
+원문 인상(같은 프롬프트 #2·#6·#22 짝 비교): Solar 는 한 화자를 끝까지 붙들고 서류·손끝·빛 같은 물성 묘사로 장면을 밀고 가며 대사가
+길고 논리적("평소와 다른 침묵, 평소와 다른 외출, 평소와 다른 귀가 시간"). Gemma 는 짧고 정돈됐지만 배경 NPC(장교) 개입과 '당신을
+응시한다' 류 상투 지문이 잦다. **문장력·몰입은 Solar, 규칙 준수는 Gemma** 라는 상보 관계다.
+
+**판정: 보류 유지, 단 경로가 생겼다.** 조건 ① 은 프롬프트만으로 80.4% 라 미달이지만, V1 + 서버 단일화자 귀속 규칙이면 실효 95% 가
+가능하다. 남는 결격은 ② 어체(16.7 vs 10.5, V1 로 재측정 필요) ③ 라이브 지연 1.6배(부하 없는 시간대 재측정 필요) + 화폐·대명사 개시어.
+다음 단계가 있다면: V1 프롬프트를 Solar 한정 프리픽스로 넣고(모델별 프롬프트 분기 — 코드 1곳) 서버 귀속 규칙(코어 함수 + 스펙)을 붙여
+실런 15턴 ×2 로 ②③을 재측정. 비용은 표준가 2.9원으로 변동 없음.
