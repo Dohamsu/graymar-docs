@@ -3,6 +3,7 @@
   "name": "카른홀트",
   "description": "왕국 북부 국경의 은광·주조 도시. 위조 주화와 사라진 광부, 세 세력의 암투 속에서 진실을 캐는 자율 서사 시나리오.",
   "order": 2,
+  "status": "HOLD",
   "prerequisites": [],
   "narrativeMode": "AUTONOMOUS",
   "carryOverRules": {
