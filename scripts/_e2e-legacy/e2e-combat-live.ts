@@ -11,7 +11,7 @@ const API = 'http://localhost:3000';
 const CLIENT = 'http://localhost:3001';
 const DIR = '/tmp/e2e-combat-live';
 const EMAIL = 'playtest_1776735011@test.com'; // 36cf1680 — C2 run
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 
 let nextTurn = 0;
 let token = '';

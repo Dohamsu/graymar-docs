@@ -11,6 +11,7 @@
 사용법:
   python3 scripts/inspect-streaming-leaks.py --turns 5
 """
+from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7
 import argparse, json, re, sys, time, uuid
 from pathlib import Path
 from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
@@ -65,9 +66,9 @@ def register_login():
     email = f"leak_{int(time.time())}_{uuid.uuid4().hex[:6]}@test.com"
     try:
         d = api("POST", "/auth/register", add_invite_code(
-            {"email": email, "password": "Test1234!!", "nickname": "Leak"}, BASE, "streaming-leaks"))
+            {"email": email, "password": playtest_password(), "nickname": "Leak"}, BASE, "streaming-leaks"))
     except requests.HTTPError:
-        d = api("POST", "/auth/login", {"email": email, "password": "Test1234!!"})
+        d = api("POST", "/auth/login", {"email": email, "password": playtest_password()})
     return d["token"]
 
 

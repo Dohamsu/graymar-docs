@@ -26,7 +26,7 @@ async function run() {
   const emailInput = page.locator('input[name="email"]');
   if (await emailInput.isVisible({ timeout: 2000 }).catch(() => false)) {
     await emailInput.fill('e2e_1775993715673@test.com');
-    await page.locator('input[name="password"]').fill('Test1234!!');
+    await page.locator('input[name="password"]').fill(process.env.PLAYTEST_PASSWORD ?? '');
     // 로그인 버튼 클릭
     await page.waitForTimeout(500);
     const loginBtns = page.locator('button:has-text("로그 인"), button:has-text("로그인")');

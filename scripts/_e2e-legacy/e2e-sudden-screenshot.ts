@@ -7,7 +7,7 @@ import { chromium } from 'playwright';
 const CLIENT = 'http://localhost:3001';
 const DIR = '/tmp/e2e-sudden-screenshot';
 const EMAIL = 'sudden_test_1776836027286@test.com';
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 
 async function run() {
   fs.rmSync(DIR, { recursive: true, force: true });

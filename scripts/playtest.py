@@ -43,7 +43,8 @@ _run_ended_naturally = False  # [M1] 엔딩 도달 여부 — V0 부분 실행 �
 # 정본 테스터 계정 재사용 (register 409 → login fallback). --new-account 시에만 새로 생성.
 # 어드민 집계 제외·정리 대상은 테스트 도메인 기준 (server/src/common/tester.util.ts).
 EMAIL = f"playtest_{int(time.time())}@test.com" if args.new_account else "playtest@test.com"
-PASSWORD = "Test1234!!"
+from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7 — 평문 리터럴 제거
+PASSWORD = playtest_password()
 NICKNAME = "Tester"
 
 # tavern 포함 — 거점 사랑방(arch/68 부록 B) 자유 대화 경로도 완주 회귀에 포함

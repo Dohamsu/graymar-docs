@@ -7,7 +7,7 @@ import { chromium } from 'playwright';
 const CLIENT = 'http://localhost:3001';
 const DIR = '/tmp/e2e-fresh-combat';
 const EMAIL = 'combat_test_1776815543320@test.com';
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 
 async function main() {
   const browser = await chromium.launch({ headless: true });

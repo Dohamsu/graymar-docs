@@ -9,6 +9,7 @@ before 로그(playtest-reports/multi_npc_play_20260514_065449.json)와 동일한
   python3 scripts/multi_npc_play.py --output playtest-reports/multi_npc_play_after.json
 """
 
+from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7
 import argparse
 import json
 import sys
@@ -131,7 +132,7 @@ def poll_llm(run_id: str, turn_no: int, max_wait: int = 90) -> dict:
 
 def auth_and_run() -> tuple[str, str, int]:
     email = f"npc_play_{uuid.uuid4().hex[:8]}@test.com"
-    password = "Test1234!!"
+    password = playtest_password()
     status, resp = api("POST", "/auth/register", add_invite_code(
         {"email": email, "password": password, "nickname": "Tester"}, BASE, "multi_npc_play"))
     if status != 201:

@@ -21,7 +21,6 @@ export const CLIENT_BASE = process.env.CLIENT_BASE || "http://localhost:3001";
 export const SERVER_BASE = process.env.SERVER_BASE || "http://localhost:3000/v1";
 export const HEADLESS = process.env.HEADLESS !== "false";
 export const VIEWPORT = { width: 1440, height: 900 };
-export const DEFAULT_PASSWORD = "Test1234!!";
 export const DEFAULT_NICKNAME = "E2ETester";
 /**
  * 비공개 테스트 가입 게이트(arch/107 §8) 대응. 검증 스크립트는 매 실행 새 계정을
@@ -33,21 +32,24 @@ export const DEFAULT_NICKNAME = "E2ETester";
  * 실행하든 토큰을 확보한다(스크립트는 server/.env 를 자동 로드하지 않으므로,
  * 이게 없으면 루트 실행 스모크가 CODE_REQUIRED 로 깨진다 — playtest.py 와 동일 폴백).
  */
-function loadAdminToken(): string {
-  if (process.env.ADMIN_TOKEN) return process.env.ADMIN_TOKEN;
+function loadServerEnv(key: string): string {
+  const fromEnv = process.env[key];
+  if (fromEnv) return fromEnv;
   const here = path.dirname(fileURLToPath(import.meta.url));
   for (const rel of ["../../server/.env", "../server/.env", "server/.env"]) {
     try {
       const txt = fs.readFileSync(path.resolve(here, rel), "utf-8");
-      const m = txt.match(/^ADMIN_TOKEN=(.*)$/m);
-      if (m?.[1]) return m[1].trim();
+      const m = txt.match(new RegExp(`^${key}=(.*)$`, "m"));
+      if (m?.[1]) return m[1].trim().replace(/^["']|["']$/g, "");
     } catch {
       /* try next candidate */
     }
   }
   return "";
 }
-export const ADMIN_TOKEN = loadAdminToken();
+export const ADMIN_TOKEN = loadServerEnv("ADMIN_TOKEN");
+/** 테스터 비밀번호 — env → server/.env 폴백 (보안 감사 2026-09-07 M7, 평문 리터럴 제거) */
+export const DEFAULT_PASSWORD = loadServerEnv("PLAYTEST_PASSWORD");
 
 // ──────────────────────────────────────────────────────────────
 // 타입

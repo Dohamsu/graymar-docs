@@ -47,7 +47,7 @@ async function run() {
   await clickText(page, '회원가입');
   await page.waitForTimeout(500);
   await page.fill('input[name="email"]', email);
-  await page.fill('input[name="password"]', 'Test1234!!');
+  await page.fill('input[name="password"]', process.env.PLAYTEST_PASSWORD ?? '');
   const nick = page.locator('input[name="nickname"]');
   if (await nick.isVisible({ timeout: 1000 }).catch(() => false)) await nick.fill('호외테스트');
   await clickText(page, '가입하기');

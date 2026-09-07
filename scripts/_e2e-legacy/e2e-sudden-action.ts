@@ -16,7 +16,7 @@ import * as fs from 'fs';
 const API = 'http://localhost:3000';
 const DIR = '/tmp/e2e-sudden-action';
 const EMAIL = `sudden_test_${Date.now()}@test.com`;
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 const NICKNAME = `돌발테스트${Date.now() % 10000}`;
 
 let token = '';

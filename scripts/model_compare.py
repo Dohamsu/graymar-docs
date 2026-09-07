@@ -4,6 +4,7 @@
 같은 프리셋, 같은 행동 시퀀스로 5턴 실행 후 서술 품질 비교
 """
 
+from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7
 import json, time, uuid, sys, requests
 from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 
@@ -52,9 +53,9 @@ def create_session(tag):
     s = requests.Session()
     email = f"compare_{tag}_{int(time.time())}@test.com"
     status, resp = api(s, "POST", "/auth/register", add_invite_code(
-        {"email": email, "password": "Test1234!!", "nickname": f"Cmp_{tag}"}, BASE, "model_compare"))
+        {"email": email, "password": playtest_password(), "nickname": f"Cmp_{tag}"}, BASE, "model_compare"))
     if status != 201:
-        status, resp = api(s, "POST", "/auth/login", {"email": email, "password": "Test1234!!"})
+        status, resp = api(s, "POST", "/auth/login", {"email": email, "password": playtest_password()})
     token = resp.get("token", "")
     if not token:
         print(f"Auth failed for {tag}: {resp}", flush=True)

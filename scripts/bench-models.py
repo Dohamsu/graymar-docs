@@ -10,6 +10,7 @@ Gemma 4 모델 비교 벤치마크 — 26b-a4b vs 31b-it (또는 임의 2모델)
 결과는 playtest-reports/bench_<timestamp>.json 에 저장.
 """
 
+from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7
 import argparse
 import json
 import os
@@ -135,10 +136,10 @@ def register_login():
     email = f"bench_{int(time.time())}_{uuid.uuid4().hex[:6]}@test.com"
     try:
         data = api("POST", "/auth/register", add_invite_code(
-            {"email": email, "password": "Test1234!!", "nickname": "Bench"}, BASE, "bench-models"))
+            {"email": email, "password": playtest_password(), "nickname": "Bench"}, BASE, "bench-models"))
     except requests.HTTPError:
         data = api("POST", "/auth/login", {
-            "email": email, "password": "Test1234!!",
+            "email": email, "password": playtest_password(),
         })
     return data["token"]
 

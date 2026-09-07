@@ -25,7 +25,8 @@ parser.add_argument("--base", default="http://localhost:3000/v1", help="서버 U
 args = parser.parse_args()
 
 BASE = args.base
-PASSWORD = "Test1234!!"
+from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7 — 평문 리터럴 제거
+PASSWORD = playtest_password()
 
 try:
     import requests

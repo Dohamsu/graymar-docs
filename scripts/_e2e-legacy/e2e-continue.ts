@@ -54,7 +54,7 @@ async function run() {
   }
 
   const email = 'e2e_1775993715673@test.com';
-  const password = 'Test1234!!';
+  const password = process.env.PLAYTEST_PASSWORD ?? '';
   const runId = '084eeaa6-1aec-4242-8d15-1b1cf18627a0';
 
   // 로그인

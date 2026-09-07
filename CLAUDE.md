@@ -82,6 +82,10 @@ lsof -ti:3000 | xargs kill -9 2>/dev/null   # launchd가 자동 재기동함 (�
 - **클라이언트**: Next.js 시작 전 `lsof -ti:3001 | xargs kill -9 2>/dev/null`로 기존 프로세스 정리.
 - **다른 프로젝트 주의**: 포트 충돌 시 `ps aux | grep 'nest.js start'` + cwd 확인으로 전체 점검.
 
+## 잔여 TASK (소유자 수동)
+
+`TODOS.md` 가 정본. 2026-09-07 보안 감사 후속 3건(DB 자격증명 회전 · Slack 웹훅 재발급 · 미사용 API 키 revoke)이 대기 중 — 서비스 동작과 무관. 세션 시작 시 남아 있으면 한 줄로 상기시킨다.
+
 ## 워크플로우 규칙
 
 - **커밋 푸시 = 서버 재시작까지 한 세트** (2026-07-10): 커밋/푸시는 명시적 요청 시에만 수행하되, 수행할 때는 서버 코드 변경이 포함되면 `pnpm build + launchctl kickstart` 재시작 후 `/v1/version` 해시 일치 확인까지 한 작업 단위로 완결한다. 문서만 변경된 커밋은 재시작 불필요.

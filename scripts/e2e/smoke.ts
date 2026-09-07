@@ -20,6 +20,7 @@ import {
   pickTurnInput,
   SERVER_BASE,
   CLIENT_BASE,
+  DEFAULT_PASSWORD,
   sleep,
   type TurnLog,
 } from "./_helpers.js";
@@ -54,7 +55,7 @@ async function main() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: `smoke_gate_${Date.now()}@test.com`,
-        password: "Test1234!!",
+        password: DEFAULT_PASSWORD, // 보안 감사 2026-09-07 M7 — env/server/.env 에서
       }),
     });
     const probeBody = await probe.json().catch(() => ({}));

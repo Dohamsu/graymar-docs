@@ -15,7 +15,7 @@ const BASE = 'https://dimtale.com';
 const DIR = '/tmp/portfolio-screenshots';
 
 const EMAIL_NEW = `portfolio_${Date.now()}@test.com`;
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 const NICKNAME = `포폴${Date.now() % 10000}`;
 
 const EMAIL_ENDING = 'playtest_1776907639@test.com';

@@ -9,7 +9,8 @@ from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가�
 
 BASE = "http://localhost:3000/v1"
 EMAIL = f"speedrun_{int(time.time())}@test.com"
-PASSWORD = "Test1234!!"
+from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7 — 평문 리터럴 제거
+PASSWORD = playtest_password()
 MAX_TURNS = 60
 
 QUEST_ROUTE = [

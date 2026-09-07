@@ -4,7 +4,7 @@ import * as fs from 'fs';
 const BASE = 'http://localhost:3001';
 const DIR = '/tmp/e2e-drop-toast';
 const EMAIL = 'playtest_1776660357@test.com';
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 
 // GOLD_ACTIONS 계열 행동 — 드랍 발생 확률 있는 것들
 const GOLD_ACTIONS = [

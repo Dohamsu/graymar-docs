@@ -56,7 +56,7 @@ async function run() {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
   const email = `e2e_${Date.now()}@test.com`;
-  const password = 'Test1234!!';
+  const password = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 
   console.log('=== E2E 호외/posture 테스트 ===\n');
 

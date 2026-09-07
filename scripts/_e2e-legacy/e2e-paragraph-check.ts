@@ -7,7 +7,7 @@ import * as fs from 'fs';
 const CLIENT = 'http://localhost:3001';
 const DIR = '/tmp/e2e-paragraph-check';
 const EMAIL = 'combat_test_1776815543320@test.com';
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 
 async function run() {
   fs.rmSync(DIR, { recursive: true, force: true });

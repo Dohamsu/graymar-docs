@@ -5,7 +5,7 @@ const BASE = 'http://localhost:3001';
 const DIR = '/tmp/e2e-combat-real';
 // A2 검증 런 — 현재 COMBAT 상태
 const EMAIL = 'playtest_1776730494@test.com';
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 
 async function run() {
   fs.rmSync(DIR, { recursive: true, force: true });

@@ -9,7 +9,7 @@ const CLIENT = 'http://localhost:3001';
 const DIR = '/tmp/e2e-fresh-combat';
 
 const EMAIL = `combat_test_${Date.now()}@test.com`;
-const PASSWORD = 'Test1234!!';
+const PASSWORD = process.env.PLAYTEST_PASSWORD ?? ''; // 보안 감사 2026-09-07 M7
 const NICKNAME = `전투테스트${Date.now() % 10000}`;
 
 let token = '';
