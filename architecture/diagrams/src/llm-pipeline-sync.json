@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "LOCATION 턴 파이프라인 ① 동기 — 제출부터 HTTP 200 까지",
+    "output": "architecture/diagrams/llm-pipeline-sync.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1000,
+      585
+    ],
+    "views": [
+      {
+        "id": "guards",
+        "label": "가드와 과금",
+        "focus": [
+          "client",
+          "api",
+          "db"
+        ],
+        "note": "멱등 재전송은 저장본을 그대로 돌려준다."
+      },
+      {
+        "id": "judge",
+        "label": "의도와 판정",
+        "focus": [
+          "api",
+          "nano",
+          "engine"
+        ],
+        "note": "의도 파싱과 분류는 nano, 판정은 서버 1d6."
+      }
+    ],
+    "column_fit": "spread"
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "frontend",
+      "label": "클라이언트"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "TurnsService"
+    },
+    {
+      "id": "engine",
+      "type": "backend",
+      "label": "HUB 엔진"
+    },
+    {
+      "id": "nano",
+      "type": "external",
+      "label": "Light LLM",
+      "sublabel": "gpt-4.1-nano"
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL"
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "LlmWorker"
+    }
+  ],
+  "messages": [
+    {
+      "id": "submit",
+      "from": "client",
+      "to": "api",
+      "y": 172,
+      "label": "POST /v1/runs/:id/turns",
+      "variant": "emphasis"
+    },
+    {
+      "id": "guards",
+      "from": "api",
+      "to": "db",
+      "y": 204,
+      "label": "멱등키 · 소유권 · 포인트 5p 차감",
+      "variant": "security"
+    },
+    {
+      "id": "intent",
+      "from": "api",
+      "to": "nano",
+      "y": 236,
+      "label": "의도 파싱 (LlmIntentParser, gpt-4.1-nano)",
+      "variant": "default"
+    },
+    {
+      "id": "intent-ret",
+      "from": "nano",
+      "to": "api",
+      "y": 268,
+      "label": "actionType · target · 확신도",
+      "variant": "return"
+    },
+    {
+      "id": "challenge",
+      "from": "api",
+      "to": "nano",
+      "y": 300,
+      "label": "ChallengeClassifier — FREE/CHECK (병렬)",
+      "variant": "dashed"
+    },
+    {
+      "id": "engine-call",
+      "from": "api",
+      "to": "engine",
+      "y": 332,
+      "label": "경계·세이프티 게이트 → TurnMode · 이벤트 매칭 · NpcResolver 5단계",
+      "variant": "emphasis"
+    },
+    {
+      "id": "engine-ret",
+      "from": "engine",
+      "to": "api",
+      "y": 364,
+      "label": "1d6 판정 · WorldTick · fact 공개 → ServerResultV1",
+      "variant": "return"
+    },
+    {
+      "id": "commit",
+      "from": "api",
+      "to": "db",
+      "y": 396,
+      "label": "commitTurnRecord · llmStatus=PENDING",
+      "variant": "emphasis"
+    },
+    {
+      "id": "wake",
+      "from": "api",
+      "to": "worker",
+      "y": 428,
+      "label": "worker.wake()",
+      "variant": "dashed"
+    },
+    {
+      "id": "http-200",
+      "from": "api",
+      "to": "client",
+      "y": 460,
+      "label": "200 {serverResult, llm: PENDING}",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "client",
+      "from": 166,
+      "to": 466,
+      "type": "frontend"
+    },
+    {
+      "participant": "api",
+      "from": 166,
+      "to": 466,
+      "type": "backend"
+    },
+    {
+      "participant": "nano",
+      "from": 230,
+      "to": 274,
+      "type": "external"
+    },
+    {
+      "participant": "engine",
+      "from": 326,
+      "to": 370,
+      "type": "backend"
+    },
+    {
+      "participant": "db",
+      "from": 390,
+      "to": 402,
+      "type": "database"
+    }
+  ]
+}

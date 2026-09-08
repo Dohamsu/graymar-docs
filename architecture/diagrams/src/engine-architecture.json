@@ -1,0 +1,435 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "graymar 엔진 구성도 — 동기 턴 파이프라인과 비동기 LLM 워커",
+    "output": "architecture/diagrams/engine-architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1380,
+      600
+    ],
+    "views": [
+      {
+        "id": "sync-turn",
+        "label": "동기 턴 경로",
+        "focus": [
+          "client",
+          "tunnel",
+          "auth",
+          "turns",
+          "engine",
+          "postgres"
+        ],
+        "note": "POST /turns 가 판정·commit 까지 끝내고 200 을 돌려준다. LLM 서술은 기다리지 않는다."
+      },
+      {
+        "id": "async-llm",
+        "label": "비동기 LLM 파이프라인",
+        "focus": [
+          "postgres",
+          "worker",
+          "nano",
+          "openrouter",
+          "broker",
+          "client"
+        ],
+        "note": "워커가 PENDING 턴을 집어 nano 사전 결정 → 프롬프트 → 스트리밍 → SSE 로 흘린다."
+      },
+      {
+        "id": "state-owner",
+        "label": "상태의 정본",
+        "focus": [
+          "engine",
+          "postgres",
+          "worker"
+        ],
+        "note": "하드 상태는 엔진만 쓴다. 워커는 CAS 를 거쳐 소프트 상태만 되돌린다."
+      }
+    ],
+    "repository": {
+      "url": "https://github.com/Dohamsu/graymar-server",
+      "revision": "814e78641cade4abb6d0dc59577ab3c6f2d6808b"
+    }
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "frontend",
+      "label": "게임 클라이언트",
+      "sublabel": "Next.js · dimtale.com",
+      "pos": [
+        40,
+        200
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "tag": "Vercel"
+    },
+    {
+      "id": "tunnel",
+      "type": "cloud",
+      "label": "Cloudflare Tunnel",
+      "sublabel": "api.dimtale.com",
+      "pos": [
+        265,
+        200
+      ],
+      "size": [
+        140,
+        62
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "security",
+      "label": "Auth · Throttler",
+      "sublabel": "JWT · 쿠키 · per-IP",
+      "pos": [
+        490,
+        200
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/common/guards/auth.guard.ts",
+          "line": 20,
+          "label": "AuthGuard"
+        },
+        {
+          "path": "src/app.module.ts",
+          "line": 23,
+          "label": "Throttler"
+        }
+      ]
+    },
+    {
+      "id": "turns",
+      "type": "backend",
+      "label": "TurnsService 라우터",
+      "sublabel": "Loc · Hub · Combat · Dag",
+      "pos": [
+        715,
+        200
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/turns/turns.service.ts",
+          "line": 176,
+          "end_line": 256,
+          "label": "nodeType 분기"
+        }
+      ]
+    },
+    {
+      "id": "engine",
+      "type": "backend",
+      "label": "HUB 엔진 41 services",
+      "sublabel": "1d6 · 이벤트 · NPC · 팩",
+      "pos": [
+        940,
+        200
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/turns/location-turn.service.ts",
+          "line": 2787,
+          "end_line": 4408,
+          "label": "LOCATION 파이프라인"
+        },
+        {
+          "path": "src/engine/hub/npc-resolver.service.ts",
+          "line": 180,
+          "label": "NpcResolver"
+        },
+        {
+          "path": "src/content/content-loader.service.ts",
+          "label": "팩 캐시"
+        }
+      ]
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "turns · memories",
+      "pos": [
+        1165,
+        200
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/turns/turn-shared.service.ts",
+          "line": 125,
+          "end_line": 196,
+          "label": "commitTurnRecord"
+        }
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "LlmWorker",
+      "sublabel": "Context+Prompt · 락",
+      "pos": [
+        1165,
+        350
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/llm/llm-worker.service.ts",
+          "line": 3010,
+          "end_line": 3035,
+          "label": "락 획득"
+        },
+        {
+          "path": "src/llm/context-builder.service.ts",
+          "line": 687,
+          "label": "ContextBuilder"
+        },
+        {
+          "path": "src/llm/token-budget.service.ts",
+          "line": 37,
+          "label": "20,000자 백스톱"
+        }
+      ]
+    },
+    {
+      "id": "nano",
+      "type": "backend",
+      "label": "Nano 디렉터",
+      "sublabel": "gpt-4.1-nano ×8~12",
+      "pos": [
+        940,
+        50
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/llm/npc-reaction-director.service.ts",
+          "line": 265,
+          "label": "NpcReaction"
+        },
+        {
+          "path": "src/llm/nano-event-director.service.ts",
+          "line": 416,
+          "label": "EventDirector"
+        },
+        {
+          "path": "src/engine/hub/llm-intent-parser.service.ts",
+          "line": 199,
+          "label": "IntentParser"
+        }
+      ]
+    },
+    {
+      "id": "openrouter",
+      "type": "external",
+      "label": "OpenRouter",
+      "sublabel": "Solar Pro 4 · mini",
+      "pos": [
+        1165,
+        500
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/llm/providers/openai.provider.ts",
+          "line": 74,
+          "label": "base URL"
+        }
+      ]
+    },
+    {
+      "id": "broker",
+      "type": "messagebus",
+      "label": "LlmStreamBroker",
+      "sublabel": "SSE token · done",
+      "pos": [
+        940,
+        350
+      ],
+      "size": [
+        140,
+        62
+      ],
+      "sources": [
+        {
+          "path": "src/llm/llm-stream-broker.service.ts",
+          "label": "브로커"
+        },
+        {
+          "path": "src/turns/turns.controller.ts",
+          "line": 74,
+          "label": "@Sse stream"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Mac mini · launchd com.graymar.server (NestJS, 127.0.0.1:3000)",
+      "wraps": [
+        "auth",
+        "turns",
+        "engine",
+        "postgres",
+        "nano",
+        "broker",
+        "worker",
+        "openrouter"
+      ],
+      "pad": 24
+    }
+  ],
+  "connections": [
+    {
+      "from": "client",
+      "to": "tunnel",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "from": "tunnel",
+      "to": "auth",
+      "label": "루프백",
+      "variant": "security"
+    },
+    {
+      "from": "auth",
+      "to": "turns",
+      "label": "턴 제출",
+      "variant": "emphasis"
+    },
+    {
+      "from": "turns",
+      "to": "engine",
+      "label": "LOCATION",
+      "variant": "emphasis"
+    },
+    {
+      "from": "engine",
+      "to": "postgres",
+      "label": "commit",
+      "variant": "emphasis"
+    },
+    {
+      "from": "engine",
+      "to": "nano",
+      "label": "동기 nano ×2",
+      "variant": "dashed",
+      "route": "orthogonal-v"
+    },
+    {
+      "from": "postgres",
+      "to": "worker",
+      "label": "폴링·DONE",
+      "route": "orthogonal-v"
+    },
+    {
+      "from": "worker",
+      "to": "nano",
+      "label": "사전 결정",
+      "fromSide": "right",
+      "toSide": "right",
+      "via": [
+        [
+          1345,
+          381
+        ],
+        [
+          1345,
+          81
+        ]
+      ]
+    },
+    {
+      "from": "worker",
+      "to": "broker",
+      "label": "emit",
+      "variant": "dashed"
+    },
+    {
+      "from": "worker",
+      "to": "openrouter",
+      "label": "스트리밍",
+      "variant": "emphasis",
+      "route": "orthogonal-v"
+    },
+    {
+      "from": "broker",
+      "to": "client",
+      "label": "SSE 서술",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [
+        [
+          1010,
+          456
+        ],
+        [
+          110,
+          456
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "동기 턴 경로 (HTTP 응답까지)",
+      "items": [
+        "멱등키 → 소유권 → 포인트 5p 차감 → nodeType 라우팅",
+        "LOCATION: 의도 파싱(nano) → 경계·세이프티 게이트 → TurnMode·이벤트 매칭 → NpcResolver 5단계 → 1d6 판정 → WorldTick → fact 공개. 콘텐츠 팩은 deepFreeze 캐시에서 읽기만",
+        "commitTurnRecord 가 llmStatus=PENDING 으로 저장하고 worker.wake() 후 즉시 200"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "비동기 LLM 워커",
+      "items": [
+        "1초 폴링 + 조건부 UPDATE 락 (RUNNING, 60초 stale 회수)",
+        "ContextBuilder(메모리 L0~L4, 20,000자 백스톱) → PromptBuilder(모델 프로파일) → OpenRouter 스트리밍 (main Solar Pro 4 · light gpt-4.1-nano · fallback 4.1-mini)",
+        "후처리(마커·실명 마스킹·어체 R5v2) → DONE · EventDirector T2 선택지 → SceneCut · CAS 패치 → done"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "불변식",
+      "items": [
+        "서버가 상태의 정본 — LLM 은 하드 상태(HP·골드·questState)를 쓰지 못한다",
+        "워커 역류는 applyRunStatePatch CAS 경유 소프트 상태만 (감정·작별·장면 컷·관계 신호)",
+        "실패 턴은 무과금(refundOnFailure) · 콘텐츠 캐시는 deepFreeze"
+      ]
+    }
+  ]
+}

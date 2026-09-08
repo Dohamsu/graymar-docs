@@ -43,3 +43,12 @@ quartz/content/quest/
 quartz/content/incidents/
 quartz/content/items/
 __pycache__/
+
+# 서드파티 에이전트 스킬 (npx skills add — 로컬 도구, 공개 docs 레포에 vendored 하지 않음)
+.agents/
+.claude/skills/archify
+.hermes/skills/
+skills-lock.json
+
+# archify 브라우저 검증 부산물 (스크린샷·리시트)
+architecture/diagrams/*.visual-check.*

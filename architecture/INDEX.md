@@ -1,5 +1,7 @@
 # 설계 문서 INDEX (architecture/)
 
+> 시각 구성도: [[architecture/diagrams/README|diagrams/]] — 엔진 구성도(architecture) + LOCATION 턴 LLM 파이프라인 시퀀스 ①동기/②비동기 (archify 자립형 HTML, 코드 file:line 근거 첨부, 2026-09-07)
+
 > 도메인별 1~2문단 요약. 상세는 각 md 파일 본문 참조.
 > CLAUDE.md → INDEX.md → 상세 문서 순으로 진입.
 

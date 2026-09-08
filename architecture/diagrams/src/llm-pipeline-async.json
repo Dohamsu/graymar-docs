@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "LOCATION 턴 파이프라인 ② 비동기 — LlmWorker 서술 생성",
+    "output": "architecture/diagrams/llm-pipeline-async.html",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1000,
+      638
+    ],
+    "views": [
+      {
+        "id": "gen",
+        "label": "서술 생성",
+        "focus": [
+          "worker",
+          "nano",
+          "main"
+        ],
+        "note": "사전 결정 → 프롬프트 → 스트리밍."
+      },
+      {
+        "id": "deliver",
+        "label": "전달과 확정",
+        "focus": [
+          "worker",
+          "broker",
+          "client",
+          "db"
+        ],
+        "note": "토큰은 SSE, 확정본은 DB."
+      }
+    ],
+    "column_fit": "spread"
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "frontend",
+      "label": "클라이언트"
+    },
+    {
+      "id": "broker",
+      "type": "messagebus",
+      "label": "StreamBroker"
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "LlmWorker"
+    },
+    {
+      "id": "nano",
+      "type": "external",
+      "label": "Light LLM",
+      "sublabel": "gpt-4.1-nano"
+    },
+    {
+      "id": "main",
+      "type": "external",
+      "label": "Main LLM",
+      "sublabel": "Solar Pro 4"
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "PostgreSQL"
+    }
+  ],
+  "messages": [
+    {
+      "id": "lock",
+      "from": "worker",
+      "to": "db",
+      "y": 172,
+      "label": "PENDING → RUNNING 원자 락 · 메모리 L0~L4 로드",
+      "variant": "security"
+    },
+    {
+      "id": "predirect",
+      "from": "worker",
+      "to": "nano",
+      "y": 203,
+      "label": "NpcReaction · EventDirector T1 · NanoDirector → 톤·연출·감각",
+      "variant": "default"
+    },
+    {
+      "id": "stream-call",
+      "from": "worker",
+      "to": "main",
+      "y": 234,
+      "label": "PromptBuilder(≤20,000자 · 모델 프로파일) → 스트리밍 호출",
+      "variant": "emphasis"
+    },
+    {
+      "id": "tokens",
+      "from": "main",
+      "to": "worker",
+      "y": 265,
+      "label": "token 델타 (실패 시 non-stream · fallback gpt-4.1-mini)",
+      "variant": "return"
+    },
+    {
+      "id": "emit",
+      "from": "worker",
+      "to": "broker",
+      "y": 296,
+      "label": "token · dialogue emit (StreamClassifier)",
+      "variant": "dashed"
+    },
+    {
+      "id": "sse",
+      "from": "broker",
+      "to": "client",
+      "y": 327,
+      "label": "SSE 실시간 서술",
+      "variant": "dashed"
+    },
+    {
+      "id": "done-write",
+      "from": "worker",
+      "to": "db",
+      "y": 358,
+      "label": "후처리(마커 · 실명 마스킹 · 어체 R5v2) → DONE · llmOutput",
+      "variant": "emphasis"
+    },
+    {
+      "id": "track2",
+      "from": "worker",
+      "to": "nano",
+      "y": 389,
+      "label": "EventDirector T2 선택지 재생성 · SceneCutMatcher",
+      "variant": "default"
+    },
+    {
+      "id": "choices-write",
+      "from": "worker",
+      "to": "db",
+      "y": 420,
+      "label": "llmChoices · sceneCut · applyRunStatePatch CAS",
+      "variant": "default"
+    },
+    {
+      "id": "done-sse",
+      "from": "broker",
+      "to": "client",
+      "y": 451,
+      "label": "done → 선택지 활성화",
+      "variant": "dashed"
+    },
+    {
+      "id": "extract",
+      "from": "worker",
+      "to": "nano",
+      "y": 482,
+      "label": "FactExtractor · 요약 · PlotDirector 비트 (fire-and-forget) → entity_facts",
+      "variant": "dashed"
+    },
+    {
+      "id": "refund",
+      "from": "worker",
+      "to": "db",
+      "y": 513,
+      "label": "실패 시 llmStatus=FAILED · refundOnFailure (무과금)",
+      "variant": "security"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "worker",
+      "from": 166,
+      "to": 519,
+      "type": "backend"
+    },
+    {
+      "participant": "nano",
+      "from": 197,
+      "to": 209,
+      "type": "external"
+    },
+    {
+      "participant": "main",
+      "from": 228,
+      "to": 271,
+      "type": "external"
+    },
+    {
+      "participant": "broker",
+      "from": 290,
+      "to": 457,
+      "type": "messagebus"
+    },
+    {
+      "participant": "nano",
+      "from": 383,
+      "to": 395,
+      "type": "external"
+    },
+    {
+      "participant": "db",
+      "from": 352,
+      "to": 426,
+      "type": "database"
+    }
+  ]
+}
