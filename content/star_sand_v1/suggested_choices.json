@@ -33,7 +33,7 @@
     { "id": "ambush_threaten", "label": "위협하여 물러서게 한다", "hint": "상대가 겁먹으면 전투 없이 해결된다", "affordance": "THREATEN", "riskLevel": 2 }
   ],
   "ENCOUNTER": [
-    { "id": "encounter_talk", "label": "말을 건네본다", "hint": "자연스럽게 대화를 시도한다", "affordance": "PERSUADE" },
+    { "id": "encounter_talk", "label": "말을 건네본다", "hint": "자연스럽게 대화를 시도한다", "affordance": "PERSUADE", "riskLevel": 1 },
     { "id": "encounter_observe", "label": "조용히 지켜본다", "hint": "상황을 관찰하며 정보를 모은다", "affordance": "OBSERVE" },
     { "id": "encounter_help", "label": "도움을 건넨다", "hint": "호의를 베풀어 관계를 쌓는다", "affordance": "HELP" }
   ],
