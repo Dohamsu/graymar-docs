@@ -225,7 +225,8 @@ def dry_run_teardown():
 
 def get_prompt(run_id, turn_no):
     """턴의 LLM 프롬프트 추출 (includeDebug)"""
-    _, data = api("GET", f"/runs/{run_id}/turns/{turn_no}?includeDebug=true")
+    # llmPrompt 는 어드민 토큰 동반 요청에만 내려온다 (보안 감사 2026-09-07 M1) — x-admin-token 첨부
+    _, data = api("GET", f"/runs/{run_id}/turns/{turn_no}?includeDebug=true", admin=True)
     debug = data.get("debug", {}) or {}
     return debug.get("llmPrompt")
 
