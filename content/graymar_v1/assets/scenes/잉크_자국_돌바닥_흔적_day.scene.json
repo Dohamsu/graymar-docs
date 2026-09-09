@@ -1,0 +1,23 @@
+{
+  "locationIds": [
+    "LOC_MARKET"
+  ],
+  "requiredKeywordGroups": [
+    [
+      "잉크"
+    ],
+    [
+      "바닥",
+      "돌바닥",
+      "돌길",
+      "골목"
+    ],
+    [
+      "자국",
+      "흔적",
+      "방울"
+    ]
+  ],
+  "description": "시장 약초 노점 곁 돌바닥에 실제 드러난 검푸른 잉크 방울과 번진 자국. 문서나 손에 묻은 잉크가 아니라 바닥에서 관찰하는 흔적이다.",
+  "requiresObservedScene": true
+}

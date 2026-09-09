@@ -110,6 +110,25 @@ def collect(src_dir: Path, dst_dir: Path, url_base: str, kind: str):
             entry["id"] = f"SCN_{slug[6:14]}"  # 해시 재사용 — 파일 증감 무관 고정
             if time:
                 entry["time"] = time
+            # Discovery cuts carry explicit visual/location rules in a sibling
+            # <stem>.scene.json. Keep these out of legacy `scenes` consumers.
+            rules_path = f.with_suffix('.scene.json')
+            if rules_path.exists():
+                rules = json.loads(rules_path.read_text(encoding='utf-8'))
+                if rules.get('requiresObservedScene') is not True:
+                    raise ValueError(f'{rules_path}: requiresObservedScene must be true')
+                for key in ('locationIds', 'requiredKeywordGroups'):
+                    if not isinstance(rules.get(key), list) or not rules[key]:
+                        raise ValueError(f'{rules_path}: {key} must be nonempty')
+                if not all(isinstance(x, str) and x for x in rules['locationIds']):
+                    raise ValueError(f'{rules_path}: invalid locationIds')
+                if not all(isinstance(g, list) and g and all(isinstance(w, str) and w for w in g)
+                           for g in rules['requiredKeywordGroups']):
+                    raise ValueError(f'{rules_path}: invalid keyword groups')
+                if not isinstance(rules.get('description'), str) or not rules['description']:
+                    raise ValueError(f'{rules_path}: description required')
+                for key in ('locationIds', 'requiredKeywordGroups', 'description', 'requiresObservedScene'):
+                    entry[key] = rules[key]
         entries.append(entry)
     return entries
 
@@ -135,8 +154,11 @@ def main():
         "packId": pack,
         "portraits": portraits,
         "locations": locations,
-        "scenes": scenes,
+        "scenes": [s for s in scenes if not s.get('requiresObservedScene')],
     }
+    guarded = [s for s in scenes if s.get('requiresObservedScene')]
+    if guarded:
+        manifest['guardedScenes'] = guarded
 
     canon = ROOT / "content" / pack / "assets.json"
     canon.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

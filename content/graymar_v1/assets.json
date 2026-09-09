@@ -603,5 +603,77 @@
       ],
       "id": "SCN_fc896cc1"
     }
+  ],
+  "guardedScenes": [
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_350ef5cc.webp",
+      "kind": "scene",
+      "keywords": [
+        "잉크",
+        "자국",
+        "돌바닥",
+        "흔적"
+      ],
+      "id": "SCN_350ef5cc",
+      "locationIds": [
+        "LOC_MARKET"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "잉크"
+        ],
+        [
+          "바닥",
+          "돌바닥",
+          "돌길",
+          "골목"
+        ],
+        [
+          "자국",
+          "흔적",
+          "방울"
+        ]
+      ],
+      "description": "시장 약초 노점 곁 돌바닥에 실제 드러난 검푸른 잉크 방울과 번진 자국. 문서나 손에 묻은 잉크가 아니라 바닥에서 관찰하는 흔적이다.",
+      "requiresObservedScene": true,
+      "time": "day"
+    },
+    {
+      "url": "/pack-assets/graymar_v1/scenes/scene_b2428604.webp",
+      "kind": "scene",
+      "keywords": [
+        "창고",
+        "덧문",
+        "지하통로",
+        "계단"
+      ],
+      "id": "SCN_b2428604",
+      "locationIds": [
+        "LOC_HARBOR",
+        "LOC_DOCKS_WAREHOUSE"
+      ],
+      "requiredKeywordGroups": [
+        [
+          "창고"
+        ],
+        [
+          "덧문",
+          "지하",
+          "통로"
+        ],
+        [
+          "열린",
+          "열렸",
+          "열리",
+          "열어",
+          "들어 올",
+          "들어올",
+          "드러",
+          "계단"
+        ]
+      ],
+      "description": "창고 바닥의 나무 덧문이 실제로 열려 있고 아래로 내려가는 돌계단과 지하 통로 입구가 눈앞에 드러난 장면. 닫힌 문, 통로에 관한 소문, 찾으려는 계획에는 사용하지 않는다.",
+      "requiresObservedScene": true
+    }
   ]
 }

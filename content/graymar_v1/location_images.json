@@ -72,6 +72,30 @@
         "day_safe": "/locations/tavern_day_safe.webp",
         "night_safe": "/locations/tavern_night_safe.webp"
       }
+    },
+    "LOC_NOBLE": {
+      "keywords": [
+        "상류",
+        "귀족",
+        "저택",
+        "정원"
+      ],
+      "variants": {
+        "day_safe": "/locations/noble-day-v1.webp",
+        "night_safe": "/locations/noble-night-v1.webp"
+      }
+    },
+    "LOC_DOCKS_WAREHOUSE": {
+      "keywords": [
+        "창고구",
+        "창고",
+        "화물",
+        "하역"
+      ],
+      "variants": {
+        "day_safe": "/locations/warehouse-day-v1.webp",
+        "night_safe": "/locations/warehouse-night-v1.webp"
+      }
     }
   }
 }
