@@ -172,6 +172,8 @@ T-1: 에드릭이 안경을 밀어올리며 다가왔다. 대사: "숫자는 거
 [반복 금지] 안경 밀어올리기, 서류 움켜쥐기, 계산이 맞지
 ```
 
+> **[첫 문장] 주입 조건 (2026-09-09)**: 개시 유형의 정본은 arch/110 `[첫 문장 지시]` 로테이션이다. nano opening(NanoDirector·NanoEventDirector 모두)은 진입 턴·HUB·로테이션 SENSE/ENVIRONMENT 턴에만 실린다 — 잠금 턴·ACTION_RESULT·NPC_MOTION 턴에는 생략(`opener-directive.core.nanoOpeningAllowedForOpener`, arch/110 §6). 또 인물 눈빛·표정·감정 문형은 `OPENING_EMOTION_CLICHE` 가드가 비운다(2026-09-08 QC4).
+
 **기대 출력**:
 ```
 차가운 돌벽의 감촉이 손바닥에 와닿는다. 좁은 골목 너머로 시장의 소란이

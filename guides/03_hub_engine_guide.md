@@ -77,6 +77,10 @@ MOVE_LOCATION이 1위 AND 키워드 hit=1 AND detectLocationBasedMove=false
 
 "동작그만"처럼 "이동"이 서브스트링으로 매칭되는 오탐을 방지한다. `detectLocationBasedMove`가 true이면 장소명 복합감지이므로 제거하지 않는다.
 
+### 훔쳐보다 정규화 (`normalizePeekVerbs`, 2026-09-08 QC6)
+
+"훔쳐보다/훔쳐본다/훔쳐봤다"는 엿보기(SNEAK)인데 KW 파서가 "훔쳐"를 STEAL 로 잡아 골드·전리품을 실지급했다(run 521faf04). `intent-parser-v2.service.ts` 의 `normalizePeekVerbs(text)` 가 `훔쳐\s?(보|본|봐|봤|볼)` 을 `엿보` 로 치환한 뒤 파싱하며, `location-turn.service` 의 `hasExplicitStealIntent` 도 같은 정규화를 거친다. "금고에서 돈을 훔쳐 나온다"처럼 뒤에 보다 계열이 없는 문장은 STEAL 유지. 라이브에서는 LLM 인텐트 파서가 KW 를 덮을 수 있어(엿봄→OBSERVE 실측) 스펙은 KW 경로만 고정한다.
+
 ---
 
 ## Player-First 턴 모드 (2026-04-15)

@@ -208,7 +208,7 @@ EventMatcher가 매 턴 다른 이벤트를 선택 → sceneFrame 변경 → LLM
 
 ## LLM Worker Tag Parsing
 
-`server/src/llm/llm-worker.service.ts`
+`server/src/llm/llm-worker.service.ts` (태그 파싱 순수 함수는 `llm/worker/worker-narrative.core.ts` — arch/114 T1)
 
 | 태그 | 저장 위치 | 용도 |
 |------|----------|------|
@@ -372,7 +372,7 @@ NpcLlmSummary {
 
 ## LLM 후처리 필터 (P1-P5)
 
-`server/src/llm/llm-worker.service.ts`
+정본: `server/src/llm/narrative-filter.core.ts`(필터 체인 순수 함수) + `server/src/llm/worker/narrative-postprocess.service.ts`(마커 삽입·소개 롤백·화자 정합 등 후처리 헬퍼 군 — arch/114 T1 Phase 2 에서 `llm-worker.service.ts` 로부터 이관). 워커 본체 `llm-worker.service.ts` 는 단계 메서드 10개의 파이프라인만 남았고(`processTurnInner` 60줄), runState 역류는 `worker/run-state-patch.service.ts` CAS 단일 지점(불변식 2, `SoftStateView`).
 
 LLM 서술 출력에 대해 5단계 자동 후처리 필터를 적용한다.
 

@@ -290,6 +290,11 @@ toneHint: outcome === 'FAIL' ? 'danger' : outcome === 'SUCCESS' ? 'triumph' : 'n
 `triumph` 는 **상대를 넘어선 사회적 성취**(PERSUADE·BRIBE·HELP 성공)에만 남겼다.
 단서를 하나 찾은 것은 승리가 아니라 발견(`mysterious`)이다.
 
+**2026-09-08 보강 (QC6)**: `ToneHintInput.resolveSkipped` 추가 — 주사위를 건너뛴 FREE 턴의
+PERSUADE/BRIBE/HELP 는 `triumph` 가 아니라 `calm`. 접근 선택지("주민에게 말을 건다")가 판정
+면제(불변식 40 저작 접근 면제)로 FREE 가 되자 성공 판정 없는 인사 턴에 승리감이 주입되던 것을
+라이브 프로브로 확인해 막았다. 순서는 사교 발화 뒤·사회적 성취 앞.
+
 ### 7.2 시그널 자가오염
 
 `generateFromActionResult` 가 플레이어 **자신의** 행동을 익명 제3자 목격담으로 바꿔 세계

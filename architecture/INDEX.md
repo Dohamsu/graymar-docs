@@ -52,6 +52,9 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/10_region_economy|region economy]] — 리전별 경제(골드 유동성, 상점 물가)와 장비/세트 연계. 장비 드랍은 완성, 리전별 동적 경제는 부분.
 - [[architecture/87_admin_console|admin console]] — ✅ 구현됨(2026-07-23). 어드민 콘솔: 서버 `admin/` 모듈 관제 API 12종(overview KPI·llm-cost·points 시계열·유저 조정·런 스턱/abort/retry·failures·health) + 하이브리드 AdminGuard(x-admin-token OR JWT+users.role) + `@AdminEndpoint` 정본(가드+감사 로그 `admin_audit_logs`) + 별도 앱 graymar-admin(4번째 레포·Vercel). **보안 결함 2건 봉쇄**: settings/llm PATCH·bug-reports 목록/상세/PATCH 가 일반 유저에게 열려 있었다. QA 함정은 §9(raw SQL timestamp 문자열·llmError jsonb 렌더·빈 쿼리 422).
 - [[architecture/85_point_system|point system]] — ✅ 구현·배포됨(2026-07-23). 포인트 시스템: 충전 코드 발급(`POST /v1/admin/codes`)→redeem→채팅 1턴 `POINTS_PER_CHAT`(5p) 차감. 차감은 디스패치 직전·실패 턴 환불 2경로(`retry-llm` 무료)·가입 보너스 50p. 클라 잔액 표시·충전 모달·402 유도. 채팅 과금 정식 모델(2026-07-23 결정, CLAUDE.md 과금 원칙)의 구현체 — server `points/` 모듈 + DB 4종.
+- [[architecture/112_location_turn_service_split|location turn service split]] — ✅ Phase 0~2 + P3-A·P3-C(2026-09-02). turns.service 3차 재비대 대응: LOCATION 파이프라인을 `location-turn`·`location-quest`·`location-result` 로 분리, UI 번들 타입화, `scripts/selfcheck/wiring.py` W족 배선 디텍터.
+- [[architecture/114_llm_worker_stage_pipeline|llm worker stage pipeline]] — ✅ T1·T2·T3(2026-09-08). 거대 파일 조각내기: llm-worker 단계 파이프라인 10 + `llm/worker/` 이관, 프롬프트 블록 레지스트리 90(배타 3쌍), `SoftStateView` 로 불변식 2 컴파일 강제. 재작성 대신 유지보수 결정 근거 §0.
+- [[architecture/115_security_audit_20260907|security audit 20260907]] — ✅ 구현됨(2026-09-07, 소유자 잔여 3). `/cso` 감사 HIGH 6·MED 10 후속: IDOR 3·trust proxy·`@AllowQueryToken` SSE 한정·settings allowlist·쿠키 세션·시크릿 env 이관·DB 백업.
 - [[architecture/102_location_image_content_pool|location image content pool]] — ✅ 구현됨(2026-08-14). 이미지 정본 단일화: 100% 클라 하드코딩이던 장소 이미지 매핑을 팩 콘텐츠 `location_images.json` 으로 승격(불변식 45 정합 — 파일·URL 은 불변, 메타데이터만 이동). 이로써 장면 컷(96) 장소 후보가 graymar·star_sand 에서 영구 0이던 결함과 미등록 신규 팩의 조용한 graymar 폴백 구멍을 봉쇄. **2차 E-1~E-3(같은 날)**: NPC 초상화 정적 맵을 `npcs.json portraitUrl` 로 외부화(클라 미러 맵 삭제, karnholt 동적 NPC 도감 얼굴 획득) + 마커 와이어 포맷 `@[표시명|URL]`→`@[표시명|npcId]` 전환(혼재 허용, portraitMap 전달 3채널 — URL 오염 404·과거 턴 박제의 근원 제거) + 장소 이미지 URL 서버 이관(`ui.worldState.locationImageUrl`, 클라는 fallback). karnholt 는 arch/80 sync 매니페스트 경로 유지.
 
 ### 4. 진행·라우팅
@@ -102,6 +105,10 @@ CLAUDE.md에 구현 현황(Phase 표)과 정본 enum 목록이 있고, 본 INDEX
 - [[architecture/75_autonomous_pack_design|autonomous pack design]] — 📐 상세설계 확정 → **P0~P6+P8 구현·배포**(2026-07-16, karnholt_v1 AUTONOMOUS 팩). 진상 선확정 Plot Seed(PlotSeedGenerator+검증/폴백) + Emergent Director 비트 선계산(PlotDirector, 워커 비동기 CAS)+동기 채택(beat-gravity, 불변식 47 의도 정합) + 동적 NPC(dynamic-npc stub) + 규명율 엔딩(autonomous-ending) + 킬스위치. §19 P8 계측: 디렉터 존재감 낮음(채택 0~2/12턴) — 후속은 83(안 A+C)으로 구현 완료.
 - [[architecture/83_director_presence_tuning|director presence tuning]] — ✅ 구현·검증(2026-07-21). arch/75 P8 후속: 채택 병목 = 임계가 아니라 "기회 창(WORLD_EVENT 게이트)×신선도(stale 2턴)" 동시 성립 진단 → 안 A(BEAT_STALE_MAX_TURNS 2→3)+안 C(GRAVITY_NPC_BONUS 25→30·직전 상호작용 가중 ½→⅔) 구현, 안 B(강제창 4→3)는 정합률 감시 하 보류. 채택 0~2→2.0/12턴·keyFact↑·강제 진행 회귀 0. §11 무명 화자 프레이밍(무명 정보원의 긴 증언 → 서술형 소문 우선 + 익명 @마커 ≤1, 무명 12→5·7회, 위화감 0×2런).
 - [[architecture/69_npc_living_presence|npc living presence]] — B축(살아있는 NPC), B0~B4 ✅ 구현. B0 계측(정보 편향 88% 실측)·B1 반응 자기목적 주입(INFO 88→40%)·B2 잡담 활동 결합·B3 재등장 연속성·B4 NPC 간 세계(잡담 경로 관계 근황 발화 selectRelationMentionCore, introduced 후보 한정+rel: 쿨다운; 목격 파이프 위치 판정 버그 수정으로 부활). 공용 헬퍼 getNpcSchedulePhaseEntry/getNpcCurrentActivity 4곳 재사용. 후속: 어미 다양화(26명 재배정·HAEYO 제거) + 어체 검증 경로 **완결** — C1 하오체 강제 후처리 제거 → C2 화자 인지 계측(llm_speech_audit, 검증기 버그 7건 발견·수정) → C2.5 forbidHint·검증기 정비 → **C2.6 시스템 프롬프트 하오체 전역 강제 레거시 정정(진짜 원인)** → 하오체 침식 80→9.1%로 C3(선별 재생성) 미발동 확정. 잔여 과제는 문서 §7 통합. A축(선제 단서 억제)은 arch/68 부록 M.
+- [[architecture/109_npc_relationship_engine|npc relationship engine]] — ✅ R1~R3(2026-08-26). 관계 유형 kind 전이 정본(`relationship-kind.core`)·tier 파생·동행 1명·양다리 들킴 결정론·nano relationSignal 감지만. 불변식 56~58.
+- [[architecture/110_narrative_opening_variance|narrative opening variance]] — ✅ 구현됨(2026-08-27). 서술 개시 다양화: 잠금 턴 장면 리셋 금지 + 4유형 결정론 로테이션(`opener-directive.core`) + 팔레트 샘플링 + 사교 분량 변주. §6 nano `[첫 문장]` 모순 게이트(2026-09-09).
+- [[architecture/111_incident_rebalance|incident rebalance]] — ✅ 구현됨(2026-08-30~31). Incident 만성 저활성(해소율 4.3%) → 임계 재기준화·해소 시그널(A안)·방치 드리프트(B안).
+- [[architecture/113_solar_dialogue_profile|solar dialogue profile]] — ✅ 병합·전턴 운영(2026-09-03, 개발 기간). Solar Pro 4 모델 프로파일: 라벨 재강조 접두/접미 + 화자 연속 귀속 + v2(대명사·호칭·화폐, 다중 인용 분리) + 로어북 미발견 fact 게이트.
 - [[architecture/91_player_name_recognition|player name recognition]] — ✅ 구현됨(2026-07-26). 플레이어 이름 인지: 캐릭터 이름이 생성→UI→엔딩 요약으로만 흐르고 플레이 중엔 800+턴에 1건뿐이던 것 해소. A = 프롤로그 통성명 왕복(`{NAME_ASK}` 덩어리 토큰, 이름 미지정 런 41%는 3줄 통째 제거) · B = `NPCState.knowsPlayerName` + `shouldCallPlayerName` 게이트(npc-state.ts 단일 정본) + 자기소개 nano 되받기 + 마커 안전망. **§9**: 재회 트리거 미발동의 원인이 `encounterCount` 실플레이 고착임을 규명 → `computeFamiliarity`(방문+서술÷2) 파생 지표로 관계 깊이·`isReEncounter` 전환, "전 NPC 영구 첫 만남" 모순 해소. 계측 함정: `llmContext.npcStates` 는 턴 시작 스냅샷이라 5.11 CAS 결과가 안 보인다.
 
 ### 6. UI·클라이언트
@@ -198,20 +205,20 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 
 ---
 
-## 도메인별 최신 업데이트 기준 (2026-08-19)
+## 도메인별 최신 업데이트 기준 (2026-09-09)
 
 | 도메인       | 최신 문서                          | 상태                |
 | ------------ | ---------------------------------- | ------------------- |
-| 세계/NPC     | 01, 06, 09, **63, 64, 66, 69, 91, 105** | 구현됨 (멀티 시나리오 + 이름 공개 무결성 + 자기소개 + Living Presence + 플레이어 이름 인지 + **세계 경계 3부류·분위기 탈주사위·시그널 자가오염(105)**) |
+| 세계/NPC     | 01, 06, 09, **63, 64, 66, 69, 91, 105, 109** | 구현됨 (멀티 시나리오 + 이름 공개 무결성 + 자기소개 + Living Presence + 플레이어 이름 인지 + **세계 경계 3부류·분위기 탈주사위·시그널 자가오염(105)**) |
 | 전투         | 02, 08, **41, 42**                 | 구현됨 (창의 Tier + 버튼 UI + arch/76 전투 기만) |
 | HUB/진행     | 03, 07, 14, **70, 71, 92**         | 구현됨 (07 부분 업데이트 필요, 캠페인은 71이 정본, 거점 명명은 92) |
 | Living World | 21                                 | 구현됨              |
-| 서버/데이터  | 04, 10, 12, **77, 85, 87, 102**    | 구현됨 (10 리전 경제 부분, 77 God method 완료, 85 포인트, 87 어드민 콘솔, 102 이미지 정본 단일화) |
-| LLM 서술     | 05, 11, 26, 35, **62**             | 구현됨 (스트리밍 + 레이턴시 최적화) |
+| 서버/데이터  | 04, 10, 12, **77, 85, 87, 102, 112, 114, 115** | 구현됨 (10 리전 경제 부분, 77 God method 완료, 85 포인트, 87 어드민 콘솔, 102 이미지 정본 단일화, 112 LOCATION 턴 분리, 114 워커 조각내기, 115 보안 감사) |
+| LLM 서술     | 05, 11, 26, 35, **62, 110, 113, 114** | 구현됨 (스트리밍 + 레이턴시 최적화 + 개시 다양화 + Solar 프로파일 + 워커 파이프라인) |
 | 모델 평가    | 25                                 | 참고                |
 | 메모리       | 31                                 | 구현됨 (v4)         |
 | 대사/마커    | 30, 32, 33, **44, 45, 56, 58~61, 67, 98, 104, 105** | 구현됨 (품질 v2 + 자유 대화 + Reaction Director + 단서 단일화·튜닝 + 선택지 튜닝·품질(98) + nano 감사 + **대화 게이트 재설계(104)** + **프롬프트 완성 문장 예시 제거·선택지 라벨 정규화(105)**) |
-| 이벤트 엔진  | 34, **43, 46**                     | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체, 28은 archive 배경) |
+| 이벤트 엔진  | 34, **43, 46, 111**                | 구현됨 (Player-First + 돌발행동 + Fact 일급 객체 + Incident 재기준화, 28은 archive 배경) |
 | NPC 결정/품질 | **48, 49, 51, 47, 55, 72, 104, 105**   | 구현됨 (NpcResolver 단일 권한자 + Distinctness + NPA 감사/메트릭 + 반응 권한 통합 + **잠금 3상태·streak·BACKGROUND 제외(104)** + **실명 치환 정본 수렴·소재 안내 자기모순(105)**, 50은 폐기) |
 | UI/클라      | 15, 23, **42, 68, 86, 90, 93, 94, 97, 99** | 구현됨 (UI/UX 실사 리뷰 + 팩 정합·모바일 + 랜딩 + 장소 배경 + 스크롤 정합 + 생성 간략화(97) + 퀘스트탭(99)) |
 | 파티         | 24, **84**                         | 구현됨 (Phase 1~3 + 클라 배선 완성) |
@@ -272,4 +279,11 @@ archive/28 (Nano Event — 배경 설계)   ─► 34 (Player-First, 현행)
 | 실명/별칭 치환 추가      | [[architecture/105_run_review_defect_fixes|run review defect fixes]] §2 (정본 `maskHiddenNpcNames` 만 — 불변식 51) |
 | 세계 밖 입력 거절        | [[architecture/105_run_review_defect_fixes|run review defect fixes]] §5 + [[architecture/76_market_alignment_direction|market alignment]] D3-④ |
 | 유해 입력 콘텐츠 방어    | [[architecture/106_input_content_safety_gate|input content safety gate]] (📎 설계 — L1 룰+L2 nano 축+L3 서술 지시, REFUSED 판정 경로) |
+| NPC 관계·동행·양다리     | [[architecture/109_npc_relationship_engine|npc relationship engine]] → `engine/hub/relationship-kind.core.ts`·`companion.core.ts`·`affair.core.ts` |
+| 서술 개시 유형·첫 문장   | [[architecture/110_narrative_opening_variance|narrative opening variance]] → `llm/prompts/opener-directive.core.ts` (nano `[첫 문장]` 은 §6 게이트) |
+| Incident 압력·해소       | [[architecture/111_incident_rebalance|incident rebalance]] → `engine/hub/incident.service.ts` |
+| LOCATION 턴 파이프라인   | [[architecture/112_location_turn_service_split|location turn service split]] → `turns/location-turn·location-quest·location-result.service.ts` |
+| 새 서술 모델 도입        | [[architecture/25_llm_model_evaluation|llm model evaluation]] 부록 → [[architecture/113_solar_dialogue_profile|solar dialogue profile]] (모델 프로파일 `llm/model-prompt-profile.core.ts`) |
+| 워커 후처리·CAS 역류 추가 | [[architecture/114_llm_worker_stage_pipeline|llm worker stage pipeline]] → `llm/worker/` (`SoftStateView` 등재 = 불변식 2 ③) |
+| 인증·프록시·보안 점검    | [[architecture/115_security_audit_20260907|security audit 20260907]] → `common/guards`·`common/decorators`·`main.ts` |
 | 법적 고지·규제 준수      | [[architecture/107_legal_compliance|legal compliance]] (약관·개인정보처리방침·`operator.ts` 정본 · 초대 코드 가입 게이트 · 게임산업법 제21·25조 미해결) |

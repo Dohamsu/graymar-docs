@@ -78,7 +78,7 @@ users.role: text enum ['user', 'admin']  NOT NULL DEFAULT 'user'
 |------|------|------|
 | `/v1/admin/codes` | AdminTokenGuard | AdminGuard (동작 동일 + JWT 경로 추가) |
 | `/v1/settings/llm` GET | AuthGuard | 유지 (키 마스킹된 읽기 — 게임 클라 dev 패널 호환) |
-| `/v1/settings/llm` PATCH | AuthGuard ⚠️ | **경로 유지 + @AdminEndpoint() 게이트 교체** (P0 보안 수정 — 별도 /v1/admin 경로 신설 대신 제자리 게이트. 게임 클라 LlmSettingsModal 은 admin 계정만 동작하게 됨 — 의도) |
+| `/v1/settings/llm` PATCH | AuthGuard ⚠️ | **경로 유지 + @AdminEndpoint() 게이트 교체** (P0 보안 수정 — 별도 /v1/admin 경로 신설 대신 제자리 게이트. 게임 클라 LlmSettingsModal 은 admin 계정만 동작하게 됨 — 의도). **2026-09-07 M8**: body 를 Zod `.strict()` allowlist(provider·model 슬러그·maxRetries·timeoutMs·maxTokens·temperature·fallback 만)로 검증 — 구 `{...config, ...body}` 는 openaiApiKey·openaiBaseUrl 까지 덮어써 토큰 유출 시 전 프롬프트를 임의 호스트로 흘릴 수 있었다 |
 
 ---
 

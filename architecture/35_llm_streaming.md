@@ -31,6 +31,7 @@
 
 ```
 GET /v1/runs/:runId/turns/:turnNo/stream?token=JWT
+# ?token= 쿼리 인증은 @AllowQueryToken() 을 단 SSE 핸들러 2곳(턴 스트림·파티 스트림)에서만 — 그 외 라우트는 Bearer/httpOnly 쿠키만 (보안 감사 2026-09-07 M3, common/decorators/allow-query-token.decorator.ts)
 
 Response: text/event-stream
 

@@ -98,6 +98,15 @@ mode B(인계)/C(default)/D(잡담)는 기존 유지.
   이벤트 컨텍스트만으로는 서술이 그 단서를 말하지 않는다. 이벤트 primaryNpc 가 있으면
   `revealMode: 'observe'`, 없으면 `'rumor'` 프레이밍으로 `ui.questReveal` 을 세운다
   (NPC 경로 2 가 뒤에서 자기 fact 로 덮는 것은 유지).
+  → **2026-09-08 QC3 게이트** (`location-quest.service` 경로 1): ChallengeClassifier FREE(자동 SUCCESS)
+  턴이 대화 계열(TALK/PERSUADE/HELP/TRADE/REST/SHOP)이고 입력이 fact `keywords` 에 닿지 않으면
+  이벤트 discoverableFact 를 공개하지 않는다 — 기행("탁자 위에서 춤을 추며 왕의 사촌이다")·잡담 턴이
+  자동 SUCCESS 라는 이유로 단서를 100% 낙하시켰다(run e5aabc0f T4·T12, 30일 13건). 불변식 44 를
+  이벤트 경로에 적용한 것이며 조사·탐색·잠입·거래류는 그대로. 같은 사이클에서 (a) FREE 턴은
+  `resolveOutcome` 이 비어 서술 주입 게이트(SUCCESS|PARTIAL)가 죽어 있던 것을 `context-builder`
+  가 `resolveSkipped` 를 SUCCESS 로 간주하도록 교정(기록≠서술 원인, 30일 ≈80턴), (b) 상황 생성기
+  활동 이벤트의 discoverableFact 는 스케줄 NPC 가 보유(knownFacts/knownBy)한 것만 싣도록 제한
+  (마이렐이 knownBy 밖 S4→S5 fact 를 "관찰" 공개 — 30일 보유자 불일치 7건).
 
 ## 6. nano `[정보 전달]` 지시 정규화 (2026-09-02, 30턴 롱런 분석 B)
 

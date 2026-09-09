@@ -481,6 +481,12 @@ TurnMode=CONVERSATION_CONT인데 컨셉이 플레이어 행동을 덮음 (Player
   계열(BRIBE/THREATEN/STEAL)이 아닌데 concept/opening/npcGesture가 뇌물 신호
   (은화·밀어넣·뇌물·매수·수고비…)를 담으면 그 3필드만 비운다 — **선택지
   (BRIBE 노출)는 유지**해 bribeOpportunity 의도 보존.
+- **NanoOpeningGuard** (같은 validate, 가드 3b — 2026-09-08 QC4): opening 이
+  "X의 눈빛이 차갑게 빛난다/표정이 굳어 있다"류 인물 감정 클리셰면 비운다
+  (`OPENING_EMOTION_CLICHE` — 30일 1,687턴 중 20%, 그 69%가 서술에 축자 복제,
+  FRIENDLY trust 69 NPC 에도 "눈빛이 차갑게"). 환경 감각("공기가 차갑게")은
+  통과 — 첫 배포 오탐을 인물 문형으로 좁힌 회귀 스펙 보유. 주입 자체의 조건은
+  arch/110 §6 (개시 로테이션과 배타).
 - **prompt-builder**: concept 빈 문자열이면 "[이벤트 컨셉]" 블록 전체 스킵
   (빈 헤더가 LLM을 혼란시키지 않게).
 - **nano 프롬프트 positive**: bribeOpportunity 지시에 "금전 접근은 선택지로만,

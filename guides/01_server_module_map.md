@@ -3,21 +3,21 @@
 > 정본 위치: `server/src/`
 > 최종 갱신: 2026-08-14
 
-## 모듈 구조 (16 modules, 117 services, 21 controllers)
+## 모듈 구조 (16 modules, 123 services, 21 controllers — 2026-09-09 `@Injectable` grep 기준)
 
 ```
 main.ts → AppModule
 ├── common/              ← Guards, Filters, Pipes, Decorators, Errors
-│   ├── decorators/      ← user-id.decorator
+│   ├── decorators/      ← user-id · admin-endpoint(@AdminEndpoint, arch/87) · allow-query-token(@AllowQueryToken — ?token= 쿼리 인증을 SSE 2곳에 한정, arch/115 M3)
 │   ├── errors/          ← game-errors (GameError 클래스)
 │   ├── filters/         ← game-exception.filter
-│   ├── guards/          ← auth.guard
+│   ├── guards/          ← auth.guard(Bearer → @AllowQueryToken 쿼리 → httpOnly 쿠키) · admin.guard(x-admin-token OR JWT users.role, safeTokenEqual)
 │   ├── pipes/           ← zod-validation.pipe
 │   ├── text-utils.ts    ← 텍스트 유틸리티
 │   ├── dialogue-act.ts  ← 사교 발화 감지 (GREETING/WELLBEING/THANKS/FAREWELL — 불변식 44)
 │   └── korean.ts        ← 한국어 조사 처리 (korParticleRo 등, architecture/68)
 ├── auth/                ← 인증 모듈
-│   ├── auth.controller  ← POST /v1/auth/register, POST /v1/auth/login, GET /v1/auth/me(회원번호)
+│   ├── auth.controller  ← POST /v1/auth/register, POST /v1/auth/login, POST /v1/auth/logout(쿠키 제거, arch/115), POST /v1/auth/withdraw(탈퇴, arch/107 §5), GET /v1/auth/me(회원번호)
 │   ├── auth.service     ← JWT 세션 관리
 │   └── auth.dto         ← 인증 DTO
 ├── db/                  ← Drizzle ORM
@@ -55,7 +55,7 @@ main.ts → AppModule
 │   ├── planner/         ← RUN 계획 (1 service)
 │   │   └── run-planner.service ← RUN 구조 생성
 │   └── hub/             ← HUB 엔진 (41 services, 6 서브시스템 + 퀘스트 + TurnOrchestration, 아래 상세)
-│       └── (순수 모듈)  ← beat-gravity(비트 채택), autonomous-ending(규명율 종결), pack-meter, plot-seed-validator — 자율 서사 P3~P5 (architecture/75)
+│       └── (순수 모듈)  ← beat-gravity(비트 채택), autonomous-ending(규명율 종결), pack-meter, plot-seed-validator — 자율 서사 P3~P5 (architecture/75) · conversation-lock.core(불변식 26, arch/104) · relationship-kind.core·relationship-tier.core·companion.core·affair.core(arch/109) · choice-label.core(선택지 라벨 조립) · nano-move-choice.core(이동 라벨 승격, 버그 5ae9b872) · nano-bg-diversify.core(배경 화자 턴 선택지 다양화) · quest-hint-whereabouts.core(힌트+NPC 위치 합성)
 ├── runs/                ← RUN/버그리포트
 │   ├── runs.controller        ← POST /v1/runs, GET /v1/runs, GET /v1/runs/:runId
 │   ├── runs.service
@@ -75,8 +75,21 @@ main.ts → AppModule
 │   ├── turns.core.ts             ← 순수 코어 함수 (순환 임포트 차단, arch/77 §18)
 │   ├── npc-agitation.core.ts     ← 감정→세계 행동화 (fear 도주/susp 신고/trust 접근, arch/76 D3)
 │   ├── witness-reaction.core.ts  ← 목격자 반응 posture 우선 trust 밴드 (architecture/72)
-│   └── run-state-apply.core.ts   ← 인벤토리 수량 병합 단일화 순수 함수 (5개 보상 경로 공통, arch/77 P3)
-├── llm/                 ← Async LLM narrative (24 services, 1 controller, 아래 상세)
+│   ├── run-state-apply.core.ts   ← 인벤토리 수량 병합 단일화 순수 함수 (5개 보상 경로 공통, arch/77 P3)
+│   ├── choice-challenge.core.ts  ← 판돈 기반 CHOICE 판정 FREE/CHECK (STRUCTURAL_FREE→ALWAYS_CHECK→fact 판돈→BLOCK→riskLevel→라벨 판돈; 저작 접근 PERSUADE riskLevel 1 면제 — 불변식 40)
+│   ├── tone-hint.core.ts         ← 분위기(toneHint) 장면 성질 도출 (불변식 53, arch/105 §7.1 — resolveSkipped 사회 행동은 calm)
+│   ├── world-boundary.core.ts    ← 세계 밖 요청 META/ANACHRONISM 감지 (불변식 52, arch/105 §5)
+│   ├── move-boundary.core.ts     ← 무대 이탈 이동 감지 L1 (버그 95db0e75, arch/76 D3-④)
+│   ├── content-safety.core.ts    ← 유해 입력 세이프티 L1 룰 (불변식 55, arch/106)
+│   ├── go-hub-gate.core.ts       ← go_hub 노출 게이트 (사유 턴에만, 2026-08-21)
+│   ├── quest-forward-choice.core.ts ← 정체 3턴 + 타 장소 fact → MOVE_LOCATION 전진 선택지 (2026-08-21)
+│   ├── empty-handed-hint.core.ts ← 빈손 대화 가드 (보유 0 NPC 2턴째 → 다음 보유자 지목, STEER 모드 — arch/112 §10.3)
+│   ├── natural-acquisition.core.ts ← 자연스러운 장비 획득 3경로 판정 (arch/108)
+│   ├── arc-stage.core.ts         ← 아크 종반부 3막 스테이지 진행 (arch/103, isArcCommitted)
+│   ├── news-article.core.ts      ← 호외 기사 조립 (버그 e945218d)
+│   ├── npc-override.core.ts      ← 플레이어 지목 NPC 오버라이드 판정 (arch/92 §10)
+│   └── time-cost.ts              ← 행동별 시간 소요 정본 (대화 0·행동 1·REST 2 — 불변식 49)
+├── llm/                 ← Async LLM narrative (26 services, 1 controller, 아래 상세 — worker/ 하위 2 서비스 arch/114)
 ├── endings/             ← 여정 아카이브 조회
 │   ├── endings.controller     ← GET /v1/endings, GET /v1/endings/:runId
 │   └── endings.module         ← SummaryBuilderService(engine/hub)를 lazy fallback으로 사용
@@ -196,13 +209,15 @@ main.ts → AppModule
 
 ---
 
-## LLM 모듈 서비스 (24 services, 1 controller)
+## LLM 모듈 서비스 (26 services, 1 controller)
 
 `server/src/llm/`
 
 | 서비스 | 파일 | 역할 |
 |--------|------|------|
-| LlmWorkerService | llm-worker.service.ts | Background poller (1s), PENDING→DONE, NanoEventDirector 비동기 호출, 스트리밍 파이프라인 진입점 (arch/77 P4: Inner 3,503→1,746줄, 금지선 4곳 마킹) |
+| LlmWorkerService | llm-worker.service.ts | Background poller (1s), PENDING→DONE, NanoEventDirector 비동기 호출, 스트리밍 파이프라인 진입점. **arch/114 T1**: 6,765→3,965줄, `processTurnInner` 60줄 = 단계 메서드 10(락→컨텍스트→nano→프롬프트→호출→후처리→커밋→사후), 금지선 4곳 위치 불변 |
+| NarrativePostprocessService | worker/narrative-postprocess.service.ts | 서술 후처리 헬퍼 군 — 마커 삽입(1,105)·소개 롤백/확정·화자 정합·별칭 정리·작별 감지·스트림 세그먼트 정리 (arch/114 T1 Phase 2, 워커에서 byte 대조 이관) |
+| RunStatePatchService | worker/run-state-patch.service.ts | runState CAS 패치 **단일 쓰기 지점** — 콜백은 `SoftStateView`(db/types/soft-state.ts)만 본다, 하드 상태 접근은 컴파일 오류 (불변식 2 · arch/114 T3) |
 | LlmCallerService | llm-caller.service.ts | LLM 공급자 호출 래퍼 (retry, timeout, fallback 모델, cost_usd 추적) |
 | LlmConfigService | llm-config.service.ts | 런타임 LLM 설정 관리 (provider, model, JSON 모드) |
 | ContextBuilderService | context-builder.service.ts | L0-L4 메모리 컨텍스트 빌드 + 선별 주입 |
@@ -230,6 +245,19 @@ main.ts → AppModule
 
 **순수 모듈/유틸 (서비스 아님):**
 - `narrative-filter.core.ts` — 서술 품질 후처리 필터 체인 export 정본 (플레이어 대사 방어→메타 서술→R1→미소개 실명→경어체→opening, arch/77 P4.1)
+- `worker/worker-narrative.core.ts` — 워커·후처리 서비스 공용 순수 함수 블록(태그 파싱 등, export 20 — arch/114 T1, 워커 파일이 재수출)
+- `prompts/prompt-block.registry.ts` — 프롬프트 블록 레지스트리 90 항목(헤더·목적·발화 조건·배타 3쌍) + 픽스처 스펙 (arch/114 T2, 사후 분류)
+- `prompts/opener-directive.core.ts` — 서술 개시 4유형 결정론 로테이션 + 잠금 턴 대화 직행 + 감각 팔레트 샘플링 + `nanoOpeningAllowedForOpener`(nano [첫 문장] 모순 게이트) (arch/110)
+- `model-prompt-profile.core.ts` — 모델별 프롬프트 프로파일(Solar 라벨 재강조 접두/접미) (arch/113)
+- `speaker-continuity.core.ts` · `split-multi-quote.core.ts` — 무라벨 대사 직전 화자 귀속(군중·타 화자 신호 가드) · 한 줄 다중 인용 분리 (arch/113 §2.2·§5.2)
+- `dialogue-repeat.core.ts` — NPC 대사 축자·접두 재탕 제거 (QC Solar 3회차)
+- `pronoun-opener.core.ts` — 대명사 개시어 후처리 (2026-09-04)
+- `small-talk-gate.core.ts` — 잡담 주입 화이트리스트 게이트 (불변식 44, arch/104)
+- `signal-freshness.core.ts` — 시그널 신선도 필터 (arch/104 P2)
+- `nano-fact-reveal.core.ts` — nano [정보 전달] 지시를 `ui.questReveal` 로 정규화 (arch/58 §6)
+- `quest-hint-fragments.core.ts` — [단서 방향] 힌트 문장→장소·인물·열쇠말 조각 분해 (2026-09-03 소유자 결정)
+- `marker-npc-resolve.core.ts` — @마커 표시명→npcId 역매핑 (2026-08-19)
+- `intro-check.core.ts` — NPC 소개 성사 판정 (QC23)
 - `turn-context.ts` — 턴 단위 LLM 호출 로그 ALS 스코프 (유닛 이코노미 실측)
 - `npc-relation-mention.ts` — NPC 관계 근황 발화 후보 선정 (arch/69 B4)
 - `npc-utterance.util.ts` — @마커에서 특정 NPC 발화 추출
@@ -406,3 +434,10 @@ main.ts → AppModule
 - **content 확장**: ContentValidator(콘텐츠 정합성 빌드 시점 검증, architecture/49 Phase 4) 추가.
 - **포인트·감사 DB (arch/85·87)**: point_transactions·redeem_codes·code_redemptions·admin_audit_logs — 스키마 25 파일 / 27 pgTable.
 - **합계**: 111 → 117 services, 19 → 21 controllers, DB 타입 45 파일.
+
+## 최근 추가/변경 요약 (2026-09-09 동기화)
+
+- **arch/114 거대 파일 조각내기 (2026-09-08)**: `llm/worker/` 신설 — NarrativePostprocessService(2,290)·RunStatePatchService(CAS 단일 지점, `SoftStateView`)·worker-narrative.core(756). llm-worker 6,765→3,965. `prompts/prompt-block.registry.ts`(블록 90·배타 3쌍). LLM 24 → 26 services.
+- **보안 감사 후속 (arch/115, 2026-09-07)**: common/decorators 에 `allow-query-token`(SSE 전용 `?token=`), auth.guard 쿼리 토큰 한정, `POST /v1/auth/logout`, `main.ts` trust proxy loopback + 127.0.0.1 바인딩(`HOST`), settings/llm PATCH Zod strict, vote.service 원자 UPDATE.
+- **순수 코어 파일 목록 동기화**: turns/ 12개·llm/ 11개·engine/hub/ 9개가 트리에 누락돼 있던 것을 등재 (2026-08~09 신설분 — 각 arch 번호는 트리 참조). 새 `*.core.ts` 를 추가하면 이 트리에도 한 줄 넣는다.
+- **합계**: 117 → 123 services(`@Injectable` grep), 21 controllers, DB 타입 45 파일 + `soft-state.ts`.

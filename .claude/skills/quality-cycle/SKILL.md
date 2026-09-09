@@ -85,7 +85,8 @@ SELECT turn_no, llm_output FROM turns WHERE run_id='<ID>' ORDER BY turn_no;
 조우). 대신:
 
 1. **재현 프로브**: 결함 시나리오와 동일한 입력을 스크래치 스크립트로 직접
-   제출 (로그인 `playtest@test.com`/`Test1234!!` → 런 생성 → 지목 ACTION →
+   제출 (로그인 `playtest@test.com` — 비밀번호는 `scripts/playtest_env.playtest_password()`
+   (`server/.env PLAYTEST_PASSWORD`), 리터럴 금지 → 런 생성 → 지목 ACTION →
    `questReveal`·서술 대조). 명시 지목은 화자 결정 1순위(불변식 34)라
    대상 NPC 를 확정적으로 소환한다.
 2. 프로브 스크립트는 스크래치패드에만 — scripts/ 에 새 정본을 만들지 않는다.

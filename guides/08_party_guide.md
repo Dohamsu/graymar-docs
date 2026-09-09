@@ -105,7 +105,7 @@ server/src/party/
 | 메서드 | 시그니처 | 역할 |
 |--------|---------|------|
 | `createVote` | `(partyId, runId, proposerId, targetLocationId) → VoteDTO` | 30초 타이머 + 제안자 자동 찬성 + `vote:proposed` |
-| `castVote` | `(voteId, userId, partyId, choice)` | 집계 → 과반수 도달 시 resolveVote, 아니면 `vote:updated` |
+| `castVote` | `(voteId, userId, partyId, choice)` | 투표 ∈ 호출자 파티 검증(타 파티 id 는 404) → **원자적 조건부 UPDATE**(PENDING + 미투표를 DB 가 재확인, 카운터 제자리 증가 — 동시 요청 1인 2표 race 차단, 보안 감사 2026-09-07 H3) → 과반수 도달 시 resolveVote, 아니면 `vote:updated` |
 | `resolveVote` *(private)* | `(voteId, partyId, status, extra?)` | 상태 확정 → APPROVED 시 `executeMove` 실행 + `vote:resolved` |
 | `expireVote` *(private)* | `(voteId, partyId)` | 30초 경과 자동 EXPIRED |
 | `executeMove` *(private)* | `(partyId, targetLocationId)` | HUB 턴 자동 제출 (리더 계정, `vote-move-{partyId}-{ts}` idempotency) |
