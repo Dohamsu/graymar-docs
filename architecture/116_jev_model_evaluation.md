@@ -275,6 +275,20 @@ Jev action 오분류는 `THREATEN→INVESTIGATE`(confidence 0.64), `TRADE→SHOP
 
 제한: 실제 운영 로그가 아닌 수작업 표본이고, 이벤트 정답은 제작자 판단이 개입한다. nano 비교 프롬프트도 운영 `ChallengeClassifierService`의 모든 부가 필드를 재현한 것이 아니다. confidence 임계값은 별도 calibration/held-out 표본으로 다시 정해야 하며, 이 결과는 운영 전환이 아니라 canary 순서를 정하는 근거다.
 
+### 7.1.3 차기 3개 운영 편입과 실주행 (2026-09-21)
+
+반복 실측한 세 후보를 모두 confidence-gated 운영 경로로 편입했다.
+
+- 챌린지 `FREE/CHECK`: `JEV_CHALLENGE_MIN_CONFIDENCE=0.9`. nano appraisal과 안전성 메타데이터는 보존하고, 룰로 고정되지 않은 회색지대의 결과 축만 병렬 JEV 판정으로 교정한다.
+- 이벤트 최종 선택: `JEV_EVENT_MIN_CONFIDENCE=0.85`. 조건·게이트·affordance·반복 제한을 통과한 최대 8개 후보 안에서만 재순위화한다. DANGER/ALERT의 `BLOCK` 강제 정책은 JEV가 우회할 수 없다.
+- 선택지 affordance 검증: `JEV_AFFORDANCE_MIN_CONFIDENCE=0.9`. 모든 선택지를 재분류하지 않고 기존 고정밀 라벨 규칙이 모순을 감지한 선택지만 JEV에 보낸다. 저신뢰·오류면 기존 결정론 교정기가 처리한다.
+
+세 경로 모두 타임아웃·저신뢰·잘못된 응답에서 기존 경로로 자동 복귀하며, 실제 채택 여부와 이유를 `llm_call_logs` decision 메타데이터에 기록한다. 구현 검토에서 발견된 이벤트 heat 정책 우회 가능성과 affordance 과다 호출은 각각 후보 경계 보존과 모순 감지 선행 게이트로 수정했다.
+
+로컬 서버에서 `DESERTER` 15턴 플레이테스트를 실행해 전체 검증 `15/15`를 통과했다. JEV 실호출은 `typesafe/jev-1.13-20260917`로 기록됐고, 챌린지 및 선택지 affordance 경로가 229~340ms 범위에서 fail-open으로 동작했다. 해당 자연 플레이 표본에는 JEV 이벤트 후보가 2개 이상 남는 턴과 고신뢰 affordance 모순 교정이 없었으므로 그 두 채택 경로는 정책 경계·고신뢰·저신뢰 단위 테스트로 별도 검증했다. 보고서는 `playtest-reports/jev_three_candidates_15turn_20260921.json`이다.
+
+최종 서버 검증은 194개 suite, 2,645개 test 통과(1 suite/2 test skip), 17개 snapshot 통과와 production build 성공이다. confidence 임계값은 여전히 임시값이며 §7.3의 held-out calibration은 후속 과제로 남긴다.
+
 ### 7.2 지금 바로 핵심 운영 모델로 넣지 않는다
 
 이유는 세 가지다.
