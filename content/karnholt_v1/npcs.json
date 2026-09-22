@@ -1,6 +1,7 @@
 [
   {
     "npcId": "NPC_KH_WIDOW",
+    "publicDescription": "실종된 광부를 기다리는 지친 눈의 여인.",
     "name": "메린",
     "unknownAlias": "지친 눈의 여인",
     "shortAlias": "여인",
@@ -150,6 +151,7 @@
   },
   {
     "npcId": "NPC_KH_WARDEN",
+    "publicDescription": "왕립 주조 업무를 감독하는 금테 차림의 관리.",
     "name": "발드릭 경",
     "unknownAlias": "금테 두른 감독관",
     "shortAlias": "감독관",
@@ -296,6 +298,7 @@
   },
   {
     "npcId": "NPC_KH_GUILDMASTER",
+    "publicDescription": "광산 길드를 이끄는 굳은살 박인 손의 길드장.",
     "name": "토르그",
     "unknownAlias": "굳은살 박인 손",
     "shortAlias": "길드장",
@@ -440,6 +443,7 @@
   },
   {
     "npcId": "NPC_KH_SMUGGLER",
+    "publicDescription": "그림자에 몸을 가린 채 거래하는 상인.",
     "name": "카이라",
     "unknownAlias": "그림자 걸친 상인",
     "shortAlias": "상인",
@@ -590,6 +594,7 @@
   },
   {
     "npcId": "NPC_KH_INNKEEP",
+    "publicDescription": "무너진 곡괭이 술집을 운영하는 안주인.",
     "name": "오슬라",
     "unknownAlias": "주름진 눈매의 안주인",
     "shortAlias": "안주인",
@@ -740,6 +745,7 @@
   },
   {
     "npcId": "NPC_KH_ENGRAVER",
+    "publicDescription": "주조 각인을 새기는 조각공. 손가락에 잉크가 배어 있다.",
     "name": "옌",
     "unknownAlias": "잉크 밴 손가락",
     "shortAlias": "각인공",

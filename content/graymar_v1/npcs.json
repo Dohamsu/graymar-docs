@@ -1,6 +1,7 @@
 [
   {
     "npcId": "NPC_HARLUN",
+    "publicDescription": "부두 노동 형제단의 연락책. 투박한 인상의 노동자다.",
     "name": "하를런 보스",
     "unknownAlias": "투박한 노동자",
     "role": "부두 노동 형제단 연락책. 은퇴한 복서로 뒷골목 싸움의 중재자 역할도 한다.",
@@ -311,6 +312,7 @@
   },
   {
     "npcId": "NPC_EDRIC_VEIL",
+    "publicDescription": "은장부 상단에서 회계를 담당하는 인물. 장부와 숫자를 다룬다.",
     "name": "에드릭 베일",
     "unknownAlias": "날카로운 회계사",
     "role": "은장부 상단 회계 담당. 숫자에 밝지만 도박 빚에 쫓기는 처지.",
@@ -612,6 +614,7 @@
   },
   {
     "npcId": "NPC_MAIREL",
+    "publicDescription": "도시수비대의 야간 책임자. 밤의 치안을 맡고 있다.",
     "name": "마이렐 단 경",
     "unknownAlias": "야간 경비 책임자",
     "role": "그레이마르 도시수비대 야간 책임자. 전쟁 참전 경험이 있으며 부하들의 복지에 집착한다.",
@@ -909,6 +912,7 @@
   },
   {
     "npcId": "NPC_TOBREN",
+    "publicDescription": "동부 부두의 창고를 관리하는 인물.",
     "name": "토브렌 하위크",
     "unknownAlias": "수상한 관리인",
     "role": "동부 부두 창고 관리자. 아내와 딸을 먹여살려야 하는 가장으로, 밀수에 연루된 것도 가족 때문이다.",
@@ -1079,6 +1083,7 @@
   },
   {
     "npcId": "NPC_MOON_SEA",
+    "publicDescription": "상단 문서실에서 일하는 조용한 실무자.",
     "name": "라이라 케스텔",
     "unknownAlias": "조용한 실무자",
     "role": "상단 문서실 암호 메모 실무자. 고양이를 키우며 조용한 일상을 좋아하지만, 문서 속 비밀에 점점 깊이 빠지고 있다.",
@@ -1266,6 +1271,7 @@
   },
   {
     "npcId": "NPC_MIRELA",
+    "publicDescription": "시장 거리에서 약초와 치료제를 파는 노부인.",
     "name": "미렐라",
     "unknownAlias": "약초 파는 노부인",
     "role": "시장 거리 약초 노점상. 약초와 치료제를 팔며 40년간 시장에서 장사해온 터줏대감. 시장 상인들의 분쟁 중재도 맡는다.",
@@ -1447,6 +1453,7 @@
   },
   {
     "npcId": "NPC_RENNICK",
+    "publicDescription": "술집을 오가며 사람들과 어울리는 입 가벼운 술꾼.",
     "name": "레닉",
     "unknownAlias": "입이 가벼운 술꾼",
     "role": "뒷골목의 귀. 술집을 떠돌며 인맥을 잇고 소문을 모은다. 한때 극단 배우여서 변장에 능하다.",
@@ -1620,6 +1627,7 @@
   },
   {
     "npcId": "NPC_CAPTAIN_BREN",
+    "publicDescription": "그레이마르 수비대 소속의 단정한 장교.",
     "name": "브렌 대위",
     "unknownAlias": "단정한 장교",
     "role": "그레이마르 수비대 장교. 정의감이 강하지만 아픈 어머니 병원비 때문에 상부 압력을 견디고 있다.",
@@ -1778,6 +1786,7 @@
   },
   {
     "npcId": "NPC_ROSA",
+    "publicDescription": "빈민가 고아원을 운영하며 아이들을 돌보는 인물.",
     "name": "로자",
     "unknownAlias": "다정한 보모",
     "role": "빈민가 고아원 운영자. 전직 교사로 아이들을 돌보는 한편, 빈민가 주민들의 민원 대변인 역할도 한다.",
@@ -1934,6 +1943,7 @@
   },
   {
     "npcId": "NPC_INFO_BROKER",
+    "publicDescription": "뒷골목에서 정보를 거래하는 후드 차림의 정보상.",
     "name": "쉐도우",
     "unknownAlias": "후드 쓴 정보상",
     "role": "뒷골목 정보 브로커. 양쪽 세력 모두에게 정보를 팔며, 요리에 일가견이 있어 거래 장소로 자기 부엌을 쓴다.",
@@ -2104,6 +2114,7 @@
   },
   {
     "npcId": "NPC_GUARD_CAPTAIN",
+    "publicDescription": "그레이마르 수비대의 대위. 당당한 태도의 지휘관이다.",
     "name": "벨론 대위",
     "unknownAlias": "당당한 수비대장",
     "role": "그레이마르 수비대 대위. 마이렐의 상관으로 체스 애호가답게 모든 일에 수를 두듯 접근한다.",
@@ -2262,6 +2273,7 @@
   },
   {
     "npcId": "NPC_LORD_VANCE",
+    "publicDescription": "도시 의회에 몸담은 은발의 신사.",
     "name": "밴스 경",
     "unknownAlias": "은발의 신사",
     "role": "그레이마르 도시 의회 의원. 겉으로는 온건한 중재자이나, 와인 수집가로서의 면모 뒤에 정보망을 구축해두었다.",
@@ -2532,6 +2544,7 @@
   },
   {
     "npcId": "NPC_OWEN_KEEPER",
+    "publicDescription": "잠긴 닻 선술집의 주인. 여러 부류의 손님을 맞는다.",
     "name": "오웬",
     "unknownAlias": "선술집 주인",
     "role": "잠긴 닻 선술집의 주인. 모든 파벌이 드나드는 중립 지대를 운영하며, 젊은 시절 항해사였던 경험으로 바다 이야기에도 밝다.",
@@ -2692,6 +2705,7 @@
   },
   {
     "npcId": "NPC_SERA_DOCKS",
+    "publicDescription": "항만 창고구에서 물류를 관리하는 무표정한 여인.",
     "name": "세라",
     "unknownAlias": "무표정한 여인",
     "role": "항만 창고구 물류 관리인. 겉으로는 합법 화물만 다루지만, 어린 시절 고아 출신으로 밑바닥을 경험한 현실주의자.",
@@ -2848,6 +2862,7 @@
   },
   {
     "npcId": "NPC_DAME_ISOLDE",
+    "publicDescription": "상류 사교계에서 활동하는 귀부인.",
     "name": "이졸데 여사",
     "unknownAlias": "향수 짙은 미망인",
     "role": "상류 사교계의 여왕. 귀족들의 약점과 비밀을 수집하며, 남편의 의문사 이후 직접 가문의 재산을 관리하는 사업가이기도 하다.",
@@ -3002,6 +3017,7 @@
   },
   {
     "npcId": "NPC_RAT_KING",
+    "publicDescription": "빈민가에서 활동하는 두건 차림의 사내.",
     "name": "쥐왕",
     "unknownAlias": "두건 쓴 사내",
     "role": "빈민가 지하 조직의 두목. 한때 성공한 상인이었으나 몰락하여 하층부의 정보를 독점하게 되었다.",
@@ -3308,6 +3324,7 @@
   },
   {
     "npcId": "NPC_GUARD_FELIX",
+    "publicDescription": "그레이마르 수비대의 풋풋한 하급 경비병.",
     "name": "펠릭스",
     "unknownAlias": "풋풋한 경비병",
     "role": "그레이마르 수비대 하급 경비병. 시골 출신의 이상주의자로, 도시의 현실에 적응하며 성장 중이다.",
@@ -3462,6 +3479,7 @@
   },
   {
     "npcId": "NPC_BG_FISHMONGER",
+    "publicDescription": "시장에서 생선을 파는 상인. 큰 목소리로 손님을 부른다.",
     "name": "거너",
     "unknownAlias": "목소리 큰 생선상인",
     "role": "시장 거리 생선 노점상. 목청 좋은 호객꾼이자, 조류와 날씨를 읽는 데 능한 전직 어부.",
@@ -3541,6 +3559,7 @@
   },
   {
     "npcId": "NPC_BG_FRUIT_VENDOR",
+    "publicDescription": "시장 거리에서 과일을 파는 웃는 얼굴의 장수.",
     "name": "마리엘",
     "unknownAlias": "웃는 얼굴의 과일장수",
     "role": "시장 거리 과일 노점상. 미소 뒤에 날카로운 흥정 실력을 숨기고 있으며, 딸의 결혼 자금을 모으는 중.",
@@ -3620,6 +3639,7 @@
   },
   {
     "npcId": "NPC_BG_ANTIQUE_DEALER",
+    "publicDescription": "시장 골목에서 골동품을 취급하는 노인.",
     "name": "제롬 영감",
     "unknownAlias": "골동품 가게의 노인",
     "role": "시장 골목 골동품상. 과거 이야기를 좋아하며, 한때 대학에서 역사를 가르쳤던 학자 출신.",
@@ -3699,6 +3719,7 @@
   },
   {
     "npcId": "NPC_BG_SHOE_SHINE",
+    "publicDescription": "시장 거리를 누비며 구두를 닦는 재빠른 소년.",
     "name": "핍",
     "unknownAlias": "재빠른 구두닦이 소년",
     "role": "시장 거리 구두닦이. 어린 나이에 시장 곳곳을 누비며 소식을 줍는 소식통이자, 장래 상인이 되려는 꿈이 있다.",
@@ -3778,6 +3799,7 @@
   },
   {
     "npcId": "NPC_BG_MESSENGER",
+    "publicDescription": "경비대 본부와 순찰대 사이에 소식을 전하는 전령.",
     "name": "릴리",
     "unknownAlias": "숨이 찬 전령",
     "role": "경비대 전령. 본부와 순찰대 사이를 쉬지 않고 오가며, 달리기가 특기라 비공식 배달도 맡는다.",
@@ -3856,6 +3878,7 @@
   },
   {
     "npcId": "NPC_BG_ARMORER",
+    "publicDescription": "경비대 무기고를 관리하는 과묵한 병사.",
     "name": "갤러스",
     "unknownAlias": "과묵한 무기관리병",
     "role": "경비대 무기고 관리병. 무기에 대해서만큼은 입이 열리며, 아버지에게서 물려받은 대장장이 기술이 있다.",
@@ -3935,6 +3958,7 @@
   },
   {
     "npcId": "NPC_BG_CLERK",
+    "publicDescription": "경비대에서 민원 접수를 맡는 직원.",
     "name": "하워드",
     "unknownAlias": "딱딱한 민원접수관",
     "role": "경비대 민원접수 담당. 관료적이지만 규정을 완벽히 숙지하고 있으며, 조용히 시를 쓰는 취미가 있다.",
@@ -4013,6 +4037,7 @@
   },
   {
     "npcId": "NPC_BG_CAPTAIN_OLD",
+    "publicDescription": "부두 벤치에서 바다 이야기를 들려주는 은퇴 선장.",
     "name": "노선장 그래디",
     "unknownAlias": "파이프 문 은퇴 선장",
     "role": "은퇴한 선장. 부두 벤치에 앉아 바다 이야기를 들려주며, 아직도 밀물 시간을 정확히 맞추는 노련한 해양인.",
@@ -4092,6 +4117,7 @@
   },
   {
     "npcId": "NPC_BG_DOCKER",
+    "publicDescription": "부두에서 짐을 나르는 덩치 큰 하역 인부.",
     "name": "벅",
     "unknownAlias": "덩치 큰 하역 인부",
     "role": "부두 하역 인부. 힘이 세고 말이 적지만 믿음직하며, 고향에 두고 온 형제를 그리워한다.",
@@ -4171,6 +4197,7 @@
   },
   {
     "npcId": "NPC_BG_ROPE_MAKER",
+    "publicDescription": "항구에서 밧줄 공방을 운영하는 손재주 좋은 장인.",
     "name": "엘사",
     "unknownAlias": "손재주 좋은 밧줄장인",
     "role": "항구 밧줄 공방 운영. 손재주가 뛰어나고 부두 사람들과 친하며, 매듭 기술로 간단한 수리도 해준다.",
@@ -4249,6 +4276,7 @@
   },
   {
     "npcId": "NPC_BG_CUSTOMS",
+    "publicDescription": "항구에서 들어오는 화물을 검사하는 세관원.",
     "name": "피터슨",
     "unknownAlias": "날카로운 눈의 세관원",
     "role": "항구 세관 담당. 화물을 검사하지만 적절한 대가에 약하며, 가족에게는 정직한 공무원인 척한다.",
@@ -4328,6 +4356,7 @@
   },
   {
     "npcId": "NPC_BG_HERB_CRONE",
+    "publicDescription": "빈민가 골목에서 약초를 파는 노파.",
     "name": "마그다",
     "unknownAlias": "약초 파는 노파",
     "role": "빈민가 골목 약초상 겸 점술사. 허브와 미신의 경계에서 장사하며, 젊은 시절 수녀였던 과거가 있다.",
@@ -4407,6 +4436,7 @@
   },
   {
     "npcId": "NPC_BG_STREET_KID",
+    "publicDescription": "빈민가 골목을 재빠르게 누비는 소년.",
     "name": "날쌘돌이 짐",
     "unknownAlias": "재빠른 골목 아이",
     "role": "빈민가 골목 소년. 전령과 소식통 역할을 하며, 언젠가 바다를 건너겠다는 꿈을 품고 있다.",
@@ -4486,6 +4516,7 @@
   },
   {
     "npcId": "NPC_BG_VAGRANT",
+    "publicDescription": "잠긴 닻 선술집에서 볼 수 있는 단골 취객.",
     "name": "한눈 잭",
     "unknownAlias": "술에 절은 떠돌이",
     "role": "잠긴 닻 선술집의 단골 취객. 헛소리 같은 말 속에 가끔 진실이 섞이며, 한때 세관에서 일한 경험이 있다.",
@@ -4565,6 +4596,7 @@
   },
   {
     "npcId": "NPC_BG_BEGGAR",
+    "publicDescription": "빈민가에서 구걸하며 지내는 여인.",
     "name": "엘리자",
     "unknownAlias": "초라한 걸인",
     "role": "빈민가에서 구걸하는 여인. 실은 이전 귀족가 하녀 출신으로, 자수와 바느질 솜씨가 남다르다.",
@@ -4644,6 +4676,7 @@
   },
   {
     "npcId": "NPC_BG_BUTLER",
+    "publicDescription": "귀족 저택에서 일하는 노련한 집사.",
     "name": "올드릭",
     "unknownAlias": "노련한 집사",
     "role": "밴스 경의 저택 집사. 30년간 밴스가를 섬기며 모든 비밀을 알고 있고, 와인 감별이 취미.",
@@ -4722,6 +4755,7 @@
   },
   {
     "npcId": "NPC_BG_GARDENER",
+    "publicDescription": "귀족 거리의 공용 정원에서 꽃과 나무를 돌보는 인물.",
     "name": "토마스",
     "unknownAlias": "햇볕에 그을린 정원사",
     "role": "귀족 거리 공용 정원 관리인. 꽃과 나무를 돌보며 귀족가 뒷이야기를 줍고, 약초 재배에도 일가견이 있다.",
@@ -4800,6 +4834,7 @@
   },
   {
     "npcId": "NPC_BG_NOBLE_MAID",
+    "publicDescription": "귀족 거리의 저택들에서 일하는 조용한 시녀.",
     "name": "클라라",
     "unknownAlias": "조용한 귀족 시녀",
     "role": "귀족 거리 여러 저택에서 일하는 시녀. 조용하지만 눈치가 빠르고, 몰래 글 읽기를 배우고 있다.",
@@ -4878,6 +4913,7 @@
   },
   {
     "npcId": "NPC_BG_BARD",
+    "publicDescription": "류트를 들고 노래와 이야기를 전하는 떠돌이 음유시인.",
     "name": "비올라",
     "unknownAlias": "류트를 든 음유시인",
     "role": "떠돌이 음유시인. 노래와 이야기로 선술집에서 환대받으며, 각 도시의 정치 풍자를 가사에 담는다.",
@@ -4957,6 +4993,7 @@
   },
   {
     "npcId": "NPC_BG_COOK",
+    "publicDescription": "잠긴 닻 선술집에서 음식을 만드는 주방장.",
     "name": "헬가",
     "unknownAlias": "투박한 체구의 요리사",
     "role": "잠긴 닻 선술집 주방장. 투박하지만 따뜻한 음식을 만들며, 고향 산골의 비밀 레시피를 아끼고 있다.",
@@ -5036,6 +5073,7 @@
   },
   {
     "npcId": "NPC_BG_BARMAID",
+    "publicDescription": "잠긴 닻 선술집에서 손님을 응대하는 상냥한 서빙 담당.",
     "name": "리나",
     "unknownAlias": "상냥한 서빙꾼",
     "role": "잠긴 닻 선술집 서빙 담당. 손님들의 대화를 자연스럽게 듣는 위치에 있으며, 장래 자기 가게를 열 꿈이 있다.",
@@ -5115,6 +5153,7 @@
   },
   {
     "npcId": "NPC_BG_DRUNK",
+    "publicDescription": "빈민가에서 떠돌며 지내는 취객.",
     "name": "파울",
     "unknownAlias": "만취한 취객",
     "role": "빈민가 떠돌이. 전직 용병으로 술에 절어 있지만, 밤하늘 별자리를 읽는 의외의 재주가 있다.",
@@ -5194,6 +5233,7 @@
   },
   {
     "npcId": "NPC_BG_WAREHOUSE_GUARD",
+    "publicDescription": "창고구의 밤을 지키는 졸음 많은 경비.",
     "name": "마일로",
     "unknownAlias": "졸음에 싸우는 야간 경비",
     "role": "창고구 야간 경비. 졸음과 싸우며 밤을 지키지만, 별을 보며 시간을 재는 습관이 있다.",
@@ -5273,6 +5313,7 @@
   },
   {
     "npcId": "NPC_BG_DOG_HANDLER",
+    "publicDescription": "창고구에서 경비견을 돌보는 인물.",
     "name": "네드",
     "unknownAlias": "경비견을 끌고 다니는 남자",
     "role": "창고구 경비견 관리자. 사람보다 개와 더 잘 통하며, 동물 치료에도 경험이 있다.",
@@ -5351,6 +5392,7 @@
   },
   {
     "npcId": "NPC_BG_CARGO_INSPECTOR",
+    "publicDescription": "창고구에서 화물을 확인하는 꼼꼼한 검수원.",
     "name": "밀드레드",
     "unknownAlias": "꼼꼼한 화물 검수원",
     "role": "창고구 화물 검수원. 꼼꼼하고 원칙적이며 뇌물이 통하지 않는 드문 인물. 기록 정리가 취미.",
@@ -5429,6 +5471,7 @@
   },
   {
     "npcId": "NPC_RONEN",
+    "publicDescription": "항만 노동 길드에서 일하는 말단 서기관.",
     "name": "로넨",
     "unknownAlias": "초조한 서기관",
     "role": "항만 노동 길드의 말단 서기관. 장부 관리 책임자였으나 도난 사실을 상부에 보고하지 못해 쫓기는 처지. 플레이어에게 장부 추적을 의뢰한 인물.",

@@ -395,6 +395,11 @@ def check_l2_contract(pack):
         if not isinstance(n, dict):
             continue
         nid = n.get("npcId", "?")
+        if "publicDescription" in n:
+            description = n["publicDescription"]
+            if not isinstance(description, str) or not description.strip() or len(description) > 120:
+                f.append(Finding("ERROR", "NPC_PUBLIC_DESCRIPTION_SHAPE", f"npcs.json:{nid}",
+                                 "publicDescription 은 공백이 아닌 120자 이하 공개용 문자열이어야 함"))
         gift = n.get("gift")
         if gift is not None:
             if not isinstance(gift, dict) or not gift.get("itemId"):

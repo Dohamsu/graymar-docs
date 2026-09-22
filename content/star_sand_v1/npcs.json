@@ -1,6 +1,7 @@
 [
   {
     "npcId": "NPC_SS_IREN",
+    "publicDescription": "꿈잠 여관을 운영하는 침착한 안주인.",
     "name": "이렌",
     "unknownAlias": "침착한 안주인",
     "shortAlias": "여관 주인",
@@ -264,6 +265,7 @@
   },
   {
     "npcId": "NPC_SS_LUOR",
+    "publicDescription": "등불수녀원에서 꿈을 기록하고 환자를 돌보는 수녀.",
     "name": "루오르",
     "unknownAlias": "별빛 눈의 수녀",
     "shortAlias": "수녀",
@@ -536,6 +538,7 @@
   },
   {
     "npcId": "NPC_SS_SAEL",
+    "publicDescription": "오로라 관측탑의 수석 관측관. 별고래의 궤적을 연구한다.",
     "name": "사엘",
     "unknownAlias": "건조한 관측관",
     "shortAlias": "관측관",
@@ -797,6 +800,7 @@
   },
   {
     "npcId": "NPC_SS_MAREK",
+    "publicDescription": "실종자를 찾아다니는 무뚝뚝한 수색꾼.",
     "name": "마레크",
     "unknownAlias": "무뚝뚝한 수색꾼",
     "shortAlias": "수색꾼",
@@ -1014,6 +1018,7 @@
   },
   {
     "npcId": "NPC_SS_KAILUN",
+    "publicDescription": "검은얼음 시장에서 꿈약을 다루는 조제사.",
     "name": "카일룬",
     "unknownAlias": "장난스런 밀매상",
     "shortAlias": "밀매상",
@@ -1278,6 +1283,7 @@
   },
   {
     "npcId": "NPC_SS_NAHAT",
+    "publicDescription": "자신의 이름을 잃은 채 돌아온 귀환자.",
     "name": "나하트",
     "unknownAlias": "이름 잃은 귀환자",
     "shortAlias": "귀환자",
@@ -1487,6 +1493,7 @@
   },
   {
     "npcId": "NPC_SS_BRAN",
+    "publicDescription": "갈비평원에서 채굴반을 이끄는 험상궂은 반장.",
     "name": "브란",
     "unknownAlias": "험상궂은 반장",
     "shortAlias": "채굴반장",
@@ -1632,6 +1639,7 @@
   },
   {
     "npcId": "NPC_SS_SEFI",
+    "publicDescription": "순례자들을 안내하는 눈먼 어린 안내인.",
     "name": "세피",
     "unknownAlias": "눈먼 안내인",
     "shortAlias": "안내인",
@@ -1780,6 +1788,7 @@
   },
   {
     "npcId": "NPC_SS_ODRIN",
+    "publicDescription": "관측탑에서 기록 업무를 돕는 보조원.",
     "name": "오드린",
     "unknownAlias": "눈치 보조원",
     "shortAlias": "보조원",
@@ -1925,6 +1934,7 @@
   },
   {
     "npcId": "NPC_SS_HELUN",
+    "publicDescription": "꿈잠 여관에 오래 머무는 창백한 투숙객.",
     "name": "헬룬",
     "unknownAlias": "창백한 투숙객",
     "shortAlias": "투숙객",
@@ -2070,6 +2080,7 @@
   },
   {
     "npcId": "NPC_SS_RIVA",
+    "publicDescription": "검은얼음 시장을 오가는 재빠른 운반책.",
     "name": "리바",
     "unknownAlias": "재빠른 운반책",
     "shortAlias": "운반책",
@@ -2218,6 +2229,7 @@
   },
   {
     "npcId": "NPC_SS_ABAS",
+    "publicDescription": "흰숨 부두에서 별기름 램프를 만드는 장인.",
     "name": "아바스",
     "unknownAlias": "미신적 장인",
     "shortAlias": "장인",
@@ -2350,6 +2362,7 @@
   },
   {
     "npcId": "NPC_SS_MIREN",
+    "publicDescription": "등불수녀원에서 지내는 손 떠는 환자.",
     "name": "미렌",
     "unknownAlias": "손 떠는 환자",
     "shortAlias": "환자",
@@ -2507,6 +2520,7 @@
   },
   {
     "npcId": "NPC_SS_TOBA",
+    "publicDescription": "흰숨 부두에서 항로 거래를 중개하는 인물.",
     "name": "토바",
     "unknownAlias": "셈 빠른 중개인",
     "shortAlias": "중개인",
@@ -2642,6 +2656,7 @@
   },
   {
     "npcId": "NPC_SS_KASIEN",
+    "publicDescription": "해안 사냥꾼 잔족의 나이 든 장로.",
     "name": "카시엔",
     "unknownAlias": "해안 노장로",
     "shortAlias": "장로",
@@ -2799,6 +2814,7 @@
   },
   {
     "npcId": "NPC_SS_YURMA",
+    "publicDescription": "무장을 갖추고 길을 떠난 순례자.",
     "name": "유르마",
     "unknownAlias": "무장한 순례자",
     "shortAlias": "순례자",
@@ -2948,6 +2964,7 @@
   },
   {
     "npcId": "NPC_SS_PENA",
+    "publicDescription": "심장 웅덩이의 채취 허가를 담당하는 깐깐한 관리.",
     "name": "페나",
     "unknownAlias": "깐깐한 허가관",
     "shortAlias": "허가관",
@@ -3096,6 +3113,7 @@
   },
   {
     "npcId": "NPC_SS_ED",
+    "publicDescription": "이름을 모으며 떠도는 서기관.",
     "name": "에드",
     "unknownAlias": "이름 수집가",
     "shortAlias": "서기관",
@@ -3242,6 +3260,7 @@
   },
   {
     "npcId": "NPC_SS_BG_01",
+    "publicDescription": "부두에서 짐을 나르는 노련한 하역꾼.",
     "name": "하론 벡",
     "unknownAlias": "노련한 하역꾼",
     "shortAlias": "하역꾼",
@@ -3301,6 +3320,7 @@
   },
   {
     "npcId": "NPC_SS_BG_02",
+    "publicDescription": "경매 진행을 돕는 보조원.",
     "name": "셀디 마르",
     "unknownAlias": "경매 조수",
     "shortAlias": "경매 조수",
@@ -3360,6 +3380,7 @@
   },
   {
     "npcId": "NPC_SS_BG_03",
+    "publicDescription": "얼음배를 손보는 수리공.",
     "name": "오르반 테크",
     "unknownAlias": "얼음배 수리공",
     "shortAlias": "수리공",
@@ -3419,6 +3440,7 @@
   },
   {
     "npcId": "NPC_SS_BG_04",
+    "publicDescription": "따뜻한 국물을 파는 장수.",
     "name": "니아 펠",
     "unknownAlias": "국물 장수",
     "shortAlias": "장수",
@@ -3478,6 +3500,7 @@
   },
   {
     "npcId": "NPC_SS_BG_05",
+    "publicDescription": "부두 검문 기록을 맡는 인물.",
     "name": "로스크 다임",
     "unknownAlias": "검문 대장",
     "shortAlias": "검문 대장",
@@ -3537,6 +3560,7 @@
   },
   {
     "npcId": "NPC_SS_BG_06",
+    "publicDescription": "채굴 현장에 갓 들어온 신참 채굴꾼.",
     "name": "데룬 카프",
     "unknownAlias": "신참 채굴꾼",
     "shortAlias": "채굴꾼",
@@ -3596,6 +3620,7 @@
   },
   {
     "npcId": "NPC_SS_BG_07",
+    "publicDescription": "고래뼈를 절단하고 다루는 기술자.",
     "name": "베사 울",
     "unknownAlias": "고래뼈 기술자",
     "shortAlias": "기술자",
@@ -3655,6 +3680,7 @@
   },
   {
     "npcId": "NPC_SS_BG_08",
+    "publicDescription": "채굴에 필요한 도구를 빌려주는 상인.",
     "name": "케린 노스",
     "unknownAlias": "도구 대여상",
     "shortAlias": "대여상",
@@ -3714,6 +3740,7 @@
   },
   {
     "npcId": "NPC_SS_BG_09",
+    "publicDescription": "현장의 기록을 맡는 서기.",
     "name": "팔로 그렌",
     "unknownAlias": "현장 서기",
     "shortAlias": "서기",
@@ -3773,6 +3800,7 @@
   },
   {
     "npcId": "NPC_SS_BG_10",
+    "publicDescription": "뼛가루 부적을 파는 상인.",
     "name": "아실 모라",
     "unknownAlias": "부적 상인",
     "shortAlias": "상인",
@@ -3832,6 +3860,7 @@
   },
   {
     "npcId": "NPC_SS_BG_11",
+    "publicDescription": "심장액 채취 작업을 돕는 일꾼.",
     "name": "레나 오스",
     "unknownAlias": "채취 일꾼",
     "shortAlias": "채취 일꾼",
@@ -3891,6 +3920,7 @@
   },
   {
     "npcId": "NPC_SS_BG_12",
+    "publicDescription": "작업에 쓰이는 방호복을 관리하는 인물.",
     "name": "무크 사벤",
     "unknownAlias": "방호복 관리인",
     "shortAlias": "관리인",
@@ -3950,6 +3980,7 @@
   },
   {
     "npcId": "NPC_SS_BG_13",
+    "publicDescription": "오염 수치를 재는 측정사.",
     "name": "이솔 프렘",
     "unknownAlias": "오염 측정사",
     "shortAlias": "측정사",
@@ -4009,6 +4040,7 @@
   },
   {
     "npcId": "NPC_SS_BG_14",
+    "publicDescription": "출입자의 허가증을 확인하는 경비원.",
     "name": "타벨 준",
     "unknownAlias": "허가증 경비원",
     "shortAlias": "경비원",
@@ -4068,6 +4100,7 @@
   },
   {
     "npcId": "NPC_SS_BG_15",
+    "publicDescription": "침묵 속에서 기도를 올리는 인물.",
     "name": "오나 리스",
     "unknownAlias": "침묵 기도자",
     "shortAlias": "기도자",
@@ -4127,6 +4160,7 @@
   },
   {
     "npcId": "NPC_SS_BG_16",
+    "publicDescription": "환자들의 침상을 돌보는 간병인.",
     "name": "멜라 수녀",
     "unknownAlias": "환자 침상 간병인",
     "shortAlias": "간병인",
@@ -4186,6 +4220,7 @@
   },
   {
     "npcId": "NPC_SS_BG_17",
+    "publicDescription": "꿈에 관한 기록을 옮겨 적는 필사 담당.",
     "name": "오벨 수녀",
     "unknownAlias": "필사 서생",
     "shortAlias": "서생",
@@ -4245,6 +4280,7 @@
   },
   {
     "npcId": "NPC_SS_BG_18",
+    "publicDescription": "수녀원에서 배우며 지내는 견습 수녀.",
     "name": "수련생 야니",
     "unknownAlias": "견습 사제",
     "shortAlias": "견습 사제",
@@ -4304,6 +4340,7 @@
   },
   {
     "npcId": "NPC_SS_BG_19",
+    "publicDescription": "환자 곁을 지키는 보호자.",
     "name": "브엘 소트",
     "unknownAlias": "환자 보호자",
     "shortAlias": "보호자",
@@ -4363,6 +4400,7 @@
   },
   {
     "npcId": "NPC_SS_BG_20",
+    "publicDescription": "순례자들에게 기도문을 파는 상인.",
     "name": "마나 흐렌",
     "unknownAlias": "기도문 순례상",
     "shortAlias": "순례상",
@@ -4421,6 +4459,7 @@
   },
   {
     "npcId": "NPC_SS_BG_21",
+    "publicDescription": "암호를 확인하며 문을 지키는 인물.",
     "name": "제크 울란",
     "unknownAlias": "암호 문지기",
     "shortAlias": "문지기",
@@ -4480,6 +4519,7 @@
   },
   {
     "npcId": "NPC_SS_BG_22",
+    "publicDescription": "금지된 약초를 취급하는 상인.",
     "name": "피로 단",
     "unknownAlias": "금지 약초상",
     "shortAlias": "약초상",
@@ -4538,6 +4578,7 @@
   },
   {
     "npcId": "NPC_SS_BG_23",
+    "publicDescription": "폐광의 길을 안내하는 길잡이.",
     "name": "소렌 바트",
     "unknownAlias": "폐광 길잡이",
     "shortAlias": "길잡이",
@@ -4597,6 +4638,7 @@
   },
   {
     "npcId": "NPC_SS_BG_24",
+    "publicDescription": "허가증을 거래하는 상인.",
     "name": "벨리카 노움",
     "unknownAlias": "허가증 거래상",
     "shortAlias": "거래상",
@@ -4656,6 +4698,7 @@
   },
   {
     "npcId": "NPC_SS_BG_25",
+    "publicDescription": "꿈약 도박에 참여하는 인물.",
     "name": "아루 케스",
     "unknownAlias": "꿈약 도박꾼",
     "shortAlias": "도박꾼",
@@ -4715,6 +4758,7 @@
   },
   {
     "npcId": "NPC_SS_BG_26",
+    "publicDescription": "관측에 쓰이는 렌즈를 연마하는 장인.",
     "name": "렌트 이바",
     "unknownAlias": "렌즈 연마공",
     "shortAlias": "연마공",
@@ -4774,6 +4818,7 @@
   },
   {
     "npcId": "NPC_SS_BG_27",
+    "publicDescription": "별자리 도표를 정리하는 직원.",
     "name": "도리스 켄",
     "unknownAlias": "도표 정리원",
     "shortAlias": "정리원",
@@ -4833,6 +4878,7 @@
   },
   {
     "npcId": "NPC_SS_BG_28",
+    "publicDescription": "원정대의 식량을 담당하는 인물.",
     "name": "밀라 오크",
     "unknownAlias": "식량 배급인",
     "shortAlias": "배급인",
@@ -4892,6 +4938,7 @@
   },
   {
     "npcId": "NPC_SS_BG_29",
+    "publicDescription": "관측탑을 지키는 경비병.",
     "name": "가벤 루크",
     "unknownAlias": "관측탑 경비병",
     "shortAlias": "경비병",
@@ -4951,6 +4998,7 @@
   },
   {
     "npcId": "NPC_SS_BG_30",
+    "publicDescription": "실패한 예언들을 기록하는 필경사.",
     "name": "세이온 파르",
     "unknownAlias": "예언 필경사",
     "shortAlias": "필경사",
