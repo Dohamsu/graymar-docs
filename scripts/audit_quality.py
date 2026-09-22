@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""정본 품질 감사 스크립트 (v4) — 심층 검사 자동 내장.
+"""정본 품질 감사 스크립트 (v5) — 심층 검사 자동 내장.
 
-v3 대비 개선:
+v5 추가:
+  - 런의 scenarioId와 llm_prompt 시간대를 함께 조회
+  - 콘텐츠 phaseHints의 따옴표형 금지 목록을 읽어 팩별 광원 모순 탐지
+  - 금지 개념의 부재를 설명하는 부정문은 FP로 분리
+
+v4 개선:
   - 1차 regex 탐지 후, 각 이슈마다 자동 심층 검사 3단계 수행:
     1) 원문 50자 context 추출 (DB psql)
     2) system-prompts.ts grep — 명시 금지어 여부 확인
@@ -21,6 +26,7 @@ import json
 import re
 import subprocess
 import sys
+import uuid
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -89,6 +95,7 @@ CURRENCY_FORBID = {
 URL_PAT = re.compile(r'/(?:npc-portraits|pack-assets)/[^\s\]"]+\.webp')
 ENG_PAT = re.compile(r'\b[A-Za-z]{3,}\b')
 ENG_ALLOW = {'NPC', 'ID', 'URL', 'HP', 'MP'}
+PHASE_RE = re.compile(r'\[현재 시간대\][^\n]*\((DAWN|DAY|DUSK|NIGHT)\)')
 
 
 # ─── 심층 검사 헬퍼 ───
@@ -175,16 +182,106 @@ def classify_issue(
 
 
 # ─── 메인 실행 ───
-def query_run(run_id: str) -> list:
+def load_pack_phase_forbidden(scenario_id: str | None) -> dict[str, list[str]]:
+    """scenario phaseHints의 따옴표형 금지 목록을 감사 규칙으로 읽는다.
+
+    콘텐츠가 ``'햇살·햇빛·밝은 낮' 금지``처럼 선언한 경우에만 활성화한다.
+    감사기가 세계관을 별도 하드코딩하지 않고 콘텐츠 정본을 따라가게 한다.
+    """
+    if not scenario_id or not re.fullmatch(r'[a-z0-9_]+', scenario_id):
+        return {}
+    scenario_path = REPO_ROOT / 'content' / scenario_id / 'scenario.json'
+    try:
+        scenario = json.loads(scenario_path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    phase_hints = scenario.get('world', {}).get('phaseHints', {})
+    result: dict[str, list[str]] = {}
+    for phase, hint in phase_hints.items():
+        terms: list[str] = []
+        for quoted in re.findall(r"['\"]([^'\"]+)['\"]\s*금지", str(hint)):
+            terms.extend(
+                term.strip()
+                for term in re.split(r'[·,|/]', quoted)
+                if term.strip()
+            )
+        if terms:
+            result[str(phase)] = list(dict.fromkeys(terms))
+    return result
+
+
+def phase_from_prompt(prompt: str) -> str | None:
+    match = PHASE_RE.search(prompt or '')
+    return match.group(1) if match else None
+
+
+def classify_pack_phase_terms(
+    turn_no: int,
+    txt: str,
+    prompt: str,
+    scenario_id: str | None,
+    forbidden_by_phase: dict[str, list[str]],
+) -> list[tuple[str, dict]]:
+    """현재 턴 phaseHint가 명시 금지한 광원 표현만 정밀 분류한다."""
+    phase = phase_from_prompt(prompt)
+    if not phase:
+        return []
+    issues: list[tuple[str, dict]] = []
+    for term in forbidden_by_phase.get(phase, []):
+        for match in re.finditer(re.escape(term), txt):
+            context = extract_context(txt, match.start())
+            # "햇빛은 전혀 들지 않는다"처럼 금지 개념의 부재를 명시하는
+            # 세계관 준수 문장은 오탐으로 남기되 실제 위반 점수에는 넣지 않는다.
+            nearby = txt[max(0, match.start() - 12):match.end() + 28]
+            negated = bool(
+                re.search(r'(없|아니|않|못|금지|비치지|들지|뜨지)', nearby)
+            )
+            detail = {
+                'cat': 'pack_phase_forbidden',
+                'turn': turn_no,
+                'keyword': term,
+                'context': context,
+                'in_dialogue': is_inside_dialogue(txt, match.start()),
+                'in_url': False,
+                'prompt_explicit': True,
+                'scenario': scenario_id,
+                'phase': phase,
+            }
+            if negated:
+                detail['reason'] = (
+                    f'{scenario_id}/{phase} 금지 개념을 부정문으로 명시 — 세계관 준수'
+                )
+                issues.append(('fp', detail))
+            else:
+                detail['reason'] = (
+                    f'{scenario_id}/{phase} phaseHints 명시 금지 표현'
+                )
+                issues.append(('real', detail))
+    return issues
+
+
+def query_run(run_id: str) -> dict:
+    # psql 문자열 보간 전에 UUID를 정규화해 감사 도구 자체의 SQL 주입을 막는다.
+    run_id = str(uuid.UUID(run_id))
     out = subprocess.check_output([
         'docker', 'exec', 'textRpg-db', 'psql', '-U', 'user', '-d', 'textRpg', '-At', '-c',
-        f"SELECT json_agg(json_build_object('t',turn_no,'txt',coalesce(llm_output,'')) ORDER BY turn_no) FROM turns WHERE run_id = '{run_id}'"
+        "SELECT json_build_object("
+        "'scenario', r.scenario_id, "
+        "'turns', COALESCE(json_agg(json_build_object("
+        "'t',t.turn_no,'txt',coalesce(t.llm_output,''),"
+        "'prompt',coalesce(t.llm_prompt::text,'')) ORDER BY t.turn_no) "
+        "FILTER (WHERE t.id IS NOT NULL), '[]'::json)) "
+        "FROM run_sessions r LEFT JOIN turns t ON t.run_id=r.id "
+        f"WHERE r.id='{run_id}' GROUP BY r.scenario_id"
     ]).decode().strip()
-    return json.loads(out) or []
+    return json.loads(out) if out else {'scenario': None, 'turns': []}
 
 
 def run_audit(run_id: str):
-    data = query_run(run_id)
+    run_data = query_run(run_id)
+    data = run_data.get('turns', [])
+    scenario_id = run_data.get('scenario')
+    pack_phase_forbidden = load_pack_phase_forbidden(scenario_id)
 
     # 카테고리별 수집
     buckets = {
@@ -201,6 +298,7 @@ def run_audit(run_id: str):
         'narr_hapsyo': [],
         'exc_real': 0,
         'marker_coverage': (0, 0),  # marked, total
+        'scenario': scenario_id,
     }
     first_sent_start = Counter()
     npc_markers = Counter()
@@ -268,6 +366,14 @@ def run_audit(run_id: str):
                 buckets[cat].append(detail)
 
         # E. 세계관
+        for category, detail in classify_pack_phase_terms(
+            turn_no,
+            txt,
+            t.get('prompt', ''),
+            scenario_id,
+            pack_phase_forbidden,
+        ):
+            buckets[category].append(detail)
         for word, pat_str in EASTERN_FORBID.items():
             for m in re.finditer(pat_str, txt):
                 cat, detail = classify_issue(word, turn_no, txt, m.start())
@@ -344,7 +450,10 @@ def run_audit(run_id: str):
 
 def print_report(run_id: str, buckets: dict, stats: dict, first_start: Counter, npc_markers: Counter):
     print('=' * 70)
-    print(f'RUN: {run_id}  |  turns: {stats["turns"]}  |  chars: {stats["chars"]}')
+    print(
+        f'RUN: {run_id}  |  scenario: {stats.get("scenario") or "?"}'
+        f'  |  turns: {stats["turns"]}  |  chars: {stats["chars"]}'
+    )
     print(f'avg narrative: {stats["chars"] // max(stats["turns"], 1)}자  |  dialogues: {stats["marker_coverage"][1]}')
     print('=' * 70)
 
