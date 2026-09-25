@@ -391,6 +391,26 @@ def check_l2_contract(pack):
     loc_ids = {
         l.get("locationId") for l in pack.locations if isinstance(l, dict)
     } - {None}
+    # 신규 fact 후속 목적지: 엔진은 ID 배열만 소비한다. 문자열/빈 배열/타 팩 ID는
+    # 조용히 즉시 이동 선택지를 끄거나 잘못된 곳으로 보낼 수 있으므로 모양을 고정한다.
+    for fid, fact in pack.facts.items():
+        if not isinstance(fact, dict) or "nextHintLocationIds" not in fact:
+            continue
+        destinations = fact["nextHintLocationIds"]
+        where = f"facts.json:{fid}:nextHintLocationIds"
+        if (not isinstance(destinations, list) or not destinations
+                or any(not isinstance(loc, str) or not loc.startswith("LOC_") for loc in destinations)
+                or len(set(destinations)) != len(destinations)):
+            f.append(Finding("ERROR", "FACT_NEXT_HINT_LOCATION_SHAPE", where,
+                             "nextHintLocationIds 는 중복 없는 LOC_* ID의 비어 있지 않은 배열이어야 함"))
+            continue
+        if not isinstance(fact.get("nextHint"), str) or not fact["nextHint"].strip():
+            f.append(Finding("ERROR", "FACT_NEXT_HINT_LOCATION_SHAPE", where,
+                             "후속 장소 ID를 저작한 fact 에는 플레이어에게 보일 nextHint 문구가 필요함"))
+        unknown = [loc for loc in destinations if loc not in loc_ids]
+        if unknown:
+            f.append(Finding("ERROR", "FACT_NEXT_HINT_LOCATION_REF", where,
+                             f"후속 장소가 현재 팩에 정의되지 않음: {unknown}"))
     for n in pack.npcs:
         if not isinstance(n, dict):
             continue
