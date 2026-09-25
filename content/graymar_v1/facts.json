@@ -51,6 +51,7 @@
         "LOC_NOBLE"
       ],
       "nextHint": "내부자의 소행이라면 물건이 어디로 갔는지 추적할 수 있다. 밀수 경로나 비밀 하역 장소를 찾아라. 부두와 창고 쪽을 살펴봐라.",
+      "nextHintLocationIds": ["LOC_HARBOR", "LOC_DOCKS_WAREHOUSE"],
       "knownBy": [
         "NPC_DAME_ISOLDE",
         "NPC_EDRIC_VEIL",
@@ -368,6 +369,7 @@
         "LOC_GUARD"
       ],
       "nextHint": "조작 흔적이 확인됐다. 이건 단순 도난이 아니라 내부 공모다. 문서에 접근할 수 있는 사람이 누군지 알아내야 한다. 경비대나 상위 권력자 쪽을 파헤쳐봐라.",
+      "nextHintLocationIds": ["LOC_GUARD", "LOC_NOBLE"],
       "knownBy": [
         "NPC_EDRIC_VEIL",
         "NPC_MOON_SEA"
