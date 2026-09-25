@@ -63,6 +63,15 @@ class DialogueAndWorldAuditTest(unittest.TestCase):
         self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['은화'], '은화를 건넸다'))
         self.assertIsNotNone(re.search(AUDIT.EASTERN_FORBID['젓가락'], '젓가락을 내려놓았다'))
 
+    def test_forbidden_terms_keep_a_right_boundary_after_known_particles(self):
+        self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['동전'], '동전주머니를 열었다'))
+        self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['닢'], '한 닢짜리 물건'))
+        for key, term in [('은화', '은화단'), ('금화', '금화문'),
+                          ('동전', '동전거래'), ('닢', '닢새')]:
+            with self.subTest(term=term):
+                self.assertIsNone(re.search(AUDIT.CURRENCY_FORBID[key], term))
+        self.assertIsNone(re.search(AUDIT.EASTERN_FORBID['젓가락'], '젓가락질'))
+
     def test_marker_coverage_uses_the_same_dialogue_denominator(self):
         text = '그가 말했다. @[로넨] "왔군."\n\n@[행인] “조용히.”'
         self.assertEqual(AUDIT.count_dialogue_markers(text), (2, 2))
