@@ -9,7 +9,7 @@
     "availableAtNight": true,
     "nightDescription": "잠든 손님들의 입에서 같은 문장이 흘러나온다. 벽에 성에가 번지고, 문틈으로 푸른 꿈빛이 새어 든다.",
     "hubAccessible": true,
-    "hubHint": "공통몽과 실종의 시작점, 소문이 모이는 곳",
+    "hubHint": "이렌의 숙박 장부와 실종 손님의 방을 확인할 수 있는 곳",
     "moveKeywords": ["여관", "꿈잠", "숙소", "거점", "홀"],
     "hubState": { "security": 50, "crime": 20, "unrest": 40 },
     "ambushEncounterId": "enc_ss_inn_sleepwalker"
