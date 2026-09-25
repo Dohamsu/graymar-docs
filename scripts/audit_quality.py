@@ -77,6 +77,7 @@ EASTERN_FORBID = {
     '된장':   r'(?<![가-힣])된장(?![가-힣])',
     '고추장': r'(?<![가-힣])고추장(?![가-힣])',
     '소주':   r'(?<![가-힣])소주(?![가-힣])',
+    '젓가락': r'(?<![가-힣])젓가락',  # 조사 결합(젓가락을)도 감지
     # [M3 감사 2026-08-12 — 체크리스트 C7] '막사' 제거.
     #   시스템 프롬프트(P0-K)와 CLAUDE.md 가 금지하는 동양 요소는
     #   막걸리/김치/온돌 뿐이다. '막사'(幕舍)는 서양 중세에서도 쓰는 일반
@@ -85,10 +86,11 @@ EASTERN_FORBID = {
     #   검사기가 설계보다 넓게 금지하면 노이즈만 늘고 진짜 위반이 묻힌다.
 }
 CURRENCY_FORBID = {
-    '은화':   r'(?<![가-힣])은화(?![가-힣])',
-    '금화':   r'(?<![가-힣])금화(?![가-힣])',
-    '동전':   r'(?<![가-힣])동전(?![가-힣])',  # "동전주머니", "동전 주머니" 포함
-    '닢':     r'(?<=[0-9])\s*닢(?![가-힣])',    # 숫자 뒤 "닢"만
+    '은화':   r'(?<![가-힣])은화',
+    '은전':   r'(?<![가-힣])은전',
+    '금화':   r'(?<![가-힣])금화',
+    '동전':   r'(?<![가-힣])동전',  # 조사 결합·"동전주머니" 포함
+    '닢':     r'(?<![가-힣])닢',  # 한글 수사 뒤 공백·닢짜리도 감지
 }
 
 # npc-portraits(고정 매핑) + pack-assets(arch/80 팩 에셋 풀) 두 URL 체계 모두 제외
@@ -131,6 +133,62 @@ def check_prompt_explicit(keyword: str) -> bool:
         if re.search(r'금지|금지한다|금지합니다|하지 마|하지마|마세요|피하세요|안 된다|안된다', ctx):
             return True
     return False
+
+
+def count_dialogue_markers(txt: str) -> tuple[int, int]:
+    """큰따옴표 대사와 직전 마커를 동일 표본에서 센다 (coverage >100% 방지)."""
+    marked = total = 0
+    for m in re.finditer(r'["\u201C]([^"\u201D]+)["\u201D]', txt):
+        if len(m.group(1)) < 2:
+            continue
+        total += 1
+        line_start = txt.rfind('\n', 0, m.start()) + 1
+        if re.search(r'@\[[^\]\n]+\]\s*$', txt[line_start:m.start()]):
+            marked += 1
+    return marked, total
+
+
+def find_bare_colon_dialogue_candidates(turn_no: int, txt: str) -> list[dict]:
+    """줄 맨 앞의 `화자: 발화` 후보를 수동 검토 대상으로 찾는다.
+
+    `장부: ...` 같은 설명용 표제도 같은 꼴이므로 실제 위반으로 확정하지 않는다.
+    큰따옴표 대사 적용률의 분모에도 더하지 않는다.
+    """
+    issues = []
+    pattern = re.compile(
+        r'(?m)^(?P<speaker>[가-힣][가-힣 ]{1,30}):[ \t]*'
+        r'(?P<utterance>[^"“@\n][^\n]{1,120})$'
+    )
+    for match in pattern.finditer(txt):
+        issues.append({
+            'cat': 'bare_colon_speech',
+            'turn': turn_no,
+            'keyword': match.group('speaker').strip(),
+            'context': extract_context(txt, match.start(), 80),
+            'reason': '따옴표 없는 화자: 발화 후보 — 설명용 표제 가능성 있어 수동 검토',
+        })
+    return issues
+
+
+def find_speaker_cap_issue(turn_no: int, txt: str) -> dict | None:
+    """큰따옴표 대사를 한 턴에 세 인물 이상이 말한 명백한 P0 위반."""
+    speakers = dict.fromkeys(
+        (match.group('id') or match.group('alias')).strip()
+        for match in re.finditer(
+            r'@\[(?P<alias>[^|\]\n]+)(?:\|(?P<id>[^\]\n]+))?\][ \t]*["“]',
+            txt,
+        )
+    )
+    if len(speakers) <= 2:
+        return None
+    return {
+        'cat': 'speaker_cap',
+        'turn': turn_no,
+        'keyword': '화자 2명 초과',
+        'speaker_count': len(speakers),
+        'context': ', '.join(speakers),
+        'reason': '한 턴 NPC 대사 2명 이하 P0 규칙 위반',
+    }
 
 
 def classify_issue(
@@ -346,12 +404,13 @@ def run_audit(run_id: str):
             stats['narr_present'] += 1
 
         # C. 대사 카운팅
-        dialogues = re.findall(r'"([^"]+)"', txt)
-        for d in dialogues:
-            if len(d) >= 2:
-                total_dialogue += 1
-        marked = len(re.findall(r'@\[[^\]]+\]\s*["\u201C]', txt))
+        marked, dialogue_count = count_dialogue_markers(txt)
+        total_dialogue += dialogue_count
         total_marked += marked
+        buckets['gray'].extend(find_bare_colon_dialogue_candidates(turn_no, txt))
+        speaker_cap_issue = find_speaker_cap_issue(turn_no, txt)
+        if speaker_cap_issue:
+            buckets['real'].append(speaker_cap_issue)
 
         # D. 전지적 서술 금지어
         for pat_str, label in META_NARR_FORBID:

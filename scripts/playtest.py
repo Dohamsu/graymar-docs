@@ -27,6 +27,8 @@ parser.add_argument("--output", default=None, help="결과 JSON 파일 경로")
 parser.add_argument("--loc-turns", type=int, default=4, help="장소당 체류 턴 수 (default: 4)")
 parser.add_argument("--dry-run", action="store_true", help="LLM mock 모드 + 프롬프트 추출 (비용 0원)")
 parser.add_argument("--choice-rate", type=float, default=0.25, help="LOCATION에서 CHOICE 선택 확률 (default: 0.25)")
+parser.add_argument("--forced-action", action="append", default=[],
+                    help="다음 LOCATION 턴에 정확히 한 번 제출할 ACTION 텍스트 (여러 번 지정 가능)")
 parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
 parser.add_argument("--scenario", default=None, help="시나리오 팩 ID (default: 서버 기본=graymar_v1)")
 parser.add_argument("--agent", default=None, help="에이전트 플레이어 페르소나 (coercer|chatty|weirdo|brawler) — LLM이 서술을 읽고 의도 연속 플레이 + 위화감 자동 노트")
@@ -449,6 +451,7 @@ last_narrative = ""   # 에이전트 모드 — 직전 턴 서술 (위화감 판
 last_input_desc = ""
 bought_items = set()   # 4-A: 상점 구매 1회/아이템 제한
 arc_committed = False  # 4-A: 아크 커밋 선택지 1회 클릭
+forced_actions = list(args.forced_action)  # 표적 회귀 입력 — 지정 순서대로 LOCATION에서만 소비
 
 for turn_i in range(MAX_TURNS):
     # 인간 플레이 페이스 모사 — AUTONOMOUS 팩은 Plot Seed 백그라운드 생성(60초~2분대
@@ -481,12 +484,12 @@ for turn_i in range(MAX_TURNS):
             if str(c.get("id", "")).startswith("arc_"):
                 arc_choice = c
                 break
-    if arc_choice:
+    if arc_choice and not (node_type == "LOCATION" and forced_actions):
         body = {"input": {"type": "CHOICE", "choiceId": arc_choice["id"]}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
         input_desc = f"CHOICE:{arc_choice['id']} (arc)"
         arc_committed = True
     # 4-A: 상점 구매 — 현 장소 진열에서 살 수 있는 첫 품목 1회 구매
-    elif node_type == "LOCATION" and not args.agent and (shop_target := next(
+    elif node_type == "LOCATION" and not forced_actions and not args.agent and (shop_target := next(
         (it for s in (state.get("lastResult", {}).get("ui", {}) or {}).get("shops", [])
          for it in s.get("items", [])
          if it.get("itemId") not in bought_items and gold >= it.get("price", 10**9)),
@@ -552,11 +555,18 @@ for turn_i in range(MAX_TURNS):
         # LOCATION turn
         loc_turns += 1
         agent_input = None
-        if args.agent and loc_turns <= args.loc_turns:
+        forced_this_turn = bool(forced_actions)
+        if forced_this_turn:
+            action = forced_actions.pop(0)
+            body = {"input": {"type": "ACTION", "text": action}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
+            input_desc = f"ACTION:forced({action[:24]})"
+        elif args.agent and loc_turns <= args.loc_turns:
             agent_input = agent_decide(args.agent, node_type, choices, last_narrative, last_input_desc, hp, "장소 탐험 중")
             if agent_notes and agent_notes[-1]["turn"] is None:
                 agent_notes[-1]["turn"] = turn_i
-        if agent_input:
+        if forced_this_turn:
+            pass  # 위에서 결정한 고정 입력 유지
+        elif agent_input:
             body = {"input": agent_input, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
             input_desc = f"AGENT:{(agent_input.get('text') or agent_input.get('choiceId', ''))[:30]}"
         elif loc_turns > args.loc_turns:
@@ -1944,6 +1954,7 @@ output = {
         "preset": args.preset,
         "gender": args.gender,
         "maxTurns": MAX_TURNS,
+        "forcedActions": args.forced_action,
         "actualTurns": len(turn_logs),
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "git": git,

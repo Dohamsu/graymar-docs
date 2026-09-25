@@ -1,4 +1,5 @@
 import importlib.util
+import re
 import unittest
 from pathlib import Path
 
@@ -53,6 +54,47 @@ class PackPhaseAuditTest(unittest.TestCase):
         )
 
         self.assertEqual(issues, [])
+
+
+class DialogueAndWorldAuditTest(unittest.TestCase):
+    def test_hangul_number_coin_and_chopsticks_with_particles_are_detected(self):
+        self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['닢'], '스물여섯 닢이 모자랐다'))
+        self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['은전'], '은전 몇 개가 손바닥에 놓였다'))
+        self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['은화'], '은화를 건넸다'))
+        self.assertIsNotNone(re.search(AUDIT.EASTERN_FORBID['젓가락'], '젓가락을 내려놓았다'))
+
+    def test_marker_coverage_uses_the_same_dialogue_denominator(self):
+        text = '그가 말했다. @[로넨] "왔군."\n\n@[행인] “조용히.”'
+        self.assertEqual(AUDIT.count_dialogue_markers(text), (2, 2))
+        self.assertEqual(AUDIT.count_dialogue_markers('문서에 "A"라고 썼다.'), (0, 0))
+
+    def test_bare_colon_speech_is_reviewed_without_treating_narration_as_dialogue(self):
+        text = (
+            '목소리 큰 생선상인: 조심하오.\n'
+            '장부: 열 항목이 있다.\n'
+            '낡은 종이에는 날짜: 보름 전이라고 적혀 있다.\n'
+            '@[로넨] "왔군."'
+        )
+        issues = AUDIT.find_bare_colon_dialogue_candidates(5, text)
+        self.assertEqual(
+            [it['keyword'] for it in issues],
+            ['목소리 큰 생선상인', '장부', '낡은 종이에는 날짜'],
+        )
+        self.assertEqual([it['cat'] for it in issues], ['bare_colon_speech'] * 3)
+        self.assertEqual(AUDIT.count_dialogue_markers(text), (1, 1))
+
+    def test_more_than_two_distinct_marked_speakers_is_reported(self):
+        text = (
+            '@[노부인|NPC_A] "그만하오."\n'
+            '@[노부인|NPC_A] "들으시오."\n'
+            '@[상인|NPC_B] "조심하오."\n'
+            '@[노동자|NPC_C] "물러나시오."'
+        )
+        issue = AUDIT.find_speaker_cap_issue(6, text)
+        self.assertIsNotNone(issue)
+        self.assertEqual(issue['cat'], 'speaker_cap')
+        self.assertEqual(issue['speaker_count'], 3)
+        self.assertIsNone(AUDIT.find_speaker_cap_issue(7, text.splitlines()[0]))
 
 
 if __name__ == '__main__':
