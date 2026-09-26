@@ -14,7 +14,7 @@
 import json, time, uuid, random, sys, argparse, os, subprocess, re, glob
 
 from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
-from playtest_gate_ledger import select_gate_window
+from playtest_gate_ledger import PUBLIC_LLM_SETTINGS_FIELDS, make_gate_cohort, select_gate_window
 
 # --- CLI 인자 ---
 parser = argparse.ArgumentParser(description="Playtest runner")
@@ -123,10 +123,12 @@ if os.getcwd() != _REPO_ROOT:
 #    false-PASS 방지. 양쪽 다 `git rev-parse --short HEAD` 산출이라 정확 비교.
 #    로컬 서버 대상일 때만 강제 (원격은 HEAD가 다른 게 정상일 수 있음).
 _SERVER_HASH = ""  # V12 원장 기록용 — preflight 를 건너뛰면 빈 값으로 남는다
+_SERVER_START_TIME = ""  # 같은 HEAD라도 재시작 전후 콘텐츠·빌드는 섞지 않는다
 if not args.skip_version_check and ("localhost" in BASE or "127.0.0.1" in BASE):
     _, _ver = api("GET", "/version")
     _server_hash = str(_ver.get("server", ""))
     _SERVER_HASH = _server_hash
+    _SERVER_START_TIME = str(_ver.get("startedAt") or "")
     if not _server_hash:
         print(f"[preflight] 서버 응답 없음 ({BASE}/version) — 서버 기동을 먼저 확인", flush=True)
         sys.exit(2)
@@ -401,6 +403,49 @@ if args.model:
 
 if args.dry_run:
     dry_run_setup()
+
+# 누적 품질 게이트는 같은 서버 프로세스의 실효 모델 설정끼리만 비교한다.
+# 공개 설정에는 동적 LLM 설정이, 어드민 flags에는 교차·경량 모델 노브가 있다.
+_, _gate_settings_response = api("GET", "/settings/llm")
+_GATE_MODEL_SETTINGS = (
+    {key: _gate_settings_response[key] for key in PUBLIC_LLM_SETTINGS_FIELDS}
+    if all(key in _gate_settings_response for key in PUBLIC_LLM_SETTINGS_FIELDS) else {}
+)
+_flags_status, _flags_response = api("GET", "/admin/llm/flags", admin=True)
+_GATE_RUNTIME_FLAGS = (
+    {row["key"]: row.get("effective") for row in _flags_response.get("flags", [])
+     if isinstance(row, dict) and isinstance(row.get("key"), str)}
+    if _flags_status == 200 and isinstance(_flags_response.get("flags"), list) else {}
+)
+_PACK_ID = args.scenario or "graymar_v1"
+import os as _os
+_CONTENT_DIR = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", _PACK_ID)
+_GATE_COHORT = make_gate_cohort(
+    _SERVER_HASH,
+    _SERVER_START_TIME,
+    _CONTENT_DIR,
+    _GATE_MODEL_SETTINGS,
+    _GATE_RUNTIME_FLAGS,
+    {
+        "scenario": _PACK_ID,
+        "turns": args.turns,
+        "preset": args.preset,
+        "gender": args.gender,
+        "characterName": args.character_name,
+        "newAccount": args.new_account,
+        "agent": args.agent,
+        "agentModel": args.agent_model if args.agent else None,
+        "choiceRate": args.choice_rate,
+        "locationTurns": args.loc_turns,
+        "forcedActions": args.forced_action,
+        "turnDelay": args.turn_delay,
+        "dryRun": args.dry_run,
+    },
+)
+if _GATE_COHORT:
+    print(f"[preflight] 품질 게이트 비교군: {_GATE_COHORT}", flush=True)
+else:
+    print("[preflight] 품질 게이트 비교군 불명 — 누적 판정 없이 단독 계측", flush=True)
 
 # ═══════════════════════════════════════
 # 2. Create Run
@@ -970,9 +1015,6 @@ _npc_alias_pool = []
 # [arch/92 §8] 활성 팩 기준으로 로드 — 구 코드는 graymar_v1 경로 하드코딩이라
 # 별빛모래·카른홀트 런에서 **다른 팩의 NPC 별칭 풀**로 판정하고 있었다
 # (V9-c 무명 대사 의심 + D5-2 CONTENT_ALIAS 분류가 전부 오염).
-_PACK_ID = args.scenario or "graymar_v1"
-import os as _os
-_CONTENT_DIR = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", _PACK_ID)
 try:
     with open(_os.path.join(_CONTENT_DIR, "npcs.json"), encoding="utf-8") as _f:
         _npcs_raw = json.load(_f)
@@ -1240,8 +1282,8 @@ def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
     추가로 필요해 창을 직접 다룬다.
 
     원장은 playtest-reports/ 아래 로컬 파일이며 런별 서버 해시를 함께 남긴다.
-    서버 버전이 다른 런은 판정 창에 넣지 않는다. 버전을 모르는 런은 단독
-    계측으로 남겨 기존 런을 섞어 거짓 PASS/FAIL을 만들지 않는다.
+    서버·콘텐츠·모델·테스트 설정이 다른 런은 판정 창에 넣지 않는다. 설정을
+    확인할 수 없는 런은 단독 계측으로 남겨 거짓 PASS/FAIL을 만들지 않는다.
     """
     path = os.path.join("playtest-reports", ledger_name)
     ledger = []
@@ -1261,7 +1303,9 @@ def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
             json.dump(ledger, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"  ⚠️ 원장 저장 실패 (판정은 계속): {e}", flush=True)
-    return select_gate_window(ledger, entry.get("server", ""), pool_runs)
+    return select_gate_window(
+        ledger, entry.get("server", ""), entry.get("cohort", ""), pool_runs
+    )
 print("\n[V12] 프롬프트 예산 (재비대 가드):", flush=True)
 prompt_sizes = []
 # V14-b 재사용 캐시 — 같은 프롬프트를 두 번 받아오지 않는다 (turnNo → 합친 본문)
@@ -1313,6 +1357,7 @@ if prompt_sizes:
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
             # 서버 해시는 preflight 에서만 채워진다 (--skip-version-check 시 빈 값)
             "server": _SERVER_HASH,
+            "cohort": _GATE_COHORT,
             "sampleTurns": len(_sizes),
             "fireProxyCount": len(_fired),
             "watchBandCount": len(_watch_band),
@@ -1422,6 +1467,7 @@ if _aff_total >= 6:  # nano 선택지 2턴분 미만이면 표본 부족
             "runId": run_id,
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "server": _SERVER_HASH,
+            "cohort": _GATE_COHORT,
             "affTotal": _aff_total,
             "activeCount": _active,
         },
@@ -1554,6 +1600,7 @@ _v14_entry = {
     "runId": run_id,
     "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
     "server": _SERVER_HASH,
+    "cohort": _GATE_COHORT,
     "turns": len(turn_logs),
     "maxStreak": _max_streak,
     "bgOver": len(_bg_over),
