@@ -14,7 +14,9 @@
 import json, time, uuid, random, sys, argparse, os, subprocess, re, glob
 
 from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
+from playtest_arc_choice import select_priority_arc_choice
 from playtest_gate_ledger import PUBLIC_LLM_SETTINGS_FIELDS, make_gate_cohort, select_gate_window
+from playtest_run_gate import turns_executed_pass
 
 # --- CLI 인자 ---
 parser = argparse.ArgumentParser(description="Playtest runner")
@@ -492,6 +494,7 @@ def resolve_choice_surface(state):
     return list(server_choices), "server"
 
 turn_logs = []
+submit_errors = []  # 500 뒤 계속 진행해도 자동 15/15가 되지 않도록 보존
 loc_turns = 0
 last_narrative = ""   # 에이전트 모드 — 직전 턴 서술 (위화감 판정·행동 결정 입력)
 last_input_desc = ""
@@ -523,17 +526,14 @@ for turn_i in range(MAX_TURNS):
     hp = state.get("runState", {}).get("hp", "?")
     gold = state.get("runState", {}).get("gold", 0) or 0
 
-    # 4-A: 아크 커밋 선택지 감지 시 최우선 클릭 (arc_ 접두 규약, 1회)
-    arc_choice = None
-    if not arc_committed:
-        for c in choices:
-            if str(c.get("id", "")).startswith("arc_"):
-                arc_choice = c
-                break
+    # 명시적 결말은 커밋 후에도 클릭해야 한다. 기존 arc_ 1회 게이트는
+    # arc_commit_* 을 클릭한 뒤 arc_finale 까지 막아 완주 검증을 놓쳤다.
+    arc_choice = select_priority_arc_choice(choices, arc_committed)
     if arc_choice and not (node_type == "LOCATION" and forced_actions):
         body = {"input": {"type": "CHOICE", "choiceId": arc_choice["id"]}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
         input_desc = f"CHOICE:{arc_choice['id']} (arc)"
-        arc_committed = True
+        if str(arc_choice["id"]).startswith("arc_commit_"):
+            arc_committed = True
     # 4-A: 상점 구매 — 현 장소 진열에서 살 수 있는 첫 품목 1회 구매
     elif node_type == "LOCATION" and not forced_actions and not args.agent and (shop_target := next(
         (it for s in (state.get("lastResult", {}).get("ui", {}) or {}).get("shops", [])
@@ -647,10 +647,12 @@ for turn_i in range(MAX_TURNS):
 
     if status == 402:
         # 포인트 소진 — 계속 돌려봤자 전 턴 402라 즉시 중단 (침묵 진행 금지)
+        submit_errors.append({"turn": turn_i + 1, "status": status})
         print(f"  T{turn_i+1}: 포인트 소진(402) — 턴 제출 불가, 루프 중단", flush=True)
         break
 
     if status not in (200, 201):
+        submit_errors.append({"turn": turn_i + 1, "status": status})
         print(f"  T{turn_i+1}: ERROR {status} - {json.dumps(resp)[:100]}", flush=True)
         _, state = api("GET", f"/runs/{run_id}")
         current_turn = state.get("run", {}).get("currentTurnNo", current_turn)
@@ -1285,6 +1287,10 @@ def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
     서버·콘텐츠·모델·테스트 설정이 다른 런은 판정 창에 넣지 않는다. 설정을
     확인할 수 없는 런은 단독 계측으로 남겨 거짓 PASS/FAIL을 만들지 않는다.
     """
+    # 실패한 턴이 섞인 런은 다음 런의 누적 판정 표본으로 쓰지 않는다.
+    # 현재 런 수치는 참고용 단독 계측으로만 계산한다.
+    if submit_errors:
+        return [entry]
     path = os.path.join("playtest-reports", ledger_name)
     ledger = []
     try:
@@ -1668,8 +1674,8 @@ all_checks = {
     #   못 잡았다. 15턴 요청 → 3턴 사망도 통과하고, 그 얇은 표본으로 나머지
     #   게이트가 전부 PASS 를 찍는다 (분모가 작으면 위반도 안 나온다).
     #   엔딩 자연 종료는 정당하므로 예외. 그 외에는 요청 턴의 50% 이상 요구.
-    "V0_turns_executed": len(turn_logs) > 0 and (
-        _run_ended_naturally or len(turn_logs) >= MAX_TURNS * 0.5),
+    "V0_turns_executed": turns_executed_pass(
+        len(turn_logs), MAX_TURNS, _run_ended_naturally, submit_errors),
     # [2026-09-01] AUTONOMOUS 팩은 incidents 부재가 구조적 — 게이트 면제
     "V1_incidents": len(incidents) > 0 or _autonomous_pack,
     "V2_encounter": enc_pass >= 2,
@@ -1699,6 +1705,8 @@ for k, v in all_checks.items():
     print(f"  {'✅' if v else '❌'} {k}", flush=True)
 if len(turn_logs) == 0:
     print("❌ 하드 FAIL: 실행 턴 0건 — 종합 판정 무효 (포인트 잔액/서버 상태 확인)", flush=True)
+elif submit_errors:
+    print(f"❌ 턴 제출 실패 {len(submit_errors)}건 — V0 실패: {submit_errors}", flush=True)
 elif len(turn_logs) < MAX_TURNS * 0.5:
     print(f"⚠️ 요청 턴수 미달: {len(turn_logs)}/{MAX_TURNS} — 표본 부족, 게이트 판정 주의", flush=True)
 
@@ -2010,6 +2018,7 @@ output = {
     },
     "runId": run_id,
     "turns": turn_logs,
+    "submitErrors": submit_errors,
     "finalState": {
         "hp": run_state.get("hp"),
         "gold": run_state.get("gold"),
