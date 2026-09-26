@@ -340,6 +340,23 @@ def check_l2_contract(pack):
     for fn, err in pack.parse_errors:
         f.append(Finding("ERROR", "JSON_PARSE", fn, f"JSON 파싱 실패: {err}"))
 
+    # 첫 HUB 재진입 저작 문구는 실제 거점 장소의 비어 있지 않은 본문이어야 한다.
+    scenario = pack.raw.get("scenario.json") or {}
+    hub = scenario.get("hub") if isinstance(scenario, dict) else None
+    hub_location_id = hub.get("locationId") if isinstance(hub, dict) else None
+    for loc in pack.locations:
+        if not isinstance(loc, dict) or "firstReturnNarrative" not in loc:
+            continue
+        text = loc["firstReturnNarrative"]
+        if (not isinstance(text, str) or not text.strip()
+                or loc.get("locationId") != hub_location_id
+                or loc.get("hubAccessible") is not True):
+            f.append(Finding(
+                "ERROR", "FIRST_RETURN_NARRATIVE_SHAPE",
+                f'locations.json:{loc.get("locationId", "?")}.firstReturnNarrative',
+                "첫 재진입 문구는 HUB locationId의 접근 가능한 장소에만 비어 있지 않은 문자열로 둬야 함",
+            ))
+
     # 플레이어에게 보이거나 서술 프롬프트에 주입되는 저작 문구는 정본 화폐
     # 어휘만 사용한다. 검색 키워드는 유저의 구어 입력을 받아야 하므로 제외하고,
     # HOLD 팩은 출시 대상에서 빠진 동안 이 계약의 차단 대상이 아니다.

@@ -366,6 +366,8 @@
         "장부",
         "조작",
         "필체",
+        "덧쓴",
+        "덧씌운",
         "서명",
         "잉크",
         "셋째",
@@ -379,6 +381,14 @@
       "nextHint": "조작 흔적이 확인됐다. 이건 단순 도난이 아니라 내부 공모다. 문서에 접근할 수 있는 사람이 누군지 알아내야 한다. 경비대나 상위 권력자 쪽을 파헤쳐봐라.",
       "nextFactId": "FACT_INSIDE_JOB",
       "nextHintLocationIds": ["LOC_GUARD", "LOC_NOBLE"],
+      "withheldNextStep": {
+        "NPC_EDRIC_VEIL": {
+          "line": "지금은 더 단정할 수 없소. 장부의 잉크와 필체가 같은지 직접 살펴보시오.",
+          "anchors": ["잉크", "필체"],
+          "choiceLabel": "장부의 잉크와 필체 차이를 직접 살핀다",
+          "targetLocationId": "LOC_MARKET"
+        }
+      },
       "knownBy": [
         "NPC_EDRIC_VEIL",
         "NPC_MOON_SEA"

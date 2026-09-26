@@ -4,6 +4,19 @@ from audit_content import Pack, check_l2_contract
 
 
 class FactFollowUpContractTests(unittest.TestCase):
+    def test_first_return_narrative_needs_hub_location_and_nonempty_text(self):
+        pack = Pack("star_sand_v1")
+        inn = next(loc for loc in pack.locations if loc.get("locationId") == "LOC_SS_INN")
+        inn["firstReturnNarrative"] = "   "
+        rules = {finding.rule for finding in check_l2_contract(pack)}
+        self.assertIn("FIRST_RETURN_NARRATIVE_SHAPE", rules)
+
+        pack = Pack("star_sand_v1")
+        dock = next(loc for loc in pack.locations if loc.get("locationId") == "LOC_SS_DOCK")
+        dock["firstReturnNarrative"] = "부두로 돌아갔다."
+        rules = {finding.rule for finding in check_l2_contract(pack)}
+        self.assertIn("FIRST_RETURN_NARRATIVE_SHAPE", rules)
+
     def test_location_and_item_display_currency_are_audited(self):
         pack = Pack("graymar_v1")
         pack.raw["locations.json"][0]["name"] = "금화 시장"
