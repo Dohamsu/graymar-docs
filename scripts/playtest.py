@@ -15,6 +15,7 @@ import json, time, uuid, random, sys, argparse, os, subprocess, re, glob
 
 from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 from playtest_arc_choice import select_priority_arc_choice
+from playtest_finale_route import choose_finale_input
 from playtest_gate_ledger import PUBLIC_LLM_SETTINGS_FIELDS, make_gate_cohort, select_gate_window
 from playtest_run_gate import turns_executed_pass
 
@@ -36,18 +37,26 @@ parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
 parser.add_argument("--scenario", default=None, help="시나리오 팩 ID (default: 서버 기본=graymar_v1)")
 parser.add_argument("--agent", default=None, help="에이전트 플레이어 페르소나 (coercer|chatty|weirdo|brawler) — LLM이 서술을 읽고 의도 연속 플레이 + 위화감 자동 노트")
 parser.add_argument("--agent-model", default="openai/gpt-4.1-mini", help="에이전트 플레이어 LLM 모델 (OpenRouter)")
+parser.add_argument("--finale-route", choices=["expose-corruption"], default=None,
+                    help="그레이마르 고발 노선의 단서→커밋→3막→명시 결말을 실제 플레이 입력으로 추적")
 parser.add_argument("--turn-delay", type=float, default=0, help="턴 간 대기 초 (인간 페이스 모사 — AUTONOMOUS 팩 시드/디렉터 검증용)")
 parser.add_argument("--new-account", action="store_true", help="정본 테스터 대신 새 계정 생성 (기본: playtest@test.com 재사용)")
+parser.add_argument("--account-email", default=None,
+                    help="기존 @test.com 테스트 계정을 재사용 (추가 포인트 발급 없이 후속 런)")
 parser.add_argument("--skip-version-check", action="store_true",
                     help="preflight 서버 버전 해시 대조 생략 (의도적으로 구버전/원격 빌드를 테스트할 때)")
 args = parser.parse_args()
+if args.finale_route and (args.agent or args.forced_action):
+    parser.error("--finale-route 는 --agent/--forced-action 과 함께 쓸 수 없습니다")
+if args.account_email and (args.new_account or not args.account_email.endswith("@test.com")):
+    parser.error("--account-email 은 기존 @test.com 계정에만 단독으로 지정할 수 있습니다")
 
 BASE = args.base
 MAX_TURNS = args.turns
 _run_ended_naturally = False  # [M1] 엔딩 도달 여부 — V0 부분 실행 판정 예외
 # 정본 테스터 계정 재사용 (register 409 → login fallback). --new-account 시에만 새로 생성.
 # 어드민 집계 제외·정리 대상은 테스트 도메인 기준 (server/src/common/tester.util.ts).
-EMAIL = f"playtest_{int(time.time())}@test.com" if args.new_account else "playtest@test.com"
+EMAIL = args.account_email or (f"playtest_{int(time.time())}@test.com" if args.new_account else "playtest@test.com")
 from playtest_env import playtest_password  # 보안 감사 2026-09-07 M7 — 평문 리터럴 제거
 PASSWORD = playtest_password()
 NICKNAME = "Tester"
@@ -422,6 +431,14 @@ _GATE_RUNTIME_FLAGS = (
 _PACK_ID = args.scenario or "graymar_v1"
 import os as _os
 _CONTENT_DIR = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", _PACK_ID)
+_FINALE_STAGE_LOCATIONS = []
+if args.finale_route:
+    if _PACK_ID != "graymar_v1":
+        parser.error("--finale-route 는 현재 graymar_v1 에서만 지원합니다")
+    with open(_os.path.join(_CONTENT_DIR, "arc_events.json"), encoding="utf-8") as _stage_file:
+        _arc_events = json.load(_stage_file)
+    _FINALE_STAGE_LOCATIONS = [stage["locationId"] for stage in
+                               sorted(_arc_events["EXPOSE_CORRUPTION"], key=lambda s: s["stage"])]
 _GATE_COHORT = make_gate_cohort(
     _SERVER_HASH,
     _SERVER_START_TIME,
@@ -435,8 +452,10 @@ _GATE_COHORT = make_gate_cohort(
         "gender": args.gender,
         "characterName": args.character_name,
         "newAccount": args.new_account,
+        "existingTestAccount": bool(args.account_email),
         "agent": args.agent,
         "agentModel": args.agent_model if args.agent else None,
+        "finaleRoute": args.finale_route,
         "choiceRate": args.choice_rate,
         "locationTurns": args.loc_turns,
         "forcedActions": args.forced_action,
@@ -528,8 +547,14 @@ for turn_i in range(MAX_TURNS):
 
     # 명시적 결말은 커밋 후에도 클릭해야 한다. 기존 arc_ 1회 게이트는
     # arc_commit_* 을 클릭한 뒤 arc_finale 까지 막아 완주 검증을 놓쳤다.
+    finale_input = choose_finale_input(state, choices, _FINALE_STAGE_LOCATIONS) if args.finale_route else None
     arc_choice = select_priority_arc_choice(choices, arc_committed)
-    if arc_choice and not (node_type == "LOCATION" and forced_actions):
+    if finale_input:
+        body = {"input": finale_input, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
+        input_desc = f"FINALE:{(finale_input.get('choiceId') or finale_input.get('text', ''))[:50]}"
+        if str(finale_input.get("choiceId", "")).startswith("arc_commit_"):
+            arc_committed = True
+    elif arc_choice and not (node_type == "LOCATION" and forced_actions):
         body = {"input": {"type": "CHOICE", "choiceId": arc_choice["id"]}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
         input_desc = f"CHOICE:{arc_choice['id']} (arc)"
         if str(arc_choice["id"]).startswith("arc_commit_"):
