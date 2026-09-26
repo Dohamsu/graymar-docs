@@ -3311,7 +3311,7 @@
       },
       {
         "topicId": "TOPIC_RATKING_OLD_COINS",
-        "text": "몰락 전에 모으던 옛 동전 몇 닢 · 값어치는 없지만 버리게 되지 않음",
+        "text": "몰락 전에 모으던 낡은 주화 · 값어치는 없지만 버리게 되지 않음",
         "keywords": [
           "동전",
           "수집",
@@ -4556,7 +4556,7 @@
         },
         "DUSK": {
           "locationId": "LOC_TAVERN",
-          "activity": "선술집 문 앞에서 동전을 구걸하며 들어오는 사람들을 관찰한다",
+          "activity": "선술집 문 앞에서 잔돈을 구걸하며 들어오는 사람들을 관찰한다",
           "interactable": true
         },
         "NIGHT": {
@@ -4948,7 +4948,7 @@
         },
         "DAY": {
           "locationId": "LOC_MARKET",
-          "activity": "시장 광장에서 거리 공연을 하며 동전을 모은다",
+          "activity": "시장 광장에서 거리 공연을 하며 팁을 모은다",
           "interactable": true
         },
         "DUSK": {
@@ -4979,7 +4979,7 @@
       {
         "topicId": "TOPIC_BG_BARD_TIPS",
         "category": "WORK",
-        "text": "평소보다 잘 떨어진 오늘 동전 · 손님들 기분이 좋은 모양",
+        "text": "평소보다 후한 오늘 팁 · 손님들 기분이 좋은 모양",
         "keywords": [
           "동전",
           "팁",

@@ -32,7 +32,7 @@
         },
         {
           "id": "mkt_rumor_bribe",
-          "label": "금화 한 닢을 건네며 상세한 이야기를 요청한다",
+          "label": "골드를 내밀며 상세한 이야기를 요청한다",
           "hint": "관련 인물의 이름을 알아낼 수 있다",
           "affordance": "BRIBE",
           "riskLevel": 2
@@ -161,7 +161,7 @@
         {
           "id": "mkt_shop_bribe",
           "label": "카운터 아래 특별한 물건이 있느냐고 귀띔한다",
-          "hint": "추가 금화로 희귀 아이템을 볼 수 있다",
+          "hint": "골드를 더 내면 희귀 아이템을 볼 수 있다",
           "affordance": "BRIBE",
           "riskLevel": 1
         },
@@ -236,7 +236,7 @@
         },
         {
           "id": "mkt_chk_bribe",
-          "label": "금화를 슬쩍 쥐어주며 지나간다",
+          "label": "골드를 슬쩍 쥐어주며 지나간다",
           "hint": "비용이 들지만 확실하다",
           "affordance": "BRIBE",
           "riskLevel": 2
@@ -415,7 +415,7 @@
         },
         {
           "id": "grd_chk_bribe",
-          "label": "검문 병사에게 은밀히 금화를 건넨다",
+          "label": "검문 병사에게 은밀히 골드를 건넨다",
           "hint": "병사에 따라 통할 수도 있다",
           "affordance": "BRIBE",
           "riskLevel": 2
@@ -656,7 +656,7 @@
         },
         {
           "id": "hbr_rumor_bribe",
-          "label": "조용한 구석으로 데려가 금화를 건넨다",
+          "label": "조용한 구석으로 데려가 골드를 건넨다",
           "hint": "화물선의 구체적 스케줄을 알아낸다",
           "affordance": "BRIBE",
           "riskLevel": 2
@@ -954,7 +954,7 @@
         },
         {
           "id": "slm_rumor_bribe",
-          "label": "금화를 테이블에 올려놓는다",
+          "label": "골드를 테이블에 올려놓는다",
           "hint": "{npc:NPC_INFO_BROKER}의 최신 정보를 모두 듣는다",
           "affordance": "BRIBE",
           "riskLevel": 1
@@ -1280,7 +1280,7 @@
         {
           "id": "mkt_rumor_n_bribe",
           "label": "경매에 참여하여 문서를 낙찰받는다",
-          "hint": "금화가 필요하지만 확실한 증거를 얻는다",
+          "hint": "골드가 필요하지만 확실한 증거를 얻는다",
           "affordance": "BRIBE",
           "riskLevel": 2
         },
@@ -1399,7 +1399,7 @@
         },
         {
           "id": "slm_rumor_n_bribe",
-          "label": "금화를 주며 기록할 수 있도록 천천히 말해달라고 한다",
+          "label": "골드를 내밀며 기록할 수 있도록 천천히 말해달라고 한다",
           "hint": "정식 증거로 쓸 수 있는 진술을 받는다",
           "affordance": "BRIBE",
           "riskLevel": 1
@@ -1586,7 +1586,7 @@
         },
         {
           "id": "mkt_enc_bus_tip",
-          "label": "동전을 던져주며 특별 곡을 요청한다",
+          "label": "골드를 내밀며 특별 곡을 요청한다",
           "hint": "더 은밀한 정보가 담긴 노래를 들을 수 있다",
           "affordance": "BRIBE",
           "riskLevel": 1
@@ -2300,7 +2300,7 @@
         {
           "id": "hbr_opp_gam_join",
           "label": "도박에 참여한다",
-          "hint": "금화를 딸 수 있지만 잃을 수도 있다",
+          "hint": "골드를 딸 수 있지만 잃을 수도 있다",
           "affordance": "TRADE",
           "riskLevel": 2
         },
@@ -3183,7 +3183,7 @@
     "friction": 3,
     "matchPolicy": "NEUTRAL",
     "payload": {
-      "sceneFrame": "시장 골목을 지나는데 갑자기 양쪽에서 사람들이 나타난다. 복면을 한 자들이 칼을 들고 다가오며 '금화를 내놓으면 살려두지'라고 말한다. 노련한 움직임으로 보아 흔한 소매치기가 아니다.",
+      "sceneFrame": "시장 골목을 지나는데 갑자기 양쪽에서 사람들이 나타난다. 복면을 한 자들이 칼을 들고 다가오며 '돈을 내놓으면 살려두지'라고 말한다. 노련한 움직임으로 보아 흔한 소매치기가 아니다.",
       "primaryNpcId": null,
       "choices": [
         {
@@ -4540,7 +4540,8 @@
       }
     ],
     "affordances": [
-      "ANY"
+      "ANY",
+      "TALK"
     ],
     "friction": 0,
     "matchPolicy": "NEUTRAL",
@@ -4557,9 +4558,9 @@
         },
         {
           "id": "slm_atm3_coin",
-          "label": "동전을 던져준다",
-          "hint": "음유시인의 감사를 받는다",
-          "affordance": "ANY",
+          "label": "음유시인에게 다른 항구의 노래를 청한다",
+          "hint": "다른 항구의 이야기를 들을 수 있다",
+          "affordance": "TALK",
           "riskLevel": 1
         }
       ],
@@ -5352,7 +5353,7 @@
         },
         {
           "id": "nob_rum_con_bribe",
-          "label": "금화를 건네며 더 구체적인 정보를 요청한다",
+          "label": "골드를 내밀며 더 구체적인 정보를 요청한다",
           "hint": "관련 인물의 이름을 알아낼 수 있다",
           "affordance": "BRIBE",
           "riskLevel": 2
@@ -6278,7 +6279,7 @@
         },
         {
           "id": "dck_rum_bm_bribe",
-          "label": "금화를 건네며 암시장 입장 방법을 산다",
+          "label": "골드를 내밀며 암시장 입장 방법을 산다",
           "hint": "확실한 접근법을 얻지만 노출 위험이 있다",
           "affordance": "BRIBE",
           "riskLevel": 2

@@ -8,7 +8,7 @@
     },
     {
       "id": "rumor_bribe",
-      "label": "금화를 건네며 더 물어본다",
+      "label": "골드를 내밀며 더 물어본다",
       "hint": "확실한 정보를 얻을 수 있다",
       "affordance": "BRIBE",
       "riskLevel": 2
@@ -86,7 +86,7 @@
     {
       "id": "shop_bribe",
       "label": "상인에게 특별 물건을 요청한다",
-      "hint": "금화를 더 내면 숨겨둔 물건을 보여준다",
+      "hint": "골드를 더 내면 숨겨둔 물건을 보여준다",
       "affordance": "BRIBE",
       "riskLevel": 1
     },
@@ -115,7 +115,7 @@
     {
       "id": "checkpoint_bribe",
       "label": "경비병에게 뇌물을 건넨다",
-      "hint": "금화가 필요하지만 빠르게 통과할 수 있다",
+      "hint": "골드가 필요하지만 빠르게 통과할 수 있다",
       "affordance": "BRIBE",
       "riskLevel": 2
     },

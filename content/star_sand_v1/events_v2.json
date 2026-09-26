@@ -923,7 +923,7 @@
         },
         {
           "id": "ss_dock_ship_bribe",
-          "label": "동전을 쥐여주고 입항 일정을 산다",
+          "label": "골드를 내밀고 입항 일정을 산다",
           "hint": "보고선의 목적에 대한 구체 정보를 얻는다",
           "affordance": "BRIBE",
           "riskLevel": 2

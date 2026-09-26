@@ -47,6 +47,7 @@ CONTENT = os.path.join(ROOT, "content")
 QUEST_STATE_RE = re.compile(r"^S[0-5]_[A-Z_]+$")
 # arc-state.ts ArcRoute 정본
 ARC_ROUTES = {"EXPOSE_CORRUPTION", "PROFIT_FROM_CHAOS", "ALLY_GUARD"}
+NONCANONICAL_CURRENCY_RE = re.compile(r"금화|은화|은전|동전|닢")
 
 # ID 접두사 → 정의가 사는 곳 (파일, 추출기)
 #   추출기는 로드된 JSON 을 받아 정의된 ID 집합을 돌려준다.
@@ -338,6 +339,41 @@ def check_l2_contract(pack):
 
     for fn, err in pack.parse_errors:
         f.append(Finding("ERROR", "JSON_PARSE", fn, f"JSON 파싱 실패: {err}"))
+
+    # 플레이어에게 보이거나 서술 프롬프트에 주입되는 저작 문구는 정본 화폐
+    # 어휘만 사용한다. 검색 키워드는 유저의 구어 입력을 받아야 하므로 제외하고,
+    # HOLD 팩은 출시 대상에서 빠진 동안 이 계약의 차단 대상이 아니다.
+    scenario = pack.raw.get("scenario.json") or {}
+    if isinstance(scenario, dict) and scenario.get("status") != "HOLD":
+        def walk_visible_currency(value, where):
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    if key in {"keywords", "tags", "_comment"}:
+                        continue
+                    walk_visible_currency(child, f"{where}.{key}")
+            elif isinstance(value, list):
+                for index, child in enumerate(value):
+                    identity = (
+                        child.get("eventId") or child.get("npcId") or child.get("factId")
+                        if isinstance(child, dict)
+                        else None
+                    )
+                    walk_visible_currency(child, f"{where}[{identity or index}]")
+            elif isinstance(value, str):
+                match = NONCANONICAL_CURRENCY_RE.search(value)
+                if match:
+                    f.append(Finding(
+                        "ERROR", "NONCANONICAL_CURRENCY", where,
+                        f'노출·서술 저작 문구에 "{match.group()}" 사용 — 골드 정본과 불일치',
+                    ))
+
+        for filename in (
+            "events_v2.json", "npcs.json", "suggested_choices.json",
+            "endings.json", "scenario.json", "facts.json",
+            "locations.json", "items.json", "shops.json",
+        ):
+            if filename in pack.raw:
+                walk_visible_currency(pack.raw[filename], filename)
 
     # 불변식 45 — questState 명명
     states = pack.quest.get("states") or []
