@@ -77,6 +77,10 @@ class DialogueAndWorldAuditTest(unittest.TestCase):
         self.assertEqual(AUDIT.count_dialogue_markers(text), (2, 2))
         self.assertEqual(AUDIT.count_dialogue_markers('문서에 "A"라고 썼다.'), (0, 0))
 
+    def test_empty_marker_does_not_pair_with_the_next_line_as_dialogue(self):
+        text = '@[이렌|NPC_SS_IREN] ""\n\n@[이렌|NPC_SS_IREN] "알겠어요."'
+        self.assertEqual(AUDIT.count_dialogue_markers(text), (1, 1))
+
     def test_bare_colon_speech_is_reviewed_without_treating_narration_as_dialogue(self):
         text = (
             '목소리 큰 생선상인: 조심하오.\n'

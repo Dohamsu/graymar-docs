@@ -141,7 +141,7 @@ def check_prompt_explicit(keyword: str) -> bool:
 def count_dialogue_markers(txt: str) -> tuple[int, int]:
     """큰따옴표 대사와 직전 마커를 동일 표본에서 센다 (coverage >100% 방지)."""
     marked = total = 0
-    for m in re.finditer(r'["\u201C]([^"\u201D]+)["\u201D]', txt):
+    for m in re.finditer(r'["\u201C]([^"\u201D\r\n]+)["\u201D]', txt):
         if len(m.group(1)) < 2:
             continue
         total += 1
