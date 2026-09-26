@@ -382,6 +382,27 @@ def check_l2_contract(pack):
                     "payload.tags 누락 — 이벤트 분류·매칭 신호 부재 (불변식 45)",
                 )
             )
+        payload = ev.get("payload") or {}
+        if "directedTriggerPhrases" in payload:
+            phrases = payload["directedTriggerPhrases"]
+            lead = payload.get("transitionLead")
+            anchors = payload.get("transitionAnchors")
+            valid = (payload.get("subsceneTransition") is True
+                     and isinstance(phrases, list) and bool(phrases)
+                     and all(isinstance(p, str) and p.strip() for p in phrases)
+                     and isinstance(lead, str) and bool(lead.strip())
+                     and isinstance(anchors, list) and bool(anchors)
+                     and all(isinstance(a, str) and a.strip() and a in lead for a in anchors)
+                     and ev.get("conditions") is None
+                     and isinstance(ev.get("affordances"), list)
+                     and bool(ev.get("affordances"))
+                     and isinstance(ev.get("gates"), list)
+                     and all(isinstance(g, dict) and g.get("type") == "COOLDOWN_TURNS"
+                             for g in ev["gates"]))
+            if not valid:
+                f.append(Finding("ERROR", "DIRECTED_SUBSCENE_SHAPE",
+                                 f"events_v2.json:{eid}:directedTriggerPhrases",
+                                 "명시 이동 트리거는 조건 없는 하위 무대와 비어 있지 않은 표현 배열에만 사용"))
 
     # arch/108 — 자연스러운 장비 획득 필드 모양 검사 (사문 배선 방지).
     # 새 콘텐츠 필드는 엔진이 못 읽는 모양으로 저작되면 조용히 무시된다 — 필수 검사.
@@ -411,6 +432,58 @@ def check_l2_contract(pack):
         if unknown:
             f.append(Finding("ERROR", "FACT_NEXT_HINT_LOCATION_REF", where,
                              f"후속 장소가 현재 팩에 정의되지 않음: {unknown}"))
+    # 후속 질문은 현재 인물·장소에서 실제로 물을 수 있어야 한다. 텍스트 힌트만
+    # 있는 경우와 달리 nextFactId 는 클릭 가능한 선택지로 소비된다.
+    for fid, fact in pack.facts.items():
+        if not isinstance(fact, dict):
+            continue
+        next_id = fact.get("nextFactId")
+        if next_id is not None:
+            where = f"facts.json:{fid}:nextFactId"
+            target = pack.facts.get(next_id) if isinstance(next_id, str) else None
+            if not isinstance(target, dict):
+                f.append(Finding("ERROR", "FACT_NEXT_QUESTION_REF", where,
+                                 "nextFactId 는 현재 팩의 fact ID여야 함"))
+            else:
+                shared_holders = set(fact.get("knownBy") or []) & set(target.get("knownBy") or [])
+                shared_places = set(fact.get("discoveryLocations") or []) & set(target.get("discoveryLocations") or [])
+                if not shared_holders or not shared_places:
+                    f.append(Finding("ERROR", "FACT_NEXT_QUESTION_UNREACHABLE", where,
+                                     "후속 fact 를 같은 NPC·장소에서 물을 수 없어 선택지가 생성되지 않음"))
+        reconfirm = fact.get("reconfirm")
+        if reconfirm is not None:
+            where = f"facts.json:{fid}:reconfirm"
+            valid = isinstance(reconfirm, dict) and bool(reconfirm)
+            if valid:
+                for npc_id, answer in reconfirm.items():
+                    if (npc_id not in (fact.get("knownBy") or [])
+                            or not isinstance(answer, dict)
+                            or any(not isinstance(answer.get(key), list)
+                                   or not answer[key]
+                                   or any(not isinstance(item, str) or not item.strip()
+                                          for item in answer[key])
+                                   for key in ("anchors", "lines"))):
+                        valid = False
+                        break
+            if not valid:
+                f.append(Finding("ERROR", "FACT_RECONFIRM_SHAPE", where,
+                                 "reconfirm 은 knownBy NPC별 비어 있지 않은 anchors·lines 문자열 배열이어야 함"))
+        withheld_steps = fact.get("withheldNextStep")
+        if withheld_steps is not None:
+            valid = (isinstance(withheld_steps, dict) and bool(withheld_steps)
+                     and all(npc_id in (fact.get("knownBy") or [])
+                             and isinstance(step, dict)
+                             and isinstance(step.get("line"), str) and step["line"].strip()
+                             and isinstance(step.get("anchors"), list) and bool(step["anchors"])
+                             and all(isinstance(anchor, str) and anchor.strip()
+                                     and anchor in step["line"] for anchor in step["anchors"])
+                             and isinstance(step.get("choiceLabel"), str) and step["choiceLabel"].strip()
+                             and step.get("targetLocationId") in loc_ids
+                             for npc_id, step in withheld_steps.items()))
+            if not valid:
+                f.append(Finding("ERROR", "FACT_WITHHELD_STEP_SHAPE",
+                                 f"facts.json:{fid}:withheldNextStep",
+                                 "보류 후속 행동은 보유 NPC별 line·anchors·choiceLabel·팩 내 targetLocationId 객체여야 함"))
     for n in pack.npcs:
         if not isinstance(n, dict):
             continue

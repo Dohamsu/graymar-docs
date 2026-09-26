@@ -52,6 +52,14 @@
       ],
       "nextHint": "내부자의 소행이라면 물건이 어디로 갔는지 추적할 수 있다. 밀수 경로나 비밀 하역 장소를 찾아라. 부두와 창고 쪽을 살펴봐라.",
       "nextHintLocationIds": ["LOC_HARBOR", "LOC_DOCKS_WAREHOUSE"],
+      "withheldNextStep": {
+        "NPC_EDRIC_VEIL": {
+          "line": "그 안쪽 사정은 지금 단정할 수 없소. 경비대 지구에서 원본 장부를 맡은 사람의 출입 기록부터 살펴보시오.",
+          "anchors": ["경비대 지구", "출입 기록"],
+          "choiceLabel": "경비대 지구에서 원본 장부 출입 기록을 살핀다",
+          "targetLocationId": "LOC_GUARD"
+        }
+      },
       "knownBy": [
         "NPC_DAME_ISOLDE",
         "NPC_EDRIC_VEIL",
@@ -369,6 +377,7 @@
         "LOC_GUARD"
       ],
       "nextHint": "조작 흔적이 확인됐다. 이건 단순 도난이 아니라 내부 공모다. 문서에 접근할 수 있는 사람이 누군지 알아내야 한다. 경비대나 상위 권력자 쪽을 파헤쳐봐라.",
+      "nextFactId": "FACT_INSIDE_JOB",
       "nextHintLocationIds": ["LOC_GUARD", "LOC_NOBLE"],
       "knownBy": [
         "NPC_EDRIC_VEIL",
@@ -377,6 +386,15 @@
       "versions": {
         "NPC_EDRIC_VEIL": "장부 셋째 칸 넷째 줄에 조작 흔적이 있다. 서명란 아래 다른 필체가 덧씌워져 있다.",
         "NPC_MOON_SEA": "문서 보관함에서 원본과 다른 사본이 발견됐다. 암호화된 메모로 기록해두었다."
+      },
+      "reconfirm": {
+        "NPC_EDRIC_VEIL": {
+          "anchors": ["셋째 칸 넷째 줄", "셋째 칸의 넷째 줄"],
+          "lines": [
+            "장부 셋째 칸 넷째 줄입니다. 서명란 아래에 다른 필체가 덧씌워져 있습니다.",
+            "조작 흔적은 셋째 칸 넷째 줄에 있습니다. 잉크와 필체가 다른 자리이지요."
+          ]
+        }
       },
       "rumored": [],
       "primarySources": [

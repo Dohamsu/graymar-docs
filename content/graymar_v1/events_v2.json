@@ -3670,6 +3670,7 @@
       }
     ],
     "affordances": [
+      "INVESTIGATE",
       "PERSUADE",
       "TALK",
       "OBSERVE"
@@ -3678,6 +3679,9 @@
     "matchPolicy": "NEUTRAL",
     "payload": {
       "subsceneTransition": true,
+      "directedTriggerPhrases": ["외곽 술집"],
+      "transitionLead": "경비대 지구의 길목을 따라 외곽 술집 앞까지 걸어가자, 열린 문 안에서 낮은 대화가 들린다.",
+      "transitionAnchors": ["경비대 지구", "외곽 술집"],
       "sceneFrame": "경비대 지구의 길목을 지나 외곽 술집 앞에 이르자, 열린 문 너머로 {npc:NPC_RENNICK}과 경비병 한 명이 은밀히 대화하는 모습이 보인다. 두 사람은 서로를 경계하면서도 무언가를 교환하는 중이다. {npc:NPC_RENNICK}이 당신을 발견하면 찰나의 당혹감을 보이지만, 곧 여유로운 미소를 짓는다.",
       "primaryNpcId": "NPC_RENNICK",
       "choices": [

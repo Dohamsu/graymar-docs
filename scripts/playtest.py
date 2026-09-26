@@ -33,6 +33,10 @@ parser.add_argument("--dry-run", action="store_true", help="LLM mock 모드 + �
 parser.add_argument("--choice-rate", type=float, default=0.25, help="LOCATION에서 CHOICE 선택 확률 (default: 0.25)")
 parser.add_argument("--forced-action", action="append", default=[],
                     help="다음 LOCATION 턴에 정확히 한 번 제출할 ACTION 텍스트 (여러 번 지정 가능)")
+parser.add_argument("--prefer-choice-prefix", default=None,
+                    help="고정 입력을 소비한 뒤 일치하는 LOCATION 선택지를 한 번 클릭 (표적 회귀용)")
+parser.add_argument("--first-go-choice-id", default=None,
+                    help="첫 HUB 이동에서 이 ID의 선택지를 우선 클릭 (표적 회귀용)")
 parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
 parser.add_argument("--scenario", default=None, help="시나리오 팩 ID (default: 서버 기본=graymar_v1)")
 parser.add_argument("--agent", default=None, help="에이전트 플레이어 페르소나 (coercer|chatty|weirdo|brawler) — LLM이 서술을 읽고 의도 연속 플레이 + 위화감 자동 노트")
@@ -520,6 +524,8 @@ last_input_desc = ""
 bought_items = set()   # 4-A: 상점 구매 1회/아이템 제한
 arc_committed = False  # 4-A: 아크 커밋 선택지 1회 클릭
 forced_actions = list(args.forced_action)  # 표적 회귀 입력 — 지정 순서대로 LOCATION에서만 소비
+preferred_choice_used = False
+first_go_choice_used = False
 
 for turn_i in range(MAX_TURNS):
     # 인간 플레이 페이스 모사 — AUTONOMOUS 팩은 Plot Seed 백그라운드 생성(60초~2분대
@@ -559,6 +565,12 @@ for turn_i in range(MAX_TURNS):
         input_desc = f"CHOICE:{arc_choice['id']} (arc)"
         if str(arc_choice["id"]).startswith("arc_commit_"):
             arc_committed = True
+    elif node_type == "LOCATION" and args.prefer_choice_prefix and not preferred_choice_used and not forced_actions and (preferred := next(
+        (c for c in choices if c.get("id", "").startswith(args.prefer_choice_prefix)), None
+    )):
+        body = {"input": {"type": "CHOICE", "choiceId": preferred["id"]}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
+        input_desc = f"CHOICE:{preferred['id']} (preferred)"
+        preferred_choice_used = True
     # 4-A: 상점 구매 — 현 장소 진열에서 살 수 있는 첫 품목 1회 구매
     elif node_type == "LOCATION" and not forced_actions and not args.agent and (shop_target := next(
         (it for s in (state.get("lastResult", {}).get("ui", {}) or {}).get("shops", [])
@@ -573,12 +585,17 @@ for turn_i in range(MAX_TURNS):
     # Determine input
     elif node_type == "HUB":
         target = None
+        if args.first_go_choice_id and not first_go_choice_used:
+            target = next((c for c in choices if c.get("id") == args.first_go_choice_id), None)
+            if target:
+                first_go_choice_used = True
         # 1) accept_quest / arc 커밋류 우선 (프롤로그·진행 게이트)
-        for c in choices:
-            cid = c.get("id", "")
-            if "accept" in cid.lower() or "quest" in cid.lower():
-                target = c
-                break
+        if not target:
+            for c in choices:
+                cid = c.get("id", "")
+                if "accept" in cid.lower() or "quest" in cid.lower():
+                    target = c
+                    break
         # 2) 이동 선택지 — 미방문 go_* 우선, 전부 방문했으면 라운드로빈
         if not target:
             go_choices = [
