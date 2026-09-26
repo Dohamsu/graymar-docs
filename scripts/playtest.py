@@ -15,7 +15,7 @@ import json, time, uuid, random, sys, argparse, os, subprocess, re, glob
 
 from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
 from playtest_arc_choice import select_priority_arc_choice
-from playtest_finale_route import choose_finale_input
+from playtest_finale_route import choose_finale_input, finale_fallback_choices, verify_finale_route
 from playtest_gate_ledger import PUBLIC_LLM_SETTINGS_FIELDS, make_gate_cohort, select_gate_window
 from playtest_run_gate import turns_executed_pass
 
@@ -41,8 +41,10 @@ parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
 parser.add_argument("--scenario", default=None, help="시나리오 팩 ID (default: 서버 기본=graymar_v1)")
 parser.add_argument("--agent", default=None, help="에이전트 플레이어 페르소나 (coercer|chatty|weirdo|brawler) — LLM이 서술을 읽고 의도 연속 플레이 + 위화감 자동 노트")
 parser.add_argument("--agent-model", default="openai/gpt-4.1-mini", help="에이전트 플레이어 LLM 모델 (OpenRouter)")
-parser.add_argument("--finale-route", choices=["expose-corruption"], default=None,
-                    help="그레이마르 고발 노선의 단서→커밋→3막→명시 결말을 실제 플레이 입력으로 추적")
+parser.add_argument("--finale-route", choices=["expose-corruption", "profit-from-chaos", "ally-guard"], default=None,
+                    help="그레이마르 선택 노선의 단서→커밋→3막→명시 결말을 실제 플레이 입력으로 추적")
+parser.add_argument("--finale-stage-mode", choices=["full", "early"], default="full",
+                    help="결말 검증: full=3막 모두 완료(기본), early=S5 안전망으로 3막 이전 명시 종료")
 parser.add_argument("--turn-delay", type=float, default=0, help="턴 간 대기 초 (인간 페이스 모사 — AUTONOMOUS 팩 시드/디렉터 검증용)")
 parser.add_argument("--new-account", action="store_true", help="정본 테스터 대신 새 계정 생성 (기본: playtest@test.com 재사용)")
 parser.add_argument("--account-email", default=None,
@@ -436,13 +438,14 @@ _PACK_ID = args.scenario or "graymar_v1"
 import os as _os
 _CONTENT_DIR = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "content", _PACK_ID)
 _FINALE_STAGE_LOCATIONS = []
+_FINALE_ROUTE_ID = args.finale_route.upper().replace("-", "_") if args.finale_route else None
 if args.finale_route:
     if _PACK_ID != "graymar_v1":
         parser.error("--finale-route 는 현재 graymar_v1 에서만 지원합니다")
     with open(_os.path.join(_CONTENT_DIR, "arc_events.json"), encoding="utf-8") as _stage_file:
         _arc_events = json.load(_stage_file)
     _FINALE_STAGE_LOCATIONS = [stage["locationId"] for stage in
-                               sorted(_arc_events["EXPOSE_CORRUPTION"], key=lambda s: s["stage"])]
+                               sorted(_arc_events[_FINALE_ROUTE_ID], key=lambda s: s["stage"])]
 _GATE_COHORT = make_gate_cohort(
     _SERVER_HASH,
     _SERVER_START_TIME,
@@ -553,8 +556,10 @@ for turn_i in range(MAX_TURNS):
 
     # 명시적 결말은 커밋 후에도 클릭해야 한다. 기존 arc_ 1회 게이트는
     # arc_commit_* 을 클릭한 뒤 arc_finale 까지 막아 완주 검증을 놓쳤다.
-    finale_input = choose_finale_input(state, choices, _FINALE_STAGE_LOCATIONS) if args.finale_route else None
-    arc_choice = select_priority_arc_choice(choices, arc_committed)
+    finale_input = choose_finale_input(state, choices, _FINALE_STAGE_LOCATIONS, _FINALE_ROUTE_ID, args.finale_stage_mode) if args.finale_route else None
+    # 목적 노선에서 선택지가 잠깐 안 보인다고 다른 노선을 자동 커밋하지 않는다.
+    arc_choice = select_priority_arc_choice(choices, arc_committed) if not args.finale_route else None
+    fallback_choices = finale_fallback_choices(choices) if args.finale_route else choices
     if finale_input:
         body = {"input": finale_input, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
         input_desc = f"FINALE:{(finale_input.get('choiceId') or finale_input.get('text', ''))[:50]}"
@@ -591,7 +596,7 @@ for turn_i in range(MAX_TURNS):
                 first_go_choice_used = True
         # 1) accept_quest / arc 커밋류 우선 (프롤로그·진행 게이트)
         if not target:
-            for c in choices:
+            for c in fallback_choices:
                 cid = c.get("id", "")
                 if "accept" in cid.lower() or "quest" in cid.lower():
                     target = c
@@ -599,7 +604,7 @@ for turn_i in range(MAX_TURNS):
         # 2) 이동 선택지 — 미방문 go_* 우선, 전부 방문했으면 라운드로빈
         if not target:
             go_choices = [
-                c for c in choices
+                c for c in fallback_choices
                 if "go_" in c.get("id", "").lower() or "loc_" in c.get("id", "").lower()
             ]
             if go_choices:
@@ -611,8 +616,8 @@ for turn_i in range(MAX_TURNS):
                     order = {cid: i for i, cid in enumerate(visited_go_choices)}
                     target = min(go_choices, key=lambda c: order.get(c.get("id"), -1))
         # 3) 첫 번째 선택지 fallback
-        if not target and choices:
-            target = choices[0]
+        if not target and fallback_choices:
+            target = fallback_choices[0]
         if target and ("go_" in target.get("id", "").lower() or "loc_" in target.get("id", "").lower()):
             tid = target.get("id")
             if tid in visited_go_choices:
@@ -661,9 +666,9 @@ for turn_i in range(MAX_TURNS):
             body = {"input": {"type": "ACTION", "text": "다른 장소로 이동한다"}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
             input_desc = "ACTION:move_location"
             loc_turns = 0
-        elif choices and random.random() < args.choice_rate:
+        elif fallback_choices and random.random() < args.choice_rate:
             # go_hub은 제외 — 의도치 않은 조기 복귀 방지
-            loc_choices = [c for c in choices if c.get("id", "") != "go_hub"]
+            loc_choices = [c for c in fallback_choices if c.get("id", "") != "go_hub"]
             if loc_choices:
                 c = random.choice(loc_choices)
                 body = {"input": {"type": "CHOICE", "choiceId": c.get("id", "")}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
@@ -722,6 +727,8 @@ for turn_i in range(MAX_TURNS):
     log_entry = {
         "turn": turn_i + 1,
         "turnNo": submitted_turn,
+        # 조기 피날레의 사전 조건은 결말 처리 *전* 상태로 검증한다.
+        "questStateBefore": (state.get("runState") or {}).get("questState"),
         "nodeType": node_type,
         "input": input_desc,
         "hp": hp,
@@ -729,6 +736,9 @@ for turn_i in range(MAX_TURNS):
         "resolveOutcome": resolve,
         "nodeOutcome": node_outcome,
         "events": [e.get("kind", "") for e in events],
+        # P5: 종료 장면의 확정 루트·보상과 서술을 같은 리포트에서 대조한다.
+        "endingResult": server_result.get("ui", {}).get("endingResult") if node_outcome == "RUN_ENDED" else None,
+        "settlementEvents": [e.get("text", "") for e in events if "QUEST_REWARD_SETTLE" in (e.get("tags") or [])],
         "narrative": narrative if narrative else "",
         # V11: 빈 서술(DONE인데 출력 없음)과 FAILED/TIMEOUT을 구분하기 위한 상태 기록
         "llmStatus": llm_result.get("status", "") if isinstance(llm_result, dict) else "",
@@ -785,6 +795,15 @@ run_state = final_state.get("runState", {})
 npc_states = run_state.get("npcStates", {})
 world_state = run_state.get("worldState", {})
 memory = final_state.get("memory", {})
+finale_verification = verify_finale_route(
+    _FINALE_ROUTE_ID,
+    run_state.get("arcState"),
+    turn_logs,
+    args.finale_stage_mode,
+    run_state.get("questState"),
+) if args.finale_route else None
+if finale_verification:
+    print(f"[Finale route/{args.finale_stage_mode}] {'PASS' if finale_verification['pass'] else 'FAIL'} — requested={_FINALE_ROUTE_ID}, committed={finale_verification['committedRoute']}, ending={finale_verification['endingRoute']}, stages={finale_verification['completedStages']}, explicit={finale_verification['explicitFinale']}", flush=True)
 
 print("\n" + "=" * 60, flush=True)
 print("플레이테스트 검증 결과", flush=True)
@@ -2064,6 +2083,8 @@ output = {
     "finalState": {
         "hp": run_state.get("hp"),
         "gold": run_state.get("gold"),
+        "questState": run_state.get("questState"),
+        "arcState": run_state.get("arcState"),
         "npcStates": npc_states,
         "worldState": {
             "hubHeat": world_state.get("hubHeat"),
@@ -2075,6 +2096,7 @@ output = {
         "discoveredQuestFacts": discovered_facts,
     },
     "verification": all_checks,
+    "finaleVerification": finale_verification,
     "promptBudget": prompt_budget_metrics,
     "narrativeMetrics": narrative_metrics,
     "outcomeDistribution": outcome_distribution,
@@ -2201,3 +2223,5 @@ print(f"=== 플레이테스트 완료 ===", flush=True)
 # V0 하드 FAIL — 0턴 실행은 exit 1 (CI/자동화에서 침묵 통과 방지)
 if len(turn_logs) == 0:
     sys.exit(1)
+if finale_verification and not finale_verification["pass"]:
+    sys.exit(3)

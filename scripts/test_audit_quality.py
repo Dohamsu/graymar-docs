@@ -57,6 +57,20 @@ class PackPhaseAuditTest(unittest.TestCase):
 
 
 class DialogueAndWorldAuditTest(unittest.TestCase):
+    def test_narration_audit_masks_curly_and_straight_dialogue_without_shifting_offsets(self):
+        text = (
+            '그녀는 고개를 끄덕인다.\n'
+            '@[로자|NPC_ROSA] “자료를 확인했습니다.”\n'
+            '@[에드릭|NPC_EDRIC] "나도 확인했습니다."\n'
+            '그러나 서술은 여기서 마무리합니다.'
+        )
+        masked = AUDIT.mask_quoted_dialogue(text)
+        self.assertEqual(len(masked), len(text))
+        self.assertEqual(masked.index('그러나'), text.index('그러나'))
+        matches = list(AUDIT.HAPSYO_NARR_PAT.finditer(masked))
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0].start(), text.index('리합니다.'))
+
     def test_hangul_number_coin_and_chopsticks_with_particles_are_detected(self):
         self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['닢'], '스물여섯 닢이 모자랐다'))
         self.assertIsNotNone(re.search(AUDIT.CURRENCY_FORBID['은전'], '은전 몇 개가 손바닥에 놓였다'))
@@ -108,6 +122,13 @@ class DialogueAndWorldAuditTest(unittest.TestCase):
         self.assertEqual(issue['cat'], 'speaker_cap')
         self.assertEqual(issue['speaker_count'], 3)
         self.assertIsNone(AUDIT.find_speaker_cap_issue(7, text.splitlines()[0]))
+
+    def test_repeated_draft_after_self_correction_is_a_real_violation(self):
+        paragraph = '선술집 문이 열리는 소리에 로넨이 움찔했다. 그는 외투 자락을 만지작거렸다.'
+        text = f'{paragraph}\n\n대사가 틀렸습니다. 수정하겠습니다.\n\n{paragraph}'
+        issue = AUDIT.find_self_correction_issue(1, text)
+        self.assertEqual(issue['cat'], 'self_correction_leak')
+        self.assertIsNone(AUDIT.find_self_correction_issue(1, paragraph))
 
 
 if __name__ == '__main__':

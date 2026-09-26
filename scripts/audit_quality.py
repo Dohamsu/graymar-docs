@@ -116,6 +116,15 @@ def is_inside_dialogue(txt: str, pos: int) -> bool:
     return txt[:pos].count('"') % 2 == 1
 
 
+def mask_quoted_dialogue(txt: str) -> str:
+    """서술 검사에서 직선/곡선 따옴표 발화를 가리고 원문 위치를 보존한다."""
+    return re.sub(
+        r'"[^"\r\n]*"|“[^”\r\n]*”',
+        lambda match: ' ' * len(match.group()),
+        txt,
+    )
+
+
 def is_inside_url(txt: str, pos: int) -> bool:
     """pos 위치가 /npc-portraits/xxx.webp URL 내부인지"""
     for m in URL_PAT.finditer(txt):
@@ -192,6 +201,27 @@ def find_speaker_cap_issue(turn_no: int, txt: str) -> dict | None:
         'context': ', '.join(speakers),
         'reason': '한 턴 NPC 대사 2명 이하 P0 규칙 위반',
     }
+
+
+def find_self_correction_issue(turn_no: int, txt: str) -> dict | None:
+    """모델의 자기 수정 선언 뒤 동일 도입이 재출력된 최종 본문을 검출한다."""
+    lines = txt.splitlines()
+    for i, line in enumerate(lines):
+        if not re.search(r'수정하겠습니다|다시\s*(?:작성|쓰)겠습니다|고쳐\s*쓰겠습니다', line):
+            continue
+        if '"' in line or '“' in line or '”' in line:
+            continue
+        before = re.sub(r'\s+', '', '\n'.join(lines[:i]))
+        after = re.sub(r'\s+', '', '\n'.join(lines[i + 1:]))
+        if len(before) >= 30 and len(after) >= 30 and after.startswith(before[:30]):
+            return {
+                'cat': 'self_correction_leak',
+                'turn': turn_no,
+                'keyword': '자기 수정 원고 중복',
+                'reason': '모델의 수정 선언과 중복 초안이 최종 본문에 노출됨',
+                'context': extract_context(txt, txt.find(line), 80),
+            }
+    return None
 
 
 def classify_issue(
@@ -375,7 +405,7 @@ def run_audit(run_id: str):
         stats['turns'] += 1
         stats['chars'] += len(txt)
 
-        narr_only = re.sub(r'"[^"]*"', '', txt)
+        narr_only = mask_quoted_dialogue(txt)
 
         # A. 예외 빠른 검사 (따옴표 홀수, 중첩 마커)
         if txt.count('"') % 2 == 1:
@@ -414,16 +444,16 @@ def run_audit(run_id: str):
         speaker_cap_issue = find_speaker_cap_issue(turn_no, txt)
         if speaker_cap_issue:
             buckets['real'].append(speaker_cap_issue)
+        self_correction_issue = find_self_correction_issue(turn_no, txt)
+        if self_correction_issue:
+            buckets['real'].append(self_correction_issue)
 
         # D. 전지적 서술 금지어
         for pat_str, label in META_NARR_FORBID:
             for m in re.finditer(pat_str, narr_only):
-                # narr_only 에서 찾았으므로 원본 txt 에서 대응 pos 찾기
+                # 마스킹이 길이를 보존하므로 중복 표현도 정확한 원문 위치를 쓴다.
                 needle = m.group(0)
-                orig_pos = txt.find(needle)
-                if orig_pos < 0:
-                    continue
-                cat, detail = classify_issue(needle, turn_no, txt, orig_pos)
+                cat, detail = classify_issue(needle, turn_no, txt, m.start())
                 detail['cat'] = f'meta_narr:{label}'
                 buckets[cat].append(detail)
 
