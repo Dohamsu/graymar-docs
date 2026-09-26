@@ -14,6 +14,7 @@
 import json, time, uuid, random, sys, argparse, os, subprocess, re, glob
 
 from invite_util import add_invite_code  # arch/107 §8 비공개 테스트 가입 게이트
+from playtest_gate_ledger import select_gate_window
 
 # --- CLI 인자 ---
 parser = argparse.ArgumentParser(description="Playtest runner")
@@ -1239,7 +1240,8 @@ def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
     추가로 필요해 창을 직접 다룬다.
 
     원장은 playtest-reports/ 아래 로컬 파일이며 런별 서버 해시를 함께 남긴다.
-    코드 변경을 사이에 둔 창은 해석 시 분리할 것.
+    서버 버전이 다른 런은 판정 창에 넣지 않는다. 버전을 모르는 런은 단독
+    계측으로 남겨 기존 런을 섞어 거짓 PASS/FAIL을 만들지 않는다.
     """
     path = os.path.join("playtest-reports", ledger_name)
     ledger = []
@@ -1259,7 +1261,7 @@ def append_gate_ledger(ledger_name, entry, pool_runs, keep=V12_LEDGER_KEEP):
             json.dump(ledger, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"  ⚠️ 원장 저장 실패 (판정은 계속): {e}", flush=True)
-    return ledger[-pool_runs:]
+    return select_gate_window(ledger, entry.get("server", ""), pool_runs)
 print("\n[V12] 프롬프트 예산 (재비대 가드):", flush=True)
 prompt_sizes = []
 # V14-b 재사용 캐시 — 같은 프롬프트를 두 번 받아오지 않는다 (turnNo → 합친 본문)
