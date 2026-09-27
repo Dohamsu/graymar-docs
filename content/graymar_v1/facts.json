@@ -386,6 +386,10 @@
           "line": "지금은 더 단정할 수 없소. 장부의 잉크와 필체가 같은지 직접 살펴보시오.",
           "anchors": ["잉크", "필체"],
           "choiceLabel": "장부의 잉크와 필체 차이를 직접 살핀다",
+          "partialNextStep": {
+            "line": "겉면만으로는 판별할 수 없다. 종이를 빛에 기울여 잉크가 겹친 순서를 비교한다.",
+            "choiceLabel": "장부를 빛에 기울여 잉크가 겹친 순서를 비교한다"
+          },
           "targetLocationId": "LOC_MARKET"
         }
       },
