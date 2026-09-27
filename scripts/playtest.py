@@ -34,7 +34,9 @@ parser.add_argument("--choice-rate", type=float, default=0.25, help="LOCATION에
 parser.add_argument("--forced-action", action="append", default=[],
                     help="다음 LOCATION 턴에 정확히 한 번 제출할 ACTION 텍스트 (여러 번 지정 가능)")
 parser.add_argument("--prefer-choice-prefix", default=None,
-                    help="고정 입력을 소비한 뒤 일치하는 LOCATION 선택지를 한 번 클릭 (표적 회귀용)")
+                    help="고정 입력을 소비한 뒤 일치하는 LOCATION 선택지를 우선 클릭 (표적 회귀용)")
+parser.add_argument("--prefer-choice-count", type=int, default=1,
+                    help="우선 선택지를 클릭할 최대 횟수 (default: 1)")
 parser.add_argument("--first-go-choice-id", default=None,
                     help="첫 HUB 이동에서 이 ID의 선택지를 우선 클릭 (표적 회귀용)")
 parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
@@ -56,6 +58,8 @@ if args.finale_route and (args.agent or args.forced_action):
     parser.error("--finale-route 는 --agent/--forced-action 과 함께 쓸 수 없습니다")
 if args.account_email and (args.new_account or not args.account_email.endswith("@test.com")):
     parser.error("--account-email 은 기존 @test.com 계정에만 단독으로 지정할 수 있습니다")
+if args.prefer_choice_count < 1:
+    parser.error("--prefer-choice-count 는 1 이상이어야 합니다")
 
 BASE = args.base
 MAX_TURNS = args.turns
@@ -527,7 +531,7 @@ last_input_desc = ""
 bought_items = set()   # 4-A: 상점 구매 1회/아이템 제한
 arc_committed = False  # 4-A: 아크 커밋 선택지 1회 클릭
 forced_actions = list(args.forced_action)  # 표적 회귀 입력 — 지정 순서대로 LOCATION에서만 소비
-preferred_choice_used = False
+preferred_choice_uses = 0
 first_go_choice_used = False
 
 for turn_i in range(MAX_TURNS):
@@ -570,12 +574,12 @@ for turn_i in range(MAX_TURNS):
         input_desc = f"CHOICE:{arc_choice['id']} (arc)"
         if str(arc_choice["id"]).startswith("arc_commit_"):
             arc_committed = True
-    elif node_type == "LOCATION" and args.prefer_choice_prefix and not preferred_choice_used and not forced_actions and (preferred := next(
+    elif node_type == "LOCATION" and args.prefer_choice_prefix and preferred_choice_uses < args.prefer_choice_count and not forced_actions and (preferred := next(
         (c for c in choices if c.get("id", "").startswith(args.prefer_choice_prefix)), None
     )):
         body = {"input": {"type": "CHOICE", "choiceId": preferred["id"]}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
         input_desc = f"CHOICE:{preferred['id']} (preferred)"
-        preferred_choice_used = True
+        preferred_choice_uses += 1
     # 4-A: 상점 구매 — 현 장소 진열에서 살 수 있는 첫 품목 1회 구매
     elif node_type == "LOCATION" and not forced_actions and not args.agent and (shop_target := next(
         (it for s in (state.get("lastResult", {}).get("ui", {}) or {}).get("shops", [])
