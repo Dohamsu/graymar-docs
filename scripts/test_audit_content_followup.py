@@ -104,6 +104,25 @@ class FactFollowUpContractTests(unittest.TestCase):
         rules = {finding.rule for finding in check_l2_contract(pack)}
         self.assertIn("FACT_WITHHELD_STEP_SHAPE", rules)
 
+    def test_nested_withheld_steps_need_valid_text_and_target(self):
+        invalid_steps = (
+            {"partialNextStep": {"line": " ", "choiceLabel": "다시 살핀다"}},
+            {"partialNextStep": {"line": "더 살핀다", "choiceLabel": " "}},
+            {"furtherNextStep": {"line": "기록을 대조한다", "choiceLabel": "대조한다", "targetLocationId": "LOC_UNKNOWN"}},
+            {"furtherNextStep": {"line": "기록을 대조한다", "choiceLabel": " ", "targetLocationId": "LOC_GUARD"}},
+            {"furtherNextStep": {"line": "기록을 대조한다", "choiceLabel": "대조한다", "targetLocationId": []}},
+        )
+        for patch in invalid_steps:
+            with self.subTest(patch=patch):
+                pack = Pack("graymar_v1")
+                fact = dict(pack.facts["FACT_TAMPERED_LOGS"])
+                steps = dict(fact["withheldNextStep"])
+                steps["NPC_EDRIC_VEIL"] = dict(steps["NPC_EDRIC_VEIL"], **patch)
+                fact["withheldNextStep"] = steps
+                pack.facts["FACT_TAMPERED_LOGS"] = fact
+                rules = {finding.rule for finding in check_l2_contract(pack)}
+                self.assertIn("FACT_WITHHELD_STEP_SHAPE", rules)
+
 
 if __name__ == "__main__":
     unittest.main()

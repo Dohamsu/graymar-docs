@@ -523,6 +523,11 @@ def check_l2_contract(pack):
                                  "reconfirm 은 knownBy NPC별 비어 있지 않은 anchors·lines 문자열 배열이어야 함"))
         withheld_steps = fact.get("withheldNextStep")
         if withheld_steps is not None:
+            def valid_followup_text(value):
+                return (isinstance(value, dict)
+                        and all(isinstance(value.get(field), str) and value[field].strip()
+                                for field in ("line", "choiceLabel")))
+
             valid = (isinstance(withheld_steps, dict) and bool(withheld_steps)
                      and all(npc_id in (fact.get("knownBy") or [])
                              and isinstance(step, dict)
@@ -531,12 +536,19 @@ def check_l2_contract(pack):
                              and all(isinstance(anchor, str) and anchor.strip()
                                      and anchor in step["line"] for anchor in step["anchors"])
                              and isinstance(step.get("choiceLabel"), str) and step["choiceLabel"].strip()
-                             and step.get("targetLocationId") in loc_ids
+                             and isinstance(step.get("targetLocationId"), str)
+                             and step["targetLocationId"] in loc_ids
+                             and ("partialNextStep" not in step
+                                  or valid_followup_text(step["partialNextStep"]))
+                             and ("furtherNextStep" not in step
+                                  or (valid_followup_text(step["furtherNextStep"])
+                                      and isinstance(step["furtherNextStep"].get("targetLocationId"), str)
+                                      and step["furtherNextStep"]["targetLocationId"] in loc_ids))
                              for npc_id, step in withheld_steps.items()))
             if not valid:
                 f.append(Finding("ERROR", "FACT_WITHHELD_STEP_SHAPE",
                                  f"facts.json:{fid}:withheldNextStep",
-                                 "보류 후속 행동은 보유 NPC별 line·anchors·choiceLabel·팩 내 targetLocationId 객체여야 함"))
+                                 "보류 후속 행동은 보유 NPC별 line·anchors·choiceLabel·팩 내 targetLocationId 객체여야 하며, 중첩된 후속 행동도 유효한 문구·목적지를 가져야 함"))
     for n in pack.npcs:
         if not isinstance(n, dict):
             continue
