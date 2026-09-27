@@ -390,6 +390,11 @@
             "line": "겉면만으로는 판별할 수 없다. 종이를 빛에 기울여 잉크가 겹친 순서를 비교한다.",
             "choiceLabel": "장부를 빛에 기울여 잉크가 겹친 순서를 비교한다"
           },
+          "furtherNextStep": {
+            "line": "두 번 살펴도 잉크만으로는 판별하기 어렵다. 경비대 기록과 대조할 수 있는지 확인한다.",
+            "choiceLabel": "경비대 기록과 장부를 대조할 수 있는지 확인하러 간다",
+            "targetLocationId": "LOC_GUARD"
+          },
           "targetLocationId": "LOC_MARKET"
         }
       },
