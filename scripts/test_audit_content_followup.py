@@ -56,6 +56,23 @@ class FactFollowUpContractTests(unittest.TestCase):
         rules = {finding.rule for finding in check_l2_contract(pack)}
         self.assertIn("FACT_RECONFIRM_SHAPE", rules)
 
+    def test_evidence_medium_must_use_known_holder_and_supported_value(self):
+        for medium in ("PAPER", "", []):
+            with self.subTest(medium=medium):
+                pack = Pack("star_sand_v1")
+                fact = dict(pack.facts["FACT_SS_SAME_WORDS"])
+                fact["evidenceMediumByNpc"] = {"NPC_SS_IREN": medium}
+                pack.facts["FACT_SS_SAME_WORDS"] = fact
+                rules = {finding.rule for finding in check_l2_contract(pack)}
+                self.assertIn("FACT_EVIDENCE_MEDIUM_SHAPE", rules)
+
+        pack = Pack("star_sand_v1")
+        fact = dict(pack.facts["FACT_SS_SAME_WORDS"])
+        fact["evidenceMediumByNpc"] = {"NPC_UNKNOWN": "SPOKEN"}
+        pack.facts["FACT_SS_SAME_WORDS"] = fact
+        rules = {finding.rule for finding in check_l2_contract(pack)}
+        self.assertIn("FACT_EVIDENCE_MEDIUM_SHAPE", rules)
+
     def test_directed_subscene_needs_a_visible_transition_lead(self):
         pack = Pack("graymar_v1")
         event = next(e for e in pack.events if e.get("eventId") == "EVT_GUARD_INT_3")

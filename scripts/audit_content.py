@@ -490,6 +490,16 @@ def check_l2_contract(pack):
     for fid, fact in pack.facts.items():
         if not isinstance(fact, dict):
             continue
+        evidence_medium = fact.get("evidenceMediumByNpc")
+        if evidence_medium is not None:
+            valid_medium = (isinstance(evidence_medium, dict) and bool(evidence_medium)
+                            and all(npc_id in (fact.get("knownBy") or [])
+                                    and medium in ("SPOKEN", "DOCUMENT")
+                                    for npc_id, medium in evidence_medium.items()))
+            if not valid_medium:
+                f.append(Finding("ERROR", "FACT_EVIDENCE_MEDIUM_SHAPE",
+                                 f"facts.json:{fid}:evidenceMediumByNpc",
+                                 "원출처 매체는 knownBy NPC별 SPOKEN/DOCUMENT 매핑이어야 함"))
         next_id = fact.get("nextFactId")
         if next_id is not None:
             where = f"facts.json:{fid}:nextFactId"
