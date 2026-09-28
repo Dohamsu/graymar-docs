@@ -670,6 +670,7 @@ SCENE_CUT_MIN_CONFIDENCE=0.65           # 장면 컷 nano 판정 채택 임계
 # ── 개발·검증 전용 ──
 PROMPT_FIXTURE_CAPTURE=                 # 설정 시 프롬프트 픽스처 덤프
 PLAYTEST_NPC_REACTION=                  # 플레이테스트 NPC 반응 계측 토글
+CHOICE_GROUNDING_PROPOSAL_EXPERIMENT=false # B1 격리 평가 전용. true면 Nano Track 2 프롬프트·출력 형식이 변한다. 기본 false 유지; 최종 UI 차단은 하지 않음 — arch/123 §51
 OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activity API. 일반 추론 키는 403 (arch/87 §9)
 ```
 
