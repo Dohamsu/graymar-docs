@@ -37,6 +37,8 @@ parser.add_argument("--prefer-choice-prefix", default=None,
                     help="고정 입력을 소비한 뒤 일치하는 LOCATION 선택지를 우선 클릭 (표적 회귀용)")
 parser.add_argument("--prefer-choice-count", type=int, default=1,
                     help="우선 선택지를 클릭할 최대 횟수 (default: 1)")
+parser.add_argument("--prefer-choice-sequence", action="append", default=[],
+                    help="고정 입력 뒤 LOCATION 선택지를 지정한 ID 접두사 순서대로 실제 클릭 (반복 지정)")
 parser.add_argument("--first-go-choice-id", default=None,
                     help="첫 HUB 이동에서 이 ID의 선택지를 우선 클릭 (표적 회귀용)")
 parser.add_argument("--model", default=None, help="런타임 LLM 모델 전환")
@@ -532,6 +534,7 @@ bought_items = set()   # 4-A: 상점 구매 1회/아이템 제한
 arc_committed = False  # 4-A: 아크 커밋 선택지 1회 클릭
 forced_actions = list(args.forced_action)  # 표적 회귀 입력 — 지정 순서대로 LOCATION에서만 소비
 preferred_choice_uses = 0
+preferred_choice_sequence_index = 0
 first_go_choice_used = False
 
 for turn_i in range(MAX_TURNS):
@@ -574,6 +577,12 @@ for turn_i in range(MAX_TURNS):
         input_desc = f"CHOICE:{arc_choice['id']} (arc)"
         if str(arc_choice["id"]).startswith("arc_commit_"):
             arc_committed = True
+    elif node_type == "LOCATION" and not forced_actions and preferred_choice_sequence_index < len(args.prefer_choice_sequence) and (preferred := next(
+        (c for c in choices if c.get("id", "").startswith(args.prefer_choice_sequence[preferred_choice_sequence_index])), None
+    )):
+        body = {"input": {"type": "CHOICE", "choiceId": preferred["id"]}, "expectedNextTurnNo": current_turn + 1, "idempotencyKey": idem}
+        input_desc = f"CHOICE:{preferred['id']} (sequence {preferred_choice_sequence_index + 1}/{len(args.prefer_choice_sequence)})"
+        preferred_choice_sequence_index += 1
     elif node_type == "LOCATION" and args.prefer_choice_prefix and preferred_choice_uses < args.prefer_choice_count and not forced_actions and (preferred := next(
         (c for c in choices if c.get("id", "").startswith(args.prefer_choice_prefix)), None
     )):
@@ -2077,6 +2086,8 @@ output = {
         "gender": args.gender,
         "maxTurns": MAX_TURNS,
         "forcedActions": args.forced_action,
+        "preferredChoiceSequence": args.prefer_choice_sequence,
+        "preferredChoiceSequenceClicks": preferred_choice_sequence_index,
         "actualTurns": len(turn_logs),
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "git": git,
