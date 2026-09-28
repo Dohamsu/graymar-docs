@@ -66,3 +66,7 @@
 | S11 | 같은 수정판 런 T5 / 6 | `nano_6_1`, `TALK`, `NPC_SS_IREN`; `그녀에게 마지막 말이 어떤 것인지 묻는다` | T6 / 7 `AGENT:nano_6_1` | 정상 질문의 클릭·다음 턴 접수 확인. 정답 진전은 별도 P3-1. |
 
 이는 기존 실런의 **증거 복원**이며 B1 구조 제안 실험이 켜져 있던 런이 아니다. 따라서 이 4건에 `STRUCTURE_MATCH/CONTRADICTED`를 역으로 만들어 붙이지 않는다. B1 비교에서는 본문 주장과 저작·서버 선택지, 그리고 최종 Nano 여부가 확인되지 않은 행을 각각 별도 분모로 둔다. 실험 후에도 `STRUCTURE_MATCH`는 라벨 의미의 안전 승인으로 세지 않는다.
+
+## 고정 사례의 재실행 가능한 최종 표면 감사 (2026-09-28)
+
+위 4건의 원본 완료 턴 `llmChoices`와 바로 다음 입력을 [[architecture/127_choice_grounding_fixed_evidence_20260928.json|증거 발췌]]에 보존했다. `node scripts/choice-grounding-fixed-case-audit.mjs architecture/124_choice_grounding_fixed_cases.md architecture/127_choice_grounding_fixed_evidence_20260928.json architecture/126_b1_shadow_audit_20260928.json`으로 40건의 기대 판정(거부 20/허용 20), 정확한 최종 Nano 표면 4건(거부 3/허용 1), 실제 클릭 2건, 노출 후 비클릭 2건, 다른 36건의 최종 Nano 미연결을 재계산한다. **B1 shadow와 동일한 런·턴·choice ID·라벨·payload의 중첩은 0건**이다. 이 0은 오경보·미검출 0건이 아니라 B1 성능을 산출할 같은 표면 분모가 없다는 뜻이다. 36건 중 저작/본문/회귀 사례를 실제 Nano 부재나 클릭 실패로 읽지 않는다.

@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "note": "Selected final Nano and next-turn excerpts copied from the listed full playtest reports; these runs predate B1 structural proposals. This archive does not prove that other fixed cases lacked a final surface.",
+  "samples": [
+    {
+      "caseId": "G01",
+      "sourceReport": "/private/tmp/graymar_p3_afterpush_graymar_b_20260928.json",
+      "expected": {
+        "runId": "f6fe5833-0def-4366-9bc5-c275d0d96ed8",
+        "turnNo": 7,
+        "choiceId": "nano_7_0",
+        "label": "날카로운 회계사의 손에 있는 작은 가방을 살핀다",
+        "payload": {
+          "riskLevel": 1,
+          "affordance": "OBSERVE",
+          "sourceNpcId": "NPC_EDRIC_VEIL"
+        }
+      },
+      "reportExcerpt": {
+        "runId": "f6fe5833-0def-4366-9bc5-c275d0d96ed8",
+        "turns": [
+          {
+            "turnNo": 7,
+            "llmStatus": "DONE",
+            "llmChoices": [
+              {
+                "id": "nano_7_0",
+                "hint": "그의 소지품에서 단서를 찾는다",
+                "label": "날카로운 회계사의 손에 있는 작은 가방을 살핀다",
+                "action": {
+                  "type": "CHOICE",
+                  "payload": {
+                    "riskLevel": 1,
+                    "affordance": "OBSERVE",
+                    "sourceNpcId": "NPC_EDRIC_VEIL"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "turnNo": 8,
+            "input": "AGENT:nano_7_0"
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "S02",
+      "sourceReport": "/private/tmp/graymar_p3_source_isolated_20260928.json",
+      "expected": {
+        "runId": "1bf5f057-b40e-433e-86aa-d8137fd1b2a5",
+        "turnNo": 6,
+        "choiceId": "nano_6_1",
+        "label": "그 문장을 적은 쪽지를 살펴본다",
+        "payload": {
+          "riskLevel": 2,
+          "affordance": "INVESTIGATE",
+          "sourceNpcId": null
+        }
+      },
+      "reportExcerpt": {
+        "runId": "1bf5f057-b40e-433e-86aa-d8137fd1b2a5",
+        "turns": [
+          {
+            "turnNo": 6,
+            "llmStatus": "DONE",
+            "llmChoices": [
+              {
+                "id": "nano_6_1",
+                "hint": "추가 단서나 의미를 파악한다",
+                "label": "그 문장을 적은 쪽지를 살펴본다",
+                "action": {
+                  "type": "CHOICE",
+                  "payload": {
+                    "riskLevel": 2,
+                    "affordance": "INVESTIGATE",
+                    "sourceNpcId": null
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "turnNo": 7,
+            "input": "AGENT:nano_6_0"
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "S04",
+      "sourceReport": "/private/tmp/graymar_p3_source_isolated_fixed_20260928.json",
+      "expected": {
+        "runId": "7044dda3-0006-4cc0-a0d9-df355b7824cd",
+        "turnNo": 7,
+        "choiceId": "nano_7_1",
+        "label": "거울을 이용해 장부를 자세히 살핀다",
+        "payload": {
+          "riskLevel": 2,
+          "affordance": "INVESTIGATE",
+          "sourceNpcId": null
+        }
+      },
+      "reportExcerpt": {
+        "runId": "7044dda3-0006-4cc0-a0d9-df355b7824cd",
+        "turns": [
+          {
+            "turnNo": 7,
+            "llmStatus": "DONE",
+            "llmChoices": [
+              {
+                "id": "nano_7_1",
+                "hint": "숨겨진 단서를 찾을 수 있다",
+                "label": "거울을 이용해 장부를 자세히 살핀다",
+                "action": {
+                  "type": "CHOICE",
+                  "payload": {
+                    "riskLevel": 2,
+                    "affordance": "INVESTIGATE",
+                    "sourceNpcId": null
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "turnNo": 8,
+            "input": "ACTION:move_location"
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "S11",
+      "sourceReport": "/private/tmp/graymar_p3_source_isolated_fixed_20260928.json",
+      "expected": {
+        "runId": "7044dda3-0006-4cc0-a0d9-df355b7824cd",
+        "turnNo": 6,
+        "choiceId": "nano_6_1",
+        "label": "그녀에게 마지막 말이 어떤 것인지 묻는다",
+        "payload": {
+          "riskLevel": 2,
+          "affordance": "TALK",
+          "sourceNpcId": "NPC_SS_IREN"
+        }
+      },
+      "reportExcerpt": {
+        "runId": "7044dda3-0006-4cc0-a0d9-df355b7824cd",
+        "turns": [
+          {
+            "turnNo": 6,
+            "llmStatus": "DONE",
+            "llmChoices": [
+              {
+                "id": "nano_6_1",
+                "hint": "추가 정보를 얻을 수 있다",
+                "label": "그녀에게 마지막 말이 어떤 것인지 묻는다",
+                "action": {
+                  "type": "CHOICE",
+                  "payload": {
+                    "riskLevel": 2,
+                    "affordance": "TALK",
+                    "sourceNpcId": "NPC_SS_IREN"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "turnNo": 7,
+            "input": "AGENT:nano_6_1"
+          }
+        ]
+      }
+    }
+  ]
+}
