@@ -22,3 +22,9 @@
 - `B1-R3` 두 건의 라벨 교체는 두 팩 모두 `EmptyHandedChoice:STEER` 로그에 원래 라벨→저작 질문이 찍혔다. `ensureNpcTargetChoiceCore`는 기존 `nano_` ID를 유지하고 라벨·`TALK` payload를 함께 교체한다. 따라서 원래 Nano의 구조 제안을 새 저작 질문의 의미 승인 근거로 쓸 수 없다.
 - `B1-R2` 네 건 중 그레이마르 T5 `TRADE→PERSUADE`는 `ChoiceAffFix`의 최종 행동 보정, 같은 턴 `OBSERVE→TALK`는 위 STEER 교체와 겹친다. 극야해안 T13 `TALK→PERSUADE`, 그레이마르 T6 `TALK→BRIBE`는 생성 시 affordance를 당시 로그가 남기지 않아 발생 단계를 확정할 수 없다. 이후 shadow 감사에 `candidateAffordance`를 추가했지만, 기존 로그를 소급 판정하지 않는다.
 - `B1-R1`은 이후 실험용 공개 참조 ID 로그가 추가된 상태다. 기존 두 런의 당시 공개 목록은 복원되지 않는다. 세 항목 모두 선택지 동작 수정·재검증은 **0/2회**이며, 같은 증상에 대한 세 번째 수정 루프를 시작하지 않는다.
+
+## 동일 표면 재측정과 신규 보류 (2026-09-28)
+
+- 서버 `ad8b53e`의 두 팩 각 10턴에서 [[architecture/128_b1_shadow_same_surface_20260928.json|공개 참조와 후보 affordance가 함께 있는 최종 표면]] 35개를 추가 확보했다. 기존 27개에 더한 **별도 표본**이며 같은 턴을 재집계한 것이 아니다. 상세 해석은 [[architecture/129_b1_same_surface_assessment_20260928|평가]]에 둔다.
+- R1 `UNKNOWN_REF` 18/35: 내부 NPC ID 8건, 접두사 없는 fact ID 7건, 문자열 `null`·자유문 evidence·다른 비공개 evidence 참조 3건이다. 공개 목록이 실제 로그에 있으므로 형식 위반은 확인되지만 NPC가 현장에 있거나 열린 질문인 경우도 있어 유해 선택지 18건으로 환산하지 않는다. R2 `INTENT_PAYLOAD_MISMATCH` 9/35: 구조↔원 후보가 다른 4건과 원 후보↔최종 payload가 다른 5건이며, 이번 표본에서는 두 그룹이 겹치지 않았다. R3 `LABEL_CHANGED_AFTER_PROPOSAL` 4/35. 세 항목 모두 **추가 코드 수정 시도 없음(0/2회)**.
+- **B1-R4 신규 보류:** 극야해안 T5 숙박 명부→별자리 도표, T12 램프 질문→첫 공통몽 fact, 그레이마르 T12 종이 조각·팔뚝 흠집→하급 치료제(2개)가 모두 유효한 공개 ref를 제안해 `STRUCTURE_MATCH`를 받았다. 두 팩에서 반복된 **라벨 대상↔ref 의미 불일치**다. 수정 시도 **0/2회**. 동일 명사별 가드를 덧붙이지 않고, 라벨 대상의 실체 바인딩·소품 ID 미해결을 구조 계약으로 해결할 때 재개한다. 선택지 자체의 사람 허용/거부 라벨과 이 참조 오류는 구분한다.
