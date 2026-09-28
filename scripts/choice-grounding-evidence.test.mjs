@@ -84,3 +84,25 @@ test("다음 턴이 없거나 턴 번호가 건너뛰면 클릭을 추정하지 
     ],
   );
 });
+
+test("테스터의 preferred·sequence 주석 뒤에도 실제 선택 ID를 복원한다", () => {
+  const choice = {
+    id: "nano_9_1",
+    label: "이렌에게 묻는다",
+    action: { type: "CHOICE", payload: { affordance: "TALK" } },
+  };
+  for (const input of [
+    "CHOICE:nano_9_1 (preferred)",
+    "CHOICE:nano_9_1 (sequence 1/2)",
+  ]) {
+    const evidence = extractFinalNanoChoiceEvidence({
+      runId: "run-3",
+      turns: [
+        { turnNo: 9, llmStatus: "DONE", llmChoices: [choice] },
+        { turnNo: 10, input },
+      ],
+    });
+    assert.equal(evidence[0].clickStatus, "CLICKED");
+    assert.equal(evidence[0].nextTurnNo, 10);
+  }
+});

@@ -56,7 +56,7 @@
 
 ## 최종 Nano 표면·클릭 증거 보강 (2026-09-28)
 
-`node scripts/choice-grounding-evidence.mjs <playtest-report.json>`은 `llmStatus=DONE`의 최종 `llmChoices`만 읽고 바로 다음 서버 턴의 `AGENT/CHOICE:<id>`를 연결한다. 보고서의 `choiceIds`는 서버 기본 목록일 수 있어 최종 Nano 표면의 대용으로 쓰지 않는다. `playtestTurn`은 보고서의 T번호이고 `turnNo`는 서버 턴 번호라 1 차이가 날 수 있다. `NOT_CLICKED`는 실패가 아니라 **그 선택지가 그 다음 턴에 선택되지 않았음**이다. 보고서 끝 또는 턴 번호 공백은 `UNOBSERVED`로 남긴다.
+`node scripts/choice-grounding-evidence.mjs <playtest-report.json>`은 `llmStatus=DONE`의 최종 `llmChoices`만 읽고 바로 다음 서버 턴의 `AGENT/CHOICE:<id>`를 연결한다. 테스터 입력에 붙는 `(preferred)`·`(sequence n/m)`·`(arc)` 주석은 ID 뒤에서만 허용한다. 보고서의 `choiceIds`는 서버 기본 목록일 수 있어 최종 Nano 표면의 대용으로 쓰지 않는다. `playtestTurn`은 보고서의 T번호이고 `turnNo`는 서버 턴 번호라 1 차이가 날 수 있다. `NOT_CLICKED`는 실패가 아니라 **그 선택지가 그 다음 턴에 선택되지 않았음**이다. 보고서 끝 또는 턴 번호 공백은 `UNOBSERVED`로 남긴다.
 
 | 사례 | 실제 런·T / 서버 턴 | 최종 선택지 ID·payload | 다음 턴 증거 | 판정 범위 |
 |---|---|---|---|---|

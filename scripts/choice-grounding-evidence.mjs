@@ -12,7 +12,9 @@ export function extractFinalNanoChoiceEvidence(report) {
     const nextTurnNo = following?.turnNo ?? following?.turn;
     const hasNextTurn = Number.isInteger(turnNo) && nextTurnNo === turnNo + 1;
     const selectedId = hasNextTurn
-      ? /^(?:AGENT|CHOICE):([^\s]+)$/.exec(following.input ?? "")?.[1]
+      ? /^(?:AGENT|CHOICE):([^\s]+)(?: \((?:preferred|arc|sequence \d+\/\d+)\))?$/.exec(
+          following.input ?? "",
+        )?.[1]
       : null;
     for (const choice of turn.llmChoices) {
       if (typeof choice?.id !== "string" || !choice.id.startsWith("nano_")) {
