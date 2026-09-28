@@ -11,7 +11,7 @@
 - 전체 아키텍처: [[architecture/04_server_architecture|server architecture]]
 - 최근 파이프라인: [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]], [[architecture/35_llm_streaming|llm streaming]]
 - 서술·대사 독자 경험 기록: [[architecture/122_narrative_reader_experience_observations|narrative reader experience observations]] (2026-09-25 실측 본문·증상·독자 체감, 수정 계획 전 베이스라인)
-- 서술·대사 순차 수정: [[architecture/123_narrative_quality_master_plan|narrative quality master plan]] (N-01~16 분류, P0~P7 실행·검증 게이트)
+- 서술·대사 순차 수정: [[architecture/123_narrative_quality_master_plan|narrative quality master plan]] (N-01~22, P0~P7 게이트; §47 출처 계약 설계·§48~50 A2 배포/잔여 구현 현황)
 - 최신 전투: [[architecture/41_creative_combat_actions|creative combat actions]](창의 입력), [[architecture/42_combat_ui_buttonform|combat ui buttonform]](버튼형 UI)
 - 최신 구현 가이드: `guides/01~08_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지·LivingWorld·파티)
 
