@@ -10,6 +10,7 @@ const fixedCases = `| ID | 팩 | 조건 | 정본 | 기대 | 클릭 근거 | 출�
 
 const sample = {
   caseId: "G01",
+  sourceReport: "/report.json",
   expected: {
     runId: "run-1",
     turnNo: 7,
@@ -93,4 +94,32 @@ test("다른 런의 shadow 판정은 고정 사례의 미검출·오경보 점�
   };
   const result = auditFixedCaseEvidence(fixedCases, [sample], shadow);
   assert.equal(result.sameSurfaceShadow, 0);
+});
+
+test("원본 보고서가 있으면 발췌본의 최종 선택지와 다음 클릭을 다시 대조한다", () => {
+  const changedSource = {
+    ...sample.reportExcerpt,
+    turns: [
+      {
+        ...sample.reportExcerpt.turns[0],
+        llmChoices: [
+          {
+            ...sample.reportExcerpt.turns[0].llmChoices[0],
+            label: "원본에서 달라진 선택지",
+          },
+        ],
+      },
+      sample.reportExcerpt.turns[1],
+    ],
+  };
+  assert.throws(
+    () =>
+      auditFixedCaseEvidence(
+        fixedCases,
+        [sample],
+        undefined,
+        new Map([[sample.sourceReport, changedSource]]),
+      ),
+    /source report mismatch: G01/,
+  );
 });
