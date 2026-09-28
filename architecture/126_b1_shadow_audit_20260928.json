@@ -1,0 +1,887 @@
+{
+  "schemaVersion": 1,
+  "source": "ChoiceGroundingShadow isolated server stdout",
+  "experimentServerCommit": "785f438",
+  "experimentFlag": "CHOICE_GROUNDING_PROPOSAL_EXPERIMENT=true",
+  "note": "Captured before catalogTurnNo/publicRefIds logging was added; these fields cannot be reconstructed for these runs. Records are final Nano choice audit, not human semantic judgments.",
+  "turns": [
+    {
+      "runId": "4caa9a74-1d2e-46b9-ac6b-de7df02544c0",
+      "packId": "star_sand_v1",
+      "turnNo": 4,
+      "finalNanoCount": 3,
+      "authoredCount": 0,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 2,
+        "STRUCTURE_MATCH": 1
+      },
+      "reasonCounts": {
+        "UNKNOWN_REF": 2
+      },
+      "changedLabelCount": 0,
+      "findings": [
+        {
+          "choiceId": "nano_4_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_4_2",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_4_0",
+          "candidateLabel": "이렌의 말에 공감하며 더 물어본다",
+          "finalLabel": "이렌의 말에 공감하며 더 물어본다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_4_1",
+          "candidateLabel": "홀 주변을 자세히 살펴본다",
+          "finalLabel": "홀 주변을 자세히 살펴본다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        },
+        {
+          "choiceId": "nano_4_2",
+          "candidateLabel": "이렌에게 조금 더 거리를 두고 조용히 상황을 관찰한다",
+          "finalLabel": "이렌에게 조금 더 거리를 두고 조용히 상황을 관찰한다",
+          "payload": {
+            "affordance": "INVESTIGATE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "INVESTIGATE",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "4caa9a74-1d2e-46b9-ac6b-de7df02544c0",
+      "packId": "star_sand_v1",
+      "turnNo": 5,
+      "finalNanoCount": 3,
+      "authoredCount": 0,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 3
+      },
+      "reasonCounts": {
+        "UNKNOWN_REF": 3,
+        "LABEL_CHANGED_AFTER_PROPOSAL": 1
+      },
+      "changedLabelCount": 1,
+      "findings": [
+        {
+          "choiceId": "nano_5_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_1",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_2",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF",
+            "LABEL_CHANGED_AFTER_PROPOSAL"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_5_0",
+          "candidateLabel": "이렌에게 돈을 건넨다",
+          "finalLabel": "이렌에게 돈을 건넨다",
+          "payload": {
+            "affordance": "BRIBE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 3
+          },
+          "proposal": {
+            "intent": "BRIBE",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_SS_FIRST_DREAM",
+              "FACT_SS_SAME_WORDS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_1",
+          "candidateLabel": "이렌의 말에 더 귀 기울인다",
+          "finalLabel": "이렌의 말에 더 귀 기울인다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_2",
+          "candidateLabel": "이렌에게 조용히 질문한다",
+          "finalLabel": "이렌에게 첫 공통몽의 시점에 대해 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "이렌의 말과 행동"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF",
+            "LABEL_CHANGED_AFTER_PROPOSAL"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "4caa9a74-1d2e-46b9-ac6b-de7df02544c0",
+      "packId": "star_sand_v1",
+      "turnNo": 6,
+      "finalNanoCount": 3,
+      "authoredCount": 1,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 3
+      },
+      "reasonCounts": {
+        "UNKNOWN_REF": 3
+      },
+      "changedLabelCount": 0,
+      "findings": [
+        {
+          "choiceId": "nano_6_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_6_1",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_6_2",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_6_0",
+          "candidateLabel": "이렌의 말에 공감하며 잠자리의 어려움을 묻는다",
+          "finalLabel": "이렌의 말에 공감하며 잠자리의 어려움을 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_6_1",
+          "candidateLabel": "이렌이 언급한 잠자리 문제와 관련된 증거를 찾아본다",
+          "finalLabel": "이렌이 언급한 잠자리 문제와 관련된 증거를 찾아본다",
+          "payload": {
+            "affordance": "INVESTIGATE",
+            "sourceNpcId": null,
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "INVESTIGATE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_SS_SAME_WORDS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_6_2",
+          "candidateLabel": "이렌의 눈길을 관찰하며 이렌이 숨기고 있는 것이 있는지 살핀다",
+          "finalLabel": "이렌의 눈길을 관찰하며 이렌이 숨기고 있는 것이 있는지 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "4caa9a74-1d2e-46b9-ac6b-de7df02544c0",
+      "packId": "star_sand_v1",
+      "turnNo": 7,
+      "finalNanoCount": 3,
+      "authoredCount": 2,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 1,
+        "STRUCTURE_MATCH": 2
+      },
+      "reasonCounts": {
+        "UNKNOWN_REF": 1
+      },
+      "changedLabelCount": 0,
+      "findings": [
+        {
+          "choiceId": "nano_7_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_7_0",
+          "candidateLabel": "이렌에게 꿈의 시작 시점에 대해 묻는다",
+          "finalLabel": "이렌에게 꿈의 시작 시점에 대해 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_SS_IREN",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_SS_SAME_WORDS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_7_1",
+          "candidateLabel": "별자리 도표를 조사한다",
+          "finalLabel": "별자리 도표를 조사한다",
+          "payload": {
+            "affordance": "INVESTIGATE",
+            "sourceNpcId": null,
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "INVESTIGATE",
+            "targetRef": "ITEM:ITEM_SS_STAR_CHART",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        },
+        {
+          "choiceId": "nano_7_2",
+          "candidateLabel": "창밖 부두를 관찰한다",
+          "finalLabel": "창밖 부두를 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "runId": "4caa9a74-1d2e-46b9-ac6b-de7df02544c0",
+      "packId": "star_sand_v1",
+      "turnNo": 13,
+      "finalNanoCount": 3,
+      "authoredCount": 0,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 1,
+        "STRUCTURE_MATCH": 2
+      },
+      "reasonCounts": {
+        "INTENT_PAYLOAD_MISMATCH": 1
+      },
+      "changedLabelCount": 0,
+      "findings": [
+        {
+          "choiceId": "nano_13_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_13_0",
+          "candidateLabel": "중개인에게 말을 건다",
+          "finalLabel": "중개인에게 말을 건다",
+          "payload": {
+            "affordance": "PERSUADE",
+            "sourceNpcId": "NPC_SS_TOBA",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_PRESENT:13:1",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH"
+          ]
+        },
+        {
+          "choiceId": "nano_13_1",
+          "candidateLabel": "바닷물에 적셔진 이름들을 관찰한다",
+          "finalLabel": "바닷물에 적셔진 이름들을 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        },
+        {
+          "choiceId": "nano_13_2",
+          "candidateLabel": "중개인의 말을 흘려 듣고 주변을 살핀다",
+          "finalLabel": "중개인의 말을 흘려 듣고 주변을 살핀다",
+          "payload": {
+            "affordance": "INVESTIGATE",
+            "sourceNpcId": null,
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "INVESTIGATE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "runId": "07b51f0a-b00a-42a4-a856-ff54c124efe1",
+      "packId": "graymar_v1",
+      "turnNo": 4,
+      "finalNanoCount": 3,
+      "authoredCount": 0,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 2,
+        "STRUCTURE_MATCH": 1
+      },
+      "reasonCounts": {
+        "UNKNOWN_REF": 2
+      },
+      "changedLabelCount": 0,
+      "findings": [
+        {
+          "choiceId": "nano_4_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_4_1",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_4_0",
+          "candidateLabel": "장부의 내용에 대해 조심스럽게 질문한다",
+          "finalLabel": "장부의 내용에 대해 조심스럽게 질문한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_TAMPERED_LOGS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_4_1",
+          "candidateLabel": "장부 주변을 조심스럽게 살핀다",
+          "finalLabel": "장부 주변을 조심스럽게 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_TAMPERED_LOGS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_4_2",
+          "candidateLabel": "날카로운 회계사의 도움을 요청하여 더 자세한 정보를 얻는다",
+          "finalLabel": "날카로운 회계사의 도움을 요청하여 더 자세한 정보를 얻는다",
+          "payload": {
+            "affordance": "HELP",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "HELP",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "runId": "07b51f0a-b00a-42a4-a856-ff54c124efe1",
+      "packId": "graymar_v1",
+      "turnNo": 5,
+      "finalNanoCount": 3,
+      "authoredCount": 0,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 3
+      },
+      "reasonCounts": {
+        "UNKNOWN_REF": 2,
+        "INTENT_PAYLOAD_MISMATCH": 2,
+        "LABEL_CHANGED_AFTER_PROPOSAL": 1
+      },
+      "changedLabelCount": 1,
+      "findings": [
+        {
+          "choiceId": "nano_5_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_1",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH",
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_2",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH",
+            "LABEL_CHANGED_AFTER_PROPOSAL"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_5_0",
+          "candidateLabel": "장부를 펼쳐서 잉크 번진 부분을 자세히 본다",
+          "finalLabel": "장부를 펼쳐서 잉크 번진 부분을 자세히 본다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_1",
+          "candidateLabel": "장부의 내용을 더 명확히 묻기 위해 흥정을 제안한다",
+          "finalLabel": "장부의 내용을 더 명확히 묻기 위해 흥정을 제안한다",
+          "payload": {
+            "affordance": "PERSUADE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TRADE",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH",
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_5_2",
+          "candidateLabel": "회계사와의 대화를 피하기 위해 주변 환경을 살핀다",
+          "finalLabel": "날카로운 회계사에게 장부 도난에 대해 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH",
+            "LABEL_CHANGED_AFTER_PROPOSAL"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "07b51f0a-b00a-42a4-a856-ff54c124efe1",
+      "packId": "graymar_v1",
+      "turnNo": 6,
+      "finalNanoCount": 3,
+      "authoredCount": 1,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "CONTRADICTED": 3
+      },
+      "reasonCounts": {
+        "UNKNOWN_REF": 2,
+        "INTENT_PAYLOAD_MISMATCH": 1
+      },
+      "changedLabelCount": 0,
+      "findings": [
+        {
+          "choiceId": "nano_6_0",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_6_1",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH"
+          ]
+        },
+        {
+          "choiceId": "nano_6_2",
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "choiceId": "nano_6_0",
+          "candidateLabel": "날카로운 회계사의 말과 잉크 자국에 대한 의문을 제기한다",
+          "finalLabel": "날카로운 회계사의 말과 잉크 자국에 대한 의문을 제기한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "refId:장부_잉크번짐"
+            ],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        },
+        {
+          "choiceId": "nano_6_1",
+          "candidateLabel": "장부를 살펴볼 수 있도록 돈을 건넨다",
+          "finalLabel": "장부를 살펴볼 수 있도록 돈을 건넨다",
+          "payload": {
+            "affordance": "BRIBE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH"
+          ]
+        },
+        {
+          "choiceId": "nano_6_2",
+          "candidateLabel": "날카로운 회계사의 집중을 깨기 위해 주변을 관찰한다",
+          "finalLabel": "날카로운 회계사의 집중을 깨기 위해 주변을 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "장부의 잉크 번진 자리"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ]
+        }
+      ]
+    },
+    {
+      "runId": "07b51f0a-b00a-42a4-a856-ff54c124efe1",
+      "packId": "graymar_v1",
+      "turnNo": 12,
+      "finalNanoCount": 3,
+      "authoredCount": 2,
+      "droppedGeneratedCount": 0,
+      "statuses": {
+        "STRUCTURE_MATCH": 3
+      },
+      "reasonCounts": {},
+      "changedLabelCount": 0,
+      "findings": [],
+      "records": [
+        {
+          "choiceId": "nano_12_0",
+          "candidateLabel": "책상 위 손이 끝나는 지점을 살핀다",
+          "finalLabel": "책상 위 손이 끝나는 지점을 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_MAIREL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "ITEM:ITEM_STAMINA_TONIC",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        },
+        {
+          "choiceId": "nano_12_1",
+          "candidateLabel": "야간 경비 책임자에게 내부자 의혹 관련 질문한다",
+          "finalLabel": "야간 경비 책임자에게 내부자 의혹 관련 질문한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_MAIREL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": null,
+            "requiredRefs": [
+              "FACT:FACT_INSIDE_JOB"
+            ],
+            "evidenceRefs": [
+              "FACT:FACT_INSIDE_JOB"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        },
+        {
+          "choiceId": "nano_12_2",
+          "candidateLabel": "부두와 창고 쪽을 조사한다",
+          "finalLabel": "부두와 창고 쪽을 조사한다",
+          "payload": {
+            "affordance": "INVESTIGATE",
+            "sourceNpcId": null,
+            "riskLevel": 3
+          },
+          "proposal": {
+            "intent": "INVESTIGATE",
+            "targetRef": "LOCATION:LOC_GUARD",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": []
+        }
+      ]
+    }
+  ]
+}
