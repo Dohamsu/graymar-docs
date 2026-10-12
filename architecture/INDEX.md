@@ -14,6 +14,8 @@
 - 서술·대사 순차 수정: [[architecture/123_narrative_quality_master_plan|narrative quality master plan]] (§35 완료 범위, §47 계약, §59 현재 관문, §67 후속 36건의 35건 판정) · [[architecture/124_choice_grounding_fixed_cases|choice grounding fixed cases]] (두 팩 원천 사례 40건, 최종 Nano·클릭은 별도 분모) · [[architecture/125_narrative_quality_repeat_queue|반복 증상 보류 목록]] (두 팩 반복 증상·수정 시도 한도) · [[architecture/136_b1_typed_public_ref_assessment_20260928|이전 B1 평가]] (마지막 경계 보강 전 실런과 잔여 관문) · [[architecture/138_b1_followup_label_eligibility_20260929|B1 후속 판정 적격성]] (36건 중 35건 판정, B1 분모와 표현 판정 분리)
 - 행동 기반 시간·세부 장소 전환: [[architecture/137_action_time_place_transition_todo|별도 TODO]] (특정 시간까지 대기한 뒤 장소 내부 공간으로 이동하는 정본 상태 계약, B1 선택지 60번 보류)
 - 원문 회상 블록(Dimtale 기억 방식 이식): [[architecture/139_dimtale_recall_transplant|dimtale recall transplant]] (설계 제안 — 기존 `turns.raw_input`·`llm_output` 을 입력 기반 검색해 자르지 않은 원문 묶음 주입, NPC 관점 범위, 단계 분리 계측 V15)
+- 구조화(JSON) 스트리밍: [[architecture/140_structured_json_streaming_research|structured json streaming research]] (조사 — "JSON 모드는 스트리밍 비호환"은 부분 파서 부재였을 뿐, GPT-6 Luna 실측 4/4 유효·첫 표시 +0.3초·화자 ID 8/9. 운영 전환으로 서술은 json_schema 전용·구 분류기 삭제, 커밋 전 리뷰 후속으로 장면 게이트·화자 라벨 실명 가리기·JSON 실패 텍스트 복구·스트림 정체 이중 과금 차단)
+- 첫 글자 지연 분석: [[architecture/141_first_text_latency_breakdown|first text latency breakdown]] (계측 — 9초 중 6.5초가 서술 전 nano 직렬 호출: 의도 2.2·판정 1.5·중간 요약 0.8·사전 결정 2.2, 서술 첫 조각 2.1. 개선안 7종 + 구조 대안 R1~R7. **선택지 턴(65%)은 POST 수십 ms·첫 조각 3.3초로 9초 문제는 직접 입력 턴 몫**. R1 중간 요약 사전 계산 구현 — context 1.1~1.4초→20ms, R3 은 기존 동작 확인)
 - 최신 전투: [[architecture/41_creative_combat_actions|creative combat actions]](창의 입력), [[architecture/42_combat_ui_buttonform|combat ui buttonform]](버튼형 UI)
 - 최신 구현 가이드: `guides/01~08_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지·LivingWorld·파티)
 

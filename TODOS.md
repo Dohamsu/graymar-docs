@@ -23,4 +23,3 @@
 - [ ] **Slack Incoming Webhook 재발급** — Slack 앱 설정에서 기존 웹훅 삭제 → 새로 발급 → 루트 `.env` `SLACK_WEBHOOK_URL` 교체 (`scripts/health-monitor.py`·`bug-monitor.py` 가 읽음).
 - [ ] **미사용 OpenRouter API 키 revoke** — openrouter.ai Keys 에서 현재 `server/.env` 에 없는 키 정리.
 - [ ] (선택) `/tmp/graymar-server.log` 를 `~/Library/Logs` + newsyslog 회전으로 이전 — 감사 부록 LOW.
-- [ ] (선택) `gstack` 업그레이드 (`/gstack-upgrade`, 1.60.1 → 1.81.0).
