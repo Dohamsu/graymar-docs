@@ -16,6 +16,7 @@
 - 원문 회상 블록(Dimtale 기억 방식 이식): [[architecture/139_dimtale_recall_transplant|dimtale recall transplant]] (설계 제안 — 기존 `turns.raw_input`·`llm_output` 을 입력 기반 검색해 자르지 않은 원문 묶음 주입, NPC 관점 범위, 단계 분리 계측 V15)
 - 구조화(JSON) 스트리밍: [[architecture/140_structured_json_streaming_research|structured json streaming research]] (조사 — "JSON 모드는 스트리밍 비호환"은 부분 파서 부재였을 뿐, GPT-6 Luna 실측 4/4 유효·첫 표시 +0.3초·화자 ID 8/9. 운영 전환으로 서술은 json_schema 전용·구 분류기 삭제, 커밋 전 리뷰 후속으로 장면 게이트·화자 라벨 실명 가리기·JSON 실패 텍스트 복구·스트림 정체 이중 과금 차단)
 - 첫 글자 지연 분석: [[architecture/141_first_text_latency_breakdown|first text latency breakdown]] (계측 — 9초 중 6.5초가 서술 전 nano 직렬 호출: 의도 2.2·판정 1.5·중간 요약 0.8·사전 결정 2.2, 서술 첫 조각 2.1. 개선안 7종 + 구조 대안 R1~R7. **선택지 턴(65%)은 POST 수십 ms·첫 조각 3.3초로 9초 문제는 직접 입력 턴 몫**. R1 중간 요약 사전 계산 구현 — context 1.1~1.4초→20ms, R3 은 기존 동작 확인)
+- 사전 결정·첫 조각: [[architecture/143_predirect_first_chunk_plan|predirect first chunk]] (작업 3·5 — 반응·연출 nano JSON 모드 단일 시도+3초 마감, 지목 NPC 없는 턴 후보 동시 실행, 첫 송출 절 경계. 사전 결정 p90 3.1→2.0초·첫 조각 지연 0.5→0.3초. 프롬프트 캐시는 첫 토큰과 무관(Luna 바닥 1.3초) 실측으로 지연 계획에서 제외. B 빠른 nano 후보 벤치 — 관문 통과 0, 채택 안 함)
 - 최신 전투: [[architecture/41_creative_combat_actions|creative combat actions]](창의 입력), [[architecture/42_combat_ui_buttonform|combat ui buttonform]](버튼형 UI)
 - 최신 구현 가이드: `guides/01~08_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지·LivingWorld·파티)
 
