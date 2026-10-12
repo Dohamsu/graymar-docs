@@ -55,6 +55,7 @@ parser.add_argument("--account-email", default=None,
                     help="기존 @test.com 테스트 계정을 재사용 (추가 포인트 발급 없이 후속 런)")
 parser.add_argument("--skip-version-check", action="store_true",
                     help="preflight 서버 버전 해시 대조 생략 (의도적으로 구버전/원격 빌드를 테스트할 때)")
+parser.add_argument("--b1-capture", action="store_true", help="B1 평가용 실행 영수증을 시작·종료 시 기록")
 args = parser.parse_args()
 if args.finale_route and (args.agent or args.forced_action):
     parser.error("--finale-route 는 --agent/--forced-action 과 함께 쓸 수 없습니다")
@@ -62,6 +63,8 @@ if args.account_email and (args.new_account or not args.account_email.endswith("
     parser.error("--account-email 은 기존 @test.com 계정에만 단독으로 지정할 수 있습니다")
 if args.prefer_choice_count < 1:
     parser.error("--prefer-choice-count 는 1 이상이어야 합니다")
+if args.b1_capture and not args.scenario:
+    parser.error("--b1-capture 는 DB 팩 식별을 위해 --scenario 를 명시해야 합니다")
 
 BASE = args.base
 MAX_TURNS = args.turns
@@ -192,6 +195,27 @@ if not args.skip_version_check and ("localhost" in BASE or "127.0.0.1" in BASE):
         print(f"[preflight] OK — 서버 {_server_hash} = 로컬 HEAD", flush=True)
     else:
         print(f"[preflight] OK — 서버 {_server_hash} ≠ HEAD {_local_hash}지만 코드 차이 없음(비코드 커밋)", flush=True)
+
+def b1_runtime_receipt(required=True):
+    status, response = api("GET", "/version")
+    receipt = response.get("runtimeReceipt") if isinstance(response, dict) else None
+    if status != 200 or not isinstance(receipt, dict) or receipt.get("schemaVersion") != 2:
+        print("[B1] 실행 영수증 없음", flush=True)
+        if required:
+            sys.exit(2)
+        return None
+    if not isinstance(receipt.get("bootId"), str) or not receipt["bootId"]:
+        print("[B1] 실행 영수증 오류", flush=True)
+        if required:
+            sys.exit(2)
+        return None
+    for key in ("artifactSha256", "contentSha256", "configSha256"):
+        if not isinstance(receipt.get(key), str) or not re.fullmatch(r"[a-f0-9]{64}", receipt[key]):
+            print("[B1] 실행 영수증 오류", flush=True)
+            if required:
+                sys.exit(2)
+            return None
+    return {key: receipt[key] for key in ("schemaVersion", "bootId", "artifactSha256", "contentSha256", "configSha256")}
 
 def poll_llm(run_id, turn_no, max_wait=90, expect_choices=False):
     """LLM 폴링: GET /turns/:turnNo → llm.status / llm.output + UI 데이터
@@ -426,6 +450,8 @@ if args.model:
 
 if args.dry_run:
     dry_run_setup()
+
+_B1_RECEIPT_START = b1_runtime_receipt() if args.b1_capture else None
 
 # 누적 품질 게이트는 같은 서버 프로세스의 실효 모델 설정끼리만 비교한다.
 # 공개 설정에는 동적 LLM 설정이, 어드민 flags에는 교차·경량 모델 노브가 있다.
@@ -2077,6 +2103,7 @@ npc_met = sum(1 for n in npc_states.values() if n.get("encounterCount", 0) > 0)
 # ═══════════════════════════════════════
 # 6. Save Output (JSON + DB)
 # ═══════════════════════════════════════
+_B1_RECEIPT_END = b1_runtime_receipt(required=False) if args.b1_capture else None
 output = {
     "meta": {
         # [arch/92 §8] 실행 팩 기록 — 없으면 사후 리포트 분석에서 어느 팩 런인지
@@ -2091,6 +2118,7 @@ output = {
         "actualTurns": len(turn_logs),
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "git": git,
+        **({"b1RuntimeReceipt": {"start": _B1_RECEIPT_START, "end": _B1_RECEIPT_END}} if args.b1_capture else {}),
     },
     "runId": run_id,
     "turns": turn_logs,

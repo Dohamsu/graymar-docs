@@ -1,0 +1,521 @@
+{
+  "date": "2026-09-28",
+  "serverHead": "ad8b53e",
+  "conditions": {
+    "database": "graymar_p3_e2e_20260927",
+    "port": 3015,
+    "proposalFlag": true,
+    "semanticShadowFlag": true,
+    "defaultFlags": false,
+    "productionUntouched": true
+  },
+  "runs": [
+    {
+      "pack": "star_sand_v1",
+      "runId": "3f9e5cc1-7ec0-45f5-927c-d3e6509feca1",
+      "turns": 10,
+      "playtestFile": "/private/tmp/graymar_b1_semantic_star_20260928.json"
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "2492c7c8-fa8e-4433-a1b0-d0a17d6836e9",
+      "turns": 10,
+      "playtestFile": "/private/tmp/graymar_b1_semantic_graymar_20260928.json"
+    }
+  ],
+  "shadow": [
+    {
+      "pack": "star_sand_v1",
+      "turn": 4,
+      "latency": 244,
+      "cost": 0.000058422,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_4_0",
+          "label": "나하트의 말에서 의미를 파악하려 한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.9
+        },
+        {
+          "id": "nano_4_1",
+          "label": "나하트에게 금전을 제시한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.69
+        },
+        {
+          "id": "nano_4_2",
+          "label": "이 인물의 말에 답한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.97
+        }
+      ]
+    },
+    {
+      "pack": "star_sand_v1",
+      "turn": 5,
+      "latency": 237,
+      "cost": 0.000050652,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_5_0",
+          "label": "나하트의 말에 대해 더 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.94
+        },
+        {
+          "id": "nano_5_1",
+          "label": "바닥의 물기와 냄새를 자세히 살핀다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "ACT_ON_OBJECT",
+          "mc": 0.96
+        },
+        {
+          "id": "nano_5_2",
+          "label": "나하트가 말한 '이름도 아니고 주문도 아니네'의 의미를 질문한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.94
+        }
+      ]
+    },
+    {
+      "pack": "star_sand_v1",
+      "turn": 6,
+      "latency": 434,
+      "cost": 0.000052206,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_6_0",
+          "label": "나하트의 말을 조용히 듣는다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.89
+        },
+        {
+          "id": "nano_6_1",
+          "label": "나하트의 말에 답하며, 침묵의 의미를 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.62
+        },
+        {
+          "id": "nano_6_2",
+          "label": "나하트에게 침묵의 봉인에 대해 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.6
+        }
+      ]
+    },
+    {
+      "pack": "star_sand_v1",
+      "turn": 7,
+      "latency": 274,
+      "cost": 0.000054684,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_7_0",
+          "label": "침묵의 봉인에 대해 더 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": "FACT:FACT_SS_SILENCE_SEAL",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": 0.54,
+          "mode": "UNVERIFIED",
+          "mc": 0.65
+        },
+        {
+          "id": "nano_7_1",
+          "label": "나하트의 말을 설득해 잠시 침묵을 풀도록 만든다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_NAHAT",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.83
+        }
+      ]
+    },
+    {
+      "pack": "star_sand_v1",
+      "turn": 12,
+      "latency": 263,
+      "cost": 0.000069258,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_12_0",
+          "label": "부적을 더 가까이 살펴본다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": "ITEM:ITEM_SS_STAR_CHART",
+          "signal": "TARGET_MISMATCH",
+          "target": "DIFFERENT",
+          "tc": 0.83,
+          "mode": "ACT_ON_OBJECT",
+          "mc": 0.98
+        },
+        {
+          "id": "nano_12_1",
+          "label": "장인과 부적에 대해 흥정을 시도한다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": "ITEM:ITEM_SS_STAR_CHART",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": 0.64,
+          "mode": "UNVERIFIED",
+          "mc": 0.57
+        },
+        {
+          "id": "nano_12_2",
+          "label": "파도와 부두의 소리를 더 듣는다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.27
+        }
+      ]
+    },
+    {
+      "pack": "star_sand_v1",
+      "turn": 13,
+      "latency": 229,
+      "cost": 0.000067452,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_13_0",
+          "label": "아바스의 말에 관심을 갖고 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_SS_ABAS",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.9
+        },
+        {
+          "id": "nano_13_1",
+          "label": "부적의 내부를 몰래 관찰한다",
+          "struct": "CONTRADICTED",
+          "ref": "ITEM:ITEM_SS_STAR_CHART",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": 0.79,
+          "mode": "ACT_ON_OBJECT",
+          "mc": 0.93
+        },
+        {
+          "id": "nano_13_2",
+          "label": "밧줄 사이로 지나가는 짐꾼들을 조용히 관찰한다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.61
+        }
+      ]
+    },
+    {
+      "pack": "graymar_v1",
+      "turn": 4,
+      "latency": 231,
+      "cost": 0.000058464,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_4_0",
+          "label": "약초 묶음의 비밀을 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_MIRELA",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.14
+        },
+        {
+          "id": "nano_4_1",
+          "label": "마음의 열림과 신뢰를 얻기 위해 작은 돈을 건넨다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_MIRELA",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.72
+        },
+        {
+          "id": "nano_4_2",
+          "label": "그녀의 말을 더 자세히 듣기 위해 주변 소리를 살핀다",
+          "struct": "CONTRADICTED",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.36
+        }
+      ]
+    },
+    {
+      "pack": "graymar_v1",
+      "turn": 5,
+      "latency": 219,
+      "cost": 0.000055272,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_5_0",
+          "label": "미렐라에게 차 한잔 제안한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_MIRELA",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.9
+        },
+        {
+          "id": "nano_5_1",
+          "label": "그의 움직임과 주변 상황을 관찰한다",
+          "struct": "CONTRADICTED",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.82
+        },
+        {
+          "id": "nano_5_2",
+          "label": "미렐라에게 장부 도난에 대해 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_MIRELA",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.15
+        }
+      ]
+    },
+    {
+      "pack": "graymar_v1",
+      "turn": 6,
+      "latency": 863,
+      "cost": 0.000057036,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_6_0",
+          "label": "미렐라에게 시장에서 장부 이야기를 다시 꺼낸다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_MIRELA",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.9
+        },
+        {
+          "id": "nano_6_1",
+          "label": "시장 길목을 유심히 관찰한다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.62
+        },
+        {
+          "id": "nano_6_2",
+          "label": "찰리라는 목격자를 찾기 위해 주변을 조사한다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.57
+        }
+      ]
+    },
+    {
+      "pack": "graymar_v1",
+      "turn": 7,
+      "latency": 213,
+      "cost": 0.000055524,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_7_0",
+          "label": "잔을 놓으며 그녀의 눈치를 살핀다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.26
+        },
+        {
+          "id": "nano_7_1",
+          "label": "그녀에게 작은 돈을 건네며 정보를 요청한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_MIRELA",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.76
+        },
+        {
+          "id": "nano_7_2",
+          "label": "미렐라에게 유리한 거래를 제안한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_MIRELA",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "OTHER",
+          "mc": 0.96
+        }
+      ]
+    },
+    {
+      "pack": "graymar_v1",
+      "turn": 12,
+      "latency": 224,
+      "cost": 0.00005124,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_12_0",
+          "label": "풋풋한 경비병의 태도를 살펴본다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_GUARD_FELIX",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.7
+        },
+        {
+          "id": "nano_12_1",
+          "label": "경비병에게 접근하여 질문한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_GUARD_FELIX",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.79
+        },
+        {
+          "id": "nano_12_2",
+          "label": "주변을 자세히 조사한다",
+          "struct": "STRUCTURE_MATCH",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "ACT_ON_OBJECT",
+          "mc": 0.87
+        }
+      ]
+    },
+    {
+      "pack": "graymar_v1",
+      "turn": 13,
+      "latency": 387,
+      "cost": 0.000059724,
+      "status": "EVALUATED",
+      "records": [
+        {
+          "id": "nano_13_0",
+          "label": "풋풋한 경비병의 말에 다시 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_GUARD_FELIX",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.68
+        },
+        {
+          "id": "nano_13_1",
+          "label": "경비병의 몸짓과 표정을 관찰한다",
+          "struct": "CONTRADICTED",
+          "ref": "NPC_GUARD_FELIX",
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.63
+        },
+        {
+          "id": "nano_13_2",
+          "label": "풋풋한 경비병에게 마이렐 경비대 증거에 대해 묻는다",
+          "struct": "CONTRADICTED",
+          "ref": null,
+          "signal": "UNVERIFIED",
+          "target": "UNVERIFIED",
+          "tc": null,
+          "mode": "UNVERIFIED",
+          "mc": 0.14
+        }
+      ]
+    }
+  ]
+}

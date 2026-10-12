@@ -1,0 +1,10 @@
+ts	phase	decision	why	evidence	result
+2026-09-29T01:39:15Z	frame	36개 신규 패킷의 35개 사용자 판정을 B1 평가와 분리해 감사한다	문구 선호와 행동·대상 오류를 한 분모로 합치면 검출률이 왜곡된다	playtest-reports/archive/b1-followup-20260929/review/choice-grounding-human-label-ledger.json	35 labeled, 1 held
+2026-09-29T01:39:15Z	boundary	첫 B2 후보는 NPC 대화만 평가하고 ITEM은 제외한다	이번 최종 선택지 36개 모두 sourceNpcId가 있으며 ITEM 행동이 없다	playtest-reports/archive/b1-followup-20260929/review/choice-grounding-review-packet.json	ITEM not covered
+2026-09-29T01:41:14Z	eligibility	원시 35판정 중 B1 후보 23건만 분리하고 13건은 보류 또는 범위 밖에 둔다	문구 문제를 클릭 대상 오류와 합산하지 않고 누락된 대상 가족을 드러낸다	architecture/138_b1_followup_label_eligibility_20260929.md	15 ALLOW candidates, 8 REJECT candidates; counts verified
+2026-09-29T01:47:48Z	provenance	기존 런의 shadow 정확도 계산을 보류한다	DB 원장에는 의미 호출 12건만 있고 상세 판정은 당시 서버 로그에만 출력됐다	server/src/llm/llm-worker.service.ts:3472	INCONCLUSIVE
+2026-09-29T02:07:30Z	capture-v3	새 격리 런부터 원 후보·생성 직후 선택지·구조/의미 shadow를 불변 비공개 캡처에 보존한다	기존 35개 판정의 상세 shadow는 소급 복원 불가하며 내부 신호는 사람 패킷에서 가려야 한다	server/src/llm/worker/choice-grounding-review-capture.core.ts	12 captures, 36 Nano IDs, packet projection blind
+2026-09-29T02:07:30Z	live-eval	두 팩 각 10턴의 새 v3 패킷 36건을 사람 판정 대기로 둔다	자동 게이트 및 구조·의미 신호는 사람 ALLOW/REJECT를 대체하지 않는다	playtest-reports/archive/b1-v3-20260929/review/choice-grounding-review-packet.json	36 PENDING, B1 HOLD for promotion
+2026-09-29T02:25:17Z	manual-review	새 36건 전수 사람 판정을 중단한다	기존 35건이 결함 유형을 보였고 새 전수 판정만으로 부족한 NPC 반례가 채워지지 않는다	architecture/138_b1_followup_label_eligibility_20260929.md	no further ten-case batches
+2026-09-29T02:25:17Z	payload-target-replay	기존 최종 선택지의 공개 NPC 클릭 대상을 합성 제안으로 재검사한다	당시 shadow는 없으므로 과거 성능을 복원하지 않고 현재 판정기의 대상 분리 능력만 측정한다	playtest-reports/archive/b1-followup-20260929/review/payload-target-replay.json	12/12 evaluated, direct mismatch 1/8 signaled and 7/8 unverified
+2026-09-29T02:25:17Z	b1-decision	B1 적용 승격을 HOLD로 종결하고 B2를 켜지 않는다	NPC 가족 반례 균형과 ITEM 증거가 없고 대상 불일치 후보 대부분이 판정 미확인이다	architecture/123_narrative_quality_master_plan.md#69	HOLD, not PASS_LIMITED

@@ -1,0 +1,1793 @@
+{
+  "date": "2026-09-28",
+  "serverHead": "ad8b53e",
+  "comparisonNote": "Non-identical stochastic runs; compare format trends only, not causal quality rates.",
+  "before": "architecture/130_b1_semantic_shadow_20260928.json",
+  "conditions": {
+    "database": "graymar_p3_e2e_20260927",
+    "port": 3015,
+    "proposalFlag": true,
+    "semanticShadowFlag": true,
+    "productionUntouched": true
+  },
+  "runs": [
+    {
+      "pack": "star_sand_v1",
+      "runId": "99eebcb8-ef8d-4e70-b837-78414ce14028",
+      "turns": 10,
+      "playtestFile": "/private/tmp/graymar_b1_publicref_star_20260928.json"
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "4100758c-9e64-4d47-adef-21d63aa3f899",
+      "turns": 10,
+      "playtestFile": "/private/tmp/graymar_b1_publicref_graymar_20260928.json"
+    }
+  ],
+  "turns": [
+    {
+      "pack": "star_sand_v1",
+      "runId": "99eebcb8-ef8d-4e70-b837-78414ce14028",
+      "serverTurnNo": 4,
+      "playtestTurn": 3,
+      "publicRefIds": [
+        "FACT:FACT_SS_FIRST_DREAM",
+        "LOCATION:LOC_SS_INN",
+        "ITEM:ITEM_SS_STAR_CHART",
+        "NPC_PRESENT:4:0",
+        "NPC_PRESENT:4:1"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_4_0",
+          "candidateLabel": "이렌에게 돈을 건넨다",
+          "candidateAffordance": "BRIBE",
+          "finalLabel": "이렌에게 돈을 건넨다",
+          "payload": {
+            "affordance": "BRIBE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "BRIBE",
+            "targetRef": "NPC_PRESENT:4:0",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT:FACT_SS_FIRST_DREAM"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_4_0",
+            "targetRelation": "SAME",
+            "targetConfidence": 0.84,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.91,
+            "signal": "TARGET_POSSIBLY_ALIGNED"
+          },
+          "finalChoice": {
+            "id": "nano_4_0",
+            "label": "이렌에게 돈을 건넨다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "BRIBE",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_4_1",
+          "candidateLabel": "이렌의 질문에 답한다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "이렌의 질문에 답한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT:FACT_SS_FIRST_DREAM"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_4_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.96,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_4_1",
+            "label": "이렌의 질문에 답한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_4_2",
+          "candidateLabel": "이렌의 말을 관찰한다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "이렌의 말을 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "NPC_PRESENT:4:0",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_4_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.75,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.62,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_4_2",
+            "label": "이렌의 말을 관찰한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:fact_followup_4",
+      "clickedId": null,
+      "semanticLatencyMs": 307,
+      "semanticCostUsd": 0.000073374
+    },
+    {
+      "pack": "star_sand_v1",
+      "runId": "99eebcb8-ef8d-4e70-b837-78414ce14028",
+      "serverTurnNo": 5,
+      "playtestTurn": 4,
+      "publicRefIds": [
+        "FACT:FACT_SS_FIRST_DREAM",
+        "FACT:FACT_SS_SAME_WORDS",
+        "LOCATION:LOC_SS_INN",
+        "ITEM:ITEM_SS_STAR_CHART",
+        "NPC_PRESENT:5:0",
+        "NPC_PRESENT:5:1"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_5_0",
+          "candidateLabel": "이렌의 말에 동의하며 자세히 묻는다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "이렌의 말에 동의하며 자세히 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT:FACT_SS_SAME_WORDS",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT:FACT_SS_SAME_WORDS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_5_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.21,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.85,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_5_0",
+            "label": "이렌의 말에 동의하며 자세히 묻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_5_1",
+          "candidateLabel": "잠자는 손님들의 상태를 더 자세히 관찰한다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "잠자는 손님들의 상태를 더 자세히 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_5_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.3,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_5_1",
+            "label": "잠자는 손님들의 상태를 더 자세히 관찰한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_5_2",
+          "candidateLabel": "이렌이 시선이 향한 곳에서 잠든 손님들을 도와 깨운다",
+          "candidateAffordance": "HELP",
+          "finalLabel": "이렌이 시선이 향한 곳에서 잠든 손님들을 도와 깨운다",
+          "payload": {
+            "affordance": "HELP",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "HELP",
+            "targetRef": "NPC_PRESENT:5:0",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_5_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.68,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.89,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_5_2",
+            "label": "이렌이 시선이 향한 곳에서 잠든 손님들을 도와 깨운다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "HELP",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:nano_5_0",
+      "clickedId": "nano_5_0",
+      "semanticLatencyMs": 254,
+      "semanticCostUsd": 0.000077406
+    },
+    {
+      "pack": "star_sand_v1",
+      "runId": "99eebcb8-ef8d-4e70-b837-78414ce14028",
+      "serverTurnNo": 6,
+      "playtestTurn": 5,
+      "publicRefIds": [
+        "FACT:FACT_SS_FIRST_DREAM",
+        "FACT:FACT_SS_SAME_WORDS",
+        "LOCATION:LOC_SS_INN",
+        "ITEM:ITEM_SS_STAR_CHART",
+        "NPC_PRESENT:6:0",
+        "NPC_PRESENT:6:1"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_6_0",
+          "candidateLabel": "이렌의 말에 공감하며 진심으로 이해를 표한다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "이렌의 말에 공감하며 진심으로 이해를 표한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT:FACT_SS_SAME_WORDS",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT:FACT_SS_SAME_WORDS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_6_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.26,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.98,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_6_0",
+            "label": "이렌의 말에 공감하며 진심으로 이해를 표한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_6_1",
+          "candidateLabel": "이렌의 진술을 설득하여 더 많은 정보를 얻으려 한다",
+          "candidateAffordance": "PERSUADE",
+          "finalLabel": "이렌의 진술을 설득하여 더 많은 정보를 얻으려 한다",
+          "payload": {
+            "affordance": "PERSUADE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "PERSUADE",
+            "targetRef": "LOCATION:LOC_SS_INN",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_6_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.51,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.4,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_6_1",
+            "label": "이렌의 진술을 설득하여 더 많은 정보를 얻으려 한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "PERSUADE",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_6_2",
+          "candidateLabel": "창문 틈 사이로 새벽빛이 들어오는 모습을 관찰한다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "창문 틈 사이로 새벽빛이 들어오는 모습을 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_6_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.35,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_6_2",
+            "label": "창문 틈 사이로 새벽빛이 들어오는 모습을 관찰한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:nano_6_1",
+      "clickedId": "nano_6_1",
+      "semanticLatencyMs": 235,
+      "semanticCostUsd": 0.000068796
+    },
+    {
+      "pack": "star_sand_v1",
+      "runId": "99eebcb8-ef8d-4e70-b837-78414ce14028",
+      "serverTurnNo": 7,
+      "playtestTurn": 6,
+      "publicRefIds": [
+        "FACT:FACT_SS_FIRST_DREAM",
+        "FACT:FACT_SS_SAME_WORDS",
+        "LOCATION:LOC_SS_INN",
+        "ITEM:ITEM_SS_STAR_CHART",
+        "NPC_PRESENT:7:0",
+        "NPC_PRESENT:7:1"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_7_0",
+          "candidateLabel": "이렌에게 더 구체적인 질문을 한다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "이렌에게 더 구체적인 질문을 한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT:FACT_SS_SAME_WORDS",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_7_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.35,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.77,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_7_0",
+            "label": "이렌에게 더 구체적인 질문을 한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_7_1",
+          "candidateLabel": "거래를 제안하여 정보를 얻는다",
+          "candidateAffordance": "TRADE",
+          "finalLabel": "거래를 제안하여 정보를 얻는다",
+          "payload": {
+            "affordance": "TRADE",
+            "sourceNpcId": "NPC_SS_IREN",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TRADE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_7_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.97,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_7_1",
+            "label": "거래를 제안하여 정보를 얻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TRADE",
+                "sourceNpcId": "NPC_SS_IREN"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_7_2",
+          "candidateLabel": "장소를 떠나 주변을 살핀다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "장소를 떠나 주변을 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_7_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.94,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_7_2",
+            "label": "장소를 떠나 주변을 살핀다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "ACTION:move_location",
+      "clickedId": null,
+      "semanticLatencyMs": 244,
+      "semanticCostUsd": 0.000061446
+    },
+    {
+      "pack": "star_sand_v1",
+      "runId": "99eebcb8-ef8d-4e70-b837-78414ce14028",
+      "serverTurnNo": 12,
+      "playtestTurn": 9,
+      "publicRefIds": [
+        "FACT:FACT_SS_FIRST_DREAM",
+        "FACT:FACT_SS_SAME_WORDS",
+        "LOCATION:LOC_SS_DOCK",
+        "ITEM:ITEM_SS_STAR_CHART",
+        "NPC_PRESENT:12:0",
+        "NPC_PRESENT:12:1",
+        "NPC_PRESENT:12:2",
+        "NPC_PRESENT:12:3",
+        "NPC_PRESENT:12:4",
+        "NPC_PRESENT:12:5",
+        "NPC_PRESENT:12:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_12_0",
+          "candidateLabel": "아바스의 별소금 풀에 대해 더 묻는다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "아바스의 별소금 풀에 대해 더 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_ABAS",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT:FACT_SS_SAME_WORDS",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT:FACT_SS_FIRST_DREAM"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_12_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.77,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.13,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_12_0",
+            "label": "아바스의 별소금 풀에 대해 더 묻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_SS_ABAS"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_12_1",
+          "candidateLabel": "조용히 아바스의 작업 현장을 살핀다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "조용히 아바스의 작업 현장을 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_SS_ABAS",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "NPC_PRESENT:12:0",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_12_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.67,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.43,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_12_1",
+            "label": "조용히 아바스의 작업 현장을 살핀다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": "NPC_SS_ABAS"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_12_2",
+          "candidateLabel": "은밀하게 그의 뒤쪽으로 몰래 다가선다",
+          "candidateAffordance": "SNEAK",
+          "finalLabel": "은밀하게 그의 뒤쪽으로 몰래 다가선다",
+          "payload": {
+            "affordance": "SNEAK",
+            "sourceNpcId": null,
+            "riskLevel": 3
+          },
+          "proposal": {
+            "intent": "SNEAK",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_12_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.95,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_12_2",
+            "label": "은밀하게 그의 뒤쪽으로 몰래 다가선다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 3,
+                "affordance": "SNEAK",
+                "sourceNpcId": null
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:nano_12_0",
+      "clickedId": "nano_12_0",
+      "semanticLatencyMs": 291,
+      "semanticCostUsd": 0.000071568
+    },
+    {
+      "pack": "star_sand_v1",
+      "runId": "99eebcb8-ef8d-4e70-b837-78414ce14028",
+      "serverTurnNo": 13,
+      "playtestTurn": 10,
+      "publicRefIds": [
+        "FACT:FACT_SS_FIRST_DREAM",
+        "FACT:FACT_SS_SAME_WORDS",
+        "LOCATION:LOC_SS_DOCK",
+        "ITEM:ITEM_SS_STAR_CHART",
+        "NPC_PRESENT:13:0",
+        "NPC_PRESENT:13:1",
+        "NPC_PRESENT:13:2",
+        "NPC_PRESENT:13:3",
+        "NPC_PRESENT:13:4",
+        "NPC_PRESENT:13:5",
+        "NPC_PRESENT:13:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_13_0",
+          "candidateLabel": "아바스의 말을 끊고 별소금 풀의 성질을 더 묻는다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "아바스의 말을 끊고 별소금 풀의 성질을 더 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_SS_ABAS",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT:FACT_SS_FIRST_DREAM",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_13_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": 0.63,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.79,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_13_0",
+            "label": "아바스의 말을 끊고 별소금 풀의 성질을 더 묻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_SS_ABAS"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_13_1",
+          "candidateLabel": "부두 끝의 짐꾼을 도와 무거운 통을 옮긴다",
+          "candidateAffordance": "HELP",
+          "finalLabel": "부두 끝의 짐꾼을 도와 무거운 통을 옮긴다",
+          "payload": {
+            "affordance": "HELP",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "HELP",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_13_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.88,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_13_1",
+            "label": "부두 끝의 짐꾼을 도와 무거운 통을 옮긴다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "HELP",
+                "sourceNpcId": null
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_13_2",
+          "candidateLabel": "등잔의 도가니를 자세히 관찰한다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "등잔의 도가니를 자세히 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "ITEM:ITEM_SS_STAR_CHART",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_13_2",
+            "targetRelation": "DIFFERENT",
+            "targetConfidence": 0.97,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.96,
+            "signal": "TARGET_MISMATCH"
+          },
+          "finalChoice": {
+            "id": "nano_13_2",
+            "label": "등잔의 도가니를 자세히 관찰한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": null,
+      "clickedId": null,
+      "semanticLatencyMs": 243,
+      "semanticCostUsd": 0.000070896
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "4100758c-9e64-4d47-adef-21d63aa3f899",
+      "serverTurnNo": 4,
+      "playtestTurn": 3,
+      "publicRefIds": [
+        "LOCATION:LOC_MARKET",
+        "ITEM:ITEM_MINOR_HEALING",
+        "ITEM:ITEM_STAMINA_TONIC",
+        "NPC_PRESENT:4:0",
+        "NPC_PRESENT:4:1",
+        "NPC_PRESENT:4:2",
+        "NPC_PRESENT:4:3",
+        "NPC_PRESENT:4:4",
+        "NPC_PRESENT:4:5",
+        "NPC_PRESENT:4:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_4_0",
+          "candidateLabel": "장부의 조작 흔적에 대해 묻는다",
+          "candidateAffordance": "INVESTIGATE",
+          "finalLabel": "장부의 조작 흔적에 대해 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": null,
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "INVESTIGATE",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH",
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_4_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.37,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_4_0",
+            "label": "장부의 조작 흔적에 대해 묻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TALK",
+                "sourceNpcId": null
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_4_1",
+          "candidateLabel": "날카로운 회계사의 말에 제안을 건네며 신뢰를 쌓으려 한다",
+          "candidateAffordance": "PERSUADE",
+          "finalLabel": "날카로운 회계사의 말에 제안을 건네며 신뢰를 쌓으려 한다",
+          "payload": {
+            "affordance": "PERSUADE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "PERSUADE",
+            "targetRef": "NPC_EDRIC_VEIL",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_4_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.98,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_4_1",
+            "label": "날카로운 회계사의 말에 제안을 건네며 신뢰를 쌓으려 한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "PERSUADE",
+                "sourceNpcId": "NPC_EDRIC_VEIL"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_4_2",
+          "candidateLabel": "날카로운 회계사의 질문에 부정하며 되묻는다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "날카로운 회계사의 질문에 부정하며 되묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_EDRIC_VEIL",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_4_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.79,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_4_2",
+            "label": "날카로운 회계사의 질문에 부정하며 되묻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_EDRIC_VEIL"
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:nano_4_0",
+      "clickedId": "nano_4_0",
+      "semanticLatencyMs": 242,
+      "semanticCostUsd": 0.000059808
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "4100758c-9e64-4d47-adef-21d63aa3f899",
+      "serverTurnNo": 5,
+      "playtestTurn": 4,
+      "publicRefIds": [
+        "LOCATION:LOC_MARKET",
+        "ITEM:ITEM_MINOR_HEALING",
+        "ITEM:ITEM_STAMINA_TONIC",
+        "NPC_PRESENT:5:0",
+        "NPC_PRESENT:5:1",
+        "NPC_PRESENT:5:2",
+        "NPC_PRESENT:5:3",
+        "NPC_PRESENT:5:4",
+        "NPC_PRESENT:5:5",
+        "NPC_PRESENT:5:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_5_0",
+          "candidateLabel": "조용히 장부를 넘기며 잉크 차이 살펴본다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "조용히 장부를 넘기며 잉크 차이 살펴본다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_5_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.99,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_5_0",
+            "label": "조용히 장부를 넘기며 잉크 차이 살펴본다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_5_1",
+          "candidateLabel": "회계사에게 은밀히 다가가 장부 내부를 조심스럽게 살핀다",
+          "candidateAffordance": "SNEAK",
+          "finalLabel": "회계사에게 은밀히 다가가 장부 내부를 조심스럽게 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 3
+          },
+          "proposal": {
+            "intent": "SNEAK",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH"
+          ],
+          "semantic": {
+            "choiceId": "nano_5_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.91,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_5_1",
+            "label": "회계사에게 은밀히 다가가 장부 내부를 조심스럽게 살핀다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 3,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_5_2",
+          "candidateLabel": "회계사를 향해 손짓하며 상황을 묻는다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "날카로운 회계사에게 장부 도난에 대해 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_PRESENT:5:0",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "UNRESOLVED",
+          "reasons": [
+            "LABEL_CHANGED_AFTER_PROPOSAL"
+          ],
+          "semantic": {
+            "choiceId": "nano_5_2",
+            "targetRelation": "SAME",
+            "targetConfidence": 0.83,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.42,
+            "signal": "TARGET_POSSIBLY_ALIGNED"
+          },
+          "finalChoice": {
+            "id": "nano_5_2",
+            "label": "날카로운 회계사에게 장부 도난에 대해 묻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_EDRIC_VEIL"
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:nano_5_1",
+      "clickedId": "nano_5_1",
+      "semanticLatencyMs": 246,
+      "semanticCostUsd": 0.000056826
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "4100758c-9e64-4d47-adef-21d63aa3f899",
+      "serverTurnNo": 6,
+      "playtestTurn": 5,
+      "publicRefIds": [
+        "FACT:FACT_INSIDE_JOB",
+        "LOCATION:LOC_MARKET",
+        "ITEM:ITEM_MINOR_HEALING",
+        "ITEM:ITEM_STAMINA_TONIC",
+        "NPC_PRESENT:6:0",
+        "NPC_PRESENT:6:1",
+        "NPC_PRESENT:6:2",
+        "NPC_PRESENT:6:3",
+        "NPC_PRESENT:6:4",
+        "NPC_PRESENT:6:5",
+        "NPC_PRESENT:6:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_6_0",
+          "candidateLabel": "날카로운 회계사의 말을 듣고 도움을 제안한다",
+          "candidateAffordance": "HELP",
+          "finalLabel": "날카로운 회계사의 말을 듣고 도움을 제안한다",
+          "payload": {
+            "affordance": "PERSUADE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "HELP",
+            "targetRef": "NPC_EDRIC_VEIL",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_TAMPERED_LOGS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "INTENT_PAYLOAD_MISMATCH",
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_6_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.96,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_6_0",
+            "label": "날카로운 회계사의 말을 듣고 도움을 제안한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "PERSUADE",
+                "sourceNpcId": "NPC_EDRIC_VEIL"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_6_1",
+          "candidateLabel": "장부의 흔적을 자세히 분석한다",
+          "candidateAffordance": "INVESTIGATE",
+          "finalLabel": "장부의 흔적을 자세히 분석한다",
+          "payload": {
+            "affordance": "INVESTIGATE",
+            "sourceNpcId": null,
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "INVESTIGATE",
+            "targetRef": null,
+            "requiredRefs": [
+              "FACT_TAMPERED_LOGS"
+            ],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_6_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.97,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_6_1",
+            "label": "장부의 흔적을 자세히 분석한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "INVESTIGATE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_6_2",
+          "candidateLabel": "회계사를 관찰하며 주변을 살핀다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "회계사를 관찰하며 주변을 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "NPC_EDRIC_VEIL",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_6_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.76,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_6_2",
+            "label": "회계사를 관찰하며 주변을 살핀다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": "NPC_EDRIC_VEIL"
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:nano_6_0",
+      "clickedId": "nano_6_0",
+      "semanticLatencyMs": 197,
+      "semanticCostUsd": 0.00005187
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "4100758c-9e64-4d47-adef-21d63aa3f899",
+      "serverTurnNo": 7,
+      "playtestTurn": 6,
+      "publicRefIds": [
+        "FACT:FACT_INSIDE_JOB",
+        "FACT:FACT_LEDGER_EXISTS",
+        "LOCATION:LOC_MARKET",
+        "ITEM:ITEM_MINOR_HEALING",
+        "ITEM:ITEM_STAMINA_TONIC",
+        "NPC_PRESENT:7:0",
+        "NPC_PRESENT:7:1",
+        "NPC_PRESENT:7:2",
+        "NPC_PRESENT:7:3",
+        "NPC_PRESENT:7:4",
+        "NPC_PRESENT:7:5",
+        "NPC_PRESENT:7:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_7_0",
+          "candidateLabel": "장부의 조작 흔적을 구체적으로 묻는다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "장부의 조작 흔적을 구체적으로 묻는다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "FACT_TAMPERED_LOGS",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_WAGE_FRAUD_PATTERN"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_7_0",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.15,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_7_0",
+            "label": "장부의 조작 흔적을 구체적으로 묻는다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_EDRIC_VEIL"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_7_1",
+          "candidateLabel": "회계사에게 더 자세한 정보를 제공한다",
+          "candidateAffordance": "BRIBE",
+          "finalLabel": "회계사에게 더 자세한 정보를 제공한다",
+          "payload": {
+            "affordance": "BRIBE",
+            "sourceNpcId": "NPC_EDRIC_VEIL",
+            "riskLevel": 3
+          },
+          "proposal": {
+            "intent": "BRIBE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_7_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.71,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_7_1",
+            "label": "회계사에게 더 자세한 정보를 제공한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 3,
+                "affordance": "BRIBE",
+                "sourceNpcId": "NPC_EDRIC_VEIL"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_7_2",
+          "candidateLabel": "가판대 너머의 술내와 회계사의 긴장 상태를 살핀다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "가판대 너머의 술내와 회계사의 긴장 상태를 살핀다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_7_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.32,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_7_2",
+            "label": "가판대 너머의 술내와 회계사의 긴장 상태를 살핀다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "ACTION:move_location",
+      "clickedId": null,
+      "semanticLatencyMs": 205,
+      "semanticCostUsd": 0.000058968
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "4100758c-9e64-4d47-adef-21d63aa3f899",
+      "serverTurnNo": 12,
+      "playtestTurn": 9,
+      "publicRefIds": [
+        "FACT:FACT_INSIDE_JOB",
+        "FACT:FACT_LEDGER_EXISTS",
+        "LOCATION:LOC_GUARD",
+        "ITEM:ITEM_MINOR_HEALING",
+        "ITEM:ITEM_STAMINA_TONIC",
+        "NPC_PRESENT:12:0",
+        "NPC_PRESENT:12:1",
+        "NPC_PRESENT:12:2",
+        "NPC_PRESENT:12:3",
+        "NPC_PRESENT:12:4",
+        "NPC_PRESENT:12:5",
+        "NPC_PRESENT:12:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_12_0",
+          "candidateLabel": "야간 경비 책임자의 질문에 진지하게 답한다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "야간 경비 책임자의 질문에 진지하게 답한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_MAIREL",
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_PRESENT:12:0",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_12_0",
+            "targetRelation": "SAME",
+            "targetConfidence": 0.88,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.92,
+            "signal": "TARGET_POSSIBLY_ALIGNED"
+          },
+          "finalChoice": {
+            "id": "nano_12_0",
+            "label": "야간 경비 책임자의 질문에 진지하게 답한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_MAIREL"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_12_1",
+          "candidateLabel": "경험을 토대로 도시 치안에 대해 이야기한다",
+          "candidateAffordance": "PERSUADE",
+          "finalLabel": "경험을 토대로 도시 치안에 대해 이야기한다",
+          "payload": {
+            "affordance": "PERSUADE",
+            "sourceNpcId": "NPC_MAIREL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "PERSUADE",
+            "targetRef": "NPC_PRESENT:12:0",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_12_1",
+            "targetRelation": "SAME",
+            "targetConfidence": 0.88,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.93,
+            "signal": "TARGET_POSSIBLY_ALIGNED"
+          },
+          "finalChoice": {
+            "id": "nano_12_1",
+            "label": "경험을 토대로 도시 치안에 대해 이야기한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "PERSUADE",
+                "sourceNpcId": "NPC_MAIREL"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_12_2",
+          "candidateLabel": "경비대 주변의 분위기를 관찰한다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "경비대 주변의 분위기를 관찰한다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": null,
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_12_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.68,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_12_2",
+            "label": "경비대 주변의 분위기를 관찰한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": "AGENT:nano_12_1",
+      "clickedId": "nano_12_1",
+      "semanticLatencyMs": 275,
+      "semanticCostUsd": 0.000072282
+    },
+    {
+      "pack": "graymar_v1",
+      "runId": "4100758c-9e64-4d47-adef-21d63aa3f899",
+      "serverTurnNo": 13,
+      "playtestTurn": 10,
+      "publicRefIds": [
+        "FACT:FACT_INSIDE_JOB",
+        "FACT:FACT_LEDGER_EXISTS",
+        "LOCATION:LOC_GUARD",
+        "ITEM:ITEM_MINOR_HEALING",
+        "ITEM:ITEM_STAMINA_TONIC",
+        "NPC_PRESENT:13:0",
+        "NPC_PRESENT:13:1",
+        "NPC_PRESENT:13:2",
+        "NPC_PRESENT:13:3",
+        "NPC_PRESENT:13:4",
+        "NPC_PRESENT:13:5",
+        "NPC_PRESENT:13:6"
+      ],
+      "records": [
+        {
+          "choiceId": "nano_13_0",
+          "candidateLabel": "야간 경비 책임자가 묻는 내용에 대해 상세히 설명한다",
+          "candidateAffordance": "TALK",
+          "finalLabel": "야간 경비 책임자가 묻는 내용에 대해 상세히 설명한다",
+          "payload": {
+            "affordance": "TALK",
+            "sourceNpcId": "NPC_MAIREL",
+            "riskLevel": 2
+          },
+          "proposal": {
+            "intent": "TALK",
+            "targetRef": "NPC_PRESENT:13:0",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "CONFIRMED"
+          },
+          "status": "STRUCTURE_MATCH",
+          "reasons": [],
+          "semantic": {
+            "choiceId": "nano_13_0",
+            "targetRelation": "SAME",
+            "targetConfidence": 0.89,
+            "actionMode": "OTHER",
+            "actionModeConfidence": 0.8,
+            "signal": "TARGET_POSSIBLY_ALIGNED"
+          },
+          "finalChoice": {
+            "id": "nano_13_0",
+            "label": "야간 경비 책임자가 묻는 내용에 대해 상세히 설명한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 2,
+                "affordance": "TALK",
+                "sourceNpcId": "NPC_MAIREL"
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_13_1",
+          "candidateLabel": "경비 책임자의 손목 버클을 살펴본다",
+          "candidateAffordance": "OBSERVE",
+          "finalLabel": "경비 책임자의 손목 버클을 살펴본다",
+          "payload": {
+            "affordance": "OBSERVE",
+            "sourceNpcId": null,
+            "riskLevel": 1
+          },
+          "proposal": {
+            "intent": "OBSERVE",
+            "targetRef": "NPC_MAIREL",
+            "requiredRefs": [],
+            "evidenceRefs": [
+              "FACT_TAMPERED_LOGS"
+            ],
+            "assumption": "CONFIRMED"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_13_1",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "ACT_ON_OBJECT",
+            "actionModeConfidence": 0.91,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_13_1",
+            "label": "경비 책임자의 손목 버클을 살펴본다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 1,
+                "affordance": "OBSERVE",
+                "sourceNpcId": null
+              }
+            }
+          }
+        },
+        {
+          "choiceId": "nano_13_2",
+          "candidateLabel": "경비 책임자와 장비 거래를 진행한다",
+          "candidateAffordance": "TRADE",
+          "finalLabel": "경비 책임자와 장비 거래를 진행한다",
+          "payload": {
+            "affordance": "TRADE",
+            "sourceNpcId": "NPC_MAIREL",
+            "riskLevel": 3
+          },
+          "proposal": {
+            "intent": "TRADE",
+            "targetRef": "NPC_MAIREL",
+            "requiredRefs": [],
+            "evidenceRefs": [],
+            "assumption": "OPEN_QUESTION"
+          },
+          "status": "CONTRADICTED",
+          "reasons": [
+            "UNKNOWN_REF"
+          ],
+          "semantic": {
+            "choiceId": "nano_13_2",
+            "targetRelation": "UNVERIFIED",
+            "targetConfidence": null,
+            "actionMode": "UNVERIFIED",
+            "actionModeConfidence": 0.52,
+            "signal": "UNVERIFIED"
+          },
+          "finalChoice": {
+            "id": "nano_13_2",
+            "label": "경비 책임자와 장비 거래를 진행한다",
+            "action": {
+              "type": "CHOICE",
+              "payload": {
+                "riskLevel": 3,
+                "affordance": "TRADE",
+                "sourceNpcId": "NPC_MAIREL"
+              }
+            }
+          }
+        }
+      ],
+      "nextInput": null,
+      "clickedId": null,
+      "semanticLatencyMs": 205,
+      "semanticCostUsd": 0.000066066
+    }
+  ]
+}

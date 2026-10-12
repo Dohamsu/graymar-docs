@@ -70,8 +70,8 @@
         "turns": 5
       },
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_LEDGER_EXISTS"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_LEDGER_EXISTS"
       }
     ],
     "affordances": [
@@ -87,7 +87,28 @@
     "payload": {
       "sceneFrame": "상인 길드 연합의 회계 담당 {npc:NPC_EDRIC_VEIL}이 좌판 뒤편 창고에서 장부를 검토하고 있다. 그는 긴장한 기색으로 주변을 살피다가 당신의 시선을 의식한다. 그의 탁자 위에는 두 종류의 장부가 나란히 놓여 있다.",
       "primaryNpcId": "NPC_EDRIC_VEIL",
+      "sceneObjects": [
+        {
+          "id": "LEDGER_PAIR",
+          "label": "나란히 놓인 두 종류의 장부",
+          "placement": {
+            "kind": "ON_SURFACE",
+            "surfaceLabel": "좌판 뒤편 창고의 탁자"
+          }
+        }
+      ],
       "choices": [
+        {
+          "id": "mkt_faction_displace_ledgers",
+          "label": "시선을 피해 탁자 위 장부 두 권을 치워 둔다",
+          "hint": "장부를 탁자에서 옮기려다 들킬 수 있다",
+          "affordance": "SNEAK",
+          "riskLevel": 2,
+          "sceneObjectEffect": {
+            "kind": "DISPLACE",
+            "objectId": "LEDGER_PAIR"
+          }
+        },
         {
           "id": "mkt_faction_persuade",
           "label": "정직한 장부 관리가 길드에도 이롭다고 설득한다",
@@ -315,8 +336,8 @@
         "turns": 5
       },
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_LEDGER_EXISTS"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_LEDGER_EXISTS"
       }
     ],
     "affordances": [
@@ -449,8 +470,8 @@
     },
     "gates": [
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_TAMPERED_LOGS"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_TAMPERED_LOGS"
       },
       {
         "type": "REQUIRE_ARC",
@@ -524,8 +545,8 @@
         "turns": 6
       },
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_TAMPERED_LOGS"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_TAMPERED_LOGS"
       }
     ],
     "affordances": [
@@ -755,8 +776,8 @@
     },
     "gates": [
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_ROUTE_TO_EAST_DOCK"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_ROUTE_TO_EAST_DOCK"
       },
       {
         "type": "REQUIRE_ARC",
@@ -1000,8 +1021,8 @@
         "turns": 5
       },
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_LEDGER_EXISTS"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_LEDGER_EXISTS"
       }
     ],
     "affordances": [
@@ -1138,8 +1159,8 @@
     },
     "gates": [
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_SMUGGLE_ROUTE_GUILD"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_SMUGGLE_ROUTE_GUILD"
       }
     ],
     "affordances": [
@@ -1317,8 +1338,8 @@
         "turns": 4
       },
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_LEDGER_EXISTS"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_LEDGER_EXISTS"
       }
     ],
     "affordances": [
@@ -1433,8 +1454,8 @@
     },
     "gates": [
       {
-        "type": "REQUIRE_FLAG",
-        "flag": "FACT_OFFICIAL_INQUIRY"
+        "type": "REQUIRE_FACT",
+        "factId": "FACT_OFFICIAL_INQUIRY"
       },
       {
         "type": "REQUIRE_ARC",

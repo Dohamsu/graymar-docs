@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 게임의 최상위 원칙 (소유자 결정, 2026-09-29)
+
+플레이어는 가상의 현실에서 원하는 행동을 시도할 수 있다. 선택지에 없다는 이유로 세계관상 가능한 행동을 막지 않는다. 절도·이동·승선·폭력·살해·폭발물 사용도 일괄 금지하지 않는다. 그러나 시도는 성공 보장이 아니다. 서버는 현재 상태와 물리적·사회적·정치적 인과에 따라 결과를 판정하며, 맨몸 비행이나 한 번의 사기로 즉시 국왕이 되는 결과를 확정하지 않는다. 행동 분류는 내부 판정 수단이지 플레이어 행동의 허용 목록이 아니다. 자세한 불변 조건은 `AGENTS.md`를 따른다.
+
 ## Slack 작업 알림 (비활성 — 2026-07-09)
 
 **사용자 지시로 Slack 작업 알림을 보내지 않는다** (완료 알림·중간 보고 모두). 아래 절차는 재활성화를 대비한 기록이다.
@@ -323,7 +327,7 @@ COMBAT: ACTION/CHOICE → RuleParser → Policy → NodeResolver → ServerResul
 | React | React | 19.2 |
 | State | Zustand | 5.0 |
 | Styling | Tailwind CSS | 4 |
-| LLM | **[2026-09-03 개발 기간] 메인 = Upstage Solar Pro 4 전턴, 교차 중단 (arch/113 — 프로파일 자동 적용, 원복은 .env 두 줄)** · 이전 정본: Gemma 4 31B dense (메인, stream:true, provider allowlist Friendli·Venice·Novita·CoreWeave) / **gpt-5.6-luna** (5:5 교차 — 짝수 턴. 2026-08-13 DeepSeek 교체: 어체 위반 43~46%→6.4%, 마커 커버리지 75%→100% 실측) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
+| LLM | **[2026-10-12 소유자 지시] 메인 = OpenAI GPT-6 Luna 단일 모델 (교차 없음·선택지 생성 동일 모델·추론 none·OpenAI 직결). temperature·penalty 미지원이라 불변식 50 penalty 레버는 꺼진다** · 직전: Upstage Solar Pro 4 전턴(2026-09-03, arch/113 — 원복은 .env `OPENAI_MODEL` 한 줄) · 그 이전 정본: Gemma 4 31B dense (메인, stream:true, provider allowlist Friendli·Venice·Novita·CoreWeave) / **gpt-5.6-luna** (5:5 교차 — 짝수 턴. 2026-08-13 DeepSeek 교체: 어체 위반 43~46%→6.4%, 마커 커버리지 75%→100% 실측) / GPT-4.1 Mini (fallback) / GPT-4.1-nano (경량) | Multi-provider via OpenRouter (arch/25 부록 D·D-8) |
 
 ## LLM 설계 원칙 (필수 참고)
 
@@ -600,7 +604,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 DATABASE_URL=postgresql://user:password@localhost:5432/textRpg
 LLM_PROVIDER=openai          # openai | claude | gemini | mock
 OPENAI_API_KEY=sk-...
-OPENAI_MODEL=google/gemma-4-31b-it   # OpenRouter 메인 모델 (Gemma 4 31B dense — 2026-07-22 승격, allowlist 전제. 이전 26B MoE). **[2026-09-03 개발 기간] 실제 .env 는 upstage/solar-pro4 + LLM_ALTERNATE_MODEL 주석(교차 중단) — arch/113 §6, 원복 두 줄**
+OPENAI_MODEL=google/gemma-4-31b-it   # **[2026-10-12] 실제 .env 는 openai/gpt-6-luna (단일·추론 none, LLM_REASONING_EFFORT_MAP·LLM_PROVIDER_ONLY_MAP 에 등재)** OpenRouter 메인 모델 (Gemma 4 31B dense — 2026-07-22 승격, allowlist 전제. 이전 26B MoE). **[2026-09-03 개발 기간] 실제 .env 는 upstage/solar-pro4 + LLM_ALTERNATE_MODEL 주석(교차 중단) — arch/113 §6, 원복 두 줄**
 LLM_PROMPT_PROFILE_MAP=                # 모델별 프롬프트 프로파일 강제 (`모델=solar;…`). 미설정 시 슬러그에 solar 가 있으면 자동 (arch/113)
 LLM_ALTERNATE_MODEL=openai/gpt-5.6-luna  # 교차 모델 — 5:5(턴%10∈{0,2,4,6,8}=짝수). 2026-08-13 DeepSeek→Luna 교체 + 3:7→5:5 복원: 3:7 축소 사유(DeepSeek 어미 열세)가 모델 교체로 소멸. 30일 실측 — 어체 위반 Luna 6.4% / Gemma 14.6% / DeepSeek 43~46%, 마커 커버리지 Luna 100% / Gemma 99.6% / DeepSeek 74.8~77.5%. DeepSeek 무마커 대사는 초상화·화자 표시가 모두 실패(실측 런에서 최대 정보 공개 턴에 4연속 발생). 추론은 LLM_REASONING_EFFORT_MAP 으로 none 고정 필수 — 미지정 시 default_effort=medium 으로 켜져 출력 단가 과금. 계약은 model-alternation.spec.ts 가 고정
 OPENAI_BASE_URL=https://openrouter.ai/api/v1  # optional, OpenAI-compatible endpoint
@@ -671,6 +675,7 @@ SCENE_CUT_MIN_CONFIDENCE=0.65           # 장면 컷 nano 판정 채택 임계
 PROMPT_FIXTURE_CAPTURE=                 # 설정 시 프롬프트 픽스처 덤프
 PLAYTEST_NPC_REACTION=                  # 플레이테스트 NPC 반응 계측 토글
 CHOICE_GROUNDING_PROPOSAL_EXPERIMENT=false # B1 격리 평가 전용. true면 Nano Track 2 프롬프트·출력 형식이 변한다. 기본 false 유지; 최종 UI 차단은 하지 않음 — arch/123 §51
+CHOICE_GROUNDING_SEMANTIC_SHADOW=false # B1 독립 JEV 의미 감사. proposal 실험 플래그도 true일 때만 호출·로그; 선택지 차단 없음 — arch/123 §56
 OPENROUTER_MANAGEMENT_KEY=              # 어드민 실과금 대조 — Activity API. 일반 추론 키는 403 (arch/87 §9)
 ```
 

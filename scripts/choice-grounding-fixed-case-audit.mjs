@@ -3,13 +3,168 @@ import { isDeepStrictEqual } from "node:util";
 import { pathToFileURL } from "node:url";
 import { extractFinalNanoChoiceEvidence } from "./choice-grounding-evidence.mjs";
 
+function normalizeShadowTurns(shadowAudit, shadowFormat) {
+  if (!shadowAudit || typeof shadowAudit !== "object" || Array.isArray(shadowAudit)) {
+    throw new Error("shadow audit must be an object");
+  }
+  let turnKey;
+  if (shadowFormat === "followup-v1") {
+    if (Object.hasOwn(shadowAudit, "schemaVersion")) {
+      throw new Error("shadow format conflicts with schema version");
+    }
+    turnKey = "serverTurnNo";
+  } else if (shadowFormat === undefined && [1, 2].includes(shadowAudit.schemaVersion)) {
+    turnKey = "turnNo";
+  } else {
+    throw new Error("unsupported shadow format or schema version");
+  }
+  if (!Array.isArray(shadowAudit.turns) || shadowAudit.turns.length === 0) {
+    throw new Error("shadow turns are missing or empty");
+  }
+
+  const seenTurns = new Set();
+  return shadowAudit.turns.map((turn) => {
+    const wrongTurnKey = turnKey === "turnNo" ? "serverTurnNo" : "turnNo";
+    if (
+      !turn ||
+      typeof turn !== "object" ||
+      typeof turn.runId !== "string" ||
+      turn.runId.trim() === "" ||
+      !Object.hasOwn(turn, turnKey) ||
+      Object.hasOwn(turn, wrongTurnKey) ||
+      !Number.isSafeInteger(turn[turnKey]) ||
+      turn[turnKey] <= 0 ||
+      !Array.isArray(turn.records) ||
+      turn.records.length === 0
+    ) {
+      throw new Error("shadow turn is malformed");
+    }
+    const turnNo = turn[turnKey];
+    const turnId = JSON.stringify([turn.runId, turnNo]);
+    if (seenTurns.has(turnId)) throw new Error(`duplicate shadow turn: ${turnId}`);
+    seenTurns.add(turnId);
+
+    const seenChoices = new Set();
+    const records = turn.records.map((record) => {
+      if (
+        !record ||
+        typeof record !== "object" ||
+        typeof record.choiceId !== "string" ||
+        record.choiceId.trim() === "" ||
+        typeof record.finalLabel !== "string" ||
+        record.finalLabel.trim() === "" ||
+        !record.payload ||
+        typeof record.payload !== "object" ||
+        Array.isArray(record.payload)
+      ) {
+        throw new Error(`shadow record is malformed: ${turnId}`);
+      }
+      if (seenChoices.has(record.choiceId)) {
+        throw new Error(`duplicate shadow choice: ${turnId}:${record.choiceId}`);
+      }
+      seenChoices.add(record.choiceId);
+      if (
+        shadowFormat === "followup-v1" &&
+        (
+          record.finalChoice?.id !== record.choiceId ||
+          record.finalChoice?.label !== record.finalLabel ||
+          record.finalChoice?.action?.type !== "CHOICE" ||
+          !isDeepStrictEqual(record.finalChoice?.action?.payload, record.payload)
+        )
+      ) {
+        throw new Error(`shadow final choice mismatch: ${turnId}:${record.choiceId}`);
+      }
+      return {
+        choiceId: record.choiceId,
+        finalLabel: record.finalLabel,
+        payload: record.payload,
+      };
+    });
+    return { runId: turn.runId, turnNo, records };
+  });
+}
+
+function verifyShadowFinalSurfaces(shadowTurns, sourceReports) {
+  const total = shadowTurns.reduce((count, turn) => count + turn.records.length, 0);
+  if (sourceReports === undefined) {
+    return { status: "UNVERIFIED", total, verified: 0 };
+  }
+  if (!Array.isArray(sourceReports) || sourceReports.length === 0) {
+    throw new Error("shadow source reports are missing");
+  }
+  const evidenceByRun = new Map();
+  for (const report of sourceReports) {
+    if (typeof report?.runId !== "string" || !report.runId || evidenceByRun.has(report.runId)) {
+      throw new Error("shadow source report run is missing or duplicate");
+    }
+    evidenceByRun.set(report.runId, extractFinalNanoChoiceEvidence(report));
+  }
+  const shadowRuns = new Set(shadowTurns.map((turn) => turn.runId));
+  if (
+    evidenceByRun.size !== shadowRuns.size ||
+    [...evidenceByRun.keys()].some((runId) => !shadowRuns.has(runId))
+  ) {
+    throw new Error("shadow source report run mismatch");
+  }
+  for (const turn of shadowTurns) {
+    const finalChoices = evidenceByRun.get(turn.runId).filter(
+      (entry) => entry.turnNo === turn.turnNo,
+    );
+    if (
+      finalChoices.length !== turn.records.length ||
+      turn.records.some((record) => {
+        const final = finalChoices.find((entry) => entry.choiceId === record.choiceId);
+        return !final ||
+          final.label !== record.finalLabel ||
+          !isDeepStrictEqual(final.payload, record.payload);
+      })
+    ) {
+      throw new Error(`shadow final surface mismatch: ${turn.runId}:${turn.turnNo}`);
+    }
+  }
+  return { status: "VERIFIED", total, verified: total };
+}
+
+function readDeclaredShadowSources(shadowAudit, shadowFormat) {
+  if (shadowFormat === "followup-v1") {
+    if (!Array.isArray(shadowAudit.runs) || shadowAudit.runs.length === 0) {
+      throw new Error("shadow source reports are missing");
+    }
+    return shadowAudit.runs.map((run) => {
+      if (typeof run?.runId !== "string" || typeof run.playtestFile !== "string" || !run.playtestFile) {
+        throw new Error("shadow source report path is missing");
+      }
+      const report = JSON.parse(readFileSync(run.playtestFile, "utf8"));
+      if (report.runId !== run.runId) throw new Error("shadow source report run mismatch");
+      return report;
+    });
+  }
+  if (shadowAudit.schemaVersion === 1 && !Object.hasOwn(shadowAudit, "sourceReports")) {
+    return undefined;
+  }
+  if (!Array.isArray(shadowAudit.sourceReports) || shadowAudit.sourceReports.length === 0) {
+    throw new Error("shadow source reports are missing");
+  }
+  return shadowAudit.sourceReports.map((path) => {
+    if (typeof path !== "string" || !path) {
+      throw new Error("shadow source report path is missing");
+    }
+    return JSON.parse(readFileSync(path, "utf8"));
+  });
+}
+
 /** 고정 표의 기대 판정과 실제 완료된 최종 Nano 선택지 증거를 분리해 센다. */
 export function auditFixedCaseEvidence(
   markdown,
   samples,
-  shadowAudit,
-  sourceReports,
+  { shadowAudit, sourceReports, shadowFormat, shadowSourceReports } = {},
 ) {
+  const shadowTurns = shadowAudit === undefined
+    ? undefined
+    : normalizeShadowTurns(shadowAudit, shadowFormat);
+  const shadowFinalSurfaceVerification = shadowTurns
+    ? verifyShadowFinalSurfaces(shadowTurns, shadowSourceReports)
+    : undefined;
   const cases = new Map();
   for (const line of markdown.split("\n")) {
     const match =
@@ -68,13 +223,22 @@ export function auditFixedCaseEvidence(
   }
 
   const statuses = linked.map((entry) => entry.clickStatus);
-  const sameSurfaceShadow = shadowAudit
+  const fixedRuns = new Set(samples.map(({ expected }) => expected.runId));
+  const sharedRunIds = shadowTurns
+    ? new Set(shadowTurns.map((turn) => turn.runId).filter((runId) => fixedRuns.has(runId))).size
+    : undefined;
+  const sameRunTurnSamples = shadowTurns
+    ? samples.filter(({ expected }) => shadowTurns.some(
+        (turn) => turn.runId === expected.runId && turn.turnNo === expected.turnNo,
+      )).length
+    : undefined;
+  const sameSurfaceShadow = shadowTurns
     ? samples.filter(({ expected }) =>
-        shadowAudit.turns?.some(
+        shadowTurns.some(
           (turn) =>
             turn.runId === expected.runId &&
             turn.turnNo === expected.turnNo &&
-            turn.records?.some(
+            turn.records.some(
               (record) =>
                 record.choiceId === expected.choiceId &&
                 record.finalLabel === expected.label &&
@@ -108,7 +272,12 @@ export function auditFixedCaseEvidence(
     clickUnobserved: statuses.filter((value) => value === "UNOBSERVED").length,
     unlinked: cases.size - linked.length,
     ...(sourceReports ? { sourceVerified: linked.length } : {}),
-    ...(shadowAudit ? { sameSurfaceShadow } : {}),
+    ...(shadowTurns ? {
+      sharedRunIds,
+      sameRunTurnSamples,
+      sameSurfaceShadow,
+      shadowFinalSurfaceVerification,
+    } : {}),
     linked,
     unlinkedCaseIds: [...cases.keys()].filter((id) => !linkedIds.has(id)),
   };
@@ -118,13 +287,24 @@ if (
   process.argv[1] &&
   import.meta.url === pathToFileURL(process.argv[1]).href
 ) {
-  const verifySource = process.argv.includes("--verify-source");
-  const [fixedCasePath, samplePath, shadowPath] = process.argv
-    .slice(2)
-    .filter((arg) => arg !== "--verify-source");
+  const args = process.argv.slice(2);
+  const verifySource = args.includes("--verify-source");
+  const formatFlags = args.filter((arg) => arg.startsWith("--shadow-format="));
+  const unknownFlags = args.filter(
+    (arg) => arg.startsWith("--") && arg !== "--verify-source" && arg !== "--shadow-format=followup-v1",
+  );
+  if (unknownFlags.length > 0 || formatFlags.length > 1) {
+    throw new Error(`unknown or duplicate audit flag: ${[...unknownFlags, ...formatFlags].join(", ")}`);
+  }
+  const shadowFormat = formatFlags.length === 1 ? "followup-v1" : undefined;
+  const paths = args.filter((arg) => !arg.startsWith("--"));
+  const [fixedCasePath, samplePath, shadowPath] = paths;
+  if (paths.length > 3 || (shadowFormat && !shadowPath)) {
+    throw new Error("shadow format requires one shadow audit path");
+  }
   if (!fixedCasePath || !samplePath) {
     process.stderr.write(
-      "사용법: node scripts/choice-grounding-fixed-case-audit.mjs <fixed-cases.md> <evidence.json> [shadow-audit.json] [--verify-source]\n",
+      "사용법: node scripts/choice-grounding-fixed-case-audit.mjs <fixed-cases.md> <evidence.json> [shadow-audit.json] [--verify-source] [--shadow-format=followup-v1]\n",
     );
     process.exitCode = 2;
   } else {
@@ -132,6 +312,9 @@ if (
     const { samples } = JSON.parse(readFileSync(samplePath, "utf8"));
     const shadowAudit = shadowPath
       ? JSON.parse(readFileSync(shadowPath, "utf8"))
+      : undefined;
+    const shadowSourceReports = verifySource && shadowAudit
+      ? readDeclaredShadowSources(shadowAudit, shadowFormat)
       : undefined;
     const sourceReports = verifySource
       ? new Map(
@@ -142,7 +325,12 @@ if (
         )
       : undefined;
     process.stdout.write(
-      `${JSON.stringify(auditFixedCaseEvidence(fixedCases, samples, shadowAudit, sourceReports), null, 2)}\n`,
+      `${JSON.stringify(auditFixedCaseEvidence(fixedCases, samples, {
+        shadowAudit,
+        sourceReports,
+        shadowFormat,
+        shadowSourceReports,
+      }), null, 2)}\n`,
     );
   }
 }

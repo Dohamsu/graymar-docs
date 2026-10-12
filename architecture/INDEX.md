@@ -11,7 +11,9 @@
 - 전체 아키텍처: [[architecture/04_server_architecture|server architecture]]
 - 최근 파이프라인: [[architecture/26_narrative_pipeline_v2|narrative pipeline v2]], [[architecture/35_llm_streaming|llm streaming]]
 - 서술·대사 독자 경험 기록: [[architecture/122_narrative_reader_experience_observations|narrative reader experience observations]] (2026-09-25 실측 본문·증상·독자 체감, 수정 계획 전 베이스라인)
-- 서술·대사 순차 수정: [[architecture/123_narrative_quality_master_plan|narrative quality master plan]] (N-01~22, P0~P7 게이트; §47~54 출처 계약·A1/A2/B1 진행 현황) · [[architecture/124_choice_grounding_fixed_cases|choice grounding fixed cases]] (두 팩 40건, 문제/정상·클릭 근거 분리) · [[architecture/125_narrative_quality_repeat_queue|반복 증상 보류 목록]] (두 팩 반복 증상·수정 시도 한도) · [[architecture/126_b1_shadow_audit_20260928.json|B1 실런 감사 원자료]] (최종 Nano 27개 구조 제안·판정) · [[architecture/127_choice_grounding_fixed_evidence_20260928.json|A1 최종 표면 증거]] (고정 사례 4건의 완료 턴·다음 입력 발췌)
+- 서술·대사 순차 수정: [[architecture/123_narrative_quality_master_plan|narrative quality master plan]] (§35 완료 범위, §47 계약, §59 현재 관문, §67 후속 36건의 35건 판정) · [[architecture/124_choice_grounding_fixed_cases|choice grounding fixed cases]] (두 팩 원천 사례 40건, 최종 Nano·클릭은 별도 분모) · [[architecture/125_narrative_quality_repeat_queue|반복 증상 보류 목록]] (두 팩 반복 증상·수정 시도 한도) · [[architecture/136_b1_typed_public_ref_assessment_20260928|이전 B1 평가]] (마지막 경계 보강 전 실런과 잔여 관문) · [[architecture/138_b1_followup_label_eligibility_20260929|B1 후속 판정 적격성]] (36건 중 35건 판정, B1 분모와 표현 판정 분리)
+- 행동 기반 시간·세부 장소 전환: [[architecture/137_action_time_place_transition_todo|별도 TODO]] (특정 시간까지 대기한 뒤 장소 내부 공간으로 이동하는 정본 상태 계약, B1 선택지 60번 보류)
+- 원문 회상 블록(Dimtale 기억 방식 이식): [[architecture/139_dimtale_recall_transplant|dimtale recall transplant]] (설계 제안 — 기존 `turns.raw_input`·`llm_output` 을 입력 기반 검색해 자르지 않은 원문 묶음 주입, NPC 관점 범위, 단계 분리 계측 V15)
 - 최신 전투: [[architecture/41_creative_combat_actions|creative combat actions]](창의 입력), [[architecture/42_combat_ui_buttonform|combat ui buttonform]](버튼형 UI)
 - 최신 구현 가이드: `guides/01~08_*.md` (서비스맵·컴포넌트맵·HUB·LLM메모리·RunState상수·장소이미지·LivingWorld·파티)
 

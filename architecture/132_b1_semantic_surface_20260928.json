@@ -1,0 +1,534 @@
+{
+  "date": "2026-09-28",
+  "source": "Isolated playtest reports listed in architecture/130; exact final llmChoices and immediate next test input, not a human REJECT/ALLOW label.",
+  "turns": [
+    {
+      "pack": "star_sand_v1",
+      "serverTurnNo": 4,
+      "playtestTurn": 3,
+      "finalNanoChoices": [
+        {
+          "id": "nano_4_0",
+          "label": "나하트의 말에서 의미를 파악하려 한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        },
+        {
+          "id": "nano_4_1",
+          "label": "나하트에게 금전을 제시한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "BRIBE",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        },
+        {
+          "id": "nano_4_2",
+          "label": "이 인물의 말에 답한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_4_0",
+      "clickedId": "nano_4_0"
+    },
+    {
+      "pack": "star_sand_v1",
+      "serverTurnNo": 5,
+      "playtestTurn": 4,
+      "finalNanoChoices": [
+        {
+          "id": "nano_5_0",
+          "label": "나하트의 말에 대해 더 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        },
+        {
+          "id": "nano_5_1",
+          "label": "바닥의 물기와 냄새를 자세히 살핀다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": null
+            }
+          }
+        },
+        {
+          "id": "nano_5_2",
+          "label": "나하트가 말한 '이름도 아니고 주문도 아니네'의 의미를 질문한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 3,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_5_2",
+      "clickedId": "nano_5_2"
+    },
+    {
+      "pack": "star_sand_v1",
+      "serverTurnNo": 6,
+      "playtestTurn": 5,
+      "finalNanoChoices": [
+        {
+          "id": "nano_6_0",
+          "label": "나하트의 말을 조용히 듣는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        },
+        {
+          "id": "nano_6_1",
+          "label": "나하트의 말에 답하며, 침묵의 의미를 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        },
+        {
+          "id": "nano_6_2",
+          "label": "나하트에게 침묵의 봉인에 대해 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_6_2",
+      "clickedId": "nano_6_2"
+    },
+    {
+      "pack": "star_sand_v1",
+      "serverTurnNo": 7,
+      "playtestTurn": 6,
+      "finalNanoChoices": [
+        {
+          "id": "nano_7_0",
+          "label": "침묵의 봉인에 대해 더 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        },
+        {
+          "id": "nano_7_1",
+          "label": "나하트의 말을 설득해 잠시 침묵을 풀도록 만든다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "PERSUADE",
+              "sourceNpcId": "NPC_SS_NAHAT"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "ACTION:move_location",
+      "clickedId": null
+    },
+    {
+      "pack": "star_sand_v1",
+      "serverTurnNo": 12,
+      "playtestTurn": 9,
+      "finalNanoChoices": [
+        {
+          "id": "nano_12_0",
+          "label": "부적을 더 가까이 살펴본다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_SS_ABAS"
+            }
+          }
+        },
+        {
+          "id": "nano_12_1",
+          "label": "장인과 부적에 대해 흥정을 시도한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TRADE",
+              "sourceNpcId": "NPC_SS_ABAS"
+            }
+          }
+        },
+        {
+          "id": "nano_12_2",
+          "label": "파도와 부두의 소리를 더 듣는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": null
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_12_0",
+      "clickedId": "nano_12_0"
+    },
+    {
+      "pack": "star_sand_v1",
+      "serverTurnNo": 13,
+      "playtestTurn": 10,
+      "finalNanoChoices": [
+        {
+          "id": "nano_13_0",
+          "label": "아바스의 말에 관심을 갖고 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_SS_ABAS"
+            }
+          }
+        },
+        {
+          "id": "nano_13_1",
+          "label": "부적의 내부를 몰래 관찰한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 3,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_SS_ABAS"
+            }
+          }
+        },
+        {
+          "id": "nano_13_2",
+          "label": "밧줄 사이로 지나가는 짐꾼들을 조용히 관찰한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": null
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": null,
+      "clickedId": null
+    },
+    {
+      "pack": "graymar_v1",
+      "serverTurnNo": 4,
+      "playtestTurn": 3,
+      "finalNanoChoices": [
+        {
+          "id": "nano_4_0",
+          "label": "약초 묶음의 비밀을 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        },
+        {
+          "id": "nano_4_1",
+          "label": "마음의 열림과 신뢰를 얻기 위해 작은 돈을 건넨다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 3,
+              "affordance": "BRIBE",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        },
+        {
+          "id": "nano_4_2",
+          "label": "그녀의 말을 더 자세히 듣기 위해 주변 소리를 살핀다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_4_0",
+      "clickedId": "nano_4_0"
+    },
+    {
+      "pack": "graymar_v1",
+      "serverTurnNo": 5,
+      "playtestTurn": 4,
+      "finalNanoChoices": [
+        {
+          "id": "nano_5_0",
+          "label": "미렐라에게 차 한잔 제안한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "PERSUADE",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        },
+        {
+          "id": "nano_5_1",
+          "label": "그의 움직임과 주변 상황을 관찰한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": null
+            }
+          }
+        },
+        {
+          "id": "nano_5_2",
+          "label": "미렐라에게 장부 도난에 대해 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_5_0",
+      "clickedId": "nano_5_0"
+    },
+    {
+      "pack": "graymar_v1",
+      "serverTurnNo": 6,
+      "playtestTurn": 5,
+      "finalNanoChoices": [
+        {
+          "id": "nano_6_0",
+          "label": "미렐라에게 시장에서 장부 이야기를 다시 꺼낸다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        },
+        {
+          "id": "nano_6_1",
+          "label": "시장 길목을 유심히 관찰한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": null
+            }
+          }
+        },
+        {
+          "id": "nano_6_2",
+          "label": "찰리라는 목격자를 찾기 위해 주변을 조사한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "INVESTIGATE",
+              "sourceNpcId": null
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_6_0",
+      "clickedId": "nano_6_0"
+    },
+    {
+      "pack": "graymar_v1",
+      "serverTurnNo": 7,
+      "playtestTurn": 6,
+      "finalNanoChoices": [
+        {
+          "id": "nano_7_0",
+          "label": "잔을 놓으며 그녀의 눈치를 살핀다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        },
+        {
+          "id": "nano_7_1",
+          "label": "그녀에게 작은 돈을 건네며 정보를 요청한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "BRIBE",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        },
+        {
+          "id": "nano_7_2",
+          "label": "미렐라에게 유리한 거래를 제안한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "PERSUADE",
+              "sourceNpcId": "NPC_MIRELA"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "ACTION:move_location",
+      "clickedId": null
+    },
+    {
+      "pack": "graymar_v1",
+      "serverTurnNo": 12,
+      "playtestTurn": 9,
+      "finalNanoChoices": [
+        {
+          "id": "nano_12_0",
+          "label": "풋풋한 경비병의 태도를 살펴본다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_GUARD_FELIX"
+            }
+          }
+        },
+        {
+          "id": "nano_12_1",
+          "label": "경비병에게 접근하여 질문한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_GUARD_FELIX"
+            }
+          }
+        },
+        {
+          "id": "nano_12_2",
+          "label": "주변을 자세히 조사한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "INVESTIGATE",
+              "sourceNpcId": null
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": "AGENT:nano_12_1",
+      "clickedId": "nano_12_1"
+    },
+    {
+      "pack": "graymar_v1",
+      "serverTurnNo": 13,
+      "playtestTurn": 10,
+      "finalNanoChoices": [
+        {
+          "id": "nano_13_0",
+          "label": "풋풋한 경비병의 말에 다시 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 2,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_GUARD_FELIX"
+            }
+          }
+        },
+        {
+          "id": "nano_13_1",
+          "label": "경비병의 몸짓과 표정을 관찰한다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "OBSERVE",
+              "sourceNpcId": "NPC_GUARD_FELIX"
+            }
+          }
+        },
+        {
+          "id": "nano_13_2",
+          "label": "풋풋한 경비병에게 마이렐 경비대 증거에 대해 묻는다",
+          "action": {
+            "type": "CHOICE",
+            "payload": {
+              "riskLevel": 1,
+              "affordance": "TALK",
+              "sourceNpcId": "NPC_GUARD_FELIX"
+            }
+          }
+        }
+      ],
+      "nextPlaytestInput": null,
+      "clickedId": null
+    }
+  ]
+}
