@@ -760,6 +760,17 @@ for turn_i in range(MAX_TURNS):
     )
     narrative = llm_result.get("output", "") if isinstance(llm_result, dict) else llm_result
 
+    # [arch/144 §16] 노드 전환이면 진입 턴(SYSTEM) 서술도 끝날 때까지 기다린다. 실클라는 진입
+    # 서술을 다 보여 준 뒤에야 선택지를 내므로, 기다리지 않고 다음 선택을 제출하면 진입 턴
+    # 워커가 이미 다음 장소로 옮긴 상태를 읽어 출발지를 틀리게 그린다 (run b26366ca T9 —
+    # 진입 커밋 60ms 뒤 go_ss_dock 제출). 진입 턴은 게이트 통계를 흔들지 않도록 로그에 넣지 않는다.
+    transition = resp.get("transition") or {}
+    entry_turn_no = transition.get("enterTurnNo")
+    entry_llm_status = None
+    if entry_turn_no:
+        entry_result = poll_llm(run_id, entry_turn_no)
+        entry_llm_status = entry_result.get("status") if isinstance(entry_result, dict) else None
+
     # 카드 정합 분석 (2026-07-11): turnNo 기록이 로컬 카운터라 자동 진입 턴에서
     # 실제 커밋 턴과 어긋남 — 폴링(submitted_turn)과 동일한 응답 turnNo로 기록.
     current_turn = submitted_turn
@@ -807,6 +818,9 @@ for turn_i in range(MAX_TURNS):
         "llmChoices": llm_result.get("choices") if isinstance(llm_result, dict) else None,
         # [2026-09-02] 이번 턴 입력을 고른 선택지 표면 — 실유저 비율(nano 6:4 서버) 대조용
         "choiceSurface": choice_surface,
+        # 노드 전환 시 대기한 진입 턴 (서술은 로그에 넣지 않는다 — 위 주석)
+        "entryTurnNo": entry_turn_no,
+        "entryLlmStatus": entry_llm_status,
     }
     turn_logs.append(log_entry)
 

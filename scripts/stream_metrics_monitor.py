@@ -7,7 +7,7 @@
 
   DB  ai_turn_logs.pipeline_log.generation — 턴별 생성 경로·폴백 이벤트·실제 전송값
       turns.llm_output                     — 한자·가나 혼입 재발 (arch/144 §11)
-  로그 /tmp/graymar-server.log (launchd 표준출력)
+  로그 /tmp/graymar-server.log (launchd 표준출력) + 회전 사본 .1.gz
       [StreamHold]          — 송출 모드(stream/gated/hold)·prefixKept=false
       [HubTravel] … 축약 생략 — 흘린 이동 턴의 축약 생략 (arch/144 P4)
       [StructuredStream]    — 빈 스트림 재시도·non-stream 강등
@@ -145,11 +145,15 @@ def iter_log(path, since):
     rg = shutil.which("rg") or (
         "/opt/homebrew/bin/rg" if os.path.exists("/opt/homebrew/bin/rg") else None
     )
-    cmd = [rg, "--no-filename", "-F"] if rg else ["grep", "-F"]
+    cmd = [rg, "--no-filename", "-z", "-F"] if rg else ["grep", "-h", "-F"]
     for needle in LOG_NEEDLES:
         cmd += ["-e", needle]
+    # 회전 사본(.1.gz — scripts/rotate-server-log.sh)도 읽는다. 압축 해제 검색은 rg 만 가능
+    paths = [path]
+    if rg and os.path.exists(f"{path}.1.gz"):
+        paths.insert(0, f"{path}.1.gz")
     proc = subprocess.run(
-        cmd + [path], capture_output=True, text=True, errors="replace",
+        cmd + paths, capture_output=True, text=True, errors="replace",
         env={**os.environ, "LC_ALL": "C"},
     )
     if proc.returncode not in (0, 1):

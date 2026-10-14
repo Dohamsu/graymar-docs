@@ -22,7 +22,7 @@
   ```
 - [ ] **Slack Incoming Webhook 재발급** — Slack 앱 설정에서 기존 웹훅 삭제 → 새로 발급 → 루트 `.env` `SLACK_WEBHOOK_URL` 교체 (`scripts/health-monitor.py`·`bug-monitor.py` 가 읽음).
 - [ ] **미사용 OpenRouter API 키 revoke** — openrouter.ai Keys 에서 현재 `server/.env` 에 없는 키 정리.
-- [ ] (선택) `/tmp/graymar-server.log` 를 `~/Library/Logs` + newsyslog 회전으로 이전 — 감사 부록 LOW.
+- [x] ~~(선택) `/tmp/graymar-server.log` 회전~~ — 2026-10-14 완료: `scripts/rotate-server-log.sh` + launchd `com.graymar.server-logrotate`(매시, 200MB 초과 시 gzip 사본·보존 4, 사본 `scripts/launchd/`). 위치 이전(`~/Library/Logs`)은 안 함 — newsyslog 는 sudo 가 필요하고 launchd append 모드라 copytruncate 로 충분 (arch/144 §16).
 
 ## 전투 토픽 스택 (2026-10-14 소유자 지시 — 수정 보류, 나중에 몰아서 진행)
 
