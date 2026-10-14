@@ -115,4 +115,4 @@ Dimtale 의 선행 검증(2026-09-30, GPT-5.6 Luna high, 24회)도 같은 결론
 - **플레이어 발화** — 라벨이 플레이어 호칭(당신·용병 등)이나 캐릭터 이름이면 NPC 말풍선이 아니라 서술로 돌린다(구 분류기의 arch/91 배제 이식).
 - 기타: 대사 안 줄바꿈 합치기, 스트림 서술 따옴표를 저장본과 일치, 스키마 밖 type 미송출, 파서 프로토타입 키, 중간 요약 창 상수(`MID_SUMMARY_RECENT_WINDOW`)로 prewarm 예측 고정, 사문이 된 `decideSoleSpeakerContinuityCore` 삭제.
 
-남긴 것(소유자 Skip): 실제로 보낸 요청·원본 JSON·폴백 경로 기록, `LLM_JSON_MODE` 사문 경로 제거, `response_format` 중복 코드. 증분 파서의 전체 재파싱은 2,048토큰 상한에서 턴당 수 ms 라 그대로 둔다.
+남긴 것(소유자 Skip): 실제로 보낸 요청·원본 JSON·폴백 경로 기록, `LLM_JSON_MODE` 사문 경로 제거, `response_format` 중복 코드. → **2026-10-14 처리** (arch/144 §12). 증분 파서의 전체 재파싱은 2,048토큰 상한에서 턴당 수 ms 라 그대로 둔다.

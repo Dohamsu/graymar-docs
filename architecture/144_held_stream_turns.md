@@ -242,6 +242,24 @@ T1~T4 구현. 변경: `narrative-quality-stream-hold.core`(사유에서 `withhel
 
 **검증** — 스펙 5(대명사 치환 3종·조사째 삭제 2종·조사 없는 한자 회귀·스트림 조각), 각 수정을 되돌리면 실패. 전체 3,354 passed·스냅샷 17 불변. 한자 출력 빈도 자체는 원문이 저장되지 않아 모른다(보이는 깨짐 90일 3건).
 
+
+## 12. LLM 요청 정리 — 생성 기록·JSON 모드 제거·response_format (2026-10-14)
+
+arch/140 리뷰에서 소유자가 미뤄 둔 세 가지(실제 요청·원본 JSON·폴백 경로 기록, `LLM_JSON_MODE` 사문 경로, `response_format` 중복)를 정리했다.
+
+**발견** — 모델 원문은 이미 `ai_turn_logs.raw_completion` 에 남고 있었다(마커 변환 뒤 텍스트). §11 원인 추적 때 이 테이블을 확인하지 않아 재현에 시간이 들었다 — 6턴 원문은 "뒤,相手의"(일본어 '상대')였다. 30일 원문 2,803건 중 한자·가나 혼입 5건(Luna, 10/12 이후)이고, 관측 단어(相手·余白·どこ·灯)는 §11 표에 추가했다. 없던 것은 모델 **원본 JSON**·실제 요청 파라미터·폴백 경로다.
+
+**1. 생성 기록** — `ai_turn_logs.pipeline_log.generation`(jsonb, 스키마 변경 없음):
+- `path` stream·stream-retry·nonstream-json·text·authored·legacy-call, `events`(빈 스트림·스트림 실패·JSON 변환 실패·형태 구제·짧은 응답 재시도 등 발생 순서), `rawJson`(모델 원본, 20,000자 상한), `modelUsed`·`provider`·`attempts`.
+- `request`(워커가 요청한 값) 와 `sent`(공급자가 **실제로 보낸** 값 — `LlmProviderResponse.sentParams`)를 따로 둔다. 실측(run 5630d89e T25): 워커는 `reasoningEffort: low`·`temperature 0.8` 을 요청하지만 실제 전송은 `reasoning: {effort: none}`(env 맵)·샘플링 키 0개(Luna 미지원). 이 차이가 기록이 필요한 이유였다.
+- 플레이어 노출 없음 — `ai_turn_logs` 는 API 로 나가지 않는다(원본엔 미소개 실명이 있을 수 있다).
+
+**2. `LLM_JSON_MODE` 제거** — json_object 서술 모드(arch/32 2-Stage 대사 분리 포함)는 `LLM_JSON_MODE=false` 로 사문이었다. 워커 `useJsonMode`·`assembleJsonModeNarrative`(287줄)·JSON 파싱 헬퍼·`jsonModeParsed`·`dialogueSlotNpcIds`·부팅 경고, 프롬프트 빌더 JSON 분기·`NARRATIVE_JSON_FORMAT_INSTRUCTION(_SPLIT)`, 후처리·품질 필터의 `jsonModeParsed`, 런타임 영수증 키(`LLM_JSON_MODE`·`LLM_DIALOGUE_SPLIT`), 픽스처 필드를 지웠다. `buildNarrativePrompt` 위치 인자 하나가 빠졌다(호출 스펙 4개 수정). `DialogueGeneratorService` 는 대사 누락 보강·자기소개에 계속 쓴다. 텍스트 폴백이 JSON 봉투를 돌려준 경우의 감지(`"segments":`)는 유지.
+
+**3. `response_format`** — 스트림·비스트림에 복제돼 있던 규칙을 `responseFormatParam` 하나로.
+
+**검증** — 프롬프트 스냅샷 17 불변(JSON 모드가 꺼져 있었으므로 실제 프롬프트 동일), 전체 3,358 passed, 타입 오류 프로파일 기준선과 동일, 변경 파일 신규 린트 오류 0. 실런 2턴에서 생성 기록 확인.
+
 ---
 
 # Eng Review — arch/144 보류 스트림 턴 (2026-10-13, `/plan-eng-review`)

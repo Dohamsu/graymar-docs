@@ -393,7 +393,7 @@ LLM 관련 기능(서술 생성, 프롬프트, 후처리)을 추가/수정할 �
 34. **NPC 결정 5단계 우선순위** — 텍스트매칭 > IntentV3.targetNpcId > 대화잠금 > NanoEventDirector추천(WORLD_EVENT만) > 이벤트배정. Player-First 원칙. **선행 예외(Step 0/0b)**: CHOICE 선택지의 명시 npcId(arch/65), 그리고 **이벤트 고유 선택지(sourceEventId=매칭 이벤트) 클릭 시 이벤트 primaryNpcId**가 대화잠금보다 우선 (V10-② 2026-07-17 — 심문 이벤트 선택지 응답이 직전 대화 상대로 어긋난 분열 해소).
 35. **맥락 NPC 연결** — FIGHT/STEAL 후 TALK 시 직전 턴 primaryNpcId를 contextNpcId로 유지. 대화 잠금이 아닌 약한 연결. **역방향(2026-07-17)**: TALK/THREATEN 후 대상 미명시 FIGHT/STEAL도 직전 상대에게 잇는다 — NpcResolver Step 5b(CONTEXT_CONTINUITY)가 EVENT_PRIMARY보다 우선.
 36. **NanoEventDirector 비동기** — turns.service에서 nanoCtx만 빌드, LLM Worker에서 비동기 generate(). 턴 응답에서 nano LLM 대기 제거.
-37. **LLM 스트리밍 = JSON 스키마 구조화 스트림 (arch/140, 2026-10-12)** — 메인 서술은 `response_format: json_schema`(segments[type·speaker_id·speaker·text]) + stream:true 로만 받는다. `structured-narrative-stream.core` 증분 파서가 화자 필드가 완성된 조각만 기존 narration/dialogue SSE 이벤트로 내보내고(서술=문장 단위, 대사=조각 완성 시), 완료 시 마커 정본(`@[표시명|NPC_ID] "…"`)으로 바꿔 후처리에 넘긴다. 스트림 실패 → 같은 스키마 non-stream 재호출 → 그 호출이 실패하거나 파싱 불가면 텍스트 요청 1회(`callStructuredNonStream`). 구 텍스트 분류기(StreamClassifier)는 삭제됐다. 구 `LLM_JSON_MODE`(json_object 일괄)는 사문 경로.
+37. **LLM 스트리밍 = JSON 스키마 구조화 스트림 (arch/140, 2026-10-12)** — 메인 서술은 `response_format: json_schema`(segments[type·speaker_id·speaker·text]) + stream:true 로만 받는다. `structured-narrative-stream.core` 증분 파서가 화자 필드가 완성된 조각만 기존 narration/dialogue SSE 이벤트로 내보내고(서술=문장 단위, 대사=조각 완성 시), 완료 시 마커 정본(`@[표시명|NPC_ID] "…"`)으로 바꿔 후처리에 넘긴다. 스트림 실패 → 같은 스키마 non-stream 재호출 → 그 호출이 실패하거나 파싱 불가면 텍스트 요청 1회(`callStructuredNonStream`). 구 텍스트 분류기(StreamClassifier)는 삭제됐다. 구 `LLM_JSON_MODE`(json_object 일괄) 경로는 2026-10-14 코드에서 제거(arch/144 §12). 턴마다 실제 전송 파라미터·모델 원본 JSON·폴백 경로는 `ai_turn_logs.pipeline_log.generation` 에 남는다.
 38. **NPC 불일치 교정** — LLM 서술의 첫 @마커 NPC가 primaryNpcId와 다르면 마커+본문을 강제 교체 (Step F). **구조화 귀속 턴(JSON 스키마 응답이 재작성 없이 유지된 턴, `structuredAttribution`)은 예외** — 화자가 스키마로 확정됐으므로 Step F·F-0·F-aux·무마커 대사 재귀속(JEV)·이름 재추측(B-2.5)·BareDialogue·마커 겹침 복구를 건너뛰고, 마커 ID 로만 표시명을 정본화한다. **단 장면 NPC(collectSceneNpcIds — 주·지목·현장 presentNpcs 등)의 ID 만 믿고, 장면 밖 ID 는 표시명 라벨만 남긴다**(후보가 팩 전체라 부재 CORE NPC 가 초상화·LockSeed 를 얻던 경로 차단, 장면 정보가 비면 게이트 생략). ID 없는 라벨 마커는 B-2.5 로 별칭 해석하고, 스트림 npcName 도 실명 가리기를 거친다. 실명 세이프가드·어체 교정·자기소개 처리는 유지 (arch/140, 리뷰 2026-10-12).
 39. **NpcReactionDirector + 추상 톤 3축** — 메인 LLM 호출 전 nano로 NPC 반응(7종)+즉시목표+추상톤 3축(voiceQuality/emotionalUndertone/bodyLanguageMood) 사전 결정. 메인 LLM은 추측 대신 결정 표현. 톤 가이드는 추상만(예시 어구 절대 금지).
 40. **자유 행동 주사위 스킵** — ChallengeClassifier가 룰 게이트(NON_CHALLENGE/ALWAYS_CHALLENGE) + 회색지대 nano 분류로 FREE/CHECK 결정. FREE면 주사위 스킵 + 자동 SUCCESS. **CHOICE 는 `turns/choice-challenge.core`** (STRUCTURAL_FREE → ALWAYS_CHECK → fact 판돈 → BLOCK → riskLevel≥2 → 라벨 판돈 → 저작 INVESTIGATE/SEARCH → FREE). **저작 접근 선택지 면제(2026-09-08 QC4~6)**: PERSUADE 이면서 nano 가 아닌 저작 선택지에 `payload.riskLevel: 1` 이 명시되면 ALWAYS_CHECK 를 건너뛰어 판돈이 없을 때 FREE — "주민에게 말을 건다" 류 접근 대화 9종(scene-shell)+콘텐츠 `encounter_talk`. **affordance 는 이벤트 매칭 축이라 TALK 로 바꾸지 않는다**(저작 이벤트 funnel 30일 72%) — 판정·톤은 `choice-challenge.core`·`tone-hint.core` 에서 푼다.
@@ -632,7 +632,7 @@ LLM_REASONING_EFFORT_MAP=openai/gpt-5.6-luna=none  # 모델별 추론 강도 (`�
 LLM_FALLBACK_PROVIDER=openai          # fallback: 같은 OpenRouter 경유
 LLM_FALLBACK_MODEL=openai/gpt-4.1-mini  # fallback 모델 (이전: Claude Haiku 4.5)
 GEMINI_REASONING_MAX_TOKENS=0         # Gemini Flash thinking 비활성화 (0=off, DeepSeek는 코드에서 enabled:false 자동 주입)
-LLM_JSON_MODE=false               # JSON 구조화 출력 (스트리밍과 비호환, false 권장). false 는 2-Stage 대사 분리를 무력화한다는 부작용이 있다 — arch/104 §P2-4
+# LLM_JSON_MODE — [2026-10-14 arch/144 §12] 코드에서 제거(json_object 서술 모드 사문 경로). .env 에 남아 있어도 읽지 않는다
 LLM_SHORT_RESPONSE_MIN_TOKENS=150     # ShortResponse 재시도 임계 (기본 200 — 교차 모델 짧은 서술 이중 과금 방지)
 LLM_PROVIDER_REQUIRE_PARAMS=true      # penalty 미지원 프로바이더 배제 (불변식 50 레버 보장, 2026-07-22 채택)
 
@@ -658,7 +658,7 @@ CLAUDE_MODEL=claude-haiku-4-5-20251001  # claude provider 사용 시 모델
 GEMINI_MODEL=gemma-4-26b-a4b-it         # gemini provider 사용 시 모델
 LLM_LIGHT_PROVIDER=openai               # nano 계열 provider (기본 openai)
 LLM_MAIN_ALTERNATE_MODEL=              # 메인 교차 모델 오버라이드 (미설정 시 LLM_ALTERNATE_MODEL)
-LLM_DIALOGUE_SPLIT=true                 # 2-Stage 대사 분리 (arch/32) — ⚠️ **LLM_JSON_MODE=true 가 전제**. 현재 JSON 모드가 false 라 이 설정과 LLM_DIALOGUE_MODEL 은 사문이며, 대사는 메인 서술 LLM 이 직접 생성해 어체 검증(validateSpeechRegister+재시도)을 타지 않는다. JSON 모드는 스트리밍과 비호환(arch/35)이라 되돌릴 수 없어, 어체 정합은 사후 교정(R5v2)이 담당 — arch/104 §P2-4. 부팅 시 무효 조합 경고 있음
+# LLM_DIALOGUE_SPLIT — [2026-10-14 arch/144 §12] JSON 모드와 함께 제거(2-Stage 대사 분리 사문). LLM_DIALOGUE_MODEL 은 대사 누락 보강·자기소개 생성에 계속 쓴다
 LLM_PROVIDER_ORDER=                     # OpenRouter provider 우선순위 (콤마)
 LLM_PROVIDER_MAX_PRICE=                 # provider 단가 상한
 INTENT_LLM_ENABLED=                     # LLM 인텐트 파서 on/off
