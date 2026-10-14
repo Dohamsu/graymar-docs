@@ -30,11 +30,11 @@ components/ (71개)
 ├── narrative/          ← 메시지 표시 (6)
 │   ├── NarrativePanel.tsx    ← 메시지 스크롤 영역
 │   ├── StoryBlock.tsx        ← 메시지 렌더러 (타이핑, 보정치 뱃지, 대사/서술 혼합 — arch/77 P5c로 -45%)
-│   ├── StreamingBlock.tsx    ← 스트리밍 중 실시간 렌더링 (SSE 토큰 → 점진적 텍스트)
+│   ├── NarrativeReveal.tsx   ← 서술 타이핑 단일 정본 (스트리밍·보류 턴·폴링·완료가 같은 렌더러 — 2026-10-14, 구 StreamingBlock/StreamTyper/TypewriterText 대체)
 │   ├── DialogueBubble.tsx    ← NPC 대사 말풍선 (어체·speechRegister별 색조, 초상화 썸네일; 무명 인물=물음표·흐림 / BACKGROUND 단역=실루엣·역할명, arch/86)
 │   ├── NpcPortraitCard.tsx   ← NPC 초상화 카드 (StoryBlock에서 분리, arch/77 P5c)
-│   ├── narrative-text.tsx    ← 서술 텍스트 렌더 유틸 정본 (마커 정리·세그먼트 파싱 — StreamTyper/TypewriterText/StreamingBlock 공유)
-│   └── compact-dialogue.ts   ← 연속 대사 초상화 생략 규칙 정본 (tsx 아님, 컴포넌트 수 제외) — 한 메시지 내 같은 화자 연속 대사만 compact, 서술 개입·무명 인물·메시지 경계에서 리셋. 4개 렌더 경로(NarratorContent/TypewriterText/StreamTyper/StreamingBlock) 공유 + 유닛 테스트
+│   ├── narrative-text.tsx    ← 서술 텍스트 렌더 유틸 정본 (마커 정리·줄 모델 buildNarrativeLines·reveal 렌더 renderNarrativeLines — NarrativeReveal·NarratorContent 공유)
+│   └── compact-dialogue.ts   ← 연속 대사 초상화 생략 규칙 정본 (tsx 아님, 컴포넌트 수 제외) — 한 메시지 내 같은 화자 연속 대사만 compact, 서술 개입·무명 인물·메시지 경계에서 리셋. 줄 모델(buildNarrativeLines) 단일 경로에서 적용 + 유닛 테스트
 ├── input/              ← 입력 처리 (2)
 │   ├── InputSection.tsx      ← 텍스트 입력 + 퀵 액션 (LOCATION 전용)
 │   └── QuickActionButton.tsx ← 빠른 행동 버튼

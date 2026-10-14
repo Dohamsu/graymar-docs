@@ -296,7 +296,7 @@ cd server && pnpm jest -- --testPathPattern=rng.service
 
 | 영역 | 수 | 핵심 |
 |------|---|------|
-| narrative/ | 6 | NarrativePanel, StoryBlock, StreamingBlock, DialogueBubble, NpcPortraitCard, narrative-text(+compact-dialogue 연속 대사 초상화 생략 규칙) |
+| narrative/ | 6 | NarrativePanel, StoryBlock, NarrativeReveal(서술 타이핑 단일 정본 — 2026-10-14), DialogueBubble, NpcPortraitCard, narrative-text(줄 모델·reveal 렌더 + compact-dialogue 연속 대사 초상화 생략 규칙) |
 | input/ | 2 | InputSection, QuickActionButton |
 | hub/ | 8 | HeatGauge, TimePhaseIndicator/Transition, LocationHeader, ResolveOutcomeBanner, DiceFace, Dice3D, PackMeterGauge (HUB 본체는 GameClient/NarrativePanel 렌더) |
 | location/ | 5 | TurnResultBanner, LocationToastLayer, LocationBackdrop(장소 배경 지속화 arch/93), DeadlineBanner, EquipmentDropToast |
