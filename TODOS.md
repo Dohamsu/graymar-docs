@@ -23,3 +23,10 @@
 - [ ] **Slack Incoming Webhook 재발급** — Slack 앱 설정에서 기존 웹훅 삭제 → 새로 발급 → 루트 `.env` `SLACK_WEBHOOK_URL` 교체 (`scripts/health-monitor.py`·`bug-monitor.py` 가 읽음).
 - [ ] **미사용 OpenRouter API 키 revoke** — openrouter.ai Keys 에서 현재 `server/.env` 에 없는 키 정리.
 - [ ] (선택) `/tmp/graymar-server.log` 를 `~/Library/Logs` + newsyslog 회전으로 이전 — 감사 부록 LOW.
+
+## 전투 토픽 스택 (2026-10-14 소유자 지시 — 수정 보류, 나중에 몰아서 진행)
+
+전투 관련 이벤트·트리거·전투 돌입 전환은 발견해도 고치지 않고 여기에만 쌓는다. 다른 작업이 전투 경로에 걸리면 전투 경로는 종전 동작으로 남기고 적는다.
+
+- [ ] **전투 돌입 턴의 서술이 라이브에서 안 보임** (2026-10-14, arch/144 §9) — 장소에서 행동이 전투를 일으키면(`location-turn` → `nextNodeType: 'COMBAT'` 전환) 그 행동 턴의 서술은 생성·과금되지만, 클라가 전환 즉시 전투 진입 턴 서술만 요청해 화면에 안 나온다(이어하기 복원 때만 보임). 거점·장소 이동은 "서술 먼저 보여 주고 전환"(클라 `pendingTransition`)으로 고쳤으나 COMBAT 은 `deferTransition` 에서 제외해 종전 동작 유지. 몰아서 진행 때: 보여 줄지(A) / 서술 생략할지(B) 결정 → 클라 조건 한 줄 또는 서버 skipLlm.
+- [ ] **`compoundFight` 스트림 보류 사유** (arch/144 §2·§7) — "밀치고 주먹" 복합 공격 턴은 여전히 완료 때 일괄 표시. 관측 0건.
